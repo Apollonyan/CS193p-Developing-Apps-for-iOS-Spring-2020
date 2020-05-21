@@ -20,7 +20,7 @@ assignees: ''
 - [ ] 我已阅读并将遵守 [翻译校对步骤](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/blob/master/CONTRIBUTING.md)。
 - [ ] 我将依照 [翻译标准](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/blob/master/translation-style-guide.md) 翻译。
 - [ ] 我理解翻译的内容可能会被要求修改，甚至不被合并进入最终的字幕当中。
-- [ ] 我会在以下填写的时间前提交，或在在这之前自行转让任务给接班人。
+- [ ] 我会在以下时间前完成翻译，或在在这之前自行转让任务给接班人：
 
 北京时间 XX 月 XX 日 XX:XX
 
