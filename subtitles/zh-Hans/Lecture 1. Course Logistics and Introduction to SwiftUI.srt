@@ -17,17 +17,16 @@
 
 5
 00:00:16,730 --> 00:00:19,940
-I'm Paul Hegarty, and I'm
-going to be your tour guide
+我是 Paul Hegarty
+我将带领你走进
 
 6
 00:00:19,940 --> 00:00:23,230
-for this adventure into
-developing applications
+使用 SwiftUI 在 iOS 平台
 
 7
 00:00:23,230 --> 00:00:26,490
-for iOS using SwiftUI.
+开发程序的新探险
 
 8
 00:00:26,490 --> 00:00:28,530
