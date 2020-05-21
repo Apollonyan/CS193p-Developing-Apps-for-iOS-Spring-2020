@@ -7,7 +7,7 @@
 ## 任务分配
 
 1. 相关事宜将在 QQ 群 [639775967](https://qm.qq.com/cgi-bin/qm/qr?k=bbFbbt0CNs8lp5KegWf5dNMBiuYskt3v&authKey=SSRNAQTcd8lKGJb6bfx+LUz6tTZgaIZTO65ftpmSq7Kh0aN+ooLt2xUaFQML4rxX&noverify=0) 讨论，加群请备注 GitHub 用户名。（如果没有 QQ，Tel@ApolloZhu）
-2. 翻译请通过 新建 issue 的形式
+2. 翻译请通过 [新建 issue](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/issues/new?labels=%E7%BF%BB%E8%AF%91%E4%B8%AD&template=translate.md&title=%E7%BF%BB%E8%AF%91+X+%E9%9B%86+Y+-+Z+%E6%AE%B5%E5%AD%97%E5%B9%95) 的形式认领，根据模版
 3. 任务分配后看板会自动更新，@ApolloZhu 会在 [README](README.md) 中更新任务分配情况
 
 ## 翻译方法
@@ -20,13 +20,24 @@
    2.
    2. 每次校对不得超过 3 天
 
-## 校对方法
+## 初校方法
 
 1. 所有校对将通过 Pull Request Review 的形式进行。
-2. 校对可以选择
-2. 校对者可以提供建议的修改（suggest changes），但不得直接修改 PR 内容。
+2. Pull Request 1 天内无人申领校对，将由 @ApolloZhu 执行。
+   1. 申领校对前请和 @ApolloZhu 单独沟通。
+   2. 翻译不得校对自己翻译的内容。
+3. 校对期限为开始校对后 + max(翻译使用天数的一半, 一天)。
+4. 校对者可以直接 Approve，或提供建议的修改（suggest changes），但不得直接修改 PR 内容。
+   1. 如需要修改，翻译者需尽快更具提出的建议进行修改，最长不得超过一周。
+   2. 超过一周将视情况重新分配翻译，或进行其他调整。
+5. Pull Request 在 approve 后
 
+## 精校方法
 
+1. 因为每一集可能由多人翻译/校对，为保证最终字幕的统一性，将由 @ApolloZhu 在上传前最后检查。
+2. 如无特殊情况，校对时间不超过 3 天。
+3. 如由需要更改，由校对者直接执行，但需在原 PR 下通知翻译/校对，以便下次执行。
+4. 校对完成后发布 release，上传 bilibili。
 
 ## 领取任务
 
