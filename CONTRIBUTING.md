@@ -12,7 +12,7 @@
     1. 第一次最多申领翻译 50 条（熟悉翻译流程，避免合并的时候需要修改的太多）
     2. 第二次翻译的内容合并之后，可在校对期间同时申领新的翻译
     3. 如果同时申领多个翻译任务，请合理使用 git 的分支功能避免新提交进入到之前的校对任务中
-3. 任务申领后 [看板](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/projects/1) 会自动更新，@ApolloZhu 会在一天内更新 [README](README.md) 中任务分配情况
+3. 任务申领后 [看板](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/projects/1) 会自动更新，@ApolloZhu 会在一天内更新 [任务分配情况一览](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/issues/1#issue-622182109)
 4. 为了避免其他人也翻译同样的内容，请只翻译申领的条数。如果您不小心翻译了其他部分，请在群里面沟通，避免重复劳动
 5. 翻译或校对的过程中有拿不准的地方（如这个词该不该翻译，该翻译成什么等），请在群内沟通
 6. **注意：翻译、校对字幕的条数不是指字幕文件中行数，而是指**
