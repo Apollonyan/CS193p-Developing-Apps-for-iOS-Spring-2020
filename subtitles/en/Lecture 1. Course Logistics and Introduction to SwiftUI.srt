@@ -1,0 +1,6260 @@
+1
+00:00:00,998 --> 00:00:03,498
+(regal music)
+
+2
+00:00:04,920 --> 00:00:06,513
+- [Announcer] Stanford University.
+
+3
+00:00:08,430 --> 00:00:12,470
+- Welcome to Stanford CS193p.
+
+4
+00:00:12,470 --> 00:00:16,730
+This is spring quarter of 2020.
+
+5
+00:00:16,730 --> 00:00:19,940
+I'm Paul Hegarty, and I'm
+going to be your tour guide
+
+6
+00:00:19,940 --> 00:00:23,230
+for this adventure into
+developing applications
+
+7
+00:00:23,230 --> 00:00:26,490
+for iOS using SwiftUI.
+
+8
+00:00:26,490 --> 00:00:28,530
+And it's gonna be quite
+an adventure this quarter
+
+9
+00:00:28,530 --> 00:00:31,810
+because none of you are
+here on campus with me
+
+10
+00:00:31,810 --> 00:00:33,310
+which is kind of sad for me.
+
+11
+00:00:33,310 --> 00:00:35,570
+It's gonna be a little bit strange.
+
+12
+00:00:35,570 --> 00:00:38,670
+I'm sure it's gonna be
+very strange for you all.
+
+13
+00:00:38,670 --> 00:00:41,860
+And it's not really
+gonna affect us that much
+
+14
+00:00:41,860 --> 00:00:43,930
+in this course, believe it or not,
+
+15
+00:00:43,930 --> 00:00:46,010
+because most of the communication
+
+16
+00:00:46,010 --> 00:00:48,980
+that happens between
+you and me is happening
+
+17
+00:00:48,980 --> 00:00:51,930
+via our class forums, Piazza.
+
+18
+00:00:51,930 --> 00:00:53,769
+So you definitely wanna get on Piazza
+
+19
+00:00:53,769 --> 00:00:55,840
+and ask questions there.
+
+20
+00:00:55,840 --> 00:00:57,273
+Don't be shy about that.
+
+21
+00:00:58,260 --> 00:01:00,540
+We get very quick responses here.
+
+22
+00:01:00,540 --> 00:01:03,110
+See what your fellow
+students are asking also.
+
+23
+00:01:03,110 --> 00:01:06,090
+And definitely be
+looking for posts from me
+
+24
+00:01:06,090 --> 00:01:08,520
+because all course
+materials, all announcements
+
+25
+00:01:08,520 --> 00:01:10,650
+are gonna be made through Piazza.
+
+26
+00:01:10,650 --> 00:01:12,353
+So don't miss that part of it.
+
+27
+00:01:13,290 --> 00:01:15,720
+Now, all the lectures
+are gonna be pre-recorded
+
+28
+00:01:15,720 --> 00:01:17,070
+just like this one.
+
+29
+00:01:17,070 --> 00:01:19,590
+And that's gonna be
+convenient for you I guess
+
+30
+00:01:19,590 --> 00:01:20,860
+because after they come out,
+
+31
+00:01:20,860 --> 00:01:22,790
+you can watch them at your leisure
+
+32
+00:01:22,790 --> 00:01:24,800
+and fast forward and rewind.
+
+33
+00:01:24,800 --> 00:01:28,330
+And especially since I'm going
+to be doing a lot of demos,
+
+34
+00:01:28,330 --> 00:01:30,940
+that is gonna be really valuable.
+
+35
+00:01:30,940 --> 00:01:33,810
+I guess it's also gonna
+have a great benefit
+
+36
+00:01:33,810 --> 00:01:38,010
+which is that as we do
+many times in this course,
+
+37
+00:01:38,010 --> 00:01:42,250
+we release the course out
+into the world for free.
+
+38
+00:01:42,250 --> 00:01:44,040
+So people can watch this.
+
+39
+00:01:44,040 --> 00:01:46,354
+Spy on us basically here
+
+40
+00:01:46,354 --> 00:01:48,890
+as we're doing this course at Stanford.
+
+41
+00:01:48,890 --> 00:01:50,260
+And we'll be doing that again
+
+42
+00:01:50,260 --> 00:01:53,140
+after we do the standard closed captioning
+
+43
+00:01:53,140 --> 00:01:55,230
+and other post-production work.
+
+44
+00:01:55,230 --> 00:01:58,250
+So if you're watching me outside Stanford,
+
+45
+00:01:58,250 --> 00:02:00,430
+welcome to you as well.
+
+46
+00:02:00,430 --> 00:02:03,000
+Now, of course you're not
+gonna be able to participate
+
+47
+00:02:03,000 --> 00:02:05,020
+in the forums with the rest
+of the Stanford students
+
+48
+00:02:05,020 --> 00:02:07,593
+because you're watching
+this a little bit later.
+
+49
+00:02:08,630 --> 00:02:11,130
+But there are community-based resources
+
+50
+00:02:11,130 --> 00:02:13,140
+for asking questions
+out there in the world
+
+51
+00:02:13,140 --> 00:02:14,570
+like Stack Overflow.
+
+52
+00:02:14,570 --> 00:02:18,640
+So definitely go and
+check those out as well.
+
+53
+00:02:18,640 --> 00:02:21,260
+This SwiftUI thing is brand new,
+
+54
+00:02:21,260 --> 00:02:22,730
+literally just a few months old.
+
+55
+00:02:22,730 --> 00:02:26,120
+So you are on the cutting
+edge of technology
+
+56
+00:02:26,120 --> 00:02:29,510
+when it comes to developing
+applications for iOS.
+
+57
+00:02:29,510 --> 00:02:31,730
+And as you learn this,
+
+58
+00:02:31,730 --> 00:02:33,790
+some things are gonna be familiar to you.
+
+59
+00:02:33,790 --> 00:02:34,623
+There's a little bit
+
+60
+00:02:34,623 --> 00:02:36,720
+of object-oriented programming in there.
+
+61
+00:02:36,720 --> 00:02:40,040
+This language that you're
+gonna learn is kind of C-like.
+
+62
+00:02:40,040 --> 00:02:43,660
+It shares some syntax with
+languages like Java as well.
+
+63
+00:02:43,660 --> 00:02:45,120
+So that'll be familiar.
+
+64
+00:02:45,120 --> 00:02:46,910
+But you're probably gonna be learning
+
+65
+00:02:46,910 --> 00:02:50,470
+some pretty much brand
+new stuff for you as well.
+
+66
+00:02:50,470 --> 00:02:51,970
+For example, you're gonna be learning
+
+67
+00:02:51,970 --> 00:02:53,640
+a new programming language, Swift.
+
+68
+00:02:53,640 --> 00:02:57,070
+Entirely new for almost
+all of you, I'm sure.
+
+69
+00:02:57,070 --> 00:02:58,470
+And this programming language,
+
+70
+00:02:58,470 --> 00:03:00,320
+while it supports
+object-oriented programming,
+
+71
+00:03:00,320 --> 00:03:02,520
+it also supports a different
+kind of programming
+
+72
+00:03:02,520 --> 00:03:04,220
+called functional programming
+
+73
+00:03:04,220 --> 00:03:06,350
+or protocol-oriented programming.
+
+74
+00:03:06,350 --> 00:03:09,000
+And that I'm not gonna assume you know.
+
+75
+00:03:09,000 --> 00:03:12,880
+So I'm gonna be teaching you
+all about that along the way.
+
+76
+00:03:12,880 --> 00:03:16,670
+The user interface paradigm is
+also what's called reactive.
+
+77
+00:03:16,670 --> 00:03:19,440
+And it's declarative
+rather than imperative.
+
+78
+00:03:19,440 --> 00:03:21,490
+And I'm gonna explain what all that means
+
+79
+00:03:21,490 --> 00:03:22,950
+so that's gonna be new to you.
+
+80
+00:03:22,950 --> 00:03:25,890
+And there might be some other
+miscellaneous new topics.
+
+81
+00:03:25,890 --> 00:03:28,920
+For example, I'm hoping to get to cover
+
+82
+00:03:28,920 --> 00:03:30,830
+iOS's object-oriented database
+
+83
+00:03:30,830 --> 00:03:33,180
+which is really cool technology.
+
+84
+00:03:33,180 --> 00:03:36,480
+But in any case, all that you're
+gonna learn in this course
+
+85
+00:03:36,480 --> 00:03:40,000
+is really just kind of a survey course
+
+86
+00:03:40,000 --> 00:03:43,440
+or a collection of real-life application
+
+87
+00:03:43,440 --> 00:03:46,450
+of stuff you're learning in
+your other CS classes here.
+
+88
+00:03:46,450 --> 00:03:49,760
+For example computer-human
+interfaces, obviously.
+
+89
+00:03:49,760 --> 00:03:52,310
+API design and language design.
+
+90
+00:03:52,310 --> 00:03:54,640
+Animation, persistence,
+networking, multithreading,
+
+91
+00:03:54,640 --> 00:03:56,220
+all these things listed here
+
+92
+00:03:56,220 --> 00:03:59,130
+are absolutely going to be things
+
+93
+00:03:59,130 --> 00:04:00,610
+that we include in this course.
+
+94
+00:04:00,610 --> 00:04:03,000
+And so you're gonna see it all together
+
+95
+00:04:03,000 --> 00:04:05,950
+in a real-world environment.
+
+96
+00:04:05,950 --> 00:04:07,550
+So let's talk a little bit about
+
+97
+00:04:07,550 --> 00:04:08,850
+the mechanics of the course
+
+98
+00:04:08,850 --> 00:04:11,430
+like how it's actually gonna play out.
+
+99
+00:04:11,430 --> 00:04:14,350
+And in these pre-recorded lectures,
+
+100
+00:04:14,350 --> 00:04:16,940
+I'm gonna try and spend
+most of my time doing demos.
+
+101
+00:04:16,940 --> 00:04:18,480
+I really believe in demos.
+
+102
+00:04:18,480 --> 00:04:21,090
+I think they make the
+concepts very concrete.
+
+103
+00:04:21,090 --> 00:04:24,840
+So I'll probably spent around
+2/3 of the time on demos.
+
+104
+00:04:24,840 --> 00:04:28,110
+But occasionally I do have
+to go to the lecture slides.
+
+105
+00:04:28,110 --> 00:04:30,190
+And this is to cover concepts
+
+106
+00:04:30,190 --> 00:04:32,530
+that if you didn't understand them,
+
+107
+00:04:32,530 --> 00:04:35,151
+the demos might just not make any sense.
+
+108
+00:04:35,151 --> 00:04:37,420
+So for example, at the
+beginning of lecture two,
+
+109
+00:04:37,420 --> 00:04:40,740
+I'm gonna be covering
+MVVM, the design paradigm
+
+110
+00:04:40,740 --> 00:04:42,560
+we use to organize our code.
+
+111
+00:04:42,560 --> 00:04:45,130
+I'm also gonna be covering
+the type system in Swift
+
+112
+00:04:45,130 --> 00:04:46,970
+'cause that's just so
+critical to understanding
+
+113
+00:04:46,970 --> 00:04:50,830
+how Swift works, to
+understand its type system.
+
+114
+00:04:50,830 --> 00:04:53,610
+But again, if I can, I
+always lean towards the demo
+
+115
+00:04:53,610 --> 00:04:54,900
+because we wanna spend our time
+
+116
+00:04:54,900 --> 00:04:56,740
+actually doing iOS development.
+
+117
+00:04:56,740 --> 00:04:58,930
+That's what we're here to learn.
+
+118
+00:04:58,930 --> 00:05:01,660
+For your part, you are going
+to have some reading to do
+
+119
+00:05:01,660 --> 00:05:02,750
+the first three weeks.
+
+120
+00:05:02,750 --> 00:05:05,740
+This is mostly to learn
+the language, Swift.
+
+121
+00:05:05,740 --> 00:05:09,100
+There's an online Swift
+programming reference manual
+
+122
+00:05:09,100 --> 00:05:12,040
+that I'm going to guide you
+through those first three weeks
+
+123
+00:05:12,040 --> 00:05:13,980
+to try and get you efficiently through it.
+
+124
+00:05:13,980 --> 00:05:15,930
+Because it's a rather large document
+
+125
+00:05:15,930 --> 00:05:17,990
+and I don't want you to be spending
+
+126
+00:05:17,990 --> 00:05:20,060
+an inordinate amount of time there.
+
+127
+00:05:20,060 --> 00:05:22,320
+But by the same token,
+you do have to know Swift
+
+128
+00:05:22,320 --> 00:05:23,900
+to be able to do SwiftUI.
+
+129
+00:05:24,890 --> 00:05:26,953
+There will be programming
+assignments of course.
+
+130
+00:05:26,953 --> 00:05:29,363
+They are usually about a week long.
+
+131
+00:05:30,220 --> 00:05:32,550
+There's four or five of them.
+
+132
+00:05:32,550 --> 00:05:35,770
+This quarter's a little bit
+short, starting a week late.
+
+133
+00:05:35,770 --> 00:05:37,930
+So these four or five
+programming assignments
+
+134
+00:05:37,930 --> 00:05:40,140
+will be in the first six weeks.
+
+135
+00:05:40,140 --> 00:05:43,010
+And the reason for that is
+I leave the last three weeks
+
+136
+00:05:43,010 --> 00:05:45,210
+for you to work on a final project.
+
+137
+00:05:45,210 --> 00:05:46,950
+And this final project is the culmination
+
+138
+00:05:46,950 --> 00:05:48,690
+of everything you've learned,
+
+139
+00:05:48,690 --> 00:05:50,870
+so we won't have any
+programming assignments
+
+140
+00:05:50,870 --> 00:05:53,100
+during that final three weeks.
+
+141
+00:05:53,100 --> 00:05:55,880
+If you go to the online
+forums, the class forums,
+
+142
+00:05:55,880 --> 00:05:59,027
+there's a lot more
+information there as well.
+
+143
+00:05:59,027 --> 00:06:00,750
+And the syllabus is posted there
+
+144
+00:06:00,750 --> 00:06:01,940
+so I encourage you to read that
+
+145
+00:06:01,940 --> 00:06:02,850
+if you haven't already.
+
+146
+00:06:02,850 --> 00:06:04,260
+Hopefully, you have.
+
+147
+00:06:04,260 --> 00:06:07,410
+Let's get started here
+building our first app.
+
+148
+00:06:07,410 --> 00:06:09,740
+I have a little video that I've made
+
+149
+00:06:09,740 --> 00:06:13,510
+of what this first app that
+we're gonna build looks like.
+
+150
+00:06:13,510 --> 00:06:15,530
+So this is what it looks like.
+
+151
+00:06:15,530 --> 00:06:16,970
+It's a card matching game.
+
+152
+00:06:16,970 --> 00:06:19,150
+Those of you who have
+seen this course on video
+
+153
+00:06:19,150 --> 00:06:21,030
+in the past will recognize it.
+
+154
+00:06:21,030 --> 00:06:22,920
+But of course this one's
+all written in SwiftUI
+
+155
+00:06:22,920 --> 00:06:25,260
+so it's a completely new app.
+
+156
+00:06:25,260 --> 00:06:27,640
+And it's got a lot more
+features than the previous ones.
+
+157
+00:06:27,640 --> 00:06:30,330
+Some things are really
+easy to do in SwiftUI.
+
+158
+00:06:30,330 --> 00:06:32,150
+So you can see this
+has a lot of animation.
+
+159
+00:06:32,150 --> 00:06:33,653
+These cards are flipping over.
+
+160
+00:06:34,770 --> 00:06:36,150
+Numbers are flying up and down
+
+161
+00:06:36,150 --> 00:06:38,780
+as you match and mismatch cards.
+
+162
+00:06:38,780 --> 00:06:41,140
+You've got that little colored ring
+
+163
+00:06:41,140 --> 00:06:43,910
+that's kind of spinning
+down in the background.
+
+164
+00:06:43,910 --> 00:06:45,670
+So we're gonna be doing a lot
+of animation in this course.
+
+165
+00:06:45,670 --> 00:06:48,883
+Animation is very important
+to a good mobile UI.
+
+166
+00:06:50,610 --> 00:06:54,400
+You can also see that
+this application's got
+
+167
+00:06:54,400 --> 00:06:57,070
+multiple themes, different colors.
+
+168
+00:06:57,070 --> 00:06:59,110
+We had that Halloween version.
+
+169
+00:06:59,110 --> 00:07:01,140
+Here we have these flags.
+
+170
+00:07:01,140 --> 00:07:03,960
+Our cards are just showing emojis.
+
+171
+00:07:03,960 --> 00:07:05,580
+Obviously my little video there
+
+172
+00:07:05,580 --> 00:07:07,270
+is going very quickly clicking around,
+
+173
+00:07:07,270 --> 00:07:08,970
+but you are watching it on video
+
+174
+00:07:08,970 --> 00:07:10,960
+so you can just back up and pause
+
+175
+00:07:10,960 --> 00:07:13,550
+and take a close look at
+some of the animations
+
+176
+00:07:13,550 --> 00:07:15,500
+and the things that are going on there.
+
+177
+00:07:16,580 --> 00:07:17,690
+So that's what we're gonna spend
+
+178
+00:07:17,690 --> 00:07:20,670
+the first really two
+or three weeks in demo
+
+179
+00:07:20,670 --> 00:07:24,423
+and in your homework, working
+on building this application.
+
+180
+00:07:26,610 --> 00:07:28,220
+By the way, you're
+probably not gonna see me
+
+181
+00:07:28,220 --> 00:07:30,010
+on camera much the rest of the quarter
+
+182
+00:07:30,010 --> 00:07:32,070
+'cause we're gonna be
+doing screen records.
+
+183
+00:07:32,070 --> 00:07:35,030
+So you'll just hear my disembodied voice.
+
+184
+00:07:35,030 --> 00:07:36,510
+By the way, my disembodied voice
+
+185
+00:07:36,510 --> 00:07:37,680
+will sound a little different
+
+186
+00:07:37,680 --> 00:07:39,300
+because I'm gonna use my AirPods
+
+187
+00:07:39,300 --> 00:07:42,320
+when I'm doing the screen recordings.
+
+188
+00:07:42,320 --> 00:07:44,940
+It picks up less of the mouse clicking
+
+189
+00:07:44,940 --> 00:07:47,500
+and the keyboard tapping and all that.
+
+190
+00:07:47,500 --> 00:07:51,110
+So if you don't see me again
+the rest of the quarter,
+
+191
+00:07:51,110 --> 00:07:54,380
+just enjoy my disembodied voice.
+
+192
+00:07:54,380 --> 00:07:56,130
+So all the work that we do
+
+193
+00:07:56,130 --> 00:07:58,620
+is going to be in an
+application called Xcode.
+
+194
+00:07:58,620 --> 00:08:00,740
+It's the development environment for iOS
+
+195
+00:08:00,740 --> 00:08:01,850
+and it's all inclusive.
+
+196
+00:08:01,850 --> 00:08:04,540
+It includes the source-code
+editing compiler,
+
+197
+00:08:04,540 --> 00:08:07,200
+debugger, it's all in one place.
+
+198
+00:08:07,200 --> 00:08:09,100
+And you can get it for
+free from the App Store
+
+199
+00:08:09,100 --> 00:08:11,070
+if you just go on your
+Mac to the App Store
+
+200
+00:08:11,070 --> 00:08:12,493
+and search for Xcode.
+
+201
+00:08:13,691 --> 00:08:16,160
+You're gonna find it's
+probably the very first match.
+
+202
+00:08:16,160 --> 00:08:17,990
+you can see it right here.
+
+203
+00:08:17,990 --> 00:08:21,240
+And when you launch Xcode,
+it's gonna look like this.
+
+204
+00:08:21,240 --> 00:08:25,430
+Now, your first required task
+of your very first assignment
+
+205
+00:08:25,430 --> 00:08:27,550
+is to reproduce everything that I'm doing
+
+206
+00:08:27,550 --> 00:08:28,710
+in the first two lectures.
+
+207
+00:08:28,710 --> 00:08:33,580
+So you might wanna pause this
+video and go download Xcode
+
+208
+00:08:33,580 --> 00:08:35,610
+and be ready to follow along with me.
+
+209
+00:08:35,610 --> 00:08:38,120
+Or you can just watch this
+video at your leisure,
+
+210
+00:08:38,120 --> 00:08:40,230
+kind of soak it all in and then go back
+
+211
+00:08:40,230 --> 00:08:42,910
+and rewind, fast forward through it
+
+212
+00:08:42,910 --> 00:08:46,720
+to satisfy that first required task.
+
+213
+00:08:46,720 --> 00:08:51,050
+So here this splash screen,
+it has two sides to it.
+
+214
+00:08:51,050 --> 00:08:53,260
+This is Recent Projects
+which will build up
+
+215
+00:08:53,260 --> 00:08:55,060
+as the quarter goes along.
+
+216
+00:08:55,060 --> 00:08:58,640
+And then over here is essentially
+how we get into a project.
+
+217
+00:08:58,640 --> 00:09:01,520
+And we're gonna choose
+this second line right here
+
+218
+00:09:01,520 --> 00:09:04,420
+to create a new Xcode project.
+
+219
+00:09:04,420 --> 00:09:07,370
+Now, Xcode can be used
+as we mentioned earlier,
+
+220
+00:09:07,370 --> 00:09:10,160
+not just for iOS apps but also Watch apps
+
+221
+00:09:10,160 --> 00:09:13,510
+and Apple TV apps, even just Mac apps.
+
+222
+00:09:13,510 --> 00:09:16,820
+We're gonna focus on building
+iOS apps in this course,
+
+223
+00:09:16,820 --> 00:09:19,221
+but everything that you're
+learning about SwiftUI,
+
+224
+00:09:19,221 --> 00:09:21,993
+it's applicable to all these
+other platforms as well.
+
+225
+00:09:23,190 --> 00:09:27,350
+Now, these icons here
+are all just templates.
+
+226
+00:09:27,350 --> 00:09:30,070
+Essentially, prepackaged
+little bits of code
+
+227
+00:09:30,070 --> 00:09:33,890
+to get you started with
+apps of certain types.
+
+228
+00:09:33,890 --> 00:09:36,140
+But we're gonna be
+choosing Single View App
+
+229
+00:09:36,140 --> 00:09:38,490
+I think for every app this quarter.
+
+230
+00:09:38,490 --> 00:09:40,370
+And it's the simplest of the templates
+
+231
+00:09:40,370 --> 00:09:42,450
+and you're gonna see it
+really doesn't generate
+
+232
+00:09:42,450 --> 00:09:44,640
+a lot of code to get you started.
+
+233
+00:09:44,640 --> 00:09:46,870
+And so let's just double-click on that.
+
+234
+00:09:46,870 --> 00:09:49,540
+Now, it wants to know
+some interesting things
+
+235
+00:09:49,540 --> 00:09:52,490
+about your app, most notably the name.
+
+236
+00:09:52,490 --> 00:09:55,540
+So I'm gonna call it Memorize.
+
+237
+00:09:55,540 --> 00:09:57,650
+For those of you who
+might be watching this
+
+238
+00:09:57,650 --> 00:10:00,400
+who have seen previous videos
+
+239
+00:10:00,400 --> 00:10:04,140
+of the quarters in the
+past of this course,
+
+240
+00:10:04,140 --> 00:10:07,870
+you'll know that I did this
+memory matching game before.
+
+241
+00:10:07,870 --> 00:10:11,630
+Not in SwiftUI obviously,
+because that's brand new.
+
+242
+00:10:11,630 --> 00:10:14,978
+And I called it Concentration
+instead of Memorize.
+
+243
+00:10:14,978 --> 00:10:17,750
+And I did that for a reason
+here, used a different name
+
+244
+00:10:17,750 --> 00:10:21,330
+so that if we wanna refer
+to it, I can mention it.
+
+245
+00:10:21,330 --> 00:10:22,660
+And when I say Concentration,
+
+246
+00:10:22,660 --> 00:10:26,450
+I mean the old non-SwiftUI version.
+
+247
+00:10:26,450 --> 00:10:28,920
+And doing the same app is
+gonna allow those of you
+
+248
+00:10:28,920 --> 00:10:31,530
+who maybe already know some UIKit
+
+249
+00:10:31,530 --> 00:10:34,020
+or have some experience doing that
+
+250
+00:10:34,020 --> 00:10:36,510
+to compare and contrast what it looks like
+
+251
+00:10:36,510 --> 00:10:38,230
+to do it in SwiftUI.
+
+252
+00:10:39,330 --> 00:10:41,560
+So this second thing right here, team,
+
+253
+00:10:41,560 --> 00:10:43,960
+that's your development team.
+
+254
+00:10:43,960 --> 00:10:46,550
+In this case it's a
+personal team, just me.
+
+255
+00:10:46,550 --> 00:10:47,980
+And when you launch Xcode,
+
+256
+00:10:47,980 --> 00:10:51,150
+this is probably gonna say
+something like Add Team.
+
+257
+00:10:51,150 --> 00:10:54,250
+And when you click on it, all
+you'll need is any Apple ID
+
+258
+00:10:54,250 --> 00:10:56,100
+and you can create your own team.
+
+259
+00:10:56,100 --> 00:10:57,320
+If you worked for a company,
+
+260
+00:10:57,320 --> 00:11:01,153
+it could possibly be a
+company development team here.
+
+261
+00:11:02,120 --> 00:11:05,430
+The organization name,
+this is gonna be your name.
+
+262
+00:11:05,430 --> 00:11:07,840
+This is going to appear
+at the top of files,
+
+263
+00:11:07,840 --> 00:11:10,570
+written by CS193p instructor.
+
+264
+00:11:10,570 --> 00:11:12,660
+So you wanna put your name there.
+
+265
+00:11:12,660 --> 00:11:17,090
+This wants to be a very
+unique identifier of you.
+
+266
+00:11:17,090 --> 00:11:18,600
+So if you're a Stanford student,
+
+267
+00:11:18,600 --> 00:11:22,220
+I recommend using this
+reverse DNS notation.
+
+268
+00:11:22,220 --> 00:11:27,220
+edu.stanford.yoursunetid
+is probably good enough
+
+269
+00:11:27,900 --> 00:11:29,100
+to identify you.
+
+270
+00:11:29,100 --> 00:11:32,120
+You could put the CS193p
+in there if you want.
+
+271
+00:11:32,120 --> 00:11:34,840
+If you're a Stanford student,
+it probably doesn't matter.
+
+272
+00:11:34,840 --> 00:11:37,520
+If you're not a Stanford student
+and you're watching this,
+
+273
+00:11:37,520 --> 00:11:40,440
+maybe your email address reversed
+
+274
+00:11:40,440 --> 00:11:44,010
+or your company's address reversed.
+
+275
+00:11:44,010 --> 00:11:45,660
+You just wanna make sure it's unique.
+
+276
+00:11:45,660 --> 00:11:46,880
+You wouldn't wanna pick something
+
+277
+00:11:46,880 --> 00:11:49,610
+that someone else might also be choosing.
+
+278
+00:11:49,610 --> 00:11:53,080
+You could see that Xcode
+makes this unique identifier
+
+279
+00:11:53,080 --> 00:11:55,460
+for your app out of these two things.
+
+280
+00:11:55,460 --> 00:11:58,180
+And then we're gonna choose the language.
+
+281
+00:11:58,180 --> 00:12:01,737
+The underpinnings of what is in iOS,
+
+282
+00:12:01,737 --> 00:12:04,202
+it was all written in this
+language, Objective-C,
+
+283
+00:12:04,202 --> 00:12:07,817
+which is this
+object-oriented version of C.
+
+284
+00:12:07,817 --> 00:12:10,450
+But about five or six years ago,
+
+285
+00:12:10,450 --> 00:12:12,830
+Apple came out with this
+new language, Swift,
+
+286
+00:12:12,830 --> 00:12:15,600
+which is awesome because
+it's completely compatible
+
+287
+00:12:15,600 --> 00:12:16,680
+with Objective-C.
+
+288
+00:12:16,680 --> 00:12:19,200
+So all their existing
+libraries all just worked.
+
+289
+00:12:19,200 --> 00:12:22,190
+But it introduced a lot of
+modern language features,
+
+290
+00:12:22,190 --> 00:12:25,030
+especially support for
+functional programming
+
+291
+00:12:25,030 --> 00:12:26,950
+as opposed to object-oriented programming.
+
+292
+00:12:26,950 --> 00:12:29,860
+Swift does both and you're
+really gonna see that
+
+293
+00:12:29,860 --> 00:12:31,690
+in SwiftUI because SwiftUI is based on
+
+294
+00:12:31,690 --> 00:12:34,300
+functional programming, not
+object-oriented programming.
+
+295
+00:12:34,300 --> 00:12:36,890
+So I don't have time to
+teach you two languages,
+
+296
+00:12:36,890 --> 00:12:39,210
+I barely have time to
+teach you one new one.
+
+297
+00:12:39,210 --> 00:12:41,700
+So we are only going to
+be programming in Swift.
+
+298
+00:12:41,700 --> 00:12:46,290
+And of course SwiftUI is all
+using Swift, based on Swift.
+
+299
+00:12:46,290 --> 00:12:48,610
+This other user interface choice
+
+300
+00:12:48,610 --> 00:12:51,750
+is if you wanna develop in the old way,
+
+301
+00:12:51,750 --> 00:12:54,450
+the non-SwiftUI way.
+
+302
+00:12:54,450 --> 00:12:58,170
+I'll often call this
+UIKit instead of SwiftUI.
+
+303
+00:12:59,190 --> 00:13:01,340
+We're gonna do all our
+development in SwiftUI,
+
+304
+00:13:01,340 --> 00:13:04,510
+although the last week
+or two of the quarter,
+
+305
+00:13:04,510 --> 00:13:06,240
+hopefully I'll have time to show you
+
+306
+00:13:06,240 --> 00:13:09,390
+how to integrate the
+old stuff into SwiftUI.
+
+307
+00:13:09,390 --> 00:13:11,930
+Because SwiftUI doesn't
+cover all the ground
+
+308
+00:13:11,930 --> 00:13:13,130
+that the old UIKit does.
+
+309
+00:13:14,270 --> 00:13:16,710
+So it's nice to be able to
+kind of glue it in there.
+
+310
+00:13:16,710 --> 00:13:19,440
+And so there's some good glue in SwiftUI
+
+311
+00:13:19,440 --> 00:13:21,593
+to glue the UIKit stuff in.
+
+312
+00:13:22,830 --> 00:13:24,680
+These other switches in the bottom,
+
+313
+00:13:24,680 --> 00:13:26,760
+we might get time by
+the end of the quarter
+
+314
+00:13:26,760 --> 00:13:28,310
+to do this Core Data.
+
+315
+00:13:28,310 --> 00:13:29,950
+It's an object-oriented database.
+
+316
+00:13:29,950 --> 00:13:31,920
+I'm hoping to have time to do that.
+
+317
+00:13:31,920 --> 00:13:34,490
+Unfortunately, I'm probably
+not gonna have time
+
+318
+00:13:34,490 --> 00:13:36,350
+to do this testing framework.
+
+319
+00:13:36,350 --> 00:13:39,460
+Which really I don't want
+that to make it sound like
+
+320
+00:13:39,460 --> 00:13:40,490
+testing is not important.
+
+321
+00:13:40,490 --> 00:13:42,000
+It's super important.
+
+322
+00:13:42,000 --> 00:13:44,350
+It's just that you can't
+really test something
+
+323
+00:13:44,350 --> 00:13:46,040
+until you know how to develop for it
+
+324
+00:13:46,040 --> 00:13:47,540
+and we're just gonna run out of time
+
+325
+00:13:47,540 --> 00:13:49,730
+before I can go back and cover that.
+
+326
+00:13:49,730 --> 00:13:51,250
+So for our first assignment,
+
+327
+00:13:51,250 --> 00:13:52,280
+we're not gonna be doing any of these
+
+328
+00:13:52,280 --> 00:13:54,733
+so you can leave all of that unchecked.
+
+329
+00:13:56,150 --> 00:13:58,114
+So I hit Next here and
+now it wants to know,
+
+330
+00:13:58,114 --> 00:14:01,417
+"Okay, great, you wanna create this app.
+
+331
+00:14:01,417 --> 00:14:02,810
+"Where do you wanna put it?"
+
+332
+00:14:02,810 --> 00:14:05,320
+And I strongly recommend
+putting it in a folder
+
+333
+00:14:05,320 --> 00:14:08,210
+called Developer in your home directory.
+
+334
+00:14:08,210 --> 00:14:12,710
+That is kind of the canonical
+place that we put things.
+
+335
+00:14:12,710 --> 00:14:15,593
+And I recommend strongly that you do that.
+
+336
+00:14:16,920 --> 00:14:17,890
+Down here at the bottom
+
+337
+00:14:17,890 --> 00:14:20,560
+you can see this Source Control thing.
+
+338
+00:14:20,560 --> 00:14:21,613
+Source control for those of you
+
+339
+00:14:21,613 --> 00:14:23,503
+who are not familiar with it,
+
+340
+00:14:23,503 --> 00:14:26,470
+it's a way for you to manage
+the changes to your code,
+
+341
+00:14:26,470 --> 00:14:28,580
+kind of check them in and check them out.
+
+342
+00:14:28,580 --> 00:14:31,660
+It's especially valuable
+when you have a team
+
+343
+00:14:31,660 --> 00:14:33,870
+because a team's working on the same code,
+
+344
+00:14:33,870 --> 00:14:36,740
+their changes might conflict or whatever.
+
+345
+00:14:36,740 --> 00:14:41,070
+So you wanna have a mechanism
+for arbitrating those changes.
+
+346
+00:14:41,070 --> 00:14:42,920
+And so you can have this checked or not.
+
+347
+00:14:42,920 --> 00:14:44,530
+I'm not gonna have it checked here.
+
+348
+00:14:44,530 --> 00:14:47,290
+Later in the quarter I'll try to go
+
+349
+00:14:47,290 --> 00:14:49,090
+through some of the features
+
+350
+00:14:49,090 --> 00:14:50,830
+of the source control integration
+
+351
+00:14:50,830 --> 00:14:52,600
+in Xcode 'cause it's pretty cool.
+
+352
+00:14:52,600 --> 00:14:55,290
+But for now, either way is fine.
+
+353
+00:14:55,290 --> 00:14:57,930
+So this is gonna create our first app.
+
+354
+00:14:57,930 --> 00:15:01,040
+Now, many of you are not familiar
+
+355
+00:15:01,040 --> 00:15:02,920
+with this whole user interface here,
+
+356
+00:15:02,920 --> 00:15:04,870
+this Xcode user interface.
+
+357
+00:15:04,870 --> 00:15:07,190
+So I'm gonna go through it briefly
+
+358
+00:15:07,190 --> 00:15:09,560
+and I'm gonna start in
+the upper-left hand corner
+
+359
+00:15:09,560 --> 00:15:12,420
+right here, this little row of buttons.
+
+360
+00:15:12,420 --> 00:15:16,430
+This is essentially how we're
+going to run our application.
+
+361
+00:15:16,430 --> 00:15:18,660
+Now, if you click on this button here,
+
+362
+00:15:18,660 --> 00:15:21,870
+you can see that you can run
+your application on a device
+
+363
+00:15:21,870 --> 00:15:24,290
+if you have it actually
+connected to your Mac
+
+364
+00:15:24,290 --> 00:15:26,070
+which I don't currently have.
+
+365
+00:15:26,070 --> 00:15:27,520
+Or you can run it in a simulator.
+
+366
+00:15:27,520 --> 00:15:29,530
+And these simulators are pretty amazing.
+
+367
+00:15:29,530 --> 00:15:31,310
+They're a pretty full simulation
+
+368
+00:15:31,310 --> 00:15:33,300
+that I'm gonna show you in a second here.
+
+369
+00:15:33,300 --> 00:15:37,430
+And I'm in fact gonna pick
+iPhone 11 as my simulator.
+
+370
+00:15:37,430 --> 00:15:40,210
+And I can just run this SwiftUI app
+
+371
+00:15:40,210 --> 00:15:44,750
+that this template created
+for me by clicking Play.
+
+372
+00:15:44,750 --> 00:15:46,250
+So when I click the Play button,
+
+373
+00:15:46,250 --> 00:15:47,770
+it's gonna launch the simulator.
+
+374
+00:15:47,770 --> 00:15:48,783
+Now, the first time you do this,
+
+375
+00:15:48,783 --> 00:15:51,130
+it's gonna take a little bit of time
+
+376
+00:15:51,130 --> 00:15:54,690
+because the simulator
+fully simulates the device.
+
+377
+00:15:54,690 --> 00:15:55,750
+And in fact I'll show you that.
+
+378
+00:15:55,750 --> 00:15:58,500
+So here's our app, it
+says, "Hello, World!"
+
+379
+00:15:58,500 --> 00:16:01,140
+You can probably can imagine
+from this code over here.
+
+380
+00:16:01,140 --> 00:16:04,280
+And that's what all first apps
+do, they say "Hello, World."
+
+381
+00:16:04,280 --> 00:16:06,390
+But if we swipe up from the bottom
+
+382
+00:16:06,390 --> 00:16:08,070
+just like on a real device,
+
+383
+00:16:08,070 --> 00:16:11,990
+you can see that there
+is the App Chooser here
+
+384
+00:16:11,990 --> 00:16:13,210
+and I can go into Settings.
+
+385
+00:16:13,210 --> 00:16:14,380
+Here's the Settings app
+
+386
+00:16:14,380 --> 00:16:18,110
+and I could set settings
+about my device, et cetera.
+
+387
+00:16:18,110 --> 00:16:20,610
+It's not 100% a full device,
+
+388
+00:16:20,610 --> 00:16:22,870
+but it's the parts of
+the device you would need
+
+389
+00:16:22,870 --> 00:16:25,550
+to make sure your app is really working.
+
+390
+00:16:25,550 --> 00:16:27,920
+I don't know if you also
+notice that this device
+
+391
+00:16:27,920 --> 00:16:30,580
+is similar, it happens to be in Dark Mode
+
+392
+00:16:30,580 --> 00:16:33,110
+which is new in iOS 13.
+
+393
+00:16:33,110 --> 00:16:35,690
+And I'm gonna leave it in Dark Mode
+
+394
+00:16:35,690 --> 00:16:37,300
+because we're gonna wanna look at our app
+
+395
+00:16:37,300 --> 00:16:39,830
+in both Dark Mode and non-Dark Mode.
+
+396
+00:16:39,830 --> 00:16:42,113
+And SwiftUI handles most of that for us.
+
+397
+00:16:43,607 --> 00:16:45,090
+So I'm just gonna go back
+to the App Switcher here
+
+398
+00:16:45,090 --> 00:16:46,370
+and switch back to our app.
+
+399
+00:16:46,370 --> 00:16:49,210
+Here it is, it says, "Hello, World!"
+
+400
+00:16:49,210 --> 00:16:52,300
+Let's go back and see how we got to this.
+
+401
+00:16:52,300 --> 00:16:54,330
+How we get to this whole
+Hello, World business.
+
+402
+00:16:54,330 --> 00:16:56,170
+So I'm gonna press this square right here.
+
+403
+00:16:56,170 --> 00:16:59,080
+This is Stop, that stops the simulator.
+
+404
+00:16:59,080 --> 00:17:02,070
+And let's continue looking at Xcode's UI.
+
+405
+00:17:02,070 --> 00:17:05,610
+On the left here, this little blue area
+
+406
+00:17:05,610 --> 00:17:07,603
+which we can resize to what we want.
+
+407
+00:17:07,603 --> 00:17:09,570
+It's called the Navigator.
+
+408
+00:17:09,570 --> 00:17:12,180
+And it lets you navigate by file.
+
+409
+00:17:12,180 --> 00:17:14,510
+So you can click on files in here.
+
+410
+00:17:14,510 --> 00:17:15,840
+But it also lets you navigate
+
+411
+00:17:15,840 --> 00:17:17,530
+in all these other ways along the top.
+
+412
+00:17:17,530 --> 00:17:20,080
+Like you can navigate by searching.
+
+413
+00:17:20,080 --> 00:17:23,140
+You can navigate your
+breakpoints in the debugger.
+
+414
+00:17:23,140 --> 00:17:25,700
+You can navigate through
+all your old builds,
+
+415
+00:17:25,700 --> 00:17:28,280
+the outputs from your
+old builds, et cetera.
+
+416
+00:17:28,280 --> 00:17:31,110
+So you're really gonna get
+used to using the Navigator
+
+417
+00:17:31,110 --> 00:17:33,330
+to move around inside your app,
+
+418
+00:17:33,330 --> 00:17:36,390
+find the things you want, et cetera.
+
+419
+00:17:36,390 --> 00:17:39,850
+Now, in the right-hand side,
+there's this gray area here.
+
+420
+00:17:39,850 --> 00:17:42,090
+This is called the Utilities window
+
+421
+00:17:42,090 --> 00:17:44,620
+or the Inspector sometimes we call it.
+
+422
+00:17:44,620 --> 00:17:47,240
+And we really don't need that very much
+
+423
+00:17:47,240 --> 00:17:48,680
+for our first couple of lectures.
+
+424
+00:17:48,680 --> 00:17:51,430
+So I'm actually gonna use this opportunity
+
+425
+00:17:51,430 --> 00:17:53,160
+to show you how to hide it.
+
+426
+00:17:53,160 --> 00:17:56,460
+If you look at these three
+buttons in the upper right,
+
+427
+00:17:56,460 --> 00:17:59,963
+they let you hide and show these panes.
+
+428
+00:18:00,920 --> 00:18:03,270
+And I'm actually gonna
+leave Utilities hidden
+
+429
+00:18:03,270 --> 00:18:05,550
+because like I say, we don't need it much.
+
+430
+00:18:05,550 --> 00:18:07,040
+You see there's a third button here.
+
+431
+00:18:07,040 --> 00:18:09,530
+This actually brings
+something up from the bottom.
+
+432
+00:18:09,530 --> 00:18:14,080
+This is your debugger and
+your console output down here.
+
+433
+00:18:14,080 --> 00:18:16,640
+I tend to leave those off screen
+
+434
+00:18:16,640 --> 00:18:19,340
+just because they're
+wasting screen real estate
+
+435
+00:18:19,340 --> 00:18:20,800
+if I'm not actually debugging.
+
+436
+00:18:20,800 --> 00:18:24,310
+Also, they'll often come up
+automatically on their own
+
+437
+00:18:24,310 --> 00:18:26,700
+when you for example, hit a
+breakpoint in the debugger
+
+438
+00:18:26,700 --> 00:18:29,283
+or some output comes out on the console.
+
+439
+00:18:30,480 --> 00:18:33,850
+And this area is the main editing window.
+
+440
+00:18:33,850 --> 00:18:36,520
+And you can see that it's
+currently split in two.
+
+441
+00:18:36,520 --> 00:18:40,090
+And you can split this area in
+many, many ways if you want.
+
+442
+00:18:40,090 --> 00:18:42,470
+That's what this little
+plus button over here does.
+
+443
+00:18:42,470 --> 00:18:45,380
+It lets you add another, a
+third editor on the right.
+
+444
+00:18:45,380 --> 00:18:47,890
+You can even add an editor on the bottom
+
+445
+00:18:47,890 --> 00:18:50,863
+if you'd like your split to
+be top-bottom, et cetera.
+
+446
+00:18:51,710 --> 00:18:56,390
+So that's kind of our
+tour of the Xcode UI.
+
+447
+00:18:56,390 --> 00:18:58,880
+Of course there's tons
+of menu items up here
+
+448
+00:18:58,880 --> 00:19:02,150
+and we'll learn about them
+as the quarter goes on.
+
+449
+00:19:02,150 --> 00:19:04,616
+But let's look at our main editing window
+
+450
+00:19:04,616 --> 00:19:05,740
+and see what we got.
+
+451
+00:19:05,740 --> 00:19:08,900
+We got this ContentView.swift
+you see right here.
+
+452
+00:19:08,900 --> 00:19:10,140
+This is a Swift file.
+
+453
+00:19:10,140 --> 00:19:12,720
+So this is your first look
+at the Swift language.
+
+454
+00:19:12,720 --> 00:19:15,730
+And I'm gonna start with
+this little piece of code.
+
+455
+00:19:15,730 --> 00:19:17,740
+And what this little piece of code does
+
+456
+00:19:17,740 --> 00:19:19,900
+is it provides some glue
+
+457
+00:19:19,900 --> 00:19:22,720
+between your code that you're writing
+
+458
+00:19:22,720 --> 00:19:24,670
+and this little area on the right
+
+459
+00:19:24,670 --> 00:19:26,980
+which is called the Preview window.
+
+460
+00:19:26,980 --> 00:19:30,020
+See, it says automatic
+preview updating paused.
+
+461
+00:19:30,020 --> 00:19:31,900
+And of course we have the simulator.
+
+462
+00:19:31,900 --> 00:19:33,507
+We can always run that
+to see what our apps
+
+463
+00:19:33,507 --> 00:19:34,840
+are gonna look like.
+
+464
+00:19:34,840 --> 00:19:38,140
+But we also can see what's
+happening in our UI,
+
+465
+00:19:38,140 --> 00:19:43,020
+kind of in real time, approximately,
+by hitting Resume here.
+
+466
+00:19:43,020 --> 00:19:46,240
+And what this is gonna
+do is compile our code
+
+467
+00:19:46,240 --> 00:19:49,000
+and essentially run it right here.
+
+468
+00:19:49,000 --> 00:19:51,090
+It looks like a little iPhone.
+
+469
+00:19:51,090 --> 00:19:52,940
+Notice this is not in Dark Mode
+
+470
+00:19:52,940 --> 00:19:55,260
+so the text is black on white.
+
+471
+00:19:55,260 --> 00:19:58,730
+And that's automatic, the SwiftUI
+takes care of that for us.
+
+472
+00:19:58,730 --> 00:20:00,360
+And we can resize this too.
+
+473
+00:20:00,360 --> 00:20:03,100
+Maybe make it over here,
+it'll have less space.
+
+474
+00:20:03,100 --> 00:20:07,180
+And this code that is
+essentially gluing to it,
+
+475
+00:20:07,180 --> 00:20:09,690
+I'm not really going to
+pay much attention to it.
+
+476
+00:20:09,690 --> 00:20:12,750
+In fact, I'm going to
+move it out of the way.
+
+477
+00:20:12,750 --> 00:20:14,700
+And when you make a big edit like this
+
+478
+00:20:14,700 --> 00:20:16,640
+or you're moving a lot of code around,
+
+479
+00:20:16,640 --> 00:20:18,890
+sometimes this preview will pause.
+
+480
+00:20:18,890 --> 00:20:20,130
+You see, it's paused again.
+
+481
+00:20:20,130 --> 00:20:22,350
+No problem, you can just resume.
+
+482
+00:20:22,350 --> 00:20:23,860
+But a lot of changes you make,
+
+483
+00:20:23,860 --> 00:20:25,600
+like if I change this "Hello, World!"
+
+484
+00:20:25,600 --> 00:20:29,320
+to be "Hello There, World!"
+
+485
+00:20:29,320 --> 00:20:31,930
+you could see it's actually
+changing it in real time.
+
+486
+00:20:31,930 --> 00:20:33,750
+So it depends on the kind of change
+
+487
+00:20:33,750 --> 00:20:35,660
+you're making to your code
+
+488
+00:20:35,660 --> 00:20:38,690
+as to whether it will update in real time.
+
+489
+00:20:38,690 --> 00:20:40,900
+And again, you can
+always run the simulator.
+
+490
+00:20:40,900 --> 00:20:41,980
+Especially if you wanna see it
+
+491
+00:20:41,980 --> 00:20:45,180
+on lots of different devices
+and things like that.
+
+492
+00:20:45,180 --> 00:20:47,680
+The simulator is always
+available to you up there.
+
+493
+00:20:49,180 --> 00:20:51,127
+So let's take a look at the Swift code.
+
+494
+00:20:51,127 --> 00:20:53,227
+This is the entirety of the Swift code
+
+495
+00:20:53,227 --> 00:20:54,553
+that's specific to our app.
+
+496
+00:20:54,553 --> 00:20:57,000
+There's a little bit
+of boilerplate up here
+
+497
+00:20:57,000 --> 00:20:59,220
+in these two delegate things.
+
+498
+00:20:59,220 --> 00:21:00,260
+We'll look at those later
+
+499
+00:21:00,260 --> 00:21:03,090
+but this is really
+pretty much all there is
+
+500
+00:21:03,090 --> 00:21:06,380
+when it comes to doing this
+Hello, World right here.
+
+501
+00:21:06,380 --> 00:21:09,250
+So let's look at the Swift code in detail.
+
+502
+00:21:09,250 --> 00:21:11,950
+First we have this import SwiftUI.
+
+503
+00:21:11,950 --> 00:21:15,330
+I'm sure you can all imagine
+exactly what that is.
+
+504
+00:21:15,330 --> 00:21:18,960
+It's like include or
+import in other languages.
+
+505
+00:21:18,960 --> 00:21:22,090
+This imports what's
+called a package in Swift.
+
+506
+00:21:22,090 --> 00:21:24,520
+This package is SwiftUI.
+
+507
+00:21:24,520 --> 00:21:27,369
+So that's the big ol'
+package that Apple provides
+
+508
+00:21:27,369 --> 00:21:30,130
+that makes all this SwiftUI stuff work.
+
+509
+00:21:30,130 --> 00:21:32,640
+So anytime we're doing UI stuff,
+
+510
+00:21:32,640 --> 00:21:35,150
+we're always gonna be importing SwiftUI.
+
+511
+00:21:35,150 --> 00:21:36,870
+Sometimes we're going to be writing code
+
+512
+00:21:36,870 --> 00:21:38,450
+that is not UI stuff.
+
+513
+00:21:38,450 --> 00:21:41,280
+In fact, intentionally UI independent.
+
+514
+00:21:41,280 --> 00:21:43,963
+And in that case, we will
+not be importing SwiftUI.
+
+515
+00:21:43,963 --> 00:21:45,670
+We'll be importing a different package
+
+516
+00:21:45,670 --> 00:21:47,410
+called Foundation.
+
+517
+00:21:47,410 --> 00:21:51,200
+Foundation is kind of arrays
+and dictionaries and strings.
+
+518
+00:21:51,200 --> 00:21:53,670
+And the SwiftUI package
+depends on Foundation.
+
+519
+00:21:53,670 --> 00:21:54,910
+So if you imported SwiftUI,
+
+520
+00:21:54,910 --> 00:21:57,253
+you get that one too automatically.
+
+521
+00:21:58,190 --> 00:22:01,670
+So this whole thing is really
+just three lines of code here,
+
+522
+00:22:01,670 --> 00:22:03,100
+not including the curly braces.
+
+523
+00:22:03,100 --> 00:22:05,110
+So let's see what it is.
+
+524
+00:22:05,110 --> 00:22:07,600
+This first key word here.
+
+525
+00:22:07,600 --> 00:22:10,930
+Notice all the Swift
+keywords are in magenta.
+
+526
+00:22:10,930 --> 00:22:12,800
+We can always tell the
+difference between Swift
+
+527
+00:22:12,800 --> 00:22:15,050
+and the things we do.
+
+528
+00:22:15,050 --> 00:22:16,220
+So this is a struct.
+
+529
+00:22:16,220 --> 00:22:18,060
+This is just declaring a struct.
+
+530
+00:22:18,060 --> 00:22:21,421
+Now, I'm sure you know a
+language that has structs.
+
+531
+00:22:21,421 --> 00:22:25,417
+C and C++ and these
+languages all have struct.
+
+532
+00:22:25,417 --> 00:22:29,230
+And the struct in Swift, just
+like the other languages,
+
+533
+00:22:29,230 --> 00:22:31,970
+is a container for some variables.
+
+534
+00:22:31,970 --> 00:22:35,650
+But structs in Swift are
+much more powerful than that.
+
+535
+00:22:35,650 --> 00:22:38,500
+Structs in Swift not
+only can have variables,
+
+536
+00:22:38,500 --> 00:22:39,701
+but they can have functions
+
+537
+00:22:39,701 --> 00:22:42,100
+and they can also have behaviors
+
+538
+00:22:42,100 --> 00:22:44,270
+which we're going to see very clearly
+
+539
+00:22:44,270 --> 00:22:45,880
+right off the bat here.
+
+540
+00:22:45,880 --> 00:22:48,520
+So this struct, its name is ContentView.
+
+541
+00:22:48,520 --> 00:22:51,850
+So the name of our
+identifiers are in green.
+
+542
+00:22:51,850 --> 00:22:54,040
+And Swift's identifiers are in purple
+
+543
+00:22:54,040 --> 00:22:56,280
+and the keywords again are in magenta.
+
+544
+00:22:56,280 --> 00:22:58,350
+So the name of this struct is ContentView.
+
+545
+00:22:58,350 --> 00:23:01,800
+And this is a very interesting little part
+
+546
+00:23:01,800 --> 00:23:04,000
+of this struct's declaration.
+
+547
+00:23:04,000 --> 00:23:06,380
+It essentially means that this struct
+
+548
+00:23:06,380 --> 00:23:10,330
+is going to behave like a View.
+
+549
+00:23:10,330 --> 00:23:14,770
+Or some might say it's going
+to function like a View.
+
+550
+00:23:14,770 --> 00:23:18,370
+Or some would even say it "is a" View.
+
+551
+00:23:18,370 --> 00:23:22,830
+Although if I use the
+statement that it "is a" View,
+
+552
+00:23:22,830 --> 00:23:25,610
+some people will think that's
+object-oriented programming
+
+553
+00:23:25,610 --> 00:23:27,410
+like the superclass or something.
+
+554
+00:23:27,410 --> 00:23:28,440
+But it's not.
+
+555
+00:23:28,440 --> 00:23:29,860
+This is not object-oriented programming.
+
+556
+00:23:29,860 --> 00:23:31,450
+This is functional programming.
+
+557
+00:23:31,450 --> 00:23:33,410
+And that's why we may be more likely
+
+558
+00:23:33,410 --> 00:23:36,680
+to say something like a
+ContentView functions like a View
+
+559
+00:23:36,680 --> 00:23:39,290
+or it behaves like a View.
+
+560
+00:23:39,290 --> 00:23:41,330
+And this is super important.
+
+561
+00:23:41,330 --> 00:23:44,680
+This behavior, View, is crucial
+
+562
+00:23:44,680 --> 00:23:47,810
+to how all of SwiftUI
+works as you will see.
+
+563
+00:23:47,810 --> 00:23:49,950
+We are going to be using so many Views
+
+564
+00:23:49,950 --> 00:23:53,320
+in the next couple of lectures,
+you can't even imagine it.
+
+565
+00:23:53,320 --> 00:23:55,730
+And we're gonna talk
+all about the concepts
+
+566
+00:23:55,730 --> 00:23:59,110
+behind this behavior specification
+
+567
+00:23:59,110 --> 00:24:01,650
+using slides at the
+beginning of lecture two.
+
+568
+00:24:01,650 --> 00:24:03,870
+In the meantime, we're
+just going to understand
+
+569
+00:24:03,870 --> 00:24:07,133
+that this means that
+ContentView behaves like a View.
+
+570
+00:24:07,980 --> 00:24:11,390
+A View is just a
+rectangular area on screen.
+
+571
+00:24:11,390 --> 00:24:14,280
+So here I've put my mouse on this Text
+
+572
+00:24:14,280 --> 00:24:15,853
+and it's selected it
+over here in the preview.
+
+573
+00:24:15,853 --> 00:24:19,970
+And you can see it's put this
+blue border around that Text.
+
+574
+00:24:19,970 --> 00:24:22,310
+That blue border is bordering this View.
+
+575
+00:24:22,310 --> 00:24:25,210
+So a Text, it also behaves like a View.
+
+576
+00:24:25,210 --> 00:24:26,520
+It "is a" View.
+
+577
+00:24:26,520 --> 00:24:28,120
+And so you're seeing it right here.
+
+578
+00:24:28,120 --> 00:24:29,440
+So that's all Views are.
+
+579
+00:24:29,440 --> 00:24:31,610
+They're rectangular areas on screen,
+
+580
+00:24:31,610 --> 00:24:34,560
+both for drawing and also for multi-touch.
+
+581
+00:24:34,560 --> 00:24:37,870
+For swipes and taps, pinches,
+
+582
+00:24:37,870 --> 00:24:41,120
+those kinds of things
+happen in these rectangles.
+
+583
+00:24:41,120 --> 00:24:42,640
+So that's what a View is.
+
+584
+00:24:42,640 --> 00:24:44,670
+So when something behaves like a View,
+
+585
+00:24:44,670 --> 00:24:46,330
+it's a rectangular area on screen.
+
+586
+00:24:46,330 --> 00:24:49,250
+So our ContentView which
+behaves like a View
+
+587
+00:24:49,250 --> 00:24:51,900
+is this entire rectangle.
+
+588
+00:24:51,900 --> 00:24:54,640
+The whole rectangle that fills the screen
+
+589
+00:24:54,640 --> 00:24:56,173
+is our ContentView.
+
+590
+00:24:57,296 --> 00:24:59,890
+All right, if you are somebody,
+
+591
+00:24:59,890 --> 00:25:02,260
+some struct like this ContentView,
+
+592
+00:25:02,260 --> 00:25:05,320
+and you want to say that
+you behave like a View,
+
+593
+00:25:05,320 --> 00:25:10,320
+you must in your struct
+have this var right here,
+
+594
+00:25:10,360 --> 00:25:12,850
+this var called body.
+
+595
+00:25:12,850 --> 00:25:14,330
+I'll select it for you here.
+
+596
+00:25:14,330 --> 00:25:17,190
+So here's the declaration of var body.
+
+597
+00:25:17,190 --> 00:25:20,890
+So Swift variables, they
+have the keyword var,
+
+598
+00:25:20,890 --> 00:25:22,210
+short for variable.
+
+599
+00:25:22,210 --> 00:25:24,910
+Although we don't tend to call variables
+
+600
+00:25:24,910 --> 00:25:27,700
+inside a struct like this vars.
+
+601
+00:25:27,700 --> 00:25:29,770
+We call them properties.
+
+602
+00:25:29,770 --> 00:25:32,870
+So you're gonna hear me use
+the word property all the time.
+
+603
+00:25:32,870 --> 00:25:36,010
+It means a var inside a struct or a class.
+
+604
+00:25:36,010 --> 00:25:38,120
+Also, if we're doing
+object-oriented programming,
+
+605
+00:25:38,120 --> 00:25:40,210
+we call them properties.
+
+606
+00:25:40,210 --> 00:25:44,680
+So the syntax for a property,
+really easy, you got a var.
+
+607
+00:25:44,680 --> 00:25:46,487
+This is the name of the property.
+
+608
+00:25:46,487 --> 00:25:49,410
+Again, it's green 'cause
+it's something we chose.
+
+609
+00:25:49,410 --> 00:25:54,410
+And this right here is
+the type of this property
+
+610
+00:25:55,400 --> 00:25:57,290
+or of this var.
+
+611
+00:25:57,290 --> 00:26:01,020
+Now, this is a pretty
+interesting type even in Swift.
+
+612
+00:26:01,020 --> 00:26:04,000
+Because it's got a little magenta keyword
+
+613
+00:26:04,000 --> 00:26:06,083
+in the middle of it.
+
+614
+00:26:07,000 --> 00:26:10,640
+Normally this type might
+look like this is an Int
+
+615
+00:26:10,640 --> 00:26:12,910
+or maybe it's a String.
+
+616
+00:26:12,910 --> 00:26:15,180
+Or it might be a Boolean value
+
+617
+00:26:15,180 --> 00:26:17,350
+or it's an Array or something.
+
+618
+00:26:17,350 --> 00:26:20,940
+But in our case, it's this some View
+
+619
+00:26:20,940 --> 00:26:23,450
+which is kind of a interesting type.
+
+620
+00:26:23,450 --> 00:26:24,333
+What this essentially means
+
+621
+00:26:24,333 --> 00:26:28,820
+is that the type of this
+variable, this property,
+
+622
+00:26:28,820 --> 00:26:33,820
+is any type, any struct, as
+long as it behaves like a View.
+
+623
+00:26:34,830 --> 00:26:36,883
+As long as it is some View.
+
+624
+00:26:38,180 --> 00:26:41,450
+So that's what this kind of odd thing
+
+625
+00:26:41,450 --> 00:26:42,580
+means right here.
+
+626
+00:26:42,580 --> 00:26:45,200
+So if you wanna behave like a View,
+
+627
+00:26:45,200 --> 00:26:47,480
+you have to have a var called body
+
+628
+00:26:47,480 --> 00:26:51,674
+that also is another thing
+that behaves like a View.
+
+629
+00:26:51,674 --> 00:26:53,977
+And you might be kind of thinking, "What?
+
+630
+00:26:53,977 --> 00:26:54,810
+"That's weird.
+
+631
+00:26:54,810 --> 00:26:57,497
+"So to be a View I have to have a var
+
+632
+00:26:57,497 --> 00:27:00,017
+"that is another View as my body?
+
+633
+00:27:00,017 --> 00:27:01,357
+"That makes no sense."
+
+634
+00:27:01,357 --> 00:27:05,460
+But you could kind of
+think of Views as Legos.
+
+635
+00:27:05,460 --> 00:27:07,580
+So of course there are some brick Legos,
+
+636
+00:27:07,580 --> 00:27:11,170
+Legos that are like the
+basic thing like Text.
+
+637
+00:27:11,170 --> 00:27:13,330
+Text is like a brick Lego.
+
+638
+00:27:13,330 --> 00:27:16,930
+But then you can put Legos
+together to make something else.
+
+639
+00:27:16,930 --> 00:27:18,830
+And that thing that you put them together,
+
+640
+00:27:18,830 --> 00:27:20,590
+you could call that a new Lego.
+
+641
+00:27:20,590 --> 00:27:24,350
+It's like a combined Lego
+or a more powerful Lego.
+
+642
+00:27:24,350 --> 00:27:26,520
+For example, if you were
+building a Lego house,
+
+643
+00:27:26,520 --> 00:27:29,140
+you probably would make
+little Lego furniture.
+
+644
+00:27:29,140 --> 00:27:32,030
+A Lego couch, a Lego kitchen table,
+
+645
+00:27:32,030 --> 00:27:33,800
+all those things out of other Legos.
+
+646
+00:27:33,800 --> 00:27:36,030
+And if you consider that
+couch and the kitchen table
+
+647
+00:27:36,030 --> 00:27:38,570
+as Legos, then you're
+putting those together
+
+648
+00:27:38,570 --> 00:27:39,403
+to make the house.
+
+649
+00:27:39,403 --> 00:27:42,280
+You could even then
+have the house be a Lego
+
+650
+00:27:42,280 --> 00:27:45,370
+that you put together to
+make a Lego neighborhood.
+
+651
+00:27:45,370 --> 00:27:48,600
+Or the Lego world, Lego universe.
+
+652
+00:27:48,600 --> 00:27:52,150
+That's the way we wanna
+think of making these Views.
+
+653
+00:27:52,150 --> 00:27:54,210
+Now, the difference
+between a Lego and a View
+
+654
+00:27:54,210 --> 00:27:56,510
+is that there are special kinds of Views
+
+655
+00:27:56,510 --> 00:27:59,050
+that are used to combine Legos.
+
+656
+00:27:59,050 --> 00:28:01,807
+We've got these basic
+brick Legos like Text.
+
+657
+00:28:01,807 --> 00:28:03,900
+And then we've got other kinds of Views
+
+658
+00:28:03,900 --> 00:28:07,340
+that are combiners, Lego
+combiners, View combiners.
+
+659
+00:28:07,340 --> 00:28:11,100
+And you're gonna see us
+use those in detail here.
+
+660
+00:28:11,100 --> 00:28:13,040
+That's why our body just returns
+
+661
+00:28:13,040 --> 00:28:17,120
+one single some View of some sort.
+
+662
+00:28:17,120 --> 00:28:19,670
+It might be returning a combiner.
+
+663
+00:28:19,670 --> 00:28:21,090
+If it returns a combiner View,
+
+664
+00:28:21,090 --> 00:28:24,180
+then it could have tons
+and tons of Views inside
+
+665
+00:28:24,180 --> 00:28:25,333
+that are combined.
+
+666
+00:28:26,620 --> 00:28:30,530
+Now, this is also a kind
+of an interesting var here
+
+667
+00:28:30,530 --> 00:28:34,010
+in that it's got this
+curly brace thing after it.
+
+668
+00:28:34,010 --> 00:28:37,750
+This var, its value is
+not stored in memory.
+
+669
+00:28:37,750 --> 00:28:41,000
+Instead this var is computed.
+
+670
+00:28:41,000 --> 00:28:44,900
+So every time someone, namely the system,
+
+671
+00:28:44,900 --> 00:28:47,030
+asks for the value of this var,
+
+672
+00:28:47,030 --> 00:28:50,810
+this code in this curly
+brace gets executed.
+
+673
+00:28:50,810 --> 00:28:53,090
+And whatever the value that's returned,
+
+674
+00:28:53,090 --> 00:28:54,680
+that's what the value of the body is.
+
+675
+00:28:54,680 --> 00:28:57,080
+And every time it's called,
+it gets called again,
+
+676
+00:28:57,080 --> 00:28:58,920
+it's constantly calling this thing.
+
+677
+00:28:58,920 --> 00:29:01,770
+Now, this code in here
+seems kind of minimalistic
+
+678
+00:29:01,770 --> 00:29:03,330
+but it'll probably make more sense
+
+679
+00:29:03,330 --> 00:29:05,720
+if I put this keyword back.
+
+680
+00:29:05,720 --> 00:29:08,050
+This keyword, return, you see is magenta.
+
+681
+00:29:08,050 --> 00:29:10,450
+It's a Swift thing, it means return.
+
+682
+00:29:10,450 --> 00:29:13,280
+Return a value from this piece of code,
+
+683
+00:29:13,280 --> 00:29:15,540
+this little curly-braced piece of code.
+
+684
+00:29:15,540 --> 00:29:20,160
+And it wasn't there because
+Swift loves to leave things out
+
+685
+00:29:20,160 --> 00:29:22,440
+and make it so you have to type
+as little code as possible.
+
+686
+00:29:22,440 --> 00:29:23,990
+You're gonna see that later.
+
+687
+00:29:23,990 --> 00:29:27,000
+And so if you have a
+one-line function like this
+
+688
+00:29:27,000 --> 00:29:29,530
+that returns a value,
+so that's what this is,
+
+689
+00:29:29,530 --> 00:29:32,320
+a one-liner returns this Text thing.
+
+690
+00:29:32,320 --> 00:29:34,910
+Then you can leave this return out.
+
+691
+00:29:34,910 --> 00:29:36,250
+It'll just infer that.
+
+692
+00:29:36,250 --> 00:29:38,263
+But I'm gonna leave it in
+
+693
+00:29:38,263 --> 00:29:40,220
+because I want you to realize
+
+694
+00:29:40,220 --> 00:29:41,290
+that that's what's going on here.
+
+695
+00:29:41,290 --> 00:29:43,570
+We have this little piece of code,
+
+696
+00:29:43,570 --> 00:29:46,450
+it returns this Text thing.
+
+697
+00:29:46,450 --> 00:29:49,020
+And that's going to always
+be the value of body.
+
+698
+00:29:49,020 --> 00:29:51,460
+Anytime someone asks me
+for the value of body,
+
+699
+00:29:51,460 --> 00:29:54,853
+it's gonna execute this and
+return this Text right here.
+
+700
+00:29:55,710 --> 00:29:59,490
+Now, this return type,
+remember, is some View.
+
+701
+00:29:59,490 --> 00:30:02,137
+So if you're saying, "It's returning Text.
+
+702
+00:30:02,137 --> 00:30:03,270
+"What's going on here?"
+
+703
+00:30:03,270 --> 00:30:07,750
+Well, of course Text, it
+says it behaves like a View.
+
+704
+00:30:07,750 --> 00:30:09,070
+So this is "some View".
+
+705
+00:30:09,070 --> 00:30:12,110
+In other words, somewhere
+off in Apple's code
+
+706
+00:30:12,110 --> 00:30:13,607
+there is some line that looks like this.
+
+707
+00:30:13,607 --> 00:30:18,310
+"struct Text behaves like a View."
+
+708
+00:30:18,310 --> 00:30:23,160
+And that's why we can return
+a Text as the value of body
+
+709
+00:30:23,160 --> 00:30:23,993
+'cause it's some View.
+
+710
+00:30:23,993 --> 00:30:26,700
+In fact, we could even
+just type Text right here.
+
+711
+00:30:26,700 --> 00:30:30,800
+That would be valid because
+to behave like a View,
+
+712
+00:30:30,800 --> 00:30:35,460
+your var body just has to
+return something that is a View.
+
+713
+00:30:35,460 --> 00:30:37,830
+And of course, Text is a View.
+
+714
+00:30:37,830 --> 00:30:40,080
+So why don't we type Text?
+
+715
+00:30:40,080 --> 00:30:42,320
+Why do we do this some View?
+
+716
+00:30:42,320 --> 00:30:46,300
+Well, as our body of our
+View gets more complicated
+
+717
+00:30:46,300 --> 00:30:48,170
+and we start using these View-combiners
+
+718
+00:30:48,170 --> 00:30:50,900
+and things like that, it's
+gonna be constantly changing.
+
+719
+00:30:50,900 --> 00:30:53,430
+Which kind of View we're returning.
+
+720
+00:30:53,430 --> 00:30:54,870
+Right now we're returning a Text.
+
+721
+00:30:54,870 --> 00:30:56,500
+But eventually we're gonna be returning
+
+722
+00:30:56,500 --> 00:30:58,780
+View-combining Views.
+
+723
+00:30:58,780 --> 00:31:02,530
+And we wanna let the compiler
+figure it out for us.
+
+724
+00:31:02,530 --> 00:31:06,187
+So this some View is basically
+saying to the compiler,
+
+725
+00:31:06,187 --> 00:31:08,867
+"Go look in my code right here.
+
+726
+00:31:08,867 --> 00:31:10,867
+"Figure out what it's returning.
+
+727
+00:31:10,867 --> 00:31:13,897
+"Make sure that it behaves like a View.
+
+728
+00:31:13,897 --> 00:31:16,597
+"And then use that as
+the type of the body."
+
+729
+00:31:17,450 --> 00:31:20,310
+You're gonna find as we
+go through this course
+
+730
+00:31:20,310 --> 00:31:24,060
+that Swift is what's called a
+very strongly-typed language.
+
+731
+00:31:24,060 --> 00:31:28,050
+That means every variable
+has a specific type.
+
+732
+00:31:28,050 --> 00:31:30,580
+It's not a language
+like JavaScript or other
+
+733
+00:31:30,580 --> 00:31:32,230
+where it's like well, the variable
+
+734
+00:31:32,230 --> 00:31:33,850
+depends on what you assign to it.
+
+735
+00:31:33,850 --> 00:31:34,683
+That's when it gets ...
+
+736
+00:31:34,683 --> 00:31:38,250
+No, in Swift, every
+variable has a specific type
+
+737
+00:31:38,250 --> 00:31:39,610
+and always has a value.
+
+738
+00:31:39,610 --> 00:31:43,963
+That's just fundamental
+to the way Swift works.
+
+739
+00:31:45,740 --> 00:31:49,060
+So let's look at this Text right here.
+
+740
+00:31:49,060 --> 00:31:51,320
+We create this Text.
+
+741
+00:31:51,320 --> 00:31:53,680
+Anytime we're creating
+anything, any struct,
+
+742
+00:31:53,680 --> 00:31:56,680
+so a Text is just a struct
+that behaves like a View.
+
+743
+00:31:56,680 --> 00:32:00,120
+And anytime we create
+one, we in parentheses
+
+744
+00:32:00,120 --> 00:32:03,700
+give it whatever information
+it needs to create itself.
+
+745
+00:32:03,700 --> 00:32:05,840
+Now, obviously for a Text,
+
+746
+00:32:05,840 --> 00:32:09,007
+it needs the string that it's
+going to use to create itself.
+
+747
+00:32:09,007 --> 00:32:11,460
+and that's why you get
+this "Hello There, World!"
+
+748
+00:32:11,460 --> 00:32:14,140
+And notice if I edit this,
+it's not changing this.
+
+749
+00:32:14,140 --> 00:32:16,080
+That's because it's paused up here.
+
+750
+00:32:16,080 --> 00:32:18,720
+But if I resume, then it's going
+
+751
+00:32:18,720 --> 00:32:23,303
+and now I can for example
+type, and it's tracking it.
+
+752
+00:32:24,250 --> 00:32:28,010
+So this is always the way we
+create new structs of any kind.
+
+753
+00:32:28,010 --> 00:32:30,030
+We put parentheses after it
+
+754
+00:32:30,030 --> 00:32:32,100
+and then we give it
+whatever arguments it wants.
+
+755
+00:32:32,100 --> 00:32:34,040
+And some things when you're creating them,
+
+756
+00:32:34,040 --> 00:32:35,420
+can take different kinds of arguments
+
+757
+00:32:35,420 --> 00:32:36,361
+depending on what they are.
+
+758
+00:32:36,361 --> 00:32:38,511
+And you're gonna see
+that pretty soon here.
+
+759
+00:32:40,740 --> 00:32:43,960
+So let's see if we can start building
+
+760
+00:32:43,960 --> 00:32:48,090
+a UI that looks a little
+bit more like a card.
+
+761
+00:32:48,090 --> 00:32:49,510
+Right now it just says, "Hello, World!"
+
+762
+00:32:49,510 --> 00:32:53,550
+Let's remind ourselves what
+that's gonna look like.
+
+763
+00:32:53,550 --> 00:32:55,730
+Kind of a screen capture of the game
+
+764
+00:32:55,730 --> 00:32:57,670
+that I showed you earlier.
+
+765
+00:32:57,670 --> 00:33:01,210
+And our cards, they kind of
+have these rounded rectangles
+
+766
+00:33:01,210 --> 00:33:03,030
+around the edge, you see that?
+
+767
+00:33:03,030 --> 00:33:04,470
+And this is a line.
+
+768
+00:33:04,470 --> 00:33:06,040
+Then kind of a white background.
+
+769
+00:33:06,040 --> 00:33:08,010
+They have an emoji on the front.
+
+770
+00:33:08,010 --> 00:33:10,630
+So let's take care of
+each of these things.
+
+771
+00:33:10,630 --> 00:33:11,710
+Let's start with the emoji.
+
+772
+00:33:11,710 --> 00:33:13,000
+That's gonna be really easy
+
+773
+00:33:13,000 --> 00:33:15,420
+'cause an emoji is just a piece of text.
+
+774
+00:33:15,420 --> 00:33:17,160
+So I'm gonna delete that.
+
+775
+00:33:17,160 --> 00:33:19,840
+I don't know if you know
+this but in any Mac app,
+
+776
+00:33:19,840 --> 00:33:22,850
+if you go to the Edit menu,
+go down to the bottom,
+
+777
+00:33:22,850 --> 00:33:24,891
+there'll be Emoji &amp; Symbols.
+
+778
+00:33:24,891 --> 00:33:26,460
+You see there, I can get an emoji.
+
+779
+00:33:26,460 --> 00:33:29,090
+You can even search ghost.
+
+780
+00:33:29,090 --> 00:33:30,040
+There it is, ghost.
+
+781
+00:33:30,940 --> 00:33:32,280
+Let's double-click on it.
+
+782
+00:33:32,280 --> 00:33:33,120
+Now we have a ghost.
+
+783
+00:33:33,120 --> 00:33:34,360
+And sure enough, there's our ghost.
+
+784
+00:33:34,360 --> 00:33:35,690
+He's really small.
+
+785
+00:33:35,690 --> 00:33:38,400
+Although we can zoom in and see him there.
+
+786
+00:33:38,400 --> 00:33:40,370
+And we're gonna have to
+fix that he's so small.
+
+787
+00:33:40,370 --> 00:33:41,810
+It's not gonna work for our cards
+
+788
+00:33:41,810 --> 00:33:43,100
+for him to be so tiny like that.
+
+789
+00:33:43,100 --> 00:33:44,973
+But one thing at a time.
+
+790
+00:33:45,930 --> 00:33:48,760
+The next thing we need
+is our rounded rectangle.
+
+791
+00:33:48,760 --> 00:33:50,610
+So we need this rounded
+rectangle, it goes up there.
+
+792
+00:33:50,610 --> 00:33:53,490
+So let's comment this Text out.
+
+793
+00:33:53,490 --> 00:33:55,470
+So I'm doing Command
+slash by the way there
+
+794
+00:33:55,470 --> 00:33:57,290
+to comment that Text out.
+
+795
+00:33:57,290 --> 00:34:01,180
+And instead put our
+rounded rectangle in there.
+
+796
+00:34:01,180 --> 00:34:04,000
+Luckily, Swift has an awesome thing here.
+
+797
+00:34:04,000 --> 00:34:07,760
+RoundedRectangle which
+is exactly what we want.
+
+798
+00:34:07,760 --> 00:34:10,200
+And again, just like when we created Text,
+
+799
+00:34:10,200 --> 00:34:12,850
+we have to provide some information
+
+800
+00:34:12,850 --> 00:34:14,790
+to create a RoundedRectangle.
+
+801
+00:34:14,790 --> 00:34:17,980
+You can by the way, easily
+find out what that is
+
+802
+00:34:17,980 --> 00:34:20,290
+by just doing the open parentheses
+
+803
+00:34:20,290 --> 00:34:22,170
+and Xcode will show you the options.
+
+804
+00:34:22,170 --> 00:34:24,820
+Now, RoundedRectangle,
+there's four different ways
+
+805
+00:34:24,820 --> 00:34:26,197
+to create a ZStack.
+
+806
+00:34:26,197 --> 00:34:29,350
+You can specify the corner
+radius or the corner size,
+
+807
+00:34:29,350 --> 00:34:31,770
+width and height of the corner.
+
+808
+00:34:31,770 --> 00:34:33,340
+I'm gonna do the cornerRadius.
+
+809
+00:34:33,340 --> 00:34:37,363
+So you can hit Tab here or
+you can double-click on this.
+
+810
+00:34:38,970 --> 00:34:43,040
+Then it wants the radius
+and this is in points.
+
+811
+00:34:43,040 --> 00:34:45,235
+So I'm gonna do 10 points.
+
+812
+00:34:45,235 --> 00:34:48,050
+A point is the same as
+the point size of a font,
+
+813
+00:34:48,050 --> 00:34:49,830
+like 10-point font.
+
+814
+00:34:49,830 --> 00:34:53,780
+It's also, just to give you an
+idea of the size of a point,
+
+815
+00:34:53,780 --> 00:34:57,550
+a typical iPhone is maybe
+four or 500 points wide
+
+816
+00:34:57,550 --> 00:35:00,230
+and maybe seven or 800 points high.
+
+817
+00:35:00,230 --> 00:35:05,230
+An iPad might be 1,000
+by 700 and something.
+
+818
+00:35:05,580 --> 00:35:08,070
+Now, I'm being intentionally vague here
+
+819
+00:35:08,070 --> 00:35:10,710
+because we never write our code
+
+820
+00:35:10,710 --> 00:35:13,830
+trying to know what the
+sizes of screens are.
+
+821
+00:35:13,830 --> 00:35:16,050
+SwiftUI helps us write code
+
+822
+00:35:16,050 --> 00:35:17,450
+that works on any size screen.
+
+823
+00:35:17,450 --> 00:35:20,010
+It just adapts and adjusts
+to any size screen.
+
+824
+00:35:20,010 --> 00:35:22,530
+You're really gonna see
+that with our Memorize game
+
+825
+00:35:22,530 --> 00:35:25,430
+when we start having rows
+and columns of buttons.
+
+826
+00:35:25,430 --> 00:35:27,740
+On big screens they're gonna be large.
+
+827
+00:35:27,740 --> 00:35:30,940
+When we're in portrait mode
+it's gonna kind of resize things
+
+828
+00:35:30,940 --> 00:35:32,970
+one way and landscape another.
+
+829
+00:35:32,970 --> 00:35:34,930
+So we always wanna write our code
+
+830
+00:35:34,930 --> 00:35:36,910
+so it works in any size screen.
+
+831
+00:35:36,910 --> 00:35:39,670
+But that's the approximate size of a point
+
+832
+00:35:39,670 --> 00:35:41,820
+to give you an idea of a point.
+
+833
+00:35:41,820 --> 00:35:45,570
+Now, one thing that's
+kind of strange about this
+
+834
+00:35:45,570 --> 00:35:47,453
+is this right here.
+
+835
+00:35:48,420 --> 00:35:53,030
+It has put a label on
+this piece of information
+
+836
+00:35:53,030 --> 00:35:55,077
+that it needs to create a ZStack.
+
+837
+00:35:55,077 --> 00:35:56,700
+And that didn't happen with Text.
+
+838
+00:35:56,700 --> 00:36:00,740
+This doesn't say the string
+or something like that.
+
+839
+00:36:00,740 --> 00:36:02,580
+Text doesn't have one of these.
+
+840
+00:36:02,580 --> 00:36:05,120
+But this is actually the norm.
+
+841
+00:36:05,120 --> 00:36:07,620
+It's unusual to have something like Text
+
+842
+00:36:07,620 --> 00:36:10,770
+where there's no label
+here for an argument.
+
+843
+00:36:10,770 --> 00:36:12,390
+You have to go out of your way to do that.
+
+844
+00:36:12,390 --> 00:36:14,090
+And I'm gonna show you
+how to go out of your way
+
+845
+00:36:14,090 --> 00:36:16,700
+although we're not gonna
+do that very often.
+
+846
+00:36:16,700 --> 00:36:19,430
+Instead, when we create things,
+
+847
+00:36:19,430 --> 00:36:21,070
+when we pass the information,
+
+848
+00:36:21,070 --> 00:36:23,960
+we almost always label each piece.
+
+849
+00:36:23,960 --> 00:36:26,900
+And this is true when we
+call functions as well.
+
+850
+00:36:26,900 --> 00:36:28,880
+So one of the things that maybe takes
+
+851
+00:36:28,880 --> 00:36:30,784
+the most getting used to in Swift
+
+852
+00:36:30,784 --> 00:36:33,410
+is that almost all the arguments
+
+853
+00:36:33,410 --> 00:36:37,870
+to all parameters of all
+functions are labeled.
+
+854
+00:36:37,870 --> 00:36:40,500
+And this is something that was
+inherited from Objective-C.
+
+855
+00:36:40,500 --> 00:36:43,167
+It's actually quite nice
+because if we didn't have this
+
+856
+00:36:43,167 --> 00:36:46,530
+and we had ZStack 10,
+
+857
+00:36:46,530 --> 00:36:48,730
+I mean, is that the width and height
+
+858
+00:36:48,730 --> 00:36:50,810
+or what exactly is that 10?
+
+859
+00:36:50,810 --> 00:36:53,080
+But as soon as we put this
+cornerRadius in there,
+
+860
+00:36:53,080 --> 00:36:54,597
+it's like all of a
+sudden, "Oh, I'm creating
+
+861
+00:36:54,597 --> 00:36:57,807
+"a ZStack with a corner radius of 10."
+
+862
+00:36:59,070 --> 00:37:03,130
+It's kind of hard to see if
+our rectangle is rounded there.
+
+863
+00:37:03,130 --> 00:37:06,150
+That's because I actually have
+this line of code selected.
+
+864
+00:37:06,150 --> 00:37:08,890
+So we've got this blue line around here.
+
+865
+00:37:08,890 --> 00:37:10,900
+But if I just click away,
+
+866
+00:37:10,900 --> 00:37:13,690
+then you can now start
+to see the ZStack there.
+
+867
+00:37:13,690 --> 00:37:15,720
+And if I zoom in, you can see
+
+868
+00:37:15,720 --> 00:37:18,220
+the ZStack quite clearly.
+
+869
+00:37:18,220 --> 00:37:20,100
+Obviously, we're gonna
+have to do something
+
+870
+00:37:20,100 --> 00:37:21,440
+about the visibility of this.
+
+871
+00:37:21,440 --> 00:37:24,280
+Our cards don't want to be
+smashed up against the edge
+
+872
+00:37:24,280 --> 00:37:26,430
+and they don't want to be black either.
+
+873
+00:37:26,430 --> 00:37:28,090
+But first things first.
+
+874
+00:37:28,090 --> 00:37:30,690
+We'll get to that in a bit.
+
+875
+00:37:30,690 --> 00:37:32,950
+The next thing I wanna do is combine
+
+876
+00:37:32,950 --> 00:37:35,910
+this RoundedRectangle
+and this Text together.
+
+877
+00:37:35,910 --> 00:37:39,904
+Because remember, our cards
+have both a RoundedRectangle
+
+878
+00:37:39,904 --> 00:37:43,030
+and a Text stacked on top of each other.
+
+879
+00:37:43,030 --> 00:37:46,670
+And I'm gonna have to do
+that by returning some View.
+
+880
+00:37:46,670 --> 00:37:51,460
+So the View I'm gonna return
+here is called a ZStack.
+
+881
+00:37:51,460 --> 00:37:54,294
+So a ZStack is just a struct.
+
+882
+00:37:54,294 --> 00:37:55,740
+It behaves like a View
+
+883
+00:37:55,740 --> 00:37:59,281
+just like RoundedRectangle is a struct
+
+884
+00:37:59,281 --> 00:38:00,850
+that behaves like a View.
+
+885
+00:38:00,850 --> 00:38:01,800
+So is Text.
+
+886
+00:38:01,800 --> 00:38:03,803
+Actually, so is our ContentView.
+
+887
+00:38:04,882 --> 00:38:08,100
+A ZStack does need an
+argument to be created here.
+
+888
+00:38:08,100 --> 00:38:12,910
+The argument we're gonna use
+is content then in curly braces
+
+889
+00:38:12,910 --> 00:38:16,350
+The list of the Views to
+stack on top of each other.
+
+890
+00:38:16,350 --> 00:38:19,653
+And obviously we don't
+need the returns in here.
+
+891
+00:38:20,690 --> 00:38:21,860
+So this is the list.
+
+892
+00:38:21,860 --> 00:38:24,890
+RoundedRectangle in the
+back, Text in the front.
+
+893
+00:38:24,890 --> 00:38:26,960
+First thing in the list
+and this is two items
+
+894
+00:38:26,960 --> 00:38:29,480
+but we could have five
+or six or seven items
+
+895
+00:38:29,480 --> 00:38:32,320
+all listed in a row and
+it would stack them all
+
+896
+00:38:32,320 --> 00:38:33,453
+on top of each other.
+
+897
+00:38:34,724 --> 00:38:36,380
+ZStack is just some View.
+
+898
+00:38:36,380 --> 00:38:38,670
+And in fact, this return type here
+
+899
+00:38:38,670 --> 00:38:41,550
+would be some sort of ZStack here
+
+900
+00:38:41,550 --> 00:38:44,370
+instead of a Text or a RoundedRectangle
+
+901
+00:38:44,370 --> 00:38:45,260
+or something like that.
+
+902
+00:38:45,260 --> 00:38:48,310
+But Swift is going to
+automatically realize
+
+903
+00:38:48,310 --> 00:38:49,317
+that it's returning this.
+
+904
+00:38:49,317 --> 00:38:51,403
+And so it's gonna do that for us.
+
+905
+00:38:52,430 --> 00:38:56,500
+This kind of combiner View
+is really important obviously
+
+906
+00:38:56,500 --> 00:38:58,210
+to building complicated Views.
+
+907
+00:38:58,210 --> 00:39:00,850
+And we're gonna build our
+own combiner View next week.
+
+908
+00:39:00,850 --> 00:39:04,390
+So you're really gonna
+understand how these things work.
+
+909
+00:39:04,390 --> 00:39:06,030
+Now, we're getting there.
+
+910
+00:39:06,030 --> 00:39:09,760
+But there's still some things,
+we'll kind of resume here,
+
+911
+00:39:09,760 --> 00:39:12,270
+that this doesn't look much like our card.
+
+912
+00:39:12,270 --> 00:39:14,650
+First of all our cards
+aren't filled with black.
+
+913
+00:39:14,650 --> 00:39:18,830
+They're kind of stroked with
+orange around the outside.
+
+914
+00:39:18,830 --> 00:39:22,200
+Also we have a problem where
+it's hard to see the edges
+
+915
+00:39:22,200 --> 00:39:24,370
+'cause they're all the
+way out to the edge.
+
+916
+00:39:24,370 --> 00:39:25,460
+So let's fix both of those.
+
+917
+00:39:25,460 --> 00:39:29,700
+First of all, let's stroke
+this instead of filling it.
+
+918
+00:39:29,700 --> 00:39:31,200
+And the way we're gonna do that
+
+919
+00:39:31,200 --> 00:39:33,410
+is we're going to call a function
+
+920
+00:39:34,260 --> 00:39:37,020
+on RoundedRectangle called stroke.
+
+921
+00:39:37,020 --> 00:39:41,017
+RoundedRectangle, we know
+that it behaves like a View.
+
+922
+00:39:41,017 --> 00:39:42,400
+It has to behave like a View
+
+923
+00:39:42,400 --> 00:39:44,400
+or we wouldn't be able
+to put it in the ZStack
+
+924
+00:39:44,400 --> 00:39:45,610
+like with this Text.
+
+925
+00:39:45,610 --> 00:39:48,470
+But RoundedRectangle also
+behaves like another thing
+
+926
+00:39:48,470 --> 00:39:50,350
+which is a Shape.
+
+927
+00:39:50,350 --> 00:39:54,410
+Other Shapes are Circle,
+Capsule, bezier paths,
+
+928
+00:39:54,410 --> 00:39:55,840
+these are all Shapes.
+
+929
+00:39:55,840 --> 00:39:57,910
+And Shapes can all be stroked
+
+930
+00:39:57,910 --> 00:40:01,100
+by calling this function
+on them called stroke.
+
+931
+00:40:01,100 --> 00:40:03,150
+And you can see that it's
+exactly what happened.
+
+932
+00:40:03,150 --> 00:40:05,560
+It stroked a line around the edges
+
+933
+00:40:05,560 --> 00:40:08,720
+of this RoundedRectangle.
+
+934
+00:40:08,720 --> 00:40:10,830
+And stroke is an interesting function
+
+935
+00:40:10,830 --> 00:40:13,030
+in that it returns something.
+
+936
+00:40:13,030 --> 00:40:15,050
+Can you guess what it returns?
+
+937
+00:40:15,050 --> 00:40:16,810
+It returns a View.
+
+938
+00:40:16,810 --> 00:40:19,060
+It returns something
+that behaves like a View.
+
+939
+00:40:19,060 --> 00:40:24,060
+And it has to because whatever
+this is has to be a View.
+
+940
+00:40:24,060 --> 00:40:27,000
+Otherwise again, we couldn't
+put it in the ZStack.
+
+941
+00:40:27,000 --> 00:40:30,230
+So this right here is like a stroked
+
+942
+00:40:30,230 --> 00:40:32,560
+RoundedRectangle View
+or something like that.
+
+943
+00:40:32,560 --> 00:40:35,000
+So there's two Views still in the ZStack.
+
+944
+00:40:35,000 --> 00:40:37,173
+A stroked RoundedRectangle is one of them
+
+945
+00:40:37,173 --> 00:40:39,573
+and Text is the other.
+
+946
+00:40:39,573 --> 00:40:44,573
+So this pattern of calling
+a function on a View
+
+947
+00:40:45,525 --> 00:40:46,650
+or a Shape
+
+948
+00:40:46,650 --> 00:40:50,410
+to return another View is very common.
+
+949
+00:40:50,410 --> 00:40:53,920
+This is the first time you've
+seen a Swift function call.
+
+950
+00:40:53,920 --> 00:40:57,460
+Really simple, it's just dot
+and the name of the function.
+
+951
+00:40:57,460 --> 00:40:59,990
+And then in parentheses, any arguments.
+
+952
+00:40:59,990 --> 00:41:02,490
+Now, stroke actually can take arguments
+
+953
+00:41:02,490 --> 00:41:05,110
+but it works perfectly
+fine without its arguments.
+
+954
+00:41:05,110 --> 00:41:06,060
+Without its arguments,
+
+955
+00:41:06,060 --> 00:41:08,800
+it just kind of does this default behavior
+
+956
+00:41:08,800 --> 00:41:12,460
+of stroking kind of a one-point line
+
+957
+00:41:12,460 --> 00:41:14,233
+around the edges of the Shape.
+
+958
+00:41:15,256 --> 00:41:17,220
+So what about the color
+
+959
+00:41:17,220 --> 00:41:20,930
+of this RoundedRectangle's edge here?
+
+960
+00:41:20,930 --> 00:41:23,340
+It currently looks like
+it's kind of either
+
+961
+00:41:23,340 --> 00:41:26,220
+maybe dark gray or something like that.
+
+962
+00:41:26,220 --> 00:41:28,160
+What if we want that to be orange?
+
+963
+00:41:28,160 --> 00:41:29,460
+So how do we do that?
+
+964
+00:41:29,460 --> 00:41:32,810
+Well, this is a View
+right here, some View.
+
+965
+00:41:32,810 --> 00:41:36,440
+And all Views, anything
+that behaves like a View,
+
+966
+00:41:36,440 --> 00:41:39,747
+you can call the function on
+it called foregroundColor.
+
+967
+00:41:41,920 --> 00:41:44,150
+It takes an argument which is a Color.
+
+968
+00:41:44,150 --> 00:41:46,690
+I'm gonna use the Color orange.
+
+969
+00:41:46,690 --> 00:41:50,670
+And that will set the
+color that it uses to draw
+
+970
+00:41:50,670 --> 00:41:52,480
+to be this Color, orange.
+
+971
+00:41:52,480 --> 00:41:53,820
+And sure enough, look at that.
+
+972
+00:41:53,820 --> 00:41:56,700
+It's changed it to orange right there.
+
+973
+00:41:56,700 --> 00:42:00,920
+Now, this function can
+be called on any View.
+
+974
+00:42:00,920 --> 00:42:02,520
+We could call it on Text.
+
+975
+00:42:02,520 --> 00:42:03,970
+You can see, no errors.
+
+976
+00:42:03,970 --> 00:42:05,869
+Of course, it doesn't
+really help with Text
+
+977
+00:42:05,869 --> 00:42:07,130
+'cause it's an emoji.
+
+978
+00:42:07,130 --> 00:42:11,220
+But if Text were the letter X instead,
+
+979
+00:42:11,220 --> 00:42:14,193
+you'd see that that's
+an orange X right there.
+
+980
+00:42:15,820 --> 00:42:17,790
+Again, it doesn't make
+sense to call it there.
+
+981
+00:42:17,790 --> 00:42:22,790
+The other thing we could send
+this orange to is our ZStack.
+
+982
+00:42:23,970 --> 00:42:26,860
+What does it mean to tell this View
+
+983
+00:42:26,860 --> 00:42:29,950
+to have its foregroundColor be orange?
+
+984
+00:42:29,950 --> 00:42:30,960
+ZStack is just a View.
+
+985
+00:42:30,960 --> 00:42:33,600
+It behaves like a View
+so it has foregroundColor
+
+986
+00:42:33,600 --> 00:42:36,280
+just like every other View in the world.
+
+987
+00:42:36,280 --> 00:42:39,687
+And what it means for
+this is "Tell every View
+
+988
+00:42:39,687 --> 00:42:44,090
+"inside of me to use
+foregroundColor orange."
+
+989
+00:42:44,090 --> 00:42:46,733
+So this works as well.
+
+990
+00:42:46,733 --> 00:42:47,566
+Look at that.
+
+991
+00:42:47,566 --> 00:42:48,399
+See, that's orange.
+
+992
+00:42:48,399 --> 00:42:51,490
+Again, if we change this ghost to an X,
+
+993
+00:42:51,490 --> 00:42:54,610
+that X would be orange as
+well because the ZStack
+
+994
+00:42:54,610 --> 00:42:57,100
+is essentially setting the environment
+
+995
+00:42:57,100 --> 00:42:59,260
+that all of the Views inside of it
+
+996
+00:42:59,260 --> 00:43:01,710
+are going to use to draw.
+
+997
+00:43:01,710 --> 00:43:02,970
+Now this can be overridden.
+
+998
+00:43:02,970 --> 00:43:07,500
+We could then say,
+foregroundColor(Color.blue).
+
+999
+00:43:08,850 --> 00:43:12,360
+And then we'd get a blue one out here.
+
+1000
+00:43:12,360 --> 00:43:15,593
+But this would still be orange.
+
+1001
+00:43:16,470 --> 00:43:19,380
+Because I only overrode
+this foregroundColor blue
+
+1002
+00:43:19,380 --> 00:43:23,580
+for this View right here,
+this stroked RoundedRectangle.
+
+1003
+00:43:23,580 --> 00:43:26,823
+I didn't override it
+for this X right here.
+
+1004
+00:43:27,790 --> 00:43:31,300
+So by scoping the calls
+to these functions,
+
+1005
+00:43:31,300 --> 00:43:33,750
+so we can control what color things are.
+
+1006
+00:43:33,750 --> 00:43:35,373
+And this is really valuable for the ZStack
+
+1007
+00:43:35,373 --> 00:43:37,830
+because we're eventually
+gonna make this ZStack
+
+1008
+00:43:37,830 --> 00:43:40,080
+so it does the front of the
+cards, the back of the cards,
+
+1009
+00:43:40,080 --> 00:43:43,190
+everything in all those cases
+that wants to be orange.
+
+1010
+00:43:43,190 --> 00:43:44,840
+So we want orange for everything
+
+1011
+00:43:44,840 --> 00:43:46,350
+so it's really nice to be able to set that
+
+1012
+00:43:46,350 --> 00:43:48,517
+for the entire ZStack.
+
+1013
+00:43:48,517 --> 00:43:51,060
+And we usually put these modifiers
+
+1014
+00:43:51,060 --> 00:43:53,770
+for these combiner Views
+on a line by themselves,
+
+1015
+00:43:53,770 --> 00:43:55,470
+just to make them stand out a little more.
+
+1016
+00:43:55,470 --> 00:43:57,660
+Whereas we might leave
+them on the same line here.
+
+1017
+00:43:57,660 --> 00:44:01,710
+Although occasionally,
+we would even put these
+
+1018
+00:44:01,710 --> 00:44:04,240
+on a separate line as well.
+
+1019
+00:44:04,240 --> 00:44:07,150
+But we're not gonna do
+it here, but you might.
+
+1020
+00:44:07,150 --> 00:44:08,960
+It's kind of a style thing.
+
+1021
+00:44:08,960 --> 00:44:11,070
+However you think your
+code is most readable
+
+1022
+00:44:11,070 --> 00:44:12,270
+and most understandable.
+
+1023
+00:44:13,600 --> 00:44:16,440
+So we're making good
+progress on our card here.
+
+1024
+00:44:16,440 --> 00:44:19,730
+One thing, it's really
+hard to see the edges here.
+
+1025
+00:44:19,730 --> 00:44:24,130
+We kind of want some
+padding around this edge.
+
+1026
+00:44:24,130 --> 00:44:26,970
+And we can do padding
+with another View function
+
+1027
+00:44:26,970 --> 00:44:29,080
+called padding.
+
+1028
+00:44:29,080 --> 00:44:32,120
+And here notice when I put
+padding around my Text,
+
+1029
+00:44:32,120 --> 00:44:35,040
+oop, it popped out, it got
+some padding around it.
+
+1030
+00:44:35,040 --> 00:44:36,730
+Now, I could do the same thing over here
+
+1031
+00:44:36,730 --> 00:44:40,960
+to my stroked RoundedRectangle
+since it's a View.
+
+1032
+00:44:40,960 --> 00:44:43,920
+padding, ooh, that's nice.
+
+1033
+00:44:43,920 --> 00:44:46,030
+You see, it put padding around there.
+
+1034
+00:44:46,030 --> 00:44:48,770
+Again, I could even put the padding
+
+1035
+00:44:49,940 --> 00:44:52,917
+around my entire ZStack.
+
+1036
+00:44:54,953 --> 00:44:56,120
+It put the padding around the whole ZStack
+
+1037
+00:44:56,120 --> 00:44:57,260
+which is probably what I want
+
+1038
+00:44:57,260 --> 00:44:58,970
+'cause I don't wanna
+have to put the padding
+
+1039
+00:44:58,970 --> 00:45:01,470
+on every single
+RoundedRectangle separately.
+
+1040
+00:45:01,470 --> 00:45:02,880
+Like the RoundedRectangle we'll use
+
+1041
+00:45:02,880 --> 00:45:05,690
+for the back of my card
+eventually and things like that.
+
+1042
+00:45:05,690 --> 00:45:07,980
+So this is nice to be able
+to put these on the outside.
+
+1043
+00:45:07,980 --> 00:45:11,070
+Now, notice the subtle
+difference between padding
+
+1044
+00:45:11,070 --> 00:45:12,570
+and foregroundColor.
+
+1045
+00:45:12,570 --> 00:45:15,120
+Padding pads the ZStack.
+
+1046
+00:45:15,120 --> 00:45:17,400
+The entire ZStack gets
+some padding around it
+
+1047
+00:45:17,400 --> 00:45:19,260
+and everything in the ZStack is drawn
+
+1048
+00:45:19,260 --> 00:45:21,200
+in that little padded area.
+
+1049
+00:45:21,200 --> 00:45:23,490
+Whereas foregroundColor
+doesn't really make sense
+
+1050
+00:45:23,490 --> 00:45:25,197
+for a ZStack.
+
+1051
+00:45:25,197 --> 00:45:26,950
+A ZStack doesn't have a color.
+
+1052
+00:45:26,950 --> 00:45:28,690
+All it does it contain other Views.
+
+1053
+00:45:28,690 --> 00:45:31,560
+So it gets passed down
+into the environment
+
+1054
+00:45:31,560 --> 00:45:33,943
+for all the Views on the inside of it.
+
+1055
+00:45:35,930 --> 00:45:36,870
+All right, let's see,
+
+1056
+00:45:36,870 --> 00:45:38,770
+we've been looking in our preview here.
+
+1057
+00:45:38,770 --> 00:45:41,770
+But let's go take a look in our simulator
+
+1058
+00:45:41,770 --> 00:45:43,180
+to see how this looks.
+
+1059
+00:45:43,180 --> 00:45:45,550
+And ah, kind of interesting.
+
+1060
+00:45:45,550 --> 00:45:49,097
+It's working but it doesn't
+look very good here.
+
+1061
+00:45:49,097 --> 00:45:52,240
+That's because our
+simulator's in Dark Mode.
+
+1062
+00:45:52,240 --> 00:45:55,190
+And really we want this
+background to be white.
+
+1063
+00:45:55,190 --> 00:45:57,570
+Even in Dark Mode we want it to be white.
+
+1064
+00:45:57,570 --> 00:46:00,760
+We don't want it to be black
+cards on black background.
+
+1065
+00:46:00,760 --> 00:46:03,290
+Let's say we want it to be white.
+
+1066
+00:46:03,290 --> 00:46:04,910
+So how would we make that white?
+
+1067
+00:46:04,910 --> 00:46:08,090
+Unfortunately, there's
+no function you can send
+
+1068
+00:46:08,090 --> 00:46:11,030
+to a RoundedRectangle that
+says stroke it with one Color
+
+1069
+00:46:11,030 --> 00:46:13,350
+and then fill it with another Color.
+
+1070
+00:46:13,350 --> 00:46:16,610
+But that's no problem because
+we're in a ZStack right here.
+
+1071
+00:46:16,610 --> 00:46:19,760
+So I'm just gonna create
+another RoundedRectangle,
+
+1072
+00:46:19,760 --> 00:46:23,730
+and this one I will
+fill instead of stroke.
+
+1073
+00:46:23,730 --> 00:46:26,700
+And remember, it's in the back of this.
+
+1074
+00:46:26,700 --> 00:46:28,250
+And resume right here.
+
+1075
+00:46:28,250 --> 00:46:31,570
+Now, that's gonna fill it with
+whatever the foregroundColor
+
+1076
+00:46:31,570 --> 00:46:35,140
+that's set as the environment
+here, so I can't even see.
+
+1077
+00:46:35,140 --> 00:46:38,310
+But luckily fill takes
+an optional argument
+
+1078
+00:46:38,310 --> 00:46:40,250
+which is the Color to fill with.
+
+1079
+00:46:40,250 --> 00:46:43,810
+And that overrides this
+foregroundColor here.
+
+1080
+00:46:43,810 --> 00:46:44,790
+So now this is white.
+
+1081
+00:46:44,790 --> 00:46:48,390
+If I click on here, it
+is filling it with white.
+
+1082
+00:46:48,390 --> 00:46:52,213
+And there is that orange
+border, kind of hard to see.
+
+1083
+00:46:52,213 --> 00:46:56,230
+It's only one point wide,
+especially near the black.
+
+1084
+00:46:56,230 --> 00:46:57,680
+It's really kind of hard to see.
+
+1085
+00:46:57,680 --> 00:46:59,574
+So let's fix that.
+
+1086
+00:46:59,574 --> 00:47:01,530
+A stroke I told you could
+take other arguments.
+
+1087
+00:47:01,530 --> 00:47:04,320
+One it can take is line width.
+
+1088
+00:47:04,320 --> 00:47:07,060
+So let's make it a line width of three.
+
+1089
+00:47:07,060 --> 00:47:10,540
+Again, we could resume here
+to see it in Light Mode.
+
+1090
+00:47:10,540 --> 00:47:11,373
+There it is.
+
+1091
+00:47:11,373 --> 00:47:16,096
+And we can run over here
+to see this in Dark Mode.
+
+1092
+00:47:16,096 --> 00:47:18,810
+And by the way, the dark and
+light mode of your simulator
+
+1093
+00:47:18,810 --> 00:47:20,970
+can also be controlled right here.
+
+1094
+00:47:20,970 --> 00:47:22,800
+You see this little button down here?
+
+1095
+00:47:22,800 --> 00:47:24,200
+You see this Interface Style?
+
+1096
+00:47:24,200 --> 00:47:27,580
+You can turn that on and go
+from Dark Mode to Light Mode.
+
+1097
+00:47:27,580 --> 00:47:29,830
+Now if you go back to your simulator,
+
+1098
+00:47:29,830 --> 00:47:31,480
+it's in Light Mode.
+
+1099
+00:47:31,480 --> 00:47:35,373
+That's really kind of a cool
+way to switch back and forth.
+
+1100
+00:47:37,890 --> 00:47:40,620
+So we are making some great progress here.
+
+1101
+00:47:40,620 --> 00:47:43,590
+Our little emoji is still really small.
+
+1102
+00:47:43,590 --> 00:47:44,810
+I'm gonna make it bigger.
+
+1103
+00:47:44,810 --> 00:47:47,160
+I can do that with Font.
+
+1104
+00:47:47,160 --> 00:47:49,280
+Font, Font.largeTitle.
+
+1105
+00:47:50,200 --> 00:47:53,563
+Now I'm using a pre-canned
+Font here called largeTitle.
+
+1106
+00:47:53,563 --> 00:47:56,998
+There's some other ones called subheadline
+
+1107
+00:47:56,998 --> 00:47:58,900
+and body and other things.
+
+1108
+00:47:58,900 --> 00:48:02,253
+largeTitle happens to be
+the largest one I can find.
+
+1109
+00:48:03,100 --> 00:48:04,830
+If we resume, you are gonna see
+
+1110
+00:48:04,830 --> 00:48:06,210
+it's gonna make our emoji larger.
+
+1111
+00:48:06,210 --> 00:48:08,810
+Still not large enough.
+
+1112
+00:48:08,810 --> 00:48:11,460
+Next week we're gonna
+learn how to scale the Font
+
+1113
+00:48:11,460 --> 00:48:14,760
+to an exact size that
+fits nicely in our card.
+
+1114
+00:48:14,760 --> 00:48:17,580
+But for now at least it's
+getting a little bit larger.
+
+1115
+00:48:17,580 --> 00:48:18,940
+One of the reason I did this
+
+1116
+00:48:18,940 --> 00:48:21,420
+is I also wanna show you that this Font,
+
+1117
+00:48:21,420 --> 00:48:24,180
+while it seems like this
+would be a Text only thing,
+
+1118
+00:48:24,180 --> 00:48:27,400
+it can actually be put on the ZStack
+
+1119
+00:48:27,400 --> 00:48:32,080
+and it will set the font
+environment for all Texts.
+
+1120
+00:48:32,080 --> 00:48:35,299
+So if I had multiple
+Texts inside the ZStack,
+
+1121
+00:48:35,299 --> 00:48:38,127
+then it would use the Font,
+that Font for all of them.
+
+1122
+00:48:38,127 --> 00:48:40,080
+And you could easily
+imagine building something
+
+1123
+00:48:40,080 --> 00:48:40,997
+that had multiple pieces of Text
+
+1124
+00:48:40,997 --> 00:48:43,350
+and you want them all to be the same Font.
+
+1125
+00:48:43,350 --> 00:48:47,240
+And so setting it on the
+ZStack is a really cool feature
+
+1126
+00:48:47,240 --> 00:48:48,203
+for that as well.
+
+1127
+00:48:49,830 --> 00:48:53,500
+So I've kind of got the card
+somewhat looking like I want.
+
+1128
+00:48:53,500 --> 00:48:57,370
+Now I want multiple cards
+'cause I only have one card here
+
+1129
+00:48:57,370 --> 00:48:59,540
+and I'd love to have multiple cards.
+
+1130
+00:48:59,540 --> 00:49:01,640
+So how am I gonna get multiple cards?
+
+1131
+00:49:01,640 --> 00:49:06,090
+I'm gonna do that by returning
+a different kind of View,
+
+1132
+00:49:06,090 --> 00:49:07,393
+another combiner View.
+
+1133
+00:49:07,393 --> 00:49:09,536
+This is called a ForEach.
+
+1134
+00:49:09,536 --> 00:49:12,920
+Now, a ForEach, of course
+it takes arguments.
+
+1135
+00:49:12,920 --> 00:49:15,170
+The first argument, it
+takes two arguments.
+
+1136
+00:49:15,170 --> 00:49:20,170
+The first argument is like an
+iterable thing of some sort.
+
+1137
+00:49:20,370 --> 00:49:21,780
+We'll talk about that in a second.
+
+1138
+00:49:21,780 --> 00:49:26,500
+Then the second argument, just
+like a ZStack, is content.
+
+1139
+00:49:26,500 --> 00:49:30,263
+And that content is
+going to be this ZStack.
+
+1140
+00:49:34,100 --> 00:49:36,050
+What ForEach is gonna do
+
+1141
+00:49:36,050 --> 00:49:39,530
+is it's going to iterate
+over this iterable thing.
+
+1142
+00:49:39,530 --> 00:49:41,150
+And for each of those things,
+
+1143
+00:49:41,150 --> 00:49:44,020
+it's going to build one of these Views.
+
+1144
+00:49:44,020 --> 00:49:48,000
+So it essentially is a way
+to make multiple Views.
+
+1145
+00:49:48,000 --> 00:49:51,160
+Kind of a View replicator
+or a View iterator
+
+1146
+00:49:51,160 --> 00:49:53,160
+if you wanna think of it like that.
+
+1147
+00:49:53,160 --> 00:49:56,980
+So what is this iterable thing
+we're talking about here?
+
+1148
+00:49:56,980 --> 00:49:59,650
+Well, usually this is
+going to be an array.
+
+1149
+00:49:59,650 --> 00:50:01,370
+So you're gonna give it an array of things
+
+1150
+00:50:01,370 --> 00:50:03,320
+and it's gonna, for each
+of the things in the array,
+
+1151
+00:50:03,320 --> 00:50:05,030
+it's going to create a View.
+
+1152
+00:50:05,030 --> 00:50:06,410
+I'm not gonna use an array here.
+
+1153
+00:50:06,410 --> 00:50:08,800
+We'll eventually switch to using an array
+
+1154
+00:50:08,800 --> 00:50:12,780
+but I'm using another
+iterable thing called a Range.
+
+1155
+00:50:12,780 --> 00:50:17,430
+So this is the Range from zero
+up to and not including four.
+
+1156
+00:50:17,430 --> 00:50:20,570
+That's what this Swift
+syntax right here means.
+
+1157
+00:50:20,570 --> 00:50:25,570
+It means a Range from some
+lower bound to some upper bound,
+
+1158
+00:50:25,970 --> 00:50:27,340
+not including the upper bound.
+
+1159
+00:50:27,340 --> 00:50:31,230
+If you say dot-dot-dot, then
+it includes the upper bound.
+
+1160
+00:50:31,230 --> 00:50:34,030
+But I don't wanna include the upper bound.
+
+1161
+00:50:34,030 --> 00:50:37,560
+So, this is going through for
+zero, one, two, and three.
+
+1162
+00:50:37,560 --> 00:50:40,923
+It's going to create this ZStack in here.
+
+1163
+00:50:41,940 --> 00:50:43,660
+So it's a repeater.
+
+1164
+00:50:43,660 --> 00:50:45,180
+Now, one thing that's also cool,
+
+1165
+00:50:45,180 --> 00:50:47,600
+so it's got the same thing
+where it's got the content.
+
+1166
+00:50:47,600 --> 00:50:49,380
+And this could be a list of Views.
+
+1167
+00:50:49,380 --> 00:50:53,060
+We only have one View
+in here, it's a ZStack.
+
+1168
+00:50:53,060 --> 00:50:54,910
+But we could have multiple things.
+
+1169
+00:50:54,910 --> 00:50:56,960
+Just like in the ZStack,
+we have multiple things.
+
+1170
+00:50:56,960 --> 00:50:59,320
+The ForEach, its little curly-braced thing
+
+1171
+00:50:59,320 --> 00:51:01,400
+could have multiple things.
+
+1172
+00:51:01,400 --> 00:51:03,970
+And one thing that's kind of
+cool also about the ForEach
+
+1173
+00:51:03,970 --> 00:51:06,200
+is it actually has this little thing here
+
+1174
+00:51:06,200 --> 00:51:11,060
+which we're gonna talk about
+this "in" meaning at some point
+
+1175
+00:51:11,060 --> 00:51:13,390
+But essentially this is
+the iteration variable.
+
+1176
+00:51:13,390 --> 00:51:16,770
+So in this case, this index is zero.
+
+1177
+00:51:16,770 --> 00:51:19,320
+And then it's one and then
+it's two and then it's three
+
+1178
+00:51:19,320 --> 00:51:21,900
+as it makes the four of these.
+
+1179
+00:51:21,900 --> 00:51:23,330
+Now, one thing about ForEach,
+
+1180
+00:51:23,330 --> 00:51:25,360
+you'll see in the preview it actually made
+
+1181
+00:51:25,360 --> 00:51:29,580
+four separate previews of it.
+
+1182
+00:51:29,580 --> 00:51:33,360
+And that's because ForEach
+is not a layout View.
+
+1183
+00:51:33,360 --> 00:51:34,732
+It's not like ZStack.
+
+1184
+00:51:34,732 --> 00:51:37,540
+ZStack positions the Views on screen
+
+1185
+00:51:37,540 --> 00:51:39,960
+on top of each other from back to front.
+
+1186
+00:51:39,960 --> 00:51:42,680
+ForEach doesn't do that and if you run,
+
+1187
+00:51:42,680 --> 00:51:43,930
+if we were to run this in simulator,
+
+1188
+00:51:43,930 --> 00:51:45,620
+it would probably put the View somewhere
+
+1189
+00:51:45,620 --> 00:51:49,460
+because it obviously can't
+simulate multiple iPhones.
+
+1190
+00:51:49,460 --> 00:51:51,760
+But really the preview
+is actually showing more
+
+1191
+00:51:51,760 --> 00:51:54,410
+of what's happening where it's
+creating four of these Views.
+
+1192
+00:51:54,410 --> 00:51:56,500
+So it's showing you each of the four Views
+
+1193
+00:51:56,500 --> 00:51:57,820
+that it's creating.
+
+1194
+00:51:57,820 --> 00:51:59,040
+Which is really cool for debugging.
+
+1195
+00:51:59,040 --> 00:52:00,620
+It's like, "Oh yeah, this is the one now."
+
+1196
+00:52:00,620 --> 00:52:02,410
+Our four Views are exactly the same
+
+1197
+00:52:02,410 --> 00:52:04,760
+so not so interesting for us.
+
+1198
+00:52:04,760 --> 00:52:06,110
+But what we really wanna do
+
+1199
+00:52:06,110 --> 00:52:08,647
+is put all four of these on
+the screen at the same time.
+
+1200
+00:52:08,647 --> 00:52:11,450
+And for that we need another stack.
+
+1201
+00:52:11,450 --> 00:52:13,750
+Now, we don't wanna stack
+them on top of each other
+
+1202
+00:52:13,750 --> 00:52:16,130
+and we wouldn't be able to
+see the ones in the back.
+
+1203
+00:52:16,130 --> 00:52:17,470
+Instead we want a different one
+
+1204
+00:52:17,470 --> 00:52:19,503
+which is we're gonna return an HStack.
+
+1205
+00:52:20,698 --> 00:52:23,683
+Our HStack just like ZStack has content.
+
+1206
+00:52:24,640 --> 00:52:26,960
+And you put in the content the things
+
+1207
+00:52:26,960 --> 00:52:31,203
+you want to arrange like this.
+
+1208
+00:52:32,200 --> 00:52:36,840
+And HStack instead of arranging
+things from back to front,
+
+1209
+00:52:36,840 --> 00:52:38,820
+it arranges things horizontally.
+
+1210
+00:52:38,820 --> 00:52:40,670
+That's what the H means,
+from left to right.
+
+1211
+00:52:40,670 --> 00:52:44,050
+So look at that, left to
+right, it arranged them there.
+
+1212
+00:52:44,050 --> 00:52:49,050
+Now, I told you that Swift
+likes to not type things
+
+1213
+00:52:49,120 --> 00:52:50,690
+that you don't need to type.
+
+1214
+00:52:50,690 --> 00:52:52,530
+And that return I can still remove
+
+1215
+00:52:52,530 --> 00:52:53,990
+because believe it or not,
+
+1216
+00:52:53,990 --> 00:52:56,993
+there's still only one
+View being returned.
+
+1217
+00:52:57,910 --> 00:53:00,090
+Being used as the value of this body,
+
+1218
+00:53:00,090 --> 00:53:01,280
+some View, it's one View.
+
+1219
+00:53:01,280 --> 00:53:06,280
+It's a HStack of ForEaches that
+make ZStacks that's padded.
+
+1220
+00:53:07,060 --> 00:53:08,720
+It has a foregroundColor and a font.
+
+1221
+00:53:08,720 --> 00:53:11,500
+That is the one View
+that's being returned.
+
+1222
+00:53:11,500 --> 00:53:14,540
+Of course, HStack is a combiner
+so it's combining things.
+
+1223
+00:53:14,540 --> 00:53:17,950
+And ForEach is a combiner
+and ZStack is a combiner.
+
+1224
+00:53:17,950 --> 00:53:20,820
+But those are all inside the HStack.
+
+1225
+00:53:20,820 --> 00:53:22,600
+Now, notice also that the HStack
+
+1226
+00:53:22,600 --> 00:53:25,710
+when it sees a ForEach
+'cause this could be a list,
+
+1227
+00:53:25,710 --> 00:53:28,890
+we could say Text("hello")
+
+1228
+00:53:28,890 --> 00:53:30,400
+So it puts hello in there.
+
+1229
+00:53:30,400 --> 00:53:33,700
+And then this ForEach
+is kind of like listing
+
+1230
+00:53:33,700 --> 00:53:35,740
+each of these ZStacks separately.
+
+1231
+00:53:35,740 --> 00:53:36,870
+That's why it does this.
+
+1232
+00:53:36,870 --> 00:53:38,370
+So each stack is smart.
+
+1233
+00:53:38,370 --> 00:53:40,610
+It knows if it has a ForEach inside,
+
+1234
+00:53:40,610 --> 00:53:41,690
+then it wants to lay out
+
+1235
+00:53:41,690 --> 00:53:43,833
+each of the ForEach things separately.
+
+1236
+00:53:45,050 --> 00:53:48,400
+Now, another thing to
+notice here is the spacing.
+
+1237
+00:53:48,400 --> 00:53:51,870
+There's a little bit of
+space between these things.
+
+1238
+00:53:51,870 --> 00:53:53,850
+Is that this padding right here?
+
+1239
+00:53:53,850 --> 00:53:55,910
+No, that padding is this padding
+
+1240
+00:53:55,910 --> 00:53:57,957
+around the outside of HStack
+
+1241
+00:53:57,957 --> 00:54:02,520
+'cause the padding function is
+called on the HStack itself.
+
+1242
+00:54:02,520 --> 00:54:06,670
+That spacing is actually
+something the HStack is doing
+
+1243
+00:54:06,670 --> 00:54:08,800
+and it has an argument
+that lets you set that.
+
+1244
+00:54:08,800 --> 00:54:10,970
+So here I've set the spacing to zero.
+
+1245
+00:54:10,970 --> 00:54:15,410
+Or I set it to 50 or I
+leave it unspecified.
+
+1246
+00:54:15,410 --> 00:54:17,630
+A lot of times we're leaving
+those things unspecified
+
+1247
+00:54:17,630 --> 00:54:21,330
+'cause we want this spacing
+to be standard spacing.
+
+1248
+00:54:21,330 --> 00:54:23,430
+The same in all apps.
+
+1249
+00:54:23,430 --> 00:54:24,930
+Same thing with padding down here.
+
+1250
+00:54:24,930 --> 00:54:26,940
+We didn't specify anything
+here but in padding
+
+1251
+00:54:26,940 --> 00:54:30,170
+you can actually even do
+padding on the top is 100.
+
+1252
+00:54:30,170 --> 00:54:34,730
+Or padding is 10 on all sides.
+
+1253
+00:54:34,730 --> 00:54:38,870
+But usually we go for standard
+padding as much as we can.
+
+1254
+00:54:38,870 --> 00:54:40,733
+Standard padding and spacing.
+
+1255
+00:54:42,180 --> 00:54:46,900
+Now, I told you, remember
+we took away this return.
+
+1256
+00:54:46,900 --> 00:54:49,430
+There's another thing we can take away.
+
+1257
+00:54:49,430 --> 00:54:54,430
+In Swift, if the last
+argument to a function
+
+1258
+00:54:54,633 --> 00:54:57,310
+or the creation of
+something, so here's ForEach.
+
+1259
+00:54:57,310 --> 00:54:58,450
+It has two arguments.
+
+1260
+00:54:58,450 --> 00:55:02,640
+This and then it has this
+as its second argument.
+
+1261
+00:55:02,640 --> 00:55:06,320
+If the second argument
+is a curly-braced thing,
+
+1262
+00:55:06,320 --> 00:55:10,380
+then believe it or not, you
+can get rid of the label
+
+1263
+00:55:10,380 --> 00:55:14,500
+and put it outside of the function call.
+
+1264
+00:55:14,500 --> 00:55:15,720
+So here's the ForEach.
+
+1265
+00:55:15,720 --> 00:55:18,170
+So basically the creation of the ForEach.
+
+1266
+00:55:18,170 --> 00:55:19,550
+And here's its second argument.
+
+1267
+00:55:19,550 --> 00:55:23,833
+It's floating outside of the parentheses.
+
+1268
+00:55:24,810 --> 00:55:27,420
+So this seems kind of crazy.
+
+1269
+00:55:27,420 --> 00:55:30,240
+But actually, look what it
+makes our code look like.
+
+1270
+00:55:30,240 --> 00:55:32,490
+I'm gonna do that for all of these things
+
+1271
+00:55:32,490 --> 00:55:34,190
+'cause this only has one argument.
+
+1272
+00:55:35,537 --> 00:55:37,954
+So I'm gonna get rid of that.
+
+1273
+00:55:39,190 --> 00:55:43,440
+And I'm gonna do the same
+thing here for my HStack.
+
+1274
+00:55:46,890 --> 00:55:48,570
+So that looks kind of a lot cleaner.
+
+1275
+00:55:48,570 --> 00:55:49,787
+You don't have those contents in there.
+
+1276
+00:55:49,787 --> 00:55:53,720
+And even more than that,
+if you have no arguments,
+
+1277
+00:55:53,720 --> 00:55:56,080
+in that case where you have
+the little curly-braced guy
+
+1278
+00:55:56,080 --> 00:55:58,963
+hanging out there, you
+can remove that as well.
+
+1279
+00:56:00,450 --> 00:56:04,300
+So that cleans up our code considerably.
+
+1280
+00:56:04,300 --> 00:56:06,217
+And of course we're doing these ZStacks
+
+1281
+00:56:06,217 --> 00:56:07,610
+and these HStacks all the time.
+
+1282
+00:56:07,610 --> 00:56:09,920
+Now, if I wanna put this
+spacing back, I could.
+
+1283
+00:56:09,920 --> 00:56:13,050
+Spacing, zero, perfectly fine.
+
+1284
+00:56:13,050 --> 00:56:15,130
+It's still the first argument.
+
+1285
+00:56:15,130 --> 00:56:19,093
+This is still the second
+argument to the HStack there.
+
+1286
+00:56:20,508 --> 00:56:22,208
+So it's kind of a little clean up.
+
+1287
+00:56:23,420 --> 00:56:25,960
+So our code is looking
+pretty clean already
+
+1288
+00:56:25,960 --> 00:56:27,700
+making these four cards.
+
+1289
+00:56:27,700 --> 00:56:30,170
+We can clean it up even a little more
+
+1290
+00:56:30,170 --> 00:56:32,330
+by factoring out some of our code.
+
+1291
+00:56:32,330 --> 00:56:35,420
+This ZStack here is essentially one card.
+
+1292
+00:56:35,420 --> 00:56:38,270
+Wouldn't it be cool if I
+just created a new struct
+
+1293
+00:56:38,270 --> 00:56:41,980
+called a CardView which
+also behaves like a View?
+
+1294
+00:56:41,980 --> 00:56:42,940
+Which means what?
+
+1295
+00:56:42,940 --> 00:56:47,280
+It has to have a var
+body that is some View.
+
+1296
+00:56:47,280 --> 00:56:49,110
+And in here we just return some View.
+
+1297
+00:56:49,110 --> 00:56:51,530
+I'm gonna return a ZStack.
+
+1298
+00:56:51,530 --> 00:56:54,573
+Cut that out of there, paste it in there.
+
+1299
+00:56:55,500 --> 00:56:56,900
+And then in ContentView here,
+
+1300
+00:56:56,900 --> 00:56:58,613
+I'm just gonna create a CardView.
+
+1301
+00:57:01,240 --> 00:57:03,760
+So this is a way we can use the Views
+
+1302
+00:57:03,760 --> 00:57:06,830
+to factor out our code
+to do encapsulation.
+
+1303
+00:57:06,830 --> 00:57:09,710
+To make our code look
+even simpler and nicer.
+
+1304
+00:57:09,710 --> 00:57:10,863
+Somebody looking at this ContentView,
+
+1305
+00:57:10,863 --> 00:57:15,190
+it's really easy to see what
+this is gonna look like.
+
+1306
+00:57:15,190 --> 00:57:17,610
+And similarly down here.
+
+1307
+00:57:17,610 --> 00:57:18,693
+Simple to see.
+
+1308
+00:57:19,920 --> 00:57:22,920
+Now, the last thing I'm
+gonna do here in this lecture
+
+1309
+00:57:22,920 --> 00:57:25,430
+is do fronts and backs of cards.
+
+1310
+00:57:25,430 --> 00:57:29,090
+'Cause right now, we only have
+the front of the card shown.
+
+1311
+00:57:29,090 --> 00:57:30,930
+We don't ever show the back of the card.
+
+1312
+00:57:30,930 --> 00:57:33,300
+So how would we draw
+this back of the card?
+
+1313
+00:57:33,300 --> 00:57:35,740
+Well, it's just a ZStack as well
+
+1314
+00:57:35,740 --> 00:57:38,500
+but it's filled with the foregroundColor.
+
+1315
+00:57:38,500 --> 00:57:40,950
+So we could actually go ahead
+
+1316
+00:57:40,950 --> 00:57:43,240
+and just copy and paste here
+
+1317
+00:57:43,240 --> 00:57:46,400
+a RoundedRectangle to be the back.
+
+1318
+00:57:46,400 --> 00:57:48,267
+And for the moment I'll comment this out.
+
+1319
+00:57:48,267 --> 00:57:50,480
+And of course we don't
+wanna fill with white.
+
+1320
+00:57:50,480 --> 00:57:54,930
+We just wanna fill with whatever
+our environment Color is.
+
+1321
+00:57:54,930 --> 00:57:56,720
+Which it's going to get from here.
+
+1322
+00:57:56,720 --> 00:57:58,520
+Notice that this foregroundColor
+
+1323
+00:57:58,520 --> 00:58:01,900
+not only applies to
+everything in the HStack
+
+1324
+00:58:01,900 --> 00:58:03,900
+that ForEach passes it on down
+
+1325
+00:58:03,900 --> 00:58:05,450
+so that it applies to the CardView
+
+1326
+00:58:05,450 --> 00:58:07,090
+which passes it on down.
+
+1327
+00:58:07,090 --> 00:58:08,620
+Which applies to the ZStack
+
+1328
+00:58:08,620 --> 00:58:10,120
+which passes it on down
+
+1329
+00:58:10,120 --> 00:58:12,890
+so that it applies to all these things.
+
+1330
+00:58:12,890 --> 00:58:14,710
+So now if we resume.
+
+1331
+00:58:14,710 --> 00:58:17,143
+We can see backs of cards.
+
+1332
+00:58:18,410 --> 00:58:20,720
+See, here's the backs of our cards.
+
+1333
+00:58:20,720 --> 00:58:23,513
+Right here, RoundedRectangles
+that are just filled.
+
+1334
+00:58:24,450 --> 00:58:27,530
+But of course, really, we
+want to have fronts of cards
+
+1335
+00:58:27,530 --> 00:58:31,200
+and backs of cards somehow be conditional.
+
+1336
+00:58:31,200 --> 00:58:34,900
+Or the card is either
+face up or face down.
+
+1337
+00:58:34,900 --> 00:58:37,910
+So we need an if-then or something.
+
+1338
+00:58:37,910 --> 00:58:41,130
+Well, the amazing thing
+here is that this ZStack,
+
+1339
+00:58:41,130 --> 00:58:44,760
+which allows you to put
+a list of Views in here
+
+1340
+00:58:44,760 --> 00:58:47,540
+also lets you put ifs.
+
+1341
+00:58:47,540 --> 00:58:49,290
+So you can put simple ifs like
+
+1342
+00:58:49,290 --> 00:58:53,080
+if, let's say, isFaceUp for now.
+
+1343
+00:58:53,080 --> 00:58:57,000
+And we'll put these three
+things in the isFaceUp case.
+
+1344
+00:58:57,000 --> 00:59:00,000
+And then, otherwise if it's face down,
+
+1345
+00:59:00,000 --> 00:59:02,933
+then we will put this right here.
+
+1346
+00:59:03,970 --> 00:59:05,580
+So we can actually put an if.
+
+1347
+00:59:05,580 --> 00:59:07,550
+Now, we got all kinds of
+errors and warnings here
+
+1348
+00:59:07,550 --> 00:59:10,206
+because I just made up isFaceUp.
+
+1349
+00:59:10,206 --> 00:59:12,290
+That's not a thing.
+
+1350
+00:59:12,290 --> 00:59:13,470
+I just made that up.
+
+1351
+00:59:13,470 --> 00:59:15,970
+What do I want isFaceUp to be?
+
+1352
+00:59:15,970 --> 00:59:18,750
+Well, I'm just gonna have it be a var.
+
+1353
+00:59:18,750 --> 00:59:21,563
+It's gonna be a normal in memory var.
+
+1354
+00:59:21,563 --> 00:59:24,500
+It's not gonna have any curly
+braces or anything on it.
+
+1355
+00:59:24,500 --> 00:59:28,180
+It's just a normal in memory var.
+
+1356
+00:59:28,180 --> 00:59:30,690
+And you see that fixed up
+all of our code down here.
+
+1357
+00:59:30,690 --> 00:59:34,460
+CardView is perfectly,
+internally self-consistent.
+
+1358
+00:59:34,460 --> 00:59:38,630
+It's referring, it's saying
+if my isFaceUp var is true,
+
+1359
+00:59:38,630 --> 00:59:40,880
+then this way, otherwise this way.
+
+1360
+00:59:40,880 --> 00:59:43,310
+But it did cause an error up here.
+
+1361
+00:59:43,310 --> 00:59:44,840
+And what is this error about,
+
+1362
+00:59:44,840 --> 00:59:47,210
+missing argument for isFaceUp?
+
+1363
+00:59:47,210 --> 00:59:48,790
+Why is it saying that?
+
+1364
+00:59:48,790 --> 00:59:50,360
+Well, I told you earlier.
+
+1365
+00:59:50,360 --> 00:59:53,650
+Swift, all variables, it's strongly typed
+
+1366
+00:59:53,650 --> 00:59:57,320
+and all variables have
+to have an initial value.
+
+1367
+00:59:57,320 --> 00:59:59,170
+So we could set an initial value
+
+1368
+00:59:59,170 --> 01:00:01,920
+by just saying it equals false.
+
+1369
+01:00:01,920 --> 01:00:06,053
+And if I say that it's going
+to fix this error right here.
+
+1370
+01:00:07,340 --> 01:00:08,840
+Face up is false, does that.
+
+1371
+01:00:08,840 --> 01:00:13,313
+And if I change thisFaceUp
+to be true and resume,
+
+1372
+01:00:15,530 --> 01:00:17,470
+now we get face up cards.
+
+1373
+01:00:17,470 --> 01:00:18,940
+So that's one way to set this.
+
+1374
+01:00:18,940 --> 01:00:21,400
+And we often will set
+this if it makes sense.
+
+1375
+01:00:21,400 --> 01:00:23,150
+But if we don't set it in here,
+
+1376
+01:00:23,150 --> 01:00:24,650
+we don't give it a default value,
+
+1377
+01:00:24,650 --> 01:00:26,630
+that's when we get this error up here.
+
+1378
+01:00:26,630 --> 01:00:29,390
+Because Swift is saying this CardView
+
+1379
+01:00:29,390 --> 01:00:31,310
+that you're trying to create right here,
+
+1380
+01:00:31,310 --> 01:00:33,430
+it has an uninitialized variable.
+
+1381
+01:00:33,430 --> 01:00:35,763
+So you have to initialize it.
+
+1382
+01:00:36,620 --> 01:00:38,110
+And here's a cool feature.
+
+1383
+01:00:38,110 --> 01:00:41,820
+If you click on this little
+red button of an error,
+
+1384
+01:00:41,820 --> 01:00:44,590
+a lot of times you'll get
+this little Fix option.
+
+1385
+01:00:44,590 --> 01:00:46,950
+And the Fix will fix the error for you.
+
+1386
+01:00:46,950 --> 01:00:49,000
+Now, it's not always gonna fix it
+
+1387
+01:00:49,000 --> 01:00:51,990
+exactly the way you want so
+it doesn't work all the time.
+
+1388
+01:00:51,990 --> 01:00:54,310
+And there's not always a Fix option.
+
+1389
+01:00:54,310 --> 01:00:55,460
+'Cause sometimes it can't figure out
+
+1390
+01:00:55,460 --> 01:00:56,940
+how to fix what you're saying.
+
+1391
+01:00:56,940 --> 01:00:58,040
+But here it does work.
+
+1392
+01:00:58,040 --> 01:01:02,410
+If I hit Fix, it actually adds an argument
+
+1393
+01:01:02,410 --> 01:01:03,780
+to the creation of CardView
+
+1394
+01:01:04,630 --> 01:01:08,030
+to set this variable isFaceUp.
+
+1395
+01:01:08,030 --> 01:01:09,863
+So if I say false right here,
+
+1396
+01:01:10,990 --> 01:01:14,270
+it's going to initialize this variable.
+
+1397
+01:01:14,270 --> 01:01:15,103
+Let's resume.
+
+1398
+01:01:18,430 --> 01:01:19,830
+And there it is.
+
+1399
+01:01:19,830 --> 01:01:21,700
+False, face up is false.
+
+1400
+01:01:21,700 --> 01:01:22,890
+This gets initialized false.
+
+1401
+01:01:22,890 --> 01:01:25,210
+All these are not face up.
+
+1402
+01:01:25,210 --> 01:01:29,273
+Now, hopefully this pattern
+is looking familiar to you.
+
+1403
+01:01:29,273 --> 01:01:31,953
+It's the same as this pattern.
+
+1404
+01:01:32,870 --> 01:01:34,860
+Here I'm creating a ZStack.
+
+1405
+01:01:34,860 --> 01:01:36,740
+It has some var probably.
+
+1406
+01:01:36,740 --> 01:01:38,430
+Not necessarily because
+there are other ways
+
+1407
+01:01:38,430 --> 01:01:39,810
+to pass these variables.
+
+1408
+01:01:39,810 --> 01:01:42,130
+But it might have a var
+called cornerRadius.
+
+1409
+01:01:42,130 --> 01:01:46,140
+And so it's forcing us to set it,
+
+1410
+01:01:46,140 --> 01:01:48,390
+to define it 'cause we
+can't have unset vars.
+
+1411
+01:01:49,460 --> 01:01:51,010
+This is the same kind of thing.
+
+1412
+01:01:52,040 --> 01:01:55,950
+Okay, that is it for this lecture.
+
+1413
+01:01:55,950 --> 01:01:57,080
+In the next lecture,
+
+1414
+01:01:57,080 --> 01:01:59,210
+I'm gonna actually start with some slides,
+
+1415
+01:01:59,210 --> 01:02:00,620
+some conceptual stuff.
+
+1416
+01:02:00,620 --> 01:02:03,000
+Then we'll get right back to this demo.
+
+1417
+01:02:03,000 --> 01:02:04,830
+Normally I would tell
+you a little bit more
+
+1418
+01:02:04,830 --> 01:02:07,220
+about what's gonna happen
+in the next lecture.
+
+1419
+01:02:07,220 --> 01:02:09,380
+Except for that I'm releasing lecture two
+
+1420
+01:02:09,380 --> 01:02:10,910
+along with lecture one.
+
+1421
+01:02:10,910 --> 01:02:12,690
+So if you really want to
+see what's in lecture two,
+
+1422
+01:02:12,690 --> 01:02:14,113
+just go watch it right now.
+
+1423
+01:02:15,760 --> 01:02:18,993
+- [Announcer] For more, please
+visit us at stanford.edu.

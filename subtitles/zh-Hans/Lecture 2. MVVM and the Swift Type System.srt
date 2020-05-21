@@ -1,0 +1,10118 @@
+1
+00:00:00,000 --> 00:00:03,250
+（开场音乐）
+
+2
+00:00:04,930 --> 00:00:06,630
+>> [旁白] 斯坦福大学
+
+3
+00:00:08,280 --> 00:00:10,560
+>> 大家好，欢迎回到第二节
+
+4
+00:00:10,560 --> 00:00:15,452
+2020 年春季学期斯坦福 CS193p 公开课
+
+5
+00:00:15,452 --> 00:00:17,640
+I'm gonna dive right back into the demo
+
+6
+00:00:17,640 --> 00:00:19,250
+that we started in lecture one,
+
+7
+00:00:19,250 --> 00:00:22,070
+however, first, I'm gonna cover these two
+
+8
+00:00:22,070 --> 00:00:24,810
+really important conceptual ideas.
+
+9
+00:00:24,810 --> 00:00:26,840
+First is MVVM.
+
+10
+00:00:26,840 --> 00:00:29,430
+This is a design paradigm we're gonna use
+
+11
+00:00:29,430 --> 00:00:33,220
+to design our app, kind
+of organize our code
+
+12
+00:00:33,220 --> 00:00:34,550
+and then the second thing
+
+13
+00:00:34,550 --> 00:00:37,630
+is I'm gonna talk about
+the type system in Swift.
+
+14
+00:00:37,630 --> 00:00:40,370
+So let's do this MVVM thing first.
+
+15
+00:00:40,370 --> 00:00:44,270
+MVVM is a code organizing model.
+
+16
+00:00:44,270 --> 00:00:46,400
+Basically, a place to determine
+
+17
+00:00:46,400 --> 00:00:48,810
+where all your code lives in your app
+
+18
+00:00:48,810 --> 00:00:50,890
+and it works in concert with this concept
+
+19
+00:00:50,890 --> 00:00:55,460
+of reactive user interfaces
+that I mentioned last time.
+
+20
+00:00:55,460 --> 00:00:59,700
+It has to be adhered to for
+SwiftUI to work, this MVVM.
+
+21
+00:00:59,700 --> 00:01:02,250
+You can't do SwiftUI without it.
+
+22
+00:01:02,250 --> 00:01:04,590
+And for those of you have seen this class
+
+23
+00:01:04,590 --> 00:01:08,510
+in previous quarters, this
+is different from MVC,
+
+24
+00:01:08,510 --> 00:01:12,150
+which is Model-View-Controller
+that the UIKit,
+
+25
+00:01:12,150 --> 00:01:16,463
+the old-style iOS
+development mechanism uses.
+
+26
+00:01:17,810 --> 00:01:22,520
+Okay, so MVVM, it shares a lot with MVC
+
+27
+00:01:22,520 --> 00:01:25,750
+in that we're trying
+to separate the Model,
+
+28
+00:01:25,750 --> 00:01:27,607
+which is our back-end of our app, right?
+
+29
+00:01:27,607 --> 00:01:30,270
+The UI independent part with the View,
+
+30
+00:01:30,270 --> 00:01:32,310
+which is what's in front of the users.
+
+31
+00:01:32,310 --> 00:01:34,380
+Let's talk about the
+Model and the View first
+
+32
+00:01:34,380 --> 00:01:38,393
+and then we'll talk about how
+MVVM hooks them up together.
+
+33
+00:01:39,490 --> 00:01:42,840
+So the Model is UI independent.
+
+34
+00:01:42,840 --> 00:01:46,720
+The Model doesn't import
+SwiftUI, for example.
+
+35
+00:01:46,720 --> 00:01:50,580
+It is trying to encapsulate
+the data and the logic
+
+36
+00:01:50,580 --> 00:01:53,280
+about what your application does.
+
+37
+00:01:53,280 --> 00:01:55,870
+So in the case of our card matching game,
+
+38
+00:01:55,870 --> 00:01:59,200
+this is the cards, that's the data,
+
+39
+00:01:59,200 --> 00:02:02,840
+and it's also the logic, what
+happens when I choose a card,
+
+40
+00:02:02,840 --> 00:02:06,650
+how do I match, how many
+points do I get when I match,
+
+41
+00:02:06,650 --> 00:02:08,400
+what happens if I have a mismatch.
+
+42
+00:02:08,400 --> 00:02:12,773
+All of that logic and the
+card data lives in the Model.
+
+43
+00:02:14,180 --> 00:02:16,870
+The Model is the truth, okay?
+
+44
+00:02:16,870 --> 00:02:19,340
+For all that data and
+logic, it's the truth.
+
+45
+00:02:19,340 --> 00:02:22,680
+We're never going to store
+that data somewhere else
+
+46
+00:02:22,680 --> 00:02:24,610
+and have two different versions of it.
+
+47
+00:02:24,610 --> 00:02:27,923
+We're always gonna go to
+the Model for the truth.
+
+48
+00:02:28,770 --> 00:02:31,730
+Now, the View reflects the Model.
+
+49
+00:02:31,730 --> 00:02:35,410
+The data is always flowing
+from the Model to the View.
+
+50
+00:02:35,410 --> 00:02:37,770
+We're always going to
+try and make our View
+
+51
+00:02:37,770 --> 00:02:39,450
+look just like our Model.
+
+52
+00:02:39,450 --> 00:02:42,040
+However our View draws
+what's in the Model,
+
+53
+00:02:42,040 --> 00:02:46,090
+so, however our card matching
+game appears on screen,
+
+54
+00:02:46,090 --> 00:02:49,130
+it's always going to reflect
+the state of the game
+
+55
+00:02:49,130 --> 00:02:50,110
+in the Model.
+
+56
+00:02:50,110 --> 00:02:51,850
+So that's important thing to
+understand about the View.
+
+57
+00:02:51,850 --> 00:02:54,410
+Always reflecting what's in the Model.
+
+58
+00:02:54,410 --> 00:02:57,030
+The View is pretty much stateless
+
+59
+00:02:57,030 --> 00:03:00,510
+because all the state about
+the game is in the Model.
+
+60
+00:03:00,510 --> 00:03:03,660
+So the View itself doesn't
+need to have any state.
+
+61
+00:03:03,660 --> 00:03:05,580
+The View essentially just takes
+
+62
+00:03:05,580 --> 00:03:08,110
+whatever the current state of
+the Model is and displays it
+
+63
+00:03:08,110 --> 00:03:10,420
+and it should be able
+to do that at any time,
+
+64
+00:03:10,420 --> 00:03:13,070
+just at any time should
+be able to say to View,
+
+65
+00:03:13,070 --> 00:03:15,393
+look at the Model and
+look like that right now.
+
+66
+00:03:15,393 --> 00:03:18,650
+And that's the way we're
+gonna design our View.
+
+67
+00:03:18,650 --> 00:03:22,870
+And that makes the View
+what we call declarative.
+
+68
+00:03:22,870 --> 00:03:25,220
+Declarative means we're
+just going to declare
+
+69
+00:03:25,220 --> 00:03:26,950
+that the View looks this way
+
+70
+00:03:26,950 --> 00:03:30,030
+and we're only going to actually
+change anything on screen
+
+71
+00:03:30,030 --> 00:03:31,503
+when the Model changes.
+
+72
+00:03:32,703 --> 00:03:35,843
+If you look at the code
+that we wrote last time,
+
+73
+00:03:35,843 --> 00:03:39,300
+notice we don't call functions
+to put things in places,
+
+74
+00:03:39,300 --> 00:03:44,300
+we just create RoundedRectangles
+and Texts and HStacks
+
+75
+00:03:44,560 --> 00:03:47,520
+and ZStacks and things so
+that we just create them
+
+76
+00:03:47,520 --> 00:03:49,870
+and place them where
+we want them in the UI.
+
+77
+00:03:49,870 --> 00:03:54,100
+The only functions we call
+in this code that we wrote
+
+78
+00:03:54,100 --> 00:03:57,750
+are modifiers, things to
+change the look of things
+
+79
+00:03:57,750 --> 00:03:59,960
+and they're doing it right in place.
+
+80
+00:03:59,960 --> 00:04:02,760
+So, while all this code
+that we wrote yesterday
+
+81
+00:04:02,760 --> 00:04:06,350
+is just declaring what our
+user interface looks like.
+
+82
+00:04:06,350 --> 00:04:11,300
+Now, that's different than
+the old way of doing iOS apps
+
+83
+00:04:11,300 --> 00:04:12,905
+and also a lot of other systems
+
+84
+00:04:12,905 --> 00:04:14,090
+that have been around for years,
+
+85
+00:04:14,090 --> 00:04:16,615
+which we would call imperative.
+
+86
+00:04:16,615 --> 00:04:20,730
+So if you hear this imperative
+model of doing user interface
+
+87
+00:04:20,730 --> 00:04:24,530
+or coding in general, think of imperative,
+
+88
+00:04:24,530 --> 00:04:27,620
+the same root as the word imperial, right?
+
+89
+00:04:27,620 --> 00:04:32,090
+An imperial state is one
+in which an emperor rules
+
+90
+00:04:32,090 --> 00:04:33,820
+and the emperor goes around saying,
+
+91
+00:04:33,820 --> 00:04:37,650
+oh, you do that and build this
+and then plant these fields,
+
+92
+00:04:37,650 --> 00:04:40,890
+and so, he's telling people
+what to do, he's the emperor
+
+93
+00:04:40,890 --> 00:04:43,640
+and that's how the country gets run.
+
+94
+00:04:43,640 --> 00:04:46,650
+Well, to use that
+metaphor in the UI world,
+
+95
+00:04:46,650 --> 00:04:48,570
+you're saying put this button here
+
+96
+00:04:48,570 --> 00:04:51,590
+and arrange these things on UI over there
+
+97
+00:04:51,590 --> 00:04:54,540
+and you're calling functions
+to do this over time.
+
+98
+00:04:54,540 --> 00:04:58,430
+So, why is the imperative
+model kind of bad for UI?
+
+99
+00:04:58,430 --> 00:05:00,860
+Well, the main reason has to do with time.
+
+100
+00:05:00,860 --> 00:05:03,400
+These things, these functions
+are called over time.
+
+101
+00:05:03,400 --> 00:05:04,950
+Put the button here and then later,
+
+102
+00:05:04,950 --> 00:05:06,130
+we're gonna arrange this over here
+
+103
+00:05:06,130 --> 00:05:08,140
+and then later, something's
+gonna happen here.
+
+104
+00:05:08,140 --> 00:05:11,440
+So if you want to understand
+how your UI is built,
+
+105
+00:05:11,440 --> 00:05:14,610
+you need this other dimension of time
+
+106
+00:05:14,610 --> 00:05:16,750
+to know when this function can be called
+
+107
+00:05:16,750 --> 00:05:20,050
+and what function call
+depends on some other call
+
+108
+00:05:20,050 --> 00:05:23,100
+happening first and then once
+your UI is up and running,
+
+109
+00:05:23,100 --> 00:05:25,790
+someone could call a function
+to change your UI at any time
+
+110
+00:05:25,790 --> 00:05:27,720
+so you have to kind of be always on guard
+
+111
+00:05:27,720 --> 00:05:28,850
+and ready for that.
+
+112
+00:05:28,850 --> 00:05:31,340
+Well, that is kind of
+a nightmare to manage
+
+113
+00:05:31,340 --> 00:05:35,260
+and almost impossible to prove
+that your UI really works
+
+114
+00:05:35,260 --> 00:05:37,690
+because you can't call every function
+
+115
+00:05:37,690 --> 00:05:39,230
+in every possible order,
+
+116
+00:05:39,230 --> 00:05:40,810
+so it just doesn't make any sense,
+
+117
+00:05:40,810 --> 00:05:43,040
+whereas declarative, you can always look
+
+118
+00:05:43,040 --> 00:05:45,540
+at what you've declared for your UI
+
+119
+00:05:45,540 --> 00:05:47,520
+and see this is what this thing does.
+
+120
+00:05:47,520 --> 00:05:50,480
+At anytime, it's really time independent,
+
+121
+00:05:50,480 --> 00:05:52,900
+it should be able to at any time be asked
+
+122
+00:05:52,900 --> 00:05:55,310
+to do what it does, to draw what it does
+
+123
+00:05:55,310 --> 00:05:57,530
+and it's just going to look like the code
+
+124
+00:05:57,530 --> 00:05:58,950
+you're looking in front of you.
+
+125
+00:05:58,950 --> 00:06:01,200
+It also localizes all the code.
+
+126
+00:06:01,200 --> 00:06:06,110
+So all the code to draw your
+UI all right in front of you.
+
+127
+00:06:06,110 --> 00:06:08,350
+That code we wrote yesterday, that was it,
+
+128
+00:06:08,350 --> 00:06:12,080
+that was the entire code for
+showing the UI of our cards
+
+129
+00:06:12,080 --> 00:06:13,680
+and there wasn't some
+code some other where else
+
+130
+00:06:13,680 --> 00:06:17,420
+that was gonna call a function
+on this and mess it up.
+
+131
+00:06:17,420 --> 00:06:21,000
+In fact, you're gonna learn
+later today that structs,
+
+132
+00:06:21,000 --> 00:06:22,620
+our Views are structs,
+
+133
+00:06:22,620 --> 00:06:25,370
+they're actually read-only by default.
+
+134
+00:06:25,370 --> 00:06:28,850
+No one is allowed to call a
+function that would change it.
+
+135
+00:06:28,850 --> 00:06:30,700
+It's not even possible to do.
+
+136
+00:06:30,700 --> 00:06:32,850
+So that way, you can
+be sure that this View
+
+137
+00:06:32,850 --> 00:06:36,060
+is always gonna look
+like exactly what you see
+
+138
+00:06:36,060 --> 00:06:38,560
+in the code that you've
+declared right in front of you.
+
+139
+00:06:38,560 --> 00:06:40,820
+As huge advantage is for understanding
+
+140
+00:06:40,820 --> 00:06:42,660
+how your code is gonna be working,
+
+141
+00:06:42,660 --> 00:06:43,770
+making sure that you,
+
+142
+00:06:43,770 --> 00:06:46,300
+and that random things aren't happening
+
+143
+00:06:46,300 --> 00:06:48,130
+as your application runs.
+
+144
+00:06:48,130 --> 00:06:49,170
+It's fantastic.
+
+145
+00:06:49,170 --> 00:06:52,523
+Big improvement over
+imperative models for UI.
+
+146
+00:06:54,018 --> 00:06:56,150
+And then the last part of the View
+
+147
+00:06:56,150 --> 00:06:58,180
+is it's going to be reactive.
+
+148
+00:06:58,180 --> 00:07:00,430
+That means that anytime the Model changes,
+
+149
+00:07:00,430 --> 00:07:03,260
+it's going to automatically
+update the View
+
+150
+00:07:03,260 --> 00:07:05,290
+'cause I told you the View is stateless.
+
+151
+00:07:05,290 --> 00:07:07,420
+At any time you should be able to say
+
+152
+00:07:07,420 --> 00:07:09,030
+make it look like the Model
+
+153
+00:07:09,030 --> 00:07:11,900
+and so, we are gonna have a system
+
+154
+00:07:11,900 --> 00:07:13,530
+where whenever the Model changes,
+
+155
+00:07:13,530 --> 00:07:16,700
+it asks the View to look
+like it automatically.
+
+156
+00:07:16,700 --> 00:07:18,690
+Call that reactive programming,
+
+157
+00:07:18,690 --> 00:07:22,410
+it's reacting to changes in the Model.
+
+158
+00:07:22,410 --> 00:07:23,470
+So that's it.
+
+159
+00:07:23,470 --> 00:07:26,303
+This is what we got to make happen
+
+160
+00:07:27,980 --> 00:07:32,980
+is it introduces another
+thing called the ViewModel.
+
+161
+00:07:33,044 --> 00:07:36,870
+The ViewModel's job is to
+bind the View to the Model.
+
+162
+00:07:36,870 --> 00:07:38,940
+So the one change has
+happened in the Model,
+
+163
+00:07:38,940 --> 00:07:41,530
+the View get reflected.
+
+164
+00:07:41,530 --> 00:07:43,130
+And along the way,
+
+165
+00:07:43,130 --> 00:07:45,920
+as it does that binding
+between the Model and the View,
+
+166
+00:07:45,920 --> 00:07:49,150
+it might be interpreting
+the Model for the View
+
+167
+00:07:49,150 --> 00:07:50,980
+because we want the View to be very simple
+
+168
+00:07:50,980 --> 00:07:53,870
+since we're writing it
+in a declarative way,
+
+169
+00:07:53,870 --> 00:07:55,790
+we don't want it to have
+a lot of code in there
+
+170
+00:07:55,790 --> 00:07:58,750
+that's like converting from
+one data type to another
+
+171
+00:07:58,750 --> 00:07:59,770
+and things like that.
+
+172
+00:07:59,770 --> 00:08:02,320
+So we're gonna ask the
+ViewModel to do that.
+
+173
+00:08:02,320 --> 00:08:05,480
+Our Model in our game
+that we're writing here,
+
+174
+00:08:05,480 --> 00:08:08,150
+this memory game, our Model
+is just gonna be a struct.
+
+175
+00:08:08,150 --> 00:08:10,130
+This is a very simple little demo
+
+176
+00:08:10,130 --> 00:08:11,940
+but you could imagine that your Model
+
+177
+00:08:11,940 --> 00:08:15,560
+is a SQL database or it's
+something over the network
+
+178
+00:08:15,560 --> 00:08:17,610
+where you're making HTTP requests.
+
+179
+00:08:17,610 --> 00:08:19,760
+So it can be quite complicated over there
+
+180
+00:08:19,760 --> 00:08:22,460
+and your ViewModel can simplify that,
+
+181
+00:08:22,460 --> 00:08:25,080
+boil it down into maybe
+some simpler data structures
+
+182
+00:08:25,080 --> 00:08:27,420
+that it can pass to the View
+
+183
+00:08:27,420 --> 00:08:30,340
+that will let the View be
+simple code that draws it.
+
+184
+00:08:30,340 --> 00:08:32,760
+So, the ViewModel does
+have this role a little bit
+
+185
+00:08:32,760 --> 00:08:36,053
+as an interpreter of that Model data.
+
+186
+00:08:36,990 --> 00:08:40,101
+So we're gonna interpose the ViewModel
+
+187
+00:08:40,101 --> 00:08:41,960
+between the Model and the View.
+
+188
+00:08:41,960 --> 00:08:44,750
+It's gonna be the thing that
+
+189
+00:08:44,750 --> 00:08:48,020
+helps make this automatic
+updating happening.
+
+190
+00:08:48,020 --> 00:08:50,430
+So how does it do what it does?
+
+191
+00:08:50,430 --> 00:08:51,890
+Well, first of all the ViewModel
+
+192
+00:08:51,890 --> 00:08:54,710
+is always trying to notice
+changes in the Model
+
+193
+00:08:54,710 --> 00:08:57,390
+and it can do that any way that it wants.
+
+194
+00:08:57,390 --> 00:09:00,900
+If your Model is a struct,
+it's actually quite easy.
+
+195
+00:09:00,900 --> 00:09:02,600
+Again, I'm gonna talk about a struct,
+
+196
+00:09:02,600 --> 00:09:05,450
+more about that type in
+Swift in a few moments
+
+197
+00:09:05,450 --> 00:09:07,980
+but one great feature of a struct
+
+198
+00:09:07,980 --> 00:09:09,460
+since it's copied around
+
+199
+00:09:09,460 --> 00:09:11,431
+when it's passed to functions and stuff
+
+200
+00:09:11,431 --> 00:09:15,030
+is that Swift knows when
+a struct has changed.
+
+201
+00:09:15,030 --> 00:09:16,998
+It can track when a struct changes
+
+202
+00:09:16,998 --> 00:09:19,110
+and so it's very easy for a ViewModel
+
+203
+00:09:19,110 --> 00:09:22,710
+whose Model is a struct
+to see when it's changing.
+
+204
+00:09:22,710 --> 00:09:24,600
+But if the Model were a SQL database,
+
+205
+00:09:24,600 --> 00:09:26,980
+I don't know how much you
+all know about databases
+
+206
+00:09:26,980 --> 00:09:30,610
+but it's quite easy to insert
+things into SQL database
+
+207
+00:09:30,610 --> 00:09:33,270
+so that when it changes, you get notified.
+
+208
+00:09:33,270 --> 00:09:34,303
+But it's up to the ViewModel
+
+209
+00:09:34,303 --> 00:09:36,980
+to know these changes in the Model.
+
+210
+00:09:36,980 --> 00:09:40,477
+That's one of the primary
+things it has to be able to do.
+
+211
+00:09:40,477 --> 00:09:44,250
+Now, when that data changes,
+it might interpret that data,
+
+212
+00:09:44,250 --> 00:09:46,140
+it might convert it to some other format
+
+213
+00:09:46,140 --> 00:09:48,560
+or something like that
+but then what it does
+
+214
+00:09:48,560 --> 00:09:53,370
+is it publishes something
+changed to the world, okay?
+
+215
+00:09:53,370 --> 00:09:54,930
+To anybody who's interested.
+
+216
+00:09:54,930 --> 00:09:58,090
+That's all it does,
+publishes something changed.
+
+217
+00:09:58,090 --> 00:10:01,820
+It doesn't actually have any
+pointers to any Views, okay?
+
+218
+00:10:01,820 --> 00:10:04,270
+The ViewModel never has
+a pointer to its View.
+
+219
+00:10:04,270 --> 00:10:05,860
+This is an important thing to understand.
+
+220
+00:10:05,860 --> 00:10:10,590
+The ViewModel does not
+talk directly to its Views.
+
+221
+00:10:10,590 --> 00:10:11,934
+When things change in the Model,
+
+222
+00:10:11,934 --> 00:10:15,610
+it publishes something changed.
+
+223
+00:10:15,610 --> 00:10:20,350
+But then the View subscribes
+to that publication
+
+224
+00:10:20,350 --> 00:10:22,760
+and when it sees that
+something has changed,
+
+225
+00:10:22,760 --> 00:10:25,780
+it goes back to the ViewModel and asks,
+
+226
+00:10:25,780 --> 00:10:27,480
+okay, what's the current
+state of the world?
+
+227
+00:10:27,480 --> 00:10:30,297
+And I'm gonna draw myself to
+match that state of the world.
+
+228
+00:10:30,297 --> 00:10:32,490
+And the reason it asks the ViewModel that,
+
+229
+00:10:32,490 --> 00:10:34,610
+it doesn't go directly back to the Model,
+
+230
+00:10:34,610 --> 00:10:36,480
+is because the ViewModel might be doing
+
+231
+00:10:36,480 --> 00:10:38,240
+this interpreting for it
+
+232
+00:10:38,240 --> 00:10:40,720
+or it might be protecting the Model
+
+233
+00:10:40,720 --> 00:10:42,870
+to make sure that some nefarious View
+
+234
+00:10:42,870 --> 00:10:44,780
+doesn't do something bad to the Model.
+
+235
+00:10:44,780 --> 00:10:46,927
+This is how this whole thing
+works, it's as simple as that.
+
+236
+00:10:46,927 --> 00:10:49,098
+ViewModel notices changes in the Model
+
+237
+00:10:49,098 --> 00:10:50,920
+but anytime something changes,
+
+238
+00:10:50,920 --> 00:10:53,130
+it says, oh, something has changed
+
+239
+00:10:53,130 --> 00:10:57,180
+and then the Views just
+observe those something changed
+
+240
+00:10:57,180 --> 00:10:59,550
+things happening and
+then it pulls the data
+
+241
+00:10:59,550 --> 00:11:01,260
+from the ViewModel and redraws itself
+
+242
+00:11:01,260 --> 00:11:02,829
+because that's what a View can do,
+
+243
+00:11:02,829 --> 00:11:06,400
+can always redraw itself with
+the current state of the Model
+
+244
+00:11:06,400 --> 00:11:09,790
+which it gets it through
+this ViewModel interpreter.
+
+245
+00:11:09,790 --> 00:11:13,780
+This is all there is to it
+and as the quarter goes on,
+
+246
+00:11:13,780 --> 00:11:18,200
+we're gonna see the Swift
+syntax for making this all work.
+
+247
+00:11:18,200 --> 00:11:21,760
+I've put some of the syntax
+up here like ObservableObjects
+
+248
+00:11:21,760 --> 00:11:25,080
+and onReceive, and
+objectWillChange going on,
+
+249
+00:11:25,080 --> 00:11:26,960
+these are all things which I'm gonna start
+
+250
+00:11:26,960 --> 00:11:28,167
+talking about next week.
+
+251
+00:11:28,167 --> 00:11:29,560
+Actually, we're gonna see it
+
+252
+00:11:29,560 --> 00:11:31,740
+right at the end of the demo today even
+
+253
+00:11:31,740 --> 00:11:33,770
+while we're gonna start
+using some of these keywords
+
+254
+00:11:33,770 --> 00:11:36,493
+to make this whole thing happen.
+
+255
+00:11:37,660 --> 00:11:40,320
+Now, what about the other direction?
+
+256
+00:11:40,320 --> 00:11:42,384
+We've talked about how the Model
+
+257
+00:11:42,384 --> 00:11:44,187
+can be flowing into the View
+
+258
+00:11:44,187 --> 00:11:46,860
+and the View is always
+reflecting what's in the Model.
+
+259
+00:11:46,860 --> 00:11:50,110
+What if the View, which
+is where buttons are
+
+260
+00:11:50,110 --> 00:11:52,720
+and swipe gestures are happening,
+
+261
+00:11:52,720 --> 00:11:55,310
+what if it wants to
+change the Model, okay?
+
+262
+00:11:55,310 --> 00:11:56,920
+How does that work?
+
+263
+00:11:56,920 --> 00:12:01,330
+Well, for that, we add
+another responsibility
+
+264
+00:12:01,330 --> 00:12:05,250
+for the ViewModel which is
+for it to process Intent
+
+265
+00:12:05,250 --> 00:12:09,060
+and by Intent, I mean the user's intent,
+
+266
+00:12:09,060 --> 00:12:12,090
+what the user intends,
+the actual end user.
+
+267
+00:12:12,090 --> 00:12:15,370
+And this is MVVM, this whole system.
+
+268
+00:12:15,370 --> 00:12:18,380
+There's another somewhat
+related architecture
+
+269
+00:12:18,380 --> 00:12:20,870
+called Model-View-Intent, okay?
+
+270
+00:12:20,870 --> 00:12:23,500
+Which makes even more
+clear that when the user
+
+271
+00:12:23,500 --> 00:12:25,730
+wants to do something, they
+go through this Intent.
+
+272
+00:12:25,730 --> 00:12:30,730
+Now, Apple's iOS SwiftUI
+design does not implement
+
+273
+00:12:31,180 --> 00:12:34,140
+an Intent system so I'm
+just gonna talk about Intent
+
+274
+00:12:34,140 --> 00:12:35,550
+as a concept here.
+
+275
+00:12:35,550 --> 00:12:38,300
+An Intent is some user intent.
+
+276
+00:12:38,300 --> 00:12:41,340
+A classic example here,
+in our memory game,
+
+277
+00:12:41,340 --> 00:12:44,550
+the user is going to have the
+Intent of choosing a card.
+
+278
+00:12:44,550 --> 00:12:45,950
+That's their intent.
+
+279
+00:12:45,950 --> 00:12:48,880
+So it's up to the ViewModel
+to process these Intents
+
+280
+00:12:48,880 --> 00:12:52,530
+and it does this by
+making functions available
+
+281
+00:12:52,530 --> 00:12:56,010
+to the View to call to
+make the intent clear.
+
+282
+00:12:56,010 --> 00:12:58,630
+So the View, whenever a gesture happens,
+
+283
+00:12:58,630 --> 00:13:00,920
+tap gesture, swipe gesture or whatever,
+
+284
+00:13:00,920 --> 00:13:03,850
+the View is going to
+call an Intent function
+
+285
+00:13:03,850 --> 00:13:04,683
+in the ViewModel.
+
+286
+00:13:04,683 --> 00:13:06,880
+And it's just a documentation thing.
+
+287
+00:13:06,880 --> 00:13:09,993
+We're gonna have a section
+in our ViewModel's code
+
+288
+00:13:09,993 --> 00:13:12,120
+that's got a comment at the top,
+
+289
+00:13:12,120 --> 00:13:17,120
+these are the intentions or
+the Intents of the end user.
+
+290
+00:13:17,750 --> 00:13:21,100
+And that makes it really
+clear what can happen,
+
+291
+00:13:21,100 --> 00:13:24,000
+what the user can do that
+will change the Model.
+
+292
+00:13:24,000 --> 00:13:25,977
+Now, when the ViewModel receives
+
+293
+00:13:25,977 --> 00:13:28,680
+a function like this called on them,
+
+294
+00:13:28,680 --> 00:13:30,310
+they're gonna modify the Model
+
+295
+00:13:30,310 --> 00:13:33,750
+and again, the ViewModel
+knows all about the Model
+
+296
+00:13:33,750 --> 00:13:36,040
+and how it's represented, if it's SQL,
+
+297
+00:13:36,040 --> 00:13:38,999
+it's gonna be issuing SQL
+commands to change the Model,
+
+298
+00:13:38,999 --> 00:13:42,240
+if it's a struct, then
+maybe it's just setting vars
+
+299
+00:13:42,240 --> 00:13:45,040
+or calling functions
+in the Model to modify.
+
+300
+00:13:45,040 --> 00:13:46,730
+you can do whatever makes sense
+
+301
+00:13:46,730 --> 00:13:50,990
+to express that user's
+Intent in changing the Model.
+
+302
+00:13:50,990 --> 00:13:52,400
+So now the Model is changing.
+
+303
+00:13:52,400 --> 00:13:53,530
+What happens next?
+
+304
+00:13:53,530 --> 00:13:56,280
+Well, the exact Intent
+we talked about before.
+
+305
+00:13:56,280 --> 00:13:59,240
+The ViewModel notices the
+change that it just made,
+
+306
+00:13:59,240 --> 00:14:01,470
+it publishes something changed
+
+307
+00:14:01,470 --> 00:14:03,940
+and then the View sees
+that something changed
+
+308
+00:14:03,940 --> 00:14:06,910
+and it automatically redraws itself.
+
+309
+00:14:06,910 --> 00:14:08,670
+And this is it, this picture,
+
+310
+00:14:08,670 --> 00:14:10,240
+this whole picture you see right here,
+
+311
+00:14:10,240 --> 00:14:13,239
+this is the MVVM architecture,
+
+312
+00:14:13,239 --> 00:14:15,560
+these are the Swift keywords
+
+313
+00:14:15,560 --> 00:14:18,470
+that you're gonna see in the code
+
+314
+00:14:18,470 --> 00:14:19,896
+when we write to make this all happen
+
+315
+00:14:19,896 --> 00:14:21,630
+but it's as simple as this.
+
+316
+00:14:21,630 --> 00:14:24,800
+And really, the key to all
+this is just understanding
+
+317
+00:14:24,800 --> 00:14:27,150
+each of these three thing's roles
+
+318
+00:14:27,150 --> 00:14:30,500
+because they're gonna be very
+clearly defined in the code.
+
+319
+00:14:30,500 --> 00:14:32,230
+So, in the demo that I'm gonna do today,
+
+320
+00:14:32,230 --> 00:14:35,810
+we're going to implement
+this MVVM architecture
+
+321
+00:14:35,810 --> 00:14:37,800
+for our memory game
+
+322
+00:14:37,800 --> 00:14:40,990
+We couldn't make our memory
+game work really any other way.
+
+323
+00:14:40,990 --> 00:14:43,170
+If we did, it would be extremely bad.
+
+324
+00:14:43,170 --> 00:14:44,130
+I'm not sure how we could do it
+
+325
+00:14:44,130 --> 00:14:47,040
+but if we could make it work
+somehow, that would be wrong.
+
+326
+00:14:47,040 --> 00:14:48,543
+We wanna use MVVM.
+
+327
+00:14:50,080 --> 00:14:51,630
+All right, before we do that though,
+
+328
+00:14:51,630 --> 00:14:55,150
+let's have another, cover
+another little topic here
+
+329
+00:14:55,150 --> 00:14:56,542
+which is types.
+
+330
+00:14:56,542 --> 00:14:58,060
+So there's a lot to learn
+
+331
+00:14:58,060 --> 00:14:59,847
+about the Swift programming language
+
+332
+00:14:59,847 --> 00:15:01,710
+but we're gonna start with learning
+
+333
+00:15:01,710 --> 00:15:03,710
+about the kinds of types it has
+
+334
+00:15:03,710 --> 00:15:08,010
+and it has these six types
+struct which you've already seen.
+
+335
+00:15:08,010 --> 00:15:10,680
+Class which is for object
+or your programming.
+
+336
+00:15:10,680 --> 00:15:11,560
+We'll see that.
+
+337
+00:15:11,560 --> 00:15:14,219
+Protocol, which, actually,
+you've also seen that.
+
+338
+00:15:14,219 --> 00:15:17,890
+Don't care types, okay,
+which we call generic,
+
+339
+00:15:17,890 --> 00:15:19,050
+so the generic system.
+
+340
+00:15:19,050 --> 00:15:21,230
+enums and functions.
+
+341
+00:15:21,230 --> 00:15:24,173
+Yes, functions are types in Swift.
+
+342
+00:15:25,260 --> 00:15:26,560
+But in the interest of time,
+
+343
+00:15:26,560 --> 00:15:30,030
+I'm only gonna cover
+these four of the types:
+
+344
+00:15:30,030 --> 00:15:34,080
+struct, class, these don't
+care types and functions.
+
+345
+00:15:34,080 --> 00:15:37,760
+I'll get to protocol and enum next time.
+
+346
+00:15:37,760 --> 00:15:40,520
+All right, let's start
+with struct and class.
+
+347
+00:15:40,520 --> 00:15:43,350
+Struct and class look
+almost exactly the same.
+
+348
+00:15:43,350 --> 00:15:45,580
+Their syntax is very, very similar.
+
+349
+00:15:45,580 --> 00:15:49,393
+They both have stored
+variables like var isFaceUp
+
+350
+00:15:49,393 --> 00:15:52,070
+that we saw in the demo from last time.
+
+351
+00:15:52,070 --> 00:15:54,760
+They also both can have computed variables
+
+352
+00:15:54,760 --> 00:15:56,790
+like we saw from the
+demo last time, right?
+
+353
+00:15:56,790 --> 00:15:57,800
+Var body.
+
+354
+00:15:57,800 --> 00:16:00,010
+Its value is computed each time
+
+355
+00:16:00,010 --> 00:16:02,530
+someone asked for classes and structs.
+
+356
+00:16:02,530 --> 00:16:03,763
+Both can have that.
+
+357
+00:16:04,610 --> 00:16:07,310
+They can also have these
+things called lets.
+
+358
+00:16:07,310 --> 00:16:10,440
+Okay, a let is just a var where the var
+
+359
+00:16:10,440 --> 00:16:11,620
+does not actually vary.
+
+360
+00:16:11,620 --> 00:16:13,810
+It's not variable, it's a constant.
+
+361
+00:16:13,810 --> 00:16:15,600
+So, a let is essentially a constant.
+
+362
+00:16:15,600 --> 00:16:18,280
+They can both have constants in them.
+
+363
+00:16:18,280 --> 00:16:20,350
+They also both have functions.
+
+364
+00:16:20,350 --> 00:16:23,260
+We haven't talked a lot
+about the syntax of functions
+
+365
+00:16:23,260 --> 00:16:27,240
+so let me take just a moment
+here to talk about that.
+
+366
+00:16:27,240 --> 00:16:29,640
+We do already know that for a function,
+
+367
+00:16:29,640 --> 00:16:34,230
+the arguments have labels or
+in this multiply function,
+
+368
+00:16:34,230 --> 00:16:35,610
+it's got two arguments.
+
+369
+00:16:35,610 --> 00:16:37,217
+The first argument is called operand
+
+370
+00:16:37,217 --> 00:16:38,997
+and the second one is called by,
+
+371
+00:16:38,997 --> 00:16:42,105
+out of both of type Int,
+this function returns an Int
+
+372
+00:16:42,105 --> 00:16:44,540
+and inside of multiply.
+
+373
+00:16:44,540 --> 00:16:48,520
+I just use the labels operand
+and by to make it operate.
+
+374
+00:16:48,520 --> 00:16:52,750
+so if I say multiply operand five by six,
+
+375
+00:16:52,750 --> 00:16:56,050
+that's obviously going
+to return 30 for us.
+
+376
+00:16:56,050 --> 00:16:58,960
+I do wanna tell you that those labels,
+
+377
+00:16:58,960 --> 00:17:02,760
+actually, each parameter
+can have two labels.
+
+378
+00:17:02,760 --> 00:17:04,980
+So here, I have multiply again
+
+379
+00:17:04,980 --> 00:17:07,350
+but each of them has two labels.
+
+380
+00:17:07,350 --> 00:17:11,550
+I have the first parameter
+has the label underbar
+
+381
+00:17:11,550 --> 00:17:16,020
+and the label operand and the
+second one has the label by
+
+382
+00:17:16,020 --> 00:17:18,114
+and the label otherOperand.
+
+383
+00:17:18,114 --> 00:17:21,130
+See how there's two, a
+blue one and a purple one
+
+384
+00:17:21,130 --> 00:17:24,740
+for each of the arguments
+and why are there two?
+
+385
+00:17:24,740 --> 00:17:29,040
+Well, the blue ones are used
+by callers of the function
+
+386
+00:17:29,040 --> 00:17:32,720
+and the purple ones are
+used inside the function.
+
+387
+00:17:32,720 --> 00:17:35,520
+So the purple ones look the
+same as our previous one,
+
+388
+00:17:35,520 --> 00:17:37,660
+return operand times other operand.
+
+389
+00:17:37,660 --> 00:17:42,660
+That's the second of the
+two labels for each of them
+
+390
+00:17:42,870 --> 00:17:44,260
+but look at the caller.
+
+391
+00:17:44,260 --> 00:17:48,550
+He now says multiply five by six.
+
+392
+00:17:48,550 --> 00:17:52,560
+So the underbar label means no label.
+
+393
+00:17:52,560 --> 00:17:55,680
+That's why we've seen things like text,
+
+394
+00:17:55,680 --> 00:17:57,500
+which takes a little emoji string,
+
+395
+00:17:57,500 --> 00:17:58,833
+it doesn't have to have a label there,
+
+396
+00:17:58,833 --> 00:18:03,360
+it's because it's using this
+underbar somewhere in its code
+
+397
+00:18:03,360 --> 00:18:04,704
+to mean you can leave it out.
+
+398
+00:18:04,704 --> 00:18:08,100
+Underbar always means leave it out, okay?
+
+399
+00:18:08,100 --> 00:18:10,130
+Unused, you wanna think of it that way,
+
+400
+00:18:10,130 --> 00:18:13,060
+it's the unused character in Swift.
+
+401
+00:18:13,060 --> 00:18:16,090
+We'll see that in the demo today as well.
+
+402
+00:18:16,090 --> 00:18:19,800
+And then the second one still
+uses by as the external name.
+
+403
+00:18:19,800 --> 00:18:21,763
+We call that the external name of this,
+
+404
+00:18:21,763 --> 00:18:24,883
+and it's using otherOperand
+as the internal name.
+
+405
+00:18:25,720 --> 00:18:27,550
+So you can stare at
+this a little bit later
+
+406
+00:18:27,550 --> 00:18:31,180
+but this is the syntax,
+basically, for functions
+
+407
+00:18:31,180 --> 00:18:35,600
+and functions exist in both
+structs and in classes.
+
+408
+00:18:35,600 --> 00:18:38,330
+Now, structs and classes
+also have special functions
+
+409
+00:18:38,330 --> 00:18:40,461
+called initializers.
+
+410
+00:18:40,461 --> 00:18:45,133
+And initializer are used to
+create your struct or class
+
+411
+00:18:46,230 --> 00:18:50,220
+with some argument that is
+not one of your variables.
+
+412
+00:18:50,220 --> 00:18:51,710
+We've already seen like with CardView
+
+413
+00:18:51,710 --> 00:18:53,698
+and remember CardView,
+
+414
+00:18:53,698 --> 00:18:56,954
+we created it with the
+argument isFaceUp true
+
+415
+00:18:56,954 --> 00:19:00,560
+and it set the var
+isFaceUp in our CardView.
+
+416
+00:19:00,560 --> 00:19:04,410
+So we can always
+initialize things that way
+
+417
+00:19:04,410 --> 00:19:08,060
+but what if we want to use
+some other kind of argument
+
+418
+00:19:08,060 --> 00:19:09,915
+to get something initialized?
+
+419
+00:19:09,915 --> 00:19:12,900
+And a great example it's
+gonna be our MemoryGame
+
+420
+00:19:12,900 --> 00:19:15,310
+because when you create a MemoryGame,
+
+421
+00:19:15,310 --> 00:19:18,910
+it's vars are gonna be like
+it's cards or things like that
+
+422
+00:19:18,910 --> 00:19:20,750
+but really, a MemoryGame,
+when you create it,
+
+423
+00:19:20,750 --> 00:19:23,650
+you wanna say how many pairs
+of cards are in the game.
+
+424
+00:19:23,650 --> 00:19:25,428
+Is this a big MemoryGame with 20 cards
+
+425
+00:19:25,428 --> 00:19:29,120
+or a smaller MemoryGame
+with only six pairs of cards
+
+426
+00:19:29,120 --> 00:19:30,100
+or something like that?
+
+427
+00:19:30,100 --> 00:19:32,750
+So, I wanna be able to have the argument
+
+428
+00:19:32,750 --> 00:19:36,110
+to creating a MemoryGame
+be numberOfPairsOfCards
+
+429
+00:19:36,110 --> 00:19:38,270
+which is an Int and I can do that
+
+430
+00:19:38,270 --> 00:19:41,352
+by putting an init function
+inside my MemoryGame,
+
+431
+00:19:41,352 --> 00:19:43,280
+which takes that as an argument.
+
+432
+00:19:43,280 --> 00:19:45,270
+And the cool thing is I can have
+
+433
+00:19:45,270 --> 00:19:47,570
+any number of these inits that I want,
+
+434
+00:19:47,570 --> 00:19:49,300
+each of which taking a different argument.
+
+435
+00:19:49,300 --> 00:19:51,750
+Maybe there's other ways
+to create a MemoryGame.
+
+436
+00:19:51,750 --> 00:19:55,733
+So structs and classes
+both have initializers.
+
+437
+00:19:56,660 --> 00:19:59,210
+So what's the difference then
+between structs and classes?
+
+438
+00:19:59,210 --> 00:20:02,250
+They looked awfully similar
+and they are roughly similar
+
+439
+00:20:02,250 --> 00:20:04,050
+but there are some fundamental differences
+
+440
+00:20:04,050 --> 00:20:06,730
+so let's talk about what
+those differences are.
+
+441
+00:20:06,730 --> 00:20:11,130
+The biggest difference is
+that struct is a value type
+
+442
+00:20:11,130 --> 00:20:13,940
+and class is a reference type.
+
+443
+00:20:13,940 --> 00:20:16,610
+So let's talk a little bit
+more about what that means.
+
+444
+00:20:16,610 --> 00:20:18,861
+Value type versus reference type.
+
+445
+00:20:18,861 --> 00:20:23,430
+A reference type is
+passed around by pointers.
+
+446
+00:20:23,430 --> 00:20:25,710
+Reference types live in the heap.
+
+447
+00:20:25,710 --> 00:20:27,570
+Okay, so classes, when you create them,
+
+448
+00:20:27,570 --> 00:20:30,130
+the storage for them is in the heap.
+
+449
+00:20:30,130 --> 00:20:31,570
+Everyone knows what that means.
+
+450
+00:20:31,570 --> 00:20:34,730
+That's just like stored in
+memory and when I pass it around,
+
+451
+00:20:34,730 --> 00:20:36,120
+I'm passing around pointers to it.
+
+452
+00:20:36,120 --> 00:20:37,610
+So a lot of people might have a pointer
+
+453
+00:20:37,610 --> 00:20:39,670
+to the same class somewhere.
+
+454
+00:20:39,670 --> 00:20:44,670
+Structs are not passed around
+by pointer, they are copied.
+
+455
+00:20:45,550 --> 00:20:49,720
+So if you pass a struct to
+a function as an argument,
+
+456
+00:20:49,720 --> 00:20:51,535
+that function gets a copy of it
+
+457
+00:20:51,535 --> 00:20:53,811
+even if I just have one variable
+
+458
+00:20:53,811 --> 00:20:56,090
+and I have another variable that I said
+
+459
+00:20:56,090 --> 00:20:57,720
+equal to the first variable,
+
+460
+00:20:57,720 --> 00:21:01,690
+both variables are a separate copy of it.
+
+461
+00:21:01,690 --> 00:21:04,560
+This might seem like,
+whoa, you're kidding me.
+
+462
+00:21:04,560 --> 00:21:08,010
+I'm making copies of, I
+mean arrays are structs
+
+463
+00:21:08,010 --> 00:21:10,700
+so I'm making copies of huge arrays
+
+464
+00:21:10,700 --> 00:21:14,200
+every time I pass it to a
+function or something like that?
+
+465
+00:21:14,200 --> 00:21:17,840
+And the answer is, of course,
+that's not actually happening.
+
+466
+00:21:17,840 --> 00:21:20,340
+Behind the scenes, Swift is,
+
+467
+00:21:20,340 --> 00:21:21,640
+when you're passing these things around
+
+468
+00:21:21,640 --> 00:21:23,530
+and it's copying these structs,
+
+469
+00:21:23,530 --> 00:21:26,720
+it is not really copying the bits of it,
+
+470
+00:21:26,720 --> 00:21:30,880
+it's somehow sharing them until
+you then try to write to it.
+
+471
+00:21:30,880 --> 00:21:33,513
+So if you pass an array to a function,
+
+472
+00:21:33,513 --> 00:21:36,650
+it might copy that into another variable
+
+473
+00:21:36,650 --> 00:21:40,630
+and then it wants to add
+something to that array,
+
+474
+00:21:40,630 --> 00:21:44,015
+then it's gonna make a
+copy, an actual bitwise copy
+
+475
+00:21:44,015 --> 00:21:46,410
+of the array so that you can add to it
+
+476
+00:21:46,410 --> 00:21:49,750
+because the one you added
+it to is a different copy
+
+477
+00:21:49,750 --> 00:21:50,590
+than the other one.
+
+478
+00:21:50,590 --> 00:21:52,630
+So that's called copy-on-write,
+
+479
+00:21:52,630 --> 00:21:54,950
+when you actually write to a struct,
+
+480
+00:21:54,950 --> 00:21:57,520
+it actually really makes a copy.
+
+481
+00:21:57,520 --> 00:22:01,810
+But semantically, every
+time you pass struct around,
+
+482
+00:22:01,810 --> 00:22:03,220
+it's getting copied.
+
+483
+00:22:03,220 --> 00:22:04,840
+It's just always copied.
+
+484
+00:22:04,840 --> 00:22:06,810
+So you're not sharing, these structs,
+
+485
+00:22:06,810 --> 00:22:10,240
+as you pass them around, are
+never shared, they're copied.
+
+486
+00:22:10,240 --> 00:22:12,248
+Now, a class, on the other hand,
+
+487
+00:22:12,248 --> 00:22:13,770
+you're passing pointers to it,
+
+488
+00:22:13,770 --> 00:22:17,625
+so instead, what it's doing
+is counting the references.
+
+489
+00:22:17,625 --> 00:22:21,145
+Seeing how many pointers
+there are to this thing
+
+490
+00:22:21,145 --> 00:22:22,540
+and this happens automatically
+
+491
+00:22:22,540 --> 00:22:25,870
+and when finally, no one is left pointing
+
+492
+00:22:25,870 --> 00:22:29,543
+to the classes in the heap,
+then the memory gets freed up
+
+493
+00:22:29,543 --> 00:22:30,923
+out of the heap.
+
+494
+00:22:31,920 --> 00:22:34,640
+So that's called automatic
+reference counting.
+
+495
+00:22:34,640 --> 00:22:36,470
+So this is two very different ways
+
+496
+00:22:36,470 --> 00:22:38,840
+of thinking about the world, right?
+
+497
+00:22:38,840 --> 00:22:43,180
+Copying it as you pass
+it around or by pointer.
+
+498
+00:22:43,180 --> 00:22:45,710
+Most things that you see are structs.
+
+499
+00:22:45,710 --> 00:22:48,480
+So arrays, dictionaries,
+Ints, Bools, Doubles,
+
+500
+00:22:48,480 --> 00:22:50,690
+those are all structs.
+
+501
+00:22:50,690 --> 00:22:54,120
+And struct is kind of basically built
+
+502
+00:22:54,120 --> 00:22:55,540
+to support a kind of programming
+
+503
+00:22:55,540 --> 00:22:58,230
+called functional programming.
+
+504
+00:22:58,230 --> 00:22:59,750
+Functional programming focuses
+
+505
+00:22:59,750 --> 00:23:02,900
+on the functionality of things.
+
+506
+00:23:02,900 --> 00:23:06,750
+Classes are built for
+object-oriented programming.
+
+507
+00:23:06,750 --> 00:23:09,125
+Object-oriented programming focuses on
+
+508
+00:23:09,125 --> 00:23:11,140
+encapsulating the data
+
+509
+00:23:11,140 --> 00:23:15,320
+and the functionality
+into some container, okay?
+
+510
+00:23:15,320 --> 00:23:16,490
+An object.
+
+511
+00:23:16,490 --> 00:23:18,740
+These are very different kind
+of concepts of the world.
+
+512
+00:23:18,740 --> 00:23:22,140
+They're both trying to
+achieve similar goals,
+
+513
+00:23:22,140 --> 00:23:24,900
+which is encapsulation a little bit
+
+514
+00:23:24,900 --> 00:23:29,050
+and also just understanding
+where the functionality lives
+
+515
+00:23:29,050 --> 00:23:32,140
+in your program but they're
+doing it quite differently.
+
+516
+00:23:32,140 --> 00:23:34,944
+And you can tell by the
+way their types are built.
+
+517
+00:23:34,944 --> 00:23:37,932
+Copying it around versus
+having a pointer to it
+
+518
+00:23:37,932 --> 00:23:40,700
+lead to a lot of different behavior
+
+519
+00:23:40,700 --> 00:23:42,780
+and over the course of this quarter,
+
+520
+00:23:42,780 --> 00:23:45,390
+we're going to learn a lot
+about functional programming
+
+521
+00:23:45,390 --> 00:23:49,230
+and how it works even in the
+rest of this little lecture,
+
+522
+00:23:49,230 --> 00:23:51,900
+we're gonna understand
+a lot more about that.
+
+523
+00:23:51,900 --> 00:23:53,620
+I'm assuming you all pretty much know
+
+524
+00:23:53,620 --> 00:23:54,930
+about object-oriented programming.
+
+525
+00:23:54,930 --> 00:23:57,700
+You programmed in Java or C++ or something
+
+526
+00:23:57,700 --> 00:23:58,853
+so you kinda know.
+
+527
+00:23:59,872 --> 00:24:02,210
+Structs have no inheritance.
+
+528
+00:24:02,210 --> 00:24:03,770
+That's not really,
+
+529
+00:24:03,770 --> 00:24:05,920
+that wouldn't make any sense, really,
+
+530
+00:24:05,920 --> 00:24:08,020
+in functional programming
+to have inheritance.
+
+531
+00:24:08,020 --> 00:24:09,280
+We do have a kind of inheritance
+
+532
+00:24:09,280 --> 00:24:10,810
+in functional programming, you'll see,
+
+533
+00:24:10,810 --> 00:24:12,090
+but not with structs, okay?
+
+534
+00:24:12,090 --> 00:24:13,680
+Struct can't have inheritance.
+
+535
+00:24:13,680 --> 00:24:16,520
+And classes in Swift do
+you have inheritance.
+
+536
+00:24:16,520 --> 00:24:18,830
+Of course, they can have
+a superclass if they want
+
+537
+00:24:18,830 --> 00:24:20,040
+but it's single inheritance.
+
+538
+00:24:20,040 --> 00:24:22,861
+They can only inherit from one class.
+
+539
+00:24:22,861 --> 00:24:23,694
+That's what you're used to
+
+540
+00:24:23,694 --> 00:24:25,507
+and Java only has single inheritance,
+
+541
+00:24:25,507 --> 00:24:28,890
+C++ a single inheritance, et cetera.
+
+542
+00:24:28,890 --> 00:24:30,833
+So that's a big difference as well.
+
+543
+00:24:31,970 --> 00:24:34,130
+I told you about those init functions.
+
+544
+00:24:34,130 --> 00:24:36,804
+In a struct you get a free init
+
+545
+00:24:36,804 --> 00:24:40,050
+that initializes all
+the vars in your struct.
+
+546
+00:24:40,050 --> 00:24:41,670
+Get that one for free,
+
+547
+00:24:41,670 --> 00:24:44,753
+that's why we're able to say
+CardView isFaceUp colon true
+
+548
+00:24:45,820 --> 00:24:49,353
+and it initializes that
+isFaceUp var that we had there
+
+549
+00:24:49,353 --> 00:24:51,640
+because we got a free initializer
+
+550
+00:24:51,640 --> 00:24:53,270
+that initialize all the vars.
+
+551
+00:24:53,270 --> 00:24:55,581
+In a class, you also
+get a free initializer
+
+552
+00:24:55,581 --> 00:24:58,320
+but it doesn't initialize any of the vars.
+
+553
+00:24:58,320 --> 00:25:00,160
+It's always open parentheses,
+close parentheses,
+
+554
+00:25:00,160 --> 00:25:01,540
+that's the free one.
+
+555
+00:25:01,540 --> 00:25:03,070
+So that would mean all of your vars
+
+556
+00:25:03,070 --> 00:25:05,770
+would have to have equal
+something after them
+
+557
+00:25:05,770 --> 00:25:08,930
+or you have to provide
+your own init in a class.
+
+558
+00:25:08,930 --> 00:25:13,350
+So in classes, we almost
+always are providing inits.
+
+559
+00:25:13,350 --> 00:25:15,920
+Because of this reason, we
+don't get a nice free one.
+
+560
+00:25:15,920 --> 00:25:17,610
+In structs, it's a mix.
+
+561
+00:25:17,610 --> 00:25:21,730
+Sometimes, we do the CardView
+way of using the free init,
+
+562
+00:25:21,730 --> 00:25:23,710
+sometimes, we create our own init.
+
+563
+00:25:25,460 --> 00:25:27,150
+In value type programming,
+
+564
+00:25:27,150 --> 00:25:30,320
+we're copying these
+things around mutability
+
+565
+00:25:30,320 --> 00:25:35,320
+or changeability has to be
+explicitly stated with a struct.
+
+566
+00:25:35,910 --> 00:25:38,700
+If you have a struct and you
+want, like it's an Array,
+
+567
+00:25:38,700 --> 00:25:40,143
+and you wanna be able to add items to it,
+
+568
+00:25:40,143 --> 00:25:42,400
+like it wants to be a changeable Array,
+
+569
+00:25:42,400 --> 00:25:45,080
+then you have to explicitly say
+
+570
+00:25:45,080 --> 00:25:46,130
+that that's what you're gonna do
+
+571
+00:25:46,130 --> 00:25:49,890
+and you do that by using var versus let.
+
+572
+00:25:49,890 --> 00:25:52,270
+Remember I said that structs and classes
+
+573
+00:25:52,270 --> 00:25:54,600
+both have this thing
+let which is a constant?
+
+574
+00:25:54,600 --> 00:25:57,950
+Well, if you say let a
+variable equal a struct,
+
+575
+00:25:57,950 --> 00:26:00,920
+then you can't mutate it, you can't,
+
+576
+00:26:00,920 --> 00:26:03,450
+if it's an Array, you
+couldn't add items to it
+
+577
+00:26:03,450 --> 00:26:07,940
+but if you say var something
+equals a struct, now, you can.
+
+578
+00:26:07,940 --> 00:26:10,240
+Whereas classes are always mutable.
+
+579
+00:26:10,240 --> 00:26:12,470
+They live in the heap, you
+have a pointer to them,
+
+580
+00:26:12,470 --> 00:26:14,410
+you could always go through that pointer
+
+581
+00:26:14,410 --> 00:26:16,570
+and modify the thing in the heap, okay?
+
+582
+00:26:16,570 --> 00:26:20,750
+There's no control of
+mutability in a class,
+
+583
+00:26:20,750 --> 00:26:23,620
+which is really a bigger,
+
+584
+00:26:23,620 --> 00:26:24,847
+when it comes to trying to build code,
+
+585
+00:26:24,847 --> 00:26:29,250
+did you understand what it
+really is doing, provably doing?
+
+586
+00:26:29,250 --> 00:26:31,040
+That's a big problem with classes,
+
+587
+00:26:31,040 --> 00:26:32,890
+that anybody who has a pointer to a class
+
+588
+00:26:32,890 --> 00:26:34,250
+can just go mutate it.
+
+589
+00:26:34,250 --> 00:26:36,151
+It's like that's so Wild West,
+
+590
+00:26:36,151 --> 00:26:38,660
+it's really hard to
+understand what's going on.
+
+591
+00:26:38,660 --> 00:26:40,810
+So having this mutability be explicit,
+
+592
+00:26:40,810 --> 00:26:42,160
+it's really nice feature
+
+593
+00:26:42,160 --> 00:26:44,820
+in functional programming and structs.
+
+594
+00:26:44,820 --> 00:26:47,600
+Now, structs are your
+go-to data structure.
+
+595
+00:26:47,600 --> 00:26:50,912
+You're pretty much gonna use
+struct's as your first try.
+
+596
+00:26:50,912 --> 00:26:52,889
+You're only gonna resort using a class
+
+597
+00:26:52,889 --> 00:26:55,600
+in certain specific circumstances.
+
+598
+00:26:55,600 --> 00:26:58,860
+And we're gonna see one of
+those circumstances today,
+
+599
+00:26:58,860 --> 00:27:01,190
+which is your ViewModel.
+
+600
+00:27:01,190 --> 00:27:05,040
+The ViewModel in an
+MVVM is always a class.
+
+601
+00:27:05,040 --> 00:27:07,450
+Also the old way of doing iOS programming,
+
+602
+00:27:07,450 --> 00:27:08,770
+that was all class-based,
+
+603
+00:27:08,770 --> 00:27:12,180
+that was all object-oriented,
+not functional programming.
+
+604
+00:27:12,180 --> 00:27:15,100
+Why is the ViewModel in MVVM a class?
+
+605
+00:27:15,100 --> 00:27:17,680
+By the way, look, I'm gonna
+talk about this in the demo
+
+606
+00:27:17,680 --> 00:27:19,530
+but it has to do with the fact
+
+607
+00:27:19,530 --> 00:27:21,820
+that a ViewModel needs to be shared
+
+608
+00:27:21,820 --> 00:27:24,780
+amongst a lot of different Views, perhaps.
+
+609
+00:27:24,780 --> 00:27:27,550
+The ViewModel is kind of
+the portal on to the Model.
+
+610
+00:27:27,550 --> 00:27:29,260
+A lot of different Views
+might wanna be looking
+
+611
+00:27:29,260 --> 00:27:33,530
+at that Model and they
+wanna share that portal.
+
+612
+00:27:33,530 --> 00:27:35,000
+Classes are great for sharing
+
+613
+00:27:35,000 --> 00:27:37,110
+because we all have a pointer to them.
+
+614
+00:27:37,110 --> 00:27:38,560
+There's a downside on sharing,
+
+615
+00:27:38,560 --> 00:27:40,990
+we try to mitigate that in MVVM,
+
+616
+00:27:40,990 --> 00:27:43,080
+I'll show you that in the demo as well
+
+617
+00:27:43,080 --> 00:27:44,650
+but that's an example of a class.
+
+618
+00:27:44,650 --> 00:27:47,380
+Pretty much everything else
+you've seen, it's been a struct.
+
+619
+00:27:47,380 --> 00:27:49,570
+All these Views that
+obviously you've seen,
+
+620
+00:27:49,570 --> 00:27:51,050
+they're all structs.
+
+621
+00:27:51,050 --> 00:27:53,160
+I said, Arrays, Ints, Bools, Doubles,
+
+622
+00:27:53,160 --> 00:27:54,830
+everything, all at range,
+
+623
+00:27:54,830 --> 00:27:58,720
+everything is a struct
+pretty much, except View.
+
+624
+00:27:58,720 --> 00:28:02,720
+View is actually a different
+type called a protocol.
+
+625
+00:28:02,720 --> 00:28:05,980
+A View is not a struct or
+a class, it is a protocol
+
+626
+00:28:05,980 --> 00:28:07,870
+and we'll be talking about protocols
+
+627
+00:28:07,870 --> 00:28:10,223
+in great detail next week.
+
+628
+00:28:11,360 --> 00:28:15,540
+Okay, the next thing I wanna
+talk about is generics.
+
+629
+00:28:15,540 --> 00:28:18,350
+We may want to manipulate
+some data structure
+
+630
+00:28:18,350 --> 00:28:21,170
+that we're kind of type agnostic about it.
+
+631
+00:28:21,170 --> 00:28:24,330
+We don't really care about
+the types, like whatever.
+
+632
+00:28:24,330 --> 00:28:27,200
+Give me whatever type but
+the problem with Swift
+
+633
+00:28:27,200 --> 00:28:30,250
+is it's an extremely
+strongly typed language,
+
+634
+00:28:30,250 --> 00:28:33,450
+every var, every parameter
+to every function,
+
+635
+00:28:33,450 --> 00:28:36,080
+everything has to have a type.
+
+636
+00:28:36,080 --> 00:28:38,490
+No such thing isn't really, well,
+
+637
+00:28:38,490 --> 00:28:41,080
+for backwards compatibility to old UIKit,
+
+638
+00:28:41,080 --> 00:28:43,180
+there's kind of is an untype thing.
+
+639
+00:28:43,180 --> 00:28:45,790
+But, really, in Swift,
+in SwiftUI, for sure,
+
+640
+00:28:45,790 --> 00:28:47,700
+we don't use untyped variables.
+
+641
+00:28:47,700 --> 00:28:50,370
+Variables all have to have types.
+
+642
+00:28:50,370 --> 00:28:52,630
+So, how do we specify this type
+
+643
+00:28:52,630 --> 00:28:54,880
+when we're in a situation
+where we don't care
+
+644
+00:28:54,880 --> 00:28:56,030
+what the type is?
+
+645
+00:28:56,030 --> 00:28:59,160
+So we have something
+that we're manipulating
+
+646
+00:28:59,160 --> 00:29:02,010
+but we don't really care
+what its type is, all right?
+
+647
+00:29:02,010 --> 00:29:03,370
+So, how do we do this?
+
+648
+00:29:03,370 --> 00:29:05,740
+Well, this is best shown by example.
+
+649
+00:29:05,740 --> 00:29:09,080
+One of the best example
+in the world is Array.
+
+650
+00:29:09,080 --> 00:29:13,000
+An Array contains a bunch of
+things, that's what an Array is
+
+651
+00:29:13,000 --> 00:29:15,910
+but it doesn't care what
+type those things are.
+
+652
+00:29:15,910 --> 00:29:18,480
+Inside Array's code though,
+it's got to store those things,
+
+653
+00:29:18,480 --> 00:29:21,983
+it's got to have some vars
+or something inside of it.
+
+654
+00:29:21,983 --> 00:29:25,270
+They're storing the things inside of it.
+
+655
+00:29:25,270 --> 00:29:28,140
+So how do we fix this conundrum
+
+656
+00:29:28,140 --> 00:29:30,560
+of where array needs to be storing things
+
+657
+00:29:30,560 --> 00:29:31,860
+but it actually doesn't even care
+
+658
+00:29:31,860 --> 00:29:33,820
+whether it's an Array of
+Int, Array of Strings,
+
+659
+00:29:33,820 --> 00:29:37,060
+Array of another Arrays,
+Set of Array, whatever,
+
+660
+00:29:37,060 --> 00:29:38,740
+Array doesn't care.
+
+661
+00:29:38,740 --> 00:29:42,110
+Also, Array has functions and vars on it.
+
+662
+00:29:42,110 --> 00:29:44,500
+They'll let you do things
+like add to the Array
+
+663
+00:29:44,500 --> 00:29:46,134
+or get the values of the Array.
+
+664
+00:29:46,134 --> 00:29:48,930
+How are those going to
+declare their return types
+
+665
+00:29:48,930 --> 00:29:50,630
+and their argument types?
+
+666
+00:29:50,630 --> 00:29:53,580
+Well, the answer is you
+do this with generics.
+
+667
+00:29:53,580 --> 00:29:56,940
+Now, other languages, Java, for example,
+
+668
+00:29:56,940 --> 00:29:58,080
+have generics as well.
+
+669
+00:29:58,080 --> 00:30:00,280
+For some of you, just
+a little bit of review
+
+670
+00:30:00,280 --> 00:30:02,810
+but we're going to take these generics
+
+671
+00:30:02,810 --> 00:30:05,600
+to the next level next
+week when we combine them
+
+672
+00:30:05,600 --> 00:30:08,760
+with some of the other
+type features in Swift.
+
+673
+00:30:08,760 --> 00:30:12,020
+So let's talk about how
+generics work with Array.
+
+674
+00:30:12,020 --> 00:30:13,510
+Array's declaration
+
+675
+00:30:13,510 --> 00:30:15,760
+looks something like this, approximately.
+
+676
+00:30:15,760 --> 00:30:19,460
+Struct Array, angle bracket, Element
+
+677
+00:30:19,460 --> 00:30:23,350
+and then, for example, the
+function append takes an argument
+
+678
+00:30:23,350 --> 00:30:25,910
+which is of type Element.
+
+679
+00:30:25,910 --> 00:30:28,600
+This type Element, what is it?
+
+680
+00:30:28,600 --> 00:30:32,320
+It's what I like to
+call a don't care type.
+
+681
+00:30:32,320 --> 00:30:36,010
+It's a type that Array
+just made up the name of,
+
+682
+00:30:36,010 --> 00:30:38,860
+that means I don't care what this type is.
+
+683
+00:30:38,860 --> 00:30:40,140
+So it's a don't care type,
+
+684
+00:30:40,140 --> 00:30:41,120
+and Array doesn't care.
+
+685
+00:30:41,120 --> 00:30:43,880
+It could be an Array of Int,
+Array of String, whatever.
+
+686
+00:30:43,880 --> 00:30:46,660
+This is essentially another
+kind of type in Swift
+
+687
+00:30:46,660 --> 00:30:50,430
+called I got to call
+anyway, I don't care type.
+
+688
+00:30:50,430 --> 00:30:53,530
+So now, Array's
+implementation about append
+
+689
+00:30:53,530 --> 00:30:56,310
+doesn't know anything
+about the Element's type.
+
+690
+00:30:56,310 --> 00:30:58,520
+It does not gonna send any messages to
+
+691
+00:30:58,520 --> 00:30:59,673
+or access any vars on the element,
+
+692
+00:30:59,673 --> 00:31:02,550
+it's just gonna store it in
+vars and stuff like that.
+
+693
+00:31:02,550 --> 00:31:04,730
+So Element, is kind of like a placeholder
+
+694
+00:31:04,730 --> 00:31:06,400
+for whatever type that is.
+
+695
+00:31:06,400 --> 00:31:10,090
+When does that type actually
+get set to be a real type,
+
+696
+00:31:10,090 --> 00:31:11,150
+not a placeholder?
+
+697
+00:31:11,150 --> 00:31:13,360
+Well, that's when people use Array.
+
+698
+00:31:13,360 --> 00:31:17,900
+So if I declare an Array, I
+can say var a equals Array
+
+699
+00:31:17,900 --> 00:31:19,910
+and now, I put in angle brackets
+
+700
+00:31:19,910 --> 00:31:22,690
+the actual type that Element is.
+
+701
+00:31:22,690 --> 00:31:24,790
+So this is an Array of Ints.
+
+702
+00:31:24,790 --> 00:31:26,970
+Now, it's sort of almost like someone did
+
+703
+00:31:26,970 --> 00:31:29,820
+a search and replace
+in all of Array's code
+
+704
+00:31:29,820 --> 00:31:32,620
+where they searched and
+replaced Element with Int.
+
+705
+00:31:32,620 --> 00:31:36,460
+So the function append now
+takes an Int as an argument.
+
+706
+00:31:36,460 --> 00:31:39,990
+That's why I can say a.append(5)
+and that works perfectly
+
+707
+00:31:39,990 --> 00:31:41,440
+'cause five is an Int
+
+708
+00:31:41,440 --> 00:31:44,403
+and append now takes
+an Int as an argument.
+
+709
+00:31:45,290 --> 00:31:47,320
+So, it's the using of Array
+
+710
+00:31:47,320 --> 00:31:49,760
+when Element's actual
+type gets determined,
+
+711
+00:31:49,760 --> 00:31:52,090
+when the code in Array is being written,
+
+712
+00:31:52,090 --> 00:31:53,160
+it's all a don't care.
+
+713
+00:31:53,160 --> 00:31:56,870
+It just uses the type Element,
+which is a don't care.
+
+714
+00:31:56,870 --> 00:31:59,140
+Notice that when you use
+a don't care like this,
+
+715
+00:31:59,140 --> 00:32:01,620
+you have to let the world know about it
+
+716
+00:32:01,620 --> 00:32:03,000
+because they're gonna have to tell you
+
+717
+00:32:03,000 --> 00:32:05,080
+what it actually is when they use it
+
+718
+00:32:05,080 --> 00:32:07,700
+and that's what the angle
+bracket Element there
+
+719
+00:32:07,700 --> 00:32:09,580
+at the top is all about.
+
+720
+00:32:09,580 --> 00:32:12,096
+And it's perfectly legal to
+have multiple don't cares.
+
+721
+00:32:12,096 --> 00:32:15,748
+Struct Array, angle bracket
+Element, comma, Foo, comma,
+
+722
+00:32:15,748 --> 00:32:18,890
+so you may have as many
+don't care as you want
+
+723
+00:32:18,890 --> 00:32:21,650
+and then the person who's
+using it has to specify
+
+724
+00:32:21,650 --> 00:32:23,433
+what all those types are.
+
+725
+00:32:24,940 --> 00:32:27,690
+Okay, I call these don't care types,
+
+726
+00:32:27,690 --> 00:32:29,310
+elements that don't care type.
+
+727
+00:32:29,310 --> 00:32:31,843
+The real name for these is type parameter.
+
+728
+00:32:33,750 --> 00:32:36,710
+And the last type I wanna
+talk about is functions.
+
+729
+00:32:36,710 --> 00:32:39,120
+So, functions are people too.
+
+730
+00:32:39,120 --> 00:32:42,450
+Functions can serve as a type
+
+731
+00:32:42,450 --> 00:32:47,020
+and the syntax for it is really
+simple and straightforward.
+
+732
+00:32:47,020 --> 00:32:51,070
+Here's some example of some
+functions that are types.
+
+733
+00:32:51,070 --> 00:32:54,940
+This in yellow, the stuff you
+see in yellow, that is a type.
+
+734
+00:32:54,940 --> 00:32:59,940
+Just imagine the yellow part
+is Int or String, right?
+
+735
+00:33:00,000 --> 00:33:02,040
+Or Array of Int, okay?
+
+736
+00:33:02,040 --> 00:33:04,070
+It's exactly, it's just as much a type
+
+737
+00:33:04,070 --> 00:33:05,320
+as any of those things.
+
+738
+00:33:05,320 --> 00:33:09,320
+So this type is a function
+that takes two Ints
+
+739
+00:33:09,320 --> 00:33:11,030
+and returns a Bool.
+
+740
+00:33:11,030 --> 00:33:12,240
+That's what that type is.
+
+741
+00:33:12,240 --> 00:33:15,390
+So you could have the parameter
+to a function of this type.
+
+742
+00:33:15,390 --> 00:33:18,290
+This one is a function that takes a Double
+
+743
+00:33:18,290 --> 00:33:20,230
+and returns nothing.
+
+744
+00:33:20,230 --> 00:33:23,350
+This one is a function that takes nothing
+
+745
+00:33:23,350 --> 00:33:25,350
+and returns an Array of Strings.
+
+746
+00:33:25,350 --> 00:33:28,290
+This one is a function
+that takes no arguments
+
+747
+00:33:28,290 --> 00:33:30,400
+and returns nothing.
+
+748
+00:33:30,400 --> 00:33:31,460
+These are all just types,
+
+749
+00:33:31,460 --> 00:33:34,010
+each of these yellow things, just a type.
+
+750
+00:33:34,010 --> 00:33:37,300
+Nothing kind of special
+about them, really.
+
+751
+00:33:37,300 --> 00:33:40,160
+That means I can declare a
+variable of one of these types.
+
+752
+00:33:40,160 --> 00:33:42,250
+So like let's say I have a variable foo,
+
+753
+00:33:42,250 --> 00:33:45,400
+its type could be a
+function that takes a Double
+
+754
+00:33:45,400 --> 00:33:47,010
+and returns nothing.
+
+755
+00:33:47,010 --> 00:33:48,420
+Or I could have a function.
+
+756
+00:33:48,420 --> 00:33:52,310
+Do something with an
+argument what, what to do
+
+757
+00:33:52,310 --> 00:33:55,510
+and it's type is a function
+that takes no arguments
+
+758
+00:33:55,510 --> 00:33:58,920
+and returns a Bool, presumably,
+in the body of do something
+
+759
+00:33:58,920 --> 00:34:01,580
+it wants to do that what.
+
+760
+00:34:01,580 --> 00:34:05,130
+So let's see how we use
+something that's of type function
+
+761
+00:34:05,130 --> 00:34:07,830
+so I'm gonna have here
+a var called operation
+
+762
+00:34:07,830 --> 00:34:10,730
+of type function that takes a
+Double and returns a Double.
+
+763
+00:34:11,710 --> 00:34:15,180
+And I'm going to create a function
+
+764
+00:34:15,180 --> 00:34:16,780
+that takes a Double and returns a Double.
+
+765
+00:34:16,780 --> 00:34:20,630
+So I have this function
+square, takes a operand Double
+
+766
+00:34:20,630 --> 00:34:22,750
+and returns a Double, it squares it,
+
+767
+00:34:22,750 --> 00:34:24,980
+operand times operand.
+
+768
+00:34:24,980 --> 00:34:27,400
+So now, since that's what it is I can say
+
+769
+00:34:27,400 --> 00:34:29,670
+operation equals square, right?
+
+770
+00:34:29,670 --> 00:34:32,397
+Operation of type function
+that takes a Double
+
+771
+00:34:32,397 --> 00:34:34,250
+and returns a Double equals square.
+
+772
+00:34:34,250 --> 00:34:36,790
+Square is a function that takes
+a Double, returns a Double.
+
+773
+00:34:36,790 --> 00:34:39,210
+It's perfectly legal and I can then,
+
+774
+00:34:39,210 --> 00:34:42,100
+now that I have operation,
+I can execute it by saying
+
+775
+00:34:42,100 --> 00:34:46,260
+let result1, let's say
+equal operation of four.
+
+776
+00:34:46,260 --> 00:34:50,900
+So result1 would be 16 'cause
+that's what square does.
+
+777
+00:34:50,900 --> 00:34:52,980
+Notice that when I
+called operation though,
+
+778
+00:34:52,980 --> 00:34:56,030
+I did not say operation operand:
+
+779
+00:34:56,030 --> 00:34:58,870
+The little var thing,
+that gets dropped, okay?
+
+780
+00:34:58,870 --> 00:35:01,190
+That's one thing happens
+when you pass something
+
+781
+00:35:01,190 --> 00:35:06,190
+through a function type is
+it loses its little labels.
+
+782
+00:35:06,640 --> 00:35:08,070
+But I could also come along and say
+
+783
+00:35:08,070 --> 00:35:09,660
+operation equals square root
+
+784
+00:35:09,660 --> 00:35:13,190
+so sqrt is a built-in function in Swift
+
+785
+00:35:13,190 --> 00:35:15,390
+and it square roots a thing,
+
+786
+00:35:15,390 --> 00:35:17,240
+but it's just a function
+that takes a Double
+
+787
+00:35:17,240 --> 00:35:18,480
+and returns a Double.
+
+788
+00:35:18,480 --> 00:35:20,430
+So I can say operation equals square root.
+
+789
+00:35:20,430 --> 00:35:23,563
+And now, if I say let
+result2 equal operation of 4,
+
+790
+00:35:23,563 --> 00:35:24,873
+result2 is gonna be two
+
+791
+00:35:24,873 --> 00:35:27,450
+because I changed the value of operation.
+
+792
+00:35:27,450 --> 00:35:29,140
+That used to be a function square
+
+793
+00:35:29,140 --> 00:35:32,110
+and I changed it to be
+a function square root.
+
+794
+00:35:32,110 --> 00:35:32,970
+It's simple as that.
+
+795
+00:35:32,970 --> 00:35:36,200
+I mean, seems almost too simple to be true
+
+796
+00:35:36,200 --> 00:35:38,280
+but it is what it is.
+
+797
+00:35:38,280 --> 00:35:40,900
+And in the demo that I'm gonna do
+
+798
+00:35:40,900 --> 00:35:42,970
+right in a few seconds here,
+
+799
+00:35:42,970 --> 00:35:44,658
+we're going to create
+our own little function
+
+800
+00:35:44,658 --> 00:35:47,270
+that takes a function as an argument.
+
+801
+00:35:47,270 --> 00:35:49,340
+You're gonna hear the phrase closures
+
+802
+00:35:49,340 --> 00:35:51,410
+and I'm gonna talk a
+lot more about closures
+
+803
+00:35:51,410 --> 00:35:53,313
+probably next week or the week after.
+
+804
+00:35:54,200 --> 00:35:57,430
+A closure is essentially
+inlining a function,
+
+805
+00:35:57,430 --> 00:36:00,487
+taking a function that you're
+passing to another function
+
+806
+00:36:00,487 --> 00:36:03,250
+as a parameter and you're in lining it
+
+807
+00:36:03,250 --> 00:36:06,440
+instead of having it be
+separately declared somewhere.
+
+808
+00:36:06,440 --> 00:36:08,450
+It's a little more than just inlining it
+
+809
+00:36:08,450 --> 00:36:09,960
+because it's doing some nice things
+
+810
+00:36:09,960 --> 00:36:12,115
+to capture local variables and things.
+
+811
+00:36:12,115 --> 00:36:14,240
+So, that's what I'm gonna
+talk about next week
+
+812
+00:36:14,240 --> 00:36:16,100
+but I am gonna show you what the syntax
+
+813
+00:36:16,100 --> 00:36:19,783
+of inlining functions
+looks like in the demo
+
+814
+00:36:19,783 --> 00:36:20,913
+that we're gonna do.
+
+815
+00:36:21,810 --> 00:36:25,580
+And in fact, that is the
+end of our slides for today.
+
+816
+00:36:25,580 --> 00:36:27,660
+So this is what we talked about
+
+817
+00:36:27,660 --> 00:36:31,140
+and so now, we're gonna
+go back to the demo
+
+818
+00:36:31,140 --> 00:36:34,890
+and we're gonna try and
+talk about everything
+
+819
+00:36:34,890 --> 00:36:37,990
+that I covered in the slides in the demo.
+
+820
+00:36:37,990 --> 00:36:40,490
+Remember that you're gonna
+have to reproduce this demo
+
+821
+00:36:40,490 --> 00:36:43,700
+for your first homework
+assignment, which is out there,
+
+822
+00:36:43,700 --> 00:36:45,410
+kind of came out with these lectures
+
+823
+00:36:45,410 --> 00:36:48,283
+so make sure you check Piazza for that.
+
+824
+00:36:49,820 --> 00:36:53,160
+Let's take our Memorize
+app here to the next level
+
+825
+00:36:53,160 --> 00:36:58,160
+by using this MVVM architecture
+to give it some brains,
+
+826
+00:36:58,510 --> 00:37:02,003
+some logic and some data being the cards.
+
+827
+00:37:02,003 --> 00:37:03,510
+How are we gonna do this?
+
+828
+00:37:03,510 --> 00:37:05,350
+Well, we've been working so far,
+
+829
+00:37:05,350 --> 00:37:08,690
+all this code that you see
+here on the screen on the View.
+
+830
+00:37:08,690 --> 00:37:13,580
+So in MVVM, we've been working
+on the first V, the View
+
+831
+00:37:13,580 --> 00:37:16,510
+and the next piece we're gonna
+work on is the Model, okay?
+
+832
+00:37:16,510 --> 00:37:19,260
+And again, the Model is UI independent,
+
+833
+00:37:19,260 --> 00:37:21,260
+it's not gonna know
+anything about how the game
+
+834
+00:37:21,260 --> 00:37:23,130
+is going to be displayed.
+
+835
+00:37:23,130 --> 00:37:26,820
+Anytime we're gonna add a
+new Swift file to Xcode,
+
+836
+00:37:26,820 --> 00:37:30,763
+that we do that with the
+File menu under New, File.
+
+837
+00:37:31,770 --> 00:37:34,470
+There's a lot of different
+kinds of files you can create
+
+838
+00:37:34,470 --> 00:37:37,350
+but really, comes down
+to these two right here.
+
+839
+00:37:37,350 --> 00:37:40,890
+This creates a new SwiftUI
+View for you, right?
+
+840
+00:37:40,890 --> 00:37:43,720
+Something that's gonna say
+struct whatever colon View
+
+841
+00:37:43,720 --> 00:37:47,960
+with var body, all that and
+this one creates a non-UI,
+
+842
+00:37:47,960 --> 00:37:50,480
+just blank Swift file,
+which is what we want
+
+843
+00:37:50,480 --> 00:37:54,620
+because our Model is not a UI struct.
+
+844
+00:37:54,620 --> 00:37:56,360
+So let's double click on this.
+
+845
+00:37:56,360 --> 00:37:58,500
+Now, it's asking you
+where you wanna store it
+
+846
+00:37:58,500 --> 00:38:00,000
+and what you wanna call it.
+
+847
+00:38:00,000 --> 00:38:02,600
+Well, this is gonna be the
+heart of our memory game
+
+848
+00:38:02,600 --> 00:38:05,440
+so I'm actually gonna
+call this file MemoryGame
+
+849
+00:38:05,440 --> 00:38:08,230
+because the struct that I'm
+gonna create inside of it,
+
+850
+00:38:08,230 --> 00:38:11,210
+the main struct, is a MemoryGame struct
+
+851
+00:38:11,210 --> 00:38:12,910
+that plays the MemoryGame.
+
+852
+00:38:12,910 --> 00:38:15,190
+So, what the other thing
+down here, it's asking
+
+853
+00:38:15,190 --> 00:38:16,850
+is where do you wanna put it?
+
+854
+00:38:16,850 --> 00:38:20,810
+This yellow is the same
+as this yellow over here
+
+855
+00:38:20,810 --> 00:38:25,120
+and similarly, this blue is
+the same as this blue up here.
+
+856
+00:38:25,120 --> 00:38:28,690
+We don't really ever wanna put
+things up here in the blue.
+
+857
+00:38:28,690 --> 00:38:30,650
+We wanna put them in these folders,
+
+858
+00:38:30,650 --> 00:38:32,590
+okay, these yellow folders.
+
+859
+00:38:32,590 --> 00:38:34,840
+Also, no matter which
+group you choose here,
+
+860
+00:38:34,840 --> 00:38:36,570
+you wanna make sure it's in the same place
+
+861
+00:38:36,570 --> 00:38:39,440
+in a filesystem as things
+like your content View.
+
+862
+00:38:39,440 --> 00:38:41,230
+You see the content View there,
+
+863
+00:38:41,230 --> 00:38:45,370
+we wanna make sure that's
+what's selected in here.
+
+864
+00:38:45,370 --> 00:38:47,280
+So let's create this.
+
+865
+00:38:47,280 --> 00:38:48,251
+Here it is, right?
+
+866
+00:38:48,251 --> 00:38:49,084
+MemoryGame.
+
+867
+00:38:49,084 --> 00:38:50,900
+Notice that it does not import SwiftUI
+
+868
+00:38:50,900 --> 00:38:53,780
+'cause it's not a UI thing.
+
+869
+00:38:53,780 --> 00:38:56,170
+Foundation here, this, I
+talked about this last time.
+
+870
+00:38:56,170 --> 00:38:59,580
+It has Array and Dictionary
+and String and Int and Bool
+
+871
+00:38:59,580 --> 00:39:00,680
+and all the basic types
+
+872
+00:39:00,680 --> 00:39:02,900
+but now, it doesn't have View or Text
+
+873
+00:39:02,900 --> 00:39:06,710
+or RoundedRectangle or
+any of those UI things.
+
+874
+00:39:06,710 --> 00:39:08,010
+So we're gonna create a struct here.
+
+875
+00:39:08,010 --> 00:39:10,720
+Remember, struct as our
+go-to data structure
+
+876
+00:39:10,720 --> 00:39:12,427
+and I'm gonna call it MemoryGame
+
+877
+00:39:13,510 --> 00:39:15,430
+and it's not gonna have colon View
+
+878
+00:39:15,430 --> 00:39:17,250
+because it's not gonna behave like a View,
+
+879
+00:39:17,250 --> 00:39:20,490
+it's a non-UI thing.
+
+880
+00:39:20,490 --> 00:39:24,080
+And when I create a struct
+that's gonna represent my Model,
+
+881
+00:39:24,080 --> 00:39:26,630
+by the way, my Model might
+not be a struct like this,
+
+882
+00:39:26,630 --> 00:39:30,580
+it might be a SQL database
+or some network thing
+
+883
+00:39:30,580 --> 00:39:32,640
+that I'm getting information from
+
+884
+00:39:32,640 --> 00:39:34,377
+but a lot of times, there's a struct
+
+885
+00:39:34,377 --> 00:39:37,760
+that's at least wrapping
+around a lot of that stuff.
+
+886
+00:39:37,760 --> 00:39:39,110
+It could also be a class.
+
+887
+00:39:39,110 --> 00:39:41,350
+It's possible in some circumstances
+
+888
+00:39:41,350 --> 00:39:44,000
+to have Models that are classes
+
+889
+00:39:44,000 --> 00:39:46,250
+but you don't get structs as our go-to
+
+890
+00:39:46,250 --> 00:39:47,800
+so we're definitely gonna start
+
+891
+00:39:47,800 --> 00:39:49,703
+with our go-to data structure here.
+
+892
+00:39:51,000 --> 00:39:54,600
+Now, when I create a Model,
+I'm always asking myself
+
+893
+00:39:54,600 --> 00:39:56,350
+what does this Model do?
+
+894
+00:39:56,350 --> 00:39:59,630
+And let me see if I can get
+the vars and functions in place
+
+895
+00:39:59,630 --> 00:40:04,000
+that could really describe
+what this thing does.
+
+896
+00:40:04,000 --> 00:40:05,590
+And so, when I think of a MemoryGame,
+
+897
+00:40:05,590 --> 00:40:07,480
+a card-matching MemoryGame,
+
+898
+00:40:07,480 --> 00:40:09,720
+the most important
+thing I'm thinking about
+
+899
+00:40:09,720 --> 00:40:11,290
+is gotta have some cards.
+
+900
+00:40:11,290 --> 00:40:15,410
+So I'm gonna have to have
+some var, which is the cards,
+
+901
+00:40:15,410 --> 00:40:17,240
+and of course, all of ours need a type
+
+902
+00:40:17,240 --> 00:40:20,200
+so we do types with colon something
+
+903
+00:40:20,200 --> 00:40:23,820
+and I think my cards
+are gonna be an Array.
+
+904
+00:40:23,820 --> 00:40:26,300
+And Array is a generic type,
+
+905
+00:40:26,300 --> 00:40:29,440
+which means it has this don't care type,
+
+906
+00:40:29,440 --> 00:40:31,410
+which in the case of an Array
+
+907
+00:40:31,410 --> 00:40:35,330
+is the type of the thing that
+is contained in the Array.
+
+908
+00:40:35,330 --> 00:40:38,960
+So, I'm gonna need some
+type, some real type
+
+909
+00:40:38,960 --> 00:40:40,010
+that is in this Array.
+
+910
+00:40:40,010 --> 00:40:43,750
+So it's gonna make one up, I'm
+gonna call it Card right here
+
+911
+00:40:43,750 --> 00:40:46,100
+and I'm just gonna go
+down and say struct Card
+
+912
+00:40:46,100 --> 00:40:49,060
+is some struct of some
+sort and this struct
+
+913
+00:40:49,060 --> 00:40:52,230
+is gonna have to represent a single card.
+
+914
+00:40:52,230 --> 00:40:56,860
+Notice that I put this struct
+Card inside of this struct.
+
+915
+00:40:56,860 --> 00:40:58,750
+So the full name of this one
+
+916
+00:40:58,750 --> 00:41:01,990
+is actually MemoryGame.Card.
+
+917
+00:41:01,990 --> 00:41:05,960
+Nesting structs inside
+structs, it's mostly a naming,
+
+918
+00:41:05,960 --> 00:41:08,250
+a name spacing thing so that we know
+
+919
+00:41:08,250 --> 00:41:09,810
+that this is not a playing card
+
+920
+00:41:09,810 --> 00:41:11,420
+or some other kind of random card,
+
+921
+00:41:11,420 --> 00:41:14,243
+it is a MemoryGames card
+that's why we put it in here
+
+922
+00:41:14,243 --> 00:41:16,210
+and has some other slight benefits
+
+923
+00:41:16,210 --> 00:41:19,370
+that you'll see along the way.
+
+924
+00:41:19,370 --> 00:41:21,410
+Now, what else does a MemoryGame need
+
+925
+00:41:21,410 --> 00:41:23,410
+beside a bunch of cards?
+
+926
+00:41:23,410 --> 00:41:25,270
+It needs a way to choose a Card.
+
+927
+00:41:25,270 --> 00:41:27,930
+So you're gonna see here
+your first definition
+
+928
+00:41:27,930 --> 00:41:31,650
+of a Swift function and you
+do it with the keyword func,
+
+929
+00:41:31,650 --> 00:41:34,420
+of course, and next is
+the name of the function,
+
+930
+00:41:34,420 --> 00:41:38,650
+I'm gonna call it choose
+and then any arguments,
+
+931
+00:41:38,650 --> 00:41:41,500
+in this case, you're gonna choose a Card,
+
+932
+00:41:41,500 --> 00:41:45,270
+so I'm gonna put this
+argument here for card.
+
+933
+00:41:45,270 --> 00:41:47,800
+Now, notice, as promised,
+
+934
+00:41:47,800 --> 00:41:52,350
+almost all arguments to
+all functions have a label
+
+935
+00:41:52,350 --> 00:41:56,040
+and this makes it so that when
+callers are calling choose,
+
+936
+00:41:56,040 --> 00:41:57,810
+it's clear that they're calling choose
+
+937
+00:41:57,810 --> 00:42:01,823
+with a card that that is
+the argument right there.
+
+938
+00:42:03,130 --> 00:42:07,510
+Now, inside here, we are going
+to have to actually fork off
+
+939
+00:42:07,510 --> 00:42:10,505
+and do all the logic for
+our game matching cards.
+
+940
+00:42:10,505 --> 00:42:13,000
+For now, I'm actually just going to do,
+
+941
+00:42:13,000 --> 00:42:14,940
+use a print of statements.
+
+942
+00:42:14,940 --> 00:42:17,640
+So, print is a great function in Swift
+
+943
+00:42:17,640 --> 00:42:20,260
+and it prints a string.
+
+944
+00:42:20,260 --> 00:42:22,870
+So here I'm printing an empty string.
+
+945
+00:42:22,870 --> 00:42:26,780
+But I can say something like card chosen
+
+946
+00:42:26,780 --> 00:42:31,780
+and then I wanna put this
+Card, somehow, in this print
+
+947
+00:42:31,870 --> 00:42:34,240
+right here and in other languages,
+
+948
+00:42:34,240 --> 00:42:38,370
+you might do %s and then
+put the card out here
+
+949
+00:42:38,370 --> 00:42:39,910
+but in Swift, you don't do that.
+
+950
+00:42:39,910 --> 00:42:42,020
+When you wanna embed something in a string
+
+951
+00:42:42,020 --> 00:42:43,320
+that's of a different type,
+
+952
+00:42:43,320 --> 00:42:45,030
+you actually do backslash,
+
+953
+00:42:45,030 --> 00:42:47,150
+open parentheses, close parentheses
+
+954
+00:42:47,150 --> 00:42:49,200
+and then you can put it in here.
+
+955
+00:42:49,200 --> 00:42:51,150
+And as long as this can be turned
+
+956
+00:42:51,150 --> 00:42:54,730
+to do a string of some
+sort, then this will work
+
+957
+00:42:54,730 --> 00:42:56,660
+and Swift is amazingly good
+
+958
+00:42:56,660 --> 00:43:00,860
+at turning almost anything into a string.
+
+959
+00:43:00,860 --> 00:43:03,400
+Now, this struct right here
+it doesn't have any vars
+
+960
+00:43:03,400 --> 00:43:06,270
+right in here so it probably
+not gonna print my job there,
+
+961
+00:43:06,270 --> 00:43:09,580
+might just say empty struct
+Card or something like that
+
+962
+00:43:09,580 --> 00:43:11,990
+but we're going to obviously add vars
+
+963
+00:43:11,990 --> 00:43:13,880
+and then when we say card chosen,
+
+964
+00:43:13,880 --> 00:43:17,390
+it's gonna print out what
+the values of those vars are
+
+965
+00:43:17,390 --> 00:43:19,230
+as long as all those vars can be converted
+
+966
+00:43:19,230 --> 00:43:20,150
+into strings as well.
+
+967
+00:43:20,150 --> 00:43:22,460
+So this is a super powerful mechanism.
+
+968
+00:43:22,460 --> 00:43:25,050
+this backslash, open
+parentheses, close parentheses.
+
+969
+00:43:25,050 --> 00:43:27,547
+I encourage you to use it,
+it's great for debugging.
+
+970
+00:43:27,547 --> 00:43:31,170
+You can print things
+out when things happen.
+
+971
+00:43:31,170 --> 00:43:32,440
+It's awesome.
+
+972
+00:43:32,440 --> 00:43:34,520
+Now, this is a pretty simple function.
+
+973
+00:43:34,520 --> 00:43:38,010
+We're gonna learn over the
+quarter various pieces of syntax
+
+974
+00:43:38,010 --> 00:43:38,843
+for doing functions.
+
+975
+00:43:38,843 --> 00:43:41,280
+For example, if this returned a value,
+
+976
+00:43:41,280 --> 00:43:42,790
+it would look like this, okay?
+
+977
+00:43:42,790 --> 00:43:44,540
+A little arrow this basically saying
+
+978
+00:43:44,540 --> 00:43:46,850
+coming out of this function is a string
+
+979
+00:43:46,850 --> 00:43:50,200
+but ours does not and if it
+had other arguments here,
+
+980
+00:43:50,200 --> 00:43:51,610
+might be other argument,
+
+981
+00:43:51,610 --> 00:43:53,070
+might be an Int or something like that.
+
+982
+00:43:53,070 --> 00:43:56,573
+It can have as many arguments as it wants.
+
+983
+00:43:58,670 --> 00:44:02,090
+So, basically, this is our
+entire MemoryGame right here.
+
+984
+00:44:02,090 --> 00:44:04,500
+Just ask cards, you can choose them.
+
+985
+00:44:04,500 --> 00:44:07,460
+But we're gonna have to
+really obviously decide
+
+986
+00:44:07,460 --> 00:44:10,970
+what a Card looks like,
+what's important about a Card
+
+987
+00:44:10,970 --> 00:44:15,400
+and one thing we know a Card has
+
+988
+00:44:15,400 --> 00:44:17,653
+is whether it's face-up
+or not so I'm gonna say
+
+989
+00:44:17,653 --> 00:44:19,236
+var isFaceUp: Bool.
+
+990
+00:44:20,290 --> 00:44:21,770
+I think, also, I'm gonna need to know
+
+991
+00:44:21,770 --> 00:44:24,123
+whether a Card is matched.
+
+992
+00:44:25,060 --> 00:44:27,570
+Okay, so it's gonna
+have that Bool as well.
+
+993
+00:44:27,570 --> 00:44:31,000
+And what else is there on a Card?
+
+994
+00:44:31,000 --> 00:44:34,830
+Well, I guess there's the
+contents of the Card, okay?
+
+995
+00:44:34,830 --> 00:44:36,810
+So, what's on the Card.
+
+996
+00:44:36,810 --> 00:44:38,500
+Now, this is a var.
+
+997
+00:44:38,500 --> 00:44:42,220
+I'll call it content and the question is
+
+998
+00:44:42,220 --> 00:44:45,720
+what type is this var going to be?
+
+999
+00:44:45,720 --> 00:44:48,370
+Now, I could imagine building a card game
+
+1000
+00:44:48,370 --> 00:44:50,360
+with images on there.
+
+1001
+00:44:50,360 --> 00:44:53,160
+Obviously, we can build
+a card game with emoji,
+
+1002
+00:44:53,160 --> 00:44:54,490
+that's what ours is.
+
+1003
+00:44:54,490 --> 00:44:57,600
+You could build a car game
+that just has words on it.
+
+1004
+00:44:57,600 --> 00:45:00,040
+Maybe it's a card game with numbers.
+
+1005
+00:45:00,040 --> 00:45:04,310
+So is this an Int or is it a String
+
+1006
+00:45:04,310 --> 00:45:07,305
+or is it an image of some sort?
+
+1007
+00:45:07,305 --> 00:45:12,305
+It's almost like we
+don't really care, okay?
+
+1008
+00:45:12,480 --> 00:45:13,820
+So, if we're a MemoryGame,
+
+1009
+00:45:13,820 --> 00:45:15,940
+you can put anything
+you want on the Cards.
+
+1010
+00:45:15,940 --> 00:45:18,900
+We're doing UI independent game playing
+
+1011
+00:45:18,900 --> 00:45:22,540
+so we don't really care
+what's on the Cards.
+
+1012
+00:45:22,540 --> 00:45:25,770
+So this is a don't care, okay?
+
+1013
+00:45:25,770 --> 00:45:26,790
+This is a don't care.
+
+1014
+00:45:26,790 --> 00:45:29,760
+So I'm gonna call this CardContent.
+
+1015
+00:45:29,760 --> 00:45:32,750
+That's a type I just made
+up, my don't care type
+
+1016
+00:45:32,750 --> 00:45:35,050
+and of course, if I do a don't care type,
+
+1017
+00:45:35,050 --> 00:45:38,830
+I'm required up here to say CardContent
+
+1018
+00:45:40,100 --> 00:45:43,520
+to declare to the world
+that I'm a generic type
+
+1019
+00:45:43,520 --> 00:45:46,220
+and I have this don't care that you,
+
+1020
+00:45:46,220 --> 00:45:48,650
+if you wanna use MemoryGame,
+
+1021
+00:45:48,650 --> 00:45:51,470
+you're going to have to
+tell me what this is.
+
+1022
+00:45:51,470 --> 00:45:55,750
+Now, in our game, once we
+start using this Model,
+
+1023
+00:45:55,750 --> 00:45:59,340
+we're gonna save MemoryGame,
+angle brackets string
+
+1024
+00:45:59,340 --> 00:46:02,010
+because an emoji is just
+a character in the string
+
+1025
+00:46:02,010 --> 00:46:04,250
+so we're gonna say angle brackets string
+
+1026
+00:46:04,250 --> 00:46:07,210
+and that's gonna define what
+kind of MemoryGame this is.
+
+1027
+00:46:07,210 --> 00:46:09,850
+But this is a really
+awesome simple example
+
+1028
+00:46:09,850 --> 00:46:11,680
+of this don't care business
+
+1029
+00:46:11,680 --> 00:46:15,040
+'cause really, this
+MemoryGame does not care
+
+1030
+00:46:15,040 --> 00:46:16,503
+what's on these Cards.
+
+1031
+00:46:18,300 --> 00:46:20,690
+All right, now that we have our Model here
+
+1032
+00:46:20,690 --> 00:46:22,490
+and we have our View right here,
+
+1033
+00:46:22,490 --> 00:46:27,300
+let's do the third piece of
+MVVM which is the ViewModel.
+
+1034
+00:46:27,300 --> 00:46:30,370
+So the ViewModel is going to be the glue
+
+1035
+00:46:30,370 --> 00:46:34,400
+that glues this totally
+UI independent thing
+
+1036
+00:46:34,400 --> 00:46:37,053
+to this totally UI dependent thing.
+
+1037
+00:46:38,120 --> 00:46:40,210
+So, let's do that by File, New again,
+
+1038
+00:46:40,210 --> 00:46:43,584
+we're gonna create a new
+thing here, so a new file.
+
+1039
+00:46:43,584 --> 00:46:46,560
+Okay, it's not a SwiftUI
+View, it is a UI thing
+
+1040
+00:46:46,560 --> 00:46:49,350
+but it's not an actual
+View, it's the ViewModel.
+
+1041
+00:46:49,350 --> 00:46:51,170
+So we're gonna Swift File.
+
+1042
+00:46:51,170 --> 00:46:54,380
+I'm gonna call my ViewModel here,
+
+1043
+00:46:54,380 --> 00:46:56,333
+I'm gonna call it EmojiMemoryGame
+
+1044
+00:46:57,395 --> 00:46:58,228
+because it's a specific kind of MemoryGame
+
+1045
+00:47:01,020 --> 00:47:04,820
+that happen to use emoji
+as the thing it draws.
+
+1046
+00:47:04,820 --> 00:47:08,040
+And I'm gonna make sure that
+it's in the right folder,
+
+1047
+00:47:08,040 --> 00:47:09,828
+it's in the same place as
+all the rest of the stuff.
+
+1048
+00:47:09,828 --> 00:47:11,380
+Okay, great.
+
+1049
+00:47:11,380 --> 00:47:13,660
+Here it is, EmojiMemoryGame.
+
+1050
+00:47:13,660 --> 00:47:16,100
+It's importing foundation but here,
+
+1051
+00:47:16,100 --> 00:47:19,600
+I could actually import SwiftUI if I want.
+
+1052
+00:47:19,600 --> 00:47:23,030
+I'm not actually gonna do UI in here,
+
+1053
+00:47:23,030 --> 00:47:26,988
+I'm going to be doing all
+my UI over here in my View.
+
+1054
+00:47:26,988 --> 00:47:31,860
+But the ViewModel is
+essentially a UI thing
+
+1055
+00:47:31,860 --> 00:47:32,693
+because it knows how this
+is gonna be drawn on screen.
+
+1056
+00:47:32,693 --> 00:47:35,343
+That's in fact some of its purpose in life
+
+1057
+00:47:39,090 --> 00:47:42,170
+is to take this UI
+independent Model MemoryGame
+
+1058
+00:47:42,170 --> 00:47:45,750
+and translate it to have
+it displayed in some way.
+
+1059
+00:47:45,750 --> 00:47:49,870
+In this case, as a EmojiMemoryGame.
+
+1060
+00:47:49,870 --> 00:47:52,600
+Before we dive into our ViewModel here,
+
+1061
+00:47:52,600 --> 00:47:55,140
+let's hide this preView which you can do,
+
+1062
+00:47:55,140 --> 00:47:56,340
+by the way, right here.
+
+1063
+00:47:56,340 --> 00:47:58,440
+You can see Show Editor Only.
+
+1064
+00:47:58,440 --> 00:47:59,450
+Well, hide that.
+
+1065
+00:47:59,450 --> 00:48:02,610
+You can always bring it back with Canvas.
+
+1066
+00:48:02,610 --> 00:48:04,073
+Okay, and then hide it again.
+
+1067
+00:48:05,180 --> 00:48:07,860
+So, let's build our ViewModel here.
+
+1068
+00:48:07,860 --> 00:48:10,030
+Now, one interesting
+thing right off the bat
+
+1069
+00:48:10,030 --> 00:48:14,020
+is that I'm gonna make
+our ViewModel be a class.
+
+1070
+00:48:14,020 --> 00:48:15,720
+I'm gonna call it EmojiMemoryGame.
+
+1071
+00:48:17,740 --> 00:48:20,180
+By the way it's a class, object-oriented,
+
+1072
+00:48:20,180 --> 00:48:21,860
+it could have a superclass here,
+
+1073
+00:48:21,860 --> 00:48:24,300
+which we would specify something like this
+
+1074
+00:48:24,300 --> 00:48:28,380
+but our emoji game does not
+have a superclass, okay?
+
+1075
+00:48:28,380 --> 00:48:31,790
+And I'm gonna explain in a
+moment here why this is a class
+
+1076
+00:48:31,790 --> 00:48:33,460
+instead of a struct.
+
+1077
+00:48:33,460 --> 00:48:37,150
+But let's think about what
+a ViewModel is, right?
+
+1078
+00:48:37,150 --> 00:48:40,860
+We know that it's essentially
+a portal between the Views
+
+1079
+00:48:40,860 --> 00:48:42,360
+and our Model, right?
+
+1080
+00:48:42,360 --> 00:48:46,670
+It's the door wait for the
+Views to get to the Model.
+
+1081
+00:48:46,670 --> 00:48:50,020
+So for sure, what our ViewModel needs here
+
+1082
+00:48:50,020 --> 00:48:53,560
+is some sort of var that it
+can access the Model through.
+
+1083
+00:48:53,560 --> 00:48:57,020
+Now, I'm actually calling
+this var model, right?
+
+1084
+00:48:57,020 --> 00:49:01,020
+Which you probably
+wouldn't call any var model
+
+1085
+00:49:01,020 --> 00:49:03,090
+because that's a concept
+
+1086
+00:49:03,090 --> 00:49:05,830
+but I'm calling it here just
+for instructor purposes.
+
+1087
+00:49:05,830 --> 00:49:09,250
+You'd really probably call
+this var something like game,
+
+1088
+00:49:09,250 --> 00:49:11,400
+something more descriptive of what it is.
+
+1089
+00:49:11,400 --> 00:49:13,190
+It's a MemoryGame so you'd
+probably call it game
+
+1090
+00:49:13,190 --> 00:49:15,077
+or memoryGame or something.
+
+1091
+00:49:15,077 --> 00:49:16,360
+But I'm gonna call it model
+
+1092
+00:49:16,360 --> 00:49:17,490
+so that all the rest of the code,
+
+1093
+00:49:17,490 --> 00:49:20,870
+you'll be able to see, oh,
+he's accessing the Model there.
+
+1094
+00:49:20,870 --> 00:49:23,460
+Now, what's the type of our Model?
+
+1095
+00:49:23,460 --> 00:49:26,010
+Well, that's this thing
+we just built over here,
+
+1096
+00:49:26,010 --> 00:49:29,630
+this struct MemoryGame, this
+generic MemoryGame thing
+
+1097
+00:49:29,630 --> 00:49:32,070
+that has this CardContent don't care,
+
+1098
+00:49:32,070 --> 00:49:34,960
+which is the contents of
+the Card and our emoji game,
+
+1099
+00:49:34,960 --> 00:49:38,160
+of course, the contents of the
+Cards are Strings, all right?
+
+1100
+00:49:38,160 --> 00:49:39,500
+Emojis are Strings.
+
+1101
+00:49:39,500 --> 00:49:42,280
+So this type is just MemoryGame
+
+1102
+00:49:42,280 --> 00:49:46,970
+where the CardContent is a String, okay?
+
+1103
+00:49:46,970 --> 00:49:49,470
+Simple as that.
+
+1104
+00:49:49,470 --> 00:49:54,350
+Now, let's talk more about
+why EmojiMemoryGame is a class
+
+1105
+00:49:54,350 --> 00:49:57,350
+and maybe I can even draw an analogy
+
+1106
+00:49:57,350 --> 00:50:00,470
+between the ViewModel and the Model
+
+1107
+00:50:00,470 --> 00:50:03,710
+that will help understand
+how these things interact.
+
+1108
+00:50:03,710 --> 00:50:08,410
+Now, a class, probably the
+biggest advantage of a class
+
+1109
+00:50:08,410 --> 00:50:13,350
+is that it's easy to share
+because a class lives in the heap
+
+1110
+00:50:13,350 --> 00:50:14,560
+and it has pointers to it.
+
+1111
+00:50:14,560 --> 00:50:17,970
+This is what you're used to in
+object-oriented programming.
+
+1112
+00:50:17,970 --> 00:50:20,210
+Well, since it lives in the
+heap, you can have pointers,
+
+1113
+00:50:20,210 --> 00:50:23,430
+all of our Views could have pointers to it
+
+1114
+00:50:23,430 --> 00:50:26,240
+and when we start building
+complicated user interfaces,
+
+1115
+00:50:26,240 --> 00:50:28,850
+we're gonna have lots of
+Views and many of those Views
+
+1116
+00:50:28,850 --> 00:50:31,530
+are gonna wanna look
+through this portal, okay?
+
+1117
+00:50:31,530 --> 00:50:33,817
+Which is what a few Model
+is, a portal on to the Model.
+
+1118
+00:50:33,817 --> 00:50:35,950
+You're gonna wanna look through here
+
+1119
+00:50:35,950 --> 00:50:37,147
+and see the Model, okay?
+
+1120
+00:50:37,147 --> 00:50:38,560
+And they're gonna wanna share it.
+
+1121
+00:50:38,560 --> 00:50:42,490
+So it's a really great use of class
+
+1122
+00:50:42,490 --> 00:50:44,140
+to have all these Views sharing,
+
+1123
+00:50:44,140 --> 00:50:45,950
+they'll each have a pointer to,
+
+1124
+00:50:45,950 --> 00:50:49,030
+this one, portal onto the Model.
+
+1125
+00:50:49,030 --> 00:50:53,020
+But as with many things,
+the class' biggest strength
+
+1126
+00:50:53,020 --> 00:50:56,130
+is also its greatest weakness, okay?
+
+1127
+00:50:56,130 --> 00:50:58,140
+The problem with lots of different people
+
+1128
+00:50:58,140 --> 00:51:02,260
+pointing to the same ViewModel here
+
+1129
+00:51:02,260 --> 00:51:05,460
+is that if any one of
+them kind of messes it up,
+
+1130
+00:51:05,460 --> 00:51:07,880
+it ruins the party for everybody.
+
+1131
+00:51:07,880 --> 00:51:10,490
+And especially in this circumstance.
+
+1132
+00:51:10,490 --> 00:51:12,100
+Here's my analogy.
+
+1133
+00:51:12,100 --> 00:51:15,680
+Imagine that there's a house, okay?
+
+1134
+00:51:15,680 --> 00:51:19,120
+And inside this house are all
+our Views, they lived there.
+
+1135
+00:51:19,120 --> 00:51:22,920
+And this ViewModel right
+here, EmojiMemoryGame
+
+1136
+00:51:22,920 --> 00:51:26,170
+is the front door because essentially,
+
+1137
+00:51:26,170 --> 00:51:28,773
+ViewModels are doorways, they're portals
+
+1138
+00:51:28,773 --> 00:51:30,860
+for the Views to exit the Model.
+
+1139
+00:51:30,860 --> 00:51:33,530
+And so the Model is the
+outside world, okay?
+
+1140
+00:51:33,530 --> 00:51:35,700
+Everything outside the
+house, that's the Model.
+
+1141
+00:51:35,700 --> 00:51:37,350
+So all of our Views will live in the house
+
+1142
+00:51:37,350 --> 00:51:39,140
+wanna look through the doorway
+
+1143
+00:51:39,140 --> 00:51:40,110
+and they're all sharing it, right?
+
+1144
+00:51:40,110 --> 00:51:40,943
+They all live in the house,
+
+1145
+00:51:40,943 --> 00:51:41,973
+they're all looking
+through the same doorway.
+
+1146
+00:51:41,973 --> 00:51:43,950
+They all have pointers
+to that same doorway.
+
+1147
+00:51:43,950 --> 00:51:45,910
+If you want think about it,
+they're huddled around it
+
+1148
+00:51:45,910 --> 00:51:47,750
+looking out and that's a good thing
+
+1149
+00:51:47,750 --> 00:51:50,420
+because they're all
+seeing the outside world
+
+1150
+00:51:50,420 --> 00:51:53,100
+in exactly the same way
+through this same doorway,
+
+1151
+00:51:53,100 --> 00:51:55,810
+so our UI is always gonna
+be nice and self consistent.
+
+1152
+00:51:55,810 --> 00:51:58,320
+They're all seeing the same thing.
+
+1153
+00:51:58,320 --> 00:52:01,520
+Now, there's a big problem
+with our front door right now
+
+1154
+00:52:01,520 --> 00:52:03,530
+is that it's wide open, okay?
+
+1155
+00:52:03,530 --> 00:52:04,860
+Our doorway is open.
+
+1156
+00:52:04,860 --> 00:52:07,390
+It has this var right here, model,
+
+1157
+00:52:07,390 --> 00:52:10,220
+which any of our Views could look at
+
+1158
+00:52:10,220 --> 00:52:14,220
+and they could go, for
+example, find a Card in there
+
+1159
+00:52:14,220 --> 00:52:17,580
+and they could set it to be isMatched
+
+1160
+00:52:17,580 --> 00:52:20,640
+and that could really
+mess up our game, okay?
+
+1161
+00:52:20,640 --> 00:52:22,810
+And why would that mess up our game?
+
+1162
+00:52:22,810 --> 00:52:24,980
+Well, maybe our game
+keeps track of the score
+
+1163
+00:52:24,980 --> 00:52:26,760
+and when Cards are matched,
+
+1164
+00:52:26,760 --> 00:52:28,220
+it gives you points or something
+
+1165
+00:52:28,220 --> 00:52:29,727
+and if you just went into the Cards
+
+1166
+00:52:29,727 --> 00:52:31,440
+and just set isMatched,
+
+1167
+00:52:31,440 --> 00:52:34,060
+now, the Card will be marked match
+
+1168
+00:52:34,060 --> 00:52:36,480
+but you never got any
+score change, et cetera,
+
+1169
+00:52:36,480 --> 00:52:39,770
+so essentially, that one bad rogue View
+
+1170
+00:52:39,770 --> 00:52:43,250
+has ruined the whole game
+for all the other Views
+
+1171
+00:52:43,250 --> 00:52:44,730
+who are all looking at the same thing.
+
+1172
+00:52:44,730 --> 00:52:48,610
+So you can see that this
+open doorway to the Model
+
+1173
+00:52:48,610 --> 00:52:50,837
+makes the fact that our
+ViewModel is a class
+
+1174
+00:52:50,837 --> 00:52:54,420
+and this share thing kinda dangerous.
+
+1175
+00:52:54,420 --> 00:52:56,180
+But there are some things we can do
+
+1176
+00:52:56,180 --> 00:53:00,370
+to mitigate the kind of worrisome effect
+
+1177
+00:53:00,370 --> 00:53:03,530
+of all sharing this same class
+
+1178
+00:53:03,530 --> 00:53:05,500
+but still have the advantage
+of them all sharing.
+
+1179
+00:53:05,500 --> 00:53:08,270
+And one is we can close the door, okay?
+
+1180
+00:53:08,270 --> 00:53:12,730
+So this var, if we mark it
+with the keyword private,
+
+1181
+00:53:12,730 --> 00:53:15,930
+that means that this model, this var
+
+1182
+00:53:15,930 --> 00:53:19,810
+can only be accessed now by
+the EmojiMemoryGame, okay?
+
+1183
+00:53:19,810 --> 00:53:22,700
+It is private to this class.
+
+1184
+00:53:22,700 --> 00:53:26,500
+Now, this solves that
+problem of the rogue View
+
+1185
+00:53:26,500 --> 00:53:29,390
+going off and setting isMatched in a Card
+
+1186
+00:53:29,390 --> 00:53:31,390
+but it kinda solves it too well
+
+1187
+00:53:31,390 --> 00:53:34,560
+because now, none of the Views
+can look out the door, okay?
+
+1188
+00:53:34,560 --> 00:53:36,570
+None of the Views can
+see the Model anymore.
+
+1189
+00:53:36,570 --> 00:53:40,010
+The store is closed
+and the outside world's
+
+1190
+00:53:40,010 --> 00:53:42,460
+inaccessible to the Views, all right?
+
+1191
+00:53:42,460 --> 00:53:46,540
+So, that is definitely a problem there.
+
+1192
+00:53:46,540 --> 00:53:50,180
+So, how can we find a middle ground there?
+
+1193
+00:53:50,180 --> 00:53:51,630
+Well, one way we can do that
+
+1194
+00:53:51,630 --> 00:53:53,670
+is by using a little
+different private here
+
+1195
+00:53:53,670 --> 00:53:56,120
+called private set.
+
+1196
+00:53:56,120 --> 00:53:58,010
+So if we say private set,
+
+1197
+00:53:58,010 --> 00:54:00,900
+that essentially like the door is closed
+
+1198
+00:54:00,900 --> 00:54:03,980
+but it's a glass door, okay?
+
+1199
+00:54:03,980 --> 00:54:07,180
+So private set means only EmojiMemoryGame
+
+1200
+00:54:07,180 --> 00:54:10,610
+can modify the Model but everyone else
+
+1201
+00:54:10,610 --> 00:54:12,300
+can still see the Model.
+
+1202
+00:54:12,300 --> 00:54:14,720
+So this is a glass door.
+
+1203
+00:54:14,720 --> 00:54:17,810
+Now, the glass door
+works great to make sure
+
+1204
+00:54:17,810 --> 00:54:19,690
+that the rouge View doesn't go in there
+
+1205
+00:54:19,690 --> 00:54:21,850
+and change a Card to be isMatched
+
+1206
+00:54:21,850 --> 00:54:23,440
+and doesn't get scored and all that.
+
+1207
+00:54:23,440 --> 00:54:25,850
+It fixes that problem but now,
+
+1208
+00:54:25,850 --> 00:54:27,600
+nobody can choose any Cards either
+
+1209
+00:54:27,600 --> 00:54:29,040
+because we can't get through,
+
+1210
+00:54:29,040 --> 00:54:33,400
+the Views can't get through the
+glass door to choose a Card,
+
+1211
+00:54:33,400 --> 00:54:34,880
+for example, that's one of the main things
+
+1212
+00:54:34,880 --> 00:54:37,470
+that these Views probably
+wanna do is tap on a Card,
+
+1213
+00:54:37,470 --> 00:54:38,687
+you wanna choose it.
+
+1214
+00:54:38,687 --> 00:54:41,580
+And so that's where these Intents come in.
+
+1215
+00:54:41,580 --> 00:54:45,018
+Remember, we talked about the ViewModels,
+
+1216
+00:54:45,018 --> 00:54:48,460
+one of its jobs is to
+interpret user intent
+
+1217
+00:54:48,460 --> 00:54:49,580
+and this is what just happened.
+
+1218
+00:54:49,580 --> 00:54:51,560
+I'm gonna actually put
+a little comment here.
+
+1219
+00:54:51,560 --> 00:54:55,497
+Mark Intent, okay, or Intents.
+
+1220
+00:54:55,497 --> 00:54:56,920
+Let's say Intents,
+
+1221
+00:54:56,920 --> 00:55:00,390
+and here, I'm just gonna provide functions
+
+1222
+00:55:00,390 --> 00:55:04,400
+that allow these Views to
+access the outside world.
+
+1223
+00:55:04,400 --> 00:55:07,810
+So, in our analogy, you can
+imagine there's a high-tech door
+
+1224
+00:55:07,810 --> 00:55:10,800
+with like a video doorbell
+intercom system or something
+
+1225
+00:55:10,800 --> 00:55:13,530
+and these Views are going
+to press the intercom button
+
+1226
+00:55:13,530 --> 00:55:14,817
+and talk to the outside world
+
+1227
+00:55:14,817 --> 00:55:17,347
+and say, please choose this Card, okay?
+
+1228
+00:55:17,347 --> 00:55:20,480
+And then the ViewModel which is the door,
+
+1229
+00:55:20,480 --> 00:55:23,730
+it can obviously talk
+to the Model directly
+
+1230
+00:55:23,730 --> 00:55:26,180
+and tell it to do things, it's
+going to make that happen.
+
+1231
+00:55:26,180 --> 00:55:29,190
+So these user Intents are kind of things
+
+1232
+00:55:29,190 --> 00:55:31,890
+that the Views would say
+into the intercom, okay?
+
+1233
+00:55:31,890 --> 00:55:34,800
+Things that they want
+to happen in the game.
+
+1234
+00:55:34,800 --> 00:55:37,680
+So, the obvious one here
+is to have a function
+
+1235
+00:55:37,680 --> 00:55:40,240
+called choose card, okay?
+
+1236
+00:55:40,240 --> 00:55:42,730
+Just like we have in the Model.
+
+1237
+00:55:42,730 --> 00:55:45,690
+And this is an Intent
+that the user might have
+
+1238
+00:55:45,690 --> 00:55:48,890
+to choose a Card and this Card right here,
+
+1239
+00:55:48,890 --> 00:55:50,820
+we have to make sure it
+give it its full name.
+
+1240
+00:55:50,820 --> 00:55:55,740
+It's a MemoryGame&lt;String&gt;.Card,
+
+1241
+00:55:55,740 --> 00:55:57,217
+that's it's full type
+
+1242
+00:55:57,217 --> 00:55:59,350
+and all the parts of its type.
+
+1243
+00:55:59,350 --> 00:56:01,350
+And this is gonna be
+really easy to implement,
+
+1244
+00:56:01,350 --> 00:56:05,060
+we're just gonna ask the
+Model to choose that Card.
+
+1245
+00:56:05,060 --> 00:56:07,760
+Okay, luckily, our Model happens to have
+
+1246
+00:56:07,760 --> 00:56:09,810
+exactly the function that we want.
+
+1247
+00:56:09,810 --> 00:56:11,840
+But keep in mind, our Model,
+
+1248
+00:56:11,840 --> 00:56:13,667
+again, it might be a SQL
+database or something
+
+1249
+00:56:13,667 --> 00:56:16,740
+and we have to issue a bunch
+of SQL commands in here
+
+1250
+00:56:16,740 --> 00:56:20,960
+to make this kind of
+the Intent by the user
+
+1251
+00:56:20,960 --> 00:56:22,580
+come to fruition.
+
+1252
+00:56:22,580 --> 00:56:26,390
+Of course, it's a very simple
+first app, demonstration app,
+
+1253
+00:56:26,390 --> 00:56:28,870
+so luckily, we can easily express
+
+1254
+00:56:28,870 --> 00:56:33,870
+this user's Intent in the
+Card right there, okay?
+
+1255
+00:56:33,980 --> 00:56:36,450
+So, this would work.
+
+1256
+00:56:36,450 --> 00:56:38,470
+It is nice, we can we have private set
+
+1257
+00:56:38,470 --> 00:56:42,020
+so we can see the Cards, we
+can look at the Model's Cards
+
+1258
+00:56:42,020 --> 00:56:45,220
+and we can express our
+intent to change the world.
+
+1259
+00:56:45,220 --> 00:56:48,080
+So we got this door, it's
+glass, we can see through it,
+
+1260
+00:56:48,080 --> 00:56:50,570
+it's protecting us from the outside world
+
+1261
+00:56:50,570 --> 00:56:53,500
+but we might even wanna
+be more restrictive.
+
+1262
+00:56:53,500 --> 00:56:56,610
+For example, we might really
+want that door to be closed
+
+1263
+00:56:56,610 --> 00:56:59,335
+and instead of looking
+through the glass door,
+
+1264
+00:56:59,335 --> 00:57:03,380
+you're going to use the
+video doorbell's video, okay?
+
+1265
+00:57:03,380 --> 00:57:04,870
+You know how video doorbell works,
+
+1266
+00:57:04,870 --> 00:57:07,420
+people come to the door
+and you can see them there
+
+1267
+00:57:07,420 --> 00:57:08,900
+on a little video screen.
+
+1268
+00:57:08,900 --> 00:57:12,080
+So, the analogy here of
+a little video screen
+
+1269
+00:57:12,080 --> 00:57:14,900
+is that we can provide vars and funcs
+
+1270
+00:57:14,900 --> 00:57:19,860
+that let people look at this
+Model in constricted ways.
+
+1271
+00:57:19,860 --> 00:57:22,324
+Now, we obviously want
+people to be able to see
+
+1272
+00:57:22,324 --> 00:57:23,790
+the Cards in the Model,
+
+1273
+00:57:23,790 --> 00:57:27,000
+so maybe I'll create
+my own var cards, okay?
+
+1274
+00:57:27,000 --> 00:57:31,923
+Which is also an array of
+MemoryGame&lt;String&gt;.Card, okay?
+
+1275
+00:57:37,870 --> 00:57:41,730
+And it's just going to
+return our Model's Cards.
+
+1276
+00:57:41,730 --> 00:57:43,270
+Again, same exact thing here.
+
+1277
+00:57:43,270 --> 00:57:46,070
+We have very simple
+Model, so it's easy to do
+
+1278
+00:57:46,070 --> 00:57:49,897
+but the ViewModel might be
+doing some interpretation here,
+
+1279
+00:57:49,897 --> 00:57:53,170
+either to try and massage the Model's data
+
+1280
+00:57:53,170 --> 00:57:57,670
+into some form that is
+more consumable by the View
+
+1281
+00:57:57,670 --> 00:57:59,600
+or it might actually be
+having to do some work,
+
+1282
+00:57:59,600 --> 00:58:01,870
+like maybe this data, this Model
+
+1283
+00:58:01,870 --> 00:58:03,230
+is coming from over the network
+
+1284
+00:58:03,230 --> 00:58:05,140
+and it has to be doing
+some network requests
+
+1285
+00:58:05,140 --> 00:58:06,600
+or something like that.
+
+1286
+00:58:06,600 --> 00:58:09,960
+But if we have a choice
+between adding some complexity
+
+1287
+00:58:09,960 --> 00:58:13,360
+to the ViewModel here to massage the data
+
+1288
+00:58:13,360 --> 00:58:15,340
+so that the View is simpler,
+
+1289
+00:58:15,340 --> 00:58:17,260
+we're always gonna make the
+trade-off in that direction.
+
+1290
+00:58:17,260 --> 00:58:19,770
+We want our Views to be
+as simple as possible
+
+1291
+00:58:19,770 --> 00:58:22,050
+so it's really part of the ViewModel's job
+
+1292
+00:58:22,050 --> 00:58:25,330
+to present the Model to the Views
+
+1293
+00:58:25,330 --> 00:58:29,380
+in a way that's easily
+consumable by the Views.
+
+1294
+00:58:29,380 --> 00:58:31,750
+Of course, this is a one-liner
+that returns something
+
+1295
+00:58:31,750 --> 00:58:33,803
+so we don't need return right there.
+
+1296
+00:58:35,170 --> 00:58:36,003
+So, that's nice.
+
+1297
+00:58:36,003 --> 00:58:38,750
+So in this case where we
+have a fully private door,
+
+1298
+00:58:38,750 --> 00:58:43,470
+fully closed door, we
+have this nice feature
+
+1299
+00:58:43,470 --> 00:58:45,877
+where we're letting them
+on the intercom here
+
+1300
+00:58:45,877 --> 00:58:50,710
+and so I might call this one mark access
+
+1301
+00:58:51,610 --> 00:58:53,510
+to the Model, okay?
+
+1302
+00:58:53,510 --> 00:58:55,410
+So these be functions and vars
+
+1303
+00:58:55,410 --> 00:58:57,310
+give the access to the var Models
+
+1304
+00:58:57,310 --> 00:58:58,840
+and then this is the Intents.
+
+1305
+00:58:58,840 --> 00:59:01,630
+By the way, this // MARK,
+the reason I'm doing that
+
+1306
+00:59:01,630 --> 00:59:03,730
+is if you look up here
+where it's telling you
+
+1307
+00:59:03,730 --> 00:59:05,234
+what's showing in here,
+
+1308
+00:59:05,234 --> 00:59:09,030
+it's actually showing you what
+the exact thing that's shown
+
+1309
+00:59:09,030 --> 00:59:11,470
+and those little marks, // MARKs
+
+1310
+00:59:11,470 --> 00:59:13,694
+provide these nice little kind of headers
+
+1311
+00:59:13,694 --> 00:59:17,810
+for the lists of functions and vars.
+
+1312
+00:59:18,700 --> 00:59:23,700
+I kinda prefer this little
+more closed non-glass door
+
+1313
+00:59:24,220 --> 00:59:27,250
+kind of approach to things
+
+1314
+00:59:27,250 --> 00:59:29,760
+but occasionally, it makes
+sense to do that private set
+
+1315
+00:59:29,760 --> 00:59:32,200
+and let people have a glass
+door and see the Model
+
+1316
+00:59:32,200 --> 00:59:34,840
+but you're always gonna
+wanna have this thing
+
+1317
+00:59:34,840 --> 00:59:36,500
+where the Intents are called out.
+
+1318
+00:59:36,500 --> 00:59:38,460
+This is almost like documentation.
+
+1319
+00:59:38,460 --> 00:59:40,760
+It's letting all the Views know,
+
+1320
+00:59:40,760 --> 00:59:42,290
+people who are writing View code,
+
+1321
+00:59:42,290 --> 00:59:45,273
+here's the things you can
+do to change the Model.
+
+1322
+00:59:46,500 --> 00:59:50,090
+Okay, so, what's this
+error we have right here?
+
+1323
+00:59:50,090 --> 00:59:54,120
+Class EmojiMemoryGame has no initializers.
+
+1324
+00:59:54,120 --> 00:59:55,270
+Hm, what does that mean?
+
+1325
+00:59:55,270 --> 00:59:57,165
+We have already learned about initializers
+
+1326
+00:59:57,165 --> 00:59:58,520
+so what is that?
+
+1327
+00:59:58,520 --> 01:00:01,760
+Well, this is essentially in a class,
+
+1328
+01:00:01,760 --> 01:00:04,700
+the same kind of complaint
+that you have a var
+
+1329
+01:00:04,700 --> 01:00:06,640
+that's not initialized and indeed,
+
+1330
+01:00:06,640 --> 01:00:09,530
+this var, this model
+var, while it has a type,
+
+1331
+01:00:09,530 --> 01:00:11,420
+it has no initial value, right?
+
+1332
+01:00:11,420 --> 01:00:14,422
+Needs to be set equal to something here
+
+1333
+01:00:14,422 --> 01:00:17,930
+to satisfy this requirement in Swift
+
+1334
+01:00:17,930 --> 01:00:21,580
+that all variables are initialized.
+
+1335
+01:00:21,580 --> 01:00:24,050
+So, how are we gonna initialize this?
+
+1336
+01:00:24,050 --> 01:00:25,490
+We essentially need to do this thing
+
+1337
+01:00:25,490 --> 01:00:29,050
+where we do MemoryGame&lt;String&gt;,
+
+1338
+01:00:29,050 --> 01:00:31,430
+the type and then in parentheses,
+
+1339
+01:00:31,430 --> 01:00:35,810
+we are going to give it
+its arguments or whatever.
+
+1340
+01:00:35,810 --> 01:00:38,110
+It actually has a little one here,
+
+1341
+01:00:38,110 --> 01:00:41,970
+we could double click the
+Cards, it wants the Cards.
+
+1342
+01:00:41,970 --> 01:00:43,130
+Why does it want the Cards?
+
+1343
+01:00:43,130 --> 01:00:46,030
+Well, if you look at our
+MemoryGame struct over here,
+
+1344
+01:00:46,030 --> 01:00:48,980
+it has an uninitialized var as well.
+
+1345
+01:00:48,980 --> 01:00:51,030
+So what's going on over here?
+
+1346
+01:00:51,030 --> 01:00:53,420
+It's saying oh, if you
+wanna create one of these,
+
+1347
+01:00:53,420 --> 01:00:56,173
+you're gonna have to give me this,
+
+1348
+01:00:57,314 --> 01:00:58,430
+a value for this Card.
+
+1349
+01:00:58,430 --> 01:01:00,274
+It's exactly the same
+thing we had over here
+
+1350
+01:01:00,274 --> 01:01:01,730
+when we had CardView isFaceUp
+
+1351
+01:01:02,780 --> 01:01:06,700
+was required to satisfy this
+thing not being initialized.
+
+1352
+01:01:06,700 --> 01:01:10,153
+So anytime you have these vars
+and they're not initialized,
+
+1353
+01:01:10,153 --> 01:01:13,610
+then it's up to whoever
+creates them to initialize them
+
+1354
+01:01:13,610 --> 01:01:15,260
+and that's what's going on here.
+
+1355
+01:01:15,260 --> 01:01:19,920
+But that's actually kind of
+bogus here, in this case,
+
+1356
+01:01:19,920 --> 01:01:22,160
+because this EmojiMemoryGame,
+
+1357
+01:01:22,160 --> 01:01:25,390
+it doesn't really wanna
+be off creating Cards,
+
+1358
+01:01:25,390 --> 01:01:29,390
+doing things like oh, setting
+them is face up and is matched
+
+1359
+01:01:29,390 --> 01:01:32,590
+and all that because it's
+really up to the MemoryGame
+
+1360
+01:01:32,590 --> 01:01:35,820
+to decide which Cards are
+face up, which are face down.
+
+1361
+01:01:35,820 --> 01:01:38,700
+So, really, it's the MemoryGame itself
+
+1362
+01:01:38,700 --> 01:01:41,540
+that wants to initialize
+these Cards right here.
+
+1363
+01:01:41,540 --> 01:01:43,097
+So it's almost like it wants to say
+
+1364
+01:01:43,097 --> 01:01:45,160
+equals something over here.
+
+1365
+01:01:45,160 --> 01:01:47,430
+But it's a little bit of a problem
+
+1366
+01:01:47,430 --> 01:01:48,980
+because it doesn't really know,
+
+1367
+01:01:48,980 --> 01:01:52,730
+for example, how many Cards
+are in this game, okay?
+
+1368
+01:01:52,730 --> 01:01:56,030
+So where is the number of
+Cards gonna be communicated
+
+1369
+01:01:56,030 --> 01:01:59,615
+from our ViewModel that's
+trying to create its Model
+
+1370
+01:01:59,615 --> 01:02:03,350
+over to the MemoryGame, okay?
+
+1371
+01:02:03,350 --> 01:02:06,120
+And the place we really
+like to do that is here.
+
+1372
+01:02:06,120 --> 01:02:08,450
+Instead of having creating a MemoryGame
+
+1373
+01:02:08,450 --> 01:02:11,420
+by giving it the Cards,
+be nice if we just create
+
+1374
+01:02:11,420 --> 01:02:14,510
+the MemoryGame by saying
+create a MemoryGame
+
+1375
+01:02:14,510 --> 01:02:17,990
+with this number of pairs of cards,
+
+1376
+01:02:17,990 --> 01:02:22,383
+two pairs or five, six
+pairs whatever of Cards.
+
+1377
+01:02:23,880 --> 01:02:26,930
+And then this MemoryGame
+would say, oh, okay,
+
+1378
+01:02:26,930 --> 01:02:31,930
+I will go and create this
+many Cards, pairs of Cards
+
+1379
+01:02:32,470 --> 01:02:35,110
+and I'll set them all up
+properly and do all that.
+
+1380
+01:02:35,110 --> 01:02:38,460
+So, the bottom line here
+is that we wanna create
+
+1381
+01:02:38,460 --> 01:02:42,810
+this MemoryGame&lt;String&gt; thing
+
+1382
+01:02:42,810 --> 01:02:47,150
+with some random other
+argument, not the Cards
+
+1383
+01:02:47,150 --> 01:02:49,550
+but some other piece of information.
+
+1384
+01:02:49,550 --> 01:02:51,780
+And this is very common to wanna do
+
+1385
+01:02:51,780 --> 01:02:55,840
+and the way we do this
+is with an init, okay?
+
+1386
+01:02:55,840 --> 01:02:59,880
+So we go over to here we're
+gonna add another new function.
+
+1387
+01:02:59,880 --> 01:03:02,570
+You don't have to say func init, okay?
+
+1388
+01:03:02,570 --> 01:03:04,240
+You can just say init
+
+1389
+01:03:04,240 --> 01:03:07,240
+because inits are, by
+definition, functions
+
+1390
+01:03:07,240 --> 01:03:09,930
+and you just give it
+whatever argument wants.
+
+1391
+01:03:09,930 --> 01:03:13,260
+So we want numberOfPairsOfCards
+
+1392
+01:03:13,260 --> 01:03:15,367
+and the type, that's an Int, right?
+
+1393
+01:03:15,367 --> 01:03:16,473
+And it doesn't have a return value
+
+1394
+01:03:16,473 --> 01:03:20,690
+because it's just going to
+initialize all of our variables,
+
+1395
+01:03:20,690 --> 01:03:23,430
+that's what an init does
+and what's really cool
+
+1396
+01:03:23,430 --> 01:03:25,800
+is you can have multiple of these inits,
+
+1397
+01:03:25,800 --> 01:03:27,980
+each with different arguments.
+
+1398
+01:03:27,980 --> 01:03:31,870
+So, if there were other
+ways we could think of
+
+1399
+01:03:31,870 --> 01:03:36,870
+to create a MemoryGame, we
+could have other inits, okay?
+
+1400
+01:03:37,210 --> 01:03:38,960
+And we've seen this before too.
+
+1401
+01:03:38,960 --> 01:03:41,670
+So we go back here, we look
+at RoundedRectangle, right?
+
+1402
+01:03:41,670 --> 01:03:44,000
+When we create a RoundedRectangle
+
+1403
+01:03:44,000 --> 01:03:45,140
+and we did open parentheses,
+
+1404
+01:03:45,140 --> 01:03:47,600
+look, there were four different ways
+
+1405
+01:03:47,600 --> 01:03:49,490
+to create a RoundedRectangle.
+
+1406
+01:03:49,490 --> 01:03:52,390
+Its radius or the corner
+size or some style
+
+1407
+01:03:52,390 --> 01:03:54,110
+or something going on here.
+
+1408
+01:03:54,110 --> 01:03:56,750
+So these would be four different inits
+
+1409
+01:03:56,750 --> 01:03:58,160
+with different arguments,
+
+1410
+01:03:58,160 --> 01:04:02,810
+all of them would be used to
+create a RoundedRectangle.
+
+1411
+01:04:02,810 --> 01:04:05,150
+Okay, so that's exactly the
+same thing going on here.
+
+1412
+01:04:05,150 --> 01:04:07,930
+In our case we only have this one init.
+
+1413
+01:04:09,220 --> 01:04:11,150
+Now, what is our init need to do here?
+
+1414
+01:04:11,150 --> 01:04:14,010
+Well, it needs to
+initialize all of our vars
+
+1415
+01:04:14,010 --> 01:04:17,389
+because we are not allowed
+to have a MemoryGame
+
+1416
+01:04:17,389 --> 01:04:21,580
+without all of its vars initialized.
+
+1417
+01:04:21,580 --> 01:04:23,100
+So let's dive right in and do that.
+
+1418
+01:04:23,100 --> 01:04:25,710
+I'm gonna start by creating my Cards
+
+1419
+01:04:25,710 --> 01:04:27,810
+as an empty Array of Cards, right?
+
+1420
+01:04:27,810 --> 01:04:29,450
+My cards are in Array of Cards.
+
+1421
+01:04:29,450 --> 01:04:34,040
+I'm gonna make cards to
+equal to an Array&lt;Card&gt;
+
+1422
+01:04:34,040 --> 01:04:35,940
+with open parentheses, close parentheses.
+
+1423
+01:04:35,940 --> 01:04:39,350
+In other words, I'm calling
+its init if it has one
+
+1424
+01:04:39,350 --> 01:04:42,540
+with no arguments and when
+you do that in an Array,
+
+1425
+01:04:42,540 --> 01:04:43,980
+it creates an empty Array.
+
+1426
+01:04:43,980 --> 01:04:47,770
+So this is cards is now an
+empty Array of Cards, okay?
+
+1427
+01:04:47,770 --> 01:04:51,480
+Which satisfies this
+requirement of initializing it.
+
+1428
+01:04:51,480 --> 01:04:52,790
+But, of course, we need to do more,
+
+1429
+01:04:52,790 --> 01:04:56,620
+we need to create this
+many pairs of Cards, okay?
+
+1430
+01:04:56,620 --> 01:04:58,820
+Add that those to this Array.
+
+1431
+01:04:58,820 --> 01:05:01,330
+So to do that, we're
+gonna need a for loop.
+
+1432
+01:05:01,330 --> 01:05:05,143
+So this is the first time you're
+seeing a for loop in Swift.
+
+1433
+01:05:05,143 --> 01:05:08,520
+It's for and the iteration variable
+
+1434
+01:05:08,520 --> 01:05:10,270
+which is gonna be the pairIndex, right?
+
+1435
+01:05:10,270 --> 01:05:13,520
+The index of the pair as I'm
+gonna do this for each pair.
+
+1436
+01:05:13,520 --> 01:05:14,725
+And then you say in.
+
+1437
+01:05:14,725 --> 01:05:17,190
+So for in is a for loop.
+
+1438
+01:05:17,190 --> 01:05:18,970
+It's the only kind of for loop in Swift
+
+1439
+01:05:18,970 --> 01:05:22,590
+and this is an iteratable thing, okay?
+
+1440
+01:05:22,590 --> 01:05:23,580
+We saw this before.
+
+1441
+01:05:23,580 --> 01:05:25,650
+This is anything that can be iterated,
+
+1442
+01:05:25,650 --> 01:05:27,570
+often, it's an Array, okay?
+
+1443
+01:05:27,570 --> 01:05:30,530
+In this case, I'm gonna do
+the same iteratable thing
+
+1444
+01:05:30,530 --> 01:05:34,070
+we did over here, which is a range, okay?
+
+1445
+01:05:34,070 --> 01:05:36,360
+So a range is an iteratable thing,
+
+1446
+01:05:36,360 --> 01:05:39,150
+an Array is also an iteratable thing
+
+1447
+01:05:39,150 --> 01:05:42,220
+but here I want a range
+that goes from zero up to
+
+1448
+01:05:42,220 --> 01:05:45,870
+but not including the
+number of pairs of cards.
+
+1449
+01:05:45,870 --> 01:05:47,710
+So this is how you do a for loop,
+
+1450
+01:05:47,710 --> 01:05:51,410
+it's going to do it for zero, one, two,
+
+1451
+01:05:51,410 --> 01:05:54,130
+up until and not including
+the number of pairs of cards.
+
+1452
+01:05:54,130 --> 01:05:56,360
+So if this is two pairs of cards,
+
+1453
+01:05:56,360 --> 01:05:58,720
+then it's gonna be zero, one,
+
+1454
+01:05:58,720 --> 01:06:01,410
+and then two is not less than two.
+
+1455
+01:06:01,410 --> 01:06:03,570
+So, it will stop, okay?
+
+1456
+01:06:03,570 --> 01:06:06,040
+So, inside here, I need to add two Cards.
+
+1457
+01:06:06,040 --> 01:06:09,820
+I'm gonna have to say to
+my Cards Array, append.
+
+1458
+01:06:09,820 --> 01:06:13,390
+So append is a function in Array
+
+1459
+01:06:13,390 --> 01:06:16,229
+and it lets you add a Card to it.
+
+1460
+01:06:16,229 --> 01:06:20,160
+So I'm gonna have to append
+a Card here of some kind,
+
+1461
+01:06:21,334 --> 01:06:23,350
+which we'll have to figure out how to do
+
+1462
+01:06:23,350 --> 01:06:25,930
+and then I'm gonna append
+another Card, okay?
+
+1463
+01:06:25,930 --> 01:06:27,880
+one, so just a pair of Cards.
+
+1464
+01:06:27,880 --> 01:06:29,900
+so I'm gonna do both pairs.
+
+1465
+01:06:29,900 --> 01:06:32,040
+Now, of course, I can't create a Card,
+
+1466
+01:06:32,040 --> 01:06:33,600
+one of these little Card things
+
+1467
+01:06:33,600 --> 01:06:35,213
+with just open parentheses,
+close parentheses,
+
+1468
+01:06:35,213 --> 01:06:38,260
+that's not legal, it's got these things
+
+1469
+01:06:38,260 --> 01:06:41,180
+but if I do the open
+parenthesis, oh, there,
+
+1470
+01:06:41,180 --> 01:06:45,090
+I get this nice bright
+little initializer here
+
+1471
+01:06:45,090 --> 01:06:46,950
+that it builds that lets me initialize
+
+1472
+01:06:46,950 --> 01:06:49,140
+every single argument, okay?
+
+1473
+01:06:49,140 --> 01:06:52,399
+So I can do that for both of these things.
+
+1474
+01:06:52,399 --> 01:06:55,710
+So you get this, if it's a
+struct, this is a struct,
+
+1475
+01:06:55,710 --> 01:06:59,260
+you get this kind of initializer for free.
+
+1476
+01:06:59,260 --> 01:07:01,520
+One that initializes every variable.
+
+1477
+01:07:01,520 --> 01:07:05,024
+By the way, for a class, it
+gets a free initializer as well
+
+1478
+01:07:05,024 --> 01:07:08,380
+but it initializes none
+of the variables, okay?
+
+1479
+01:07:08,380 --> 01:07:11,235
+So in a class, you either
+have to initialize them all
+
+1480
+01:07:11,235 --> 01:07:13,938
+with equals here, right?
+
+1481
+01:07:13,938 --> 01:07:18,340
+Or you have to create your
+own init that initializes it,
+
+1482
+01:07:18,340 --> 01:07:20,410
+like we're doing here, okay?
+
+1483
+01:07:20,410 --> 01:07:23,480
+But for struct we don't
+need an init on this
+
+1484
+01:07:23,480 --> 01:07:26,510
+because we get this free
+one since it's a struct,
+
+1485
+01:07:26,510 --> 01:07:27,880
+we get this this free one.
+
+1486
+01:07:27,880 --> 01:07:30,680
+So I'm creating a Card here so, of course,
+
+1487
+01:07:30,680 --> 01:07:32,240
+I learn to start face down.
+
+1488
+01:07:32,240 --> 01:07:34,410
+This is the beginning
+of the game, presumably,
+
+1489
+01:07:34,410 --> 01:07:36,302
+and of course, it's not yet matched
+
+1490
+01:07:36,302 --> 01:07:38,290
+and we oh, we got content.
+
+1491
+01:07:38,290 --> 01:07:40,116
+Hmm, well, that's gonna be interesting
+
+1492
+01:07:40,116 --> 01:07:43,470
+but we know both Cards
+wanna be like this, okay?
+
+1493
+01:07:43,470 --> 01:07:45,570
+So we're getting closer here, right?
+
+1494
+01:07:45,570 --> 01:07:47,800
+So we're appending our Card on there
+
+1495
+01:07:47,800 --> 01:07:51,302
+but what about this CardContent, okay?
+
+1496
+01:07:51,302 --> 01:07:53,260
+That's definitely a problem.
+
+1497
+01:07:53,260 --> 01:07:55,110
+It's kind of like I wanna do something
+
+1498
+01:07:55,110 --> 01:07:59,300
+like var content equals something here,
+
+1499
+01:07:59,300 --> 01:08:01,310
+the content of this pair,
+
+1500
+01:08:01,310 --> 01:08:02,800
+that's on this pair of Cards
+
+1501
+01:08:02,800 --> 01:08:04,810
+and then put that in here, right?
+
+1502
+01:08:04,810 --> 01:08:07,120
+Same content it's gonna be on both Cards
+
+1503
+01:08:07,120 --> 01:08:09,743
+because this is a pair of Cards.
+
+1504
+01:08:09,743 --> 01:08:14,330
+But it's like I don't really
+know how to create the content
+
+1505
+01:08:14,330 --> 01:08:17,300
+because this content
+is of type CardContent
+
+1506
+01:08:17,300 --> 01:08:19,570
+which for me, is a don't care.
+
+1507
+01:08:19,570 --> 01:08:20,940
+Like I don't even know what that is,
+
+1508
+01:08:20,940 --> 01:08:23,160
+it could be an Image,
+Int, String, I don't know
+
+1509
+01:08:23,160 --> 01:08:25,094
+so how could I possibly know
+
+1510
+01:08:25,094 --> 01:08:26,853
+how to create one of these things?
+
+1511
+01:08:26,853 --> 01:08:30,240
+There's just no way to do it.
+
+1512
+01:08:30,240 --> 01:08:34,420
+So, who does know how to create
+the content on this Card?
+
+1513
+01:08:34,420 --> 01:08:37,130
+Well, this guy sure does, okay?
+
+1514
+01:08:37,130 --> 01:08:38,960
+This is an EmojiMemoryGame.
+
+1515
+01:08:38,960 --> 01:08:40,920
+He knows he's creating a MemoryGame
+
+1516
+01:08:40,920 --> 01:08:44,430
+with CardContent String,
+presumably this guy
+
+1517
+01:08:44,430 --> 01:08:46,790
+would know how to create the contents
+
+1518
+01:08:46,790 --> 01:08:49,260
+of each pair of Cards, right?
+
+1519
+01:08:49,260 --> 01:08:52,700
+So somehow, we have to give
+this guy an opportunity
+
+1520
+01:08:52,700 --> 01:08:57,400
+to do this little creation
+of the content here.
+
+1521
+01:08:57,400 --> 01:09:01,560
+We're gonna do that with a function, okay?
+
+1522
+01:09:01,560 --> 01:09:03,697
+And I'm just gonna add
+another argument to my init,
+
+1523
+01:09:03,697 --> 01:09:07,150
+I'm gonna call it my cardContentFactory,
+
+1524
+01:09:07,150 --> 01:09:09,710
+that's the name of the argument
+
+1525
+01:09:09,710 --> 01:09:12,363
+and the type of this
+argument is a function.
+
+1526
+01:09:12,363 --> 01:09:14,460
+A function that takes an Int
+
+1527
+01:09:14,460 --> 01:09:17,830
+and returns the CardContent type.
+
+1528
+01:09:17,830 --> 01:09:20,610
+Again, this is a don't care,
+I don't care what it is
+
+1529
+01:09:20,610 --> 01:09:23,500
+but I'm gonna give you an
+Int, which is this pairIndex
+
+1530
+01:09:23,500 --> 01:09:25,000
+so I'm actually gonna let you even know
+
+1531
+01:09:25,000 --> 01:09:27,283
+which pair I'm making.
+
+1532
+01:09:27,283 --> 01:09:30,220
+And you just have to
+give me a CardContent.
+
+1533
+01:09:30,220 --> 01:09:32,232
+That's an Image, give me
+an Image, that's a string,
+
+1534
+01:09:32,232 --> 01:09:33,380
+give me a string, I don't care,
+
+1535
+01:09:33,380 --> 01:09:35,330
+this is my don't care for me.
+
+1536
+01:09:35,330 --> 01:09:37,527
+So here, I can use this CardContent
+
+1537
+01:09:37,527 --> 01:09:40,480
+by calling this function right here,
+
+1538
+01:09:40,480 --> 01:09:45,480
+cardContentFactory and I'll
+call it with the argument
+
+1539
+01:09:46,750 --> 01:09:49,340
+the pairIndex.
+
+1540
+01:09:49,340 --> 01:09:51,840
+Let's get our capitalization right
+
+1541
+01:09:51,840 --> 01:09:54,860
+and this is going to call this function.
+
+1542
+01:09:54,860 --> 01:09:58,620
+This type, function type,
+this could be a String
+
+1543
+01:09:58,620 --> 01:10:01,470
+or something like that but
+it's not, it's a function.
+
+1544
+01:10:01,470 --> 01:10:04,600
+So functions are first
+class types in Swift.
+
+1545
+01:10:04,600 --> 01:10:07,240
+They're not even
+particularly special, okay?
+
+1546
+01:10:07,240 --> 01:10:09,220
+You can pass functions around.
+
+1547
+01:10:09,220 --> 01:10:10,480
+Again, as you can imagine,
+
+1548
+01:10:10,480 --> 01:10:12,730
+in a functional programming language,
+
+1549
+01:10:12,730 --> 01:10:14,550
+being able to pass functions around,
+
+1550
+01:10:14,550 --> 01:10:16,380
+it's kind of fundamental, okay?
+
+1551
+01:10:16,380 --> 01:10:19,240
+It's kind of the basic
+part of the whole thing.
+
+1552
+01:10:19,240 --> 01:10:21,267
+So you don't wanna be afraid of this.
+
+1553
+01:10:21,267 --> 01:10:24,960
+In other languages, passing
+functions around can be torture.
+
+1554
+01:10:24,960 --> 01:10:27,874
+Your passing pointers to them
+and all kinds of crazy things.
+
+1555
+01:10:27,874 --> 01:10:31,470
+Here, just literally just explain
+
+1556
+01:10:31,470 --> 01:10:33,830
+the types of the arguments
+and the return and boom,
+
+1557
+01:10:33,830 --> 01:10:35,840
+you can pass a function around.
+
+1558
+01:10:35,840 --> 01:10:38,280
+Now, this has got a yellow warning here.
+
+1559
+01:10:38,280 --> 01:10:40,210
+By the way, we know red warnings
+
+1560
+01:10:40,210 --> 01:10:42,942
+are like ah, something won't
+compile, it's terrible.
+
+1561
+01:10:42,942 --> 01:10:46,770
+Yellow warnings will compile
+but you always wanna fix these
+
+1562
+01:10:46,770 --> 01:10:50,290
+because they're often gonna
+lead to future problems
+
+1563
+01:10:50,290 --> 01:10:52,500
+if not an immediate problem.
+
+1564
+01:10:52,500 --> 01:10:53,563
+So what's this one's saying?
+
+1565
+01:10:53,563 --> 01:10:55,720
+It's saying the variable content,
+
+1566
+01:10:55,720 --> 01:10:59,230
+that's this variable right
+here, was never mutated.
+
+1567
+01:10:59,230 --> 01:11:00,990
+Mutated, that means changed, right?
+
+1568
+01:11:00,990 --> 01:11:02,050
+It's never mutated.
+
+1569
+01:11:02,050 --> 01:11:04,600
+Consider changing to a let constant.
+
+1570
+01:11:04,600 --> 01:11:07,530
+So it's basically saying
+don't call this a var
+
+1571
+01:11:07,530 --> 01:11:09,543
+if it's not variable, okay?
+
+1572
+01:11:10,540 --> 01:11:13,660
+If it doesn't vary, it shouldn't be a var,
+
+1573
+01:11:13,660 --> 01:11:17,070
+instead, in Swift, we use the keyword let
+
+1574
+01:11:17,070 --> 01:11:19,850
+and we could just type
+it here, let to fix it
+
+1575
+01:11:19,850 --> 01:11:22,930
+or we could also use
+this warning right here,
+
+1576
+01:11:22,930 --> 01:11:25,320
+click on it and do the fix.
+
+1577
+01:11:25,320 --> 01:11:29,310
+So the fix is gonna replace
+var with let right here, watch.
+
+1578
+01:11:29,310 --> 01:11:30,330
+Fix.
+
+1579
+01:11:30,330 --> 01:11:31,210
+Okay, so it makes a let.
+
+1580
+01:11:31,210 --> 01:11:33,440
+And let is a really nice word here
+
+1581
+01:11:33,440 --> 01:11:36,100
+because this reads very much like English.
+
+1582
+01:11:36,100 --> 01:11:38,100
+That content equal the results
+
+1583
+01:11:38,100 --> 01:11:42,420
+of calling the cardContentFactory
+for this pairIndex, okay?
+
+1584
+01:11:42,420 --> 01:11:45,360
+Every time you have any kind of variable
+
+1585
+01:11:45,360 --> 01:11:48,400
+that doesn't actually vary, in
+other words, it's a constant,
+
+1586
+01:11:48,400 --> 01:11:50,863
+you always wanna use let here.
+
+1587
+01:11:51,780 --> 01:11:53,740
+Now, another thing to note
+here is kind of interesting
+
+1588
+01:11:53,740 --> 01:11:57,060
+is we didn't put a type on this thing.
+
+1589
+01:11:57,060 --> 01:12:00,580
+We didn't say type CardContent even though
+
+1590
+01:12:00,580 --> 01:12:01,980
+that is what type this is.
+
+1591
+01:12:01,980 --> 01:12:03,740
+This is of type CardContent
+
+1592
+01:12:03,740 --> 01:12:07,050
+because that's what
+contentCardFactory returns
+
+1593
+01:12:07,050 --> 01:12:08,457
+but we didn't have to do this.
+
+1594
+01:12:08,457 --> 01:12:11,730
+And this is part of Swift just
+figuring things out for you,
+
+1595
+01:12:11,730 --> 01:12:13,700
+inferring the types whenever it can
+
+1596
+01:12:13,700 --> 01:12:16,250
+and we're really gonna
+see that on the other side
+
+1597
+01:12:16,250 --> 01:12:19,923
+of calling this init in just
+a moment right here, okay?
+
+1598
+01:12:21,100 --> 01:12:23,660
+All right, so let's go back to that side
+
+1599
+01:12:23,660 --> 01:12:25,530
+and see where we create our MemoryGame.
+
+1600
+01:12:25,530 --> 01:12:27,430
+And put this on a separate line
+
+1601
+01:12:27,430 --> 01:12:28,580
+so we get a little more room.
+
+1602
+01:12:28,580 --> 01:12:31,140
+So now, we've added a second argument here
+
+1603
+01:12:31,140 --> 01:12:33,990
+to number of pairs of cards
+it's this cardContentFactory,
+
+1604
+01:12:35,630 --> 01:12:40,340
+and this value that goes
+here has to be a function
+
+1605
+01:12:40,340 --> 01:12:42,980
+that takes an Int, which is the pairIndex,
+
+1606
+01:12:42,980 --> 01:12:47,520
+and returns a CardContent which
+we know to be String here.
+
+1607
+01:12:47,520 --> 01:12:48,728
+So it has to return a String.
+
+1608
+01:12:48,728 --> 01:12:50,280
+So let's create such a function.
+
+1609
+01:12:50,280 --> 01:12:54,604
+Watch this, func, I'm gonna
+call it createCardContent.
+
+1610
+01:12:54,604 --> 01:12:58,600
+We know that it has to take an
+Int which is that pairIndex,
+
+1611
+01:12:58,600 --> 01:13:02,060
+going Int, and we know it
+has to return CardContent,
+
+1612
+01:13:02,060 --> 01:13:04,840
+which would want to be a String.
+
+1613
+01:13:04,840 --> 01:13:07,860
+Okay, because this is a
+MemoryGame of String, all right?
+
+1614
+01:13:07,860 --> 01:13:11,525
+Now, I'm gonna return,
+let's just return for now
+
+1615
+01:13:11,525 --> 01:13:14,780
+some emoji, how about that?
+
+1616
+01:13:14,780 --> 01:13:16,980
+Put the same emoji on every single Card,
+
+1617
+01:13:16,980 --> 01:13:19,200
+maybe a smiley face right there.
+
+1618
+01:13:19,200 --> 01:13:23,090
+So here we are returning
+a string right there.
+
+1619
+01:13:23,090 --> 01:13:28,090
+And we can now use this
+and say createCardContent.
+
+1620
+01:13:28,970 --> 01:13:32,330
+So this is an argument
+that takes a function
+
+1621
+01:13:32,330 --> 01:13:35,350
+that takes an Int and returns a String.
+
+1622
+01:13:35,350 --> 01:13:38,110
+This certainly qualifies
+and so this is legal.
+
+1623
+01:13:38,110 --> 01:13:39,859
+Look, no errors, no warnings.
+
+1624
+01:13:39,859 --> 01:13:43,068
+This is all perfectly
+legal way to do this.
+
+1625
+01:13:43,068 --> 01:13:45,950
+However, we would never do it this way
+
+1626
+01:13:45,950 --> 01:13:48,450
+because we don't want to
+have to go be creating
+
+1627
+01:13:48,450 --> 01:13:51,050
+these extra little functions to do that.
+
+1628
+01:13:51,050 --> 01:13:54,160
+Instead, we would inline this right here
+
+1629
+01:13:54,160 --> 01:13:56,360
+inline with this code.
+
+1630
+01:13:56,360 --> 01:13:59,450
+So watch carefully now I'm
+gonna go through the process
+
+1631
+01:13:59,450 --> 01:14:02,100
+of how we take this function right here
+
+1632
+01:14:02,100 --> 01:14:04,640
+and inline it right here, okay?
+
+1633
+01:14:04,640 --> 01:14:08,460
+This inlining of functions
+in Swift is called a closure
+
+1634
+01:14:08,460 --> 01:14:11,120
+and it's called a closure
+because it actually captures
+
+1635
+01:14:11,120 --> 01:14:14,340
+the information from the
+surroundings that it needs to work.
+
+1636
+01:14:14,340 --> 01:14:16,300
+We'll talk about that later but basically,
+
+1637
+01:14:16,300 --> 01:14:19,640
+you can think of it for
+now as an inline function.
+
+1638
+01:14:19,640 --> 01:14:23,140
+So we're going to select this function,
+
+1639
+01:14:23,140 --> 01:14:25,270
+everything about it except for its name.
+
+1640
+01:14:25,270 --> 01:14:27,930
+When we inline, it
+doesn't need a name, okay?
+
+1641
+01:14:27,930 --> 01:14:31,720
+No need for a name because just
+sitting right there inline.
+
+1642
+01:14:31,720 --> 01:14:34,240
+So I'm gonna select
+everything except the name
+
+1643
+01:14:34,240 --> 01:14:37,360
+and I'm going to cut
+then I'm gonna go here
+
+1644
+01:14:37,360 --> 01:14:39,930
+and paste it here
+instead of the name here.
+
+1645
+01:14:39,930 --> 01:14:41,170
+So, paste.
+
+1646
+01:14:41,170 --> 01:14:43,690
+Now, this almost works as is
+
+1647
+01:14:43,690 --> 01:14:47,100
+but there's one thing I always
+have to do when I do this
+
+1648
+01:14:47,100 --> 01:14:50,610
+is to take this curly brace right here,
+
+1649
+01:14:50,610 --> 01:14:54,130
+cut it, replace it with the word in
+
+1650
+01:14:54,130 --> 01:14:59,040
+and then paste the curly
+brace over here at the start.
+
+1651
+01:14:59,040 --> 01:15:02,020
+And essentially, the curly
+braces have to surround
+
+1652
+01:15:02,020 --> 01:15:04,420
+the entire inline function.
+
+1653
+01:15:04,420 --> 01:15:07,620
+So, that's why we move the
+curly brace out in front
+
+1654
+01:15:07,620 --> 01:15:10,620
+of its arguments and return type there
+
+1655
+01:15:10,620 --> 01:15:14,350
+and use this in to separate it.
+
+1656
+01:15:14,350 --> 01:15:16,270
+Okay, now, we don't need this func up here
+
+1657
+01:15:16,270 --> 01:15:18,060
+and you can see again, no errors,
+
+1658
+01:15:18,060 --> 01:15:21,860
+this was perfectly legal
+way to inline this function.
+
+1659
+01:15:21,860 --> 01:15:24,950
+By the way, you probably
+recognize this in,
+
+1660
+01:15:24,950 --> 01:15:28,650
+we used to somewhere else
+over here in our View
+
+1661
+01:15:28,650 --> 01:15:32,410
+with for each, it used in and
+had a little argument here.
+
+1662
+01:15:32,410 --> 01:15:35,070
+So, this is gonna start
+making a lot more sense to you
+
+1663
+01:15:35,070 --> 01:15:37,880
+once we finish up with this.
+
+1664
+01:15:37,880 --> 01:15:39,700
+And what do I mean by
+finish off with this?
+
+1665
+01:15:39,700 --> 01:15:40,759
+Isn't this just finished?
+
+1666
+01:15:40,759 --> 01:15:45,100
+Well, not quite because just
+like when we were over here,
+
+1667
+01:15:45,100 --> 01:15:49,420
+Swift was able to infer that
+this was type CardContent
+
+1668
+01:15:49,420 --> 01:15:54,170
+so we didn't have to say
+colon CardContent here, right?
+
+1669
+01:15:54,170 --> 01:15:59,080
+So that kind of inferring that
+we call that type inference
+
+1670
+01:15:59,080 --> 01:16:00,960
+is really nice in a language
+
+1671
+01:16:00,960 --> 01:16:03,710
+where everything has to be strongly typed,
+
+1672
+01:16:03,710 --> 01:16:06,000
+every single var has to have a type, okay?
+
+1673
+01:16:06,000 --> 01:16:10,960
+That's somewhat of a
+burden but type inference
+
+1674
+01:16:10,960 --> 01:16:13,770
+helps make it so that
+it's not such a burden.
+
+1675
+01:16:13,770 --> 01:16:17,910
+And what kind of types
+can Swift infer in here?
+
+1676
+01:16:17,910 --> 01:16:19,530
+Well, a whole lot of them.
+
+1677
+01:16:19,530 --> 01:16:22,370
+It knows the type of this var,
+
+1678
+01:16:22,370 --> 01:16:25,000
+which is a function that takes an Int
+
+1679
+01:16:25,000 --> 01:16:27,740
+and returns a CardContent.
+
+1680
+01:16:27,740 --> 01:16:30,670
+So that means that we don't
+need to say this is an Int
+
+1681
+01:16:30,670 --> 01:16:34,350
+and we don't need to say
+this returns to String, okay?
+
+1682
+01:16:34,350 --> 01:16:35,600
+Swift can infer that.
+
+1683
+01:16:35,600 --> 01:16:39,010
+Again, look, no errors, no
+warnings, it's perfectly legal.
+
+1684
+01:16:39,010 --> 01:16:40,320
+You don't even really need
+
+1685
+01:16:40,320 --> 01:16:43,182
+these parentheses right here, okay?
+
+1686
+01:16:43,182 --> 01:16:45,760
+'Cause they're not really
+doing anything at that point
+
+1687
+01:16:45,760 --> 01:16:47,657
+and here, this pairIndex in,
+
+1688
+01:16:47,657 --> 01:16:51,340
+again, like an awful lot
+like index in over here
+
+1689
+01:16:51,340 --> 01:16:53,543
+'cause this, it turns out
+is a function as well,
+
+1690
+01:16:53,543 --> 01:16:54,450
+kind of a special function
+
+1691
+01:16:54,450 --> 01:16:56,720
+because you can list the Views there
+
+1692
+01:16:56,720 --> 01:17:00,760
+but it's the same syntax
+that's going on here.
+
+1693
+01:17:00,760 --> 01:17:02,490
+But we're not done yet because, of course,
+
+1694
+01:17:02,490 --> 01:17:04,920
+we know this is now a one line function
+
+1695
+01:17:04,920 --> 01:17:07,760
+that returns this string.
+
+1696
+01:17:07,760 --> 01:17:10,617
+So we don't need return right there.
+
+1697
+01:17:10,617 --> 01:17:14,720
+And we could even clean up
+some of this space here,
+
+1698
+01:17:14,720 --> 01:17:17,860
+remove some of the space like that
+
+1699
+01:17:17,860 --> 01:17:22,050
+and even more, we know that if
+you have a curly brace thing,
+
+1700
+01:17:22,050 --> 01:17:24,720
+that is the last argument, right?
+
+1701
+01:17:24,720 --> 01:17:27,526
+The last argument that
+this init has two arguments
+
+1702
+01:17:27,526 --> 01:17:30,180
+and this is the last one.
+
+1703
+01:17:30,180 --> 01:17:33,360
+We can do the same thing we
+did with the last argument
+
+1704
+01:17:33,360 --> 01:17:35,810
+for ForEach, the last argument to HStack,
+
+1705
+01:17:35,810 --> 01:17:39,460
+the last argument to ZStack,
+do the exact same thing here
+
+1706
+01:17:39,460 --> 01:17:42,183
+which is to get rid of the keyword, okay?
+
+1707
+01:17:43,390 --> 01:17:48,390
+And put the curly brace thing
+outside, floating outside
+
+1708
+01:17:48,600 --> 01:17:53,117
+so we end up with this very
+streamlined function here
+
+1709
+01:17:54,530 --> 01:17:55,580
+and even more than that,
+
+1710
+01:17:55,580 --> 01:17:58,888
+notice that since we're just
+always returning a smiley face,
+
+1711
+01:17:58,888 --> 01:18:00,970
+you don't really even
+need this pairIndex here
+
+1712
+01:18:00,970 --> 01:18:02,290
+but you can't delete it,
+
+1713
+01:18:02,290 --> 01:18:05,000
+you have to mark it with an underbar
+
+1714
+01:18:05,000 --> 01:18:06,780
+just to say yeah, I know this is supposed
+
+1715
+01:18:06,780 --> 01:18:08,610
+to take an argument but I don't need it
+
+1716
+01:18:08,610 --> 01:18:10,850
+so I'm just gonna use under
+var and then in Swift,
+
+1717
+01:18:10,850 --> 01:18:14,790
+you're gonna see we use
+underbar anytime we mean,
+
+1718
+01:18:14,790 --> 01:18:15,900
+it doesn't matter what this is,
+
+1719
+01:18:15,900 --> 01:18:19,200
+I'm not gonna use this
+things, kind of unused things
+
+1720
+01:18:19,200 --> 01:18:22,480
+so we're not using that
+pairIndex and so it does this.
+
+1721
+01:18:22,480 --> 01:18:27,480
+So, it's really nice simple syntax here.
+
+1722
+01:18:27,600 --> 01:18:28,840
+And you're gonna wanna get used to this
+
+1723
+01:18:28,840 --> 01:18:31,280
+because we're gonna be doing
+this calling functions.
+
+1724
+01:18:31,280 --> 01:18:32,890
+You've already seen in the View,
+
+1725
+01:18:32,890 --> 01:18:35,940
+we do these things all over
+the rest, these curly braces,
+
+1726
+01:18:35,940 --> 01:18:38,429
+they're everywhere and this
+is functional programming
+
+1727
+01:18:38,429 --> 01:18:41,580
+so we're gonna be passing a
+lot of functions as arguments
+
+1728
+01:18:41,580 --> 01:18:43,360
+to other functions.
+
+1729
+01:18:43,360 --> 01:18:46,020
+What if we wanna do something
+
+1730
+01:18:46,020 --> 01:18:48,300
+where we're actually
+returning a different emoji
+
+1731
+01:18:48,300 --> 01:18:49,650
+for each pair of cards, okay?
+
+1732
+01:18:49,650 --> 01:18:51,450
+We don't wanna have every pair of Cards
+
+1733
+01:18:51,450 --> 01:18:52,283
+have the smiley face,
+
+1734
+01:18:52,283 --> 01:18:53,567
+that would make the game very easy
+
+1735
+01:18:53,567 --> 01:18:55,010
+but we don't wanna do that.
+
+1736
+01:18:55,010 --> 01:18:57,500
+So how would we do a more
+complicated thing there?
+
+1737
+01:18:57,500 --> 01:18:59,350
+Well, to do that, first of all,
+
+1738
+01:18:59,350 --> 01:19:01,330
+I'm gonna, instead of doing this,
+
+1739
+01:19:01,330 --> 01:19:03,330
+setting this right in line here,
+
+1740
+01:19:03,330 --> 01:19:05,637
+I'm gonna try and create a function here,
+
+1741
+01:19:05,637 --> 01:19:09,370
+I'm gonna call this createMemoryGame
+
+1742
+01:19:11,140 --> 01:19:14,640
+and then I'm gonna put this into a func
+
+1743
+01:19:14,640 --> 01:19:17,310
+called createMemoryGame.
+
+1744
+01:19:17,310 --> 01:19:21,783
+It's gonna return in
+MemoryGame of string, okay?
+
+1745
+01:19:23,210 --> 01:19:28,210
+And this and it's going to
+essentially return this.
+
+1746
+01:19:28,990 --> 01:19:31,800
+And here, we're gonna do
+something more complicated
+
+1747
+01:19:31,800 --> 01:19:33,690
+than just that.
+
+1748
+01:19:33,690 --> 01:19:37,640
+Remember, this is the pairIndex in.
+
+1749
+01:19:37,640 --> 01:19:40,570
+And so, how am I gonna implement this?
+
+1750
+01:19:40,570 --> 01:19:44,263
+I'm going to create a little emojis Array.
+
+1751
+01:19:45,290 --> 01:19:47,580
+This is gonna be an Array of String,
+
+1752
+01:19:47,580 --> 01:19:49,380
+an Array of emojis, actually.
+
+1753
+01:19:49,380 --> 01:19:52,320
+I'm gonna set it equal
+to a constant Array.
+
+1754
+01:19:52,320 --> 01:19:55,360
+So this is what this the
+syntax is for a constant Array.
+
+1755
+01:19:55,360 --> 01:19:57,380
+So you just do open square bracket
+
+1756
+01:19:57,380 --> 01:19:59,617
+and then the things you want in the Array
+
+1757
+01:19:59,617 --> 01:20:01,560
+and then close square bracket.
+
+1758
+01:20:01,560 --> 01:20:03,750
+So these things for me are gonna be emoji
+
+1759
+01:20:03,750 --> 01:20:04,583
+so I'm gonna go over here,
+
+1760
+01:20:04,583 --> 01:20:08,117
+let's go back to our Halloween theme here
+
+1761
+01:20:08,117 --> 01:20:11,850
+and get Mr. Ghost, there's a ghost
+
+1762
+01:20:11,850 --> 01:20:14,800
+and then in this one, we'll
+put some other Halloween thing.
+
+1763
+01:20:14,800 --> 01:20:17,070
+How about pumpkin?
+
+1764
+01:20:17,070 --> 01:20:19,690
+Maybe a pump, no, I'll go pumpkin.
+
+1765
+01:20:19,690 --> 01:20:20,748
+Okay, there's a pumpkin.
+
+1766
+01:20:20,748 --> 01:20:22,023
+And we have this.
+
+1767
+01:20:22,023 --> 01:20:25,153
+So this creates an Array of
+String because these are Strings
+
+1768
+01:20:25,153 --> 01:20:27,830
+and in here, return this MemoryGame,
+
+1769
+01:20:27,830 --> 01:20:32,613
+so my little Card factory is
+just going to return emojis
+
+1770
+01:20:34,000 --> 01:20:36,440
+sub pairIndex.
+
+1771
+01:20:36,440 --> 01:20:38,930
+So this is how you access an Array.
+
+1772
+01:20:38,930 --> 01:20:41,860
+You just put square brackets
+around whatever the index is
+
+1773
+01:20:41,860 --> 01:20:44,130
+and so this pairIndex, it's gonna be zero
+
+1774
+01:20:44,130 --> 01:20:47,040
+then it's gonna be one and
+so we're gonna get index zero
+
+1775
+01:20:47,040 --> 01:20:48,710
+then we're gonna get index one.
+
+1776
+01:20:48,710 --> 01:20:51,291
+So the first pair of cards
+will be a pair of ghosts,
+
+1777
+01:20:51,291 --> 01:20:54,413
+second pair of cards are
+gonna be a pair of pumpkins.
+
+1778
+01:20:55,380 --> 01:20:57,240
+So, this code, no errors
+
+1779
+01:20:57,240 --> 01:20:59,042
+but oh, we have an error up here.
+
+1780
+01:20:59,042 --> 01:21:00,030
+What does this say?
+
+1781
+01:21:00,030 --> 01:21:03,770
+Cannot use instance
+member createMemoryGame
+
+1782
+01:21:03,770 --> 01:21:05,920
+within a property initializer.
+
+1783
+01:21:05,920 --> 01:21:10,920
+Property initializers run
+before self is available.
+
+1784
+01:21:11,561 --> 01:21:13,790
+Okay, so what does that mean?
+
+1785
+01:21:13,790 --> 01:21:18,790
+Well, here, I've told you
+that we cannot, in Swift have,
+
+1786
+01:21:19,395 --> 01:21:22,587
+any variable that's not
+initialize to something,
+
+1787
+01:21:22,587 --> 01:21:25,616
+what's even more restrictive than that,
+
+1788
+01:21:25,616 --> 01:21:30,616
+we cannot use any functions
+on our class or struct
+
+1789
+01:21:30,820 --> 01:21:33,804
+until all of these are initialized.
+
+1790
+01:21:33,804 --> 01:21:35,940
+So that major catch-22 here,
+
+1791
+01:21:35,940 --> 01:21:39,990
+I wanna use a function
+on my instance right here
+
+1792
+01:21:39,990 --> 01:21:41,960
+to create this MemoryGame
+
+1793
+01:21:41,960 --> 01:21:44,380
+but I can't until this is initialized.
+
+1794
+01:21:44,380 --> 01:21:45,890
+So, it's like wah!
+
+1795
+01:21:45,890 --> 01:21:47,192
+So, how are we gonna fix this?
+
+1796
+01:21:47,192 --> 01:21:49,930
+We're gonna turn this
+createMemoryGame here
+
+1797
+01:21:49,930 --> 01:21:53,220
+actually into a static func.
+
+1798
+01:21:53,220 --> 01:21:54,640
+So, a static func,
+
+1799
+01:21:54,640 --> 01:21:58,170
+that makes this a function
+on the type, all right?
+
+1800
+01:21:58,170 --> 01:21:59,650
+So instead of being a function
+
+1801
+01:21:59,650 --> 01:22:03,000
+that you send to an
+instance of EmojiMemoryGame,
+
+1802
+01:22:03,000 --> 01:22:05,840
+hopefully, everyone knows
+in the object-oriented sense
+
+1803
+01:22:05,840 --> 01:22:09,460
+what an instance means,
+we're sending it to the type.
+
+1804
+01:22:09,460 --> 01:22:12,480
+And the syntax for that is we type
+
+1805
+01:22:12,480 --> 01:22:17,480
+the name of the type in,
+MemoryGame. and the function
+
+1806
+01:22:19,000 --> 01:22:21,650
+and that only works for static functions.
+
+1807
+01:22:21,650 --> 01:22:23,640
+So this is a function on the type,
+
+1808
+01:22:23,640 --> 01:22:26,220
+not a function on a MemoryGame instance,
+
+1809
+01:22:26,220 --> 01:22:29,235
+EmojiMemoryGame instance, but
+actually, on the type itself.
+
+1810
+01:22:29,235 --> 01:22:31,970
+We have actually already used this.
+
+1811
+01:22:31,970 --> 01:22:35,560
+Over here in ContentView, Color.orange,
+
+1812
+01:22:35,560 --> 01:22:36,483
+Font.largeTitle.
+
+1813
+01:22:37,570 --> 01:22:40,130
+These are types, Font and Color are types
+
+1814
+01:22:40,130 --> 01:22:42,484
+so these are, in this case vars
+
+1815
+01:22:42,484 --> 01:22:44,290
+but you can do with functions or vars,
+
+1816
+01:22:44,290 --> 01:22:45,970
+vars on that type.
+
+1817
+01:22:45,970 --> 01:22:47,220
+These are static.
+
+1818
+01:22:47,220 --> 01:22:50,130
+In fact, let's go and
+look in the documentation
+
+1819
+01:22:50,130 --> 01:22:51,090
+and see this happening.
+
+1820
+01:22:51,090 --> 01:22:54,530
+So, how can we jump into the
+documentation from our code?
+
+1821
+01:22:54,530 --> 01:22:56,000
+Here's a really cool feature.
+
+1822
+01:22:56,000 --> 01:22:57,680
+Hold down the Option key.
+
+1823
+01:22:57,680 --> 01:23:00,410
+When you do, when you
+mouse over something,
+
+1824
+01:23:00,410 --> 01:23:02,410
+it will have a question mark on it.
+
+1825
+01:23:02,410 --> 01:23:04,400
+So I'm gonna click on Font
+
+1826
+01:23:04,400 --> 01:23:07,940
+and it gives me a short
+description of what font is
+
+1827
+01:23:07,940 --> 01:23:11,550
+but it also has this nice
+a little link right here.
+
+1828
+01:23:11,550 --> 01:23:14,560
+Boom, take me to the
+documentation and show me Font.
+
+1829
+01:23:14,560 --> 01:23:16,730
+So this is how you can get
+into the documentation.
+
+1830
+01:23:16,730 --> 01:23:18,930
+Of course, you can also go Window,
+
+1831
+01:23:18,930 --> 01:23:21,410
+Developer Documentation up here
+
+1832
+01:23:21,410 --> 01:23:23,570
+but doing that Option + click,
+
+1833
+01:23:23,570 --> 01:23:26,630
+it's usually how we get into
+the documentation, actually.
+
+1834
+01:23:26,630 --> 01:23:28,420
+And if you look in Font right here,
+
+1835
+01:23:28,420 --> 01:23:30,415
+you can see, there's
+largeTitle right off the bat
+
+1836
+01:23:30,415 --> 01:23:32,590
+and see, it's static.
+
+1837
+01:23:32,590 --> 01:23:36,650
+It's also a let, so
+largeTitle is a constant.
+
+1838
+01:23:36,650 --> 01:23:38,680
+Static let so it's on the Font,
+
+1839
+01:23:38,680 --> 01:23:42,980
+on the actual type itself, the Font type.
+
+1840
+01:23:42,980 --> 01:23:45,130
+You can see there's all
+these other ones as well.
+
+1841
+01:23:45,130 --> 01:23:48,220
+You probably wanna use one of
+these also for your homework.
+
+1842
+01:23:48,220 --> 01:23:50,030
+You can kinda experiment
+what they look at.
+
+1843
+01:23:50,030 --> 01:23:52,460
+Like, these are just built-in fonts
+
+1844
+01:23:52,460 --> 01:23:54,500
+and these are fonts we'd like to use
+
+1845
+01:23:54,500 --> 01:23:57,810
+because everyone else is using
+them and all the other apps
+
+1846
+01:23:57,810 --> 01:24:00,820
+and so as users use your app
+and then there's another app,
+
+1847
+01:24:00,820 --> 01:24:02,760
+they see the same types of fonts
+
+1848
+01:24:02,760 --> 01:24:05,350
+and these fonts just have
+a little different style
+
+1849
+01:24:05,350 --> 01:24:07,900
+or whatever but it's same
+
+1850
+01:24:07,900 --> 01:24:10,690
+throughout the entire system, okay?
+
+1851
+01:24:10,690 --> 01:24:13,430
+While we're looking here
+in the documentation,
+
+1852
+01:24:13,430 --> 01:24:14,530
+let's show you some features
+
+1853
+01:24:14,530 --> 01:24:16,860
+of the documentation viewer here.
+
+1854
+01:24:16,860 --> 01:24:18,420
+You can search, obviously, up here.
+
+1855
+01:24:18,420 --> 01:24:20,740
+So let's, for example, search for Array.
+
+1856
+01:24:20,740 --> 01:24:23,620
+And if I search for Array,
+here's all the matches
+
+1857
+01:24:23,620 --> 01:24:24,810
+where it finds Array.
+
+1858
+01:24:24,810 --> 01:24:28,790
+The first suggested one is
+a likely going to be a class
+
+1859
+01:24:28,790 --> 01:24:29,900
+or struct with that name.
+
+1860
+01:24:29,900 --> 01:24:33,000
+Here is array, you can see
+Array of Element, right?
+
+1861
+01:24:33,000 --> 01:24:34,070
+It's a generic type.
+
+1862
+01:24:34,070 --> 01:24:36,630
+This is it's don't care.
+it's called Element,
+
+1863
+01:24:36,630 --> 01:24:39,410
+just like our don't care
+is called CardContent.
+
+1864
+01:24:39,410 --> 01:24:42,960
+And these descriptions
+are really detailed,
+
+1865
+01:24:42,960 --> 01:24:45,380
+tell you all about an Array, how it works.
+
+1866
+01:24:45,380 --> 01:24:48,960
+You're definitely gonna
+wanna read this for Array,
+
+1867
+01:24:48,960 --> 01:24:51,617
+familiarize yourself of what Array can do.
+
+1868
+01:24:51,617 --> 01:24:54,420
+That will definitely help
+you with your homework.
+
+1869
+01:24:54,420 --> 01:24:56,710
+If you scroll down here
+and look through all these,
+
+1870
+01:24:56,710 --> 01:24:59,550
+I don't expect you to figure
+out how all these work
+
+1871
+01:24:59,550 --> 01:25:01,290
+but you definitely wanna be able to search
+
+1872
+01:25:01,290 --> 01:25:02,670
+through these here and see
+
+1873
+01:25:02,670 --> 01:25:06,060
+if you can find a particular function
+
+1874
+01:25:06,060 --> 01:25:08,720
+that might help you with
+your homework, okay?
+
+1875
+01:25:08,720 --> 01:25:12,198
+And same thing with View,
+let's go look at View.
+
+1876
+01:25:12,198 --> 01:25:14,080
+Okay, View right here.
+
+1877
+01:25:14,080 --> 01:25:16,437
+Another description of View up here,
+
+1878
+01:25:16,437 --> 01:25:18,370
+we're gonna learn all about that,
+
+1879
+01:25:18,370 --> 01:25:21,820
+we already have learned
+quite a bit about View here.
+
+1880
+01:25:21,820 --> 01:25:24,925
+Now, if you have so many
+functions and vars on it
+
+1881
+01:25:24,925 --> 01:25:28,180
+that it's divided them
+into sections right here.
+
+1882
+01:25:28,180 --> 01:25:32,060
+A couple of interesting ones
+to look at might be layout,
+
+1883
+01:25:32,060 --> 01:25:34,360
+which we're gonna learn a
+lot more about next week.
+
+1884
+01:25:34,360 --> 01:25:37,129
+That's where you find things like padding
+
+1885
+01:25:37,129 --> 01:25:39,330
+and also, rendering, okay?
+
+1886
+01:25:39,330 --> 01:25:42,300
+So, rendering, it's we can
+learn how to scale and rotate
+
+1887
+01:25:42,300 --> 01:25:45,200
+and blur things, other kind of stuff.
+
+1888
+01:25:45,200 --> 01:25:48,064
+So, again, this is something
+you're probably going to find
+
+1889
+01:25:48,064 --> 01:25:52,180
+stuff in here that will
+help you with your homework.
+
+1890
+01:25:52,180 --> 01:25:55,260
+So, part of the homework
+is really to just start
+
+1891
+01:25:56,350 --> 01:25:58,540
+kind of maneuvering around in here.
+
+1892
+01:25:58,540 --> 01:25:59,373
+Some of this stuff you're not
+
+1893
+01:25:59,373 --> 01:26:01,160
+gonna understand at all like State.
+
+1894
+01:26:01,160 --> 01:26:03,360
+You're gonna be like, whoa
+what the heck is that?
+
+1895
+01:26:03,360 --> 01:26:06,100
+I don't expect you to
+be learning any of this
+
+1896
+01:26:06,100 --> 01:26:07,654
+by reading the documentation
+
+1897
+01:26:07,654 --> 01:26:10,780
+but I definitely expect you to
+know about the documentation,
+
+1898
+01:26:10,780 --> 01:26:13,549
+know what's in there so
+you can go search around
+
+1899
+01:26:13,549 --> 01:26:16,233
+and find things, okay?
+
+1900
+01:26:17,710 --> 01:26:19,740
+All right, so back to here.
+
+1901
+01:26:19,740 --> 01:26:21,270
+So we did this a nice static function.
+
+1902
+01:26:21,270 --> 01:26:23,420
+Again, no errors, no warnings.
+
+1903
+01:26:23,420 --> 01:26:25,530
+We're using this as kind
+of a utility function
+
+1904
+01:26:25,530 --> 01:26:28,150
+to create our MemoryGame.
+
+1905
+01:26:28,150 --> 01:26:30,830
+Now, that we have a ViewModel, okay?
+
+1906
+01:26:30,830 --> 01:26:33,310
+That's looking at our Model, all right?
+
+1907
+01:26:33,310 --> 01:26:36,180
+Our Model, we don't
+actually have our Model
+
+1908
+01:26:36,180 --> 01:26:37,610
+play the game when you choose
+
+1909
+01:26:37,610 --> 01:26:40,410
+but hopefully, at least, say card chosen.
+
+1910
+01:26:40,410 --> 01:26:44,700
+Let's go back to our View and
+use our ViewModel, all right?
+
+1911
+01:26:44,700 --> 01:26:49,700
+Remember that our View always
+wants to use the ViewModel
+
+1912
+01:26:50,190 --> 01:26:51,800
+to access what's in the Model.
+
+1913
+01:26:51,800 --> 01:26:53,610
+Also don't forget that the View
+
+1914
+01:26:53,610 --> 01:26:56,400
+is its primary thing in the world
+
+1915
+01:26:56,400 --> 01:26:58,890
+is to reflect the current
+state of the Model, okay?
+
+1916
+01:26:58,890 --> 01:27:02,890
+So, whatever's in the Model,
+it wants to always show.
+
+1917
+01:27:02,890 --> 01:27:06,120
+So let's start down
+here with our CardView.
+
+1918
+01:27:06,120 --> 01:27:09,240
+Currently, our CardView
+has this one var isFaceUp
+
+1919
+01:27:09,240 --> 01:27:11,930
+but really, it should
+be getting that isFaceUp
+
+1920
+01:27:11,930 --> 01:27:14,600
+from the Card that it's viewing.
+
+1921
+01:27:14,600 --> 01:27:18,900
+So I'm gonna change this var
+from isFaceUp to be a Card,
+
+1922
+01:27:18,900 --> 01:27:23,900
+which is a MemoryGame&lt;String&gt;.Card.
+
+1923
+01:27:24,170 --> 01:27:27,070
+By the way, you notice we've
+been typing this out a lot.
+
+1924
+01:27:27,070 --> 01:27:28,290
+This is a lot to type.
+
+1925
+01:27:28,290 --> 01:27:30,620
+Of course, Swift has a way to make it so
+
+1926
+01:27:30,620 --> 01:27:31,800
+we don't have to take that so much
+
+1927
+01:27:31,800 --> 01:27:34,250
+and we'll talk about that next week.
+
+1928
+01:27:34,250 --> 01:27:36,470
+And then here, instead of saying isFaceUp,
+
+1929
+01:27:36,470 --> 01:27:39,130
+I'm gonna say card.isFaceUp.
+
+1930
+01:27:39,130 --> 01:27:41,560
+And instead of always showing a ghost,
+
+1931
+01:27:41,560 --> 01:27:44,490
+I'm gonna get the Card's content.
+
+1932
+01:27:44,490 --> 01:27:46,560
+Now, this is pretty cool right here.
+
+1933
+01:27:46,560 --> 01:27:51,560
+Content in our MemoryGame,
+this is a type CardContent,
+
+1934
+01:27:52,110 --> 01:27:54,260
+don't care, don't even know what it is
+
+1935
+01:27:54,260 --> 01:27:56,473
+but of course, in a EmojiMemoryGame,
+
+1936
+01:27:57,330 --> 01:27:59,340
+we make it be a String.
+
+1937
+01:27:59,340 --> 01:28:02,860
+And so, that's why over
+here in our content View,
+
+1938
+01:28:02,860 --> 01:28:04,830
+this is a MemoryGame of Strings card
+
+1939
+01:28:04,830 --> 01:28:07,310
+so the card's content is a type String
+
+1940
+01:28:07,310 --> 01:28:08,423
+and that's what a Text wanted,
+
+1941
+01:28:08,423 --> 01:28:11,550
+it wants a text String all right?
+
+1942
+01:28:11,550 --> 01:28:13,700
+So up here, our CardView,
+
+1943
+01:28:13,700 --> 01:28:15,860
+it's not going to take
+in isFaceUp anymore,
+
+1944
+01:28:15,860 --> 01:28:18,220
+it wants to take some sort of Card.
+
+1945
+01:28:18,220 --> 01:28:19,950
+So we're gonna have to find some way
+
+1946
+01:28:19,950 --> 01:28:22,130
+to provide it with a Card.
+
+1947
+01:28:22,130 --> 01:28:24,840
+Now, how are we going to
+provide that thing with a Card?
+
+1948
+01:28:24,840 --> 01:28:28,440
+Well, we're gonna get those
+Cards through our ViewModel.
+
+1949
+01:28:28,440 --> 01:28:31,340
+So, we need some sort of var here,
+
+1950
+01:28:31,340 --> 01:28:33,110
+which I'm gonna call viewModel
+
+1951
+01:28:33,110 --> 01:28:36,770
+Again, you would not call a var viewModel
+
+1952
+01:28:36,770 --> 01:28:41,120
+just like you wouldn't call a var model
+
+1953
+01:28:41,120 --> 01:28:43,440
+but I just wanted, in
+this code, for you to see
+
+1954
+01:28:43,440 --> 01:28:45,510
+when I'm accessing the
+Model, same thing here,
+
+1955
+01:28:45,510 --> 01:28:48,710
+I want you to see when I'm
+accessing the ViewModel.
+
+1956
+01:28:48,710 --> 01:28:50,590
+So what type is the viewModel?
+
+1957
+01:28:50,590 --> 01:28:53,940
+It's an EmojiMemoryGame, okay?
+
+1958
+01:28:53,940 --> 01:28:57,620
+This is our ViewModel type, right?
+
+1959
+01:28:57,620 --> 01:29:00,470
+Class EmojiMemoryGame right there.
+
+1960
+01:29:00,470 --> 01:29:03,090
+So, since this is a class,
+this is a pointer to it.
+
+1961
+01:29:03,090 --> 01:29:05,497
+if I had other Views that were
+accessed in the ViewModel,
+
+1962
+01:29:05,497 --> 01:29:07,010
+they'd have pointers to it
+
+1963
+01:29:07,010 --> 01:29:11,700
+so there would only be one
+EmojiMemoryGame somewhere.
+
+1964
+01:29:11,700 --> 01:29:15,208
+So where are we going to
+create this EmojiMemoryGame?
+
+1965
+01:29:15,208 --> 01:29:17,038
+Well we're gonna create it
+
+1966
+01:29:17,038 --> 01:29:21,390
+in wherever this content
+View is being created.
+
+1967
+01:29:21,390 --> 01:29:23,430
+We're gonna do the same
+thing we were doing before
+
+1968
+01:29:23,430 --> 01:29:24,283
+with the Card's isFaceUp,
+
+1969
+01:29:24,283 --> 01:29:26,640
+it's actually the same
+thing we're doing here.
+
+1970
+01:29:26,640 --> 01:29:28,890
+And so where is this created?
+
+1971
+01:29:28,890 --> 01:29:31,180
+So, this is a time to dive in a little bit
+
+1972
+01:29:31,180 --> 01:29:32,280
+to this boilerplate.
+
+1973
+01:29:32,280 --> 01:29:34,690
+Remember, I told you there
+was this AppDelegate,
+
+1974
+01:29:34,690 --> 01:29:36,370
+SceneDelegate boiler plate.
+
+1975
+01:29:36,370 --> 01:29:39,240
+Well, if we click on the SceneDelegate,
+
+1976
+01:29:39,240 --> 01:29:40,840
+we'll see there's some junk in here
+
+1977
+01:29:40,840 --> 01:29:42,520
+which we're gonna talk about later
+
+1978
+01:29:42,520 --> 01:29:44,840
+but here is the very
+important line of code
+
+1979
+01:29:44,840 --> 01:29:47,910
+that creates the ContentView that is used
+
+1980
+01:29:47,910 --> 01:29:51,760
+as the Windows' main View, okay?
+
+1981
+01:29:51,760 --> 01:29:53,900
+So this ContentView is already complaining
+
+1982
+01:29:53,900 --> 01:29:56,180
+missing argument for viewModel right?
+
+1983
+01:29:56,180 --> 01:29:59,480
+It knows that over here,
+we've got this viewModel
+
+1984
+01:29:59,480 --> 01:30:01,960
+It doesn't set equal to anything
+
+1985
+01:30:01,960 --> 01:30:04,450
+so we've got to do that when we create it.
+
+1986
+01:30:04,450 --> 01:30:08,900
+So I need to say viewModel
+is something here.
+
+1987
+01:30:08,900 --> 01:30:12,410
+So I'm going to have this
+be a var called the game
+
+1988
+01:30:12,410 --> 01:30:16,507
+and I'm gonna say let game
+equal EmojiMemoryGame,
+
+1989
+01:30:17,910 --> 01:30:19,750
+open parentheses, close parentheses,
+
+1990
+01:30:19,750 --> 01:30:23,170
+I get a free init because
+this is a class, right?
+
+1991
+01:30:23,170 --> 01:30:25,750
+A free init that initializes nothing
+
+1992
+01:30:25,750 --> 01:30:29,500
+but luckily, I initialize my only var here
+
+1993
+01:30:29,500 --> 01:30:31,420
+using this, right?
+
+1994
+01:30:31,420 --> 01:30:32,903
+So this is gonna work.
+
+1995
+01:30:33,830 --> 01:30:36,747
+So here we go, we got this
+game for passing the ViewModel.
+
+1996
+01:30:36,747 --> 01:30:39,450
+And by the way, if we go back here
+
+1997
+01:30:39,450 --> 01:30:40,830
+and look at our ContentView,
+
+1998
+01:30:40,830 --> 01:30:42,960
+it's still gonna be complaining down here.
+
+1999
+01:30:42,960 --> 01:30:46,260
+This is that glue that
+glues this to the gray area.
+
+2000
+01:30:46,260 --> 01:30:47,670
+It's creating a ContentView
+
+2001
+01:30:47,670 --> 01:30:52,240
+to show in this canvas over here.
+
+2002
+01:30:52,240 --> 01:30:56,376
+Okay, so, this ContentView
+also needs a ViewModel here.
+
+2003
+01:30:56,376 --> 01:31:00,870
+For this, I'll just create
+an EmojiMemoryGame on the fly
+
+2004
+01:31:00,870 --> 01:31:04,280
+because this is essentially
+for testing or whatever
+
+2005
+01:31:04,280 --> 01:31:06,270
+so it can create this thing on the fly,
+
+2006
+01:31:06,270 --> 01:31:09,260
+doesn't need to put it in
+a variable and all that.
+
+2007
+01:31:09,260 --> 01:31:11,290
+Okay, so, we're getting close.
+
+2008
+01:31:11,290 --> 01:31:13,320
+Now, we have our ViewModel right here.
+
+2009
+01:31:13,320 --> 01:31:16,710
+How do we use the
+ViewModel to get the Cards
+
+2010
+01:31:16,710 --> 01:31:17,850
+that we're gonna show?
+
+2011
+01:31:17,850 --> 01:31:21,060
+Well, right now, we just
+throw it show four Cards,
+
+2012
+01:31:21,060 --> 01:31:22,890
+zero, one, two, or three.
+
+2013
+01:31:22,890 --> 01:31:24,920
+We're using a range right here.
+
+2014
+01:31:24,920 --> 01:31:27,480
+Gonna click this again.
+
+2015
+01:31:27,480 --> 01:31:28,880
+We're using this range
+
+2016
+01:31:28,880 --> 01:31:31,920
+and I told you this could
+be any iteratable thing.
+
+2017
+01:31:31,920 --> 01:31:33,690
+So how about if we just make this
+
+2018
+01:31:33,690 --> 01:31:36,940
+be our ViewModel's Cards, okay?
+
+2019
+01:31:36,940 --> 01:31:40,640
+This is an Array of
+MemoryGame&lt;String&gt;.Cards
+
+2020
+01:31:40,640 --> 01:31:43,120
+and so, this should just work, right?
+
+2021
+01:31:43,120 --> 01:31:45,990
+But it doesn't work, okay?
+
+2022
+01:31:45,990 --> 01:31:48,400
+In fact, I typed an Array thing here
+
+2023
+01:31:48,400 --> 01:31:50,520
+and it says cannot convert from value
+
+2024
+01:31:50,520 --> 01:31:53,340
+to expected argument range of Int.
+
+2025
+01:31:53,340 --> 01:31:57,290
+It still thinks I want
+range of Int in here.
+
+2026
+01:31:57,290 --> 01:32:01,240
+That's because kinda mislead you a little
+
+2027
+01:32:01,240 --> 01:32:04,007
+when I said this could
+be any iteratable thing.
+
+2028
+01:32:04,007 --> 01:32:07,200
+It actually is any iteratable thing
+
+2029
+01:32:07,200 --> 01:32:09,280
+where the things that's iterating over
+
+2030
+01:32:09,280 --> 01:32:12,940
+are what is called Identifiable, okay?
+
+2031
+01:32:12,940 --> 01:32:15,440
+These things have to be Identifiable.
+
+2032
+01:32:15,440 --> 01:32:18,960
+If they're not a range of Int,
+they have to be Identifiable.
+
+2033
+01:32:18,960 --> 01:32:20,790
+So, why?
+
+2034
+01:32:20,790 --> 01:32:23,020
+Why do these have to be Identifiable?
+
+2035
+01:32:23,020 --> 01:32:27,060
+Well, for example, let's say
+you're want to do animation
+
+2036
+01:32:27,060 --> 01:32:30,670
+and let's say these Cards
+are moving around, okay?
+
+2037
+01:32:30,670 --> 01:32:33,410
+Moving into a different
+order or something like that.
+
+2038
+01:32:33,410 --> 01:32:36,470
+This for each needs to be able to identify
+
+2039
+01:32:36,470 --> 01:32:40,520
+which Card is which so
+that the View it creates
+
+2040
+01:32:40,520 --> 01:32:43,750
+for each Card, which is
+what this is, this CardView,
+
+2041
+01:32:43,750 --> 01:32:47,520
+it can keep that View in
+sync with these Cards.
+
+2042
+01:32:47,520 --> 01:32:50,850
+So these things have to be
+identifiable and right now,
+
+2043
+01:32:50,850 --> 01:32:53,261
+if you look at this, this
+is an Array of Card, right?
+
+2044
+01:32:53,261 --> 01:32:58,261
+ViewModel.cards is this
+Array of MemoryGame Cards.
+
+2045
+01:32:59,100 --> 01:33:02,380
+If we look at MemoryGame Cards,
+they are not identifiable,
+
+2046
+01:33:02,380 --> 01:33:04,420
+there's no way to identify them.
+
+2047
+01:33:04,420 --> 01:33:07,150
+In fact, right now, they're all the same.
+
+2048
+01:33:07,150 --> 01:33:08,433
+Two Cards that match would be the same
+
+2049
+01:33:08,433 --> 01:33:10,210
+because they have the same content,
+
+2050
+01:33:10,210 --> 01:33:11,911
+they might be the same isFaceUp.
+
+2051
+01:33:11,911 --> 01:33:14,410
+There's no way of identifying them.
+
+2052
+01:33:14,410 --> 01:33:18,810
+So, Swift has a formalism,
+a formal mechanism
+
+2053
+01:33:18,810 --> 01:33:22,670
+for identifying something,
+making something identifiable
+
+2054
+01:33:22,670 --> 01:33:25,040
+and it does it with
+something I like to call
+
+2055
+01:33:25,040 --> 01:33:27,500
+constrains and gains.
+
+2056
+01:33:27,500 --> 01:33:31,160
+So that's when you require a
+struct to do a certain thing,
+
+2057
+01:33:31,160 --> 01:33:34,430
+you constrain it to do a certain thing
+
+2058
+01:33:34,430 --> 01:33:38,120
+but if it does, then it
+gains certain capabilities.
+
+2059
+01:33:38,120 --> 01:33:40,560
+Now, we're gonna talk all about
+
+2060
+01:33:40,560 --> 01:33:44,163
+how constrains and gains works next week.
+
+2061
+01:33:45,250 --> 01:33:47,322
+And we've already used
+constrains and gains,
+
+2062
+01:33:47,322 --> 01:33:51,490
+actually, here, colon View
+was constrains and gains.
+
+2063
+01:33:51,490 --> 01:33:54,857
+We constrained ourselves to
+have to do this body, okay?
+
+2064
+01:33:54,857 --> 01:33:59,210
+But we gained all the
+stuff that View does, okay?
+
+2065
+01:33:59,210 --> 01:34:01,703
+So, that's constraints
+and gains in the struct.
+
+2066
+01:34:02,592 --> 01:34:04,950
+We're gonna do the same thing
+with this constrains and gains
+
+2067
+01:34:04,950 --> 01:34:06,140
+with this struct.
+
+2068
+01:34:06,140 --> 01:34:09,719
+We're gonna say constrains
+and gains Identifiable.
+
+2069
+01:34:09,719 --> 01:34:14,719
+Identifiable like View is
+what's called a protocol
+
+2070
+01:34:15,070 --> 01:34:18,900
+and that's the heart of this
+constrains and gains business.
+
+2071
+01:34:18,900 --> 01:34:22,640
+And again, we'll talk about
+protocols a lot next week.
+
+2072
+01:34:22,640 --> 01:34:24,410
+Unfortunately, you don't gain much with it
+
+2073
+01:34:24,410 --> 01:34:27,080
+except where you gain the
+ability to be identified
+
+2074
+01:34:27,080 --> 01:34:29,090
+but mostly, you are constrained
+
+2075
+01:34:29,090 --> 01:34:31,010
+and the constraint of Identifiable
+
+2076
+01:34:31,010 --> 01:34:34,540
+is that you have to have a var called id
+
+2077
+01:34:34,540 --> 01:34:36,890
+Now, luckily, it can be any type you want.
+
+2078
+01:34:36,890 --> 01:34:38,570
+I'm gonna make my id be an Int
+
+2079
+01:34:38,570 --> 01:34:41,160
+but it could be a String
+or anything you need to do
+
+2080
+01:34:41,160 --> 01:34:43,390
+to make this thing identifiable.
+
+2081
+01:34:43,390 --> 01:34:45,980
+Of course, as soon as
+I add another var here,
+
+2082
+01:34:45,980 --> 01:34:49,000
+now, my Card isFaceUp blah, blah, blah
+
+2083
+01:34:49,000 --> 01:34:51,610
+is not doing all the vars.
+
+2084
+01:34:51,610 --> 01:34:55,420
+So for both of these, I need to add an ID.
+
+2085
+01:34:55,420 --> 01:34:59,500
+And what I'm gonna use for my
+ID is my pairIndex times two
+
+2086
+01:34:59,500 --> 01:35:01,760
+and for this guy's ID
+because I want this Card
+
+2087
+01:35:01,760 --> 01:35:05,270
+to be obviously, to
+have its own identifier,
+
+2088
+01:35:05,270 --> 01:35:09,930
+I'm gonna do pairIndex
+times two plus one, okay?
+
+2089
+01:35:09,930 --> 01:35:14,760
+So now these things
+have unique identifiers.
+
+2090
+01:35:14,760 --> 01:35:17,440
+Now this is fully identifiable,
+that's all we need to do,
+
+2091
+01:35:17,440 --> 01:35:19,340
+we just have to make sure that these Cards
+
+2092
+01:35:19,340 --> 01:35:21,060
+are uniquely identifiable,
+
+2093
+01:35:21,060 --> 01:35:22,290
+again, so that they move around,
+
+2094
+01:35:22,290 --> 01:35:23,803
+we can animate them or whatever.
+
+2095
+01:35:23,803 --> 01:35:26,290
+By the way, it's a little annoying here
+
+2096
+01:35:26,290 --> 01:35:29,360
+that I have to say this
+every time for a new Card.
+
+2097
+01:35:29,360 --> 01:35:31,660
+I could just put that
+down here, by the way.
+
+2098
+01:35:31,660 --> 01:35:35,930
+You're absolutely allowed
+to have some of your vars
+
+2099
+01:35:35,930 --> 01:35:37,760
+be initialized that way
+
+2100
+01:35:37,760 --> 01:35:41,160
+and then we don't need
+to have them here, okay?
+
+2101
+01:35:41,160 --> 01:35:43,423
+That cleans up our code
+a little bit there.
+
+2102
+01:35:45,170 --> 01:35:47,140
+Okay, so now that this is Identifiable,
+
+2103
+01:35:47,140 --> 01:35:49,330
+when we go back to our View over here,
+
+2104
+01:35:49,330 --> 01:35:50,900
+it says, oh, that's fine, okay,
+
+2105
+01:35:50,900 --> 01:35:55,250
+you've got an iteratable thing
+of Identifiables all as well.
+
+2106
+01:35:55,250 --> 01:35:58,280
+Of course, this is no longer
+the index in the range, okay?
+
+2107
+01:35:58,280 --> 01:36:02,493
+This argument is the Card
+that's in the Array, okay?
+
+2108
+01:36:03,760 --> 01:36:07,740
+And of course, you know that
+this is an inline function
+
+2109
+01:36:07,740 --> 01:36:09,560
+and this is the argument to it
+
+2110
+01:36:09,560 --> 01:36:12,480
+and it's just ForEaching
+through these cards
+
+2111
+01:36:12,480 --> 01:36:14,770
+in this Array and so this is each Card
+
+2112
+01:36:14,770 --> 01:36:17,183
+and that's what we're
+gonna pass right here.
+
+2113
+01:36:18,790 --> 01:36:19,990
+And that's it.
+
+2114
+01:36:19,990 --> 01:36:24,970
+So this is how we attach
+our Model to our View
+
+2115
+01:36:24,970 --> 01:36:27,490
+through our ViewModel, okay?
+
+2116
+01:36:27,490 --> 01:36:31,760
+So our ViewModel provided
+essentially a window or a portal
+
+2117
+01:36:31,760 --> 01:36:34,290
+on to our Model through this Cards Array
+
+2118
+01:36:34,290 --> 01:36:36,800
+and through choose card
+which we haven't used yet
+
+2119
+01:36:36,800 --> 01:36:37,750
+but we're going to.
+
+2120
+01:36:38,840 --> 01:36:41,827
+For us to see our Model over here
+
+2121
+01:36:41,827 --> 01:36:45,930
+and our View is just always
+going to reflect that.
+
+2122
+01:36:45,930 --> 01:36:48,000
+Now, we're gonna run out of time today
+
+2123
+01:36:48,000 --> 01:36:50,360
+to show you how it does
+the auto-reflection,
+
+2124
+01:36:50,360 --> 01:36:53,815
+we're gonna do that first
+thing next week's lecture.
+
+2125
+01:36:53,815 --> 01:36:56,450
+But that's a key part
+of making all his work
+
+2126
+01:36:56,450 --> 01:36:58,370
+but at least we're gonna
+be able to see here
+
+2127
+01:36:58,370 --> 01:37:00,960
+that this View is always drawing
+
+2128
+01:37:00,960 --> 01:37:02,820
+whatever is in the Model, okay?
+
+2129
+01:37:02,820 --> 01:37:05,160
+Get it through the ViewModel
+but whatever it gets,
+
+2130
+01:37:05,160 --> 01:37:07,090
+it's always drawing that here.
+
+2131
+01:37:07,090 --> 01:37:08,420
+And we're gonna see that in action.
+
+2132
+01:37:08,420 --> 01:37:10,473
+Let's go ahead and we'll run our app.
+
+2133
+01:37:15,991 --> 01:37:16,824
+And here it is.
+
+2134
+01:37:16,824 --> 01:37:19,540
+And we've got four face-down cards.
+
+2135
+01:37:19,540 --> 01:37:21,410
+Why do we have four face-down cards?
+
+2136
+01:37:21,410 --> 01:37:24,470
+Well, because here, when
+we created our MemoryGame,
+
+2137
+01:37:24,470 --> 01:37:27,080
+we said we wanted two pairs of Cards
+
+2138
+01:37:27,080 --> 01:37:29,740
+so that exactly why we got
+four Cards, it's two pairs
+
+2139
+01:37:29,740 --> 01:37:31,620
+and over here in MemoryGame,
+
+2140
+01:37:31,620 --> 01:37:34,360
+we have all our Cards start facedown.
+
+2141
+01:37:34,360 --> 01:37:37,730
+So let's change this in
+our Model to be true, okay?
+
+2142
+01:37:37,730 --> 01:37:41,330
+All Cards are now created
+in our Model faceUp true.
+
+2143
+01:37:41,330 --> 01:37:44,000
+Let's see if that affects our View.
+
+2144
+01:37:44,000 --> 01:37:46,310
+Whoa, it did and even, look,
+
+2145
+01:37:46,310 --> 01:37:49,970
+there's the two kinds of
+things that we put on there.
+
+2146
+01:37:49,970 --> 01:37:51,510
+See that?
+
+2147
+01:37:51,510 --> 01:37:52,400
+Okay?
+
+2148
+01:37:52,400 --> 01:37:56,523
+Now, we could, let's say
+put another one in here.
+
+2149
+01:37:58,660 --> 01:38:00,166
+Over here.
+
+2150
+01:38:00,166 --> 01:38:01,870
+What's a good Halloween thing?
+
+2151
+01:38:01,870 --> 01:38:03,910
+How about spider?
+
+2152
+01:38:03,910 --> 01:38:05,283
+Yeah, spider.
+
+2153
+01:38:06,347 --> 01:38:08,920
+Maybe a spider, by the way,
+we have two Cards here.
+
+2154
+01:38:08,920 --> 01:38:10,920
+We could say three now that we have three
+
+2155
+01:38:10,920 --> 01:38:15,390
+but another cool thing to
+say is emojis.count, right?
+
+2156
+01:38:15,390 --> 01:38:18,000
+Because emojis is this Array.
+
+2157
+01:38:18,000 --> 01:38:20,000
+Of course, I don't need this, by the way,
+
+2158
+01:38:20,000 --> 01:38:21,990
+can infer that as well.
+
+2159
+01:38:21,990 --> 01:38:26,126
+So, this emojis.count, this
+is just a var in emojis,
+
+2160
+01:38:26,126 --> 01:38:28,170
+in Array, rather, that
+is going to tell you
+
+2161
+01:38:28,170 --> 01:38:29,810
+how many things are in here.
+
+2162
+01:38:29,810 --> 01:38:30,743
+We run again.
+
+2163
+01:38:32,750 --> 01:38:33,583
+And we got it.
+
+2164
+01:38:35,130 --> 01:38:39,040
+Okay, so, our View is very nicely
+
+2165
+01:38:39,040 --> 01:38:43,440
+always reflecting whatever
+it sees in our Model.
+
+2166
+01:38:43,440 --> 01:38:44,350
+That's great.
+
+2167
+01:38:44,350 --> 01:38:48,150
+What about this ability
+to express an Intent?
+
+2168
+01:38:48,150 --> 01:38:50,273
+Like I wanna choose a card, okay?
+
+2169
+01:38:50,273 --> 01:38:54,670
+I wanna be able to go
+here and tap on a card
+
+2170
+01:38:54,670 --> 01:38:58,360
+and have it be chosen for
+the purposes of the game.
+
+2171
+01:38:58,360 --> 01:39:00,470
+So, that's also very easy to do
+
+2172
+01:39:00,470 --> 01:39:02,228
+because we have this ViewModel.
+
+2173
+01:39:02,228 --> 01:39:06,120
+For every Card, I'm just
+gonna add a little thing on it
+
+2174
+01:39:06,120 --> 01:39:07,707
+called onTapGesture.
+
+2175
+01:39:08,602 --> 01:39:11,600
+So, onTapGesture is a function
+
+2176
+01:39:11,600 --> 01:39:14,640
+that takes another
+function as an argument.
+
+2177
+01:39:14,640 --> 01:39:16,960
+The function it takes takes no arguments
+
+2178
+01:39:16,960 --> 01:39:19,530
+and it returns nothing, okay?
+
+2179
+01:39:19,530 --> 01:39:21,560
+So, this is the function we're gonna put.
+
+2180
+01:39:21,560 --> 01:39:23,560
+So, here is a function
+that takes no arguments
+
+2181
+01:39:23,560 --> 01:39:25,357
+and returns nothing right here.
+
+2182
+01:39:25,357 --> 01:39:28,850
+And what I wanna do in
+here is ask my ViewModel
+
+2183
+01:39:28,850 --> 01:39:31,290
+to do something, an Intent,
+
+2184
+01:39:31,290 --> 01:39:35,570
+which is to choose this Card, okay?
+
+2185
+01:39:35,570 --> 01:39:39,010
+That's this Card right here,
+I'm going to choose this Card.
+
+2186
+01:39:39,010 --> 01:39:43,740
+So onTapGesture perform
+is just something in View,
+
+2187
+01:39:43,740 --> 01:39:46,913
+all Views know how to do
+this onTapGesture perform.
+
+2188
+01:39:49,354 --> 01:39:51,500
+This is the only argument
+and thus, the last argument
+
+2189
+01:39:51,500 --> 01:39:54,290
+so we don't need that on here.
+
+2190
+01:39:54,290 --> 01:39:56,420
+A lot of times, if we
+have something like this,
+
+2191
+01:39:56,420 --> 01:39:58,880
+we're going to make it
+a little more readable
+
+2192
+01:39:58,880 --> 01:40:03,355
+by putting this little
+embedded function here
+
+2193
+01:40:03,355 --> 01:40:06,630
+on its own line like this.
+
+2194
+01:40:06,630 --> 01:40:09,700
+And you can also see that
+we have an error here.
+
+2195
+01:40:09,700 --> 01:40:13,490
+Now, this is a very interesting
+error because probably,
+
+2196
+01:40:13,490 --> 01:40:15,060
+in about a month and a half,
+
+2197
+01:40:15,060 --> 01:40:17,650
+this error will no longer appear, okay?
+
+2198
+01:40:17,650 --> 01:40:20,650
+This has been fixed or changed,
+
+2199
+01:40:20,650 --> 01:40:23,291
+however you wanna describe it, in SwiftUI.
+
+2200
+01:40:23,291 --> 01:40:25,900
+Swift, all changes to Swift
+
+2201
+01:40:25,900 --> 01:40:27,940
+go through a public review process
+
+2202
+01:40:27,940 --> 01:40:30,240
+and this has gone through
+this and been approved
+
+2203
+01:40:30,240 --> 01:40:31,510
+so it will happen.
+
+2204
+01:40:31,510 --> 01:40:35,260
+And essentially, what's
+going on here is sometimes,
+
+2205
+01:40:35,260 --> 01:40:37,060
+when you have these inline functions,
+
+2206
+01:40:37,060 --> 01:40:40,670
+you need to put self. in front
+
+2207
+01:40:40,670 --> 01:40:43,910
+so that Swift knows exactly
+what's going on, okay?
+
+2208
+01:40:43,910 --> 01:40:45,840
+And I'm not gonna explain in detail today
+
+2209
+01:40:45,840 --> 01:40:47,720
+because we're out of time.
+
+2210
+01:40:47,720 --> 01:40:50,260
+What I mean by that,
+will explain it next week
+
+2211
+01:40:50,260 --> 01:40:51,322
+or the week after.
+
+2212
+01:40:51,322 --> 01:40:53,430
+But that's what this
+error is saying right here
+
+2213
+01:40:53,430 --> 01:40:54,350
+is to put the self.
+
+2214
+01:40:54,350 --> 01:40:57,780
+Now, I recommend any
+time you see this error,
+
+2215
+01:40:57,780 --> 01:41:00,570
+any time you see the words
+requires explicit self
+
+2216
+01:41:00,570 --> 01:41:03,490
+to make capture semantics
+explicit, insert self,
+
+2217
+01:41:03,490 --> 01:41:06,680
+just choose to fix it, okay?
+
+2218
+01:41:06,680 --> 01:41:08,760
+And then that'll put self in front.
+
+2219
+01:41:08,760 --> 01:41:12,260
+I mean you could put self
+in front of any var, okay?
+
+2220
+01:41:12,260 --> 01:41:13,960
+At any time.
+
+2221
+01:41:13,960 --> 01:41:16,060
+It never hurts to put self in front.
+
+2222
+01:41:16,060 --> 01:41:18,150
+Some people have kind of taken a strategy
+
+2223
+01:41:18,150 --> 01:41:20,480
+of I'm just gonna put self.
+in front of every single var
+
+2224
+01:41:20,480 --> 01:41:22,200
+and then I'll never have this problem
+
+2225
+01:41:22,200 --> 01:41:23,775
+where I have to do that fix it.
+
+2226
+01:41:23,775 --> 01:41:26,730
+Given that in a couple months, this self.
+
+2227
+01:41:26,730 --> 01:41:29,440
+is not actually going to
+be required here anymore.
+
+2228
+01:41:29,440 --> 01:41:32,860
+I'm not sure what the
+right strategy there is
+
+2229
+01:41:32,860 --> 01:41:36,450
+but in this class, if you
+see that explicit semantics
+
+2230
+01:41:36,450 --> 01:41:40,270
+insert self thing, just do the
+fix it and put self in front
+
+2231
+01:41:40,270 --> 01:41:41,570
+and all of you well there.
+
+2232
+01:41:42,770 --> 01:41:44,523
+Okay, so let's see if this works.
+
+2233
+01:41:46,460 --> 01:41:48,527
+Okay, when we click on these Cards
+
+2234
+01:41:48,527 --> 01:41:49,360
+and this tap gesture happens,
+
+2235
+01:41:49,360 --> 01:41:52,090
+we should get choose card
+appearing on our console.
+
+2236
+01:41:52,090 --> 01:41:53,736
+So let's try it, click.
+
+2237
+01:41:53,736 --> 01:41:55,890
+Oh, look, there's something down there.
+
+2238
+01:41:55,890 --> 01:41:56,723
+there it is.
+
+2239
+01:41:56,723 --> 01:41:58,240
+This is our debugger over here.
+
+2240
+01:41:58,240 --> 01:42:00,130
+This is our console.
+
+2241
+01:42:00,130 --> 01:42:03,060
+We can actually use these
+buttons to hide the debugger
+
+2242
+01:42:03,060 --> 01:42:06,540
+so we're only seeing the console,
+
+2243
+01:42:06,540 --> 01:42:07,410
+get this back over here.
+
+2244
+01:42:07,410 --> 01:42:09,320
+And hopefully, when we
+click on different cards,
+
+2245
+01:42:09,320 --> 01:42:11,130
+yeah, we're getting different things.
+
+2246
+01:42:11,130 --> 01:42:13,220
+So this output card chosen
+
+2247
+01:42:13,220 --> 01:42:16,280
+is coming from this
+line of code right here.
+
+2248
+01:42:16,280 --> 01:42:18,440
+This is in our Model.
+
+2249
+01:42:18,440 --> 01:42:21,850
+So our View was able to
+invoke code in our Model
+
+2250
+01:42:21,850 --> 01:42:26,550
+by simply executing the Intent
+function in our ViewModel.
+
+2251
+01:42:26,550 --> 01:42:29,327
+So that's how communication
+between the View
+
+2252
+01:42:29,327 --> 01:42:33,830
+and the Model happens when some
+gesture happens in the View.
+
+2253
+01:42:33,830 --> 01:42:38,240
+You can see that it's
+basically turning our Card
+
+2254
+01:42:38,240 --> 01:42:41,800
+into a String by telling us
+everything about the card, okay?
+
+2255
+01:42:41,800 --> 01:42:44,300
+All the value of all of its vars.
+
+2256
+01:42:44,300 --> 01:42:45,910
+I told you this was a cool feature
+
+2257
+01:42:45,910 --> 01:42:49,783
+and it is really good for debugging, okay?
+
+2258
+01:42:51,270 --> 01:42:54,570
+All right, so we're out of
+time for this week's lecture.
+
+2259
+01:42:54,570 --> 01:42:57,280
+Your homework is to clean
+this up a little bit.
+
+2260
+01:42:57,280 --> 01:43:00,070
+For example, notice these
+cards are not shuffled
+
+2261
+01:43:00,070 --> 01:43:02,430
+so it's really easy to
+play this game, right?
+
+2262
+01:43:02,430 --> 01:43:03,730
+'Cause the cards are
+all next to each other
+
+2263
+01:43:03,730 --> 01:43:04,760
+so you're gonna shuffle these cards,
+
+2264
+01:43:04,760 --> 01:43:08,080
+you're gonna make them stop
+being tall and skinny like this
+
+2265
+01:43:08,080 --> 01:43:11,730
+and you're also going to
+put a random number of cards
+
+2266
+01:43:11,730 --> 01:43:14,210
+in here from like two pairs up to,
+
+2267
+01:43:14,210 --> 01:43:15,660
+I think, I did five or six pairs,
+
+2268
+01:43:15,660 --> 01:43:17,380
+whatever says in the homework assignment.
+
+2269
+01:43:17,380 --> 01:43:19,040
+So every time, it's gonna have
+a different number of cards
+
+2270
+01:43:19,040 --> 01:43:21,633
+and they'll all be shuffled.
+
+2271
+01:43:22,500 --> 01:43:23,370
+And that's your homework.
+
+2272
+01:43:23,370 --> 01:43:26,670
+So you can see that most your
+homework is just to reproduce
+
+2273
+01:43:26,670 --> 01:43:28,711
+what I've done here to
+get it to this point.
+
+2274
+01:43:28,711 --> 01:43:31,470
+The changes that I mentioned,
+
+2275
+01:43:31,470 --> 01:43:33,330
+most of them are one line of code
+
+2276
+01:43:33,330 --> 01:43:34,960
+so it shouldn't be a lot
+of work for you there
+
+2277
+01:43:34,960 --> 01:43:37,790
+but it's one line of code
+but it means understanding
+
+2278
+01:43:37,790 --> 01:43:39,400
+what's going on here.
+
+2279
+01:43:39,400 --> 01:43:40,630
+Okay, that's it for this week.
+
+2280
+01:43:40,630 --> 01:43:43,440
+Enjoy your homework if you
+have any questions about it,
+
+2281
+01:43:43,440 --> 01:43:44,860
+you know to go to Piazza
+
+2282
+01:43:44,860 --> 01:43:47,260
+and we'll be right there
+to answer them for you.
+
+2283
+01:43:48,470 --> 01:43:51,693
+>> [旁白] 请访问 stanford.edu
+获取更多内容
