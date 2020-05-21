@@ -2,7 +2,7 @@
 name: 字幕问题反馈
 about: 对已经翻译的字幕有意见或者建议？
 title: ''
-labels: ''
+labels: 待解决
 assignees: ''
 
 ---
