@@ -7,7 +7,8 @@
 > Stanford 一周更两期 :)
 
 1. Course Logistics and Introduction to SwiftUI
-    - 5 - 1422 待翻译
+    - 5 - 52 翻译中
+    - 53 - 1422 待翻译
 2. MVVM and the Swift Type System
     - 5 - 2282 待翻译
 
