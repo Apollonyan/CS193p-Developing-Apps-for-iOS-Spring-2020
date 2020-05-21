@@ -8,7 +8,7 @@
 ## 任务申领
 
 1. 相关事宜将在 QQ 群 [639775967](https://qm.qq.com/cgi-bin/qm/qr?k=bbFbbt0CNs8lp5KegWf5dNMBiuYskt3v&authKey=SSRNAQTcd8lKGJb6bfx+LUz6tTZgaIZTO65ftpmSq7Kh0aN+ooLt2xUaFQML4rxX&noverify=0) 讨论，加群请备注 GitHub 用户名（如没有 QQ，Tel@ApolloZhu）
-2. 翻译请通过 [新建 issue](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/issues/new?labels=%E7%BF%BB%E8%AF%91%E4%B8%AD&template=translate.md&title=%E7%BF%BB%E8%AF%91+X+%E9%9B%86+Y+-+Z+%E6%AE%B5%E5%AD%97%E5%B9%95) 的形式认领，认领时请完整填写模版中的内容
+2. 翻译请通过 **新建 issue** 的形式认领，认领时请完整填写模版中的内容（及标题）
     1. 第一次最多申领翻译 50 条
     2. 第二次翻译的内容合并之后才可在校对期间申领新的翻译
     3. 如果同时申领多个翻译任务，请合理使用 git 的分支功能避免新提交进入到之前的校对任务中
