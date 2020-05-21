@@ -43,7 +43,7 @@
 
 1. 尽量和已翻译的内容保持一致，查阅 [统一翻译](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/issues/1#issuecomment-631977715)
 2. 参考 [术语的特殊处理](#术语的特殊处理)
-3. 参考 [Apple Developer 网页中文版](https://developer.apple.com/cn/)
+3. 参考 [Apple Developer 网页中文版](https://developer.apple.com/cn/)，比如有关 [SwiftUI](https://developer.apple.com/cn/xcode/swiftui/) 的介绍
 4. 参考 [objccn 系列图书](https://objccn.io/products/) 的翻译
 5. 参考历年来 [iOS 8](https://github.com/X140Yu/Developing_iOS_8_Apps_With_Swift)，[iOS 9](https://github.com/SwiftGGTeam/Developing-iOS-9-Apps-with-Swift)，[iOS 10](https://github.com/Apollonyan/Developing-iOS-10-Apps-with-Swift) 和 [iOS 11](https://github.com/Apollonyan/Developing-iOS-11-Apps-with-Swift) 的翻译
 6. 查阅 [《The Swift Programming Language》中文版](http://gg.swiftguide.cn/) 及其 [术语表](https://github.com/SwiftGGTeam/the-swift-programming-language-in-chinese#%E6%9C%AF%E8%AF%AD%E8%A1%A8) 对 Swift 语言相关名词的翻译
