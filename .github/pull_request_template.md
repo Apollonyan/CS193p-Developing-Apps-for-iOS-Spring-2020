@@ -13,3 +13,14 @@
 - [ ] 我已阅读并将遵守 [翻译校对步骤](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/blob/master/CONTRIBUTING.md)。
 - [ ] 我理解翻译的内容可能会被要求修改，并将会更具提供的建议尽快完成。
 - [ ] 我理解贡献的翻译可能不会被合并进入最终的字幕当中。
+
+<!--
+3. 请在 # 后面写上对应 issue 的数字，比如如果申领的 issue 是 1 的话，就写：
+
+   Closes #1
+-->
+
+Closes #
+
+## 有什么需要校对注意的地方？
+<!-- 比如申领任务之外的改动？ -->
