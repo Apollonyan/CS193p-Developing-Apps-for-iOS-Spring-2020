@@ -599,226 +599,211 @@ Swift 的工作原理至关重要
 
 141
 00:05:53,100 --> 00:05:55,880
-If you go to the online
-forums, the class forums,
+在课程论坛中
 
 142
 00:05:55,880 --> 00:05:59,027
-there's a lot more
-information there as well.
+也有很多信息
 
 143
 00:05:59,027 --> 00:06:00,750
-And the syllabus is posted there
+包括课程大纲
 
 144
 00:06:00,750 --> 00:06:01,940
-so I encourage you to read that
+如果你还没有看过
 
 145
 00:06:01,940 --> 00:06:02,850
-if you haven't already.
+我建议你去看一遍
 
 146
 00:06:02,850 --> 00:06:04,260
-Hopefully, you have.
+如果已经看过当然最好
 
 147
 00:06:04,260 --> 00:06:07,410
-Let's get started here
-building our first app.
+现在我们来开始构建第一个 app
 
 148
 00:06:07,410 --> 00:06:09,740
-I have a little video that I've made
+我做了一个视频
 
 149
 00:06:09,740 --> 00:06:13,510
-of what this first app that
-we're gonna build looks like.
+来演示这个 app 的功能
 
 150
 00:06:13,510 --> 00:06:15,530
-So this is what it looks like.
+app 的界面样式如图
 
 151
 00:06:15,530 --> 00:06:16,970
-It's a card matching game.
+这是一个纸牌配对游戏
 
 152
 00:06:16,970 --> 00:06:19,150
-Those of you who have
-seen this course on video
+看过往期课程的人
 
 153
 00:06:19,150 --> 00:06:21,030
-in the past will recognize it.
+应该会觉得似曾相识
 
 154
 00:06:21,030 --> 00:06:22,920
-But of course this one's
-all written in SwiftUI
+但我们这次会全程使用 SwiftUI 构建
 
 155
 00:06:22,920 --> 00:06:25,260
-so it's a completely new app.
+所以这会是一个全新的 app
 
 156
 00:06:25,260 --> 00:06:27,640
-And it's got a lot more
-features than the previous ones.
+我们也会加入一些全新的功能
 
 157
 00:06:27,640 --> 00:06:30,330
-Some things are really
-easy to do in SwiftUI.
+SwiftUI 的特性让这些新的功能易于构建
 
 158
 00:06:30,330 --> 00:06:32,150
-So you can see this
-has a lot of animation.
+比如说这里有很多动画效果
 
 159
 00:06:32,150 --> 00:06:33,653
-These cards are flipping over.
+这些卡片可以翻转
 
 160
 00:06:34,770 --> 00:06:36,150
-Numbers are flying up and down
+得分也会在卡片配对时
 
 161
 00:06:36,150 --> 00:06:38,780
-as you match and mismatch cards.
+上下浮动
 
 162
 00:06:38,780 --> 00:06:41,140
-You've got that little colored ring
+还有彩色的环形进度条
 
 163
 00:06:41,140 --> 00:06:43,910
-that's kind of spinning
-down in the background.
+在卡片背景中倒计时
 
 164
 00:06:43,910 --> 00:06:45,670
-So we're gonna be doing a lot
-of animation in this course.
+我们会实现许多动画效果
 
 165
 00:06:45,670 --> 00:06:48,883
-Animation is very important
-to a good mobile UI.
+动画效果对于精良的 UI 至关重要
 
 166
 00:06:50,610 --> 00:06:54,400
-You can also see that
-this application's got
+这个 app 也有
 
 167
 00:06:54,400 --> 00:06:57,070
-multiple themes, different colors.
+多种主题和不同配色
 
 168
 00:06:57,070 --> 00:06:59,110
-We had that Halloween version.
+有万圣节主题
 
 169
 00:06:59,110 --> 00:07:01,140
-Here we have these flags.
+也有旗帜主题
 
 170
 00:07:01,140 --> 00:07:03,960
-Our cards are just showing emojis.
+这些卡片会显示多种 emoji
 
 171
 00:07:03,960 --> 00:07:05,580
-Obviously my little video there
+当然，这个演示视频
 
 172
 00:07:05,580 --> 00:07:07,270
-is going very quickly clicking around,
+进度非常快
 
 173
 00:07:07,270 --> 00:07:08,970
-but you are watching it on video
+你可以在观看这节课程时
 
 174
 00:07:08,970 --> 00:07:10,960
-so you can just back up and pause
+选择变速、暂停、或倒退
 
 175
 00:07:10,960 --> 00:07:13,550
-and take a close look at
-some of the animations
+来仔细观察其中的一些动画效果
 
 176
 00:07:13,550 --> 00:07:15,500
-and the things that are going on there.
+和其他细节
 
 177
 00:07:16,580 --> 00:07:17,690
+我们将会在
 So that's what we're gonna spend
 
 178
 00:07:17,690 --> 00:07:20,670
-the first really two
-or three weeks in demo
+前二至三周的课程中
+通过课堂演示和
 
 179
 00:07:20,670 --> 00:07:24,423
-and in your homework, working
-on building this application.
+课后作业的形式
+构建这个 app
 
 180
 00:07:26,610 --> 00:07:28,220
-By the way, you're
-probably not gonna see me
+顺带一提，
+在这个学期里
 
 181
 00:07:28,220 --> 00:07:30,010
-on camera much the rest of the quarter
+你多半看不到我本人的画面
 
 182
 00:07:30,010 --> 00:07:32,070
-'cause we're gonna be
-doing screen records.
+因为我们采用了录屏的方式上课
 
 183
 00:07:32,070 --> 00:07:35,030
-So you'll just hear my disembodied voice.
+所以你只会听见我的声音
 
 184
 00:07:35,030 --> 00:07:36,510
-By the way, my disembodied voice
+而且我的声音
 
 185
 00:07:36,510 --> 00:07:37,680
-will sound a little different
+也会听起来不太一样
 
 186
 00:07:37,680 --> 00:07:39,300
-because I'm gonna use my AirPods
+因为我打算用 Airpods
 
 187
 00:07:39,300 --> 00:07:42,320
-when I'm doing the screen recordings.
+来录制收音
 
 188
 00:07:42,320 --> 00:07:44,940
-It picks up less of the mouse clicking
+它会过滤一些诸如鼠标声
 
 189
 00:07:44,940 --> 00:07:47,500
-and the keyboard tapping and all that.
+和键盘声之类的杂音
 
 190
 00:07:47,500 --> 00:07:51,110
-So if you don't see me again
-the rest of the quarter,
+所以如果你在接下来的课程中见不到我
 
 191
 00:07:51,110 --> 00:07:54,380
-just enjoy my disembodied voice.
+请享受我曼妙的嗓音（邪魅一笑
 
 192
 00:07:54,380 --> 00:07:56,130
