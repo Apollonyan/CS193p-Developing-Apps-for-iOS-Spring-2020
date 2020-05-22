@@ -41,7 +41,7 @@
 
 ### 术语的基本处理
 
-1. 尽量和已翻译的内容保持一致，查阅 [统一翻译](https://github.com/Apollonyan/CS193p-Developing-Apps-for-iOS-Spring-2020/issues/1#issuecomment-631977715)
+1. 尽量和已翻译的内容保持一致，查阅 [术语翻译对照表](https://docs.qq.com/sheet/DVnBxdUdKcUh0dldE?c=B9A0B0)
 2. 参考 [术语的特殊处理](#术语的特殊处理)
 3. 参考 [Apple Developer 网页中文版](https://developer.apple.com/cn/)，比如有关 [SwiftUI](https://developer.apple.com/cn/xcode/swiftui/) 的介绍
 4. 参考 [objccn 系列图书](https://objccn.io/products/) 的翻译
