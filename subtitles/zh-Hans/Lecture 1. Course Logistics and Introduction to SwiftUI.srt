@@ -418,203 +418,185 @@ that we include in this course.
 
 96
 00:04:05,950 --> 00:04:07,550
-So let's talk a little bit about
+现在我们来谈谈
 
 97
 00:04:07,550 --> 00:04:08,850
-the mechanics of the course
+这门课的机制
 
 98
 00:04:08,850 --> 00:04:11,430
-like how it's actually gonna play out.
+例如它具体是如何进行的
 
 99
 00:04:11,430 --> 00:04:14,350
-And in these pre-recorded lectures,
+在这些已经录好的课程里
 
 100
 00:04:14,350 --> 00:04:16,940
-I'm gonna try and spend
-most of my time doing demos.
+大部分时间我都在做演示
 
 101
 00:04:16,940 --> 00:04:18,480
-I really believe in demos.
+我非常信任示例程序
 
 102
 00:04:18,480 --> 00:04:21,090
-I think they make the
-concepts very concrete.
+因为它们能让抽象的概念变得非常具体
 
 103
 00:04:21,090 --> 00:04:24,840
 So I'll probably spent around
 2/3 of the time on demos.
+所以我会花大概 2/3 的时间做演示
 
 104
 00:04:24,840 --> 00:04:28,110
-But occasionally I do have
-to go to the lecture slides.
+但是偶尔我也会
 
 105
 00:04:28,110 --> 00:04:30,190
-And this is to cover concepts
+用幻灯片介绍概念
 
 106
 00:04:30,190 --> 00:04:32,530
-that if you didn't understand them,
+因为如果你不理解这些概念
 
 107
 00:04:32,530 --> 00:04:35,151
-the demos might just not make any sense.
+那么示例程序就毫无意义了
 
 108
 00:04:35,151 --> 00:04:37,420
-So for example, at the
-beginning of lecture two,
+例如在第二课开头
 
 109
 00:04:37,420 --> 00:04:40,740
-I'm gonna be covering
-MVVM, the design paradigm
+我会介绍一种叫做 MVVM 的设计范式
 
 110
 00:04:40,740 --> 00:04:42,560
-we use to organize our code.
+我们用它来组织代码
 
 111
 00:04:42,560 --> 00:04:45,130
-I'm also gonna be covering
-the type system in Swift
+我也会介绍 Swift 中的类型系统
 
 112
 00:04:45,130 --> 00:04:46,970
-'cause that's just so
-critical to understanding
+因为它对理解
 
 113
 00:04:46,970 --> 00:04:50,830
-how Swift works, to
-understand its type system.
+Swift 的工作原理至关重要
 
 114
 00:04:50,830 --> 00:04:53,610
-But again, if I can, I
-always lean towards the demo
+但重申一下，如果可以的话，我更倾向于做演示
 
 115
 00:04:53,610 --> 00:04:54,900
-because we wanna spend our time
+因为我们想把时间
 
 116
 00:04:54,900 --> 00:04:56,740
-actually doing iOS development.
+花在真正的 iOS 开发上
 
 117
 00:04:56,740 --> 00:04:58,930
-That's what we're here to learn.
+这才是我们在这里要学的东西
 
 118
 00:04:58,930 --> 00:05:01,660
-For your part, you are going
-to have some reading to do
+在前三周，你会有一些
 
 119
 00:05:01,660 --> 00:05:02,750
-the first three weeks.
+阅读任务
 
 120
 00:05:02,750 --> 00:05:05,740
-This is mostly to learn
-the language, Swift.
+绝大部分都是 Swift 这门语言的学习资料
 
 121
 00:05:05,740 --> 00:05:09,100
-There's an online Swift
-programming reference manual
+网上有 Swift 编程参考手册
 
 122
 00:05:09,100 --> 00:05:12,040
-that I'm going to guide you
-through those first three weeks
+在前三周我会带着你们
 
 123
 00:05:12,040 --> 00:05:13,980
-to try and get you efficiently through it.
+快速的通读它
 
 124
 00:05:13,980 --> 00:05:15,930
-Because it's a rather large document
+因为这文档太长了
 
 125
 00:05:15,930 --> 00:05:17,990
-and I don't want you to be spending
+我不想让你
 
 126
 00:05:17,990 --> 00:05:20,060
-an inordinate amount of time there.
+在这里花太长时间
 
 127
 00:05:20,060 --> 00:05:22,320
-But by the same token,
-you do have to know Swift
+同时也因为只有会了 Swift
 
 128
 00:05:22,320 --> 00:05:23,900
-to be able to do SwiftUI.
+你才能写 SwiftUI
 
 129
 00:05:24,890 --> 00:05:26,953
-There will be programming
-assignments of course.
+当然编程作业也是有的
 
 130
 00:05:26,953 --> 00:05:29,363
-They are usually about a week long.
+它们通常会持续一周时间
 
 131
 00:05:30,220 --> 00:05:32,550
-There's four or five of them.
+总共有 4 或 5 个
 
 132
 00:05:32,550 --> 00:05:35,770
-This quarter's a little bit
-short, starting a week late.
+这个学期延迟了一周开学，所以有点短
 
 133
 00:05:35,770 --> 00:05:37,930
-So these four or five
-programming assignments
+因此这 4 或 5 个编程作业
 
 134
 00:05:37,930 --> 00:05:40,140
-will be in the first six weeks.
+会在前六周布置
 
 135
 00:05:40,140 --> 00:05:43,010
-And the reason for that is
-I leave the last three weeks
+剩下的后三周我会留给你
 
 136
 00:05:43,010 --> 00:05:45,210
-for you to work on a final project.
+去完成最终项目
 
 137
 00:05:45,210 --> 00:05:46,950
-And this final project is the culmination
+最终项目将会是你学过的
 
 138
 00:05:46,950 --> 00:05:48,690
-of everything you've learned,
+所有东西的融合
 
 139
 00:05:48,690 --> 00:05:50,870
-so we won't have any
-programming assignments
+因此在最后三周
 
 140
 00:05:50,870 --> 00:05:53,100
-during that final three weeks.
+不会有任何编程作业
 
 141
 00:05:53,100 --> 00:05:55,880
