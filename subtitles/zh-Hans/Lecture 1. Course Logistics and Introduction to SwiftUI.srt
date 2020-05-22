@@ -410,11 +410,11 @@ that we include in this course.
 
 94
 00:04:00,610 --> 00:04:03,000
-And so you're gonna see it all together
+所以你将会看到它们一起
 
 95
 00:04:03,000 --> 00:04:05,950
-in a real-world environment.
+出现在真实开发环境中
 
 96
 00:04:05,950 --> 00:04:07,550
