@@ -838,233 +838,214 @@ SwiftUI 的特性
 
 203
 00:08:17,990 --> 00:08:21,240
-And when you launch Xcode,
-it's gonna look like this.
+这就是 Xcode 启动后的样子
 
 204
 00:08:21,240 --> 00:08:25,430
-Now, your first required task
-of your very first assignment
+你第一次的课后作业的第一步
 
 205
 00:08:25,430 --> 00:08:27,550
-is to reproduce everything that I'm doing
+就是重复前两节课中
 
 206
 00:08:27,550 --> 00:08:28,710
-in the first two lectures.
+我所做的事情
 
 207
 00:08:28,710 --> 00:08:33,580
-So you might wanna pause this
-video and go download Xcode
+我建议你现在暂停视频
+并下载 Xcode
 
 208
 00:08:33,580 --> 00:08:35,610
-and be ready to follow along with me.
+准备好跟进我的操作
 
 209
 00:08:35,610 --> 00:08:38,120
-Or you can just watch this
-video at your leisure,
+你也可以先轻松地看完
 
 210
 00:08:38,120 --> 00:08:40,230
-kind of soak it all in and then go back
+观看并学习必要的知识
 
 211
 00:08:40,230 --> 00:08:42,910
-and rewind, fast forward through it
+之后再重新收看
 
 212
 00:08:42,910 --> 00:08:46,720
-to satisfy that first required task.
+以完成作业
 
 213
 00:08:46,720 --> 00:08:51,050
-So here this splash screen,
-it has two sides to it.
+这就是 Xcode 的启动屏幕
+它分为两个部分
 
 214
 00:08:51,050 --> 00:08:53,260
-This is Recent Projects
-which will build up
+这边是“最近项目”
 
 215
 00:08:53,260 --> 00:08:55,060
-as the quarter goes along.
+我们往后构建的项目会出现在这里
 
 216
 00:08:55,060 --> 00:08:58,640
-And then over here is essentially
-how we get into a project.
+这边是我们创建新项目的地方
 
 217
 00:08:58,640 --> 00:09:01,520
-And we're gonna choose
-this second line right here
+选择第二个选项
 
 218
 00:09:01,520 --> 00:09:04,420
-to create a new Xcode project.
+来创建一个新的 Xcode 项目
 
 219
 00:09:04,420 --> 00:09:07,370
-Now, Xcode can be used
-as we mentioned earlier,
+就像我们之前提到的
 
 220
 00:09:07,370 --> 00:09:10,160
-not just for iOS apps but also Watch apps
+Xcode 不仅能用于构建 iOS 
+和手表（watchOS）的 app
 
 221
 00:09:10,160 --> 00:09:13,510
-and Apple TV apps, even just Mac apps.
+还包括 Apple TV（tvOS）
+甚至 Mac（macOS）的 app
 
 222
 00:09:13,510 --> 00:09:16,820
-We're gonna focus on building
-iOS apps in this course,
+我们将会重点教授
+如何构建 iOS app
 
 223
 00:09:16,820 --> 00:09:19,221
-but everything that you're
-learning about SwiftUI,
+但你们学到的 SwiftUI
 
 224
 00:09:19,221 --> 00:09:21,993
-it's applicable to all these
-other platforms as well.
+可以用于以上所有平台
 
 225
 00:09:23,190 --> 00:09:27,350
-Now, these icons here
-are all just templates.
+这些图标都代表不同的模版
 
 226
 00:09:27,350 --> 00:09:30,070
-Essentially, prepackaged
-little bits of code
+它们包含一些预设的代码
 
 227
 00:09:30,070 --> 00:09:33,890
-to get you started with
-apps of certain types.
+可以协助你构建特定形式的 app
 
 228
 00:09:33,890 --> 00:09:36,140
-But we're gonna be
-choosing Single View App
+对于这个学期所有的 app
 
 229
 00:09:36,140 --> 00:09:38,490
-I think for every app this quarter.
+我们只需要选择 Single View App
 
 230
 00:09:38,490 --> 00:09:40,370
-And it's the simplest of the templates
+它是所有模版中最简易的
 
 231
 00:09:40,370 --> 00:09:42,450
-and you're gonna see it
-really doesn't generate
+它并不会生成
 
 232
 00:09:42,450 --> 00:09:44,640
-a lot of code to get you started.
+很多代码
 
 233
 00:09:44,640 --> 00:09:46,870
-And so let's just double-click on that.
+我们双击它
 
 234
 00:09:46,870 --> 00:09:49,540
-Now, it wants to know
-some interesting things
+你现在要输入一些
 
 235
 00:09:49,540 --> 00:09:52,490
-about your app, most notably the name.
+app 的基本信息
+第一项是它的名字
 
 236
 00:09:52,490 --> 00:09:55,540
-So I'm gonna call it Memorize.
+我叫它“记忆游戏”
 
 237
 00:09:55,540 --> 00:09:57,650
-For those of you who
-might be watching this
+如果正在看的观众
 
 238
 00:09:57,650 --> 00:10:00,400
-who have seen previous videos
+你也看过往期课程视频
 
 239
 00:10:00,400 --> 00:10:04,140
-of the quarters in the
-past of this course,
+可能会发现
 
 240
 00:10:04,140 --> 00:10:07,870
-you'll know that I did this
-memory matching game before.
+我之前做过这个游戏
 
 241
 00:10:07,870 --> 00:10:11,630
-Not in SwiftUI obviously,
-because that's brand new.
+但不是使用全新推出的 SwiftUI
 
 242
 00:10:11,630 --> 00:10:14,978
-And I called it Concentration
-instead of Memorize.
+我称旧版为“翻牌游戏”（Concentration）
+而新版为“记忆游戏”（Memorize）
 
 243
 00:10:14,978 --> 00:10:17,750
-And I did that for a reason
-here, used a different name
+我用不同的名字称呼的原因在于
 
 244
 00:10:17,750 --> 00:10:21,330
-so that if we wanna refer
-to it, I can mention it.
+以后可以通过名字来区分
 
 245
 00:10:21,330 --> 00:10:22,660
-And when I say Concentration,
+当我说“翻牌游戏”时
 
 246
 00:10:22,660 --> 00:10:26,450
-I mean the old non-SwiftUI version.
+我指的是之前的非 SwiftUI 版本
 
 247
 00:10:26,450 --> 00:10:28,920
-And doing the same app is
-gonna allow those of you
+这样做的好处在于
 
 248
 00:10:28,920 --> 00:10:31,530
-who maybe already know some UIKit
+能让那些已经初步涉足
 
 249
 00:10:31,530 --> 00:10:34,020
-or have some experience doing that
+甚至已经熟练使用 UIKit 的人
 
 250
 00:10:34,020 --> 00:10:36,510
-to compare and contrast what it looks like
+能够用 SwiftUI 
 
 251
 00:10:36,510 --> 00:10:38,230
-to do it in SwiftUI.
+与之作对比
 
 252
 00:10:39,330 --> 00:10:41,560
-So this second thing right here, team,
+这里的第二项 Team
 
 253
 00:10:41,560 --> 00:10:43,960
-that's your development team.
+指的是你所属的开发者团队
 
 254
 00:10:43,960 --> 00:10:46,550

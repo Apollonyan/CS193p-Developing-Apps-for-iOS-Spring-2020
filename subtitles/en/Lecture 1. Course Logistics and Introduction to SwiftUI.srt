@@ -1111,7 +1111,7 @@ to do it in SwiftUI.
 
 252
 00:10:39,330 --> 00:10:41,560
-So this second thing right here, team,
+So this second thing right here, Team,
 
 253
 00:10:41,560 --> 00:10:43,960
