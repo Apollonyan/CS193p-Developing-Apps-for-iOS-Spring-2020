@@ -822,52 +822,47 @@ just enjoy my disembodied voice.
 
 192
 00:07:54,380 --> 00:07:56,130
-So all the work that we do
+我们做的所有工作
 
 193
 00:07:56,130 --> 00:07:58,620
-is going to be in an
-application called Xcode.
+将会在一个叫做 Xcode 的软件中进行
 
 194
 00:07:58,620 --> 00:08:00,740
-It's the development environment for iOS
+这是 iOS 的开发环境
 
 195
 00:08:00,740 --> 00:08:01,850
-and it's all inclusive.
+包含了开发用到的所有东西
 
 196
 00:08:01,850 --> 00:08:04,540
-It includes the source-code
-editing compiler,
+它包含源代码编辑、编译器
 
 197
 00:08:04,540 --> 00:08:07,200
-debugger, it's all in one place.
+调试器，是一体化的开发环境
 
 198
 00:08:07,200 --> 00:08:09,100
-And you can get it for
-free from the App Store
+你可以从 App Store 免费下载它
 
 199
 00:08:09,100 --> 00:08:11,070
-if you just go on your
-Mac to the App Store
+如果你在 Mac 上进入 App Store
 
 200
 00:08:11,070 --> 00:08:12,493
-and search for Xcode.
+然后搜索 Xcode
 
 201
 00:08:13,691 --> 00:08:16,160
-You're gonna find it's
-probably the very first match.
+你将会发现它应该是第一个结果
 
 202
 00:08:16,160 --> 00:08:17,990
-you can see it right here.
+你看，这个就是
 
 203
 00:08:17,990 --> 00:08:21,240
