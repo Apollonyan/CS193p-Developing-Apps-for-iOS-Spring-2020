@@ -1062,48 +1062,50 @@ app 的基本信息
 
 254
 00:10:43,960 --> 00:10:46,550
-In this case it's a
-personal team, just me.
+这里我选择
+仅包含自己一人的开发者团队
 
 255
 00:10:46,550 --> 00:10:47,980
-And when you launch Xcode,
+当你启动 Xcode
 
 256
 00:10:47,980 --> 00:10:51,150
-this is probably gonna say
-something like Add Team.
+你多半会在这里看到 Add Team 选项
 
 257
 00:10:51,150 --> 00:10:54,250
-And when you click on it, all
-you'll need is any Apple ID
+单击它后
+你只需要一个 Apple ID
 
 258
 00:10:54,250 --> 00:10:56,100
-and you can create your own team.
+来创建自己的开发者团队
 
 259
 00:10:56,100 --> 00:10:57,320
-If you worked for a company,
+如果你是在为公司工作
 
 260
 00:10:57,320 --> 00:11:01,153
-it could possibly be a
-company development team here.
+这里就会显示公司的开发团队
 
 261
 00:11:02,120 --> 00:11:05,430
+这里的 Organization Name
+就会是你的名字
 The organization name,
 this is gonna be your name.
 
 262
 00:11:05,430 --> 00:11:07,840
+它会出现在文件的上方
 This is going to appear
 at the top of files,
 
 263
 00:11:07,840 --> 00:11:10,570
+显示
 written by CS193p instructor.
 
 264
