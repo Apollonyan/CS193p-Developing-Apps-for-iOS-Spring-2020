@@ -851,8 +851,7 @@ SwiftUI 的特性
 
 203
 00:08:17,990 --> 00:08:21,240
-And when you launch Xcode,
-it's gonna look like this.
+这就是 Xcode 启动后的样子
 
 204
 00:08:21,240 --> 00:08:25,430
