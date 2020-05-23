@@ -44,11 +44,12 @@
 
 11
 00:00:33,310 --> 00:00:35,570
-而且这感觉比较奇怪
+而且这感觉有些奇怪
 
 12
 00:00:35,570 --> 00:00:38,670
-我相信你们也还没有完全适应
+我相信你们
+也还没有完全适应
 
 13
 00:00:38,670 --> 00:00:41,860
@@ -68,11 +69,11 @@
 
 17
 00:00:48,980 --> 00:00:51,930
-是通过 Piazza 课程论坛进行
+是通过课程论坛 Piazza 进行
 
 18
 00:00:51,930 --> 00:00:53,769
-所以你应该登录 Piazza
+所以你一定要登录 Piazza
 
 19
 00:00:53,769 --> 00:00:55,840
@@ -84,7 +85,7 @@
 
 21
 00:00:58,260 --> 00:01:00,540
-我们会非常快回复你
+我们会非常快地回复你
 
 22
 00:01:00,540 --> 00:01:03,110
@@ -92,136 +93,127 @@
 
 23
 00:01:03,110 --> 00:01:06,090
-And definitely be
-looking for posts from me
+特别是要注意看我发的帖子
 
 24
 00:01:06,090 --> 00:01:08,520
-because all course
-materials, all announcements
+因为所有的课程资料和通知
 
 25
 00:01:08,520 --> 00:01:10,650
-are gonna be made through Piazza.
+都是通过 Piazza 发的
 
 26
 00:01:10,650 --> 00:01:12,353
-So don't miss that part of it.
+所以不要把那些给错过了
 
 27
 00:01:13,290 --> 00:01:15,720
-Now, all the lectures
-are gonna be pre-recorded
+因为所有的课程
+都是提前录制好的
 
 28
 00:01:15,720 --> 00:01:17,070
-just like this one.
+就像你现在看的这个一样
 
 29
 00:01:17,070 --> 00:01:19,590
-And that's gonna be
-convenient for you I guess
+那这对你来说应该挺方便的
 
 30
 00:01:19,590 --> 00:01:20,860
-because after they come out,
+因为我把视频放出来以后
 
 31
 00:01:20,860 --> 00:01:22,790
-you can watch them at your leisure
+你可以在自己有空的时候看
 
 32
 00:01:22,790 --> 00:01:24,800
-and fast forward and rewind.
+选择变速、暂停、倒退
 
 33
 00:01:24,800 --> 00:01:28,330
-And especially since I'm going
-to be doing a lot of demos,
+特别是，因为我会做很多的示范
 
 34
 00:01:28,330 --> 00:01:30,940
-that is gonna be really valuable.
+那些是特别有价值的
 
 35
 00:01:30,940 --> 00:01:33,810
-I guess it's also gonna
-have a great benefit
+这还有个好处是
 
 36
 00:01:33,810 --> 00:01:38,010
-which is that as we do
-many times in this course,
+就像我们这门课
+之前也做过很多次一样
 
 37
 00:01:38,010 --> 00:01:42,250
-we release the course out
-into the world for free.
+是我们会把它免费公开给全世界
 
 38
 00:01:42,250 --> 00:01:44,040
-So people can watch this.
+让大家都可以观看
 
 39
 00:01:44,040 --> 00:01:46,354
-Spy on us basically here
+偷窥我们，看我们
 
 40
 00:01:46,354 --> 00:01:48,890
-as we're doing this course at Stanford.
+在斯坦福上这门课都干了什么
 
 41
 00:01:48,890 --> 00:01:50,260
-And we'll be doing that again
+我们今年也会这么做
 
 42
 00:01:50,260 --> 00:01:53,140
-after we do the standard closed captioning
+在加上外挂字幕
 
 43
 00:01:53,140 --> 00:01:55,230
-and other post-production work.
+和其他后期处理之后就会公开
 
 44
 00:01:55,230 --> 00:01:58,250
-So if you're watching me outside Stanford,
+所以如果你不是斯坦福大学的学生
 
 45
 00:01:58,250 --> 00:02:00,430
-welcome to you as well.
+也欢迎你来听课！
 
 46
 00:02:00,430 --> 00:02:03,000
-Now, of course you're not
-gonna be able to participate
+当然，你无法参加我们
 
 47
 00:02:03,000 --> 00:02:05,020
-in the forums with the rest
-of the Stanford students
+其他斯坦福学生的论坛
 
 48
 00:02:05,020 --> 00:02:07,593
-because you're watching
-this a little bit later.
+因为你看这个的时候
+我们已经讲完了
 
 49
 00:02:08,630 --> 00:02:11,130
-But there are community-based resources
+但有很多其他社区提供的资源
 
 50
 00:02:11,130 --> 00:02:13,140
-for asking questions
-out there in the world
+让你可以在上面提问
 
 51
 00:02:13,140 --> 00:02:14,570
-like Stack Overflow.
+比如像著名网站
+Stack Overflow
 
 52
 00:02:14,570 --> 00:02:18,640
-So definitely go and
-check those out as well.
+建议你去那些地方寻求帮助
 
 53
 00:02:18,640 --> 00:02:21,260
