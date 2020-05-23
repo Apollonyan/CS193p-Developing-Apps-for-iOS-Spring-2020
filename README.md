@@ -2,6 +2,10 @@
 
 [![课程封面图片](https://i.ytimg.com/vi/jbtqIBpUG7g/maxresdefault.jpg)](https://i.ytimg.com/vi/jbtqIBpUG7g/maxresdefault.jpg)
 
+## 课程资源
+
+https://cs193p.sites.stanford.edu
+
 ## 贡献字幕
 
 关于今年的操作流程，请阅读 [翻译校对步骤](CONTRIBUTING.md)。
