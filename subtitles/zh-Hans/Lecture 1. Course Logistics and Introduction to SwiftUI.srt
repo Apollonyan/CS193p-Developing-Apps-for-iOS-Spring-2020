@@ -1276,284 +1276,353 @@ UIKit instead of SwiftUI.
 
 304
 00:13:01,340 --> 00:13:04,510
+不过如果有时间的话
+我会在这学期最后一两周
 although the last week
 or two of the quarter,
 
 305
 00:13:04,510 --> 00:13:06,240
+给你展示一下
 hopefully I'll have time to show you
 
 306
 00:13:06,240 --> 00:13:09,390
+如何把旧的项目迁移到 SwiftUI
 how to integrate the
 old stuff into SwiftUI.
 
 307
 00:13:09,390 --> 00:13:11,930
+因为 SwiftUI 还不能实现所有
 Because SwiftUI doesn't
 cover all the ground
 
 308
 00:13:11,930 --> 00:13:13,130
+旧版 UIKit 能做的事情
 that the old UIKit does.
 
 309
 00:13:14,270 --> 00:13:16,710
+所以我们需要把它们粘起来一起用
 So it's nice to be able to
 kind of glue it in there.
 
 310
 00:13:16,710 --> 00:13:19,440
+SwiftUI 也提供了一些方法
 And so there's some good glue in SwiftUI
 
 311
 00:13:19,440 --> 00:13:21,593
+可以把 UIKit 里的东西粘进来
 to glue the UIKit stuff in.
 
 312
 00:13:22,830 --> 00:13:24,680
+在下面还有一些其他的选项
 These other switches in the bottom,
 
 313
 00:13:24,680 --> 00:13:26,760
+在这学期末有空的话
 we might get time by
 the end of the quarter
 
 314
 00:13:26,760 --> 00:13:28,310
+我们会学习 Core Data
 to do this Core Data.
 
 315
 00:13:28,310 --> 00:13:29,950
+这是一个面向对象的数据库
 It's an object-oriented database.
 
 316
 00:13:29,950 --> 00:13:31,920
+我希望能有时间教你们
 I'm hoping to have time to do that.
 
 317
 00:13:31,920 --> 00:13:34,490
+对于测试模块，很遗憾
 Unfortunately, I'm probably
 not gonna have time
 
 318
 00:13:34,490 --> 00:13:36,350
+我可能没时间讲了
 to do this testing framework.
 
 319
 00:13:36,350 --> 00:13:39,460
+我并没有测试不重要这种意思
 Which really I don't want
 that to make it sound like
 
 320
 00:13:39,460 --> 00:13:40,490
+恰恰相反
 testing is not important.
 
 321
 00:13:40,490 --> 00:13:42,000
+它非常重要
 It's super important.
 
 322
 00:13:42,000 --> 00:13:44,350
+只是如果你不知道如何开发
 It's just that you can't
 really test something
 
 323
 00:13:44,350 --> 00:13:46,040
+你就没办法有效地进行测试
 until you know how to develop for it
 
 324
 00:13:46,040 --> 00:13:47,540
+在我能回来讲这些东西之前
 and we're just gonna run out of time
 
 325
 00:13:47,540 --> 00:13:49,730
+我们的时间就已经用完了
 before I can go back and cover that.
 
 326
 00:13:49,730 --> 00:13:51,250
+对于第一个作业来说
 So for our first assignment,
 
 327
 00:13:51,250 --> 00:13:52,280
+没有关于这些东西的内容
 we're not gonna be doing any of these
 
 328
 00:13:52,280 --> 00:13:54,733
+所以你可以不管它们
 so you can leave all of that unchecked.
 
 329
 00:13:56,150 --> 00:13:58,114
+现在我点 Next
+然后 Xcode 弹出了一个窗口
 So I hit Next here and
 now it wants to know,
 
 330
 00:13:58,114 --> 00:14:01,417
+“行，很好，你想创建这个 app
 "Okay, great, you wanna create this app.
 
 331
 00:14:01,417 --> 00:14:02,810
+“那你想把它放到哪里呢？”
 "Where do you wanna put it?"
 
 332
 00:14:02,810 --> 00:14:05,320
+我强烈建议你把它放到 home 目录下的
 And I strongly recommend
 putting it in a folder
 
 333
 00:14:05,320 --> 00:14:08,210
+Developer 文件夹里
 called Developer in your home directory.
 
 334
 00:14:08,210 --> 00:14:12,710
+这是我们放置文件的主要位置
 That is kind of the canonical
 place that we put things.
 
 335
 00:14:12,710 --> 00:14:15,593
+我非常建议你这样做
 And I recommend strongly that you do that.
 
 336
 00:14:16,920 --> 00:14:17,890
+在窗口下方
 Down here at the bottom
 
 337
 00:14:17,890 --> 00:14:20,560
+你可以看到源代码控制（Source Control）
 you can see this Source Control thing.
 
 338
 00:14:20,560 --> 00:14:21,613
+对于不了解源代码控制的同学
 Source control for those of you
 
 339
 00:14:21,613 --> 00:14:23,503
+我这里简单介绍一下
 who are not familiar with it,
 
 340
 00:14:23,503 --> 00:14:26,470
+它是一种管理代码变化的工具
 it's a way for you to manage
 the changes to your code,
 
 341
 00:14:26,470 --> 00:14:28,580
+例如添加代码和删除代码
 kind of check them in and check them out.
 
 342
 00:14:28,580 --> 00:14:31,660
+对于团队开发来说它非常有价值
 It's especially valuable
 when you have a team
 
 343
 00:14:31,660 --> 00:14:33,870
+因为一个团队在同一份代码下工作
 because a team's working on the same code,
 
 344
 00:14:33,870 --> 00:14:36,740
+很可能会出现冲突之类的各种问题
 their changes might conflict or whatever.
 
 345
 00:14:36,740 --> 00:14:41,070
+所以你希望有一种仲裁这些变更的机制
 So you wanna have a mechanism
 for arbitrating those changes.
 
 346
 00:14:41,070 --> 00:14:42,920
+这里你勾不勾选都可以
 And so you can have this checked or not.
 
 347
 00:14:42,920 --> 00:14:44,530
+但我不会勾选它
 I'm not gonna have it checked here.
 
 348
 00:14:44,530 --> 00:14:47,290
+学期后面我会介绍一些
 Later in the quarter I'll try to go
 
 349
 00:14:47,290 --> 00:14:49,090
+Xcode 内集成的源代码控制
 through some of the features
 
 350
 00:14:49,090 --> 00:14:50,830
+的一些特性
 of the source control integration
 
 351
 00:14:50,830 --> 00:14:52,600
+因为它非常酷
 in Xcode 'cause it's pretty cool.
 
 352
 00:14:52,600 --> 00:14:55,290
+但现在选不选都行
 But for now, either way is fine.
 
 353
 00:14:55,290 --> 00:14:57,930
+现在我们来创建第一个 app
 So this is gonna create our first app.
 
 354
 00:14:57,930 --> 00:15:01,040
+现在你们中有很多人
 Now, many of you are not familiar
 
 355
 00:15:01,040 --> 00:15:02,920
+还不太了解这个用户界面
 with this whole user interface here,
 
 356
 00:15:02,920 --> 00:15:04,870
+这个 Xcode 的用户界面
 this Xcode user interface.
 
 357
 00:15:04,870 --> 00:15:07,190
+所以我会简单介绍一下
 So I'm gonna go through it briefly
 
 358
 00:15:07,190 --> 00:15:09,560
+首先看左上角
 and I'm gonna start in
 the upper-left hand corner
 
 359
 00:15:09,560 --> 00:15:12,420
+这一行按钮
 right here, this little row of buttons.
 
 360
 00:15:12,420 --> 00:15:16,430
+这是用来运行我们的应用程序的
 This is essentially how we're
 going to run our application.
 
 361
 00:15:16,430 --> 00:15:18,660
+现在如果你点击这个按钮
 Now, if you click on this button here,
 
 362
 00:15:18,660 --> 00:15:21,870
+你会看到如果你有
+一台设备连接到你的 Mac 上
 you can see that you can run
 your application on a device
 
 363
 00:15:21,870 --> 00:15:24,290
+你就可以在这台设备上运行应用程序
 if you have it actually
 connected to your Mac
 
 364
 00:15:24,290 --> 00:15:26,070
+不过我现在并没有
 which I don't currently have.
 
 365
 00:15:26,070 --> 00:15:27,520
+或者你可以在模拟器上运行
 Or you can run it in a simulator.
 
 366
 00:15:27,520 --> 00:15:29,530
+这些模拟器非常棒
 And these simulators are pretty amazing.
 
 367
 00:15:29,530 --> 00:15:31,310
+它们近乎完整模拟了一台设备
 They're a pretty full simulation
 
 368
 00:15:31,310 --> 00:15:33,300
+我马上就会展示给你看
 that I'm gonna show you in a second here.
 
 369
 00:15:33,300 --> 00:15:37,430
+我这里选 iPhone 11 作为我的模拟器
 And I'm in fact gonna pick
 iPhone 11 as my simulator.
 
