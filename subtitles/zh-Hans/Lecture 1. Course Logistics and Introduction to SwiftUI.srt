@@ -1141,8 +1141,6 @@ edu.stanford.yoursunetid
 272
 00:11:34,840 --> 00:11:37,520
 如果你还不是斯坦福的学生
-If you're not a Stanford student
-and you're watching this,
 
 273
 00:11:37,520 --> 00:11:40,440
@@ -1155,7 +1153,6 @@ and you're watching this,
 275
 00:11:44,010 --> 00:11:45,660
 只要保持它是独一无二的就好
-You just wanna make sure it's unique.
 
 276
 00:11:45,660 --> 00:11:46,880
