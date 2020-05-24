@@ -1272,8 +1272,7 @@ UIKit instead of SwiftUI.
 
 303
 00:12:59,190 --> 00:13:01,340
-We're gonna do all our
-development in SwiftUI,
+我们所有的开发工作都会用 Swift 进行
 
 304
 00:13:01,340 --> 00:13:04,510
