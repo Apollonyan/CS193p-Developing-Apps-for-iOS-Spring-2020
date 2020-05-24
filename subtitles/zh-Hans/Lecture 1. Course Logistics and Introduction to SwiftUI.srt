@@ -1049,226 +1049,209 @@ app 的基本信息
 
 254
 00:10:43,960 --> 00:10:46,550
-In this case it's a
-personal team, just me.
+这里我选择
+仅包含自己一人的开发者团队
 
 255
 00:10:46,550 --> 00:10:47,980
-And when you launch Xcode,
+当你启动 Xcode
 
 256
 00:10:47,980 --> 00:10:51,150
-this is probably gonna say
-something like Add Team.
+你多半会在这里看到 Add Team 选项
 
 257
 00:10:51,150 --> 00:10:54,250
-And when you click on it, all
-you'll need is any Apple ID
+单击它后
+你只需要一个 Apple ID
 
 258
 00:10:54,250 --> 00:10:56,100
-and you can create your own team.
+来创建自己的开发者团队
 
 259
 00:10:56,100 --> 00:10:57,320
-If you worked for a company,
+如果你是在为公司工作
 
 260
 00:10:57,320 --> 00:11:01,153
-it could possibly be a
-company development team here.
+这里就会显示公司的开发团队
 
 261
 00:11:02,120 --> 00:11:05,430
-The organization name,
-this is gonna be your name.
+这里的 Organization Name
+就会是你的名字
 
 262
 00:11:05,430 --> 00:11:07,840
-This is going to appear
-at the top of files,
+它会出现在文件的上方
 
 263
 00:11:07,840 --> 00:11:10,570
-written by CS193p instructor.
+显示 written by CS193p instructor
+(由 CS193p 教师创建)
 
 264
 00:11:10,570 --> 00:11:12,660
-So you wanna put your name there.
+所以你可以在此写上你的尊姓大名
 
 265
 00:11:12,660 --> 00:11:17,090
-This wants to be a very
-unique identifier of you.
+这里是你独一无二的标识符
 
 266
 00:11:17,090 --> 00:11:18,600
-So if you're a Stanford student,
+所以如果你是斯坦福的学生
 
 267
 00:11:18,600 --> 00:11:22,220
-I recommend using this
-reverse DNS notation.
+我建议你使用这个倒序的域名
 
 268
 00:11:22,220 --> 00:11:27,220
 edu.stanford.yoursunetid
-is probably good enough
 
 269
 00:11:27,900 --> 00:11:29,100
-to identify you.
+就足以起到辨识作用
 
 270
 00:11:29,100 --> 00:11:32,120
-You could put the CS193p
-in there if you want.
+如果想的话
+你也可以加入“CS193p”字样
 
 271
 00:11:32,120 --> 00:11:34,840
-If you're a Stanford student,
-it probably doesn't matter.
+如果你是斯坦福的学生
+加不加都关系不大
 
 272
 00:11:34,840 --> 00:11:37,520
-If you're not a Stanford student
-and you're watching this,
+如果你还不是斯坦福的学生
 
 273
 00:11:37,520 --> 00:11:40,440
-maybe your email address reversed
+你可以使用电子邮箱的倒序
 
 274
 00:11:40,440 --> 00:11:44,010
-or your company's address reversed.
+或者公司域名的倒序
 
 275
 00:11:44,010 --> 00:11:45,660
-You just wanna make sure it's unique.
+只要保持它是独一无二的就好
 
 276
 00:11:45,660 --> 00:11:46,880
-You wouldn't wanna pick something
+你最好不要使用一些
 
 277
 00:11:46,880 --> 00:11:49,610
-that someone else might also be choosing.
+大概率被他人重复的标识符
 
 278
 00:11:49,610 --> 00:11:53,080
-You could see that Xcode
-makes this unique identifier
+你会发现 Xcode 依据这两个选项
 
 279
 00:11:53,080 --> 00:11:55,460
-for your app out of these two things.
+自动生成了独一无二的标识符
 
 280
 00:11:55,460 --> 00:11:58,180
-And then we're gonna choose the language.
+接下来我们选择编程语言
 
 281
 00:11:58,180 --> 00:12:01,737
-The underpinnings of what is in iOS,
+iOS 的底层是
 
 282
 00:12:01,737 --> 00:12:04,202
-it was all written in this
-language, Objective-C,
+使用 Objective-C 来编写的
 
 283
 00:12:04,202 --> 00:12:07,817
-which is this
-object-oriented version of C.
+Objective-C 是 C 语言面向对象的版本
 
 284
 00:12:07,817 --> 00:12:10,450
-But about five or six years ago,
+但在大约五六年前
+（注：2014年）
 
 285
 00:12:10,450 --> 00:12:12,830
-Apple came out with this
-new language, Swift,
+苹果公司引入了一门新的编程语言 Swift
+（注：在 WWDC 14 公开）
 
 286
 00:12:12,830 --> 00:12:15,600
-which is awesome because
-it's completely compatible
+Swift 非常优秀
+并能与 Objective-C
 
 287
 00:12:15,600 --> 00:12:16,680
-with Objective-C.
+完全兼容
 
 288
 00:12:16,680 --> 00:12:19,200
-So all their existing
-libraries all just worked.
+因此，它能直接使用现有的代码库
 
 289
 00:12:19,200 --> 00:12:22,190
-But it introduced a lot of
-modern language features,
+它（Swift）也引入了许多现代编程语言的特性
 
 290
 00:12:22,190 --> 00:12:25,030
-especially support for
-functional programming
+不仅支持了面向对象式编程
 
 291
 00:12:25,030 --> 00:12:26,950
-as opposed to object-oriented programming.
+还特别支持了函数式编程
 
 292
 00:12:26,950 --> 00:12:29,860
-Swift does both and you're
-really gonna see that
+Swift 支持这两者的特性也将
 
 293
 00:12:29,860 --> 00:12:31,690
-in SwiftUI because SwiftUI is based on
+会在 SwiftUI 中体现出来
 
 294
 00:12:31,690 --> 00:12:34,300
-functional programming, not
-object-oriented programming.
+因为 SwiftUI 基于函数式编程
+而非面向对象式编程
 
 295
 00:12:34,300 --> 00:12:36,890
-So I don't have time to
-teach you two languages,
+我并没有足够的课时教授两门编程语言
 
 296
 00:12:36,890 --> 00:12:39,210
-I barely have time to
-teach you one new one.
+甚至很难教完一门
 
 297
 00:12:39,210 --> 00:12:41,700
-So we are only going to
-be programming in Swift.
+所以我们接下来只会写 Swift
 
 298
 00:12:41,700 --> 00:12:46,290
-And of course SwiftUI is all
-using Swift, based on Swift.
+当然，SwiftUI 是完全基于 Swift 的
 
 299
 00:12:46,290 --> 00:12:48,610
-This other user interface choice
+此处的 User Interface（用户界面）选项
 
 300
 00:12:48,610 --> 00:12:51,750
-is if you wanna develop in the old way,
+是用于选择使用旧式的
 
 301
 00:12:51,750 --> 00:12:54,450
-the non-SwiftUI way.
+非 SwiftUI 的方式开发
 
 302
 00:12:54,450 --> 00:12:58,170
-I'll often call this
-UIKit instead of SwiftUI.
+我常将其称作 UIKit
 
 303
 00:12:59,190 --> 00:13:01,340
