@@ -30,7 +30,8 @@
 7. 如遇到英文词汇或阿拉伯数字和标点符号相邻的情况，则不需要再留空格。比如：
 
     ```srt
-    就算是最新的 iPad，也不能用 Swift Playgrounds 打包应用。
+    就算是最新的 iPad，也不能
+    用 Swift Playgrounds 打包应用
     ```
 
 ## 错误修正 | Fixing Erratum
