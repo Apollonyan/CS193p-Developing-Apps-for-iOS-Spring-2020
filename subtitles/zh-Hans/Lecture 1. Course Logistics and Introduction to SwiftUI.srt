@@ -1288,7 +1288,7 @@ hopefully I'll have time to show you
 
 306
 00:13:06,240 --> 00:13:09,390
-如何把旧的项目迁移到 SwiftUI
+如何把旧东西应用到 SwiftUI 中
 how to integrate the
 old stuff into SwiftUI.
 
@@ -1821,7 +1821,7 @@ On the left here, this little blue area
 
 406
 00:17:05,610 --> 00:17:07,603
-我们称它为管理器（Navigator）
+我们称它为导航器（Navigator）
 which we can resize to what we want.
 
 407
@@ -1846,7 +1846,7 @@ But it also lets you navigate
 
 411
 00:17:15,840 --> 00:17:17,530
-它还提供了其他管理方式
+它还提供了其他导航方式
 in all these other ways along the top.
 
 412
@@ -1857,7 +1857,7 @@ Like you can navigate by searching.
 413
 00:17:20,080 --> 00:17:23,140
 还可以在调试器（Debugger）中
-管理断点（Breakpoint）
+查看断点（Breakpoint）
 You can navigate your
 breakpoints in the debugger.
 
@@ -1869,7 +1869,7 @@ all your old builds,
 
 415
 00:17:25,700 --> 00:17:28,280
-例如之前的输出
+例如之前的输出等等
 the outputs from your
 old builds, et cetera.
 
@@ -1881,169 +1881,205 @@ used to using the Navigator
 
 417
 00:17:31,110 --> 00:17:33,330
-用管理器在项目中移动
+用导航器在项目中移动
 to move around inside your app,
 
 418
 00:17:33,330 --> 00:17:36,390
-找到你想要的东西的
+找到你想要的东西
 find the things you want, et cetera.
 
 419
 00:17:36,390 --> 00:17:39,850
+在右手边有一块灰色区域
 Now, in the right-hand side,
 there's this gray area here.
 
 420
 00:17:39,850 --> 00:17:42,090
+叫做 Utilities Window
 This is called the Utilities window
 
 421
 00:17:42,090 --> 00:17:44,620
+有时候我们也叫它 Inspector
 or the Inspector sometimes we call it.
 
 422
 00:17:44,620 --> 00:17:47,240
+不过我们第一节课
 And we really don't need that very much
 
 423
 00:17:47,240 --> 00:17:48,680
+并不需要用到它
 for our first couple of lectures.
 
 424
 00:17:48,680 --> 00:17:51,430
+所以我想趁这个机会告诉你
 So I'm actually gonna use this opportunity
 
 425
 00:17:51,430 --> 00:17:53,160
+如何隐藏它
 to show you how to hide it.
 
 426
 00:17:53,160 --> 00:17:56,460
+你可以看到右上角有三个按钮
 If you look at these three
 buttons in the upper right,
 
 427
 00:17:56,460 --> 00:17:59,963
+它们可以隐藏和显示这些面板
 they let you hide and show these panes.
 
 428
 00:18:00,920 --> 00:18:03,270
+我会把 Utilities 隐藏起来
 And I'm actually gonna
 leave Utilities hidden
 
 429
 00:18:03,270 --> 00:18:05,550
+因为我刚说过了，我们不需要这东西
 because like I say, we don't need it much.
 
 430
 00:18:05,550 --> 00:18:07,040
+你看这第三个按钮
 You see there's a third button here.
 
 431
 00:18:07,040 --> 00:18:09,530
+它会让底部弹出一些东西
 This actually brings
 something up from the bottom.
 
 432
 00:18:09,530 --> 00:18:14,080
+它们是调试器和控制台输出
 This is your debugger and
 your console output down here.
 
 433
 00:18:14,080 --> 00:18:16,640
+我倾向于隐藏它们
 I tend to leave those off screen
 
 434
 00:18:16,640 --> 00:18:19,340
+因为在不做调试的时候
 just because they're
 wasting screen real estate
 
 435
 00:18:19,340 --> 00:18:20,800
+它们会浪费屏幕空间
 if I'm not actually debugging.
 
 436
 00:18:20,800 --> 00:18:24,310
+同时它们会在你需要的时候自己弹出来
 Also, they'll often come up
 automatically on their own
 
 437
 00:18:24,310 --> 00:18:26,700
+例如运行到断点的时候
 when you for example, hit a
 breakpoint in the debugger
 
 438
 00:18:26,700 --> 00:18:29,283
+或者控制台有输出的时候
 or some output comes out on the console.
 
 439
 00:18:30,480 --> 00:18:33,850
+这个区域是主编辑窗口
 And this area is the main editing window.
 
 440
 00:18:33,850 --> 00:18:36,520
+现在它被分成了两块
 And you can see that it's
 currently split in two.
 
 441
 00:18:36,520 --> 00:18:40,090
+你也可以通过点击这个小加号按钮
 And you can split this area in
 many, many ways if you want.
 
 442
 00:18:40,090 --> 00:18:42,470
+来分割更多区域
 That's what this little
 plus button over here does.
 
 443
 00:18:42,470 --> 00:18:45,380
+它能在右边添加另一个，
+也就是第三个编辑框
 It lets you add another, a
 third editor on the right.
 
 444
 00:18:45,380 --> 00:18:47,890
+如果你希望上下排列的话
 You can even add an editor on the bottom
 
 445
 00:18:47,890 --> 00:18:50,863
+你甚至可以在下方添加一个编辑框
 if you'd like your split to
 be top-bottom, et cetera.
 
 446
 00:18:51,710 --> 00:18:56,390
+这就是对 Xcode 界面的介绍了
 So that's kind of our
 tour of the Xcode UI.
 
 447
 00:18:56,390 --> 00:18:58,880
+当然上面还有一大堆菜单项
 Of course there's tons
 of menu items up here
 
 448
 00:18:58,880 --> 00:19:02,150
+随着课程进行我们会渐渐学习它们
 and we'll learn about them
 as the quarter goes on.
 
 449
 00:19:02,150 --> 00:19:04,616
+现在我们聚焦于主编辑窗口
 But let's look at our main editing window
 
 450
 00:19:04,616 --> 00:19:05,740
+来看看我们的代码
 and see what we got.
 
 451
 00:19:05,740 --> 00:19:08,900
+这里有个文件叫 ContentView.swift
 We got this ContentView.swift
 you see right here.
 
 452
 00:19:08,900 --> 00:19:10,140
+这是一个 Swift 文件
 This is a Swift file.
 
 453
 00:19:10,140 --> 00:19:12,720
+这是你第一次见到这门语言
 So this is your first look
 at the Swift language.
 
