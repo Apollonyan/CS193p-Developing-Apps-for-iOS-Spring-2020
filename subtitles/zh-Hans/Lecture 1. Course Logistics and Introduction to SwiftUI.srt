@@ -1101,7 +1101,7 @@ app 的基本信息
 
 263
 00:11:07,840 --> 00:11:10,570
-显示 written by CS193p instructor
+显示 written by CS193p Instructor
 (由 CS193p 教师创建)
 
 264
@@ -1122,7 +1122,7 @@ app 的基本信息
 
 268
 00:11:22,220 --> 00:11:27,220
-edu.stanford.yoursunetid
+edu.stanford.<你的 SUNet ID>
 
 269
 00:11:27,900 --> 00:11:29,100
