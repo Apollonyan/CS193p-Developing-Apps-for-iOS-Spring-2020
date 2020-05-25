@@ -1612,7 +1612,7 @@ And these simulators are pretty amazing.
 
 367
 00:15:29,530 --> 00:15:31,310
-它们近乎完整模拟了一台设备
+它们完整地模拟了一台设备
 They're a pretty full simulation
 
 368
@@ -1628,213 +1628,265 @@ iPhone 11 as my simulator.
 
 370
 00:15:37,430 --> 00:15:40,210
+我可以通过点击 Play 按钮
 And I can just run this SwiftUI app
 
 371
 00:15:40,210 --> 00:15:44,750
+来运行这个模板创建的 SwiftUI 项目
 that this template created
 for me by clicking Play.
 
 372
 00:15:44,750 --> 00:15:46,250
+现在我点击了 Play 按钮
 So when I click the Play button,
 
 373
 00:15:46,250 --> 00:15:47,770
+模拟器启动了
 it's gonna launch the simulator.
 
 374
 00:15:47,770 --> 00:15:48,783
+当你第一次启动的时候
 Now, the first time you do this,
 
 375
 00:15:48,783 --> 00:15:51,130
+需要等待一段时间
 it's gonna take a little bit of time
 
 376
 00:15:51,130 --> 00:15:54,690
+因为模拟器完全模拟了真实的设备
 because the simulator
 fully simulates the device.
 
 377
 00:15:54,690 --> 00:15:55,750
+我会给你展示这一点
 And in fact I'll show you that.
 
 378
 00:15:55,750 --> 00:15:58,500
+这就是我们的 app
+它显示了一行字“Hello, World!”
 So here's our app, it
 says, "Hello, World!"
 
 379
 00:15:58,500 --> 00:16:01,140
+从旁边的代码你就能想象出来
 You can probably can imagine
 from this code over here.
 
 380
 00:16:01,140 --> 00:16:04,280
+显示一行“Hello, World”
+就是第一个 app 唯一能做的事情了
 And that's what all first apps
 do, they say "Hello, World."
 
 381
 00:16:04,280 --> 00:16:06,390
+但如果你从底部往上滑
 But if we swipe up from the bottom
 
 382
 00:16:06,390 --> 00:16:08,070
+会看到 App 切换器
 just like on a real device,
 
 383
 00:16:08,070 --> 00:16:11,990
+就像真正的设备一样
 you can see that there
 is the App Chooser here
 
 384
 00:16:11,990 --> 00:16:13,210
+我可以进入设置
 and I can go into Settings.
 
 385
 00:16:13,210 --> 00:16:14,380
+这就是设置 app
 Here's the Settings app
 
 386
 00:16:14,380 --> 00:16:18,110
+我可以设置这台设备
 and I could set settings
 about my device, et cetera.
 
 387
 00:16:18,110 --> 00:16:20,610
+这并不是一个 100% 完整的设备
 It's not 100% a full device,
 
 388
 00:16:20,610 --> 00:16:22,870
+但这是确保 app 正常运行
 but it's the parts of
 the device you would need
 
 389
 00:16:22,870 --> 00:16:25,550
+所需的设备部分
 to make sure your app is really working.
 
 390
 00:16:25,550 --> 00:16:27,920
+不知道你是否注意到了
 I don't know if you also
 notice that this device
 
 391
 00:16:27,920 --> 00:16:30,580
+这台设备刚巧处在深色模式（Dark Mode）
 is similar, it happens to be in Dark Mode
 
 392
 00:16:30,580 --> 00:16:33,110
+这是 iOS 13 的新特性
 which is new in iOS 13.
 
 393
 00:16:33,110 --> 00:16:35,690
+并且我打算留在深色模式
 And I'm gonna leave it in Dark Mode
 
 394
 00:16:35,690 --> 00:16:37,300
+因为我们要看看 app 在
 because we're gonna wanna look at our app
 
 395
 00:16:37,300 --> 00:16:39,830
+深色模式和非深色模式下的区别
 in both Dark Mode and non-Dark Mode.
 
 396
 00:16:39,830 --> 00:16:42,113
+这些区别大部分都被 SwiftUI 自动处理了
 And SwiftUI handles most of that for us.
 
 397
 00:16:43,607 --> 00:16:45,090
+现在我回到 App 选择器
 So I'm just gonna go back
 to the App Switcher here
 
 398
 00:16:45,090 --> 00:16:46,370
+回到我们的 app
 and switch back to our app.
 
 399
 00:16:46,370 --> 00:16:49,210
+它显示了一行“Hello, World!”
 Here it is, it says, "Hello, World!"
 
 400
 00:16:49,210 --> 00:16:52,300
+我们来看看
 Let's go back and see how we got to this.
 
 401
 00:16:52,300 --> 00:16:54,330
+这个 Hello World 是如何实现的
 How we get to this whole
 Hello, World business.
 
 402
 00:16:54,330 --> 00:16:56,170
+现在我按下这个方形的按钮
 So I'm gonna press this square right here.
 
 403
 00:16:56,170 --> 00:16:59,080
+这是 Stop，用来停止模拟器
 This is Stop, that stops the simulator.
 
 404
 00:16:59,080 --> 00:17:02,070
+现在我们继续参观 Xcode 的界面
 And let's continue looking at Xcode's UI.
 
 405
 00:17:02,070 --> 00:17:05,610
+在左边的蓝色区域
 On the left here, this little blue area
 
 406
 00:17:05,610 --> 00:17:07,603
+我们称它为管理器（Navigator）
 which we can resize to what we want.
 
 407
 00:17:07,603 --> 00:17:09,570
+你可以调整它的大小
 It's called the Navigator.
 
 408
 00:17:09,570 --> 00:17:12,180
+通过点击这里的文件
 And it lets you navigate by file.
 
 409
 00:17:12,180 --> 00:17:14,510
+就能在不同文件间跳转
 So you can click on files in here.
 
 410
 00:17:14,510 --> 00:17:15,840
+同时在上方
 But it also lets you navigate
 
 411
 00:17:15,840 --> 00:17:17,530
+它还提供了其他管理方式
 in all these other ways along the top.
 
 412
 00:17:17,530 --> 00:17:20,080
+例如你可以在这里搜索
 Like you can navigate by searching.
 
 413
 00:17:20,080 --> 00:17:23,140
+还可以在调试器（Debugger）中
+管理断点（Breakpoint）
 You can navigate your
 breakpoints in the debugger.
 
 414
 00:17:23,140 --> 00:17:25,700
+在这里还可以查看之前的编译结果
 You can navigate through
 all your old builds,
 
 415
 00:17:25,700 --> 00:17:28,280
+例如之前的输出
 the outputs from your
 old builds, et cetera.
 
 416
 00:17:28,280 --> 00:17:31,110
+所以你真的会习惯于
 So you're really gonna get
 used to using the Navigator
 
 417
 00:17:31,110 --> 00:17:33,330
+用管理器在项目中移动
 to move around inside your app,
 
 418
 00:17:33,330 --> 00:17:36,390
+找到你想要的东西的
 find the things you want, et cetera.
 
 419
