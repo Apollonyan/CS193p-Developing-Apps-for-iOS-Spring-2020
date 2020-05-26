@@ -2346,37 +2346,35 @@ But it's not.
 
 555
 00:23:28,440 --> 00:23:29,860
-This is not object-oriented programming.
+这不是面向对象编程
 
 556
 00:23:29,860 --> 00:23:31,450
-This is functional programming.
+这是函数式编程
 
 557
 00:23:31,450 --> 00:23:33,410
-And that's why we may be more likely
+这也是为什么我们更倾向于
 
 558
 00:23:33,410 --> 00:23:36,680
-to say something like a
-ContentView functions like a View
+说一些比如，ContentView 像 View 一样运作
 
 559
 00:23:36,680 --> 00:23:39,290
-or it behaves like a View.
+或者它的行为像 View
 
 560
 00:23:39,290 --> 00:23:41,330
-And this is super important.
+这是非常重要的
 
 561
 00:23:41,330 --> 00:23:44,680
-This behavior, View, is crucial
+你会发现这个行为：View，对所有 SwiftUI
 
 562
 00:23:44,680 --> 00:23:47,810
-to how all of SwiftUI
-works as you will see.
+是如何工作的非常关键
 
 563
 00:23:47,810 --> 00:23:49,950
