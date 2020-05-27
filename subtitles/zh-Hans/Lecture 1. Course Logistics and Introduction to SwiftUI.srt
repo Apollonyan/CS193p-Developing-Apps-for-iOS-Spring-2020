@@ -3412,87 +3412,85 @@ RoundedRectangle 正是我们想要的
 
 798
 00:34:07,760 --> 00:34:10,200
-And again, just like when we created Text,
+和之前我们创建 Text 一样
 
 799
 00:34:10,200 --> 00:34:12,850
-we have to provide some information
+我们必须提供一些信息
 
 800
 00:34:12,850 --> 00:34:14,790
-to create a RoundedRectangle.
+来创建一个 RoundedRectangle
 
 801
 00:34:14,790 --> 00:34:17,980
-You can by the way, easily
-find out what that is
+你可以通过以下方法
+轻松地知道需要补充什么
 
 802
 00:34:17,980 --> 00:34:20,290
-by just doing the open parentheses
+只需输入左括号 (
 
 803
 00:34:20,290 --> 00:34:22,170
-and Xcode will show you the options.
+Xcode 便会向你展示各种选项
 
 804
 00:34:22,170 --> 00:34:24,820
-Now, RoundedRectangle,
-there's four different ways
+可以看到，共有四种方式
 
 805
 00:34:24,820 --> 00:34:26,197
-to create a ZStack.
+用来创建 RoundRectangle
 
 806
 00:34:26,197 --> 00:34:29,350
-You can specify the corner
-radius or the corner size,
+你可以指定圆角的半径
+或者圆角的尺寸
 
 807
 00:34:29,350 --> 00:34:31,770
-width and height of the corner.
+也就是圆角的宽和高
 
 808
 00:34:31,770 --> 00:34:33,340
-I'm gonna do the cornerRadius.
+接下来我用
+cornerRadius 作为示范
 
 809
 00:34:33,340 --> 00:34:37,363
-So you can hit Tab here or
-you can double-click on this.
+你可以按下 Tab 键
+或者鼠标双击这里
 
 810
 00:34:38,970 --> 00:34:43,040
-Then it wants the radius
-and this is in points.
+接着，它会提示你输入半径
+以磅为单位
 
 811
 00:34:43,040 --> 00:34:45,235
-So I'm gonna do 10 points.
+输入 10 磅
 
 812
 00:34:45,235 --> 00:34:48,050
-A point is the same as
-the point size of a font,
+一磅与字体的磅值
+是相同的标准
 
 813
 00:34:48,050 --> 00:34:49,830
-like 10-point font.
+比如 10 磅大小的字体
 
 814
 00:34:49,830 --> 00:34:53,780
-It's also, just to give you an
-idea of the size of a point,
+再举个例子，方便你理解一磅的大小
 
 815
 00:34:53,780 --> 00:34:57,550
-a typical iPhone is maybe
-four or 500 points wide
+一台 iPhone 大约有四五百磅宽
 
 816
 00:34:57,550 --> 00:35:00,230
-and maybe seven or 800 points high.
+七八百磅高
 
 817
 00:35:00,230 --> 00:35:05,230
