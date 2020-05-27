@@ -2567,90 +2567,87 @@ we call them properties.
 
 606
 00:25:40,210 --> 00:25:44,680
-So the syntax for a property,
-really easy, you got a var.
+你可以用简单的语法声明一个属性
+并存储在变量中
 
 607
 00:25:44,680 --> 00:25:46,487
-This is the name of the property.
+此处的 body 是属性的名称
 
 608
 00:25:46,487 --> 00:25:49,410
-Again, it's green 'cause
-it's something we chose.
+它的字体颜色也是绿色
+因为这是我们声明的（而非系统声明）
 
 609
 00:25:49,410 --> 00:25:54,410
-And this right here is
-the type of this property
+这里的 some View 是属性的类型
 
 610
 00:25:55,400 --> 00:25:57,290
-or of this var.
+或者说是这个变量的类型
 
 611
 00:25:57,290 --> 00:26:01,020
-Now, this is a pretty
-interesting type even in Swift.
+即使在 Swift 这门语言中
+它也是一种相当有趣的类型
 
 612
 00:26:01,020 --> 00:26:04,000
-Because it's got a little magenta keyword
+因为它包含一个紫红色字体所代表的
 
 613
 00:26:04,000 --> 00:26:06,083
-in the middle of it.
+系统声明的关键字
 
 614
 00:26:07,000 --> 00:26:10,640
-Normally this type might
-look like this is an Int
+这里通常会是一个 Int 类型的变量
 
 615
 00:26:10,640 --> 00:26:12,910
-or maybe it's a String.
+或是一个 String 类型的变量
 
 616
 00:26:12,910 --> 00:26:15,180
-Or it might be a Boolean value
+也或许是个布尔值
 
 617
 00:26:15,180 --> 00:26:17,350
-or it's an Array or something.
+是个 Array 类型的变量之类的
 
 618
 00:26:17,350 --> 00:26:20,940
-But in our case, it's this some View
+但在我们的示例程序中
 
 619
 00:26:20,940 --> 00:26:23,450
-which is kind of a interesting type.
+它是这个耐人寻味的类型：some View
 
 620
 00:26:23,450 --> 00:26:24,333
-What this essentially means
+说到底
 
 621
 00:26:24,333 --> 00:26:28,820
-is that the type of this
-variable, this property,
+这个变量，或者说这个属性的类型
 
 622
 00:26:28,820 --> 00:26:33,820
-is any type, any struct, as
-long as it behaves like a View.
+可以是任何一种类型，任何一种结构
+只要表现得像一个 View 就行
 
 623
 00:26:34,830 --> 00:26:36,883
-As long as it is some View.
+也就是说，它只要是某一个 View 就行
 
 624
 00:26:38,180 --> 00:26:41,450
-So that's what this kind of odd thing
+这就是这个古怪的类型
 
 625
 00:26:41,450 --> 00:26:42,580
-means right here.
+在这里所代表的含义
 
 626
 00:26:42,580 --> 00:26:45,200
