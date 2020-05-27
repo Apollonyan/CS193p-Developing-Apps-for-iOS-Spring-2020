@@ -900,7 +900,7 @@ SwiftUI 的特性
 
 220
 00:09:07,370 --> 00:09:10,160
-Xcode 不仅能用于构建 iOS 
+Xcode 不仅能用于构建 iOS
 和手表（watchOS）的 app
 
 221
@@ -1025,7 +1025,7 @@ app 的基本信息
 
 250
 00:10:34,020 --> 00:10:36,510
-能够用 SwiftUI 
+能够用 SwiftUI
 
 251
 00:10:36,510 --> 00:10:38,230
@@ -1248,660 +1248,615 @@ Swift 支持这两者的特性
 
 303
 00:12:59,190 --> 00:13:01,340
-We're gonna do all our
-development in SwiftUI,
+我们所有的开发工作都会用 SwiftUI 进行
 
 304
 00:13:01,340 --> 00:13:04,510
-although the last week
-or two of the quarter,
+不过如果有时间的话
+我会在这学期最后一两周
 
 305
 00:13:04,510 --> 00:13:06,240
-hopefully I'll have time to show you
+给你展示一下
 
 306
 00:13:06,240 --> 00:13:09,390
-how to integrate the
-old stuff into SwiftUI.
+如何把旧东西应用到 SwiftUI 中
 
 307
 00:13:09,390 --> 00:13:11,930
-Because SwiftUI doesn't
-cover all the ground
+因为 SwiftUI 还不能实现所有
 
 308
 00:13:11,930 --> 00:13:13,130
-that the old UIKit does.
+旧版 UIKit 能做的事情
 
 309
 00:13:14,270 --> 00:13:16,710
-So it's nice to be able to
-kind of glue it in there.
+所以我们需要把它们组合起来一起用
 
 310
 00:13:16,710 --> 00:13:19,440
-And so there's some good glue in SwiftUI
+SwiftUI 也提供了一些方法
 
 311
 00:13:19,440 --> 00:13:21,593
-to glue the UIKit stuff in.
+可以把 UIKit 里的东西组合进来
 
 312
 00:13:22,830 --> 00:13:24,680
-These other switches in the bottom,
+在下面还有一些其他的选项
 
 313
 00:13:24,680 --> 00:13:26,760
-we might get time by
-the end of the quarter
+在这学期末有空的话
 
 314
 00:13:26,760 --> 00:13:28,310
-to do this Core Data.
+我们会学习 Core Data
 
 315
 00:13:28,310 --> 00:13:29,950
-It's an object-oriented database.
+这是一个面向对象的数据库
 
 316
 00:13:29,950 --> 00:13:31,920
-I'm hoping to have time to do that.
+我希望能有时间教你们
 
 317
 00:13:31,920 --> 00:13:34,490
-Unfortunately, I'm probably
-not gonna have time
+对于测试模块，很遗憾
 
 318
 00:13:34,490 --> 00:13:36,350
-to do this testing framework.
+我可能没时间讲了
 
 319
 00:13:36,350 --> 00:13:39,460
-Which really I don't want
-that to make it sound like
+我并没有“测试不重要”这种意思
 
 320
 00:13:39,460 --> 00:13:40,490
-testing is not important.
+恰恰相反
 
 321
 00:13:40,490 --> 00:13:42,000
-It's super important.
+它非常重要
 
 322
 00:13:42,000 --> 00:13:44,350
-It's just that you can't
-really test something
+只是如果你不知道如何开发
 
 323
 00:13:44,350 --> 00:13:46,040
-until you know how to develop for it
+你就没东西进行测试
 
 324
 00:13:46,040 --> 00:13:47,540
-and we're just gonna run out of time
+在我能回来讲这些东西之前
 
 325
 00:13:47,540 --> 00:13:49,730
-before I can go back and cover that.
+我们的时间就已经用完了
 
 326
 00:13:49,730 --> 00:13:51,250
-So for our first assignment,
+对于第一个作业来说
 
 327
 00:13:51,250 --> 00:13:52,280
-we're not gonna be doing any of these
+没有关于这些东西的内容
 
 328
 00:13:52,280 --> 00:13:54,733
-so you can leave all of that unchecked.
+所以你可以不管它们
 
 329
 00:13:56,150 --> 00:13:58,114
-So I hit Next here and
-now it wants to know,
+现在我点 Next
+然后 Xcode 弹出了一个窗口
 
 330
 00:13:58,114 --> 00:14:01,417
-"Okay, great, you wanna create this app.
+“行，很好，你想创建这个 app”
 
 331
 00:14:01,417 --> 00:14:02,810
-"Where do you wanna put it?"
+“那你想把它放到哪里呢？”
 
 332
 00:14:02,810 --> 00:14:05,320
-And I strongly recommend
-putting it in a folder
+我强烈建议你把它放到 home 目录下的
 
 333
 00:14:05,320 --> 00:14:08,210
-called Developer in your home directory.
+Developer 文件夹里
 
 334
 00:14:08,210 --> 00:14:12,710
-That is kind of the canonical
-place that we put things.
+这是我们放置文件的主要位置
 
 335
 00:14:12,710 --> 00:14:15,593
-And I recommend strongly that you do that.
+我非常建议你这样做
 
 336
 00:14:16,920 --> 00:14:17,890
-Down here at the bottom
+在窗口下方
 
 337
 00:14:17,890 --> 00:14:20,560
-you can see this Source Control thing.
+你可以看到源代码控制（Source Control）
 
 338
 00:14:20,560 --> 00:14:21,613
-Source control for those of you
+对于不了解源代码控制的同学
 
 339
 00:14:21,613 --> 00:14:23,503
-who are not familiar with it,
+我这里简单介绍一下
 
 340
 00:14:23,503 --> 00:14:26,470
-it's a way for you to manage
-the changes to your code,
+它是一种管理代码变化的工具
 
 341
 00:14:26,470 --> 00:14:28,580
-kind of check them in and check them out.
+例如添加代码和删除代码
 
 342
 00:14:28,580 --> 00:14:31,660
-It's especially valuable
-when you have a team
+对于团队开发来说它非常有价值
 
 343
 00:14:31,660 --> 00:14:33,870
-because a team's working on the same code,
+因为一个团队在同一份代码下工作
 
 344
 00:14:33,870 --> 00:14:36,740
-their changes might conflict or whatever.
+很可能会出现冲突之类的各种问题
 
 345
 00:14:36,740 --> 00:14:41,070
-So you wanna have a mechanism
-for arbitrating those changes.
+所以你希望有一种仲裁这些变更的机制
 
 346
 00:14:41,070 --> 00:14:42,920
-And so you can have this checked or not.
+这里你勾不勾选都可以
 
 347
 00:14:42,920 --> 00:14:44,530
-I'm not gonna have it checked here.
+但我不会勾选它
 
 348
 00:14:44,530 --> 00:14:47,290
-Later in the quarter I'll try to go
+学期后面我会介绍一些
 
 349
 00:14:47,290 --> 00:14:49,090
-through some of the features
+Xcode 内集成的源代码控制
 
 350
 00:14:49,090 --> 00:14:50,830
-of the source control integration
+的一些特性
 
 351
 00:14:50,830 --> 00:14:52,600
-in Xcode 'cause it's pretty cool.
+因为它非常酷
 
 352
 00:14:52,600 --> 00:14:55,290
-But for now, either way is fine.
+但现在选不选都行
 
 353
 00:14:55,290 --> 00:14:57,930
-So this is gonna create our first app.
+现在我们的第一个 app 创建好了
 
 354
 00:14:57,930 --> 00:15:01,040
-Now, many of you are not familiar
+现在你们中有很多人
 
 355
 00:15:01,040 --> 00:15:02,920
-with this whole user interface here,
+还不太了解这个用户界面
 
 356
 00:15:02,920 --> 00:15:04,870
-this Xcode user interface.
+这个 Xcode 的用户界面
 
 357
 00:15:04,870 --> 00:15:07,190
-So I'm gonna go through it briefly
+所以我会简单介绍一下
 
 358
 00:15:07,190 --> 00:15:09,560
-and I'm gonna start in
-the upper-left hand corner
+首先看左上角
 
 359
 00:15:09,560 --> 00:15:12,420
-right here, this little row of buttons.
+这一行按钮
 
 360
 00:15:12,420 --> 00:15:16,430
-This is essentially how we're
-going to run our application.
+这是用来运行我们的应用程序的
 
 361
 00:15:16,430 --> 00:15:18,660
-Now, if you click on this button here,
+现在如果你点击这个按钮
 
 362
 00:15:18,660 --> 00:15:21,870
-you can see that you can run
-your application on a device
+你会看到如果你有
+一台设备连接到你的 Mac 上
 
 363
 00:15:21,870 --> 00:15:24,290
-if you have it actually
-connected to your Mac
+你就可以在这台设备上运行应用程序
 
 364
 00:15:24,290 --> 00:15:26,070
-which I don't currently have.
+不过我现在并没有
 
 365
 00:15:26,070 --> 00:15:27,520
-Or you can run it in a simulator.
+或者你可以在模拟器上运行
 
 366
 00:15:27,520 --> 00:15:29,530
-And these simulators are pretty amazing.
+这些模拟器非常棒
 
 367
 00:15:29,530 --> 00:15:31,310
-They're a pretty full simulation
+它们完整地模拟了一台设备
 
 368
 00:15:31,310 --> 00:15:33,300
-that I'm gonna show you in a second here.
+我马上就会展示给你看
 
 369
 00:15:33,300 --> 00:15:37,430
-And I'm in fact gonna pick
-iPhone 11 as my simulator.
+我这里选 iPhone 11 作为我的模拟器
 
 370
 00:15:37,430 --> 00:15:40,210
-And I can just run this SwiftUI app
+我可以通过点击 Play 按钮
 
 371
 00:15:40,210 --> 00:15:44,750
-that this template created
-for me by clicking Play.
+来运行这个模板创建的 SwiftUI 项目
 
 372
 00:15:44,750 --> 00:15:46,250
-So when I click the Play button,
+现在我点击了 Play 按钮
 
 373
 00:15:46,250 --> 00:15:47,770
-it's gonna launch the simulator.
+模拟器启动了
 
 374
 00:15:47,770 --> 00:15:48,783
-Now, the first time you do this,
+当你第一次启动的时候
 
 375
 00:15:48,783 --> 00:15:51,130
-it's gonna take a little bit of time
+需要等待一段时间
 
 376
 00:15:51,130 --> 00:15:54,690
-because the simulator
-fully simulates the device.
+因为模拟器完全模拟了真实的设备
 
 377
 00:15:54,690 --> 00:15:55,750
-And in fact I'll show you that.
+我会给你展示这一点
 
 378
 00:15:55,750 --> 00:15:58,500
-So here's our app, it
-says, "Hello, World!"
+这就是我们的 app
+它显示了一行字“Hello, World!”
 
 379
 00:15:58,500 --> 00:16:01,140
-You can probably can imagine
-from this code over here.
+从旁边的代码你就能想象出来
 
 380
 00:16:01,140 --> 00:16:04,280
-And that's what all first apps
-do, they say "Hello, World."
+显示一行“Hello, World”
+就是第一个 app 唯一能做的事情了
 
 381
 00:16:04,280 --> 00:16:06,390
-But if we swipe up from the bottom
+但如果你从底部往上滑
 
 382
 00:16:06,390 --> 00:16:08,070
-just like on a real device,
+会看到 App 切换器
 
 383
 00:16:08,070 --> 00:16:11,990
-you can see that there
-is the App Chooser here
+就像真正的设备一样
 
 384
 00:16:11,990 --> 00:16:13,210
-and I can go into Settings.
+我可以进入设置
 
 385
 00:16:13,210 --> 00:16:14,380
-Here's the Settings app
+这就是设置 app
 
 386
 00:16:14,380 --> 00:16:18,110
-and I could set settings
-about my device, et cetera.
+我可以设置这台设备
 
 387
 00:16:18,110 --> 00:16:20,610
-It's not 100% a full device,
+这并不是一个 100% 完整的设备
 
 388
 00:16:20,610 --> 00:16:22,870
-but it's the parts of
-the device you would need
+但这是确保 app 正常运行
 
 389
 00:16:22,870 --> 00:16:25,550
-to make sure your app is really working.
+所需的部分
 
 390
 00:16:25,550 --> 00:16:27,920
-I don't know if you also
-notice that this device
+不知道你是否注意到了
 
 391
 00:16:27,920 --> 00:16:30,580
-is similar, it happens to be in Dark Mode
+这台设备刚巧处在深色模式（Dark Mode）
 
 392
 00:16:30,580 --> 00:16:33,110
-which is new in iOS 13.
+这是 iOS 13 的新特性
 
 393
 00:16:33,110 --> 00:16:35,690
-And I'm gonna leave it in Dark Mode
+并且我打算留在深色模式
 
 394
 00:16:35,690 --> 00:16:37,300
-because we're gonna wanna look at our app
+因为我们要看看 app 在
 
 395
 00:16:37,300 --> 00:16:39,830
-in both Dark Mode and non-Dark Mode.
+深色模式和非深色模式下的区别
 
 396
 00:16:39,830 --> 00:16:42,113
-And SwiftUI handles most of that for us.
+这些区别大部分都被 SwiftUI 自动处理了
 
 397
 00:16:43,607 --> 00:16:45,090
-So I'm just gonna go back
-to the App Switcher here
+现在我回到 App 选择器
 
 398
 00:16:45,090 --> 00:16:46,370
-and switch back to our app.
+回到我们的 app
 
 399
 00:16:46,370 --> 00:16:49,210
-Here it is, it says, "Hello, World!"
+它显示了一行“Hello, World!”
 
 400
 00:16:49,210 --> 00:16:52,300
-Let's go back and see how we got to this.
+我们来看看
 
 401
 00:16:52,300 --> 00:16:54,330
-How we get to this whole
-Hello, World business.
+这个 Hello World 是如何实现的
 
 402
 00:16:54,330 --> 00:16:56,170
-So I'm gonna press this square right here.
+现在我按下这个方形的按钮
 
 403
 00:16:56,170 --> 00:16:59,080
-This is Stop, that stops the simulator.
+这是 Stop，用来停止模拟器
 
 404
 00:16:59,080 --> 00:17:02,070
-And let's continue looking at Xcode's UI.
+现在我们继续参观 Xcode 的界面
 
 405
 00:17:02,070 --> 00:17:05,610
-On the left here, this little blue area
+在左边的蓝色区域
 
 406
 00:17:05,610 --> 00:17:07,603
-which we can resize to what we want.
+我们称它为导航器（Navigator）
 
 407
 00:17:07,603 --> 00:17:09,570
-It's called the Navigator.
+你可以调整它的大小
 
 408
 00:17:09,570 --> 00:17:12,180
-And it lets you navigate by file.
+通过点击这里的文件
 
 409
 00:17:12,180 --> 00:17:14,510
-So you can click on files in here.
+就能在不同文件间跳转
 
 410
 00:17:14,510 --> 00:17:15,840
-But it also lets you navigate
+同时在上方
 
 411
 00:17:15,840 --> 00:17:17,530
-in all these other ways along the top.
+它还提供了其他导航方式
 
 412
 00:17:17,530 --> 00:17:20,080
-Like you can navigate by searching.
+例如你可以在这里搜索
 
 413
 00:17:20,080 --> 00:17:23,140
-You can navigate your
-breakpoints in the debugger.
+还可以在调试器（Debugger）中
+查看断点（Breakpoint）
 
 414
 00:17:23,140 --> 00:17:25,700
-You can navigate through
-all your old builds,
+在这里还可以查看之前的编译结果
 
 415
 00:17:25,700 --> 00:17:28,280
-the outputs from your
-old builds, et cetera.
+例如之前的输出等等
 
 416
 00:17:28,280 --> 00:17:31,110
-So you're really gonna get
-used to using the Navigator
+所以你真的会习惯于
 
 417
 00:17:31,110 --> 00:17:33,330
-to move around inside your app,
+用导航器在项目中移动
 
 418
 00:17:33,330 --> 00:17:36,390
-find the things you want, et cetera.
+找到你想要的东西
 
 419
 00:17:36,390 --> 00:17:39,850
-Now, in the right-hand side,
-there's this gray area here.
+在右手边有一块灰色区域
 
 420
 00:17:39,850 --> 00:17:42,090
-This is called the Utilities window
+叫做实用工具（Utilities）窗口
 
 421
 00:17:42,090 --> 00:17:44,620
-or the Inspector sometimes we call it.
+有时候我们也叫它检查器（Inspector）
 
 422
 00:17:44,620 --> 00:17:47,240
-And we really don't need that very much
+不过我们前几节课
 
 423
 00:17:47,240 --> 00:17:48,680
-for our first couple of lectures.
+并不需要用到它
 
 424
 00:17:48,680 --> 00:17:51,430
-So I'm actually gonna use this opportunity
+所以我想趁这个机会告诉你
 
 425
 00:17:51,430 --> 00:17:53,160
-to show you how to hide it.
+如何隐藏它
 
 426
 00:17:53,160 --> 00:17:56,460
-If you look at these three
-buttons in the upper right,
+你可以看到右上角有三个按钮
 
 427
 00:17:56,460 --> 00:17:59,963
-they let you hide and show these panes.
+它们可以隐藏和显示这些面板
 
 428
 00:18:00,920 --> 00:18:03,270
-And I'm actually gonna
-leave Utilities hidden
+我会把实用工具隐藏起来
 
 429
 00:18:03,270 --> 00:18:05,550
-because like I say, we don't need it much.
+因为我刚说过了，我们不需要这东西
 
 430
 00:18:05,550 --> 00:18:07,040
-You see there's a third button here.
+你看这第三个按钮
 
 431
 00:18:07,040 --> 00:18:09,530
-This actually brings
-something up from the bottom.
+它会让底部弹出一些东西
 
 432
 00:18:09,530 --> 00:18:14,080
-This is your debugger and
-your console output down here.
+它们是调试器和
+控制台（Console）输出
 
 433
 00:18:14,080 --> 00:18:16,640
-I tend to leave those off screen
+我倾向于隐藏它们
 
 434
 00:18:16,640 --> 00:18:19,340
-just because they're
-wasting screen real estate
+因为在不做调试的时候
 
 435
 00:18:19,340 --> 00:18:20,800
-if I'm not actually debugging.
+它们会浪费屏幕空间
 
 436
 00:18:20,800 --> 00:18:24,310
-Also, they'll often come up
-automatically on their own
+同时它们会在你需要的时候自己弹出来
 
 437
 00:18:24,310 --> 00:18:26,700
-when you for example, hit a
-breakpoint in the debugger
+例如运行到断点的时候
 
 438
 00:18:26,700 --> 00:18:29,283
-or some output comes out on the console.
+或者控制台有输出的时候
 
 439
 00:18:30,480 --> 00:18:33,850
-And this area is the main editing window.
+这个区域是主编辑窗口
 
 440
 00:18:33,850 --> 00:18:36,520
-And you can see that it's
-currently split in two.
+现在它被分成了两块
 
 441
 00:18:36,520 --> 00:18:40,090
-And you can split this area in
-many, many ways if you want.
+你也可以通过点击这个小加号按钮
 
 442
 00:18:40,090 --> 00:18:42,470
-That's what this little
-plus button over here does.
+来分割更多区域
 
 443
 00:18:42,470 --> 00:18:45,380
-It lets you add another, a
-third editor on the right.
+它能在右边添加另一个
+也就是第三个编辑器
 
 444
 00:18:45,380 --> 00:18:47,890
-You can even add an editor on the bottom
+如果你希望上下排列的话
 
 445
 00:18:47,890 --> 00:18:50,863
-if you'd like your split to
-be top-bottom, et cetera.
+你甚至可以在下方添加一个编辑器
 
 446
 00:18:51,710 --> 00:18:56,390
-So that's kind of our
-tour of the Xcode UI.
+这就是对 Xcode 界面的介绍了
 
 447
 00:18:56,390 --> 00:18:58,880
-Of course there's tons
-of menu items up here
+当然上面还有一大堆菜单项
 
 448
 00:18:58,880 --> 00:19:02,150
-and we'll learn about them
-as the quarter goes on.
+随着课程进行我们会渐渐学习它们
 
 449
 00:19:02,150 --> 00:19:04,616
-But let's look at our main editing window
+现在我们聚焦于主编辑窗口
 
 450
 00:19:04,616 --> 00:19:05,740
-and see what we got.
+来看看我们的代码
 
 451
 00:19:05,740 --> 00:19:08,900
-We got this ContentView.swift
-you see right here.
+这里有个文件叫 ContentView.swift
 
 452
 00:19:08,900 --> 00:19:10,140
-This is a Swift file.
+这是一个 Swift 文件
 
 453
 00:19:10,140 --> 00:19:12,720
-So this is your first look
-at the Swift language.
+这是你第一次见到这门语言
 
 454
 00:19:12,720 --> 00:19:15,730
