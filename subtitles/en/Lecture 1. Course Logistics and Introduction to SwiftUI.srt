@@ -3675,7 +3675,7 @@ this piece of information
 
 836
 00:35:53,030 --> 00:35:55,077
-that it needs to create a ZStack.
+that it needs to create a RoundedRectangle.
 
 837
 00:35:55,077 --> 00:35:56,700

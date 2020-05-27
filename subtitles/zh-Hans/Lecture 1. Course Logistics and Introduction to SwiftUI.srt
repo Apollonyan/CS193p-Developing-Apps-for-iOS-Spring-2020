@@ -3417,177 +3417,172 @@ cornerRadius 作为示范
 810
 00:34:38,970 --> 00:34:43,040
 接着，它会提示你输入半径
-以磅（point）为单位
+以点（point）为单位
 
 811
 00:34:43,040 --> 00:34:45,235
-输入 10 磅
+输入 10 点
 
 812
 00:34:45,235 --> 00:34:48,050
-一磅与字体的磅值
+一点与字体的点值
 是相同的标准
 
 813
 00:34:48,050 --> 00:34:49,830
-比如 10 磅大小的字体
+比如 10 点大小的字体
 
 814
 00:34:49,830 --> 00:34:53,780
-举个例子，方便你们感受一磅有多大
+举个例子，方便你们感受一点有多大
 
 815
 00:34:53,780 --> 00:34:57,550
-一台 iPhone 的宽度大约四五百磅
+一台 iPhone 的宽度大约四五百点
 
 816
 00:34:57,550 --> 00:35:00,230
-高度大约七八百磅
+高度大约七八百点
 
 817
 00:35:00,230 --> 00:35:05,230
-An iPad might be 1,000
-by 700 and something.
+一台 iPad 的宽度大约一千点 
+高度约七百点
 
 818
 00:35:05,580 --> 00:35:08,070
-Now, I'm being intentionally vague here
+在此，我故意说得很模糊
 
 819
 00:35:08,070 --> 00:35:10,710
-because we never write our code
+因为我们尚未写代码
 
 820
 00:35:10,710 --> 00:35:13,830
-trying to know what the
-sizes of screens are.
+来尝试了解
+屏幕的尺寸是什么
 
 821
 00:35:13,830 --> 00:35:16,050
-SwiftUI helps us write code
+SwiftUI 会帮助我们将代码
 
 822
 00:35:16,050 --> 00:35:17,450
-that works on any size screen.
+运行在任意尺寸的屏幕上
 
 823
 00:35:17,450 --> 00:35:20,010
-It just adapts and adjusts
-to any size screen.
+它会适应并在任意尺寸的屏幕上进行校准
 
 824
 00:35:20,010 --> 00:35:22,530
-You're really gonna see
-that with our Memorize game
+当我们在 记忆游戏 中开始拥有
+成行成列的按钮时
 
 825
 00:35:22,530 --> 00:35:25,430
-when we start having rows
-and columns of buttons.
+你将体会到这一点
 
 826
 00:35:25,430 --> 00:35:27,740
-On big screens they're gonna be large.
+在大尺寸的屏幕上他们会被放大
 
 827
 00:35:27,740 --> 00:35:30,940
-When we're in portrait mode
-it's gonna kind of resize things
+当设备在竖屏模式下
+它会用一种方式调整大小
 
 828
 00:35:30,940 --> 00:35:32,970
-one way and landscape another.
+而在横屏模式下会以另一种方式调整
 
 829
 00:35:32,970 --> 00:35:34,930
-So we always wanna write our code
+所以我们总是想写出
 
 830
 00:35:34,930 --> 00:35:36,910
-so it works in any size screen.
+能在任意尺寸屏幕上工作正常的代码
 
 831
 00:35:36,910 --> 00:35:39,670
-But that's the approximate size of a point
+这只是 一点 大约的尺寸
 
 832
 00:35:39,670 --> 00:35:41,820
-to give you an idea of a point.
+给你一个印象
 
 833
 00:35:41,820 --> 00:35:45,570
-Now, one thing that's
-kind of strange about this
+现在，
+这里有一点奇怪
 
 834
 00:35:45,570 --> 00:35:47,453
-is this right here.
+啊！在这里
 
 835
 00:35:48,420 --> 00:35:53,030
-It has put a label on
-this piece of information
+这块信息的位置
+被放上了一个标签
 
 836
 00:35:53,030 --> 00:35:55,077
-that it needs to create a ZStack.
+说明需要创建一个圆角矩形
 
 837
 00:35:55,077 --> 00:35:56,700
-And that didn't happen with Text.
+但是Text视图并没有这个用法
 
 838
 00:35:56,700 --> 00:36:00,740
-This doesn't say the string
-or something like that.
+这并不是说字符串
+或者类似的
 
 839
 00:36:00,740 --> 00:36:02,580
-Text doesn't have one of these.
+Text视图没有参数这种要求
 
 840
 00:36:02,580 --> 00:36:05,120
-But this is actually the norm.
+但有参数实际上是一种常态
 
 841
 00:36:05,120 --> 00:36:07,620
-It's unusual to have something like Text
+像Text视图这样
 
 842
 00:36:07,620 --> 00:36:10,770
-where there's no label
-here for an argument.
+没有标签作为参数
+是不同寻常的
 
 843
 00:36:10,770 --> 00:36:12,390
-You have to go out of your way to do that.
+你必须写额外的代码才能实现
 
 844
 00:36:12,390 --> 00:36:14,090
-And I'm gonna show you
-how to go out of your way
+虽然我们不经常这么做
 
 845
 00:36:14,090 --> 00:36:16,700
-although we're not gonna
-do that very often.
+但我还是会为你展示一下
 
 846
 00:36:16,700 --> 00:36:19,430
-Instead, when we create things,
+当我们创建东西的时候
 
 847
 00:36:19,430 --> 00:36:21,070
-when we pass the information,
+当我们传递信息的时候
 
 848
 00:36:21,070 --> 00:36:23,960
-we almost always label each piece.
+我们几乎总是用标签标注某一块
 
 849
 00:36:23,960 --> 00:36:26,900
-And this is true when we
-call functions as well.
+并且当我们调用函数时也总是这样
 
 850
 00:36:26,900 --> 00:36:28,880
