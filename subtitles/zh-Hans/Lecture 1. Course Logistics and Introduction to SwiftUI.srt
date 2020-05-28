@@ -2745,7 +2745,7 @@ have the house be a Lego
 
 650
 00:27:42,280 --> 00:27:45,370
-在拿着它去组合出一条街
+再拿着它去组合出一条街
 that you put together to
 make a Lego neighborhood.
 
@@ -2756,126 +2756,155 @@ Or the Lego world, Lego universe.
 
 652
 00:27:48,600 --> 00:27:52,150
+这就是我们构造界面的思维方式
 That's the way we wanna
 think of making these Views.
 
 653
 00:27:52,150 --> 00:27:54,210
+乐高与 View 之间的不同点
 Now, the difference
 between a Lego and a View
 
 654
 00:27:54,210 --> 00:27:56,510
+有一些特殊的 View
 is that there are special kinds of Views
 
 655
 00:27:56,510 --> 00:27:59,050
+专门用来把乐高组合在一起
 that are used to combine Legos.
 
 656
 00:27:59,050 --> 00:28:01,807
+这个 Text 类似于乐高中的基础砖块
 We've got these basic
 brick Legos like Text.
 
 657
 00:28:01,807 --> 00:28:03,900
+之后我们会见到 View 组合器
 And then we've got other kinds of Views
 
 658
 00:28:03,900 --> 00:28:07,340
+乐高组合器，View 组合器
 that are combiners, Lego
 combiners, View combiners.
 
 659
 00:28:07,340 --> 00:28:11,100
+将来我会详细介绍它们
 And you're gonna see us
 use those in detail here.
 
 660
 00:28:11,100 --> 00:28:13,040
+这句是 body 仅仅返回
 That's why our body just returns
 
 661
 00:28:13,040 --> 00:28:17,120
+一个 some View 的原因了
 one single some View of some sort.
 
 662
 00:28:17,120 --> 00:28:19,670
+它可能返回一个组合器
 It might be returning a combiner.
 
 663
 00:28:19,670 --> 00:28:21,090
+如果它返回了一个 View 组合器
 If it returns a combiner View,
 
 664
 00:28:21,090 --> 00:28:24,180
+那它里面可能包裹了一大堆
 then it could have tons
 and tons of Views inside
 
 665
 00:28:24,180 --> 00:28:25,333
+被组合起来的 View
 that are combined.
 
 666
 00:28:26,620 --> 00:28:30,530
+现在我们来看看这个有趣的变量
 Now, this is also a kind
 of an interesting var here
 
 667
 00:28:30,530 --> 00:28:34,010
+它后面跟着一对花括号
 in that it's got this
 curly brace thing after it.
 
 668
 00:28:34,010 --> 00:28:37,750
+这个变量的值并没有保存在内存中
 This var, its value is
 not stored in memory.
 
 669
 00:28:37,750 --> 00:28:41,000
+而是被计算出来的
 Instead this var is computed.
 
 670
 00:28:41,000 --> 00:28:44,900
+所以每当有人（也就是系统）
 So every time someone, namely the system,
 
 671
 00:28:44,900 --> 00:28:47,030
+想获取这个变量的值的时候
 asks for the value of this var,
 
 672
 00:28:47,030 --> 00:28:50,810
+这对花括号里的代码就会被执行一次
 this code in this curly
 brace gets executed.
 
 673
 00:28:50,810 --> 00:28:53,090
+计算返回的结果
 And whatever the value that's returned,
 
 674
 00:28:53,090 --> 00:28:54,680
+也就是 body 这个变量的值
 that's what the value of the body is.
 
 675
 00:28:54,680 --> 00:28:57,080
+而且这个变量被访问之后
+很快就会被再次访问
 And every time it's called,
 it gets called again,
 
 676
 00:28:57,080 --> 00:28:58,920
+系统一直在不断地访问它
 it's constantly calling this thing.
 
 677
 00:28:58,920 --> 00:29:01,770
+这段代码看起来非常简洁
 Now, this code in here
 seems kind of minimalistic
 
 678
 00:29:01,770 --> 00:29:03,330
+但是如果我把关键字放回去
 but it'll probably make more sense
 
 679
 00:29:03,330 --> 00:29:05,720
+它的含义会变得更明确
 if I put this keyword back.
 
 680
