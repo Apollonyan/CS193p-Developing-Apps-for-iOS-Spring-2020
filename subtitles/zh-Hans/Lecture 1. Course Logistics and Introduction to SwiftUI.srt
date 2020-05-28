@@ -3465,7 +3465,7 @@ cornerRadius 作为示范
 810
 00:34:38,970 --> 00:34:43,040
 接着，它会提示你输入半径
-以磅为单位
+以磅（point）为单位
 
 811
 00:34:43,040 --> 00:34:45,235
@@ -4404,152 +4404,114 @@ and most understandable.
 
 1023
 00:44:13,600 --> 00:44:16,440
-So we're making good
-progress on our card here.
 目前为止我们的卡片
 看上去还不错
 
 1024
 00:44:16,440 --> 00:44:19,730
-One thing, it's really
-hard to see the edges here.
 但有一点问题
 卡片的边缘不是很明显
 
 1025
 00:44:19,730 --> 00:44:24,130
-We kind of want some
-padding around this edge.
 我们需要在边缘周围
 填充一些空白
 
 1026
 00:44:24,130 --> 00:44:26,970
-And we can do padding
-with another View function
 我们可以通过调用一个函数
 为视图添加边缘填充
 
 1027
 00:44:26,970 --> 00:44:29,080
-called padding.
 函数名为 padding
 
 1028
 00:44:29,080 --> 00:44:32,120
-And here notice when I put
-padding around my Text,
 注意，当我在 Text 后面
 添加 padding 函数后
 
 1029
 00:44:32,120 --> 00:44:35,040
-oop, it popped out, it got
-some padding around it.
 Text 的周围瞬间
 蹦出了一圈空白填充
 
 1030
 00:44:35,040 --> 00:44:36,730
-Now, I could do the same thing over here
 当然，我也可以对 RoundedRectangle
 
 1031
 00:44:36,730 --> 00:44:40,960
-to my stroked RoundedRectangle
-since it's a View.
 做同样的事儿
 因为它也是一个 View
 
 1032
 00:44:40,960 --> 00:44:43,920
-padding, ooh, that's nice.
 输入 padding，效果不错
 
 1033
 00:44:43,920 --> 00:44:46,030
-You see, it put padding around there.
 可以看到，周围多了一圈空白填充
 
 1034
 00:44:46,030 --> 00:44:48,770
-Again, I could even put the padding
 甚至，我可以把空白填充在
 
 1035
 00:44:49,940 --> 00:44:52,917
-around my entire ZStack.
 整个 ZStack 的周围
 
 1036
 00:44:54,953 --> 00:44:56,120
-It put the padding around the whole ZStack
 这样应该就可以达到我想要的效果
 
 1037
 00:44:56,120 --> 00:44:57,260
-which is probably what I want
 在整个 ZStack 周围添加填充
 
 1038
 00:44:57,260 --> 00:44:58,970
-'cause I don't wanna
-have to put the padding
 而不用为每个
 RoundedRectangle
 
 1039
 00:44:58,970 --> 00:45:01,470
-on every single
-RoundedRectangle separately.
 单独添加边缘填充
 
 1040
 00:45:01,470 --> 00:45:02,880
-Like the RoundedRectangle we'll use
 比如我们之后会添加 
 RoundedRectangle
 
 1041
 00:45:02,880 --> 00:45:05,690
-for the back of my card
-eventually and things like that.
 用来做卡片背面的
 或者是一些其它类似的情况
 
 1042
 00:45:05,690 --> 00:45:07,980
-So this is nice to be able
-to put these on the outside.
 能在外围调用这些函数
 省了不少功夫
 
 1043
 00:45:07,980 --> 00:45:11,070
-Now, notice the subtle
-difference between padding
 但需要注意的是
 padding 与
 
 1044
 00:45:11,070 --> 00:45:12,570
-and foregroundColor.
 foregourndColor 之间有些不同
 
 1045
 00:45:12,570 --> 00:45:15,120
-Padding pads the ZStack.
 padding 为 ZStack 添加边缘填充
 
 1046
 00:45:15,120 --> 00:45:17,400
-The entire ZStack gets
-some padding around it
 使 ZStack 周围多了一圈空白
 
 1047
 00:45:17,400 --> 00:45:19,260
-and everything in the ZStack is drawn
 并且在 ZStack 中的视图都绘制
 
 1048
@@ -4559,75 +4521,59 @@ in that little padded area.
 
 1049
 00:45:21,200 --> 00:45:23,490
-Whereas foregroundColor
-doesn't really make sense
 而 foregroundColor
 并不会直接对
 
 1050
 00:45:23,490 --> 00:45:25,197
-for a ZStack.
 ZStack 产生什么作用 
 
 1051
 00:45:25,197 --> 00:45:26,950
-A ZStack doesn't have a color.
 ZStack 视图没有颜色相关的属性
 
 1052
 00:45:26,950 --> 00:45:28,690
-All it does it contain other Views.
 它仅仅是包含了其它的 View 视图
 
 1053
 00:45:28,690 --> 00:45:31,560
-So it gets passed down
-into the environment
 但 foregroundColor 的值
 会被传递到
 
 1054
 00:45:31,560 --> 00:45:33,943
-for all the Views on the inside of it.
 ZStack 内 View 视图的环境中
 
 1055
 00:45:35,930 --> 00:45:36,870
-All right, let's see,
-好的，我们继续
+好了，我们继续
 
 1056
 00:45:36,870 --> 00:45:38,770
-we've been looking in our preview here.
 我们已经看过预览的效果
 
 1057
 00:45:38,770 --> 00:45:41,770
-But let's go take a look in our simulator
 接下来我们看一下在模拟器中
 
 1058
 00:45:41,770 --> 00:45:43,180
-to see how this looks.
 应用看起来如何
 
 1059
 00:45:43,180 --> 00:45:45,550
-And ah, kind of interesting.
 嗯，有点意思
 
 1060
 00:45:45,550 --> 00:45:49,097
-It's working but it doesn't
-look very good here.
 应用正常运作了
 但看上去不太好
 
 1061
 00:45:49,097 --> 00:45:52,240
-That's because our
-simulator's in Dark Mode.
-因为我们的模拟器现在是暗黑模式
+这是因为我们的模拟器
+现在是暗黑模式
 
 1062
 00:45:52,240 --> 00:45:55,190
@@ -4642,61 +4588,45 @@ Even in Dark Mode we want it to be white.
 
 1064
 00:45:57,570 --> 00:46:00,760
-We don't want it to be black
-cards on black background.
 我们都不想看到黑色的卡片
 堆在黑乎乎的背景前面
 
 1065
 00:46:00,760 --> 00:46:03,290
-Let's say we want it to be white.
 换句话说，我们希望卡片是白色的
 
 1066
 00:46:03,290 --> 00:46:04,910
-So how would we make that white?
-那么该怎么让它变成白色的呢？
+那该怎么让它变成白色的呢？
 
 1067
 00:46:04,910 --> 00:46:08,090
-Unfortunately, there's
-no function you can send
 很不幸，并没有一个函数能让我们
 
 1068
 00:46:08,090 --> 00:46:11,030
-to a RoundedRectangle that
-says stroke it with one Color
 给 RoundedRectangle 描绘轮廓时
 用一种颜色
 
 1069
 00:46:11,030 --> 00:46:13,350
-and then fill it with another Color.
-给它填充时又用另一个颜色
+同时再给它用另一个颜色填充
 
 1070
 00:46:13,350 --> 00:46:16,610
-But that's no problem because
-we're in a ZStack right here.
 但没关系，我们现在是在一个 ZStack 中
 
 1071
 00:46:16,610 --> 00:46:19,760
-So I'm just gonna create
-another RoundedRectangle,
 所以我打算创建另一个
 RoundedRectangle
 
 1072
 00:46:19,760 --> 00:46:23,730
-and this one I will
-fill instead of stroke.
 这次我将调用 fill 而不是 stroke
 
 1073
 00:46:23,730 --> 00:46:26,700
-And remember, it's in the back of this.
 记住，这个是放在另一个的后面
 
 1074
