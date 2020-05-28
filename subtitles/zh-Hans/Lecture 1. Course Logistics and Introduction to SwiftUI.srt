@@ -2899,7 +2899,7 @@ seems kind of minimalistic
 
 678
 00:29:01,770 --> 00:29:03,330
-但是如果我把关键字放回去
+但是如果我把关键字补回去
 but it'll probably make more sense
 
 679
@@ -2909,133 +2909,168 @@ if I put this keyword back.
 
 680
 00:29:05,720 --> 00:29:08,050
+这个品红色的关键字 return
 This keyword, return, you see is magenta.
 
 681
 00:29:08,050 --> 00:29:10,450
+它是 Swift 的关键字，意思是“返回”
 It's a Swift thing, it means return.
 
 682
 00:29:10,450 --> 00:29:13,280
+从这段花括号包围的代码
 Return a value from this piece of code,
 
 683
 00:29:13,280 --> 00:29:15,540
+返回一个值
 this little curly-braced piece of code.
 
 684
 00:29:15,540 --> 00:29:20,160
+但是它并没有出现在这里
+因为 Swift 喜欢省略代码
 And it wasn't there because
 Swift loves to leave things out
 
 685
 00:29:20,160 --> 00:29:22,440
+它希望你写的代码越少越好
 and make it so you have to type
 as little code as possible.
 
 686
 00:29:22,440 --> 00:29:23,990
+后面你会看到更多例子
 You're gonna see that later.
 
 687
 00:29:23,990 --> 00:29:27,000
+如果你有个只有一行的函数
 And so if you have a
 one-line function like this
 
 688
 00:29:27,000 --> 00:29:29,530
+并且这行代码返回了一个值，就像这里
 that returns a value,
 so that's what this is,
 
 689
 00:29:29,530 --> 00:29:32,320
+用一行代码返回了一个 Text
 a one-liner returns this Text thing.
 
 690
 00:29:32,320 --> 00:29:34,910
+那么你就可以把 return 省略掉
 Then you can leave this return out.
 
 691
 00:29:34,910 --> 00:29:36,250
+它会自动推断出来
 It'll just infer that.
 
 692
 00:29:36,250 --> 00:29:38,263
+但是我打算把 return 留下来
 But I'm gonna leave it in
 
 693
 00:29:38,263 --> 00:29:40,220
+因为我想让你明白
 because I want you to realize
 
 694
 00:29:40,220 --> 00:29:41,290
+这里具体发生了什么
 that that's what's going on here.
 
 695
 00:29:41,290 --> 00:29:43,570
+这有一小段代码
 We have this little piece of code,
 
 696
 00:29:43,570 --> 00:29:46,450
+它返回了一个 Text
 it returns this Text thing.
 
 697
 00:29:46,450 --> 00:29:49,020
+这就是 body 的值
 And that's going to always
 be the value of body.
 
 698
 00:29:49,020 --> 00:29:51,460
+每当有人需要访问 body 的值的时候
 Anytime someone asks me
 for the value of body,
 
 699
 00:29:51,460 --> 00:29:54,853
+这行代码就会被执行并返回这个 Text
 it's gonna execute this and
 return this Text right here.
 
 700
 00:29:55,710 --> 00:29:59,490
+现在还记得吗？
+这个返回值类型是 some View
 Now, this return type,
 remember, is some View.
 
 701
 00:29:59,490 --> 00:30:02,137
+所以你可能会疑惑
+“它返回了个 Text”
 So if you're saying, "It's returning Text.
 
 702
 00:30:02,137 --> 00:30:03,270
+“这是怎么回事？”
 "What's going on here?"
 
 703
 00:30:03,270 --> 00:30:07,750
+这是因为 Text 说
+它会表现的和 View 一样
 Well, of course Text, it
 says it behaves like a View.
 
 704
 00:30:07,750 --> 00:30:09,070
+所以它就是一种“some View”
 So this is "some View".
 
 705
 00:30:09,070 --> 00:30:12,110
+换句话说，在苹果的代码里
 In other words, somewhere
 off in Apple's code
 
 706
 00:30:12,110 --> 00:30:13,607
+会有这么一行
 there is some line that looks like this.
 
 707
 00:30:13,607 --> 00:30:18,310
+“struct Text 表现得像 View 一样”
 "struct Text behaves like a View."
 
 708
 00:30:18,310 --> 00:30:23,160
+这就是为什么我们能把 Text
+作为 body 的值
 And that's why we can return
 a Text as the value of body
 
 709
 00:30:23,160 --> 00:30:23,993
+因为它就是 some View
 'cause it's some View.
 
 710
