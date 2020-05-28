@@ -3821,139 +3821,126 @@ or something like that.
 
 902
 00:38:45,260 --> 00:38:48,310
-But Swift is going to
-automatically realize
+但是 Swift 将自动识别出
 
 903
 00:38:48,310 --> 00:38:49,317
-that it's returning this.
+这里返回的是 ZStack
 
 904
 00:38:49,317 --> 00:38:51,403
-And so it's gonna do that for us.
+因此它会替我们完成
 
 905
 00:38:52,430 --> 00:38:56,500
-This kind of combiner View
-is really important obviously
+显然，这类组合器视图在
 
 906
 00:38:56,500 --> 00:38:58,210
-to building complicated Views.
+构建复杂的视图时非常重要
 
 907
 00:38:58,210 --> 00:39:00,850
-And we're gonna build our
-own combiner View next week.
+而且我们将在下周构建自己的组合器视图
 
 908
 00:39:00,850 --> 00:39:04,390
-So you're really gonna
-understand how these things work.
+所以你真的需要理解它们是如何工作的
 
 909
 00:39:04,390 --> 00:39:06,030
-Now, we're getting there.
+我们正有条不紊地推进
 
 910
 00:39:06,030 --> 00:39:09,760
-But there's still some things,
-we'll kind of resume here,
+但是这里仍有些地方
+（我们点这里的 Resume 恢复下）
 
 911
 00:39:09,760 --> 00:39:12,270
-that this doesn't look much like our card.
+看起来和我们的卡片不太像
 
 912
 00:39:12,270 --> 00:39:14,650
-First of all our cards
-aren't filled with black.
+首先，我们的卡片不是由黑色填满的
 
 913
 00:39:14,650 --> 00:39:18,830
-They're kind of stroked with
-orange around the outside.
+它们应该有橙色的边框
 
 914
 00:39:18,830 --> 00:39:22,200
-Also we have a problem where
-it's hard to see the edges
+其次，我们很难看到卡片的边线
 
 915
 00:39:22,200 --> 00:39:24,370
-'cause they're all the
-way out to the edge.
+因为它们离屏幕的边缘太近了
 
 916
 00:39:24,370 --> 00:39:25,460
-So let's fix both of those.
+那么让我们修复这两个问题
 
 917
 00:39:25,460 --> 00:39:29,700
-First of all, let's stroke
-this instead of filling it.
+首先，我们将描边绘制它而不是填满它
 
 918
 00:39:29,700 --> 00:39:31,200
-And the way we're gonna do that
+然后我们实现它的方式是
 
 919
 00:39:31,200 --> 00:39:33,410
-is we're going to call a function
+我们将调用
 
 920
 00:39:34,260 --> 00:39:37,020
-on RoundedRectangle called stroke.
+RoundedRectangle 的 stroke 方法
 
 921
 00:39:37,020 --> 00:39:41,017
-RoundedRectangle, we know
-that it behaves like a View.
+我们知道 RoundedRectangle
+有和 View 一样的表现
 
 922
 00:39:41,017 --> 00:39:42,400
-It has to behave like a View
+它也必须表现得像个 View 一样
 
 923
 00:39:42,400 --> 00:39:44,400
-or we wouldn't be able
-to put it in the ZStack
+否则我们就不能把它传给 ZStack
 
 924
 00:39:44,400 --> 00:39:45,610
-like with this Text.
+Text 也是一样的
 
 925
 00:39:45,610 --> 00:39:48,470
-But RoundedRectangle also
-behaves like another thing
+但是 RoundedRectangle 的行为
 
 926
 00:39:48,470 --> 00:39:50,350
-which is a Shape.
+还跟 Shape 一样
 
 927
 00:39:50,350 --> 00:39:54,410
-Other Shapes are Circle,
-Capsule, bezier paths,
+其他的形状有 Circle、Capsule
+贝塞尔曲线（Path）
 
 928
 00:39:54,410 --> 00:39:55,840
-these are all Shapes.
+这些都是 Shape
 
 929
 00:39:55,840 --> 00:39:57,910
-And Shapes can all be stroked
+所有的形状都可以通过调用
 
 930
 00:39:57,910 --> 00:40:01,100
-by calling this function
-on them called stroke.
+它们的 stroke 方法描边绘制出来
 
 931
 00:40:01,100 --> 00:40:03,150
-And you can see that it's
-exactly what happened.
+你可以看到正是这样
 
 932
 00:40:03,150 --> 00:40:05,560
