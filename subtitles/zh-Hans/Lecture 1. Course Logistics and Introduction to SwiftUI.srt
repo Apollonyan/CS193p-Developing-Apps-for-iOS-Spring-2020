@@ -3957,42 +3957,40 @@ exactly what happened.
 
 932
 00:40:03,150 --> 00:40:05,560
-It stroked a line around the edges
+它沿着这个 RoundedRectangle 的边缘
 
 933
 00:40:05,560 --> 00:40:08,720
-of this RoundedRectangle.
+画了一条线
 
 934
 00:40:08,720 --> 00:40:10,830
-And stroke is an interesting function
+stroke 方法的有趣之处在于
 
 935
 00:40:10,830 --> 00:40:13,030
-in that it returns something.
+它会 return 一些东西
 
 936
 00:40:13,030 --> 00:40:15,050
-Can you guess what it returns?
+猜猜它 return 了什么？
 
 937
 00:40:15,050 --> 00:40:16,810
-It returns a View.
+它 return 了一个 View
 
 938
 00:40:16,810 --> 00:40:19,060
-It returns something
-that behaves like a View.
+它 return 了一个和 View 行为一致的东西
 
 939
 00:40:19,060 --> 00:40:24,060
-And it has to because whatever
-this is has to be a View.
+这是必要的
+因为这里一定要是一个 View
 
 940
 00:40:24,060 --> 00:40:27,000
-Otherwise again, we couldn't
-put it in the ZStack.
+否则我们就不能把它传给 ZStack
 
 941
 00:40:27,000 --> 00:40:30,230
