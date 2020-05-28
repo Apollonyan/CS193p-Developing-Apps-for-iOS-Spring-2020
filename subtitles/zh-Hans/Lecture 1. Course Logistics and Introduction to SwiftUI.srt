@@ -1,4 +1,4 @@
-1
+﻿1
 00:00:00,998 --> 00:00:03,498
 本字幕由志愿者义务贡献，采用许可协议
 知识共享 署名-非商业性使用-相同方式共享 3.0 美国
@@ -4406,35 +4406,48 @@ and most understandable.
 00:44:13,600 --> 00:44:16,440
 So we're making good
 progress on our card here.
+目前为止我们的卡片
+看上去还不错
 
 1024
 00:44:16,440 --> 00:44:19,730
 One thing, it's really
 hard to see the edges here.
+但有一点问题
+卡片的边缘不是很明显
 
 1025
 00:44:19,730 --> 00:44:24,130
 We kind of want some
 padding around this edge.
+我们需要在边缘周围
+填充一些空白
 
 1026
 00:44:24,130 --> 00:44:26,970
 And we can do padding
 with another View function
+我们可以通过调用一个函数
+为视图添加边缘填充
 
 1027
 00:44:26,970 --> 00:44:29,080
 called padding.
+函数名为 padding
 
 1028
 00:44:29,080 --> 00:44:32,120
 And here notice when I put
 padding around my Text,
+注意了，当我在 Text 后面
+添加 padding 函数后
 
 1029
 00:44:32,120 --> 00:44:35,040
 oop, it popped out, it got
 some padding around it.
+一瞬间，Text 的周围
+多了一圈空白填充
 
 1030
 00:44:35,040 --> 00:44:36,730
@@ -6161,3 +6174,4 @@ just go watch it right now.
 01:02:15,760 --> 01:02:18,993
 >> [旁白] 请访问 stanford.edu
 获取更多内容
+
