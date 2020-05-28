@@ -3591,7 +3591,7 @@ call functions as well.
 
 850
 00:36:26,900 --> 00:36:28,880
-所以，可能最有需要
+所以，最有可能需要
 
 851
 00:36:28,880 --> 00:36:30,784
@@ -3611,7 +3611,7 @@ call functions as well.
 
 855
 00:36:40,500 --> 00:36:43,167
-实际上这个东西非常好，因为如果我们没有这个
+实际上这个东西非常好，因为如果没有这个（标签）
 
 856
 00:36:43,167 --> 00:36:46,530
@@ -3631,7 +3631,7 @@ call functions as well.
 
 860
 00:36:53,080 --> 00:36:54,597
-忽然间，“噢，我正在创建
+忽然之间，“噢，我在创建
 
 861
 00:36:54,597 --> 00:36:57,807
@@ -3675,139 +3675,127 @@ call functions as well.
 
 871
 00:37:21,440 --> 00:37:24,280
-我们不希望牌被压在边缘上
+我们不希望卡片撞到边上去
 
 872
 00:37:24,280 --> 00:37:26,430
-并且，他们也不应该是黑色的
+而且它们也不应该是黑色的
 
 873
 00:37:26,430 --> 00:37:28,090
-But first things first.
+但是，首先要做点其他的
 
 874
 00:37:28,090 --> 00:37:30,690
-We'll get to that in a bit.
+这个我们将稍作讨论
 
 875
 00:37:30,690 --> 00:37:32,950
-The next thing I wanna do is combine
+我想要做的下一件事是：结合
 
 876
 00:37:32,950 --> 00:37:35,910
-this RoundedRectangle
-and this Text together.
+把 RounedRectangle 和 Text 结合在一起
 
 877
 00:37:35,910 --> 00:37:39,904
-Because remember, our cards
-have both a RoundedRectangle
+得记住，我们的卡片都得是 RoundedRectangle
 
 878
 00:37:39,904 --> 00:37:43,030
-and a Text stacked on top of each other.
+并且和 Text 堆叠在一起
 
 879
 00:37:43,030 --> 00:37:46,670
-And I'm gonna have to do
-that by returning some View.
+我们可以通过返回 some View 来做到这一点
 
 880
 00:37:46,670 --> 00:37:51,460
-So the View I'm gonna return
-here is called a ZStack.
+因此，这里返回的视图叫做 ZStack
 
 881
 00:37:51,460 --> 00:37:54,294
-So a ZStack is just a struct.
+ZStack 是一个结构体
 
 882
 00:37:54,294 --> 00:37:55,740
-It behaves like a View
+它表现得像一个 View
 
 883
 00:37:55,740 --> 00:37:59,281
-just like RoundedRectangle is a struct
+就像 RoundedRectangle 是一个结构体
 
 884
 00:37:59,281 --> 00:38:00,850
-that behaves like a View.
+行为表现得像视图一样
 
 885
 00:38:00,850 --> 00:38:01,800
-So is Text.
+Text 也一样
 
 886
 00:38:01,800 --> 00:38:03,803
-Actually, so is our ContentView.
+事实上，ContentView 也是如此
 
 887
 00:38:04,882 --> 00:38:08,100
-A ZStack does need an
-argument to be created here.
+在这里创建 ZStack 时，需要一个参数
 
 888
 00:38:08,100 --> 00:38:12,910
-The argument we're gonna use
-is content then in curly braces
+用到的参数是 content，然后用大括号
 
 889
 00:38:12,910 --> 00:38:16,350
-The list of the Views to
-stack on top of each other.
+把这些 View 放到 List 里面
 
 890
 00:38:16,350 --> 00:38:19,653
-And obviously we don't
-need the returns in here.
+很显然，我们不再需要这里的 return
 
 891
 00:38:20,690 --> 00:38:21,860
-So this is the list.
+所以，列表就是这样了
 
 892
 00:38:21,860 --> 00:38:24,890
-RoundedRectangle in the
-back, Text in the front.
+后面是 RoundedRectangle ，前面是 Text
 
 893
 00:38:24,890 --> 00:38:26,960
-First thing in the list
-and this is two items
+这是做列表要做的第一件事，这里面有两项
 
 894
 00:38:26,960 --> 00:38:29,480
-but we could have five
-or six or seven items
+当然也可以有五、六或七个
 
 895
 00:38:29,480 --> 00:38:32,320
-all listed in a row and
-it would stack them all
+所有的项目排在一行，并将它们
 
 896
 00:38:32,320 --> 00:38:33,453
-on top of each other.
+彼此堆叠
 
 897
 00:38:34,724 --> 00:38:36,380
-ZStack is just some View.
+ZStack 正是 some View
 
 898
 00:38:36,380 --> 00:38:38,670
-And in fact, this return type here
+实际上，这里的返回类型
 
 899
 00:38:38,670 --> 00:38:41,550
-would be some sort of ZStack here
+就是某种意义上的 ZStack
 
 900
 00:38:41,550 --> 00:38:44,370
-instead of a Text or a RoundedRectangle
+而不是 Text 或 RoundedRectangle
 
 901
 00:38:44,370 --> 00:38:45,260
-or something like that.
+或其他东西
 
 902
 00:38:45,260 --> 00:38:48,310
