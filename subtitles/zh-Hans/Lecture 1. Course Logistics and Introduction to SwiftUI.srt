@@ -4571,140 +4571,131 @@ And remember, it's in the back of this.
 
 1074
 00:46:26,700 --> 00:46:28,250
-And resume right here.
+点 Resume 恢复预览
 
 1075
 00:46:28,250 --> 00:46:31,570
-Now, that's gonna fill it with
-whatever the foregroundColor
+现在它被
 
 1076
 00:46:31,570 --> 00:46:35,140
-that's set as the environment
-here, so I can't even see.
+这里环境设置的 foregroundColor
+填满了，导致我看不到边线
 
 1077
 00:46:35,140 --> 00:46:38,310
-But luckily fill takes
-an optional argument
+还好 fill 可以传一个可选的参数
 
 1078
 00:46:38,310 --> 00:46:40,250
-which is the Color to fill with.
+这个参数就是用来填充的颜色
 
 1079
 00:46:40,250 --> 00:46:43,810
-And that overrides this
-foregroundColor here.
+而且这样会重写这里的 foregroundColor
 
 1080
 00:46:43,810 --> 00:46:44,790
-So now this is white.
+因此，现在它被白色填满了
 
 1081
 00:46:44,790 --> 00:46:48,390
-If I click on here, it
-is filling it with white.
+如果我点击这里，它也填满了白色
 
 1082
 00:46:48,390 --> 00:46:52,213
-And there is that orange
-border, kind of hard to see.
+这里是橙色的边框
+有点难去看见它
 
 1083
 00:46:52,213 --> 00:46:56,230
-It's only one point wide,
-especially near the black.
+它的宽度只有1点，而且还很靠近黑框
 
 1084
 00:46:56,230 --> 00:46:57,680
-It's really kind of hard to see.
+真的很难去看见它
 
 1085
 00:46:57,680 --> 00:46:59,574
-So let's fix that.
+让我们修复它
 
 1086
 00:46:59,574 --> 00:47:01,530
-A stroke I told you could
-take other arguments.
+我说过可以传其他参数给 stroke
 
 1087
 00:47:01,530 --> 00:47:04,320
-One it can take is line width.
+一个参数就是线宽
 
 1088
 00:47:04,320 --> 00:47:07,060
-So let's make it a line width of three.
+我们在这里传一个线宽给它
 
 1089
 00:47:07,060 --> 00:47:10,540
-Again, we could resume here
-to see it in Light Mode.
+我们点 Resume 恢复下，看它运行在
+浅色模式中
 
 1090
 00:47:10,540 --> 00:47:11,373
-There it is.
+这就是了
 
 1091
 00:47:11,373 --> 00:47:16,096
-And we can run over here
-to see this in Dark Mode.
+我们也可以看看深色模式中的效果
 
 1092
 00:47:16,096 --> 00:47:18,810
-And by the way, the dark and
-light mode of your simulator
+顺便提下，模拟器的深色模式和浅色模式
 
 1093
 00:47:18,810 --> 00:47:20,970
-can also be controlled right here.
+也可以在这里修改
 
 1094
 00:47:20,970 --> 00:47:22,800
-You see this little button down here?
+你看这里的小按钮
 
 1095
 00:47:22,800 --> 00:47:24,200
-You see this Interface Style?
+你看这里的 Interface Style
 
 1096
 00:47:24,200 --> 00:47:27,580
-You can turn that on and go
-from Dark Mode to Light Mode.
+你可以打开它，然后将深色模式
+改成浅色模式
 
 1097
 00:47:27,580 --> 00:47:29,830
-Now if you go back to your simulator,
+现在当你看到你的模拟器时
 
 1098
 00:47:29,830 --> 00:47:31,480
-it's in Light Mode.
+它已经是浅色模式了
 
 1099
 00:47:31,480 --> 00:47:35,373
-That's really kind of a cool
-way to switch back and forth.
+这种切换的方式真的很酷
 
 1100
 00:47:37,890 --> 00:47:40,620
-So we are making some great progress here.
+我们现在取得了很大的进步
 
 1101
 00:47:40,620 --> 00:47:43,590
-Our little emoji is still really small.
+我们的表情符号仍然很小
 
 1102
 00:47:43,590 --> 00:47:44,810
-I'm gonna make it bigger.
+我将让它变得更大些
 
 1103
 00:47:44,810 --> 00:47:47,160
-I can do that with Font.
+我能通过 Font 来实现
 
 1104
 00:47:47,160 --> 00:47:49,280
-Font, Font.largeTitle.
+Font，Font.largeTitle
 
 1105
 00:47:50,200 --> 00:47:53,563
