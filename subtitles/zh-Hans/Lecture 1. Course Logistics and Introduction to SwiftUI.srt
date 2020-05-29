@@ -4182,163 +4182,149 @@ ZStack 是一个 View
 
 987
 00:42:36,280 --> 00:42:39,687
-And what it means for
-this is "Tell every View
+这样写的意义在于
 
 988
 00:42:39,687 --> 00:42:44,090
-"inside of me to use
-foregroundColor orange."
+告诉所有它内部的 View
+将 foregroundColor 设置为橙色
 
 989
 00:42:44,090 --> 00:42:46,733
-So this works as well.
+这里就起了作用
 
 990
 00:42:46,733 --> 00:42:47,566
-Look at that.
+你看
 
 991
 00:42:47,566 --> 00:42:48,399
-See, that's orange.
+这里显示了橙色
 
 992
 00:42:48,399 --> 00:42:51,490
-Again, if we change this ghost to an X,
+如果我们把这个 emoji 换成字母“X”
 
 993
 00:42:51,490 --> 00:42:54,610
-that X would be orange as
-well because the ZStack
+“X”就也会是橙色
 
 994
 00:42:54,610 --> 00:42:57,100
-is essentially setting the environment
+这是因为 ZStack 设定了环境
 
 995
 00:42:57,100 --> 00:42:59,260
-that all of the Views inside of it
+得以让其内部所有的 View
 
 996
 00:42:59,260 --> 00:43:01,710
-are going to use to draw.
+都用这个方法绘制
 
 997
 00:43:01,710 --> 00:43:02,970
-Now this can be overridden.
+这个方法也可以被覆盖
 
 998
 00:43:02,970 --> 00:43:07,500
-We could then say,
-foregroundColor(Color.blue).
+我们可以在这里写上 foregroundColor(Color.blue)
 
 999
 00:43:08,850 --> 00:43:12,360
-And then we'd get a blue one out here.
+我们就会得到一个蓝色的描边
 
 1000
 00:43:12,360 --> 00:43:15,593
-But this would still be orange.
+但是这里（Text）仍然是橙色
 
 1001
 00:43:16,470 --> 00:43:19,380
-Because I only overrode
-this foregroundColor blue
+因为我只在这个描边后的 RoundedRectangle View
 
 1002
 00:43:19,380 --> 00:43:23,580
-for this View right here,
-this stroked RoundedRectangle.
+覆盖了 foregroundColor 为蓝色
 
 1003
 00:43:23,580 --> 00:43:26,823
-I didn't override it
-for this X right here.
+而并没有覆盖这个“X”的 foregroundColor
 
 1004
 00:43:27,790 --> 00:43:31,300
-So by scoping the calls
-to these functions,
+我们可以通过限定调用范围
 
 1005
 00:43:31,300 --> 00:43:33,750
-so we can control what color things are.
+来设定不同视图的颜色
 
 1006
 00:43:33,750 --> 00:43:35,373
-And this is really valuable for the ZStack
+这对于 ZStack 非常重要
 
 1007
 00:43:35,373 --> 00:43:37,830
-because we're eventually
-gonna make this ZStack
+因为我们将用这个 ZStack
 
 1008
 00:43:37,830 --> 00:43:40,080
-so it does the front of the
-cards, the back of the cards,
+来把卡片的前后
 
 1009
 00:43:40,080 --> 00:43:43,190
-everything in all those cases
-that wants to be orange.
+都统一设置为橙色
 
 1010
 00:43:43,190 --> 00:43:44,840
-So we want orange for everything
+我们要把所有视图都设置成橙色
 
 1011
 00:43:44,840 --> 00:43:46,350
-so it's really nice to be able to set that
+这样一次性设置整个 ZStack 的方式
 
 1012
 00:43:46,350 --> 00:43:48,517
-for the entire ZStack.
+非常便捷
 
 1013
 00:43:48,517 --> 00:43:51,060
-And we usually put these modifiers
+我们通常会把这些
 
 1014
 00:43:51,060 --> 00:43:53,770
-for these combiner Views
-on a line by themselves,
+组合器视图的修饰符单独放在一行
 
 1015
 00:43:53,770 --> 00:43:55,470
-just to make them stand out a little more.
+让他们能更加显眼
 
 1016
 00:43:55,470 --> 00:43:57,660
-Whereas we might leave
-them on the same line here.
+我们在这里可以不这么做
 
 1017
 00:43:57,660 --> 00:44:01,710
-Although occasionally,
-we would even put these
+虽然也能将这些修饰符
 
 1018
 00:44:01,710 --> 00:44:04,240
-on a separate line as well.
+另起一行
 
 1019
 00:44:04,240 --> 00:44:07,150
-But we're not gonna do
-it here, but you might.
+但我不打算这么做
+随便你
 
 1020
 00:44:07,150 --> 00:44:08,960
-It's kind of a style thing.
+取决于你的代码风格
 
 1021
 00:44:08,960 --> 00:44:11,070
-However you think your
-code is most readable
+你觉得怎样更易读、易理解
 
 1022
 00:44:11,070 --> 00:44:12,270
-and most understandable.
+就怎么来
 
 1023
 00:44:13,600 --> 00:44:16,440
