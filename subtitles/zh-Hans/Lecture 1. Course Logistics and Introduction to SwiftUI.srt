@@ -4923,214 +4923,206 @@ iterable thing called a Range.
 
 1155
 00:50:12,780 --> 00:50:17,430
-So this is the Range from zero
-up to and not including four.
+这是一个从 0 到 4（不包含）的区间
 
 1156
 00:50:17,430 --> 00:50:20,570
-That's what this Swift
-syntax right here means.
+也就是此处 Swift 语法的含义
 
 1157
 00:50:20,570 --> 00:50:25,570
-It means a Range from some
-lower bound to some upper bound,
+表示一个从下限到上限的区间
 
 1158
 00:50:25,970 --> 00:50:27,340
-not including the upper bound.
+不包含上限
 
 1159
 00:50:27,340 --> 00:50:31,230
-If you say dot-dot-dot, then
-it includes the upper bound.
+如果你使用 ...
+那就会包含上限
 
 1160
 00:50:31,230 --> 00:50:34,030
-But I don't wanna include the upper bound.
+但是我不想包含上限
 
 1161
 00:50:34,030 --> 00:50:37,560
-So, this is going through for
-zero, one, two, and three.
+这样会逐个遍历 0，1，2，3
 
 1162
 00:50:37,560 --> 00:50:40,923
-It's going to create this ZStack in here.
+然后在这里创建 ZStack
 
 1163
 00:50:41,940 --> 00:50:43,660
-So it's a repeater.
+这是一个重复器
 
 1164
 00:50:43,660 --> 00:50:45,180
-Now, one thing that's also cool,
+现在，还有一件很酷的事
 
 1165
 00:50:45,180 --> 00:50:47,600
-so it's got the same thing
-where it's got the content.
+在获取 content 的地方
+将得到一样的内容
 
 1166
 00:50:47,600 --> 00:50:49,380
-And this could be a list of Views.
+结果是一个视图列表
 
 1167
 00:50:49,380 --> 00:50:53,060
-We only have one View
-in here, it's a ZStack.
+这里我们只有一个视图
+也就是 ZStack
 
 1168
 00:50:53,060 --> 00:50:54,910
-But we could have multiple things.
+但是我们会有多个内容
 
 1169
 00:50:54,910 --> 00:50:56,960
-Just like in the ZStack,
-we have multiple things.
+就像在 ZStack 中一样
+我们有多个内容
 
 1170
 00:50:56,960 --> 00:50:59,320
-The ForEach, its little curly-braced thing
+对于 ForEach，在花括号内
 
 1171
 00:50:59,320 --> 00:51:01,400
-could have multiple things.
+也可以有多个内容
 
 1172
 00:51:01,400 --> 00:51:03,970
-And one thing that's kind of
-cool also about the ForEach
+另一个关于 ForEach
+有点酷的地方是
 
 1173
 00:51:03,970 --> 00:51:06,200
-is it actually has this little thing here
+我们将在某个时候讨论
 
 1174
 00:51:06,200 --> 00:51:11,060
-which we're gonna talk about
-this "in" meaning at some point
+关于这里 “in” 的含义
 
 1175
 00:51:11,060 --> 00:51:13,390
-But essentially this is
-the iteration variable.
+本质上这就是迭代变量
 
 1176
 00:51:13,390 --> 00:51:16,770
-So in this case, this index is zero.
+在这个情况下
+这里的 index 初始值是 0
 
 1177
 00:51:16,770 --> 00:51:19,320
-And then it's one and then
-it's two and then it's three
+然后变为 1，接着是 2，最后是 3
 
 1178
 00:51:19,320 --> 00:51:21,900
-as it makes the four of these.
+共 4 个
 
 1179
 00:51:21,900 --> 00:51:23,330
-Now, one thing about ForEach,
+现在，关于 ForEach
 
 1180
 00:51:23,330 --> 00:51:25,360
-you'll see in the preview it actually made
+在预览中你会看到
 
 1181
 00:51:25,360 --> 00:51:29,580
-four separate previews of it.
+实际上有 4 个单独的预览视图
 
 1182
 00:51:29,580 --> 00:51:33,360
-And that's because ForEach
-is not a layout View.
+那是因为 ForEach 不是布局视图
 
 1183
 00:51:33,360 --> 00:51:34,732
-It's not like ZStack.
+并不像 ZStack
 
 1184
 00:51:34,732 --> 00:51:37,540
-ZStack positions the Views on screen
+ZStack 会将视图从后向前
 
 1185
 00:51:37,540 --> 00:51:39,960
-on top of each other from back to front.
+堆叠着放在屏幕上
 
 1186
 00:51:39,960 --> 00:51:42,680
-ForEach doesn't do that and if you run,
+ForEach 并不会这样
+如果你运行
 
 1187
 00:51:42,680 --> 00:51:43,930
-if we were to run this in simulator,
+如果我们在模拟器上运行
 
 1188
 00:51:43,930 --> 00:51:45,620
-it would probably put the View somewhere
+它可能会把视图放在不知什么地方
 
 1189
 00:51:45,620 --> 00:51:49,460
-because it obviously can't
-simulate multiple iPhones.
+因为模拟器显然无法
+模拟多个 iPhone
 
 1190
 00:51:49,460 --> 00:51:51,760
-But really the preview
-is actually showing more
+但是预览实际上更多是
 
 1191
 00:51:51,760 --> 00:51:54,410
-of what's happening where it's
-creating four of these Views.
+显示发生了什么
+即创建了 4 个这样的视图
 
 1192
 00:51:54,410 --> 00:51:56,500
-So it's showing you each of the four Views
+所以预览向你展示了
 
 1193
 00:51:56,500 --> 00:51:57,820
-that it's creating.
+所创建的 4 个视图
 
 1194
 00:51:57,820 --> 00:51:59,040
-Which is really cool for debugging.
+这样有利于调试
 
 1195
 00:51:59,040 --> 00:52:00,620
-It's like, "Oh yeah, this is the one now."
+就像，“哦，是的，现在是这个”
 
 1196
 00:52:00,620 --> 00:52:02,410
-Our four Views are exactly the same
+这里 4 个视图完全一样
 
 1197
 00:52:02,410 --> 00:52:04,760
-so not so interesting for us.
+这对我们来说并不有趣
 
 1198
 00:52:04,760 --> 00:52:06,110
-But what we really wanna do
+我们真正想做的是
 
 1199
 00:52:06,110 --> 00:52:08,647
-is put all four of these on
-the screen at the same time.
+同时将所有这 4 个视图显示在屏幕上
 
 1200
 00:52:08,647 --> 00:52:11,450
-And for that we need another stack.
+为此，我们需要另一个 stack
 
 1201
 00:52:11,450 --> 00:52:13,750
-Now, we don't wanna stack
-them on top of each other
+现在，我们不想
+把它们堆叠在一起
 
 1202
 00:52:13,750 --> 00:52:16,130
-and we wouldn't be able to
-see the ones in the back.
+这样我们就无法看到
+后面的视图
 
 1203
 00:52:16,130 --> 00:52:17,470
