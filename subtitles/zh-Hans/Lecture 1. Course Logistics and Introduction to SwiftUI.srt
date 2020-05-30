@@ -2575,90 +2575,91 @@ Swift 定义的关键字
 
 626
 00:26:42,580 --> 00:26:45,200
-So if you wanna behave like a View,
+因此，如果你想表现的像 View
 
 627
 00:26:45,200 --> 00:26:47,480
-you have to have a var called body
+你必须有一个叫 body 的变量
 
 628
 00:26:47,480 --> 00:26:51,674
-that also is another thing
-that behaves like a View.
+它是另一个表现得
+像个 View 一样的东西
 
 629
 00:26:51,674 --> 00:26:53,977
-And you might be kind of thinking, "What?
+你可能会想：“什么”
 
 630
 00:26:53,977 --> 00:26:54,810
-"That's weird.
+“那真是怪了”
 
 631
 00:26:54,810 --> 00:26:57,497
-"So to be a View I have to have a var
+“因此要成为一个 View ”
 
 632
 00:26:57,497 --> 00:27:00,017
-"that is another View as my body?
+“我就必须有另一个 View
+作为我的 body 吗？”
 
 633
 00:27:00,017 --> 00:27:01,357
-"That makes no sense."
+“那讲不通啊”
 
 634
 00:27:01,357 --> 00:27:05,460
-But you could kind of
-think of Views as Legos.
+但是你可以
+把 View 当做乐高玩具
 
 635
 00:27:05,460 --> 00:27:07,580
-So of course there are some brick Legos,
+乐高里有一些基础砖块
 
 636
 00:27:07,580 --> 00:27:11,170
-Legos that are like the
-basic thing like Text.
+那些积木就像 Text 一样
+是基础的东西
 
 637
 00:27:11,170 --> 00:27:13,330
-Text is like a brick Lego.
+Text 就像基础砖块一样
 
 638
 00:27:13,330 --> 00:27:16,930
-But then you can put Legos
-together to make something else.
+你可以将乐高积木
+拼成其他的东西
 
 639
 00:27:16,930 --> 00:27:18,830
-And that thing that you put them together,
+你可以把你拼出来的东西
 
 640
 00:27:18,830 --> 00:27:20,590
-you could call that a new Lego.
+叫做新乐高
 
 641
 00:27:20,590 --> 00:27:24,350
-It's like a combined Lego
-or a more powerful Lego.
+就像一个新组成的乐高
+或者一个更强大的乐高
 
 642
 00:27:24,350 --> 00:27:26,520
-For example, if you were
-building a Lego house,
+例如，如果你想要
+建造一个乐高房子
 
 643
 00:27:26,520 --> 00:27:29,140
-you probably would make
-little Lego furniture.
+你可能会做
+小乐高家具
 
 644
 00:27:29,140 --> 00:27:32,030
-A Lego couch, a Lego kitchen table,
+乐高沙发，乐高餐桌
 
 645
 00:27:32,030 --> 00:27:33,800
-all those things out of other Legos.
+所有的这些东西都来自于其他的乐高
 
 646
 00:27:33,800 --> 00:27:36,030
