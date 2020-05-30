@@ -1860,444 +1860,413 @@ Xcode 内集成的源代码控制
 
 454
 00:19:12,720 --> 00:19:15,730
-And I'm gonna start with
-this little piece of code.
+我们先看这一小段代码
 
 455
 00:19:15,730 --> 00:19:17,740
-And what this little piece of code does
+它们的作用是
 
 456
 00:19:17,740 --> 00:19:19,900
-is it provides some glue
+将你写的代码
 
 457
 00:19:19,900 --> 00:19:22,720
-between your code that you're writing
+关联到
 
 458
 00:19:22,720 --> 00:19:24,670
-and this little area on the right
+右边这个区域
 
 459
 00:19:24,670 --> 00:19:26,980
-which is called the Preview window.
+这个叫做预览（Preview）的窗口
 
 460
 00:19:26,980 --> 00:19:30,020
-See, it says automatic
-preview updating paused.
+看这里写着“自动更新已暂停”
+Automatic preview updating paused
 
 461
 00:19:30,020 --> 00:19:31,900
-And of course we have the simulator.
+当然，我们依旧有模拟器
 
 462
 00:19:31,900 --> 00:19:33,507
-We can always run that
-to see what our apps
+可以用来查看程序我们的程序
 
 463
 00:19:33,507 --> 00:19:34,840
-are gonna look like.
+运行起来的样子
 
 464
 00:19:34,840 --> 00:19:38,140
-But we also can see what's
-happening in our UI,
+但我们也可以通过点这个 Resume
 
 465
 00:19:38,140 --> 00:19:43,020
-kind of in real time, approximately,
-by hitting Resume here.
+来恢复用户界面的实时预览
 
 466
 00:19:43,020 --> 00:19:46,240
-And what this is gonna
-do is compile our code
+它会编译我们的代码
 
 467
 00:19:46,240 --> 00:19:49,000
-and essentially run it right here.
+然后在这里运行
 
 468
 00:19:49,000 --> 00:19:51,090
-It looks like a little iPhone.
+它看起来有点像个 iPhone
 
 469
 00:19:51,090 --> 00:19:52,940
-Notice this is not in Dark Mode
+注意这台设备不在深色模式下
 
 470
 00:19:52,940 --> 00:19:55,260
-so the text is black on white.
+所以是白底黑字
 
 471
 00:19:55,260 --> 00:19:58,730
-And that's automatic, the SwiftUI
-takes care of that for us.
+这是 SwiftUI 自动做的深色模式适配
 
 472
 00:19:58,730 --> 00:20:00,360
-And we can resize this too.
+我们还可以调整预览窗口的大小
 
 473
 00:20:00,360 --> 00:20:03,100
-Maybe make it over here,
-it'll have less space.
+让它在这边少占一点空间
 
 474
 00:20:03,100 --> 00:20:07,180
-And this code that is
-essentially gluing to it,
+因为这段代码只是“胶水代码”
 
 475
 00:20:07,180 --> 00:20:09,690
-I'm not really going to
-pay much attention to it.
+所以我不会把注意力放在它身上
 
 476
 00:20:09,690 --> 00:20:12,750
-In fact, I'm going to
-move it out of the way.
+因此我要（多敲几个空行）
+把它从屏幕上隐藏
 
 477
 00:20:12,750 --> 00:20:14,700
-And when you make a big edit like this
+当像这样有大量代码变更的时候
 
 478
 00:20:14,700 --> 00:20:16,640
-or you're moving a lot of code around,
+或者把代码四处移动之后
 
 479
 00:20:16,640 --> 00:20:18,890
-sometimes this preview will pause.
+预览有时候会暂停
 
 480
 00:20:18,890 --> 00:20:20,130
-You see, it's paused again.
+你看，它又暂停了
 
 481
 00:20:20,130 --> 00:20:22,350
-No problem, you can just resume.
+问题不大，点下 Resume 恢复
 
 482
 00:20:22,350 --> 00:20:23,860
-But a lot of changes you make,
+但其他大部分的编辑
 
 483
 00:20:23,860 --> 00:20:25,600
-like if I change this "Hello, World!"
+比如把这个 "Hello, world!"
 
 484
 00:20:25,600 --> 00:20:29,320
-to be "Hello There, World!"
+修改为 "Hello There, World!"
 
 485
 00:20:29,320 --> 00:20:31,930
-you could see it's actually
-changing it in real time.
+你可以看到预览是实时更新的
 
 486
 00:20:31,930 --> 00:20:33,750
-So it depends on the kind of change
+所以代码改动的类型决定了
 
 487
 00:20:33,750 --> 00:20:35,660
-you're making to your code
+是会暂停预览
 
 488
 00:20:35,660 --> 00:20:38,690
-as to whether it will update in real time.
+还是让预览实时更新
 
 489
 00:20:38,690 --> 00:20:40,900
-And again, you can
-always run the simulator.
+当然，你依然可以选择使用模拟器
 
 490
 00:20:40,900 --> 00:20:41,980
-Especially if you wanna see it
+特别是如果你想
 
 491
 00:20:41,980 --> 00:20:45,180
-on lots of different devices
-and things like that.
+查看在不同设备上运行效果的时候等
 
 492
 00:20:45,180 --> 00:20:47,680
-The simulator is always
-available to you up there.
+你总是可以通过这上面选择模拟器运行
 
 493
 00:20:49,180 --> 00:20:51,127
-So let's take a look at the Swift code.
+现在让我们看 Swift 代码
 
 494
 00:20:51,127 --> 00:20:53,227
-This is the entirety of the Swift code
+这就是我们程序特有的
 
 495
 00:20:53,227 --> 00:20:54,553
-that's specific to our app.
+全部 Swift 代码了
 
 496
 00:20:54,553 --> 00:20:57,000
-There's a little bit
-of boilerplate up here
+还有些样板代码
 
 497
 00:20:57,000 --> 00:20:59,220
-in these two delegate things.
+在这两个 Delegate 文件里
 
 498
 00:20:59,220 --> 00:21:00,260
-We'll look at those later
+我们之后会去查看
 
 499
 00:21:00,260 --> 00:21:03,090
-but this is really
-pretty much all there is
+但这几乎是实现这个“Hello World”
 
 500
 00:21:03,090 --> 00:21:06,380
-when it comes to doing this
-Hello, World right here.
+程序所需要的全部代码了
 
 501
 00:21:06,380 --> 00:21:09,250
-So let's look at the Swift code in detail.
+现在让我们来仔细看看这些 Swift 代码
 
 502
 00:21:09,250 --> 00:21:11,950
-First we have this import SwiftUI.
+首先我们有
+import SwiftUI
 
 503
 00:21:11,950 --> 00:21:15,330
-I'm sure you can all imagine
-exactly what that is.
+我觉得你们能猜出来这是在干什么
 
 504
 00:21:15,330 --> 00:21:18,960
-It's like include or
-import in other languages.
+它就像其他语言的 include 或者 import
 
 505
 00:21:18,960 --> 00:21:22,090
-This imports what's
-called a package in Swift.
+它导入了一个软件包（Package）
 
 506
 00:21:22,090 --> 00:21:24,520
-This package is SwiftUI.
+软件包的名称叫做 SwiftUI
 
 507
 00:21:24,520 --> 00:21:27,369
-So that's the big ol'
-package that Apple provides
+那是苹果公司提供的一个庞大的软件包
 
 508
 00:21:27,369 --> 00:21:30,130
-that makes all this SwiftUI stuff work.
+它实现了整个 SwiftUI
 
 509
 00:21:30,130 --> 00:21:32,640
-So anytime we're doing UI stuff,
+所以当我们在编写用户界面的时候
 
 510
 00:21:32,640 --> 00:21:35,150
-we're always gonna be importing SwiftUI.
+我们总是会 import SwiftUI
 
 511
 00:21:35,150 --> 00:21:36,870
-Sometimes we're going to be writing code
+有的时候我们写的代码
 
 512
 00:21:36,870 --> 00:21:38,450
-that is not UI stuff.
+不是关于用户界面的
 
 513
 00:21:38,450 --> 00:21:41,280
-In fact, intentionally UI independent.
+或者说有意地独立于用户界面
 
 514
 00:21:41,280 --> 00:21:43,963
-And in that case, we will
-not be importing SwiftUI.
+那种情况下就不应该 import SwiftUI
 
 515
 00:21:43,963 --> 00:21:45,670
-We'll be importing a different package
+我们会导入另一个软件包
 
 516
 00:21:45,670 --> 00:21:47,410
-called Foundation.
+Foundation（基础框架）
 
 517
 00:21:47,410 --> 00:21:51,200
-Foundation is kind of arrays
-and dictionaries and strings.
+Foundation 扩展了基础类型，比如
+Array、Dictionary、String 等
 
 518
 00:21:51,200 --> 00:21:53,670
-And the SwiftUI package
-depends on Foundation.
+SwiftUI 也使用了 Foundation 软件包
 
 519
 00:21:53,670 --> 00:21:54,910
-So if you imported SwiftUI,
+所以导入 SwiftUI 的时候
 
 520
 00:21:54,910 --> 00:21:57,253
-you get that one too automatically.
+也自动导入了 Foundation
 
 521
 00:21:58,190 --> 00:22:01,670
-So this whole thing is really
-just three lines of code here,
+所以我们整个程序就这么三行代码
 
 522
 00:22:01,670 --> 00:22:03,100
-not including the curly braces.
+（如果不算这些括号的话）
 
 523
 00:22:03,100 --> 00:22:05,110
-So let's see what it is.
+所以我们来仔细分析一下
 
 524
 00:22:05,110 --> 00:22:07,600
-This first key word here.
+首先是关键字
 
 525
 00:22:07,600 --> 00:22:10,930
-Notice all the Swift
-keywords are in magenta.
+你可以看到，所有的 Swift 关键字
+是紫红色的
 
 526
 00:22:10,930 --> 00:22:12,800
-We can always tell the
-difference between Swift
+方便我们区分 Swift 语言本身的东西
 
 527
 00:22:12,800 --> 00:22:15,050
-and the things we do.
+和我们的代码
 
 528
 00:22:15,050 --> 00:22:16,220
-So this is a struct.
+然后这是一个 struct（结构体）
 
 529
 00:22:16,220 --> 00:22:18,060
-This is just declaring a struct.
+这里用 struct 声明了一个结构体
 
 530
 00:22:18,060 --> 00:22:21,421
-Now, I'm sure you know a
-language that has structs.
+我知道你可能在其他语言中用过结构体
 
 531
 00:22:21,421 --> 00:22:25,417
-C and C++ and these
-languages all have struct.
+像 C 和 C++ 这样的语言都有结构体
 
 532
 00:22:25,417 --> 00:22:29,230
-And the struct in Swift, just
-like the other languages,
+Swift 里的结构体和其他语言类似
 
 533
 00:22:29,230 --> 00:22:31,970
-is a container for some variables.
+能存储一些变量
 
 534
 00:22:31,970 --> 00:22:35,650
-But structs in Swift are
-much more powerful than that.
+但其实 Swift 里的结构体功能更强大
 
 535
 00:22:35,650 --> 00:22:38,500
-Structs in Swift not
-only can have variables,
+除了存储变量之外
 
 536
 00:22:38,500 --> 00:22:39,701
-but they can have functions
+还可以有方法
 
 537
 00:22:39,701 --> 00:22:42,100
-and they can also have behaviors
+它们还能实现（协议规定的）行为
 
 538
 00:22:42,100 --> 00:22:44,270
-which we're going to see very clearly
+我们也会马上
 
 539
 00:22:44,270 --> 00:22:45,880
-right off the bat here.
+在这里看到
 
 540
 00:22:45,880 --> 00:22:48,520
-So this struct, its name is ContentView.
+所以这个结构体的名字叫做 ContentView
 
 541
 00:22:48,520 --> 00:22:51,850
-So the name of our
-identifiers are in green.
+总结一下，我们声明的标识符是绿色的
 
 542
 00:22:51,850 --> 00:22:54,040
-And Swift's identifiers are in purple
+内置的标识符是紫色的
 
 543
 00:22:54,040 --> 00:22:56,280
-and the keywords again are in magenta.
+然后 Swift 的关键字是紫红色的
 
 544
 00:22:56,280 --> 00:22:58,350
-So the name of this struct is ContentView.
+那么我们结构体的名字是 ContentView
 
 545
 00:22:58,350 --> 00:23:01,800
-And this is a very interesting little part
+但这里就是这个结构体声明里
 
 546
 00:23:01,800 --> 00:23:04,000
-of this struct's declaration.
+比较有意思的地方了
 
 547
 00:23:04,000 --> 00:23:06,380
-It essentially means that this struct
+它的意思是这个结构体
 
 548
 00:23:06,380 --> 00:23:10,330
-is going to behave like a View.
+会有和 View 一样行为
 
 549
 00:23:10,330 --> 00:23:14,770
-Or some might say it's going
-to function like a View.
+或者说能够作为 View 使用
 
 550
 00:23:14,770 --> 00:23:18,370
-Or some would even say it "is a" View.
+也可以说它“是一个”View
 
 551
 00:23:18,370 --> 00:23:22,830
-Although if I use the
-statement that it "is a" View,
+但如果我用了“ContentView 是一个 View”
+这样的说法
 
 552
 00:23:22,830 --> 00:23:25,610
-some people will think that's
-object-oriented programming
+可能会让有的人想到面向对象编程
 
 553
 00:23:25,610 --> 00:23:27,410
-like the superclass or something.
+认为 View 是个超类
 
 554
 00:23:27,410 --> 00:23:28,440
-But it's not.
+但其实不然
 
 555
 00:23:28,440 --> 00:23:29,860
