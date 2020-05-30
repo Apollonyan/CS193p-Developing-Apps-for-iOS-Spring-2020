@@ -5134,183 +5134,177 @@ see the ones in the back.
 
 1203
 00:52:16,130 --> 00:52:17,470
-Instead we want a different one
+因此我们想用不同的栈代替
 
 1204
 00:52:17,470 --> 00:52:19,503
-which is we're gonna return an HStack.
+我们在这里返回 HStack
 
 1205
 00:52:20,698 --> 00:52:23,683
-Our HStack just like ZStack has content.
+HStack 像 ZStack 一样有
+content 参数
 
 1206
 00:52:24,640 --> 00:52:26,960
-And you put in the content the things
+你把需要排列的视图
+放入 content 中
 
 1207
 00:52:26,960 --> 00:52:31,203
-you want to arrange like this.
+就像这样
 
 1208
 00:52:32,200 --> 00:52:36,840
-And HStack instead of arranging
-things from back to front,
+HStack 不是将视图从后往前排列
 
 1209
 00:52:36,840 --> 00:52:38,820
-it arranges things horizontally.
+而是在水平方向排列它们
 
 1210
 00:52:38,820 --> 00:52:40,670
-That's what the H means,
-from left to right.
+这也是 H（水平的）的意思，从左到右
 
 1211
 00:52:40,670 --> 00:52:44,050
-So look at that, left to
-right, it arranged them there.
+看这里，它从左到右排列它们
 
 1212
 00:52:44,050 --> 00:52:49,050
-Now, I told you that Swift
-likes to not type things
+我说过 Swift 倾向略去
 
 1213
 00:52:49,120 --> 00:52:50,690
-that you don't need to type.
+你不需要打字的部分
 
 1214
 00:52:50,690 --> 00:52:52,530
-And that return I can still remove
+因此我仍可以删掉 return
 
 1215
 00:52:52,530 --> 00:52:53,990
-because believe it or not,
+因为不管信不信
 
 1216
 00:52:53,990 --> 00:52:56,993
-there's still only one
-View being returned.
+这里仍然只有一个 View 将被返回
 
 1217
 00:52:57,910 --> 00:53:00,090
-Being used as the value of this body,
+被用做这里的 body 的值
 
 1218
 00:53:00,090 --> 00:53:01,280
-some View, it's one View.
+some View，这里它是一个 View
 
 1219
 00:53:01,280 --> 00:53:06,280
-It's a HStack of ForEaches that
-make ZStacks that's padded.
+它是一个 HStack，它由生成 ZStack 的
+ForEach 组成。HStack 有填充的间距
 
 1220
 00:53:07,060 --> 00:53:08,720
-It has a foregroundColor and a font.
+它有 foregroundColor 和 font
 
 1221
 00:53:08,720 --> 00:53:11,500
-That is the one View
-that's being returned.
+这就是被返回的一个 View
 
 1222
 00:53:11,500 --> 00:53:14,540
-Of course, HStack is a combiner
-so it's combining things.
+当然了，HStack 是一个组合器
+它正在组合它们
 
 1223
 00:53:14,540 --> 00:53:17,950
-And ForEach is a combiner
-and ZStack is a combiner.
+ForEach 是一个组合器
+ZStack 是一个组合器
 
 1224
 00:53:17,950 --> 00:53:20,820
-But those are all inside the HStack.
+但是他们都在 HStack 的内部
 
 1225
 00:53:20,820 --> 00:53:22,600
-Now, notice also that the HStack
+注意到当 HStack
 
 1226
 00:53:22,600 --> 00:53:25,710
-when it sees a ForEach
-'cause this could be a list,
+遇到 ForEach 时
+因为这里可以是一个列表
 
 1227
 00:53:25,710 --> 00:53:28,890
 we could say Text("hello")
+我们可以试下 Text("hello")
 
 1228
 00:53:28,890 --> 00:53:30,400
-So it puts hello in there.
+它把 hello 放到这里了
 
 1229
 00:53:30,400 --> 00:53:33,700
-And then this ForEach
-is kind of like listing
+因此 ForEach 有点像列表
 
 1230
 00:53:33,700 --> 00:53:35,740
-each of these ZStacks separately.
+每一个 ZStack 都是独立的
 
 1231
 00:53:35,740 --> 00:53:36,870
-That's why it does this.
+这就是它展示成这样的原因
 
 1232
 00:53:36,870 --> 00:53:38,370
-So each stack is smart.
+每个栈都是智能的
 
 1233
 00:53:38,370 --> 00:53:40,610
-It knows if it has a ForEach inside,
+如果它内部有一个 ForEach
 
 1234
 00:53:40,610 --> 00:53:41,690
-then it wants to lay out
+然后它会单独地编排
 
 1235
 00:53:41,690 --> 00:53:43,833
-each of the ForEach things separately.
+每一个 ForEach 中的内容
 
 1236
 00:53:45,050 --> 00:53:48,400
-Now, another thing to
-notice here is the spacing.
+另一个值得注意的事是
+这里的空隙
 
 1237
 00:53:48,400 --> 00:53:51,870
-There's a little bit of
-space between these things.
+在这些视图间有一些空隙
 
 1238
 00:53:51,870 --> 00:53:53,850
-Is that this padding right here?
+它是这里的 padding 吗
 
 1239
 00:53:53,850 --> 00:53:55,910
-No, that padding is this padding
+不是的，这个 padding 是
 
 1240
 00:53:55,910 --> 00:53:57,957
-around the outside of HStack
+HStack 外面的一圈
+填充间距
 
 1241
 00:53:57,957 --> 00:54:02,520
-'cause the padding function is
-called on the HStack itself.
+因为是 HStack 调用的 padding 方法
 
 1242
 00:54:02,520 --> 00:54:06,670
-That spacing is actually
-something the HStack is doing
+那个空隙实际上是 HStack 实现的
 
 1243
 00:54:06,670 --> 00:54:08,800
-and it has an argument
-that lets you set that.
+并且它有一个参数可以设置
+空隙的大小
 
 1244
 00:54:08,800 --> 00:54:10,970
