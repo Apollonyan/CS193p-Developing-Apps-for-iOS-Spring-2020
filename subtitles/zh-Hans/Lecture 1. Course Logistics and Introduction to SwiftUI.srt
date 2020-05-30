@@ -5236,7 +5236,6 @@ ZStack 是一个组合器
 
 1227
 00:53:25,710 --> 00:53:28,890
-we could say Text("hello")
 我们可以试下 Text("hello")
 
 1228
