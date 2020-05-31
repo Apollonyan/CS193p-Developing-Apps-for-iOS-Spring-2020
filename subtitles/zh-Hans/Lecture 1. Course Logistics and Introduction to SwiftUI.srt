@@ -2838,7 +2838,7 @@ of an interesting var here
 
 667
 00:28:30,530 --> 00:28:34,010
-它后面跟着一对花括号
+它后面跟着一对大括号
 in that it's got this
 curly brace thing after it.
 
@@ -2865,7 +2865,7 @@ asks for the value of this var,
 
 672
 00:28:47,030 --> 00:28:50,810
-这对花括号里的代码就会被执行一次
+这对大括号里的代码就会被执行一次
 this code in this curly
 brace gets executed.
 
@@ -2909,7 +2909,7 @@ if I put this keyword back.
 
 680
 00:29:05,720 --> 00:29:08,050
-这个品红色的关键字 return
+这个紫红色的关键字 return
 This keyword, return, you see is magenta.
 
 681
@@ -2919,7 +2919,7 @@ It's a Swift thing, it means return.
 
 682
 00:29:10,450 --> 00:29:13,280
-从这段花括号包围的代码
+从这段大括号包围的代码
 Return a value from this piece of code,
 
 683
@@ -3075,173 +3075,220 @@ a Text as the value of body
 
 710
 00:30:23,993 --> 00:30:26,700
+实际上我们可以直接在这写上 Text
 In fact, we could even
 just type Text right here.
 
 711
 00:30:26,700 --> 00:30:30,800
+这完全是合法的
+因为 Text 表现得像 View 一样
 That would be valid because
 to behave like a View,
 
 712
 00:30:30,800 --> 00:30:35,460
+body 变量只需要返回一个 View
 your var body just has to
 return something that is a View.
 
 713
 00:30:35,460 --> 00:30:37,830
+显然，Text 是一个 View
 And of course, Text is a View.
 
 714
 00:30:37,830 --> 00:30:40,080
+那么为什么我们不直接写 Text 呢？
 So why don't we type Text?
 
 715
 00:30:40,080 --> 00:30:42,320
+为什么要写 some View？
 Why do we do this some View?
 
 716
 00:30:42,320 --> 00:30:46,300
+这是因为当 body 里开始用
+View 组合器之类的东西的时候
 Well, as our body of our
 View gets more complicated
 
 717
 00:30:46,300 --> 00:30:48,170
+body 的内容会变的越来越复杂
 and we start using these View-combiners
 
 718
 00:30:48,170 --> 00:30:50,900
+返回的 View 的类型
 and things like that, it's
 gonna be constantly changing.
 
 719
 00:30:50,900 --> 00:30:53,430
+可能会持续变化
 Which kind of View we're returning.
 
 720
 00:30:53,430 --> 00:30:54,870
+现在我们返回的是个 Text
 Right now we're returning a Text.
 
 721
 00:30:54,870 --> 00:30:56,500
+但是最终我们要返回的
 But eventually we're gonna be returning
 
 722
 00:30:56,500 --> 00:30:58,780
+是一组被组合起来的 View
 View-combining Views.
 
 723
 00:30:58,780 --> 00:31:02,530
+我们希望编译器来替我们解决这个问题
 And we wanna let the compiler
 figure it out for us.
 
 724
 00:31:02,530 --> 00:31:06,187
+所以这个“some View”
+就是在告诉编译器
 So this some View is basically
 saying to the compiler,
 
 725
 00:31:06,187 --> 00:31:08,867
+“去检查我写的代码”
 "Go look in my code right here.
 
 726
 00:31:08,867 --> 00:31:10,867
+“搞清楚它返回了什么东西”
 "Figure out what it's returning.
 
 727
 00:31:10,867 --> 00:31:13,897
+“确保返回的东西表现得像个 View”
 "Make sure that it behaves like a View.
 
 728
 00:31:13,897 --> 00:31:16,597
+“然后把它作为 body 的类型”
 "And then use that as
 the type of the body."
 
 729
 00:31:17,450 --> 00:31:20,310
+随着课程的进行你会发现
 You're gonna find as we
 go through this course
 
 730
 00:31:20,310 --> 00:31:24,060
+Swift 是一种强类型语言
 that Swift is what's called a
 very strongly-typed language.
 
 731
 00:31:24,060 --> 00:31:28,050
+这意味着每一个变量
+都有一个明确的类型
 That means every variable
 has a specific type.
 
 732
 00:31:28,050 --> 00:31:30,580
+它不像 JavaScript 或一些其他语言
 It's not a language
 like JavaScript or other
 
 733
 00:31:30,580 --> 00:31:32,230
+它们的变量类型
 where it's like well, the variable
 
 734
 00:31:32,230 --> 00:31:33,850
+取决于你分配的值
 depends on what you assign to it.
 
 735
 00:31:33,850 --> 00:31:34,683
+当它得到值的时候……
 That's when it gets ...
 
 736
 00:31:34,683 --> 00:31:38,250
+不，在 Swift 中每一个变量
+都有一个明确的类型
 No, in Swift, every
 variable has a specific type
 
 737
 00:31:38,250 --> 00:31:39,610
+并且永远都有一个值
 and always has a value.
 
 738
 00:31:39,610 --> 00:31:43,963
+这是 Swift 运作方式的基础
 That's just fundamental
 to the way Swift works.
 
 739
 00:31:45,740 --> 00:31:49,060
+现在我们来看看这个 Text
 So let's look at this Text right here.
 
 740
 00:31:49,060 --> 00:31:51,320
+我们创建了这个 Text
 We create this Text.
 
 741
 00:31:51,320 --> 00:31:53,680
+每当我们要创建一个东西
+一个 struct 的时候……
 Anytime we're creating
 anything, any struct,
 
 742
 00:31:53,680 --> 00:31:56,680
+Text 是一个
+表现的像个 View 一样的 struct
 so a Text is just a struct
 that behaves like a View.
 
 743
 00:31:56,680 --> 00:32:00,120
+每当我们要创建它的时候
+会在小括号里
 And anytime we create
 one, we in parentheses
 
 744
 00:32:00,120 --> 00:32:03,700
+写上创建它的时候需要的信息
 give it whatever information
 it needs to create itself.
 
 745
 00:32:03,700 --> 00:32:05,840
+显然，对于 Text 来说
 Now, obviously for a Text,
 
 746
 00:32:05,840 --> 00:32:09,007
+它需要一个字符串来创建它自己
 it needs the string that it's
 going to use to create itself.
 
 747
 00:32:09,007 --> 00:32:11,460
+这就是为什么这里会显示出
+“Hello There, World!”
 and that's why you get
 this "Hello There, World!"
 
