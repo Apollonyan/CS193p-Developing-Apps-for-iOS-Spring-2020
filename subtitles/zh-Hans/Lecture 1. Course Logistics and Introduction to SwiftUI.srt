@@ -5336,214 +5336,203 @@ spacing: 0
 
 1285
 00:56:15,130 --> 00:56:19,093
-This is still the second
-argument to the HStack there.
+这仍然是 HStack 的第二个参数
 
 1286
 00:56:20,508 --> 00:56:22,208
-So it's kind of a little clean up.
+所以这是一种清理
 
 1287
 00:56:23,420 --> 00:56:25,960
-So our code is looking
-pretty clean already
+我们生成这四张卡片的代码
 
 1288
 00:56:25,960 --> 00:56:27,700
-making these four cards.
+看起来已经非常简洁了
 
 1289
 00:56:27,700 --> 00:56:30,170
-We can clean it up even a little more
+我们甚至可以让它再简化一下
 
 1290
 00:56:30,170 --> 00:56:32,330
-by factoring out some of our code.
+通过分解我们的一些代码
 
 1291
 00:56:32,330 --> 00:56:35,420
-This ZStack here is essentially one card.
+这里的 ZStack 本质上就是一张卡片
 
 1292
 00:56:35,420 --> 00:56:38,270
-Wouldn't it be cool if I
-just created a new struct
+如果我创建一个新的名为 CardView 的结构体
+并且也有和 View 一样的行为
 
 1293
 00:56:38,270 --> 00:56:41,980
-called a CardView which
-also behaves like a View?
+是不是会更酷呢？
 
 1294
 00:56:41,980 --> 00:56:42,940
-Which means what?
+这意味着什么？
 
 1295
 00:56:42,940 --> 00:56:47,280
-It has to have a var
-body that is some View.
+它必须有一个类型是 some View 的 body 变量
 
 1296
 00:56:47,280 --> 00:56:49,110
-And in here we just return some View.
+在这里我们只需要返回 some View
 
 1297
 00:56:49,110 --> 00:56:51,530
-I'm gonna return a ZStack.
+我会返回一个 ZStack
 
 1298
 00:56:51,530 --> 00:56:54,573
-Cut that out of there, paste it in there.
+从这里剪切下来，然后粘贴进去
 
 1299
 00:56:55,500 --> 00:56:56,900
-And then in ContentView here,
+然后在 ContentView 中，
 
 1300
 00:56:56,900 --> 00:56:58,613
-I'm just gonna create a CardView.
+我只要创建一个 CardView
 
 1301
 00:57:01,240 --> 00:57:03,760
-So this is a way we can use the Views
+因此这是一种我们可以使用 Views
 
 1302
 00:57:03,760 --> 00:57:06,830
-to factor out our code
-to do encapsulation.
+去提取代码进行封装的一种方法
 
 1303
 00:57:06,830 --> 00:57:09,710
-To make our code look
-even simpler and nicer.
+使我们的代码看起来更简洁优雅
 
 1304
 00:57:09,710 --> 00:57:10,863
-Somebody looking at this ContentView,
+有些人看这个 ContentView
 
 1305
 00:57:10,863 --> 00:57:15,190
-it's really easy to see what
-this is gonna look like.
+很容易看出它长什么样
 
 1306
 00:57:15,190 --> 00:57:17,610
-And similarly down here.
+下面也是一样
 
 1307
 00:57:17,610 --> 00:57:18,693
-Simple to see.
+可以很容易看出来
 
 1308
 00:57:19,920 --> 00:57:22,920
-Now, the last thing I'm
-gonna do here in this lecture
+现在，在这节课我要做的最后一件事情
 
 1309
 00:57:22,920 --> 00:57:25,430
-is do fronts and backs of cards.
+是制作卡片的正面和背面
 
 1310
 00:57:25,430 --> 00:57:29,090
-'Cause right now, we only have
-the front of the card shown.
+因为到目前为止
+我们只展示了卡片的正面
 
 1311
 00:57:29,090 --> 00:57:30,930
-We don't ever show the back of the card.
+我们还没有展示卡片的背面
 
 1312
 00:57:30,930 --> 00:57:33,300
-So how would we draw
-this back of the card?
+那么我们将如何绘制卡片的背面呢？
 
 1313
 00:57:33,300 --> 00:57:35,740
-Well, it's just a ZStack as well
+它其实也是一个 ZStack
 
 1314
 00:57:35,740 --> 00:57:38,500
-but it's filled with the foregroundColor.
+但是它被 foregroundColor 填充
 
 1315
 00:57:38,500 --> 00:57:40,950
-So we could actually go ahead
+所以我们实际上可以继续
 
 1316
 00:57:40,950 --> 00:57:43,240
-and just copy and paste here
+复制然后粘贴到这里
 
 1317
 00:57:43,240 --> 00:57:46,400
-a RoundedRectangle to be the back.
+一个 RoundedRectangle 作为背面
 
 1318
 00:57:46,400 --> 00:57:48,267
-And for the moment I'll comment this out.
+现在我把这些注释掉
 
 1319
 00:57:48,267 --> 00:57:50,480
-And of course we don't
-wanna fill with white.
+当然我们不想用白色填充
 
 1320
 00:57:50,480 --> 00:57:54,930
-We just wanna fill with whatever
-our environment Color is.
+我们只想填充我们的环境颜色
 
 1321
 00:57:54,930 --> 00:57:56,720
-Which it's going to get from here.
+它将会从这里拿到
 
 1322
 00:57:56,720 --> 00:57:58,520
-Notice that this foregroundColor
+注意这个 foregroundColor
 
 1323
 00:57:58,520 --> 00:58:01,900
-not only applies to
-everything in the HStack
+不仅仅应用在 HStack 里的
+所有东西
 
 1324
 00:58:01,900 --> 00:58:03,900
-that ForEach passes it on down
+ForEach 把它传递下去
 
 1325
 00:58:03,900 --> 00:58:05,450
-so that it applies to the CardView
+所以它也应用在 CardView 上
 
 1326
 00:58:05,450 --> 00:58:07,090
-which passes it on down.
+又把它传递下去
 
 1327
 00:58:07,090 --> 00:58:08,620
-Which applies to the ZStack
+应用在 ZStack 上
 
 1328
 00:58:08,620 --> 00:58:10,120
-which passes it on down
+又继续把它传递下去
 
 1329
 00:58:10,120 --> 00:58:12,890
-so that it applies to all these things.
+所以它就应用在所有这些东西
 
 1330
 00:58:12,890 --> 00:58:14,710
-So now if we resume.
+所以如果我们现在恢复
 
 1331
 00:58:14,710 --> 00:58:17,143
-We can see backs of cards.
+我们可以看见卡片的背面
 
 1332
 00:58:18,410 --> 00:58:20,720
-See, here's the backs of our cards.
+看，这就是我们卡片的背面
 
 1333
 00:58:20,720 --> 00:58:23,513
-Right here, RoundedRectangles
-that are just filled.
+在这里，RoundedRectangles
+被填充了
 
 1334
 00:58:24,450 --> 00:58:27,530
