@@ -5268,185 +5268,184 @@ HStack 外面的一圈
 
 1244
 00:54:08,800 --> 00:54:10,970
-So here I've set the spacing to zero.
+在这里，我已经把 spacing
+参数设为 0
 
 1245
 00:54:10,970 --> 00:54:15,410
-Or I set it to 50 or I
-leave it unspecified.
+或者把它设成 50
+或者不设置它
 
 1246
 00:54:15,410 --> 00:54:17,630
-A lot of times we're leaving
-those things unspecified
+很多时候我们都不设置它们
 
 1247
 00:54:17,630 --> 00:54:21,330
-'cause we want this spacing
-to be standard spacing.
+因为我们想这些空隙成为标准空隙
 
 1248
 00:54:21,330 --> 00:54:23,430
-The same in all apps.
+标准空隙在所有的应用中都是相同的
 
 1249
 00:54:23,430 --> 00:54:24,930
-Same thing with padding down here.
+这里的 padding 也是一样的
 
 1250
 00:54:24,930 --> 00:54:26,940
-We didn't specify anything
-here but in padding
+我们没有设置它的参数，但是
+在 padding 方法中
 
 1251
 00:54:26,940 --> 00:54:30,170
-you can actually even do
-padding on the top is 100.
+你甚至可以设置上边的
+边缘填充为 100
 
 1252
 00:54:30,170 --> 00:54:34,730
-Or padding is 10 on all sides.
+或者设置所有方向的边缘填充
+都是 10
 
 1253
 00:54:34,730 --> 00:54:38,870
-But usually we go for standard
-padding as much as we can.
+通常我们尽可能使用
+标准的边缘填充
 
 1254
 00:54:38,870 --> 00:54:40,733
-Standard padding and spacing.
+标准的边缘填充和空隙
 
 1255
 00:54:42,180 --> 00:54:46,900
-Now, I told you, remember
-we took away this return.
+我前面说过，还记得我们删掉了
+这里的 return
 
 1256
 00:54:46,900 --> 00:54:49,430
-There's another thing we can take away.
+这里还可以删掉一些
 
 1257
 00:54:49,430 --> 00:54:54,430
-In Swift, if the last
-argument to a function
+在 Swift 中，如果函数的
+最后一个参数
 
 1258
 00:54:54,633 --> 00:54:57,310
-or the creation of
-something, so here's ForEach.
+或者类初始化函数的最后一个参数
+比如这里的 ForEach
 
 1259
 00:54:57,310 --> 00:54:58,450
-It has two arguments.
+它有两个参数
 
 1260
 00:54:58,450 --> 00:55:02,640
-This and then it has this
-as its second argument.
+这里是它的第二个参数
 
 1261
 00:55:02,640 --> 00:55:06,320
-If the second argument
-is a curly-braced thing,
+如果第二个参数是由
+大括号包含的
 
 1262
 00:55:06,320 --> 00:55:10,380
-then believe it or not, you
-can get rid of the label
+不管你信不信，你可以删掉这里的
+标签（content:）
 
 1263
 00:55:10,380 --> 00:55:14,500
-and put it outside of the function call.
+然后将它放到函数调用的最外面
 
 1264
 00:55:14,500 --> 00:55:15,720
-So here's the ForEach.
+这里同样是 ForEach
 
 1265
 00:55:15,720 --> 00:55:18,170
-So basically the creation of the ForEach.
+的类初始化函数
 
 1266
 00:55:18,170 --> 00:55:19,550
-And here's its second argument.
+这里是它的第二个参数
 
 1267
 00:55:19,550 --> 00:55:23,833
-It's floating outside of the parentheses.
+它现在在括号的外面了
 
 1268
 00:55:24,810 --> 00:55:27,420
-So this seems kind of crazy.
+这看起来有点疯狂
 
 1269
 00:55:27,420 --> 00:55:30,240
-But actually, look what it
-makes our code look like.
+但是，先看看它会让我们的
+代码变成什么样子
 
 1270
 00:55:30,240 --> 00:55:32,490
-I'm gonna do that for all of these things
+我将把这里都改掉
 
 1271
 00:55:32,490 --> 00:55:34,190
-'cause this only has one argument.
+因为它仅有一个参数
 
 1272
 00:55:35,537 --> 00:55:37,954
-So I'm gonna get rid of that.
+我将删掉它
 
 1273
 00:55:39,190 --> 00:55:43,440
-And I'm gonna do the same
-thing here for my HStack.
+然后我在 HStack 上
+再做一次
 
 1274
 00:55:46,890 --> 00:55:48,570
-So that looks kind of a lot cleaner.
+这样看起来更清晰了
 
 1275
 00:55:48,570 --> 00:55:49,787
-You don't have those contents in there.
+这些地方没有 content: 了
 
 1276
 00:55:49,787 --> 00:55:53,720
-And even more than that,
-if you have no arguments,
+更进一步，如果
+没有参数
 
 1277
 00:55:53,720 --> 00:55:56,080
-in that case where you have
-the little curly-braced guy
+在这种情况下，这里有
+大括号在后面 
 
 1278
 00:55:56,080 --> 00:55:58,963
-hanging out there, you
-can remove that as well.
+你也可以删除这里的小括号
 
 1279
 00:56:00,450 --> 00:56:04,300
-So that cleans up our code considerably.
+这样可以大大地清理我们的代码
 
 1280
 00:56:04,300 --> 00:56:06,217
-And of course we're doing these ZStacks
+我们已经在 ZStack
 
 1281
 00:56:06,217 --> 00:56:07,610
-and these HStacks all the time.
+和 HStack 都做了
 
 1282
 00:56:07,610 --> 00:56:09,920
-Now, if I wanna put this
-spacing back, I could.
+现在，如果我想设置 spacing 参数
+我仍然可以
 
 1283
 00:56:09,920 --> 00:56:13,050
-Spacing, zero, perfectly fine.
+spacing: 0
+相当完美
 
 1284
 00:56:13,050 --> 00:56:15,130
-It's still the first argument.
+它仍然是第一个参数
 
 1285
 00:56:15,130 --> 00:56:19,093
