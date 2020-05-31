@@ -3914,402 +3914,375 @@ Text 也是一样的
 
 932
 00:40:03,150 --> 00:40:05,560
-It stroked a line around the edges
+它沿着这个 RoundedRectangle
 
 933
 00:40:05,560 --> 00:40:08,720
-of this RoundedRectangle.
+描了一条边线
 
 934
 00:40:08,720 --> 00:40:10,830
-And stroke is an interesting function
+stroke 方法的有趣之处在于
 
 935
 00:40:10,830 --> 00:40:13,030
-in that it returns something.
+它会返回一些东西
 
 936
 00:40:13,030 --> 00:40:15,050
-Can you guess what it returns?
+猜猜它返回了什么？
 
 937
 00:40:15,050 --> 00:40:16,810
-It returns a View.
+它返回了一个 View
 
 938
 00:40:16,810 --> 00:40:19,060
-It returns something
-that behaves like a View.
+它返回了一个和 View 行为一致的东西
 
 939
 00:40:19,060 --> 00:40:24,060
-And it has to because whatever
-this is has to be a View.
+这是必要的
+因为这里一定要是一个 View
 
 940
 00:40:24,060 --> 00:40:27,000
-Otherwise again, we couldn't
-put it in the ZStack.
+否则我们就不能把它传给 ZStack
 
 941
 00:40:27,000 --> 00:40:30,230
-So this right here is like a stroked
+因此这里就相当于一个
 
 942
 00:40:30,230 --> 00:40:32,560
-RoundedRectangle View
-or something like that.
+描边后的 RoundedRectangle View
 
 943
 00:40:32,560 --> 00:40:35,000
-So there's two Views still in the ZStack.
+现在我们有两个 View 在 ZStack 中
 
 944
 00:40:35,000 --> 00:40:37,173
-A stroked RoundedRectangle is one of them
+一个是调用了 stroke 方法的 RoundedRectangle
 
 945
 00:40:37,173 --> 00:40:39,573
-and Text is the other.
+另一个是 Text
 
 946
 00:40:39,573 --> 00:40:44,573
-So this pattern of calling
-a function on a View
+这种调用 View 或 Shape 所属的方法
 
 947
 00:40:45,525 --> 00:40:46,650
-or a Shape
+来返回一个新的 View 的
 
 948
 00:40:46,650 --> 00:40:50,410
-to return another View is very common.
+的形式将会非常普遍
 
 949
 00:40:50,410 --> 00:40:53,920
-This is the first time you've
-seen a Swift function call.
+这是你第一次见到 Swift 方法的调用
 
 950
 00:40:53,920 --> 00:40:57,460
-Really simple, it's just dot
-and the name of the function.
+它非常简洁
+仅需“.<方法名>”
 
 951
 00:40:57,460 --> 00:40:59,990
-And then in parentheses, any arguments.
+加上圆括号和实参
 
 952
 00:40:59,990 --> 00:41:02,490
-Now, stroke actually can take arguments
+其实 stroke 方法可以传入实参
 
 953
 00:41:02,490 --> 00:41:05,110
-but it works perfectly
-fine without its arguments.
+但即使不传入任何实参
+它也能正常运转
 
 954
 00:41:05,110 --> 00:41:06,060
-Without its arguments,
+当没有实参传入时
 
 955
 00:41:06,060 --> 00:41:08,800
-it just kind of does this default behavior
+这个方法会遵从默认行为
 
 956
 00:41:08,800 --> 00:41:12,460
-of stroking kind of a one-point line
+在 Shape 的边缘
 
 957
 00:41:12,460 --> 00:41:14,233
-around the edges of the Shape.
+描出宽度为 1 点的线
 
 958
 00:41:15,256 --> 00:41:17,220
-So what about the color
+那么如何调整
 
 959
 00:41:17,220 --> 00:41:20,930
-of this RoundedRectangle's edge here?
+这条 RoundedRectangle 边框的颜色呢？
 
 960
 00:41:20,930 --> 00:41:23,340
-It currently looks like
-it's kind of either
+它现在差不多是一种
 
 961
 00:41:23,340 --> 00:41:26,220
-maybe dark gray or something like that.
+深灰的颜色
 
 962
 00:41:26,220 --> 00:41:28,160
-What if we want that to be orange?
+如果我们想把它变成橙色
 
 963
 00:41:28,160 --> 00:41:29,460
-So how do we do that?
+应该怎么做呢？
 
 964
 00:41:29,460 --> 00:41:32,810
-Well, this is a View
-right here, some View.
+这里是一个 View
 
 965
 00:41:32,810 --> 00:41:36,440
-And all Views, anything
-that behaves like a View,
+对于所有 View
+（所有与 View 行为一致的视图）来说
 
 966
 00:41:36,440 --> 00:41:39,747
-you can call the function on
-it called foregroundColor.
+你都可以调用名为 foregroundColor 的方法
 
 967
 00:41:41,920 --> 00:41:44,150
-It takes an argument which is a Color.
+它需要一个 Color 类型的参数
 
 968
 00:41:44,150 --> 00:41:46,690
-I'm gonna use the Color orange.
+我会使用橙色（Color.orange）
 
 969
 00:41:46,690 --> 00:41:50,670
-And that will set the
-color that it uses to draw
+这会把用于绘制视图的颜色
 
 970
 00:41:50,670 --> 00:41:52,480
-to be this Color, orange.
+设置为橙色
 
 971
 00:41:52,480 --> 00:41:53,820
-And sure enough, look at that.
+果不其然
 
 972
 00:41:53,820 --> 00:41:56,700
-It's changed it to orange right there.
+这里变成了橙色
 
 973
 00:41:56,700 --> 00:42:00,920
-Now, this function can
-be called on any View.
+值得一提的是
+我们可以在任一 View 中调用这个方法
 
 974
 00:42:00,920 --> 00:42:02,520
-We could call it on Text.
+可以在这个 Text 上调用它
 
 975
 00:42:02,520 --> 00:42:03,970
-You can see, no errors.
+可以看到，这样并不会报错
 
 976
 00:42:03,970 --> 00:42:05,869
-Of course, it doesn't
-really help with Text
+当然，这里的 Text 没有发生任何变化
 
 977
 00:42:05,869 --> 00:42:07,130
-'cause it's an emoji.
+是因为这是一个 emoji
 
 978
 00:42:07,130 --> 00:42:11,220
-But if Text were the letter X instead,
+但如果这是一个字母“X”
 
 979
 00:42:11,220 --> 00:42:14,193
-you'd see that that's
-an orange X right there.
+你会发现它变成了一个橙色的“X”
 
 980
 00:42:15,820 --> 00:42:17,790
-Again, it doesn't make
-sense to call it there.
+这里不是调用这个方法的最佳地点
 
 981
 00:42:17,790 --> 00:42:22,790
-The other thing we could send
-this orange to is our ZStack.
+我们还可以通过 ZStack 来调用这个方法
 
 982
 00:42:23,970 --> 00:42:26,860
-What does it mean to tell this View
+那么告诉 View 把 foregroundColor
 
 983
 00:42:26,860 --> 00:42:29,950
-to have its foregroundColor be orange?
+设置为橙色是是个什么意思呢？
 
 984
 00:42:29,950 --> 00:42:30,960
-ZStack is just a View.
+ZStack 是一个 View
 
 985
 00:42:30,960 --> 00:42:33,600
-It behaves like a View
-so it has foregroundColor
+它和 View 有一样的行为
+所以它和所有其他 View 一样
 
 986
 00:42:33,600 --> 00:42:36,280
-just like every other View in the world.
+也有 foregroundColor 方法
 
 987
 00:42:36,280 --> 00:42:39,687
-And what it means for
-this is "Tell every View
+这样写的意义在于
 
 988
 00:42:39,687 --> 00:42:44,090
-"inside of me to use
-foregroundColor orange."
+告诉所有它内部的 View
+将 foregroundColor 设置为橙色
 
 989
 00:42:44,090 --> 00:42:46,733
-So this works as well.
+这样也起了作用
 
 990
 00:42:46,733 --> 00:42:47,566
-Look at that.
+你看
 
 991
 00:42:47,566 --> 00:42:48,399
-See, that's orange.
+这里显示了橙色
 
 992
 00:42:48,399 --> 00:42:51,490
-Again, if we change this ghost to an X,
+如果我们把这个 emoji 换成字母“X”
 
 993
 00:42:51,490 --> 00:42:54,610
-that X would be orange as
-well because the ZStack
+“X”就也会是橙色
 
 994
 00:42:54,610 --> 00:42:57,100
-is essentially setting the environment
+这是因为 ZStack 设定了环境
 
 995
 00:42:57,100 --> 00:42:59,260
-that all of the Views inside of it
+得以让其内部所有的 View
 
 996
 00:42:59,260 --> 00:43:01,710
-are going to use to draw.
+都用这个方法绘制
 
 997
 00:43:01,710 --> 00:43:02,970
-Now this can be overridden.
+这个方法也可以被覆盖
 
 998
 00:43:02,970 --> 00:43:07,500
-We could then say,
-foregroundColor(Color.blue).
+我们可以在这里写上 foregroundColor(Color.blue)
 
 999
 00:43:08,850 --> 00:43:12,360
-And then we'd get a blue one out here.
+我们就会得到一个蓝色的描边
 
 1000
 00:43:12,360 --> 00:43:15,593
-But this would still be orange.
+但是这里（Text）仍然是橙色
 
 1001
 00:43:16,470 --> 00:43:19,380
-Because I only overrode
-this foregroundColor blue
+因为我只把这个描边后的 RoundedRectangle View
 
 1002
 00:43:19,380 --> 00:43:23,580
-for this View right here,
-this stroked RoundedRectangle.
+的 foregroundColor 覆盖为蓝色
 
 1003
 00:43:23,580 --> 00:43:26,823
-I didn't override it
-for this X right here.
+而并没有覆盖这个“X”的 foregroundColor
 
 1004
 00:43:27,790 --> 00:43:31,300
-So by scoping the calls
-to these functions,
+我们可以通过限定调用范围
 
 1005
 00:43:31,300 --> 00:43:33,750
-so we can control what color things are.
+来设定不同视图的颜色
 
 1006
 00:43:33,750 --> 00:43:35,373
-And this is really valuable for the ZStack
+这对于 ZStack 来说非常重要
 
 1007
 00:43:35,373 --> 00:43:37,830
-because we're eventually
-gonna make this ZStack
+因为我们将用这个 ZStack
 
 1008
 00:43:37,830 --> 00:43:40,080
-so it does the front of the
-cards, the back of the cards,
+来把卡片的前后
 
 1009
 00:43:40,080 --> 00:43:43,190
-everything in all those cases
-that wants to be orange.
+都统一设置为橙色
 
 1010
 00:43:43,190 --> 00:43:44,840
-So we want orange for everything
+我们要把所有视图都设置成橙色
 
 1011
 00:43:44,840 --> 00:43:46,350
-so it's really nice to be able to set that
+这样一次性设置整个 ZStack 的方式
 
 1012
 00:43:46,350 --> 00:43:48,517
-for the entire ZStack.
+非常便捷
 
 1013
 00:43:48,517 --> 00:43:51,060
-And we usually put these modifiers
+我们通常会把这些
 
 1014
 00:43:51,060 --> 00:43:53,770
-for these combiner Views
-on a line by themselves,
+组合视图的修饰符独立成行
 
 1015
 00:43:53,770 --> 00:43:55,470
-just to make them stand out a little more.
+让它们能更加显眼
 
 1016
 00:43:55,470 --> 00:43:57,660
-Whereas we might leave
-them on the same line here.
+我们这里就留它们在同一行里吧
 
 1017
 00:43:57,660 --> 00:44:01,710
-Although occasionally,
-we would even put these
+虽然也能将这些修饰符
 
 1018
 00:44:01,710 --> 00:44:04,240
-on a separate line as well.
+另起一行
 
 1019
 00:44:04,240 --> 00:44:07,150
-But we're not gonna do
-it here, but you might.
+但我不打算这么做
+随便你
 
 1020
 00:44:07,150 --> 00:44:08,960
-It's kind of a style thing.
+取决于你的代码风格
 
 1021
 00:44:08,960 --> 00:44:11,070
-However you think your
-code is most readable
+你觉得怎样更易读、易理解
 
 1022
 00:44:11,070 --> 00:44:12,270
-and most understandable.
+就怎么来
 
 1023
 00:44:13,600 --> 00:44:16,440
