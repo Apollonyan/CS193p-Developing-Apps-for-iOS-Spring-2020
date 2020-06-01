@@ -5631,223 +5631,224 @@ that are just filled.
 
 1334
 00:58:24,450 --> 00:58:27,530
-But of course, really, we
-want to have fronts of cards
+实际上，我们想根据条件来判断
+这里是保留卡片正面的代码
 
 1335
 00:58:27,530 --> 00:58:31,200
-and backs of cards somehow be conditional.
+还是保留卡片背面的代码
 
 1336
 00:58:31,200 --> 00:58:34,900
-Or the card is either
-face up or face down.
+或者来判断卡片是正面朝上
+还是背面朝上
 
 1337
 00:58:34,900 --> 00:58:37,910
-So we need an if-then or something.
+因此，我们需要 if-then 语句
 
 1338
 00:58:37,910 --> 00:58:41,130
-Well, the amazing thing
-here is that this ZStack,
+令人高兴的是你可以把
 
 1339
 00:58:41,130 --> 00:58:44,760
-which allows you to put
-a list of Views in here
+一系列 View 放到 ZStack 里
 
 1340
 00:58:44,760 --> 00:58:47,540
-also lets you put ifs.
+ZStack 里也可以放 if 语句
 
 1341
 00:58:47,540 --> 00:58:49,290
-So you can put simple ifs like
+因此你可以先试下简单的
+if 语句，比如
 
 1342
 00:58:49,290 --> 00:58:53,080
-if, let's say, isFaceUp for now.
+if isFaceUp
 
 1343
 00:58:53,080 --> 00:58:57,000
-And we'll put these three
-things in the isFaceUp case.
+我们将把这三行代码移到
+isFaceUp 的 if 语句中
 
 1344
 00:58:57,000 --> 00:59:00,000
-And then, otherwise if it's face down,
+然后，如果卡面是背面朝上的
 
 1345
 00:59:00,000 --> 00:59:02,933
-then we will put this right here.
+我们将把这行代码放到这里
 
 1346
 00:59:03,970 --> 00:59:05,580
-So we can actually put an if.
+事实上我们可以在这里写
+if 语句
 
 1347
 00:59:05,580 --> 00:59:07,550
-Now, we got all kinds of
-errors and warnings here
+现在这里有各种错误和警告
+（译者注：这里没有警告）
 
 1348
 00:59:07,550 --> 00:59:10,206
-because I just made up isFaceUp.
+因为我捏造了 isFaceUp
 
 1349
 00:59:10,206 --> 00:59:12,290
-That's not a thing.
+编译器还不知道它是什么
 
 1350
 00:59:12,290 --> 00:59:13,470
-I just made that up.
+我只是编造了它
 
 1351
 00:59:13,470 --> 00:59:15,970
-What do I want isFaceUp to be?
+那 isFaceUp 应该是什么呢？
 
 1352
 00:59:15,970 --> 00:59:18,750
-Well, I'm just gonna have it be a var.
+我将它设为一个变量
 
 1353
 00:59:18,750 --> 00:59:21,563
-It's gonna be a normal in memory var.
+它将是一个普通的
+内存中的变量
 
 1354
 00:59:21,563 --> 00:59:24,500
-It's not gonna have any curly
-braces or anything on it.
+它不会有大括号
 
 1355
 00:59:24,500 --> 00:59:28,180
-It's just a normal in memory var.
+它仅仅是普通的
+内存中的变量
 
 1356
 00:59:28,180 --> 00:59:30,690
-And you see that fixed up
-all of our code down here.
+然后你看到这样做修复了
+这下面所有的代码
 
 1357
 00:59:30,690 --> 00:59:34,460
-CardView is perfectly,
-internally self-consistent.
+CardView 是完美自洽的
 
 1358
 00:59:34,460 --> 00:59:38,630
-It's referring, it's saying
-if my isFaceUp var is true,
+它表达了，如果我的 isFaceUp
+变量为真
 
 1359
 00:59:38,630 --> 00:59:40,880
-then this way, otherwise this way.
+然后这样，否则就这样
 
 1360
 00:59:40,880 --> 00:59:43,310
-But it did cause an error up here.
+但是它在上面引起了一个错误
 
 1361
 00:59:43,310 --> 00:59:44,840
-And what is this error about,
+这个缺少 isFaceUp 参数的错误
 
 1362
 00:59:44,840 --> 00:59:47,210
-missing argument for isFaceUp?
+到底是什么意思呢
 
 1363
 00:59:47,210 --> 00:59:48,790
-Why is it saying that?
+为什么会出现它
 
 1364
 00:59:48,790 --> 00:59:50,360
-Well, I told you earlier.
+其实我以前说过
 
 1365
 00:59:50,360 --> 00:59:53,650
-Swift, all variables, it's strongly typed
+在 Swift 中，所有的
+变量都是强类型的
 
 1366
 00:59:53,650 --> 00:59:57,320
-and all variables have
-to have an initial value.
+并且所有的变量必须有
+初始值
 
 1367
 00:59:57,320 --> 00:59:59,170
-So we could set an initial value
+因此我们可以为它
+设置初始值
 
 1368
 00:59:59,170 --> 01:00:01,920
-by just saying it equals false.
+我们在这里写 = false
 
 1369
 01:00:01,920 --> 01:00:06,053
-And if I say that it's going
-to fix this error right here.
+如我所说，这样做马上修复了
+这个错误
 
 1370
 01:00:07,340 --> 01:00:08,840
-Face up is false, does that.
+这里展示的就是背面朝上
+的卡片了
 
 1371
 01:00:08,840 --> 01:00:13,313
-And if I change thisFaceUp
-to be true and resume,
+如果我把 isFaceUp 改成 true
+然后点下 Resume
 
 1372
 01:00:15,530 --> 01:00:17,470
-now we get face up cards.
+现在我们把卡片都翻到正面了
 
 1373
 01:00:17,470 --> 01:00:18,940
-So that's one way to set this.
+这是设置初始值的一种方式
 
 1374
 01:00:18,940 --> 01:00:21,400
-And we often will set
-this if it makes sense.
+如果这种方式行得通
+我们经常会用这种方式
 
 1375
 01:00:21,400 --> 01:00:23,150
-But if we don't set it in here,
+但是如果我们不在这里设置它
 
 1376
 01:00:23,150 --> 01:00:24,650
-we don't give it a default value,
+我们没有给它设置默认值
 
 1377
 01:00:24,650 --> 01:00:26,630
-that's when we get this error up here.
+这个错误又出现了
 
 1378
 01:00:26,630 --> 01:00:29,390
-Because Swift is saying this CardView
+因为 Swift 正在说
 
 1379
 01:00:29,390 --> 01:00:31,310
-that you're trying to create right here,
+你尝试新建的 CardView
 
 1380
 01:00:31,310 --> 01:00:33,430
-it has an uninitialized variable.
+它有一个未初始化的变量
 
 1381
 01:00:33,430 --> 01:00:35,763
-So you have to initialize it.
+因此你必须初始化它
 
 1382
 01:00:36,620 --> 01:00:38,110
-And here's a cool feature.
+并且这里有个很酷的特性
 
 1383
 01:00:38,110 --> 01:00:41,820
-If you click on this little
-red button of an error,
+如果你点下错误提示上的红色小按钮
 
 1384
 01:00:41,820 --> 01:00:44,590
-a lot of times you'll get
-this little Fix option.
+很多时候你将看到小的 Fix 选项
 
 1385
 01:00:44,590 --> 01:00:46,950
