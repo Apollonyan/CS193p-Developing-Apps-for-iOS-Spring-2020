@@ -3294,214 +3294,269 @@ this "Hello There, World!"
 
 748
 00:32:11,460 --> 00:32:14,140
+注意这里我改变了字符串
+但预览并没有更新
 And notice if I edit this,
 it's not changing this.
 
 749
 00:32:14,140 --> 00:32:16,080
+这是因为预览更新被暂停了
 That's because it's paused up here.
 
 750
 00:32:16,080 --> 00:32:18,720
+只要我按下 Resume 它就恢复正常了
 But if I resume, then it's going
 
 751
 00:32:18,720 --> 00:32:23,303
+现在我改变字符串的值
+预览就可以实时更新了
 and now I can for example
 type, and it's tracking it.
 
 752
 00:32:24,250 --> 00:32:28,010
+这就是我们创建 struct
+或其他东西的方法
 So this is always the way we
 create new structs of any kind.
 
 753
 00:32:28,010 --> 00:32:30,030
+在后面写上小括号
 We put parentheses after it
 
 754
 00:32:30,030 --> 00:32:32,100
+然后在括号里写上它想要的参数
 and then we give it
 whatever arguments it wants.
 
 755
 00:32:32,100 --> 00:32:34,040
+甚至有些东西在创建的时候
 And some things when you're creating them,
 
 756
 00:32:34,040 --> 00:32:35,420
+可以接受不同种类的参数
 can take different kinds of arguments
 
 757
 00:32:35,420 --> 00:32:36,361
+这取决于参数的内容
 depending on what they are.
 
 758
 00:32:36,361 --> 00:32:38,511
+你会在不久之后看到这一点
 And you're gonna see
 that pretty soon here.
 
 759
 00:32:40,740 --> 00:32:43,960
+现在我们来试着构建一个
 So let's see if we can start building
 
 760
 00:32:43,960 --> 00:32:48,090
+看起来更像卡片的 UI
 a UI that looks a little
 bit more like a card.
 
 761
 00:32:48,090 --> 00:32:49,510
+现在它只是显示一行“Hello World”
 Right now it just says, "Hello, World!"
 
 762
 00:32:49,510 --> 00:32:53,550
+我们先来回忆一下 UI 长得什么样子
 Let's remind ourselves what
 that's gonna look like.
 
 763
 00:32:53,550 --> 00:32:55,730
+这是游戏的截屏
 Kind of a screen capture of the game
 
 764
 00:32:55,730 --> 00:32:57,670
+我之前给你们展示过
 that I showed you earlier.
 
 765
 00:32:57,670 --> 00:33:01,210
+可以看到卡片的周围
 And our cards, they kind of
 have these rounded rectangles
 
 766
 00:33:01,210 --> 00:33:03,030
+是一圈圆角矩形，你看到了吗？
 around the edge, you see that?
 
 767
 00:33:03,030 --> 00:33:04,470
+这就是边界
 And this is a line.
 
 768
 00:33:04,470 --> 00:33:06,040
+然后背景是白色的
 Then kind of a white background.
 
 769
 00:33:06,040 --> 00:33:08,010
+中央是个表情（Emoji）
 They have an emoji on the front.
 
 770
 00:33:08,010 --> 00:33:10,630
+现在我们来一步步构建这张卡片
 So let's take care of
 each of these things.
 
 771
 00:33:10,630 --> 00:33:11,710
+我们从表情开始
 Let's start with the emoji.
 
 772
 00:33:11,710 --> 00:33:13,000
+这很容易
 That's gonna be really easy
 
 773
 00:33:13,000 --> 00:33:15,420
+因为表情就是一段文字而已
 'cause an emoji is just a piece of text.
 
 774
 00:33:15,420 --> 00:33:17,160
+我先把它删掉
 So I'm gonna delete that.
 
 775
 00:33:17,160 --> 00:33:19,840
+我不清楚你们知不知道
+在任何一个 Mac 应用中
 I don't know if you know
 this but in any Mac app,
 
 776
 00:33:19,840 --> 00:33:22,850
+如果你在菜单栏选择“编辑”
+然后往下看
 if you go to the Edit menu,
 go down to the bottom,
 
 777
 00:33:22,850 --> 00:33:24,891
+有个“表情与符号”
 there'll be Emoji &amp; Symbols.
 
 778
 00:33:24,891 --> 00:33:26,460
+看到了吗，我现在能输入表情了
 You see there, I can get an emoji.
 
 779
 00:33:26,460 --> 00:33:29,090
+你还能搜索“ghost”
 You can even search ghost.
 
 780
 00:33:29,090 --> 00:33:30,040
+找到了，这就是鬼表情
 There it is, ghost.
 
 781
 00:33:30,940 --> 00:33:32,280
+现在双击它
 Let's double-click on it.
 
 782
 00:33:32,280 --> 00:33:33,120
+我们就有了一个鬼表情
 Now we have a ghost.
 
 783
 00:33:33,120 --> 00:33:34,360
+毫无疑问，这里显示的就是鬼表情
 And sure enough, there's our ghost.
 
 784
 00:33:34,360 --> 00:33:35,690
+现在他还很小
 He's really small.
 
 785
 00:33:35,690 --> 00:33:38,400
+不过我们可以放大来看清楚他
 Although we can zoom in and see him there.
 
 786
 00:33:38,400 --> 00:33:40,370
+我们需要解决他尺寸太小的问题
 And we're gonna have to
 fix that he's so small.
 
 787
 00:33:40,370 --> 00:33:41,810
+他这么小在卡片上的
 It's not gonna work for our cards
 
 788
 00:33:41,810 --> 00:33:43,100
+展示效果很差
 for him to be so tiny like that.
 
 789
 00:33:43,100 --> 00:33:44,973
+不过我们让后面再来解决这个问题
 But one thing at a time.
 
 790
 00:33:45,930 --> 00:33:48,760
+下面我们需要画一个圆角矩形
 The next thing we need
 is our rounded rectangle.
 
 791
 00:33:48,760 --> 00:33:50,610
+就像像截屏里这样的圆角矩形
 So we need this rounded
 rectangle, it goes up there.
 
 792
 00:33:50,610 --> 00:33:53,490
+我们先把 Text 注释掉
 So let's comment this Text out.
 
 793
 00:33:53,490 --> 00:33:55,470
+顺带一提，我通过快捷键
+Command + /
 So I'm doing Command
 slash by the way there
 
 794
 00:33:55,470 --> 00:33:57,290
+注释了这行 Text
 to comment that Text out.
 
 795
 00:33:57,290 --> 00:34:01,180
+然后把圆角矩形写在这
 And instead put our
 rounded rectangle in there.
 
 796
 00:34:01,180 --> 00:34:04,000
+幸运的是，Swift 有个很棒的东西
 Luckily, Swift has an awesome thing here.
 
 797
