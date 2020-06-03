@@ -3561,233 +3561,213 @@ call functions as well.
 
 850
 00:36:26,900 --> 00:36:28,880
-So one of the things that maybe takes
+所以，最有可能需要
 
 851
 00:36:28,880 --> 00:36:30,784
-the most getting used to in Swift
+在 Swift 中习惯的事就是
 
 852
 00:36:30,784 --> 00:36:33,410
-is that almost all the arguments
+几乎所有函数中的每一个实参
 
 853
 00:36:33,410 --> 00:36:37,870
-to all parameters of all
-functions are labeled.
+都需要实际参数标签
 
 854
 00:36:37,870 --> 00:36:40,500
-And this is something that was
-inherited from Objective-C.
+这是从 Objective-C 继承而来的
 
 855
 00:36:40,500 --> 00:36:43,167
-It's actually quite nice
-because if we didn't have this
+实际上这个东西非常好
+因为如果没有这个（标签）
 
 856
 00:36:43,167 --> 00:36:46,530
-and we had ZStack 10,
+就会变成 RoundedRectangle(10.0)
 
 857
 00:36:46,530 --> 00:36:48,730
-I mean, is that the width and height
+（这个 10.0 的）意思是宽还是高？
 
 858
 00:36:48,730 --> 00:36:50,810
-or what exactly is that 10?
+这个 10.0 的准确意思是什么？
 
 859
 00:36:50,810 --> 00:36:53,080
-But as soon as we put this
-cornerRadius in there,
+但是，只要我们把这个
+cornerRadius 放在这儿
 
 860
 00:36:53,080 --> 00:36:54,597
-it's like all of a
-sudden, "Oh, I'm creating
+一下子真相大白了：“噢，我在创建
 
 861
 00:36:54,597 --> 00:36:57,807
-"a ZStack with a corner radius of 10."
+一个圆角半径是 10.0 的矩形”
 
 862
 00:36:59,070 --> 00:37:03,130
-It's kind of hard to see if
-our rectangle is rounded there.
+这儿看不太出来，矩形有没有圆角
 
 863
 00:37:03,130 --> 00:37:06,150
-That's because I actually have
-this line of code selected.
+这是因为其实我选中了这一行代码
 
 864
 00:37:06,150 --> 00:37:08,890
-So we've got this blue line around here.
+所以在这周围有一条蓝线
 
 865
 00:37:08,890 --> 00:37:10,900
-But if I just click away,
+但是一旦我点到旁边来
 
 866
 00:37:10,900 --> 00:37:13,690
-then you can now start
-to see the ZStack there.
+那么你就可以看到圆角矩形了
 
 867
 00:37:13,690 --> 00:37:15,720
-And if I zoom in, you can see
+如果放大点，你可以
 
 868
 00:37:15,720 --> 00:37:18,220
-the ZStack quite clearly.
+清晰地看到圆角矩形
 
 869
 00:37:18,220 --> 00:37:20,100
-Obviously, we're gonna
-have to do something
+很明显，我们还需要做一些
 
 870
 00:37:20,100 --> 00:37:21,440
-about the visibility of this.
+让它更显眼的处理
 
 871
 00:37:21,440 --> 00:37:24,280
-Our cards don't want to be
-smashed up against the edge
+我们不希望卡片撞到边上去
 
 872
 00:37:24,280 --> 00:37:26,430
-and they don't want to be black either.
+而且它们也不应该是黑色的
 
 873
 00:37:26,430 --> 00:37:28,090
-But first things first.
+但是，首先要做点其他的
 
 874
 00:37:28,090 --> 00:37:30,690
-We'll get to that in a bit.
+这个我们将稍作讨论
 
 875
 00:37:30,690 --> 00:37:32,950
-The next thing I wanna do is combine
+我想要做的下一件事是
 
 876
 00:37:32,950 --> 00:37:35,910
-this RoundedRectangle
-and this Text together.
+把 RounedRectangle 和 Text 结合在一起
 
 877
 00:37:35,910 --> 00:37:39,904
-Because remember, our cards
-have both a RoundedRectangle
+得记住，我们的卡片都得是 Text
 
 878
 00:37:39,904 --> 00:37:43,030
-and a Text stacked on top of each other.
+堆叠在 RoundedRectangle 上面
 
 879
 00:37:43,030 --> 00:37:46,670
-And I'm gonna have to do
-that by returning some View.
+我们可以通过返回 some View 来做到这一点
 
 880
 00:37:46,670 --> 00:37:51,460
-So the View I'm gonna return
-here is called a ZStack.
+因此，这里返回的视图叫做 ZStack
 
 881
 00:37:51,460 --> 00:37:54,294
-So a ZStack is just a struct.
+ZStack 是一个结构体
 
 882
 00:37:54,294 --> 00:37:55,740
-It behaves like a View
+它表现得像一个 View
 
 883
 00:37:55,740 --> 00:37:59,281
-just like RoundedRectangle is a struct
+就像 RoundedRectangle 是一个结构体
 
 884
 00:37:59,281 --> 00:38:00,850
-that behaves like a View.
+行为表现得像视图一样
 
 885
 00:38:00,850 --> 00:38:01,800
-So is Text.
+Text 也一样
 
 886
 00:38:01,800 --> 00:38:03,803
-Actually, so is our ContentView.
+事实上，ContentView 也是如此
 
 887
 00:38:04,882 --> 00:38:08,100
-A ZStack does need an
-argument to be created here.
+在这里创建 ZStack 时，需要一个实参
 
 888
 00:38:08,100 --> 00:38:12,910
-The argument we're gonna use
-is content then in curly braces
+用到的实参是 content，然后用大括号
 
 889
 00:38:12,910 --> 00:38:16,350
-The list of the Views to
-stack on top of each other.
+把这些 View 放到 List 里面
 
 890
 00:38:16,350 --> 00:38:19,653
-And obviously we don't
-need the returns in here.
+很显然，我们不再需要这里的 return
 
 891
 00:38:20,690 --> 00:38:21,860
-So this is the list.
+所以，列表就是这样了
 
 892
 00:38:21,860 --> 00:38:24,890
-RoundedRectangle in the
-back, Text in the front.
+RoundedRectangle 在后，Text 在前
 
 893
 00:38:24,890 --> 00:38:26,960
-First thing in the list
-and this is two items
+这是列表里的第一个元素，这里面有两个
 
 894
 00:38:26,960 --> 00:38:29,480
-but we could have five
-or six or seven items
+当然也可以有五、六或七个
 
 895
 00:38:29,480 --> 00:38:32,320
-all listed in a row and
-it would stack them all
+我们把所有的元素排在一行，并将它们
 
 896
 00:38:32,320 --> 00:38:33,453
-on top of each other.
+彼此堆叠
 
 897
 00:38:34,724 --> 00:38:36,380
-ZStack is just some View.
+ZStack 正是 some View
 
 898
 00:38:36,380 --> 00:38:38,670
-And in fact, this return type here
+实际上，这里的返回类型
 
 899
 00:38:38,670 --> 00:38:41,550
-would be some sort of ZStack here
+就是某种意义上的 ZStack
 
 900
 00:38:41,550 --> 00:38:44,370
-instead of a Text or a RoundedRectangle
+而不是 Text 或 RoundedRectangle
 
 901
 00:38:44,370 --> 00:38:45,260
-or something like that.
+或其他东西
 
 902
 00:38:45,260 --> 00:38:48,310
