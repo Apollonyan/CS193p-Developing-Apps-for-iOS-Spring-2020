@@ -4620,229 +4620,212 @@ RoundedRectangle
 
 1105
 00:47:50,200 --> 00:47:53,563
-Now I'm using a pre-canned
-Font here called largeTitle.
+这里我使用了一个内置的
+largeTitle 字体
 
 1106
 00:47:53,563 --> 00:47:56,998
-There's some other ones called subheadline
+Font 还有一些其他的内置字体
 
 1107
 00:47:56,998 --> 00:47:58,900
-and body and other things.
+例如 subheadline 或者 body 之类的
 
 1108
 00:47:58,900 --> 00:48:02,253
-largeTitle happens to be
-the largest one I can find.
+但 largeTitle 是我能找到的最大的字体了
 
 1109
 00:48:03,100 --> 00:48:04,830
-If we resume, you are gonna see
+我们点击 Resume 恢复预览
 
 1110
 00:48:04,830 --> 00:48:06,210
-it's gonna make our emoji larger.
+就可以看到 emoji 表情变大了
 
 1111
 00:48:06,210 --> 00:48:08,810
-Still not large enough.
+但它仍然不够大
 
 1112
 00:48:08,810 --> 00:48:11,460
-Next week we're gonna
-learn how to scale the Font
+下周我们会学习如何将 Font
+调整到某个精确的尺寸
 
 1113
 00:48:11,460 --> 00:48:14,760
-to an exact size that
-fits nicely in our card.
+来完美匹配我们的卡片
 
 1114
 00:48:14,760 --> 00:48:17,580
-But for now at least it's
-getting a little bit larger.
+但是我们起码已经把表情变大一些了
 
 1115
 00:48:17,580 --> 00:48:18,940
-One of the reason I did this
+我在这里调用 .font(Font.largeTitle)
 
 1116
 00:48:18,940 --> 00:48:21,420
-is I also wanna show you that this Font,
+是为了让你明白这个看起来
 
 1117
 00:48:21,420 --> 00:48:24,180
-while it seems like this
-would be a Text only thing,
+只有 Text 才拥有的属性
 
 1118
 00:48:24,180 --> 00:48:27,400
-it can actually be put on the ZStack
+事实上也可以在 ZStack 上调用
 
 1119
 00:48:27,400 --> 00:48:32,080
-and it will set the font
-environment for all Texts.
+它会设置字体环境变量给所有的 Text
 
 1120
 00:48:32,080 --> 00:48:35,299
-So if I had multiple
-Texts inside the ZStack,
+如果 ZStack 中有多个 Text
 
 1121
 00:48:35,299 --> 00:48:38,127
-then it would use the Font,
-that Font for all of them.
+那么这些 Text 都会使用这个 Font
 
 1122
 00:48:38,127 --> 00:48:40,080
-And you could easily
-imagine building something
+你一定能设想到这样一个场景
 
 1123
 00:48:40,080 --> 00:48:40,997
-that had multiple pieces of Text
+构建一个
 
 1124
 00:48:40,997 --> 00:48:43,350
-and you want them all to be the same Font.
+包含多个 Text 的视图
+使这些 Text 的 Font 都相同
 
 1125
 00:48:43,350 --> 00:48:47,240
-And so setting it on the
-ZStack is a really cool feature
+通过 ZStack 来为这些 Text 设置字体
 
 1126
 00:48:47,240 --> 00:48:48,203
-for that as well.
+真是一个绝妙的特性
 
 1127
 00:48:49,830 --> 00:48:53,500
-So I've kind of got the card
-somewhat looking like I want.
+这跟我们想要构建的卡片有几分像了
 
 1128
 00:48:53,500 --> 00:48:57,370
-Now I want multiple cards
-'cause I only have one card here
+现在我需要更多的卡片
+因为这里我们只创建了一个卡片
 
 1129
 00:48:57,370 --> 00:48:59,540
-and I'd love to have multiple cards.
+而我想要有多个卡片
 
 1130
 00:48:59,540 --> 00:49:01,640
-So how am I gonna get multiple cards?
+那么我该如何创建这些卡片呢？
 
 1131
 00:49:01,640 --> 00:49:06,090
-I'm gonna do that by returning
-a different kind of View,
+这里我会返回另一种视图
 
 1132
 00:49:06,090 --> 00:49:07,393
-another combiner View.
+另一种叫做
 
 1133
 00:49:07,393 --> 00:49:09,536
-This is called a ForEach.
+ForEach 的组合器视图
 
 1134
 00:49:09,536 --> 00:49:12,920
-Now, a ForEach, of course
-it takes arguments.
+ForEach 当然也是需要传入参数的
 
 1135
 00:49:12,920 --> 00:49:15,170
-The first argument, it
-takes two arguments.
+它需要两个参数
 
 1136
 00:49:15,170 --> 00:49:20,170
-The first argument is like an
-iterable thing of some sort.
+第一个参数是一个可迭代的类型
 
 1137
 00:49:20,370 --> 00:49:21,780
-We'll talk about that in a second.
+我们稍后会讲到它
 
 1138
 00:49:21,780 --> 00:49:26,500
-Then the second argument, just
-like a ZStack, is content.
+第二个参数是 content
+就像 ZStack 的那个参数一样
 
 1139
 00:49:26,500 --> 00:49:30,263
-And that content is
-going to be this ZStack.
+这个 content 中的内容就是
+我们之前构建的这个 ZStack
 
 1140
 00:49:34,100 --> 00:49:36,050
-What ForEach is gonna do
+ForEach 要做的事情
 
 1141
 00:49:36,050 --> 00:49:39,530
-is it's going to iterate
-over this iterable thing.
+就是迭代 iterable thing 中的内容
 
 1142
 00:49:39,530 --> 00:49:41,150
-And for each of those things,
+每迭代一次
 
 1143
 00:49:41,150 --> 00:49:44,020
-it's going to build one of these Views.
+就会构建一遍这些 View
 
 1144
 00:49:44,020 --> 00:49:48,000
-So it essentially is a way
-to make multiple Views.
+所以这里的 ForEach 本质上是一种
+可以创建多个 View 的方法
 
 1145
 00:49:48,000 --> 00:49:51,160
-Kind of a View replicator
-or a View iterator
+也许你可以把它看做一个 View 复制器
 
 1146
 00:49:51,160 --> 00:49:53,160
-if you wanna think of it like that.
+或是一个 View 迭代器
 
 1147
 00:49:53,160 --> 00:49:56,980
-So what is this iterable thing
-we're talking about here?
+那么我们这里提到的
+可迭代的类型是什么呢？
 
 1148
 00:49:56,980 --> 00:49:59,650
-Well, usually this is
-going to be an array.
+它通常是一个数组
 
 1149
 00:49:59,650 --> 00:50:01,370
-So you're gonna give it an array of things
+你可以给它传入一个数组
 
 1150
 00:50:01,370 --> 00:50:03,320
-and it's gonna, for each
-of the things in the array,
+它会为数组中的每一个元素
 
 1151
 00:50:03,320 --> 00:50:05,030
-it's going to create a View.
+都创建一个 View
 
 1152
 00:50:05,030 --> 00:50:06,410
-I'm not gonna use an array here.
+现在我还不打算用数组
 
 1153
 00:50:06,410 --> 00:50:08,800
-We'll eventually switch to using an array
+我们最终会选择使用一个数组
 
 1154
 00:50:08,800 --> 00:50:12,780
-but I'm using another
-iterable thing called a Range.
+但是现在我要用另一种
+可迭代的类型：Range（区间）
 
 1155
 00:50:12,780 --> 00:50:17,430
