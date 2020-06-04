@@ -3537,7 +3537,7 @@ there's four different ways
 
 805
 00:34:24,820 --> 00:34:26,197
-to create a ZStack.
+to create a RoundedRectangle.
 
 806
 00:34:26,197 --> 00:34:29,350
@@ -3675,7 +3675,7 @@ this piece of information
 
 836
 00:35:53,030 --> 00:35:55,077
-that it needs to create a ZStack.
+that it needs to create a RoundedRectangle.
 
 837
 00:35:55,077 --> 00:35:56,700
@@ -3763,7 +3763,7 @@ because if we didn't have this
 
 856
 00:36:43,167 --> 00:36:46,530
-and we had ZStack 10,
+and we had RoundedRectangle 10,
 
 857
 00:36:46,530 --> 00:36:48,730
@@ -3785,7 +3785,7 @@ sudden, "Oh, I'm creating
 
 861
 00:36:54,597 --> 00:36:57,807
-"a ZStack with a corner radius of 10."
+"a RoundedRectangle with a corner radius of 10."
 
 862
 00:36:59,070 --> 00:37:03,130
@@ -3808,7 +3808,7 @@ But if I just click away,
 866
 00:37:10,900 --> 00:37:13,690
 then you can now start
-to see the ZStack there.
+to see the RoundedRectangle there.
 
 867
 00:37:13,690 --> 00:37:15,720
@@ -3816,7 +3816,7 @@ And if I zoom in, you can see
 
 868
 00:37:15,720 --> 00:37:18,220
-the ZStack quite clearly.
+the RoundedRectangle quite clearly.
 
 869
 00:37:18,220 --> 00:37:20,100
