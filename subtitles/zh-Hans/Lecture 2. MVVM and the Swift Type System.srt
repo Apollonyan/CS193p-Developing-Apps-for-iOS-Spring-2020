@@ -912,213 +912,273 @@ ViewModel 很容易就能知道 Model
 204
 00:09:22,710 --> 00:09:24,600
 But if the Model were a SQL database,
+如果 Model 是一个 SQL 数据库的话
 
 205
 00:09:24,600 --> 00:09:26,980
 I don't know how much you
 all know about databases
+我不知道大家对数据库了解多少
 
 206
 00:09:26,980 --> 00:09:30,610
 but it's quite easy to insert
 things into SQL database
+但把数据插入到数据库中是十分简单的
 
 207
 00:09:30,610 --> 00:09:33,270
 so that when it changes, you get notified.
+这样当数据库发生改变时
+你就会收到通知
 
 208
 00:09:33,270 --> 00:09:34,303
 But it's up to the ViewModel
+但 Model 的这些改变
 
 209
 00:09:34,303 --> 00:09:36,980
 to know these changes in the Model.
+能否被收到就要看 ViewModel 的了
 
 210
 00:09:36,980 --> 00:09:40,477
 That's one of the primary
 things it has to be able to do.
+这是 ViewModel 主要的工作之一
 
 211
 00:09:40,477 --> 00:09:44,250
 Now, when that data changes,
 it might interpret that data,
+接下来，当数据发生改变的时候
+ViewModel 可能会对数据进行处理
 
 212
 00:09:44,250 --> 00:09:46,140
 it might convert it to some other format
+它可能将数据转换成另一种格式
 
 213
 00:09:46,140 --> 00:09:48,560
 or something like that
 but then what it does
+或者做一些类似的事情
 
 214
 00:09:48,560 --> 00:09:53,370
 is it publishes something
 changed to the world, okay?
+然后它就会向全世界对此
+感兴趣的人发布通知
 
 215
 00:09:53,370 --> 00:09:54,930
 To anybody who's interested.
+“一些东西改变了”
 
 216
 00:09:54,930 --> 00:09:58,090
 That's all it does,
 publishes something changed.
+这就是它在做的事儿
+通知大家什么东西发生改变
 
 217
 00:09:58,090 --> 00:10:01,820
 It doesn't actually have any
 pointers to any Views, okay?
+但是要知道，它没有引用任何一个 View
 
 218
 00:10:01,820 --> 00:10:04,270
 The ViewModel never has
 a pointer to its View.
+ViewModel 不会直接引用
+它的 View
 
 219
 00:10:04,270 --> 00:10:05,860
 This is an important thing to understand.
+要明白这点相当重要
 
 220
 00:10:05,860 --> 00:10:10,590
 The ViewModel does not
 talk directly to its Views.
+ViewModel 不会直接和它的 View
+进行通信
 
 221
 00:10:10,590 --> 00:10:11,934
 When things change in the Model,
+当 Model 发生改变的时候
 
 222
 00:10:11,934 --> 00:10:15,610
 it publishes something changed.
+ViewModel 会发布相关信息
 
 223
 00:10:15,610 --> 00:10:20,350
 But then the View subscribes
 to that publication
+然后 View 也订阅了相关的通知
 
 224
 00:10:20,350 --> 00:10:22,760
 and when it sees that
 something has changed,
+这时，当它知道有东西发生了改变
 
 225
 00:10:22,760 --> 00:10:25,780
 it goes back to the ViewModel and asks,
+它就会去问 ViewModel
 
 226
 00:10:25,780 --> 00:10:27,480
 okay, what's the current
 state of the world?
+现在世界是什么状态
 
 227
 00:10:27,480 --> 00:10:30,297
 And I'm gonna draw myself to
 match that state of the world.
+要按照现在世界的状态
+重新绘制它自己
 
 228
 00:10:30,297 --> 00:10:32,490
 And the reason it asks the ViewModel that,
+至于为什么它不直接去问 Model
 
 229
 00:10:32,490 --> 00:10:34,610
 it doesn't go directly back to the Model,
+而是去问 ViewModel
 
 230
 00:10:34,610 --> 00:10:36,480
 is because the ViewModel might be doing
+是因为 ViewModel 可能需要
 
 231
 00:10:36,480 --> 00:10:38,240
 this interpreting for it
+帮 View 处理一下 Model 的数据
 
 232
 00:10:38,240 --> 00:10:40,720
 or it might be protecting the Model
+或者 ViewModel 可能需要
 
 233
 00:10:40,720 --> 00:10:42,870
 to make sure that some nefarious View
+保护 Model，确保那些不怀好意的 View
 
 234
 00:10:42,870 --> 00:10:44,780
 doesn't do something bad to the Model.
+对 Model 做一些不好的事情
 
 235
 00:10:44,780 --> 00:10:46,927
 This is how this whole thing
 works, it's as simple as that.
+整个系统就是这么工作的
+就是这么简单
 
 236
 00:10:46,927 --> 00:10:49,098
 ViewModel notices changes in the Model
+ViewModel 负责通知 Model 的改变
 
 237
 00:10:49,098 --> 00:10:50,920
 but anytime something changes,
+任何时候有东西发生改变了
 
 238
 00:10:50,920 --> 00:10:53,130
 it says, oh, something has changed
+它就会说，什么东西发生了改变
 
 239
 00:10:53,130 --> 00:10:57,180
 and then the Views just
 observe those something changed
+然后 View 们就会观察到这些改变
 
 240
 00:10:57,180 --> 00:10:59,550
 things happening and
 then it pulls the data
+之后 View 就会从 ViewModel 那里
 
 241
 00:10:59,550 --> 00:11:01,260
 from the ViewModel and redraws itself
+获取相关数据并且重新绘制自己
 
 242
 00:11:01,260 --> 00:11:02,829
 because that's what a View can do,
+而这就是 View 在做的事情
 
 243
 00:11:02,829 --> 00:11:06,400
 can always redraw itself with
 the current state of the Model
+根据 Model 当下的状态
+不断更新自己
 
 244
 00:11:06,400 --> 00:11:09,790
 which it gets it through
 this ViewModel interpreter.
+当然这中间少不了 ViewModel
+对数据的预处理
 
 245
 00:11:09,790 --> 00:11:13,780
 This is all there is to it
 and as the quarter goes on,
+这就是所有相关知识的说明
 
 246
 00:11:13,780 --> 00:11:18,200
 we're gonna see the Swift
 syntax for making this all work.
+接下来我们来看一下让它运转起来
+对应的 Swift 语法
 
 247
 00:11:18,200 --> 00:11:21,760
 I've put some of the syntax
 up here like ObservableObjects
+我放了一些语法关键词在这里，比如
+ObservableObjects
 
 248
 00:11:21,760 --> 00:11:25,080
 and onReceive, and
 objectWillChange going on,
+还有 onReceive
+objectWillChange 等等
 
 249
 00:11:25,080 --> 00:11:26,960
 these are all things which I'm gonna start
+这些东西就是我将在下周
 
 250
 00:11:26,960 --> 00:11:28,167
 talking about next week.
+讲授的内容
 
 251
 00:11:28,167 --> 00:11:29,560
