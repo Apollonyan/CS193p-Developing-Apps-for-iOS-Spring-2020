@@ -1,4 +1,4 @@
-1
+﻿1
 00:00:00,000 --> 00:00:03,250
 本字幕由志愿者义务贡献，采用许可协议
 知识共享 署名-非商业性使用-相同方式共享 3.0 美国
@@ -894,15 +894,20 @@ a struct has changed.
 201
 00:09:15,030 --> 00:09:16,998
 It can track when a struct changes
+这个特性可以用于追踪 struct
+什么时候发生改变
 
 202
 00:09:16,998 --> 00:09:19,110
 and so it's very easy for a ViewModel
+所以，当 Model 是 struct 时
 
 203
 00:09:19,110 --> 00:09:22,710
 whose Model is a struct
 to see when it's changing.
+ViewModel 很容易就能知道 Model
+什么时候发生改变
 
 204
 00:09:22,710 --> 00:09:24,600
@@ -10118,3 +10123,4 @@ to answer them for you.
 01:43:48,470 --> 01:43:51,693
 >> [旁白] 请访问 stanford.edu
 获取更多内容
+
