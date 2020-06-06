@@ -1,0 +1,9189 @@
+1
+00:00:00,121 --> 00:00:02,704
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名-非商业性使用-相同方式共享 3.0 美国
+
+2
+00:00:04,236 --> 00:00:06,250
+>> [旁白] 斯坦福大学
+
+3
+00:00:08,500 --> 00:00:12,012
+2020 年春季学期 CS193p
+
+4
+00:00:12,012 --> 00:00:13,952
+这是本系列的第六课
+
+5
+00:00:13,952 --> 00:00:18,800
+and today I'm gonna
+cover two brief topics,
+
+6
+00:00:18,800 --> 00:00:21,603
+either brief because they're minor topic
+
+7
+00:00:21,603 --> 00:00:22,950
+like property observer,
+
+8
+00:00:22,950 --> 00:00:25,390
+or I'm only gonna get into
+so much detail in them
+
+9
+00:00:25,390 --> 00:00:26,940
+like @State.
+
+10
+00:00:26,940 --> 00:00:29,070
+And then we're gonna dive
+into our main topic today,
+
+11
+00:00:29,070 --> 00:00:31,881
+which is animation, which
+is what our demo is gonna be
+
+12
+00:00:31,881 --> 00:00:32,900
+all about.
+
+13
+00:00:32,900 --> 00:00:34,370
+So let's get started.
+
+14
+00:00:34,370 --> 00:00:37,920
+Property observers, only
+do a quick word on this.
+
+15
+00:00:37,920 --> 00:00:39,360
+The main thing I want you to understand
+
+16
+00:00:39,360 --> 00:00:43,940
+about property observers,
+it's just a way to watch a var
+
+17
+00:00:43,940 --> 00:00:47,280
+and see when it changes
+and then take some action.
+
+18
+00:00:47,280 --> 00:00:49,164
+Now, a lot of times people get confused
+
+19
+00:00:49,164 --> 00:00:51,723
+between property observers
+and computed vars.
+
+20
+00:00:51,723 --> 00:00:53,735
+They're completely different things,
+
+21
+00:00:53,735 --> 00:00:55,870
+nothing to do with each other.
+
+22
+00:00:55,870 --> 00:00:57,844
+Here, I have this var isFaceUp
+
+23
+00:00:57,844 --> 00:01:00,144
+which has a property observer on it.
+
+24
+00:01:00,144 --> 00:01:02,270
+That var is stored in memory,
+
+25
+00:01:02,270 --> 00:01:04,493
+it's not a computed var in any way.
+
+26
+00:01:05,690 --> 00:01:08,953
+In the property observer there
+willSet I'm just watching
+
+27
+00:01:08,953 --> 00:01:11,743
+for when isFaceUp is gonna be set
+
+28
+00:01:11,743 --> 00:01:14,240
+and if the new value
+it's gonna get is set,
+
+29
+00:01:14,240 --> 00:01:16,810
+so in other words thing is gonna face-up,
+
+30
+00:01:16,810 --> 00:01:18,310
+then for example, in this case,
+
+31
+00:01:18,310 --> 00:01:20,280
+like maybe in our Memorize game,
+
+32
+00:01:20,280 --> 00:01:24,370
+I'm gonna start using bonus
+time, start the little pie
+
+33
+00:01:24,370 --> 00:01:26,730
+behind our emoji started ticking.
+
+34
+00:01:26,730 --> 00:01:30,960
+And if the isFaceUp is just
+about to be set to false,
+
+35
+00:01:30,960 --> 00:01:32,887
+I'm gonna stop using the bonus time.
+
+36
+00:01:32,887 --> 00:01:35,220
+So the newValue in here that purple thing
+
+37
+00:01:35,220 --> 00:01:37,046
+that's a special var that only appears
+
+38
+00:01:37,046 --> 00:01:38,717
+in the will sets here.
+
+39
+00:01:38,717 --> 00:01:40,260
+And of course, there's a didSet
+
+40
+00:01:40,260 --> 00:01:42,064
+I'll use that in the demo
+just to be different,
+
+41
+00:01:42,064 --> 00:01:45,963
+inside that one oldValue is
+what the value used to be
+
+42
+00:01:45,963 --> 00:01:47,453
+before it changed.
+
+43
+00:01:48,290 --> 00:01:51,262
+Alright, for this next topic,
+I want to explain something
+
+44
+00:01:51,262 --> 00:01:54,460
+that not obvious about what's going on
+
+45
+00:01:54,460 --> 00:01:56,970
+and I haven't really
+talked about this before,
+
+46
+00:01:56,970 --> 00:02:01,502
+but your View like CardView,
+and your EmojiGameView,
+
+47
+00:02:01,502 --> 00:02:03,713
+they're all read-only.
+
+48
+00:02:04,690 --> 00:02:07,047
+In other words, if you
+look at the top View
+
+49
+00:02:07,047 --> 00:02:10,789
+and all the SwiftUI on your
+device, there's a let there.
+
+50
+00:02:10,789 --> 00:02:12,620
+And you might think that's impossible.
+
+51
+00:02:12,620 --> 00:02:13,840
+How can we not be changing the Views
+
+52
+00:02:13,840 --> 00:02:16,070
+views are changing all the time.
+
+53
+00:02:16,070 --> 00:02:17,910
+But we are not, the read-only,
+
+54
+00:02:17,910 --> 00:02:21,950
+and that means that
+having a var that stored
+
+55
+00:02:21,950 --> 00:02:23,644
+in our View is kinda useless.
+
+56
+00:02:23,644 --> 00:02:25,084
+We can't set its value anyway
+
+57
+00:02:25,084 --> 00:02:28,393
+the only exception is vars that are set
+
+58
+00:02:28,393 --> 00:02:30,130
+when you create
+
+59
+00:02:30,130 --> 00:02:31,430
+the View.
+
+60
+00:02:31,430 --> 00:02:33,190
+So like in CardView we have isFaceUp,
+
+61
+00:02:33,190 --> 00:02:35,110
+it's set by people who create it,
+
+62
+00:02:35,110 --> 00:02:38,080
+so that kind of makes
+sense for that to be a var.
+
+63
+00:02:38,080 --> 00:02:39,635
+But anything else that's not set that way,
+
+64
+00:02:39,635 --> 00:02:41,010
+it might as well be a let.
+
+65
+00:02:41,010 --> 00:02:42,386
+Or if it's a computed var definitely
+
+66
+00:02:42,386 --> 00:02:44,522
+just wants to be a read-only computed var,
+
+67
+00:02:44,522 --> 00:02:48,323
+which is the only kind of
+computed vars we've had so far.
+
+68
+00:02:48,323 --> 00:02:49,960
+Why?
+
+69
+00:02:49,960 --> 00:02:51,661
+Why are they all read-only?
+
+70
+00:02:51,661 --> 00:02:54,110
+Well, functional programming,
+
+71
+00:02:54,110 --> 00:02:55,860
+one of the awesome things about it,
+
+72
+00:02:55,860 --> 00:02:58,430
+is that it's very clear about mutability,
+
+73
+00:02:58,430 --> 00:03:00,360
+when can this be changed?
+
+74
+00:03:00,360 --> 00:03:02,890
+And there's a huge premium on good designs
+
+75
+00:03:02,890 --> 00:03:05,040
+to having things be immutable.
+
+76
+00:03:05,040 --> 00:03:05,959
+When things are immutable,
+
+77
+00:03:05,959 --> 00:03:08,193
+nobody's changing it behind the scenes
+
+78
+00:03:08,193 --> 00:03:11,810
+or doing something that is
+messing up the provability
+
+79
+00:03:11,810 --> 00:03:13,721
+that your code actually works.
+
+80
+00:03:13,721 --> 00:03:17,180
+And also, when things
+are mutable or immutable,
+
+81
+00:03:17,180 --> 00:03:19,057
+when they change, you know they change,
+
+82
+00:03:19,057 --> 00:03:20,233
+and you can do something about it.
+
+83
+00:03:20,233 --> 00:03:22,933
+That's how we can use
+these property observers on
+
+84
+00:03:22,933 --> 00:03:25,964
+value types so effectively.
+
+85
+00:03:25,964 --> 00:03:27,822
+In the case of SwiftUI,
+
+86
+00:03:27,822 --> 00:03:30,501
+it wants to be knowing
+when things are changing,
+
+87
+00:03:30,501 --> 00:03:33,014
+and when they're changing, It
+wants to do the minimum amount
+
+88
+00:03:33,014 --> 00:03:37,930
+of work to replace the View
+hierarchy with the right Views.
+
+89
+00:03:37,930 --> 00:03:39,735
+And in fact, that is what's happening,
+
+90
+00:03:39,735 --> 00:03:41,520
+if isFaceUp
+
+91
+00:03:41,520 --> 00:03:42,810
+changes,
+
+92
+00:03:42,810 --> 00:03:46,375
+it makes a new CardView that has that.
+
+93
+00:03:46,375 --> 00:03:48,493
+That is how this is all working.
+
+94
+00:03:48,493 --> 00:03:51,611
+This is actually a wonderful thing for you
+
+95
+00:03:51,611 --> 00:03:52,957
+you might not think so.
+
+96
+00:03:52,957 --> 00:03:55,480
+The fact you can't have
+read-write vars is really good
+
+97
+00:03:55,480 --> 00:03:57,794
+because remember that your Views
+
+98
+00:03:57,794 --> 00:03:59,723
+are supposed to be stateless.
+
+99
+00:03:59,723 --> 00:04:02,511
+They're supposed to always be reflecting
+
+100
+00:04:02,511 --> 00:04:04,000
+what the state of the Model is.
+
+101
+00:04:04,000 --> 00:04:06,528
+That's where the state
+is, is in the Model.
+
+102
+00:04:06,528 --> 00:04:09,627
+So you shouldn't need any
+state of their own, right?
+
+103
+00:04:09,627 --> 00:04:12,563
+No need for them to be not read-only.
+
+104
+00:04:13,540 --> 00:04:15,792
+Well, mostly,
+
+105
+00:04:15,792 --> 00:04:17,841
+and not 100% true.
+
+106
+00:04:17,841 --> 00:04:21,181
+So let's talk about when
+Views do need some state.
+
+107
+00:04:21,181 --> 00:04:23,510
+And there are a few rare times,
+
+108
+00:04:23,510 --> 00:04:26,839
+when it does need state,
+it's always temporary.
+
+109
+00:04:26,839 --> 00:04:28,878
+Views never have any long-term storage
+
+110
+00:04:28,878 --> 00:04:30,799
+that's always gonna be in your Model.
+
+111
+00:04:30,799 --> 00:04:32,437
+This is just temporary situations
+
+112
+00:04:32,437 --> 00:04:34,750
+where you might need a little storage.
+
+113
+00:04:34,750 --> 00:04:37,283
+What are some examples of
+temporary storage you might need?
+
+114
+00:04:37,283 --> 00:04:40,530
+Well, you might enter an "editing mode",
+
+115
+00:04:40,530 --> 00:04:42,670
+where you're gonna collect
+some data from the user
+
+116
+00:04:42,670 --> 00:04:45,870
+and gather it up and then call
+an Intent to change the Model
+
+117
+00:04:45,870 --> 00:04:47,990
+with that data you've
+collected or whatever.
+
+118
+00:04:47,990 --> 00:04:50,760
+So just temporarily, you're collecting it.
+
+119
+00:04:50,760 --> 00:04:53,580
+You might have been
+displaying another View,
+
+120
+00:04:53,580 --> 00:04:55,200
+some other View that
+is collecting some data
+
+121
+00:04:55,200 --> 00:04:57,540
+like a TextField, or a Picker,
+
+122
+00:04:57,540 --> 00:05:00,030
+like we saw on that post in Piazza
+
+123
+00:05:00,030 --> 00:05:02,260
+or have a View that's an Alert,
+
+124
+00:05:02,260 --> 00:05:03,650
+you're giving the user an Alert,
+
+125
+00:05:03,650 --> 00:05:05,690
+you just wanna keep track
+of the fact that it's up
+
+126
+00:05:05,690 --> 00:05:06,950
+until the user hits cancel,
+
+127
+00:05:06,950 --> 00:05:08,150
+then you're like, "argh it's gone."
+
+128
+00:05:08,150 --> 00:05:09,800
+And so you're just having a Bool,
+
+129
+00:05:09,800 --> 00:05:11,240
+whether that thing is up or not
+
+130
+00:05:11,240 --> 00:05:15,050
+that kinda really tiny
+temporary data, or an animation.
+
+131
+00:05:15,050 --> 00:05:17,480
+Animation only reflects
+things in the past.
+
+132
+00:05:17,480 --> 00:05:18,618
+So if you wanna have an
+animation that's kinda
+
+133
+00:05:18,618 --> 00:05:20,720
+going along with the present,
+
+134
+00:05:20,720 --> 00:05:23,310
+you have to have a little
+var, which is the future.
+
+135
+00:05:23,310 --> 00:05:25,380
+So you can set that var to the future
+
+136
+00:05:25,380 --> 00:05:28,490
+and animation will start
+animating towards the future.
+
+137
+00:05:28,490 --> 00:05:30,230
+Hopefully, you're setting the future to be
+
+138
+00:05:30,230 --> 00:05:32,070
+the same thing that's gonna eventually be
+
+139
+00:05:32,070 --> 00:05:33,370
+in your permanent state.
+
+140
+00:05:33,370 --> 00:05:35,109
+But you're only using that var
+
+141
+00:05:35,109 --> 00:05:36,580
+during the time the animation is happening
+
+142
+00:05:36,580 --> 00:05:38,770
+and we know that animations are short,
+
+143
+00:05:38,770 --> 00:05:40,024
+they're little temporary things.
+
+144
+00:05:40,024 --> 00:05:43,323
+So animations, another case
+of these temporary storage,
+
+145
+00:05:43,323 --> 00:05:45,833
+and we'll see doing that in the demo.
+
+146
+00:05:45,833 --> 00:05:50,660
+We can, in fact, create
+storage in our read-only Views
+
+147
+00:05:50,660 --> 00:05:53,100
+and we do it by marking a var
+
+148
+00:05:53,100 --> 00:05:56,200
+that stores the information
+we want with @State.
+
+149
+00:05:56,200 --> 00:05:57,972
+So @State you know,
+
+150
+00:05:57,972 --> 00:06:00,590
+like @Published, @ObservedObject,
+
+151
+00:06:00,590 --> 00:06:02,362
+it's a property wrapper.
+
+152
+00:06:02,362 --> 00:06:06,310
+Note that I've marked this state private.
+
+153
+00:06:06,310 --> 00:06:09,341
+That's because state is private to you
+
+154
+00:06:09,341 --> 00:06:12,930
+It's just temporary storage
+you're using in your View,
+
+155
+00:06:12,930 --> 00:06:14,720
+nobody else is gonna be looking at it.
+
+156
+00:06:14,720 --> 00:06:16,560
+So by marking it private,
+just kind of remind yourself,
+
+157
+00:06:16,560 --> 00:06:18,699
+yeah, yeah this is a little private state
+
+158
+00:06:18,699 --> 00:06:20,260
+temporary state right there.
+
+159
+00:06:20,260 --> 00:06:23,650
+And of course, the type of
+this thing can be any type,
+
+160
+00:06:23,650 --> 00:06:26,230
+you're just declaring
+a var basically here,
+
+161
+00:06:26,230 --> 00:06:27,504
+that's gonna be read-write.
+
+162
+00:06:27,504 --> 00:06:30,903
+But it can be any type that you want.
+
+163
+00:06:30,903 --> 00:06:33,323
+An important thing to
+understand about this State var,
+
+164
+00:06:33,323 --> 00:06:36,412
+something temporary
+here is if I change it,
+
+165
+00:06:36,412 --> 00:06:38,374
+my View might get redrawn.
+
+166
+00:06:38,374 --> 00:06:41,332
+If my View depends on something temporary,
+
+167
+00:06:41,332 --> 00:06:44,694
+and it changes in a way that
+makes my body draw differently
+
+168
+00:06:44,694 --> 00:06:46,043
+it'll get redrawn.
+
+169
+00:06:46,043 --> 00:06:48,690
+It's the same as ObservedObject, right?
+
+170
+00:06:48,690 --> 00:06:50,530
+We do observed object on our ViewModel.
+
+171
+00:06:50,530 --> 00:06:52,480
+If the ViewModel changes in a way
+
+172
+00:06:52,480 --> 00:06:54,560
+that would make our View look different.
+
+173
+00:06:54,560 --> 00:06:56,940
+It's gonna get redrawn
+same thing with state
+
+174
+00:06:56,940 --> 00:06:58,823
+which is kind of cool
+feature of it actually.
+
+175
+00:06:58,823 --> 00:07:01,750
+The space for this @State var
+
+176
+00:07:01,750 --> 00:07:05,060
+is gonna be allocated in the heap.
+
+177
+00:07:05,060 --> 00:07:07,204
+It has to, it can't make
+the space in your View,
+
+178
+00:07:07,204 --> 00:07:08,680
+your View is read-only
+
+179
+00:07:08,680 --> 00:07:11,020
+so it's basically making a pointer
+
+180
+00:07:11,020 --> 00:07:13,320
+so your View has a pointer in it
+
+181
+00:07:13,320 --> 00:07:15,240
+and it points into the heap.
+
+182
+00:07:15,240 --> 00:07:17,180
+And when your View gets rebuilt,
+
+183
+00:07:17,180 --> 00:07:19,340
+cause your View's getting
+rebuilt all the time,
+
+184
+00:07:19,340 --> 00:07:21,530
+when isFaceUp changes in your CardView,
+
+185
+00:07:21,530 --> 00:07:23,420
+you gotta make a new CardView.
+
+186
+00:07:23,420 --> 00:07:24,906
+And when that happens,
+
+187
+00:07:24,906 --> 00:07:28,036
+this pointer gets moved to the new version
+
+188
+00:07:28,036 --> 00:07:30,370
+so you're still pointing at
+that same thing in the heap.
+
+189
+00:07:30,370 --> 00:07:32,490
+So if isFaceUp changes,
+
+190
+00:07:32,490 --> 00:07:35,440
+your CardView is not gonna
+lose its temporary storage.
+
+191
+00:07:35,440 --> 00:07:37,930
+Basically your temporary
+storage will stay around even
+
+192
+00:07:37,930 --> 00:07:40,340
+as other things that are causing your View
+
+193
+00:07:40,340 --> 00:07:42,050
+to even be completely rebuilt
+
+194
+00:07:42,050 --> 00:07:43,773
+you get to keep your @State.
+
+195
+00:07:45,115 --> 00:07:47,365
+We're gonna learn what
+these @ sign things are,
+
+196
+00:07:47,365 --> 00:07:50,176
+you know, @Published,
+@ObservedObject, @State
+
+197
+00:07:50,176 --> 00:07:52,225
+they're called property wrappers.
+
+198
+00:07:52,225 --> 00:07:54,930
+You can read about it, in your reading.
+
+199
+00:07:54,930 --> 00:07:57,020
+I think it's assigned for next week.
+
+200
+00:07:57,020 --> 00:07:59,996
+I'm gonna explain it
+eventually in lecture.
+
+201
+00:07:59,996 --> 00:08:02,126
+Not quite yet, though, almost there.
+
+202
+00:08:02,126 --> 00:08:06,183
+For now, just know that you
+can mark a var with @State
+
+203
+00:08:06,183 --> 00:08:07,731
+and now you can write to it.
+
+204
+00:08:07,731 --> 00:08:10,970
+But use this sparingly and certainly never
+
+205
+00:08:10,970 --> 00:08:13,583
+put anything that's
+not temporary in there.
+
+206
+00:08:15,459 --> 00:08:18,290
+All right, main topic
+of the day is animation.
+
+207
+00:08:18,290 --> 00:08:19,808
+What is animation?
+
+208
+00:08:19,808 --> 00:08:23,180
+It's essentially a kind of
+a smoothed out portrayal
+
+209
+00:08:23,180 --> 00:08:26,670
+in your UI, over a period of time,
+
+210
+00:08:26,670 --> 00:08:28,930
+which is configurable by the way,
+
+211
+00:08:28,930 --> 00:08:33,670
+of a change that has
+happened in your UI already.
+
+212
+00:08:33,670 --> 00:08:35,190
+When the user looked at an animation,
+
+213
+00:08:35,190 --> 00:08:37,260
+they're seeing something
+that has already changed
+
+214
+00:08:37,260 --> 00:08:38,920
+in the Model, okay,
+
+215
+00:08:38,920 --> 00:08:40,550
+or it's already changed somewhere
+
+216
+00:08:40,550 --> 00:08:42,776
+at the very least has
+changed in an @State.
+
+217
+00:08:42,776 --> 00:08:44,865
+Something that's already happened,
+
+218
+00:08:44,865 --> 00:08:47,224
+it can't do it any other way.
+
+219
+00:08:47,224 --> 00:08:49,719
+Otherwise, all your variables
+in your Model would have
+
+220
+00:08:49,719 --> 00:08:52,333
+to be constantly changing
+as the animation went on
+
+221
+00:08:52,333 --> 00:08:54,692
+that's just untenable architecture, right?
+
+222
+00:08:54,692 --> 00:08:57,370
+So your Model changes,
+
+223
+00:08:57,370 --> 00:09:00,560
+your View changes and that change gets
+
+224
+00:09:00,560 --> 00:09:02,830
+animated in front of the user's eyes.
+
+225
+00:09:02,830 --> 00:09:05,173
+So it's showing you
+their very recent past.
+
+226
+00:09:06,153 --> 00:09:09,035
+The point of animations is
+to make the user experience
+
+227
+00:09:09,035 --> 00:09:11,580
+less herky-jerky, obviously,
+
+228
+00:09:11,580 --> 00:09:14,390
+but also to draw attention
+to things change.
+
+229
+00:09:14,390 --> 00:09:16,900
+We wanna use the user
+peripheral vision to notice
+
+230
+00:09:16,900 --> 00:09:18,420
+Oh, that number over there change,
+
+231
+00:09:18,420 --> 00:09:20,795
+oh, that View moved over here, whatever.
+
+232
+00:09:20,795 --> 00:09:23,191
+That is what we use animation for
+
+233
+00:09:23,191 --> 00:09:25,100
+and that's why we have animation.
+
+234
+00:09:25,100 --> 00:09:26,844
+It also just makes more pleasant,
+
+235
+00:09:26,844 --> 00:09:29,250
+less stressful experience
+to have something
+
+236
+00:09:29,250 --> 00:09:31,150
+jumping on screen at you all the time.
+
+237
+00:09:32,720 --> 00:09:34,905
+So in SwiftUI, what can get animated?
+
+238
+00:09:34,905 --> 00:09:37,451
+Well, I'm gonna talk about
+what can get animated
+
+239
+00:09:37,451 --> 00:09:38,960
+but first, I wanna make it clear
+
+240
+00:09:38,960 --> 00:09:41,814
+that animation only works for Views
+
+241
+00:09:41,814 --> 00:09:43,742
+that are in a container
+
+242
+00:09:43,742 --> 00:09:46,430
+that is already on screen.
+
+243
+00:09:46,430 --> 00:09:48,691
+So if they're in a container
+that's already on screen
+
+244
+00:09:48,691 --> 00:09:49,871
+and a change happens to them,
+
+245
+00:09:49,871 --> 00:09:52,580
+what kind of change can be animated?
+
+246
+00:09:52,580 --> 00:09:55,782
+Well, the appearance and
+disappearance of Views again
+
+247
+00:09:55,782 --> 00:09:58,684
+only if they're in a container
+this already on screen
+
+248
+00:09:58,684 --> 00:10:03,684
+also changes to the arguments
+of animatable ViewModifiers,
+
+249
+00:10:03,960 --> 00:10:06,660
+like opacity and
+rotation, things like this
+
+250
+00:10:06,660 --> 00:10:09,865
+that boost ViewModifiers know
+how to animate themselves.
+
+251
+00:10:09,865 --> 00:10:12,480
+And we're gonna create
+one of our own today,
+
+252
+00:10:12,480 --> 00:10:16,660
+those changes to those
+arguments can be animated.
+
+253
+00:10:16,660 --> 00:10:18,727
+And also the changes to arguments
+
+254
+00:10:18,727 --> 00:10:21,480
+are the creation of Shapes.
+
+255
+00:10:21,480 --> 00:10:22,970
+If you create a Shape,
+
+256
+00:10:22,970 --> 00:10:24,670
+with certain arguments
+configured in some way,
+
+257
+00:10:24,670 --> 00:10:26,730
+and then you change those,
+
+258
+00:10:26,730 --> 00:10:30,283
+then it can be animated
+to go to a new state.
+
+259
+00:10:32,170 --> 00:10:34,630
+So how do we kick off an animation?
+
+260
+00:10:34,630 --> 00:10:36,150
+By the way, that's it for changes,
+
+261
+00:10:36,150 --> 00:10:37,390
+there's nothing else gonna be changed
+
+262
+00:10:37,390 --> 00:10:39,470
+just ViewModifiers, Shapes,
+
+263
+00:10:39,470 --> 00:10:41,080
+and the appearance and
+disappearance of Views,
+
+264
+00:10:41,080 --> 00:10:42,910
+wanna make that clear.
+
+265
+00:10:42,910 --> 00:10:44,990
+Alright, so how do we
+make an animation "go"?
+
+266
+00:10:44,990 --> 00:10:46,210
+Well, there's two ways to do it.
+
+267
+00:10:46,210 --> 00:10:48,320
+One is an implicit animation
+
+268
+00:10:48,320 --> 00:10:51,110
+where we're going to
+just mark a View and say,
+
+269
+00:10:51,110 --> 00:10:55,300
+whenever one of the modifiers
+on this View changes,
+
+270
+00:10:55,300 --> 00:10:57,450
+we're going to animate that change.
+
+271
+00:10:57,450 --> 00:11:00,400
+So that's implicit animation
+is going to automatically
+
+272
+00:11:00,400 --> 00:11:03,720
+every time that modifiers
+on that View change,
+
+273
+00:11:03,720 --> 00:11:05,340
+it's going to animate it.
+
+274
+00:11:05,340 --> 00:11:07,750
+The second one is explicitly,
+
+275
+00:11:07,750 --> 00:11:11,410
+where we are going to call some
+code that is going to result
+
+276
+00:11:11,410 --> 00:11:14,410
+in some changes to
+ViewModifiers, or Shapes,
+
+277
+00:11:14,410 --> 00:11:16,700
+or Views are gonna be coming and going.
+
+278
+00:11:16,700 --> 00:11:18,880
+And we're gonna wrap that code
+
+279
+00:11:18,880 --> 00:11:21,720
+by calling this function withAnimation.
+
+280
+00:11:21,720 --> 00:11:23,100
+And inside the curly braces there,
+
+281
+00:11:23,100 --> 00:11:24,400
+we're gonna put the code
+
+282
+00:11:24,400 --> 00:11:27,290
+and that's gonna cause all
+the things that would change
+
+283
+00:11:27,290 --> 00:11:29,015
+all those ViewModifier
+arguments that change,
+
+284
+00:11:29,015 --> 00:11:30,310
+all the Views come and go.
+
+285
+00:11:30,310 --> 00:11:31,960
+They're all gonna happen together
+
+286
+00:11:31,960 --> 00:11:35,070
+in one concurrent animation.
+
+287
+00:11:35,070 --> 00:11:37,420
+So we're explicitly animating right there,
+
+288
+00:11:37,420 --> 00:11:40,540
+we're saying, animate
+this and then we usually
+
+289
+00:11:40,540 --> 00:11:44,140
+do something like call an
+Intent in our ViewModel.
+
+290
+00:11:44,140 --> 00:11:46,590
+And we know that's gonna
+make a lot of changes
+
+291
+00:11:46,590 --> 00:11:49,740
+we want the result of that
+to all be animated together.
+
+292
+00:11:49,740 --> 00:11:51,433
+So that's the explicit animation.
+
+293
+00:11:52,600 --> 00:11:55,520
+So let's talk about the
+implicit animation first.
+
+294
+00:11:55,520 --> 00:11:58,100
+Some people call this automatic animation
+
+295
+00:11:58,100 --> 00:12:00,956
+essentially just declares or tags a View
+
+296
+00:12:00,956 --> 00:12:02,770
+so that all ViewModifier arguments
+
+297
+00:12:02,770 --> 00:12:05,280
+are always animated
+
+298
+00:12:05,280 --> 00:12:06,163
+for this View.
+
+299
+00:12:07,370 --> 00:12:10,440
+You get to specify how
+these things happen,
+
+300
+00:12:10,440 --> 00:12:12,660
+like how long it takes for them to happen.
+
+301
+00:12:12,660 --> 00:12:14,980
+And also a curve, which I'll talk about,
+
+302
+00:12:14,980 --> 00:12:17,580
+you do get to control it a little bit.
+
+303
+00:12:17,580 --> 00:12:22,580
+You do it by calling this
+function animation on any View.
+
+304
+00:12:23,980 --> 00:12:28,130
+So here I've called it
+on opacity or rotation,
+
+305
+00:12:28,130 --> 00:12:30,820
+modified Text of a ghost.
+
+306
+00:12:30,820 --> 00:12:34,130
+I've said animation,
+provided the argument there,
+
+307
+00:12:34,130 --> 00:12:36,540
+which is the how to do the animation,
+
+308
+00:12:36,540 --> 00:12:37,970
+how long and all that stuff.
+
+309
+00:12:37,970 --> 00:12:42,440
+And now forevermore, whenever
+the scary var changes,
+
+310
+00:12:42,440 --> 00:12:44,090
+and thus the opacity changes,
+
+311
+00:12:44,090 --> 00:12:46,448
+or the upsideDown var changes there
+
+312
+00:12:46,448 --> 00:12:49,220
+rotation effect that's
+gonna change the rotation.
+
+313
+00:12:49,220 --> 00:12:52,750
+Anytime those changes happen,
+it's going to animate it,
+
+314
+00:12:52,750 --> 00:12:57,230
+because this View this
+combination, things here in green,
+
+315
+00:12:57,230 --> 00:12:59,520
+is now implicitly animated.
+
+316
+00:12:59,520 --> 00:13:02,313
+That's always gonna be the
+case that that happens.
+
+317
+00:13:03,850 --> 00:13:07,420
+Warning here, little red
+word warning so pay attention
+
+318
+00:13:08,677 --> 00:13:12,700
+.animation on a container View
+
+319
+00:13:12,700 --> 00:13:15,500
+does not work how you
+would generally think
+
+320
+00:13:15,500 --> 00:13:18,470
+you might imagine, it's just gonna animate
+
+321
+00:13:18,470 --> 00:13:23,470
+the whole container like one
+big, somehow blob of change.
+
+322
+00:13:24,000 --> 00:13:26,920
+But it doesn't all of doing
+animation on a container does,
+
+323
+00:13:26,920 --> 00:13:29,270
+it just applies that
+animation to all the things
+
+324
+00:13:29,270 --> 00:13:30,980
+inside the container.
+
+325
+00:13:30,980 --> 00:13:34,817
+In other words, .animation
+is not like .padding, right.
+
+326
+00:13:34,817 --> 00:13:37,400
+.padding puts padding
+around the whole ZStack
+
+327
+00:13:37,400 --> 00:13:39,410
+or the whole VStack or whatever.
+
+328
+00:13:39,410 --> 00:13:42,670
+It's more like .font or if
+you say .font on the ZStack,
+
+329
+00:13:42,670 --> 00:13:46,680
+all the texts in the
+ZStack, get that font, okay.
+
+330
+00:13:46,680 --> 00:13:48,150
+Animation is more like .font
+
+331
+00:13:48,150 --> 00:13:51,210
+if you say animation on ZStack,
+
+332
+00:13:51,210 --> 00:13:53,892
+all the things inside are
+gonna get that, and that's
+
+333
+00:13:53,892 --> 00:13:57,122
+rarely what you actually want surprising.
+
+334
+00:13:57,122 --> 00:13:59,390
+And so I'm just giving you a warning
+
+335
+00:13:59,390 --> 00:14:04,390
+that we don't usually put
+.animation on container Views,
+
+336
+00:14:04,610 --> 00:14:08,670
+they're usually put on,
+if not on leaf Views,
+
+337
+00:14:08,670 --> 00:14:11,493
+at least on very small,
+self-contained Views.
+
+338
+00:14:14,180 --> 00:14:16,010
+So that animation argument
+
+339
+00:14:16,010 --> 00:14:18,120
+that you're passing there you
+saw in the previous slide,
+
+340
+00:14:18,120 --> 00:14:20,370
+it was ease in and ease out, it's called,
+
+341
+00:14:20,370 --> 00:14:23,380
+that lets you control the
+animation like its duration.
+
+342
+00:14:23,380 --> 00:14:24,270
+How long is this gonna take ?
+
+343
+00:14:24,270 --> 00:14:26,520
+Two seconds or whatever, a delay,
+
+344
+00:14:26,520 --> 00:14:29,570
+wait a half a second before
+you start this animation.
+
+345
+00:14:29,570 --> 00:14:31,420
+It can repeat a certain number of times,
+
+346
+00:14:31,420 --> 00:14:32,760
+or even repeat forever,
+
+347
+00:14:32,760 --> 00:14:35,000
+do the animation to make this change,
+
+348
+00:14:35,000 --> 00:14:36,930
+and then just keep doing
+the animation over and over.
+
+349
+00:14:36,930 --> 00:14:39,350
+The change, of course, has
+already been made in the past,
+
+350
+00:14:39,350 --> 00:14:41,380
+but just keep doing the animation
+
+351
+00:14:41,380 --> 00:14:42,717
+sometimes you wanna do that.
+
+352
+00:14:42,717 --> 00:14:46,350
+And also you can set
+the animation's curve.
+
+353
+00:14:46,350 --> 00:14:48,723
+So what is the animation curve?
+
+354
+00:14:49,640 --> 00:14:51,250
+This is actually determined by
+
+355
+00:14:51,250 --> 00:14:53,580
+what kind of animation you choose.
+
+356
+00:14:53,580 --> 00:14:56,600
+And the animation curve controls the rate
+
+357
+00:14:56,600 --> 00:14:59,240
+at which the animation plays out
+
+358
+00:14:59,240 --> 00:15:02,220
+in linear animation, for example,
+
+359
+00:15:02,220 --> 00:15:04,530
+the rate is constant
+throughout the whole time
+
+360
+00:15:04,530 --> 00:15:08,010
+the whole animation from, you
+know, one opacity to another,
+
+361
+00:15:08,010 --> 00:15:09,390
+or from one rotation or another
+
+362
+00:15:09,390 --> 00:15:12,330
+happens, linear constant rate.
+
+363
+00:15:12,330 --> 00:15:14,160
+Then this ease in, ease out
+
+364
+00:15:14,160 --> 00:15:16,230
+that I mentioned on the
+previous one, it's different.
+
+365
+00:15:16,230 --> 00:15:19,440
+It starts out slow, slowly
+changing the opacity
+
+366
+00:15:19,440 --> 00:15:21,310
+of the rotation and then speeds up,
+
+367
+00:15:21,310 --> 00:15:24,680
+and then as it's almost
+there, it slows back down.
+
+368
+00:15:24,680 --> 00:15:26,980
+And why do you want something like that?
+
+369
+00:15:26,980 --> 00:15:28,440
+Well, if you're, for example,
+
+370
+00:15:28,440 --> 00:15:31,880
+moving a card across screen
+from one place to another,
+
+371
+00:15:31,880 --> 00:15:34,800
+it's kind of abrupt, if it
+just picks up moves over.
+
+372
+00:15:34,800 --> 00:15:36,050
+It's much nicer for it to
+
+373
+00:15:37,110 --> 00:15:40,100
+start moving slow and then
+move over and then slow down
+
+374
+00:15:40,100 --> 00:15:42,840
+as it's arriving, kind of
+like an airplane, right.
+
+375
+00:15:42,840 --> 00:15:45,701
+Starts on the runway stop
+and it's slowly taking off
+
+376
+00:15:45,701 --> 00:15:48,490
+and then go in the air and
+it goes to 500 miles an hour
+
+377
+00:15:48,490 --> 00:15:49,840
+then it gets to the destination airport,
+
+378
+00:15:49,840 --> 00:15:52,630
+and then slows down to
+100, 150 miles an hour,
+
+379
+00:15:52,630 --> 00:15:53,463
+and then it lands.
+
+380
+00:15:53,463 --> 00:15:57,470
+So it's that kind of curve of the rate
+
+381
+00:15:57,470 --> 00:15:58,800
+is ease in and ease out.
+
+382
+00:15:58,800 --> 00:16:00,950
+You almost always want things to moving
+
+383
+00:16:00,950 --> 00:16:02,940
+to at least do ease in, ease out
+
+384
+00:16:02,940 --> 00:16:05,150
+if not the next one, which is spring.
+
+385
+00:16:05,150 --> 00:16:08,340
+So spring is the thing
+gets to its destination
+
+386
+00:16:08,340 --> 00:16:09,960
+and then it kind of bounces a little bit
+
+387
+00:16:09,960 --> 00:16:11,800
+has a little soft landing there
+
+388
+00:16:11,800 --> 00:16:14,190
+overshoots the mark a
+little bit and springs back
+
+389
+00:16:14,190 --> 00:16:16,330
+a little bit like it's
+got a spring connecting it
+
+390
+00:16:16,330 --> 00:16:18,160
+to the destination.
+
+391
+00:16:18,160 --> 00:16:21,653
+And these kinds of
+animation curves make the UI
+
+392
+00:16:21,653 --> 00:16:24,649
+a little more comfortable
+for users less, you know,
+
+393
+00:16:24,649 --> 00:16:26,573
+jarring, less abrupt.
+
+394
+00:16:29,630 --> 00:16:31,680
+So let's talk about implicit animation
+
+395
+00:16:31,680 --> 00:16:34,650
+when I think I was just
+describing an explicit animation,
+
+396
+00:16:34,650 --> 00:16:36,650
+which is what I'm gonna describe next.
+
+397
+00:16:36,650 --> 00:16:40,460
+So these automatic, implicit animations,
+
+398
+00:16:40,460 --> 00:16:45,020
+they're not really even the
+primary way we do animation.
+
+399
+00:16:45,020 --> 00:16:47,270
+It probably depends on
+the app a little bit
+
+400
+00:16:47,270 --> 00:16:50,080
+but mostly, we don't use them that much
+
+401
+00:16:50,080 --> 00:16:55,080
+because when you have a
+kind of a group of Views,
+
+402
+00:16:55,360 --> 00:16:58,680
+they wanna work together to animate.
+
+403
+00:16:58,680 --> 00:17:03,680
+That's why putting .animation
+on a container like a ZStack,
+
+404
+00:17:04,000 --> 00:17:06,590
+not just, we just don't do it very much.
+
+405
+00:17:06,590 --> 00:17:09,250
+Because if a ZStack has a whole
+bunch of Views inside of it
+
+406
+00:17:09,250 --> 00:17:12,150
+maybe Views inside those
+and this big construction,
+
+407
+00:17:12,150 --> 00:17:15,580
+those Views want to animate all together,
+
+408
+00:17:15,580 --> 00:17:19,660
+all the same duration, all the same curve,
+
+409
+00:17:19,660 --> 00:17:21,870
+they wanna be in sync.
+
+410
+00:17:21,870 --> 00:17:26,360
+Explicit animation is where we
+cause an animation to happen
+
+411
+00:17:26,360 --> 00:17:29,210
+all with the same duration,
+all with the same curve
+
+412
+00:17:29,210 --> 00:17:31,600
+for a whole bunch of Views.
+
+413
+00:17:31,600 --> 00:17:34,320
+And the way we do it is we just take this
+
+414
+00:17:34,320 --> 00:17:37,220
+withAnimation function, call it
+
+415
+00:17:37,220 --> 00:17:39,530
+with this argument, which is a closure,
+
+416
+00:17:39,530 --> 00:17:41,540
+Inside the closure, we're
+just gonna do something
+
+417
+00:17:41,540 --> 00:17:44,010
+like calling Intent on our ViewModel,
+
+418
+00:17:44,010 --> 00:17:46,540
+that's a classic thing we do there.
+
+419
+00:17:46,540 --> 00:17:48,340
+And Model can change like crazy,
+
+420
+00:17:48,340 --> 00:17:50,520
+our View might change like crazy,
+
+421
+00:17:50,520 --> 00:17:54,290
+and all those crazy changes
+are all gonna happen together
+
+422
+00:17:54,290 --> 00:17:57,920
+with this Animation that
+we passed to withAnimation.
+
+423
+00:17:57,920 --> 00:18:00,980
+Here I'm doing two
+second linear Animation.
+
+424
+00:18:00,980 --> 00:18:04,130
+So all of the changes are
+gonna happen at a linear rate
+
+425
+00:18:04,130 --> 00:18:05,933
+over the course of two seconds.
+
+426
+00:18:07,150 --> 00:18:09,360
+Now, I'm calling a
+function here withAnimation
+
+427
+00:18:09,360 --> 00:18:13,020
+one has two arguments, an
+animation, and then a closure,
+
+428
+00:18:13,020 --> 00:18:14,400
+calling functions like this,
+
+429
+00:18:14,400 --> 00:18:17,750
+that's more of an imperative
+approach to programming.
+
+430
+00:18:17,750 --> 00:18:20,420
+We know the SwiftUI is mostly declarative,
+
+431
+00:18:20,420 --> 00:18:22,460
+we just saying the state of everything
+
+432
+00:18:22,460 --> 00:18:25,100
+and the implicit
+animations are declarative.
+
+433
+00:18:25,100 --> 00:18:26,690
+You're just declaring that
+
+434
+00:18:26,690 --> 00:18:29,960
+when these modifiers on this thing change,
+
+435
+00:18:29,960 --> 00:18:31,320
+you're gonna animate it.
+
+436
+00:18:31,320 --> 00:18:33,010
+But this is actually imperative.
+
+437
+00:18:33,010 --> 00:18:36,340
+Here we are telling somebody
+
+438
+00:18:36,340 --> 00:18:38,360
+do this and animate it
+
+439
+00:18:38,360 --> 00:18:39,360
+so it's imperative.
+
+440
+00:18:39,360 --> 00:18:43,860
+So there's not a lot of
+places in SwiftUI code,
+
+441
+00:18:43,860 --> 00:18:46,840
+where you're doing imperative programming.
+
+442
+00:18:46,840 --> 00:18:49,540
+Remember, all this code
+has to be in your View,
+
+443
+00:18:49,540 --> 00:18:51,730
+cause ViewModels don't see the View
+
+444
+00:18:51,730 --> 00:18:52,980
+so they can't be doing this.
+
+445
+00:18:52,980 --> 00:18:54,330
+This is all in your View,
+
+446
+00:18:54,330 --> 00:18:57,100
+it's in the spot in your SwiftUI code,
+
+447
+00:18:57,100 --> 00:19:00,749
+where you do imperative code
+which is like onTapGesture,
+
+448
+00:19:00,749 --> 00:19:02,210
+Views are tapped, boom,
+
+449
+00:19:02,210 --> 00:19:03,540
+you're gonna do something imperative,
+
+450
+00:19:03,540 --> 00:19:07,240
+you're gonna say choose the
+Intent, choose card or whatever.
+
+451
+00:19:07,240 --> 00:19:11,120
+And those are the places
+on things happening
+
+452
+00:19:11,120 --> 00:19:12,940
+like on tap, just other gestures
+
+453
+00:19:12,940 --> 00:19:14,740
+we're gonna learn about next week.
+
+454
+00:19:14,740 --> 00:19:17,643
+That's when we're gonna
+call withAnimation.
+
+455
+00:19:19,081 --> 00:19:22,070
+Now, explicitly animations, as I said,
+
+456
+00:19:22,070 --> 00:19:24,390
+are usually wrapped around
+things like Intents,
+
+457
+00:19:24,390 --> 00:19:25,880
+a ViewModel Intent.
+
+458
+00:19:25,880 --> 00:19:28,340
+But you might also wrap it
+around something that happens
+
+459
+00:19:28,340 --> 00:19:29,240
+only in the UI.
+
+460
+00:19:29,240 --> 00:19:31,760
+For example, that editing
+mode I was talking about,
+
+461
+00:19:31,760 --> 00:19:33,580
+let's say you're going into editing mode
+
+462
+00:19:33,580 --> 00:19:37,960
+and little icons will appear
+to delete things or whatever
+
+463
+00:19:37,960 --> 00:19:40,230
+those things want to
+kind of animate smoothly
+
+464
+00:19:40,230 --> 00:19:41,740
+and appear on screen.
+
+465
+00:19:41,740 --> 00:19:44,920
+And so you might be doing
+withAnimation when the user
+
+466
+00:19:44,920 --> 00:19:49,920
+hits the button to to say
+enter edit mode or whatever.
+
+467
+00:19:50,200 --> 00:19:53,740
+Another imperative place
+is the action of a Button.
+
+468
+00:19:53,740 --> 00:19:56,090
+And I'll show Buttons
+today in the demo as well
+
+469
+00:19:56,090 --> 00:19:58,440
+and you'll see the action
+of a Button is another place
+
+470
+00:19:58,440 --> 00:20:00,610
+we do imperative code
+and where We would likely
+
+471
+00:20:00,610 --> 00:20:02,293
+do something like withAnimation.
+
+472
+00:20:03,430 --> 00:20:06,340
+This is red again, the second red thing.
+
+473
+00:20:06,340 --> 00:20:08,767
+First one was the red about doing
+
+474
+00:20:08,767 --> 00:20:11,290
+.animation on container Views.
+
+475
+00:20:11,290 --> 00:20:15,050
+This one is to remind you
+that explicit animations
+
+476
+00:20:15,050 --> 00:20:18,630
+do not override implicit animations.
+
+477
+00:20:18,630 --> 00:20:21,090
+Implicit animations are
+assumed to be on Views
+
+478
+00:20:21,090 --> 00:20:23,750
+they are self-contained,
+they work independently,
+
+479
+00:20:23,750 --> 00:20:25,630
+whatever animation makes sense for them
+
+480
+00:20:25,630 --> 00:20:27,950
+should always make sense
+to them no matter what.
+
+481
+00:20:27,950 --> 00:20:29,030
+So if there's a View,
+
+482
+00:20:29,030 --> 00:20:32,200
+and it has an implicit
+animation attached to it,
+
+483
+00:20:32,200 --> 00:20:35,100
+then it's gonna be doing
+that implicit animation
+
+484
+00:20:35,100 --> 00:20:37,099
+whenever its things change.
+
+485
+00:20:37,099 --> 00:20:38,980
+Even if there's an explicit animation
+
+486
+00:20:38,980 --> 00:20:40,330
+going on at the same time.
+
+487
+00:20:40,330 --> 00:20:42,340
+It's gonna have no effect on them.
+
+488
+00:20:42,340 --> 00:20:44,233
+Implicitly animations always win.
+
+489
+00:20:46,670 --> 00:20:50,530
+Now transitions specify
+how to animate the arrival
+
+490
+00:20:50,530 --> 00:20:52,710
+and departure of Views.
+
+491
+00:20:52,710 --> 00:20:54,450
+Remember, those Views
+have to be in containers
+
+492
+00:20:54,450 --> 00:20:56,090
+that are already on screen.
+
+493
+00:20:56,090 --> 00:20:58,900
+But whenever you arrives, you
+want to be able to animate it
+
+494
+00:20:58,900 --> 00:21:02,890
+fade in or flies in from
+outer space or something
+
+495
+00:21:02,890 --> 00:21:06,370
+you want some sort of animation
+for that View arriving.
+
+496
+00:21:06,370 --> 00:21:08,180
+Now a transition
+
+497
+00:21:08,180 --> 00:21:09,450
+is only
+
+498
+00:21:09,450 --> 00:21:12,050
+a pair of ViewModifiers, that's all it is
+
+499
+00:21:12,050 --> 00:21:14,480
+one of the ViewModifiers is modifying
+
+500
+00:21:14,480 --> 00:21:17,080
+the View for what is supposed
+to look like when it's there
+
+501
+00:21:17,080 --> 00:21:18,673
+and the other one is
+modifying the View for what
+
+502
+00:21:18,673 --> 00:21:20,860
+it's supposed to look
+like when it's not there.
+
+503
+00:21:20,860 --> 00:21:24,380
+In other words, it hasn't
+arrived or it just left,
+
+504
+00:21:24,380 --> 00:21:26,240
+the one that's on there's
+probably gonna have,
+
+505
+00:21:26,240 --> 00:21:29,340
+let's say it's a fade, it'll
+start with the one, with
+
+506
+00:21:29,340 --> 00:21:32,490
+the ViewModifier, where it's
+on there of opacity one,
+
+507
+00:21:32,490 --> 00:21:36,260
+and then the ViewModifier for
+the other one is opacity zero.
+
+508
+00:21:36,260 --> 00:21:39,930
+And system is gonna animate
+between those two ViewModifiers
+
+509
+00:21:39,930 --> 00:21:42,690
+to make that thing appear or disappear.
+
+510
+00:21:42,690 --> 00:21:46,740
+So a transition is really just a version
+
+511
+00:21:46,740 --> 00:21:49,310
+of changes to the
+arguments of ViewModifier
+
+512
+00:21:49,310 --> 00:21:52,090
+cause a transition is just
+this pair of modifiers.
+
+513
+00:21:52,090 --> 00:21:54,370
+the two modifiers can
+have different arguments
+
+514
+00:21:54,370 --> 00:21:56,130
+and so that's it, that's all it is.
+
+515
+00:21:56,130 --> 00:21:57,600
+So transitioning is not really
+
+516
+00:21:57,600 --> 00:21:58,433
+a different kind of animation,
+
+517
+00:21:58,433 --> 00:22:01,580
+it's just a way of specifying
+the two ViewModifiers
+
+518
+00:22:01,580 --> 00:22:03,663
+for when Views appear and disappear.
+
+519
+00:22:05,250 --> 00:22:09,150
+So how do we specify
+what transition we want
+
+520
+00:22:09,150 --> 00:22:12,030
+the system to use when it's
+animating the appearance
+
+521
+00:22:12,030 --> 00:22:14,900
+or disappearance of a given View?
+
+522
+00:22:14,900 --> 00:22:16,980
+Remember a transition
+just a pair of modifiers,
+
+523
+00:22:16,980 --> 00:22:19,470
+so we're essentially just
+gonna attach the two modifiers
+
+524
+00:22:19,470 --> 00:22:22,017
+we want modifier for when it's
+on screen and the modifier
+
+525
+00:22:22,017 --> 00:22:24,830
+when it's not to a View.
+
+526
+00:22:24,830 --> 00:22:29,040
+And we attach this
+transition using .transition,
+
+527
+00:22:29,040 --> 00:22:31,160
+very simple ViewModifier.
+
+528
+00:22:31,160 --> 00:22:33,100
+I'm gonna show you by example here,
+
+529
+00:22:33,100 --> 00:22:36,110
+and I'm gonna use two
+built-in transitions.
+
+530
+00:22:36,110 --> 00:22:38,850
+One is called .scale,
+that's the blue one there,
+
+531
+00:22:38,850 --> 00:22:42,630
+and the other is called .identity,
+which is the purple one.
+
+532
+00:22:42,630 --> 00:22:44,870
+So a .scale transition,
+
+533
+00:22:44,870 --> 00:22:49,210
+its two ViewModifiers are frame modifiers.
+
+534
+00:22:49,210 --> 00:22:52,460
+And the off-screen one
+has a frame of zero,
+
+535
+00:22:52,460 --> 00:22:55,230
+and the on-screen one has
+a frame of like full size
+
+536
+00:22:55,230 --> 00:22:56,900
+whenever its normal size is.
+
+537
+00:22:56,900 --> 00:23:01,900
+So scale transition zooms the
+View in and out from tiny,
+
+538
+00:23:02,080 --> 00:23:06,616
+zero size up to full size
+as it goes out or in.
+
+539
+00:23:06,616 --> 00:23:09,760
+And the identity transition
+is an interesting one,
+
+540
+00:23:09,760 --> 00:23:12,720
+it's ViewModifier does nothing.
+
+541
+00:23:12,720 --> 00:23:16,740
+So since nothing is changing
+between when it's gone,
+
+542
+00:23:16,740 --> 00:23:19,230
+and when it's there, it
+just instantly appears
+
+543
+00:23:19,230 --> 00:23:20,710
+and instantly disappears.
+
+544
+00:23:20,710 --> 00:23:22,480
+In other words, there's
+no animation because
+
+545
+00:23:22,480 --> 00:23:25,350
+there's no differences
+between the two ViewModifiers
+
+546
+00:23:25,350 --> 00:23:26,930
+are exactly the same
+
+547
+00:23:26,930 --> 00:23:28,980
+and they don't actually modify the View
+
+548
+00:23:28,980 --> 00:23:30,970
+so there's no animation to happen.
+
+549
+00:23:30,970 --> 00:23:33,030
+So bloop, it appears and disappears.
+
+550
+00:23:33,030 --> 00:23:34,760
+And it is occasionally the case
+
+551
+00:23:34,760 --> 00:23:36,440
+that when you're doing an animation,
+
+552
+00:23:36,440 --> 00:23:38,190
+and you have Views coming and going,
+
+553
+00:23:38,190 --> 00:23:39,860
+possibly you might want a View
+
+554
+00:23:39,860 --> 00:23:42,400
+to just bloop appear and bloop disappear
+
+555
+00:23:42,400 --> 00:23:44,380
+and not be animated.
+
+556
+00:23:44,380 --> 00:23:46,000
+That's not the default
+
+557
+00:23:46,000 --> 00:23:50,090
+so the default transition
+is called .opacity,
+
+558
+00:23:50,090 --> 00:23:53,200
+which is a fade, fades in and out, right.
+
+559
+00:23:53,200 --> 00:23:54,290
+It's just taking the opacity
+
+560
+00:23:54,290 --> 00:23:55,940
+which we learned about last time,
+
+561
+00:23:55,940 --> 00:23:58,137
+making go from one to
+zero when it goes out
+
+562
+00:23:58,137 --> 00:24:00,320
+and from zero to one when it goes in.
+
+563
+00:24:00,320 --> 00:24:01,830
+So we moderated that in that case
+
+564
+00:24:01,830 --> 00:24:04,635
+is the opacity ViewModifier.
+
+565
+00:24:04,635 --> 00:24:06,890
+Let's look at this ZStack right here,
+
+566
+00:24:06,890 --> 00:24:09,894
+it's basically our card kind of
+
+567
+00:24:09,894 --> 00:24:12,050
+simplified here.
+
+568
+00:24:12,050 --> 00:24:13,627
+There's only so much room on the slides,
+
+569
+00:24:13,627 --> 00:24:17,530
+and you can see that from my
+face-up the front of my card,
+
+570
+00:24:17,530 --> 00:24:18,750
+I got my RoundedRectangles,
+
+571
+00:24:18,750 --> 00:24:20,990
+let's say don't have
+them all specified there,
+
+572
+00:24:20,990 --> 00:24:22,170
+but you know what they are.
+
+573
+00:24:22,170 --> 00:24:25,230
+And I didn't put a .transition modifier
+
+574
+00:24:25,230 --> 00:24:26,322
+on the RoundedRectangles.
+
+575
+00:24:26,322 --> 00:24:28,730
+So they're gonna get
+the default transition,
+
+576
+00:24:28,730 --> 00:24:31,177
+which is opacity. So the
+RoundedRectangles on the front
+
+577
+00:24:31,177 --> 00:24:34,240
+are gonna fade in and
+out as they come and go.
+
+578
+00:24:34,240 --> 00:24:36,417
+But I did put a transition on the Text
+
+579
+00:24:36,417 --> 00:24:38,220
+the little ghosts there.
+
+580
+00:24:38,220 --> 00:24:41,410
+That is going to zoom up out of nowhere
+
+581
+00:24:41,410 --> 00:24:45,450
+and then zoom back down to
+zero size when it goes away.
+
+582
+00:24:45,450 --> 00:24:47,220
+That's what .scale means.
+
+583
+00:24:47,220 --> 00:24:49,350
+And then the RoundedRectangle on the back
+
+584
+00:24:49,350 --> 00:24:51,540
+I put the transition identity that means
+
+585
+00:24:51,540 --> 00:24:54,010
+when the back appears
+it's gonna bloop appear
+
+586
+00:24:54,010 --> 00:24:57,220
+it's not gonna fade in or
+grow out, it's bloop appear.
+
+587
+00:24:57,220 --> 00:24:59,570
+Now it'll bloop appear and meanwhile,
+
+588
+00:24:59,570 --> 00:25:02,500
+the front will be fading out
+and zooming shrinking down
+
+589
+00:25:02,500 --> 00:25:03,333
+at the same time.
+
+590
+00:25:03,333 --> 00:25:05,680
+So it's not gonna be
+a very nice animation.
+
+591
+00:25:05,680 --> 00:25:08,160
+This is kind of a kitchen
+sink animation here,
+
+592
+00:25:08,160 --> 00:25:10,970
+you would never do it actually like this
+
+593
+00:25:10,970 --> 00:25:12,120
+but I just want you to understand
+
+594
+00:25:12,120 --> 00:25:13,840
+what all these transitions do.
+
+595
+00:25:13,840 --> 00:25:16,750
+By the way, you see here how isFaceUp,
+
+596
+00:25:16,750 --> 00:25:19,920
+which is just a conditional
+inside of a ViewBuilder, right?
+
+597
+00:25:19,920 --> 00:25:20,940
+This is the ZStack,
+
+598
+00:25:20,940 --> 00:25:23,610
+we know the content
+ZStack is a ViewBuilder.
+
+599
+00:25:23,610 --> 00:25:25,450
+And inside ViewBuilder,
+it's a list of Views
+
+600
+00:25:25,450 --> 00:25:28,470
+but we can use if-thens to
+include or not include some,
+
+601
+00:25:28,470 --> 00:25:30,490
+well, of course, as we include them,
+
+602
+00:25:30,490 --> 00:25:33,580
+they appear on screen as
+we don't include them,
+
+603
+00:25:33,580 --> 00:25:35,200
+they disappear on screen.
+
+604
+00:25:35,200 --> 00:25:39,010
+And these kinds of if-thens
+inside of ViewBuilders
+
+605
+00:25:39,010 --> 00:25:41,480
+is probably the number one way
+
+606
+00:25:41,480 --> 00:25:43,170
+the Views are coming and going.
+
+607
+00:25:43,170 --> 00:25:46,630
+So when you have
+animations of the contents
+
+608
+00:25:46,630 --> 00:25:49,850
+of some ViewBuilder thing like the ZStack,
+
+609
+00:25:49,850 --> 00:25:51,980
+and it's got conditionals in there,
+
+610
+00:25:51,980 --> 00:25:53,170
+you wanna think about transitions,
+
+611
+00:25:53,170 --> 00:25:54,996
+because those things are
+gonna be coming and going
+
+612
+00:25:54,996 --> 00:25:55,950
+and if you don't think about it,
+
+613
+00:25:55,950 --> 00:25:57,370
+you're gonna get fade-in and fade-out.
+
+614
+00:25:57,370 --> 00:25:59,820
+That's the default, but
+you might want something
+
+615
+00:25:59,820 --> 00:26:01,995
+that looks a little better than that.
+
+616
+00:26:01,995 --> 00:26:06,107
+Another way that Views
+come and go is for example,
+
+617
+00:26:06,107 --> 00:26:07,310
+in a ForEach.
+
+618
+00:26:07,310 --> 00:26:11,920
+So ForEach takes an Array
+of identifiable things,
+
+619
+00:26:11,920 --> 00:26:13,460
+and makes Views for them.
+
+620
+00:26:13,460 --> 00:26:15,400
+Well, if that Array changes,
+
+621
+00:26:15,400 --> 00:26:16,920
+like new things got added to it,
+
+622
+00:26:16,920 --> 00:26:18,946
+or some of the identifiers got pulled out,
+
+623
+00:26:18,946 --> 00:26:22,260
+it's going to either add new
+Views or take some of the Views
+
+624
+00:26:22,260 --> 00:26:24,270
+it made in the past out of there.
+
+625
+00:26:24,270 --> 00:26:26,400
+And those Views are gonna
+be coming and going.
+
+626
+00:26:26,400 --> 00:26:28,020
+You're gonna see this
+definitely in your homework
+
+627
+00:26:28,020 --> 00:26:30,140
+number three, you're gonna have your cards
+
+628
+00:26:30,140 --> 00:26:32,640
+somehow displayed on
+screen through some ForEach
+
+629
+00:26:32,640 --> 00:26:34,270
+maybe inside grade or something.
+
+630
+00:26:34,270 --> 00:26:36,360
+And it's a different game to the memorize
+
+631
+00:26:36,360 --> 00:26:39,290
+the cards kind of come and
+go in the game you're doing.
+
+632
+00:26:39,290 --> 00:26:41,880
+Whereas memorize the cards are
+just really always on screen,
+
+633
+00:26:41,880 --> 00:26:43,600
+even when they're match
+they're just hidden.
+
+634
+00:26:43,600 --> 00:26:45,840
+There's kind of a space for them there,
+
+635
+00:26:45,840 --> 00:26:47,100
+but wouldn't have to be that way.
+
+636
+00:26:47,100 --> 00:26:50,672
+So those are probably number
+one and number two ways that
+
+637
+00:26:50,672 --> 00:26:53,100
+Views come and go: conditional
+things inside ViewBuilders
+
+638
+00:26:53,100 --> 00:26:56,100
+and things like ForEach that
+are conditionally essentially
+
+639
+00:26:56,100 --> 00:26:58,750
+building Views for you.
+
+640
+00:26:58,750 --> 00:27:00,330
+All right, back to the screen code.
+
+641
+00:27:00,330 --> 00:27:01,560
+So let's just walk through,
+
+642
+00:27:01,560 --> 00:27:04,960
+if we change isFaceUp from
+one thing to the other,
+
+643
+00:27:04,960 --> 00:27:05,910
+what would happen?
+
+644
+00:27:05,910 --> 00:27:08,010
+So if we change isFaceUp to false,
+
+645
+00:27:08,010 --> 00:27:09,600
+in other words we wanna show the back,
+
+646
+00:27:09,600 --> 00:27:11,590
+the back would instantly appear
+
+647
+00:27:11,590 --> 00:27:14,620
+because we have said its
+transition to be identity,
+
+648
+00:27:14,620 --> 00:27:17,620
+which means don't do any modifications.
+
+649
+00:27:17,620 --> 00:27:18,600
+So there's no animation
+
+650
+00:27:18,600 --> 00:27:20,930
+so it just bloop instantly appears.
+
+651
+00:27:20,930 --> 00:27:23,610
+The Text would shrink down to nothing,
+
+652
+00:27:23,610 --> 00:27:25,410
+because it's using a scale transition,
+
+653
+00:27:25,410 --> 00:27:27,900
+and the front RoundedRectangles
+would fade out
+
+654
+00:27:27,900 --> 00:27:29,110
+because they have no transition
+
+655
+00:27:29,110 --> 00:27:31,863
+so they're getting the default opacity.
+
+656
+00:27:31,863 --> 00:27:33,970
+And if isFaceUp changed
+to true, by the way,
+
+657
+00:27:33,970 --> 00:27:36,020
+the isFaceUp has to be changing here,
+
+658
+00:27:36,020 --> 00:27:38,573
+while an explicit
+animation is in progress.
+
+659
+00:27:38,573 --> 00:27:40,243
+If we're not actually animating,
+
+660
+00:27:40,243 --> 00:27:42,430
+then these transitions
+mean nothing, right.
+
+661
+00:27:42,430 --> 00:27:44,670
+These transitions don't do
+the animation themselves
+
+662
+00:27:44,670 --> 00:27:47,390
+they just specify what
+ViewModifiers to use,
+
+663
+00:27:47,390 --> 00:27:49,420
+when an animation is happening.
+
+664
+00:27:49,420 --> 00:27:52,775
+So if isFaceUp changes from false to true,
+
+665
+00:27:52,775 --> 00:27:56,235
+now the back would disappear
+instantly just gone
+
+666
+00:27:56,235 --> 00:27:57,570
+because again, its transition
+
+667
+00:27:57,570 --> 00:28:00,414
+is the identity ViewModifier.
+
+668
+00:28:00,414 --> 00:28:03,190
+So there's no difference between
+the identity ViewModifier
+
+669
+00:28:03,190 --> 00:28:05,433
+when it's there or not there. So it just,
+
+670
+00:28:05,433 --> 00:28:08,270
+it's still going off screen
+though, so it disappears.
+
+671
+00:28:08,270 --> 00:28:10,550
+The Text would grow in from nothing
+
+672
+00:28:10,550 --> 00:28:13,810
+would start at zero size and
+grow up to its normal size.
+
+673
+00:28:13,810 --> 00:28:16,040
+And the front
+RoundedRectangles since again,
+
+674
+00:28:16,040 --> 00:28:18,380
+no transition specified,
+they would fade in.
+
+675
+00:28:18,380 --> 00:28:20,530
+This would all be
+happening simultaneously.
+
+676
+00:28:22,890 --> 00:28:25,750
+Now one thing to consider
+about transition,
+
+677
+00:28:25,750 --> 00:28:30,240
+unlike animation, transition
+does not get redistributed
+
+678
+00:28:30,240 --> 00:28:32,080
+to a container's content Views.
+
+679
+00:28:32,080 --> 00:28:34,000
+Remember, I told you
+that we don't usually put
+
+680
+00:28:34,000 --> 00:28:36,510
+implicit animations on container Views,
+
+681
+00:28:36,510 --> 00:28:38,980
+because it just ends up
+giving that animation
+
+682
+00:28:38,980 --> 00:28:40,410
+to each of the things inside.
+
+683
+00:28:40,410 --> 00:28:42,320
+Well, transition does not do that.
+
+684
+00:28:42,320 --> 00:28:46,190
+Transition, when you put
+it on a ZStack or a VStack
+
+685
+00:28:46,190 --> 00:28:48,120
+it is now talking about the transition
+
+686
+00:28:48,120 --> 00:28:51,600
+when the entire ZStack comes on screen
+
+687
+00:28:51,600 --> 00:28:53,070
+or goes off screen.
+
+688
+00:28:53,070 --> 00:28:56,330
+So it does not distribute it
+off into its things inside.
+
+689
+00:28:56,330 --> 00:28:59,200
+It's actually talking about the animation
+
+690
+00:28:59,200 --> 00:29:02,086
+of the ZStack itself
+when it comes and goes.
+
+691
+00:29:02,086 --> 00:29:05,060
+Now Group and ForEach,
+those are container Views
+
+692
+00:29:05,060 --> 00:29:07,840
+but since they don't put
+anything on screen anywhere,
+
+693
+00:29:07,840 --> 00:29:11,390
+they're just essentially
+grouping or creating Views
+
+694
+00:29:11,390 --> 00:29:13,910
+from a list of Identifiables,
+
+695
+00:29:13,910 --> 00:29:16,510
+they do distribute .transition
+to their content View.
+
+696
+00:29:16,510 --> 00:29:18,880
+So if you say group and a bunch of things,
+
+697
+00:29:18,880 --> 00:29:20,150
+and you say .transition,
+
+698
+00:29:20,150 --> 00:29:22,770
+it's going to be talking about
+each one of those things,
+
+699
+00:29:22,770 --> 00:29:24,123
+getting that transition.
+
+700
+00:29:26,060 --> 00:29:27,860
+This .transition function,
+
+701
+00:29:27,860 --> 00:29:29,880
+remember is doing nothing
+more than the specifying
+
+702
+00:29:29,880 --> 00:29:32,680
+what the two ViewModifiers are.
+
+703
+00:29:32,680 --> 00:29:35,770
+Think of the word
+transition there as a noun.
+
+704
+00:29:35,770 --> 00:29:38,900
+This is the transitions to use.
+
+705
+00:29:38,900 --> 00:29:42,810
+It's not a verb, like
+this View transitions now,
+
+706
+00:29:42,810 --> 00:29:45,757
+transitions only happen
+when an explicit animation
+
+707
+00:29:45,757 --> 00:29:47,080
+is going on.
+
+708
+00:29:47,080 --> 00:29:50,810
+That is the only time that
+transition animations happen.
+
+709
+00:29:50,810 --> 00:29:54,150
+Transitions do not really
+work with implicit animations.
+
+710
+00:29:54,150 --> 00:29:57,290
+If you try to do implicit animations,
+
+711
+00:29:57,290 --> 00:29:58,673
+on Views with transitions,
+
+712
+00:29:58,673 --> 00:30:00,360
+it's gonna get a little confused
+
+713
+00:30:00,360 --> 00:30:04,050
+and you can understand why this
+is remember that, you know,
+
+714
+00:30:04,050 --> 00:30:06,180
+explicit animations are for animations
+
+715
+00:30:06,180 --> 00:30:08,360
+that are coordinating a
+lot of different Views
+
+716
+00:30:08,360 --> 00:30:10,510
+that when Views are coming and going.
+
+717
+00:30:10,510 --> 00:30:13,180
+Implicit animations
+are for self-contained,
+
+718
+00:30:13,180 --> 00:30:17,330
+independent working Views, that
+their animations make sense.
+
+719
+00:30:17,330 --> 00:30:20,190
+That doesn't sound to me
+like Views coming and going.
+
+720
+00:30:20,190 --> 00:30:22,770
+Transitions are not intended to be used
+
+721
+00:30:22,770 --> 00:30:24,040
+with implicit animations,
+
+722
+00:30:24,040 --> 00:30:27,220
+they're to be used with
+explicit animations.
+
+723
+00:30:27,220 --> 00:30:29,490
+And that's the only time a
+transition animation will happen
+
+724
+00:30:29,490 --> 00:30:32,480
+is when you are animating it.
+
+725
+00:30:32,480 --> 00:30:35,250
+Transitions are just saying
+what ViewModifiers to use,
+
+726
+00:30:35,250 --> 00:30:36,930
+you still have to animate.
+
+727
+00:30:36,930 --> 00:30:39,400
+By the way, if you do
+an implicit animation on
+
+728
+00:30:39,400 --> 00:30:42,760
+something that has a transition
+and the View comes or goes,
+
+729
+00:30:42,760 --> 00:30:45,300
+it's gonna do some sort of animation,
+
+730
+00:30:45,300 --> 00:30:47,650
+but it's probably not
+gonna be what you expect.
+
+731
+00:30:48,840 --> 00:30:50,800
+The transition API,
+
+732
+00:30:50,800 --> 00:30:53,130
+you know, like creating
+an actual transition
+
+733
+00:30:53,130 --> 00:30:55,070
+is a little bit interesting.
+
+734
+00:30:55,070 --> 00:30:58,120
+And it's type-erased.
+
+735
+00:30:58,120 --> 00:31:00,660
+That means that the
+actual type of transition,
+
+736
+00:31:00,660 --> 00:31:03,870
+which the real type of a
+transition is going to have
+
+737
+00:31:03,870 --> 00:31:06,940
+don't cares is in there that
+are the two ViewModifiers
+
+738
+00:31:06,940 --> 00:31:08,880
+that you're using and all that.
+
+739
+00:31:08,880 --> 00:31:10,630
+They can be quite complicated.
+
+740
+00:31:10,630 --> 00:31:13,960
+And we're trying to pass them
+as arguments to .transition
+
+741
+00:31:13,960 --> 00:31:16,130
+we don't want that so
+we want to be simple.
+
+742
+00:31:16,130 --> 00:31:19,290
+The argument to the .transition function
+
+743
+00:31:19,290 --> 00:31:22,010
+is something called an AnyTransition.
+
+744
+00:31:22,010 --> 00:31:24,820
+And this AnyTransition is
+a type-erased transition.
+
+745
+00:31:24,820 --> 00:31:27,213
+Imagine, kind of like this,
+
+746
+00:31:27,213 --> 00:31:32,090
+that AnyTransition is just a
+struct that has an initializer
+
+747
+00:31:32,090 --> 00:31:35,040
+that takes a don't care, kind of,
+
+748
+00:31:35,040 --> 00:31:38,550
+which is a transition we had
+modifiers and all that stuff.
+
+749
+00:31:38,550 --> 00:31:42,560
+And it just knows how to do
+the transition thing with it.
+
+750
+00:31:42,560 --> 00:31:45,030
+And what you get back
+is just an AnyTransition
+
+751
+00:31:45,030 --> 00:31:47,443
+with no don't cares or
+any of that business.
+
+752
+00:31:48,320 --> 00:31:52,160
+So erasing types like this,
+so we simplify and lose.
+
+753
+00:31:52,160 --> 00:31:52,993
+We don't really lose it,
+
+754
+00:31:52,993 --> 00:31:55,296
+but we can't see all the details
+
+755
+00:31:55,296 --> 00:31:57,665
+like what kind of
+ViewModifiers it's using,
+
+756
+00:31:57,665 --> 00:32:00,499
+we do that in Swift on a number of cases,
+
+757
+00:32:00,499 --> 00:32:02,030
+you can even do it with a View,
+
+758
+00:32:02,030 --> 00:32:04,690
+there is a View called AnyView,
+
+759
+00:32:04,690 --> 00:32:06,940
+and its initializer will
+take any kind of View
+
+760
+00:32:06,940 --> 00:32:09,400
+no matter how complicated
+and return you AnyView
+
+761
+00:32:09,400 --> 00:32:11,310
+and erase all that information,
+
+762
+00:32:11,310 --> 00:32:13,600
+you'll now you'll have a
+View it's called an AnyView,
+
+763
+00:32:13,600 --> 00:32:14,908
+it's of type AnyView,
+
+764
+00:32:14,908 --> 00:32:17,240
+you know nothing about what's inside
+
+765
+00:32:17,240 --> 00:32:19,421
+or what's modified or none of that.
+
+766
+00:32:19,421 --> 00:32:21,060
+If you didn't understand
+what I'm saying there
+
+767
+00:32:21,060 --> 00:32:23,090
+about type-erased, don't
+worry about it too much
+
+768
+00:32:23,090 --> 00:32:25,050
+we're gonna see it again
+later in the quarter.
+
+769
+00:32:25,050 --> 00:32:26,890
+But the important thing to realize is
+
+770
+00:32:26,890 --> 00:32:29,860
+that AnyTransition is just a struct.
+
+771
+00:32:29,860 --> 00:32:32,860
+It has some static vars on it
+for the built in transitions
+
+772
+00:32:32,860 --> 00:32:36,330
+like opacity, which animates the opacity,
+
+773
+00:32:36,330 --> 00:32:39,330
+scale which animates the frame modifier
+
+774
+00:32:39,330 --> 00:32:42,550
+to make the frame go
+down to zero and back up.
+
+775
+00:32:42,550 --> 00:32:45,290
+There's a really important
+transition for your homework
+
+776
+00:32:45,290 --> 00:32:47,480
+called offset CGSize,
+
+777
+00:32:47,480 --> 00:32:50,940
+which causes a View to
+move across the screen
+
+778
+00:32:50,940 --> 00:32:54,580
+by some offset when it comes and goes.
+
+779
+00:32:54,580 --> 00:32:57,500
+Alright, and in your
+homework you're required
+
+780
+00:32:57,500 --> 00:32:59,810
+to make your cards be dealt
+
+781
+00:32:59,810 --> 00:33:02,450
+fly off from off the
+screen to on the screen
+
+782
+00:33:02,450 --> 00:33:06,060
+so you're gonna be wanting
+to use this offset transition
+
+783
+00:33:06,060 --> 00:33:07,453
+for those Views.
+
+784
+00:33:08,580 --> 00:33:11,600
+And you can of course
+create your own transition
+
+785
+00:33:11,600 --> 00:33:14,590
+by just specifying the two ViewModifiers.
+
+786
+00:33:14,590 --> 00:33:18,370
+The modifier to use when
+things are on screen
+
+787
+00:33:18,370 --> 00:33:21,920
+and to use when it's not, right, so
+
+788
+00:33:21,920 --> 00:33:25,523
+identity is when it's on and
+active there is when it's not.
+
+789
+00:33:27,610 --> 00:33:30,180
+You can also override
+the animation that's used
+
+790
+00:33:30,180 --> 00:33:32,700
+for a transition if you
+always want a transition
+
+791
+00:33:32,700 --> 00:33:35,400
+to be really fast, for
+example, or really slow.
+
+792
+00:33:35,400 --> 00:33:37,320
+You can use this .animation
+
+793
+00:33:37,320 --> 00:33:40,300
+that you attach to the transition, okay,
+
+794
+00:33:40,300 --> 00:33:42,870
+you know, attach it like a .animation.
+
+795
+00:33:42,870 --> 00:33:44,950
+Don't get confused by this little thing
+
+796
+00:33:44,950 --> 00:33:46,650
+this is not implicit animation,
+
+797
+00:33:46,650 --> 00:33:49,640
+implicit animation transitions,
+they don't go together.
+
+798
+00:33:49,640 --> 00:33:54,150
+This is just a way to
+override the duration
+
+799
+00:33:54,150 --> 00:33:57,080
+and curve and all that
+of a transition animation
+
+800
+00:33:57,080 --> 00:33:58,763
+so that always does it this way.
+
+801
+00:34:01,150 --> 00:34:05,840
+Transitions can be thorny,
+and a little bit frustrating
+
+802
+00:34:05,840 --> 00:34:07,720
+sometimes when you're first using them,
+
+803
+00:34:07,720 --> 00:34:11,110
+because of this restriction
+that the container
+
+804
+00:34:11,110 --> 00:34:13,437
+that has the View has
+to already be on screen.
+
+805
+00:34:13,437 --> 00:34:16,598
+So for example, in your
+homework assignment three,
+
+806
+00:34:16,598 --> 00:34:21,350
+you are required to have the
+cards deal out in animated
+
+807
+00:34:21,350 --> 00:34:24,061
+fashion onto the screen. It
+can't be like Memorize where
+
+808
+00:34:24,061 --> 00:34:26,010
+Memorize launches and oh,
+
+809
+00:34:26,010 --> 00:34:27,730
+there's the cards already on-screen.
+
+810
+00:34:27,730 --> 00:34:31,315
+No, has to launch just momentarily blank
+
+811
+00:34:31,315 --> 00:34:34,375
+and then the cards fly
+and automatic, you know,
+
+812
+00:34:34,375 --> 00:34:37,163
+kind of a deal animation
+to come on the screen.
+
+813
+00:34:38,120 --> 00:34:40,940
+How do you get out of this conundrum of
+
+814
+00:34:41,830 --> 00:34:44,905
+a View that contains the cards
+has to come on screen first
+
+815
+00:34:44,905 --> 00:34:46,297
+and then once it's on-screen,
+
+816
+00:34:46,297 --> 00:34:51,221
+then you can do something that
+causes the cards to happen.
+
+817
+00:34:51,221 --> 00:34:55,700
+There's a great function in
+View for helping with this
+
+818
+00:34:55,700 --> 00:34:58,610
+is called onAppear, very simple.
+
+819
+00:34:58,610 --> 00:35:00,367
+It's kind of like onTapGesture, right,
+
+820
+00:35:00,367 --> 00:35:05,170
+onTapGesture, when a tap
+happens, it calls this closure,
+
+821
+00:35:05,170 --> 00:35:08,520
+executes some code, this
+is kind of the same,
+
+822
+00:35:08,520 --> 00:35:13,170
+when a View appears on screen,
+then it calls this code.
+
+823
+00:35:13,170 --> 00:35:15,265
+So we're gonna use this
+nice little feature
+
+824
+00:35:15,265 --> 00:35:17,904
+on our container View.
+
+825
+00:35:17,904 --> 00:35:20,665
+On our container View,
+we're gonna add onAppear
+
+826
+00:35:20,665 --> 00:35:23,471
+and in that code, we're going to change
+
+827
+00:35:23,471 --> 00:35:26,538
+something in our Model,
+probably, that makes it
+
+828
+00:35:26,538 --> 00:35:29,720
+so those cards which weren't there,
+
+829
+00:35:29,720 --> 00:35:31,710
+when my container View first appeared,
+
+830
+00:35:31,710 --> 00:35:32,979
+something about them changed
+
+831
+00:35:32,979 --> 00:35:35,310
+now they need to be there.
+
+832
+00:35:35,310 --> 00:35:37,410
+Now they'll get animated coming on screen.
+
+833
+00:35:38,308 --> 00:35:41,629
+We're using the fact that
+we know you know onAppear
+
+834
+00:35:41,629 --> 00:35:43,559
+that our container View
+is finally on screen
+
+835
+00:35:43,559 --> 00:35:48,036
+to go ahead and do some Intent
+to the Model that says, okay,
+
+836
+00:35:48,036 --> 00:35:50,410
+you can deal the Cards now.
+
+837
+00:35:50,410 --> 00:35:52,275
+So the Model has to change
+in some way where the Cards
+
+838
+00:35:52,275 --> 00:35:56,665
+now are suddenly being
+thrown out into the View,
+
+839
+00:35:56,665 --> 00:35:59,780
+cause the View is just
+reflecting what's in the Model.
+
+840
+00:35:59,780 --> 00:36:01,212
+So if the Model says that cards are there,
+
+841
+00:36:01,212 --> 00:36:03,723
+when the app launches,
+they're gonna be there.
+
+842
+00:36:03,723 --> 00:36:06,560
+So the Cards have to not be
+there when the app launches,
+
+843
+00:36:06,560 --> 00:36:08,914
+and then after the onAppear
+happens on the container,
+
+844
+00:36:08,914 --> 00:36:13,074
+then something happens
+where the Cards are there.
+
+845
+00:36:13,074 --> 00:36:16,475
+So you've gotten the message,
+I'm sure in all this,
+
+846
+00:36:16,475 --> 00:36:19,160
+that the actual animations
+are done by ViewModifiers
+
+847
+00:36:19,160 --> 00:36:20,540
+and Shapes.
+
+848
+00:36:20,540 --> 00:36:23,622
+They're the things that actually animate.
+
+849
+00:36:23,622 --> 00:36:26,540
+How do they participate in
+this whole animation system?
+
+850
+00:36:26,540 --> 00:36:29,673
+ViewModifiers and Shapes,
+how do they get animated?
+
+851
+00:36:29,673 --> 00:36:30,680
+Well, essentially,
+
+852
+00:36:30,680 --> 00:36:33,770
+the animation system
+divides up the duration
+
+853
+00:36:33,770 --> 00:36:36,170
+of the animation into little tiny pieces,
+
+854
+00:36:36,170 --> 00:36:37,610
+depending on the curve.
+
+855
+00:36:37,610 --> 00:36:40,920
+And then it just asks all
+the shapes and ViewModifiers
+
+856
+00:36:40,920 --> 00:36:41,980
+that are Animatable,
+
+857
+00:36:41,980 --> 00:36:44,350
+here, draw this piece, draw
+this, draw this piece, right,
+
+858
+00:36:44,350 --> 00:36:45,680
+it's just drawing them
+over and over and over
+
+859
+00:36:45,680 --> 00:36:48,800
+and then piecing it together
+into like a little movie,
+
+860
+00:36:48,800 --> 00:36:50,732
+which is the animation.
+
+861
+00:36:50,732 --> 00:36:51,579
+That's it.
+
+862
+00:36:51,579 --> 00:36:53,135
+That's how this thing works
+
+863
+00:36:53,135 --> 00:36:57,743
+it's incredibly elegant and
+simple, to make it work.
+
+864
+00:36:58,660 --> 00:37:01,190
+The communication between
+the animation system
+
+865
+00:37:01,190 --> 00:37:05,540
+and ViewModifiers and Shapes
+is just one single var,
+
+866
+00:37:05,540 --> 00:37:08,230
+this var animatableData.
+
+867
+00:37:08,230 --> 00:37:11,290
+This animatableData is in
+the Animatable protocol,
+
+868
+00:37:11,290 --> 00:37:13,350
+it's the only var in there.
+
+869
+00:37:13,350 --> 00:37:16,410
+And all you have to do is implement this.
+
+870
+00:37:16,410 --> 00:37:18,930
+And if you're a Shape or a ViewModifier,
+
+871
+00:37:18,930 --> 00:37:22,653
+you can participate in this
+little piecewise animation.
+
+872
+00:37:23,540 --> 00:37:26,950
+The type of animatableData
+is a don't care.
+
+873
+00:37:26,950 --> 00:37:28,530
+Actually, it's a care a little bit
+
+874
+00:37:28,530 --> 00:37:31,097
+because that type has to
+implement the protocol
+
+875
+00:37:31,097 --> 00:37:33,670
+VectorArithmetic, which makes sense
+
+876
+00:37:33,670 --> 00:37:36,125
+because we're gonna be
+taking this animatableData,
+
+877
+00:37:36,125 --> 00:37:38,785
+whatever it is maybe the
+rotation of the angles
+
+878
+00:37:38,785 --> 00:37:42,540
+of the Pie thing or, you
+know, something like that
+
+879
+00:37:42,540 --> 00:37:43,910
+we're gonna be cutting
+up into little pieces
+
+880
+00:37:43,910 --> 00:37:45,890
+so we have to be able
+to do some math on it
+
+881
+00:37:45,890 --> 00:37:49,983
+to cut it up into pieces
+using that nice curve.
+
+882
+00:37:49,983 --> 00:37:52,940
+So type is almost always a Float,
+
+883
+00:37:52,940 --> 00:37:55,529
+either a Float or a Double
+or a CGFloat lots of the time
+
+884
+00:37:55,529 --> 00:37:58,490
+because we're doing a lot
+of drawing going on here.
+
+885
+00:37:58,490 --> 00:38:01,004
+But there's another struct that
+implements VectorArithmetic
+
+886
+00:38:01,004 --> 00:38:04,270
+called AnimatablePair that's really cool.
+
+887
+00:38:04,270 --> 00:38:08,654
+It combines two
+VectorArithmetic things into one
+
+888
+00:38:08,654 --> 00:38:10,670
+Animatable VectorArithmetic thing.
+
+889
+00:38:10,670 --> 00:38:12,370
+And of course, you can
+have AnimatablePairs
+
+890
+00:38:12,370 --> 00:38:13,800
+of AnimatablePairs.
+
+891
+00:38:13,800 --> 00:38:16,615
+So you can have any number
+of Animatable things.
+
+892
+00:38:16,615 --> 00:38:19,870
+Also, if you had your own
+complicated structure,
+
+893
+00:38:19,870 --> 00:38:22,620
+that encapsulated animation data,
+
+894
+00:38:22,620 --> 00:38:24,873
+you could make it
+implement VectorArithmetic,
+
+895
+00:38:24,873 --> 00:38:26,104
+that's just a protocol.
+
+896
+00:38:26,104 --> 00:38:28,790
+And it could be directly animated.
+
+897
+00:38:28,790 --> 00:38:31,670
+animatableData just has to be something
+
+898
+00:38:31,670 --> 00:38:34,070
+that can be sliced up into little pieces.
+
+899
+00:38:34,070 --> 00:38:36,677
+So it has to implement VectorArithmetic.
+
+900
+00:38:36,677 --> 00:38:39,720
+This var, as I said, is
+communicating both ways
+
+901
+00:38:39,720 --> 00:38:40,930
+between the animation system
+
+902
+00:38:40,930 --> 00:38:43,170
+and the Shapes and ViewModifiers.
+
+903
+00:38:43,170 --> 00:38:44,623
+So the setting of this var,
+
+904
+00:38:44,623 --> 00:38:46,248
+that's the animation system saying,
+
+905
+00:38:46,248 --> 00:38:47,627
+here's a little piece, draw it,
+
+906
+00:38:47,627 --> 00:38:49,300
+here's a little piece, draw it,
+
+907
+00:38:49,300 --> 00:38:53,115
+So it's just basically
+saying where in the curve,
+
+908
+00:38:53,115 --> 00:38:56,030
+that your a little piece
+of animatable data is
+
+909
+00:38:56,030 --> 00:38:57,780
+during this animation.
+
+910
+00:38:57,780 --> 00:38:59,699
+Now the getting of the
+var also matters for the
+
+911
+00:38:59,699 --> 00:39:02,803
+animation system to know the
+start and end of animation.
+
+912
+00:39:04,908 --> 00:39:07,930
+Now, this animatableData by the way,
+
+913
+00:39:07,930 --> 00:39:10,774
+is usually a computed var
+not because it has to be
+
+914
+00:39:10,774 --> 00:39:12,402
+it definitely doesn't have to be.
+
+915
+00:39:12,402 --> 00:39:16,600
+It's just that in our
+code like in our Pie,
+
+916
+00:39:16,600 --> 00:39:19,693
+or you know, our Cardify ViewModifier,
+
+917
+00:39:19,693 --> 00:39:22,950
+which we're gonna modify so
+that the card flips over,
+
+918
+00:39:22,950 --> 00:39:23,783
+it's rotated.
+
+919
+00:39:23,783 --> 00:39:25,874
+So in there, I really
+want to call the rotation
+
+920
+00:39:25,874 --> 00:39:27,864
+of my flipping card "rotation",
+
+921
+00:39:27,864 --> 00:39:29,745
+I don't wanna call it animatableData,
+
+922
+00:39:29,745 --> 00:39:31,666
+it's not very good name for a var.
+
+923
+00:39:31,666 --> 00:39:33,804
+So a lot of times we're
+gonna create a computed var
+
+924
+00:39:33,804 --> 00:39:38,085
+just to essentially
+rename some internal var
+
+925
+00:39:38,085 --> 00:39:40,343
+so that the animation system can see it.
+
+926
+00:39:41,465 --> 00:39:43,555
+So let's get right to that demo.
+
+927
+00:39:43,555 --> 00:39:46,524
+We're gonna be doing so
+many animation things here.
+
+928
+00:39:46,524 --> 00:39:49,700
+We are gonna do implicit animation,
+
+929
+00:39:49,700 --> 00:39:51,004
+but obviously doing explicit animation,
+
+930
+00:39:51,004 --> 00:39:52,704
+we're gonna do transitions
+
+931
+00:39:52,704 --> 00:39:55,410
+we're gonna make a
+ViewModifier be modified,
+
+932
+00:39:55,410 --> 00:39:58,540
+we're gonna make a Shape be
+modified, all that stuff,
+
+933
+00:39:58,540 --> 00:40:00,265
+and it's a big, long demo.
+
+934
+00:40:00,265 --> 00:40:02,583
+So let's dive into it right now.
+
+935
+00:40:04,170 --> 00:40:05,960
+Let's start our animation demo here
+
+936
+00:40:05,960 --> 00:40:08,185
+with some implicit animation.
+
+937
+00:40:08,185 --> 00:40:10,104
+Again, this is an animation
+where we're going to
+
+938
+00:40:10,104 --> 00:40:12,697
+have some very self-contained animation
+
+939
+00:40:12,697 --> 00:40:15,525
+that always gonna apply no matter what.
+
+940
+00:40:15,525 --> 00:40:19,484
+And it's not really coordinated
+with a lot of other activity
+
+941
+00:40:19,484 --> 00:40:21,590
+going on in the animation system.
+
+942
+00:40:21,590 --> 00:40:25,872
+What are we gonna do for
+this is to have our emojis
+
+943
+00:40:25,872 --> 00:40:27,651
+be really excited and celebrate
+
+944
+00:40:27,651 --> 00:40:31,604
+when they get a match
+by doing a somersault.
+
+945
+00:40:31,604 --> 00:40:35,374
+So a somersault is
+essentially rotating the
+
+946
+00:40:35,374 --> 00:40:37,070
+emoji around.
+
+947
+00:40:37,070 --> 00:40:39,280
+And rotation is really easy to do
+
+948
+00:40:39,280 --> 00:40:41,751
+in SwiftUI, there is a ViewModifier
+
+949
+00:40:41,751 --> 00:40:44,060
+for it called rotation effects.
+
+950
+00:40:44,060 --> 00:40:47,807
+So I'm gonna go down here
+to my Text, here's my emoji,
+
+951
+00:40:47,807 --> 00:40:52,256
+and I'm just gonna add a rotation effect
+
+952
+00:40:52,256 --> 00:40:53,370
+on it.
+
+953
+00:40:53,370 --> 00:40:56,940
+and it takes an Angle so
+I'm gonna do Angle degrees.
+
+954
+00:40:56,940 --> 00:40:59,268
+We learned about that when we did our Pie.
+
+955
+00:40:59,268 --> 00:41:01,423
+I'm gonna say it if the Card isMatched,
+
+956
+00:41:01,423 --> 00:41:05,032
+then let's start by just
+having it go upside down,
+
+957
+00:41:05,032 --> 00:41:08,071
+which is a 180 degree rotation,
+
+958
+00:41:08,071 --> 00:41:10,163
+we'll eventually have
+to do a full somersault
+
+959
+00:41:10,163 --> 00:41:11,570
+all the way around
+
+960
+00:41:12,550 --> 00:41:13,383
+and run.
+
+961
+00:41:17,800 --> 00:41:19,700
+Click on a card, we're
+looking for a match.
+
+962
+00:41:19,700 --> 00:41:21,783
+Oh, there it is, and it went upside down
+
+963
+00:41:21,783 --> 00:41:25,132
+but it didn't do any
+kind of animation there.
+
+964
+00:41:25,132 --> 00:41:26,753
+It's just as soon as it matched bloop,
+
+965
+00:41:26,753 --> 00:41:28,115
+they went upside down.
+
+966
+00:41:28,115 --> 00:41:30,585
+So how do we animate this?
+
+967
+00:41:30,585 --> 00:41:33,502
+Well, assuming that I always
+wanted to do a somersault
+
+968
+00:41:33,502 --> 00:41:34,786
+when a card matches,
+
+969
+00:41:34,786 --> 00:41:36,905
+all I need to do is an
+implicit animation here
+
+970
+00:41:36,905 --> 00:41:39,283
+and say .animation.
+
+971
+00:41:40,280 --> 00:41:43,840
+And I just specify the
+parameters of the animation.
+
+972
+00:41:43,840 --> 00:41:48,060
+So I'm gonna have this
+animation be a linear one
+
+973
+00:41:48,060 --> 00:41:52,300
+and we'll have it be a duration
+of, let's say, one second.
+
+974
+00:41:52,300 --> 00:41:55,690
+This Animation object right
+here we talked about in lecture,
+
+975
+00:41:55,690 --> 00:41:57,910
+it's the kind of thing you
+definitely would want to
+
+976
+00:41:57,910 --> 00:42:01,195
+look over in the developer
+documentation right here,
+
+977
+00:42:01,195 --> 00:42:03,695
+we can see all the
+different kinds of animation
+
+978
+00:42:03,695 --> 00:42:07,336
+easeIn, easeInOut, linear
+and all these other things.
+
+979
+00:42:07,336 --> 00:42:09,737
+I said we could do: delay animations,
+
+980
+00:42:09,737 --> 00:42:13,147
+obviously create them
+with certain durations.
+
+981
+00:42:13,147 --> 00:42:15,740
+Here's all the springs
+lots and lots to learn
+
+982
+00:42:15,740 --> 00:42:17,587
+there about animations.
+
+983
+00:42:17,587 --> 00:42:20,320
+And we'll be doing quite
+a few of them today.
+
+984
+00:42:20,320 --> 00:42:23,020
+So let's try this and
+see if this just works.
+
+985
+00:42:23,020 --> 00:42:26,117
+Will this now make that
+happen over one second,
+
+986
+00:42:26,117 --> 00:42:28,869
+and here's one and oh, wow,
+
+987
+00:42:28,869 --> 00:42:32,754
+well one of them animated
+here, not both of them.
+
+988
+00:42:32,754 --> 00:42:33,923
+Let's try another one.
+
+989
+00:42:33,923 --> 00:42:37,203
+But again, it is doing that
+animation over a second
+
+990
+00:42:37,203 --> 00:42:40,630
+to do that, but it's not
+doing this other one.
+
+991
+00:42:40,630 --> 00:42:44,043
+Now, the fact that it's only
+doing one of these is really,
+
+992
+00:42:44,043 --> 00:42:45,488
+there's a good reason for that
+
+993
+00:42:45,488 --> 00:42:47,348
+and we're gonna cover
+that a little bit later.
+
+994
+00:42:47,348 --> 00:42:49,279
+For now let's just make
+sure the one that is working
+
+995
+00:42:49,279 --> 00:42:50,607
+is doing what we want.
+
+996
+00:42:50,607 --> 00:42:55,030
+Let's have it go to let's say, 360
+
+997
+00:42:55,030 --> 00:42:56,213
+so all the way around.
+
+998
+00:43:01,660 --> 00:43:03,560
+We're trying to find a
+matching pair there it is,
+
+999
+00:43:03,560 --> 00:43:05,184
+whoo, it's somersault all the way around.
+
+1000
+00:43:05,184 --> 00:43:06,640
+How about these guys?
+
+1001
+00:43:06,640 --> 00:43:11,110
+Whoo and maybe once it's
+matched, we are so excited
+
+1002
+00:43:11,110 --> 00:43:13,620
+we just want to keep going or
+somersaults and somersaults.
+
+1003
+00:43:13,620 --> 00:43:15,439
+Let's take this animation
+that we have here,
+
+1004
+00:43:15,439 --> 00:43:19,543
+this linear animation, and
+let's have it repeatForever.
+
+1005
+00:43:23,250 --> 00:43:24,278
+So it's doing the same animation
+
+1006
+00:43:24,278 --> 00:43:26,476
+it's just now it's gonna keep going.
+
+1007
+00:43:26,476 --> 00:43:29,030
+Now the thing is, notice
+that it does do it
+
+1008
+00:43:29,030 --> 00:43:30,430
+but then it kinda reverses itself
+
+1009
+00:43:30,430 --> 00:43:32,535
+and then it does it again
+and reverses itself.
+
+1010
+00:43:32,535 --> 00:43:33,870
+This is really not what we want
+
+1011
+00:43:33,870 --> 00:43:35,121
+we want to go around and around.
+
+1012
+00:43:35,121 --> 00:43:39,990
+Luckily, repeatForever has
+a an argument to it here,
+
+1013
+00:43:39,990 --> 00:43:43,740
+which is autoreverses and
+we'll say autoreverses false,
+
+1014
+00:43:43,740 --> 00:43:45,050
+we don't want it to reverse
+
+1015
+00:43:45,050 --> 00:43:47,987
+we just want to keep repeating
+that animation over and over.
+
+1016
+00:43:47,987 --> 00:43:49,745
+And that's because this animation returns
+
+1017
+00:43:49,745 --> 00:43:51,305
+to where it started so it makes sense
+
+1018
+00:43:51,305 --> 00:43:54,302
+to keep doing it over and over.
+
+1019
+00:43:54,302 --> 00:43:55,985
+The only thing about this animation
+
+1020
+00:43:55,985 --> 00:43:59,068
+that want to be a little
+careful here about is
+
+1021
+00:44:00,741 --> 00:44:02,110
+eventually we're gonna add a new game
+
+1022
+00:44:02,110 --> 00:44:03,480
+that you did in your homework
+
+1023
+00:44:03,480 --> 00:44:06,740
+and when we do that
+these Views get reused.
+
+1024
+00:44:06,740 --> 00:44:08,810
+And we don't want this
+animation to be starting off
+
+1025
+00:44:08,810 --> 00:44:09,643
+in a new game.
+
+1026
+00:44:09,643 --> 00:44:13,567
+So essentially, whenever
+the Card is not matched,
+
+1027
+00:44:13,567 --> 00:44:17,300
+we do not want to be
+doing this repeat forever.
+
+1028
+00:44:17,300 --> 00:44:18,857
+So anytime you do a
+repeat forever animation,
+
+1029
+00:44:18,857 --> 00:44:20,893
+you wanna be careful to turn it off
+
+1030
+00:44:20,893 --> 00:44:22,724
+when it doesn't apply anymore.
+
+1031
+00:44:22,724 --> 00:44:27,052
+You can do that right here
+just by saying card is matched.
+
+1032
+00:44:27,052 --> 00:44:29,562
+We'll do this nice repeating forever.
+
+1033
+00:44:29,562 --> 00:44:31,690
+But otherwise, we're gonna go back doing
+
+1034
+00:44:31,690 --> 00:44:34,070
+whatever the default animation is.
+
+1035
+00:44:34,070 --> 00:44:37,893
+That's kind of like don't
+do this animation anymore.
+
+1036
+00:44:38,861 --> 00:44:41,229
+Make sure that didn't break anything.
+
+1037
+00:44:41,229 --> 00:44:42,259
+We go we got a match.
+
+1038
+00:44:42,259 --> 00:44:44,279
+Whoo, it's working
+
+1039
+00:44:44,279 --> 00:44:45,623
+it's working.
+
+1040
+00:44:48,440 --> 00:44:50,860
+Now we've done this implicit animation.
+
+1041
+00:44:50,860 --> 00:44:54,308
+Let's move on to doing
+an explicit animation.
+
+1042
+00:44:54,308 --> 00:44:56,798
+Before I do the explicit animation,
+
+1043
+00:44:56,798 --> 00:45:00,030
+I'm going to implement
+some of what you did
+
+1044
+00:45:00,030 --> 00:45:01,514
+in your homework specifically,
+
+1045
+00:45:01,514 --> 00:45:04,224
+I'm going to implement shuffling Cards
+
+1046
+00:45:04,224 --> 00:45:07,490
+and also I'm gonna implement new game.
+
+1047
+00:45:07,490 --> 00:45:08,323
+So shuffling Cards,
+
+1048
+00:45:08,323 --> 00:45:10,993
+that's an easy one going
+over to our Model over here
+
+1049
+00:45:10,993 --> 00:45:13,453
+and when we create our Cards,
+
+1050
+00:45:13,453 --> 00:45:16,293
+I'm just gonna say cards.shuffle.
+
+1051
+00:45:17,270 --> 00:45:19,527
+Obviously, if you haven't
+done homework one,
+
+1052
+00:45:19,527 --> 00:45:22,440
+hopefully you're not watching this video.
+
+1053
+00:45:22,440 --> 00:45:25,420
+But next I'm gonna do the new game thing
+
+1054
+00:45:25,420 --> 00:45:28,760
+where we have new games
+and that's in homework two.
+
+1055
+00:45:28,760 --> 00:45:30,040
+Hopefully you've done homework two,
+
+1056
+00:45:30,040 --> 00:45:31,705
+it was due before this lecture.
+
+1057
+00:45:31,705 --> 00:45:33,760
+But if you haven't finished homework two,
+
+1058
+00:45:33,760 --> 00:45:36,350
+now's the time to pause this video,
+
+1059
+00:45:36,350 --> 00:45:39,175
+go submit your assignment
+two and then come back
+
+1060
+00:45:39,175 --> 00:45:41,673
+and resume watching this.
+
+1061
+00:45:41,673 --> 00:45:45,945
+So cards.shuffle, that should
+fix that nice one liner.
+
+1062
+00:45:45,945 --> 00:45:49,233
+Whoo, it's shuffled now these two things
+
+1063
+00:45:49,233 --> 00:45:50,850
+are right next to each other.
+
+1064
+00:45:50,850 --> 00:45:54,213
+All right, well, we can still match them.
+
+1065
+00:45:54,213 --> 00:45:56,640
+Alright, how about new game,
+
+1066
+00:45:56,640 --> 00:46:01,640
+new game requires us to have
+an Intent in our ViewModel,
+
+1067
+00:46:01,863 --> 00:46:03,902
+just like we have the
+Intent to choose a Card,
+
+1068
+00:46:03,902 --> 00:46:07,105
+we're gonna need an Intent
+to create a new game.
+
+1069
+00:46:07,105 --> 00:46:10,020
+So I'm gonna call this resetGame
+
+1070
+00:46:10,020 --> 00:46:13,270
+and I'm gonna reset the game
+just by creating a new Model
+
+1071
+00:46:13,270 --> 00:46:16,483
+I'm gonna say Model =
+EmojiMemoryGame.createMemoryGame
+
+1072
+00:46:20,648 --> 00:46:22,748
+to create new memory game,
+
+1073
+00:46:22,748 --> 00:46:24,106
+and that's all I need to do.
+
+1074
+00:46:24,106 --> 00:46:25,943
+This is clearly gonna change the Model
+
+1075
+00:46:25,943 --> 00:46:28,793
+that's going to cause
+this ObservableObject
+
+1076
+00:46:28,793 --> 00:46:30,840
+because this Model is @Published,
+
+1077
+00:46:30,840 --> 00:46:34,388
+all this is gonna happen and
+our whole View is gonna redraw
+
+1078
+00:46:34,388 --> 00:46:36,291
+because of that change.
+
+1079
+00:46:36,291 --> 00:46:39,479
+So now I need a button
+somewhere in my UI, right?
+
+1080
+00:46:39,479 --> 00:46:41,964
+In my UI, I don't really
+have a new game button,
+
+1081
+00:46:41,964 --> 00:46:44,337
+I can't cause a new game to appear.
+
+1082
+00:46:44,337 --> 00:46:48,550
+So I'm gonna add a new button
+at the bottom very simple way.
+
+1083
+00:46:48,550 --> 00:46:50,863
+I'm just gonna have my grid of Cards here
+
+1084
+00:46:50,863 --> 00:46:53,591
+in a VStack
+
+1085
+00:46:53,591 --> 00:46:55,470
+with
+
+1086
+00:46:55,470 --> 00:46:56,900
+a Button.
+
+1087
+00:46:56,900 --> 00:46:58,230
+We didn't talk about Button
+
+1088
+00:46:58,230 --> 00:47:00,910
+and I didn't expect you in
+your homework number two,
+
+1089
+00:47:00,910 --> 00:47:03,443
+to necessarily do a Button,
+
+1090
+00:47:03,443 --> 00:47:05,910
+you could easily have just done a Text
+
+1091
+00:47:05,910 --> 00:47:09,244
+with onTapGesture there,
+that would have been fine.
+
+1092
+00:47:09,244 --> 00:47:10,840
+But while we're here, let's go ahead
+
+1093
+00:47:10,840 --> 00:47:12,480
+and learn a little bit about Button.
+
+1094
+00:47:12,480 --> 00:47:13,313
+Button is very simple
+
+1095
+00:47:13,313 --> 00:47:16,640
+it just has an action, which
+is some closure to execute
+
+1096
+00:47:16,640 --> 00:47:17,800
+when the Button gets pressed.
+
+1097
+00:47:17,800 --> 00:47:19,223
+And then it has this label,
+
+1098
+00:47:19,223 --> 00:47:22,940
+which is essentially any View
+you want to be the label.
+
+1099
+00:47:22,940 --> 00:47:26,120
+So I'm gonna have the label here be a Text
+
+1100
+00:47:26,120 --> 00:47:28,732
+that says "New Game".
+
+1101
+00:47:28,732 --> 00:47:31,940
+And in terms of what I'm
+gonna do in this action,
+
+1102
+00:47:31,940 --> 00:47:33,770
+let's double click there.
+
+1103
+00:47:33,770 --> 00:47:37,999
+I'm gonna do that Intent
+that I just talked about.
+
+1104
+00:47:37,999 --> 00:47:40,757
+So self.viewModel.resetgame.
+
+1105
+00:47:42,015 --> 00:47:44,523
+Usually, when something happens in the UI,
+
+1106
+00:47:44,523 --> 00:47:47,801
+like we tap on a Card,
+or a Button is clicked,
+
+1107
+00:47:47,801 --> 00:47:49,420
+we're gonna be doing
+
+1108
+00:47:49,420 --> 00:47:50,590
+either Intents
+
+1109
+00:47:50,590 --> 00:47:53,080
+or we're gonna be do some
+doing something that totally
+
+1110
+00:47:53,080 --> 00:47:56,004
+only affects the UI, just
+adjust the UI in some way
+
+1111
+00:47:56,004 --> 00:47:58,720
+it doesn't really affect
+what's in our Model.
+
+1112
+00:47:58,720 --> 00:48:00,339
+Let's see if our new game Button works.
+
+1113
+00:48:00,339 --> 00:48:04,259
+We click here run, well, there
+is our new game down there
+
+1114
+00:48:04,259 --> 00:48:05,840
+and we click.
+
+1115
+00:48:05,840 --> 00:48:06,950
+Let's see if it's doing anything.
+
+1116
+00:48:06,950 --> 00:48:08,537
+We've got this there and new game.
+
+1117
+00:48:08,537 --> 00:48:12,817
+Whoo, yeah, it did reshuffle
+them put new cards out there.
+
+1118
+00:48:12,817 --> 00:48:14,553
+All right let's see if some cards match
+
+1119
+00:48:14,553 --> 00:48:16,013
+then it puts them back.
+
+1120
+00:48:16,013 --> 00:48:18,007
+So our new game Button is working.
+
+1121
+00:48:18,007 --> 00:48:21,380
+By the way, what is the difference
+between using Button here
+
+1122
+00:48:21,380 --> 00:48:23,745
+and Text with onTapGesture?
+
+1123
+00:48:23,745 --> 00:48:28,127
+Well Button is powerful, it
+knows that it's a Button.
+
+1124
+00:48:28,127 --> 00:48:30,480
+So as it appears on different platforms,
+
+1125
+00:48:30,480 --> 00:48:32,668
+maybe Apple TV or Apple watch or whatever,
+
+1126
+00:48:32,668 --> 00:48:34,890
+it's gonna draw this Button in a way
+
+1127
+00:48:34,890 --> 00:48:36,657
+that makes sense on that platform.
+
+1128
+00:48:36,657 --> 00:48:38,627
+Whereas we do Text with onTapGesture,
+
+1129
+00:48:38,627 --> 00:48:40,604
+it's always gonna just
+look like a piece of text
+
+1130
+00:48:40,604 --> 00:48:41,765
+that we tap on.
+
+1131
+00:48:41,765 --> 00:48:44,788
+So we would always want
+to use a Button for reals
+
+1132
+00:48:44,788 --> 00:48:46,250
+when we are doing a Button.
+
+1133
+00:48:46,250 --> 00:48:49,429
+We don't want to do a Text
+onTapGesture solution.
+
+1134
+00:48:49,429 --> 00:48:51,679
+One other thing I want to
+mention, while we're here
+
+1135
+00:48:51,679 --> 00:48:55,050
+is this red "New Game" String.
+
+1136
+00:48:55,050 --> 00:48:57,010
+These Strings are red
+and I'm glad they're red.
+
+1137
+00:48:57,010 --> 00:49:00,110
+Red usually means I look
+I'll watch out and indeed
+
+1138
+00:49:00,110 --> 00:49:02,219
+you do want to watch out
+when you have red Strings,
+
+1139
+00:49:02,219 --> 00:49:04,445
+if you have red Strings
+that are gonna appear
+
+1140
+00:49:04,445 --> 00:49:07,640
+in front of the user, you need
+to do a little bit of work,
+
+1141
+00:49:07,640 --> 00:49:08,625
+which we're not gonna cover now
+
+1142
+00:49:08,625 --> 00:49:10,785
+to make these internationalizable.
+
+1143
+00:49:10,785 --> 00:49:12,866
+So that you can have this say,
+
+1144
+00:49:12,866 --> 00:49:16,155
+new game in French, or Chinese or Arabic
+
+1145
+00:49:16,155 --> 00:49:18,975
+or whatever that has to be
+something that can be fixed.
+
+1146
+00:49:18,975 --> 00:49:21,810
+And so we're not gonna talk about that,
+
+1147
+00:49:21,810 --> 00:49:23,630
+if you're interested in that stuff,
+
+1148
+00:49:23,630 --> 00:49:25,191
+maybe starting the
+documentation by looking
+
+1149
+00:49:25,191 --> 00:49:28,640
+at something called localizedString key.
+
+1150
+00:49:28,640 --> 00:49:30,223
+That's a way to at least get your Strings
+
+1151
+00:49:30,223 --> 00:49:32,120
+starting to be localized.
+
+1152
+00:49:32,120 --> 00:49:34,119
+There's other things that
+need to be localized as well
+
+1153
+00:49:34,119 --> 00:49:37,292
+like dates and things like
+that, dates appear differently.
+
+1154
+00:49:37,292 --> 00:49:38,931
+And again, we don't have
+time to talk about that.
+
+1155
+00:49:38,931 --> 00:49:40,351
+We're talking about animation today.
+
+1156
+00:49:40,351 --> 00:49:42,900
+I just want to give you a
+heads up that that is a thing,
+
+1157
+00:49:42,900 --> 00:49:45,529
+where we eventually are
+gonna have to be careful
+
+1158
+00:49:45,529 --> 00:49:47,683
+about the Strings we put in here.
+
+1159
+00:49:49,200 --> 00:49:51,020
+All right, new game worked
+
+1160
+00:49:51,020 --> 00:49:55,060
+but as we saw over here,
+it did not animate right,
+
+1161
+00:49:55,060 --> 00:49:57,520
+do this and whoo, it
+just immediately changed.
+
+1162
+00:49:57,520 --> 00:49:58,353
+There's no animation.
+
+1163
+00:49:58,353 --> 00:50:01,145
+So we would like this
+whole thing to be animated,
+
+1164
+00:50:01,145 --> 00:50:03,595
+that turns out to be really easy to do
+
+1165
+00:50:03,595 --> 00:50:05,076
+using an explicit animation,
+
+1166
+00:50:05,076 --> 00:50:09,270
+we're just gonna wrap this reset
+game which had a big effect
+
+1167
+00:50:09,270 --> 00:50:10,993
+on our Model and changed all our Cards.
+
+1168
+00:50:10,993 --> 00:50:13,960
+Well, all those changes, we can animate
+
+1169
+00:50:13,960 --> 00:50:17,170
+with one simple line of
+code here withAnimation.
+
+1170
+00:50:17,170 --> 00:50:19,076
+And just like when we
+did implicit animation,
+
+1171
+00:50:19,076 --> 00:50:22,330
+we're gonna specify the Animation we want.
+
+1172
+00:50:22,330 --> 00:50:25,295
+I'm gonna use easeInOut.
+notice I didn't type
+
+1173
+00:50:25,295 --> 00:50:30,295
+the full Animation dot easeInOut,
+Swift we can infer that
+
+1174
+00:50:30,717 --> 00:50:34,704
+that's the obvious argument
+to withAnimation here.
+
+1175
+00:50:34,704 --> 00:50:38,200
+And then it takes a closure,
+which takes no arguments,
+
+1176
+00:50:38,200 --> 00:50:39,033
+return no arguments,
+
+1177
+00:50:39,033 --> 00:50:40,707
+and you can put whatever
+code you want in here.
+
+1178
+00:50:40,707 --> 00:50:44,063
+And whatever this does to
+our UI, whatever it is,
+
+1179
+00:50:44,063 --> 00:50:45,940
+it's gonna get animated.
+
+1180
+00:50:45,940 --> 00:50:47,940
+Let's see what it looks like to do that.
+
+1181
+00:50:51,640 --> 00:50:54,567
+Whoo, oh my, it actually did a whole bunch
+
+1182
+00:50:54,567 --> 00:50:58,070
+of animation there, nice.
+
+1183
+00:50:58,070 --> 00:51:00,290
+Now if we want to see
+exactly what's going on here
+
+1184
+00:51:00,290 --> 00:51:02,420
+because there's some other
+stuff going on there too
+
+1185
+00:51:02,420 --> 00:51:04,340
+some fading going on,
+
+1186
+00:51:04,340 --> 00:51:08,200
+we can change the duration
+by having an easeInOut
+
+1187
+00:51:08,200 --> 00:51:11,200
+Animation of a duration, let's say,
+
+1188
+00:51:11,200 --> 00:51:13,420
+two or three seconds.
+
+1189
+00:51:13,420 --> 00:51:14,695
+I'll slow that animation way down,
+
+1190
+00:51:14,695 --> 00:51:16,630
+which is something I
+always recommend doing
+
+1191
+00:51:16,630 --> 00:51:19,183
+when you're doing animation
+is to slow things down
+
+1192
+00:51:19,183 --> 00:51:20,500
+and see what's going on.
+
+1193
+00:51:20,500 --> 00:51:22,743
+So here we go, let's try a new game.
+
+1194
+00:51:23,790 --> 00:51:27,396
+Okay, see the cards fade
+out, back to being face-down,
+
+1195
+00:51:27,396 --> 00:51:30,511
+and they move to their new position.
+
+1196
+00:51:30,511 --> 00:51:33,361
+That's what's happening
+here that is the animation.
+
+1197
+00:51:33,361 --> 00:51:35,350
+So why is that happening?
+
+1198
+00:51:35,350 --> 00:51:36,260
+That these things are fading out,
+
+1199
+00:51:36,260 --> 00:51:41,260
+that ghost, see he fades
+out, back to his card back?
+
+1200
+00:51:41,540 --> 00:51:42,373
+Well, that's because I told you
+
+1201
+00:51:42,373 --> 00:51:45,000
+that transition
+
+1202
+00:51:45,000 --> 00:51:46,860
+is by default
+
+1203
+00:51:46,860 --> 00:51:48,150
+opacity.
+
+1204
+00:51:48,150 --> 00:51:49,936
+And what's happening
+there when we switch that
+
+1205
+00:51:49,936 --> 00:51:52,257
+it's transitioning to a new View
+
+1206
+00:51:52,257 --> 00:51:54,860
+and so we're just fading the new one in
+
+1207
+00:51:54,860 --> 00:51:56,750
+and fading the old one out.
+
+1208
+00:51:56,750 --> 00:51:58,661
+We don't really want
+that, we want our cards
+
+1209
+00:51:58,661 --> 00:52:00,830
+actually to flip over when they go
+
+1210
+00:52:00,830 --> 00:52:03,460
+from back to front and front to back,
+
+1211
+00:52:03,460 --> 00:52:05,720
+we'll fix that in a few minutes.
+
+1212
+00:52:05,720 --> 00:52:09,440
+But first, let's use this same
+feature of explicit animation
+
+1213
+00:52:09,440 --> 00:52:12,401
+to make it so clicking
+on the cards is animated,
+
+1214
+00:52:12,401 --> 00:52:13,557
+cause right now it's very abrupt,
+
+1215
+00:52:13,557 --> 00:52:16,797
+if you click on a card and
+things instantly appear
+
+1216
+00:52:16,797 --> 00:52:18,660
+so that's not good.
+
+1217
+00:52:18,660 --> 00:52:21,780
+And exact same thing here's
+where we're choosing the Cards,
+
+1218
+00:52:21,780 --> 00:52:25,471
+from imperative code that we
+can just say withAnimation,
+
+1219
+00:52:25,471 --> 00:52:28,869
+let's go ahead and make
+this be a linear Animation
+
+1220
+00:52:28,869 --> 00:52:31,591
+and we'll make it be long as
+well just so we can really
+
+1221
+00:52:31,591 --> 00:52:34,800
+see it in action, see what's going on.
+
+1222
+00:52:34,800 --> 00:52:37,220
+Inside we just do whatever we're gonna do,
+
+1223
+00:52:37,220 --> 00:52:39,044
+that's gonna cause a
+bunch of changes to happen
+
+1224
+00:52:39,044 --> 00:52:41,293
+and all those changes will be animated.
+
+1225
+00:52:46,415 --> 00:52:49,770
+Okay, so there we go to clicking
+
+1226
+00:52:49,770 --> 00:52:53,724
+and we can see that we're
+getting this fade in fade out
+
+1227
+00:52:53,724 --> 00:52:55,240
+when we choose a card.
+
+1228
+00:52:55,240 --> 00:52:57,814
+And notice I clicked on
+this card but it animated
+
+1229
+00:52:57,814 --> 00:52:59,594
+every change that happened including
+
+1230
+00:52:59,594 --> 00:53:03,168
+these other cards flipping face-down.
+
+1231
+00:53:03,168 --> 00:53:06,180
+So that when you put
+this explicit animation,
+
+1232
+00:53:06,180 --> 00:53:08,220
+it's gonna animate
+everything that happened
+
+1233
+00:53:08,220 --> 00:53:10,561
+as a result of doing what you did there.
+
+1234
+00:53:10,561 --> 00:53:13,044
+And that includes something
+like let's say there's a match
+
+1235
+00:53:13,044 --> 00:53:17,140
+let's try and find ourselves a match here.
+
+1236
+00:53:17,140 --> 00:53:18,788
+We're not very good at this game are we.
+
+1237
+00:53:18,788 --> 00:53:20,225
+Let's see, oh, there's a match.
+
+1238
+00:53:20,225 --> 00:53:23,479
+By the way, we get our
+implicit animation there
+
+1239
+00:53:23,479 --> 00:53:25,300
+and if we click on another card here,
+
+1240
+00:53:25,300 --> 00:53:27,170
+these two cards are gonna disappear.
+
+1241
+00:53:27,170 --> 00:53:31,050
+Let's see how they disappear
+they fade out, right?
+
+1242
+00:53:31,050 --> 00:53:32,280
+Cause that's the default transition
+
+1243
+00:53:32,280 --> 00:53:34,170
+we haven't specified any transitions
+
+1244
+00:53:34,170 --> 00:53:36,112
+we're getting fade-in
+and fade-out transitions
+
+1245
+00:53:36,112 --> 00:53:38,049
+all over the place here.
+
+1246
+00:53:38,049 --> 00:53:41,040
+What if we wanted those
+things disappearing
+
+1247
+00:53:41,040 --> 00:53:43,530
+to be a little cooler animation
+
+1248
+00:53:43,530 --> 00:53:47,231
+like how about we'll have them
+shrink down and disappear?
+
+1249
+00:53:47,231 --> 00:53:49,837
+Really easy to do again,
+we're gonna go over here
+
+1250
+00:53:49,837 --> 00:53:51,928
+to find that View, where is that View?
+
+1251
+00:53:51,928 --> 00:53:53,903
+It's right here.
+
+1252
+00:53:53,903 --> 00:53:57,578
+This is the View, this cardified ZStack,
+
+1253
+00:53:57,578 --> 00:54:00,480
+and it's only there when it's face-up
+
+1254
+00:54:00,480 --> 00:54:02,370
+or if the Card is not matched.
+
+1255
+00:54:02,370 --> 00:54:05,385
+So once the Card is
+matched and is not face-up,
+
+1256
+00:54:05,385 --> 00:54:07,754
+this View goes away.
+
+1257
+00:54:07,754 --> 00:54:12,754
+It transitions out, okay
+disappears from the View,
+
+1258
+00:54:13,050 --> 00:54:15,930
+and so we can just say transition here
+
+1259
+00:54:15,930 --> 00:54:19,783
+and to pick, for example,
+AnyTransition.scale.
+
+1260
+00:54:21,260 --> 00:54:24,720
+So scale is the one that
+uses frame to make things
+
+1261
+00:54:24,720 --> 00:54:28,881
+zoom in, down to nothingness
+or out from nothing.
+
+1262
+00:54:28,881 --> 00:54:32,051
+So let's see if we can
+find another match here.
+
+1263
+00:54:32,051 --> 00:54:35,410
+Now, it's hard to do because
+
+1264
+00:54:35,410 --> 00:54:37,067
+we have such a slow animation here,
+
+1265
+00:54:37,067 --> 00:54:38,570
+oh, there's a match.
+
+1266
+00:54:38,570 --> 00:54:40,240
+Okay, when we click on something else,
+
+1267
+00:54:40,240 --> 00:54:43,403
+let's see what happens to
+animate these cars disappearance.
+
+1268
+00:54:44,240 --> 00:54:48,913
+Whoo, now notice that only
+they disappear by scaling down,
+
+1269
+00:54:48,913 --> 00:54:52,650
+but all other animations
+including that implicit animation,
+
+1270
+00:54:52,650 --> 00:54:53,882
+they kept going.
+
+1271
+00:54:53,882 --> 00:54:56,409
+And one thing you're gonna
+learn about SwiftUI is that
+
+1272
+00:54:56,409 --> 00:54:58,421
+all animations can be
+happening all at the same time
+
+1273
+00:54:58,421 --> 00:55:00,490
+and they all just work together.
+
+1274
+00:55:00,490 --> 00:55:03,576
+It's really, that's one of the
+nicest things about SwiftUI,
+
+1275
+00:55:03,576 --> 00:55:05,478
+is how it handles all the interactions
+
+1276
+00:55:05,478 --> 00:55:08,640
+of animations happening at the same time.
+
+1277
+00:55:08,640 --> 00:55:11,737
+Now in your homework, you're
+gonna have cards coming
+
+1278
+00:55:11,737 --> 00:55:13,128
+and going as well.
+
+1279
+00:55:13,128 --> 00:55:15,648
+But you're not gonna have them scale down,
+
+1280
+00:55:15,648 --> 00:55:19,190
+you're gonna want your card
+to fly across the screen.
+
+1281
+00:55:19,190 --> 00:55:21,462
+So they're gonna fly away
+instead of the screen,
+
+1282
+00:55:21,462 --> 00:55:23,050
+you know, shrinking down.
+
+1283
+00:55:23,050 --> 00:55:25,190
+And when they're dealt,
+when they appear on screen,
+
+1284
+00:55:25,190 --> 00:55:27,500
+they're going to fly in, not gonna
+
+1285
+00:55:27,500 --> 00:55:29,653
+have this nice shrinking effect.
+
+1286
+00:55:30,710 --> 00:55:32,460
+And adding that transition
+
+1287
+00:55:32,460 --> 00:55:34,930
+for these things coming and going,
+
+1288
+00:55:34,930 --> 00:55:38,060
+also makes it so that when
+they come back you click
+
+1289
+00:55:38,060 --> 00:55:41,513
+on new game and they come
+back, they should zoom up.
+
+1290
+00:55:43,490 --> 00:55:45,840
+This AnyTransition and remember is
+
+1291
+00:55:45,840 --> 00:55:48,380
+that type-erased version of transition.
+
+1292
+00:55:48,380 --> 00:55:51,080
+So let's go look at that in
+the developer documentation
+
+1293
+00:55:51,080 --> 00:55:53,350
+really quickly here it is AnyTransition.
+
+1294
+00:55:53,350 --> 00:55:55,720
+So here's that identity,
+opacity we talked about,
+
+1295
+00:55:55,720 --> 00:55:59,680
+which is the default, scale,
+slide, slide down to the side,
+
+1296
+00:55:59,680 --> 00:56:01,040
+down here is offset,
+
+1297
+00:56:01,040 --> 00:56:03,690
+which is the one that
+makes the View fly around,
+
+1298
+00:56:03,690 --> 00:56:04,560
+coming in and out.
+
+1299
+00:56:04,560 --> 00:56:06,610
+So that's probably what
+you want for your homework.
+
+1300
+00:56:06,610 --> 00:56:10,522
+Here's modifier where you
+get to specify the two
+
+1301
+00:56:10,522 --> 00:56:13,864
+ViewModifiers. This asymmetric,
+by the way, allows you so
+
+1302
+00:56:13,864 --> 00:56:16,210
+that you can have cards
+come in with one animation
+
+1303
+00:56:16,210 --> 00:56:19,210
+and then disappear with another
+animation if you wanted to.
+
+1304
+00:56:20,170 --> 00:56:21,880
+See that AnyTransition says here,
+
+1305
+00:56:21,880 --> 00:56:24,720
+it's a type-erased transition.
+
+1306
+00:56:24,720 --> 00:56:26,240
+That type-erasing is what makes
+
+1307
+00:56:26,240 --> 00:56:28,123
+all this very simple right here.
+
+1308
+00:56:28,123 --> 00:56:30,660
+It's making the return
+types of these things
+
+1309
+00:56:30,660 --> 00:56:35,040
+not be transition angle
+bracket ViewModifier of
+
+1310
+00:56:35,040 --> 00:56:38,210
+offset... it's just AnyTransition.
+
+1311
+00:56:38,210 --> 00:56:41,340
+And again, we'll talk
+more about type-erasure
+
+1312
+00:56:41,340 --> 00:56:42,810
+later in the quarter.
+
+1313
+00:56:42,810 --> 00:56:44,240
+For now you can kind of ignore it
+
+1314
+00:56:44,240 --> 00:56:47,130
+and just think of the
+transition as just oh transition
+
+1315
+00:56:47,130 --> 00:56:49,077
+and not worry about all the don't cares
+
+1316
+00:56:49,077 --> 00:56:51,000
+and other stuff that might be involved
+
+1317
+00:56:51,000 --> 00:56:53,640
+with a non type-erased transition.
+
+1318
+00:56:53,640 --> 00:56:56,533
+So the elephant in the
+room animation here,
+
+1319
+00:56:56,533 --> 00:57:00,140
+that we don't have, is
+cards flipping over.
+
+1320
+00:57:00,140 --> 00:57:02,670
+Really, when we have a card game,
+
+1321
+00:57:02,670 --> 00:57:04,670
+these cards when we click on them,
+
+1322
+00:57:04,670 --> 00:57:06,880
+you don't want them fading in like this
+
+1323
+00:57:06,880 --> 00:57:09,170
+we want them to flip over.
+
+1324
+00:57:09,170 --> 00:57:11,300
+That's what cards do, they flip.
+
+1325
+00:57:11,300 --> 00:57:14,570
+So how are we gonna do
+that flip animation?
+
+1326
+00:57:14,570 --> 00:57:17,170
+Well, Swift is gonna help us a lot
+
+1327
+00:57:17,170 --> 00:57:20,270
+because it has an Animatable ViewModifier
+
+1328
+00:57:20,270 --> 00:57:22,920
+called a rotation 3D effect,
+
+1329
+00:57:22,920 --> 00:57:26,500
+which rotates it just like
+we rotated on a match.
+
+1330
+00:57:26,500 --> 00:57:30,460
+If you remember, on the
+match, we rotated in 2D,
+
+1331
+00:57:30,460 --> 00:57:31,870
+essentially round and round.
+
+1332
+00:57:31,870 --> 00:57:35,000
+We can also rotate in
+3D have this View rotate
+
+1333
+00:57:35,000 --> 00:57:37,133
+in 3D around a different axis,
+
+1334
+00:57:37,133 --> 00:57:40,720
+this y-vertical axis instead
+of kind of rotating around
+
+1335
+00:57:40,720 --> 00:57:43,259
+the axis of that point straight out at us.
+
+1336
+00:57:43,259 --> 00:57:46,219
+So let's do a nice 3D
+rotation of this card
+
+1337
+00:57:46,219 --> 00:57:47,240
+and just see if it works.
+
+1338
+00:57:47,240 --> 00:57:51,330
+It's called rotation3DEffect.
+
+1339
+00:57:51,330 --> 00:57:55,320
+And you specify how much
+you want to rotate the Card.
+
+1340
+00:57:55,320 --> 00:57:59,720
+And here, again, we're
+gonna do Angle.degrees.
+
+1341
+00:57:59,720 --> 00:58:02,940
+And if the card isFaceUp,
+
+1342
+00:58:02,940 --> 00:58:05,730
+then let's not have it rotated just normal
+
+1343
+00:58:05,730 --> 00:58:09,520
+but if it's face-down,
+let's rotate it 180 degrees.
+
+1344
+00:58:09,520 --> 00:58:11,510
+Let's flip it all the way over.
+
+1345
+00:58:11,510 --> 00:58:14,681
+Now this axis, because
+this is a 3D rotation,
+
+1346
+00:58:14,681 --> 00:58:18,487
+this axis is saying around which
+axis do you want to rotate,
+
+1347
+00:58:18,487 --> 00:58:19,320
+and this is three numbers,
+
+1348
+00:58:19,320 --> 00:58:23,320
+so for example, (0, 0, 1)
+would be a 2D rotation,
+
+1349
+00:58:23,320 --> 00:58:26,250
+cause 1, the last one here is the z-axis.
+
+1350
+00:58:26,250 --> 00:58:29,260
+That's the one that points up
+out at you from the screen,
+
+1351
+00:58:29,260 --> 00:58:33,070
+and what we want is the y-axis instead,
+
+1352
+00:58:33,070 --> 00:58:35,207
+the y-axis is the vertical axis,
+
+1353
+00:58:35,207 --> 00:58:36,870
+the one that goes from
+the top of your screens
+
+1354
+00:58:36,870 --> 00:58:38,450
+straight down to the
+bottom of your screen,
+
+1355
+00:58:38,450 --> 00:58:42,550
+we want this rotation to
+happen around that axis.
+
+1356
+00:58:42,550 --> 00:58:45,510
+See what that does, it's
+not gonna quite be right.
+
+1357
+00:58:45,510 --> 00:58:47,600
+Let's see what we get here.
+
+1358
+00:58:47,600 --> 00:58:49,620
+Whoo, wow.
+
+1359
+00:58:49,620 --> 00:58:52,190
+So that's kind of interesting.
+
+1360
+00:58:52,190 --> 00:58:54,420
+It's rotating,
+
+1361
+00:58:54,420 --> 00:58:57,460
+but the Views appearing
+and disappearing there
+
+1362
+00:58:57,460 --> 00:58:59,470
+that's still happening with the fade
+
+1363
+00:58:59,470 --> 00:59:01,430
+and that's really really not what we want.
+
+1364
+00:59:01,430 --> 00:59:03,000
+When we first click the card,
+
+1365
+00:59:03,000 --> 00:59:05,690
+if both the back and the front are visible
+
+1366
+00:59:05,690 --> 00:59:08,890
+one's fading out one's fading
+in, and then by the end,
+
+1367
+00:59:08,890 --> 00:59:12,363
+the back is totally faded out
+and the front has faded in.
+
+1368
+00:59:13,490 --> 00:59:16,088
+This is close, it's close,
+
+1369
+00:59:16,088 --> 00:59:18,440
+we're on the road to making this work,
+
+1370
+00:59:18,440 --> 00:59:20,100
+but it's not quite right.
+
+1371
+00:59:20,100 --> 00:59:23,720
+So there's two ways I can
+think of to make this work.
+
+1372
+00:59:23,720 --> 00:59:27,870
+One, we could have our
+own custom transition,
+
+1373
+00:59:27,870 --> 00:59:30,090
+that transition that is transitioning
+
+1374
+00:59:30,090 --> 00:59:32,330
+between the back and the front,
+
+1375
+00:59:32,330 --> 00:59:36,470
+where the back kind of
+like we're flipping it up,
+
+1376
+00:59:36,470 --> 00:59:38,490
+the back is showing for
+
+1377
+00:59:39,784 --> 00:59:41,770
+a while until it gets up on its edge
+
+1378
+00:59:41,770 --> 00:59:42,940
+and then it kind of disappears
+
+1379
+00:59:42,940 --> 00:59:44,500
+and then when the front comes on,
+
+1380
+00:59:44,500 --> 00:59:47,880
+it starts out on its edge and
+then kind of rotates down.
+
+1381
+00:59:47,880 --> 00:59:52,290
+We could definitely write a
+ViewModifier that does that
+
+1382
+00:59:52,290 --> 00:59:53,720
+and then make a transition out of it
+
+1383
+00:59:53,720 --> 00:59:57,540
+or we're using this sort of
+half-flip up onto its edge
+
+1384
+00:59:57,540 --> 00:59:59,620
+to have the card come in and come out.
+
+1385
+00:59:59,620 --> 01:00:01,610
+It's slightly more complicated really,
+
+1386
+01:00:01,610 --> 01:00:03,150
+than I think we need to do,
+
+1387
+01:00:03,150 --> 01:00:05,640
+because if we remember how animation works
+
+1388
+01:00:05,640 --> 01:00:08,920
+we know that ViewModifiers
+are the main things
+
+1389
+01:00:08,920 --> 01:00:11,000
+that are doing animation.
+
+1390
+01:00:11,000 --> 01:00:14,500
+So why don't we just take
+our ViewModifier which draws
+
+1391
+01:00:14,500 --> 01:00:19,500
+this card and make it so that
+it's smart about it rotating
+
+1392
+01:00:19,960 --> 01:00:23,100
+itself so that it only shows
+the front during the first half
+
+1393
+01:00:23,100 --> 01:00:26,880
+of animation and only shows the
+back during the second half.
+
+1394
+01:00:26,880 --> 01:00:29,900
+In other words, we're gonna
+have our Cardify over here.
+
+1395
+01:00:29,900 --> 01:00:31,460
+Here's our Cardify
+
+1396
+01:00:31,460 --> 01:00:33,370
+when it's rotating,
+
+1397
+01:00:33,370 --> 01:00:35,420
+we're gonna make it so
+you can rotate itself.
+
+1398
+01:00:35,420 --> 01:00:36,640
+And as it's doing it,
+
+1399
+01:00:36,640 --> 01:00:41,640
+it's gonna coordinate what's
+face-up with the rotation.
+
+1400
+01:00:41,770 --> 01:00:43,310
+First half of the rotation,
+
+1401
+01:00:43,310 --> 01:00:46,453
+face-up will be their second
+half rotation, face-down.
+
+1402
+01:00:47,680 --> 01:00:50,620
+Well, the first thing
+we're gonna do is take this
+
+1403
+01:00:50,620 --> 01:00:52,940
+rotation3DEffect over here
+
+1404
+01:00:52,940 --> 01:00:54,980
+and move it into
+
+1405
+01:00:54,980 --> 01:00:55,813
+our
+
+1406
+01:00:56,880 --> 01:00:58,210
+modifier.
+
+1407
+01:00:58,210 --> 01:01:00,150
+So if we put this over here,
+
+1408
+01:01:00,150 --> 01:01:03,630
+and have this ZStack be rotated over here.
+
+1409
+01:01:03,630 --> 01:01:07,740
+Instead of having the card rotate
+
+1410
+01:01:07,740 --> 01:01:11,440
+in a binary sense between 0 and 180,
+
+1411
+01:01:11,440 --> 01:01:13,650
+we want to be able to control
+
+1412
+01:01:13,650 --> 01:01:15,560
+the entire rotation of it
+
+1413
+01:01:15,560 --> 01:01:17,740
+because in the first half, we
+only want to show the face-up
+
+1414
+01:01:17,740 --> 01:01:20,460
+and the second half, we
+only want to show face-down.
+
+1415
+01:01:20,460 --> 01:01:23,550
+So we're gonna kind of
+change our ViewModifier here,
+
+1416
+01:01:23,550 --> 01:01:28,120
+where the main var that is
+involved is the rotation.
+
+1417
+01:01:28,120 --> 01:01:29,330
+So I'm just gonna have rotation,
+
+1418
+01:01:29,330 --> 01:01:31,410
+I'm gonna make a be a
+Double, which is gonna be
+
+1419
+01:01:31,410 --> 01:01:34,943
+my amount of rotation in
+degrees just to be simple.
+
+1420
+01:01:36,194 --> 01:01:40,300
+And if I'm gonna track the
+rotation and animate it,
+
+1421
+01:01:40,300 --> 01:01:42,800
+then isFaceUp really just becomes
+
+1422
+01:01:42,800 --> 01:01:44,200
+a function of the rotation
+
+1423
+01:01:44,200 --> 01:01:46,990
+if rotation is less than 90 degrees
+
+1424
+01:01:46,990 --> 01:01:49,360
+of my 180 degree rotation,
+
+1425
+01:01:49,360 --> 01:01:53,350
+then the card is face-up
+otherwise it's face-down
+
+1426
+01:01:53,350 --> 01:01:56,533
+so now I've linked rotation
+and the face-up face-down.
+
+1427
+01:01:57,410 --> 01:02:00,210
+And then when I have this
+rotation3DEffect instead
+
+1428
+01:02:00,210 --> 01:02:02,513
+of having the card isFaceUp
+control the rotation,
+
+1429
+01:02:02,513 --> 01:02:05,073
+let's just do the actual rotation.
+
+1430
+01:02:06,070 --> 01:02:08,890
+Whatever the rotation
+we set this modifier to,
+
+1431
+01:02:08,890 --> 01:02:11,090
+that's the rotation is
+gonna be and it's gonna pick
+
+1432
+01:02:11,090 --> 01:02:15,223
+the right face, front or not
+face front, rotation of it,
+
+1433
+01:02:16,430 --> 01:02:18,900
+I still want to be able to have an init
+
+1434
+01:02:18,900 --> 01:02:20,663
+that says isFaceUp.
+
+1435
+01:02:21,620 --> 01:02:23,310
+But now when I do that,
+
+1436
+01:02:23,310 --> 01:02:26,080
+that's just setting my
+rotation equal to zero
+
+1437
+01:02:26,080 --> 01:02:29,100
+if it's face-up, and
+180 if it's face-down,
+
+1438
+01:02:29,100 --> 01:02:33,013
+so let's say isFaceUp question
+mark zero, otherwise 180.
+
+1439
+01:02:34,400 --> 01:02:36,960
+So I've converted my ViewModifier here
+
+1440
+01:02:36,960 --> 01:02:40,130
+to be based on rotation,
+rather than face-up
+
+1441
+01:02:40,130 --> 01:02:42,380
+and the face-up is always
+tracking the rotation
+
+1442
+01:02:42,380 --> 01:02:43,560
+cause this isFaceUp it's
+
+1443
+01:02:43,560 --> 01:02:46,710
+just looking at the rotation
+to see if we rotated enough.
+
+1444
+01:02:46,710 --> 01:02:48,750
+Now how do we make it so that it animates
+
+1445
+01:02:48,750 --> 01:02:50,500
+cause this is not enough
+to make it animate
+
+1446
+01:02:50,500 --> 01:02:51,680
+if we didn't run here
+
+1447
+01:02:54,280 --> 01:02:55,700
+and click on these things.
+
+1448
+01:02:55,700 --> 01:02:58,800
+It's doing the flip, but it's
+still doing the wrong thing
+
+1449
+01:02:58,800 --> 01:03:00,160
+about the face-up and face-down.
+
+1450
+01:03:00,160 --> 01:03:02,970
+When the face-up and face-down
+Views come and go here,
+
+1451
+01:03:02,970 --> 01:03:05,310
+they're still just having opacity.
+
+1452
+01:03:05,310 --> 01:03:06,840
+And that's because this ViewModifier
+
+1453
+01:03:06,840 --> 01:03:09,290
+is not marked as Animatable.
+
+1454
+01:03:09,290 --> 01:03:12,360
+So SwiftUI thinks, well, this ViewModifier
+
+1455
+01:03:12,360 --> 01:03:14,110
+does not know how to animate.
+
+1456
+01:03:14,110 --> 01:03:16,650
+So I'm just gonna do
+normal animations in here.
+
+1457
+01:03:16,650 --> 01:03:19,820
+I'll just animate this
+normally it's being switched
+
+1458
+01:03:19,820 --> 01:03:22,580
+by the init here to one or the other.
+
+1459
+01:03:22,580 --> 01:03:24,990
+And I'm just taking these
+Views that are coming
+
+1460
+01:03:24,990 --> 01:03:27,270
+and going because of isFaceUp
+
+1461
+01:03:27,270 --> 01:03:28,640
+and I'm just transitioning them
+
+1462
+01:03:28,640 --> 01:03:31,863
+with the standard
+transition, which is opacity.
+
+1463
+01:03:32,852 --> 01:03:34,440
+So we can turn a ViewModifier
+
+1464
+01:03:34,440 --> 01:03:38,330
+though into an Animatable
+modifier by changing the protocol
+
+1465
+01:03:38,330 --> 01:03:42,980
+implements to AnimatableModifier.
+
+1466
+01:03:42,980 --> 01:03:47,340
+So Animatable modifier
+really is just ViewModifier
+
+1467
+01:03:47,340 --> 01:03:52,150
+and Animatable, and Animatable this is,
+
+1468
+01:03:52,150 --> 01:03:56,940
+if we looked it up,
+this animatableData var,
+
+1469
+01:03:56,940 --> 01:03:59,800
+this communication between
+the animation system
+
+1470
+01:03:59,800 --> 01:04:02,920
+and our ViewModifier or our Shape.
+
+1471
+01:04:02,920 --> 01:04:05,000
+So we just need to implement
+this animatableData
+
+1472
+01:04:06,210 --> 01:04:09,430
+animatableData inside
+here, so let's do that.
+
+1473
+01:04:09,430 --> 01:04:13,770
+Let's put it right down
+here, var animatableData.
+
+1474
+01:04:13,770 --> 01:04:16,190
+What does our ViewModifier animate?
+
+1475
+01:04:16,190 --> 01:04:18,290
+It animates the rotation
+
+1476
+01:04:19,130 --> 01:04:22,520
+of our View that's what you'd animate.
+
+1477
+01:04:22,520 --> 01:04:25,590
+So this Double is our rotation.
+
+1478
+01:04:25,590 --> 01:04:28,470
+Now, I could use this word animatableData
+
+1479
+01:04:28,470 --> 01:04:30,300
+here instead of rotation
+
+1480
+01:04:30,300 --> 01:04:34,630
+but that's not very nice code
+to have animatableData here.
+
+1481
+01:04:34,630 --> 01:04:36,700
+So let's do that trick I was talking about
+
+1482
+01:04:36,700 --> 01:04:38,150
+on the slides where I'm just gonna have
+
+1483
+01:04:38,150 --> 01:04:39,640
+this be a computed property
+
+1484
+01:04:39,640 --> 01:04:42,100
+and I'm gonna return my rotation
+
+1485
+01:04:42,100 --> 01:04:44,810
+and I'm gonna set my rotation equal
+
+1486
+01:04:44,810 --> 01:04:47,990
+to the new value of this property.
+
+1487
+01:04:47,990 --> 01:04:50,120
+Remember, get and set, that's how we do
+
+1488
+01:04:50,120 --> 01:04:54,110
+computed properties that are
+read-write and that's it.
+
+1489
+01:04:54,110 --> 01:04:57,640
+So I essentially just renamed
+rotation to be animatableData
+
+1490
+01:04:57,640 --> 01:04:59,890
+because this is the name
+that the animation systems
+
+1491
+01:04:59,890 --> 01:05:01,320
+is going to look for.
+
+1492
+01:05:01,320 --> 01:05:04,870
+By the way you can't even
+though this really is all
+
+1493
+01:05:04,870 --> 01:05:05,720
+that's going on here,
+
+1494
+01:05:05,720 --> 01:05:07,560
+you can't actually just say this
+
+1495
+01:05:07,560 --> 01:05:11,390
+you need to say that this
+is an AnimatableModifier
+
+1496
+01:05:11,390 --> 01:05:14,400
+because this AnimatableModifier protocol
+
+1497
+01:05:14,400 --> 01:05:18,230
+while it is just this and
+ViewModifier together,
+
+1498
+01:05:18,230 --> 01:05:19,870
+it also signals to the system,
+
+1499
+01:05:19,870 --> 01:05:22,600
+I wanna participate I'm
+gonna be ViewModifier
+
+1500
+01:05:22,600 --> 01:05:25,060
+that wants to participate
+in the animation system
+
+1501
+01:05:25,060 --> 01:05:28,523
+so make sure that you say
+colon AnimatableModifier.
+
+1502
+01:05:30,010 --> 01:05:31,210
+Alright, let's try this.
+
+1503
+01:05:34,605 --> 01:05:36,513
+Tap that card well, oh my gosh,
+
+1504
+01:05:38,674 --> 01:05:40,360
+that really was amazing the easy.
+
+1505
+01:05:40,360 --> 01:05:42,870
+See in the first half of the flip there,
+
+1506
+01:05:42,870 --> 01:05:44,410
+when the cards face-down,
+
+1507
+01:05:44,410 --> 01:05:46,930
+it's only showing the back
+and when it's face-up,
+
+1508
+01:05:46,930 --> 01:05:49,030
+it's only showing the front and let's try
+
+1509
+01:05:49,030 --> 01:05:50,550
+and make a card disappear into it
+
+1510
+01:05:50,550 --> 01:05:53,143
+so you can see the cards face back down.
+
+1511
+01:05:56,090 --> 01:05:59,440
+Here's a match right
+here and make it go away.
+
+1512
+01:05:59,440 --> 01:06:01,670
+And notice when it went away it still work
+
+1513
+01:06:01,670 --> 01:06:05,460
+that animation work just
+fine the scaling animation.
+
+1514
+01:06:05,460 --> 01:06:07,750
+Notice also that when we flip cards over,
+
+1515
+01:06:07,750 --> 01:06:09,620
+there's no fade-in anymore.
+
+1516
+01:06:09,620 --> 01:06:13,370
+These cards are not fading, the
+back or front is not fading.
+
+1517
+01:06:13,370 --> 01:06:15,790
+That's because this ViewModifier
+
+1518
+01:06:15,790 --> 01:06:17,890
+has taken control of the animation.
+
+1519
+01:06:17,890 --> 01:06:19,890
+And so the animation
+system is no longer trying
+
+1520
+01:06:19,890 --> 01:06:22,310
+to reach in here and do
+this animation itself.
+
+1521
+01:06:22,310 --> 01:06:25,260
+It is assumes that this
+ViewModifier knows what it's doing.
+
+1522
+01:06:27,000 --> 01:06:30,660
+Let's go back to the problem
+we had from the very beginning,
+
+1523
+01:06:30,660 --> 01:06:32,710
+which is when things match
+let's find some cards
+
+1524
+01:06:32,710 --> 01:06:33,693
+that match here.
+
+1525
+01:06:37,592 --> 01:06:38,480
+Now I'm not very good at this game again.
+
+1526
+01:06:38,480 --> 01:06:41,840
+Okay, I think this one. Yeah,
+okay, ready, here we go match.
+
+1527
+01:06:41,840 --> 01:06:43,540
+This one spins.
+
+1528
+01:06:43,540 --> 01:06:45,660
+This one does not spin.
+
+1529
+01:06:45,660 --> 01:06:48,763
+Let's investigate why does this not spin?
+
+1530
+01:06:49,650 --> 01:06:53,620
+This doesn't spin because this
+card when we touched on it,
+
+1531
+01:06:53,620 --> 01:06:56,950
+it matched and it was
+faced down at the time
+
+1532
+01:06:56,950 --> 01:06:58,860
+we switched it to face-up.
+
+1533
+01:06:58,860 --> 01:07:02,970
+So when it came on screen
+this all this fuse right here,
+
+1534
+01:07:02,970 --> 01:07:06,493
+it was face-up and already matched.
+
+1535
+01:07:08,040 --> 01:07:10,250
+So no change happened,
+
+1536
+01:07:10,250 --> 01:07:13,210
+this card isMatched was already true
+
+1537
+01:07:13,210 --> 01:07:16,520
+so there was no need to apply any change.
+
+1538
+01:07:16,520 --> 01:07:20,200
+Animations only animate changes.
+
+1539
+01:07:20,200 --> 01:07:21,640
+And so there was no change
+
+1540
+01:07:21,640 --> 01:07:23,926
+cause that View came on screen matched,
+
+1541
+01:07:23,926 --> 01:07:25,746
+it never changed to be matched
+
+1542
+01:07:25,746 --> 01:07:28,053
+it just was matched when it came on.
+
+1543
+01:07:30,610 --> 01:07:33,400
+So if we want a match happening
+
+1544
+01:07:33,400 --> 01:07:36,070
+to be animated with the somersault,
+
+1545
+01:07:36,070 --> 01:07:39,040
+we need that card, this Text,
+
+1546
+01:07:39,040 --> 01:07:43,360
+basically the front of the
+card, needs to be on screen
+
+1547
+01:07:43,360 --> 01:07:45,420
+when the match happens.
+
+1548
+01:07:45,420 --> 01:07:47,820
+But that's a problem for a card,
+
+1549
+01:07:47,820 --> 01:07:51,080
+the second card in a match
+because it's face-down.
+
+1550
+01:07:51,080 --> 01:07:54,290
+So that emoji the front of the card
+
+1551
+01:07:54,290 --> 01:07:58,310
+it's not on screen, but we
+can still have it on screen,
+
+1552
+01:07:58,310 --> 01:08:01,350
+but hidden and that's
+an another way to deal
+
+1553
+01:08:01,350 --> 01:08:04,220
+with having Views that are
+appearing and disappearing
+
+1554
+01:08:04,220 --> 01:08:08,990
+instead of having them
+actually be if-then-ed out of
+
+1555
+01:08:08,990 --> 01:08:11,100
+existence. Instead, we can just hide them.
+
+1556
+01:08:11,100 --> 01:08:13,170
+And the way we hide
+things is with something
+
+1557
+01:08:13,170 --> 01:08:16,520
+we already know from last time, opacity,
+
+1558
+01:08:16,520 --> 01:08:19,460
+fully transparent is hidden
+
+1559
+01:08:19,460 --> 01:08:22,650
+and fully opaque is
+fully visible on screen.
+
+1560
+01:08:22,650 --> 01:08:25,780
+So let's use opacity to
+have the back and front
+
+1561
+01:08:25,780 --> 01:08:27,700
+of our cards be showing or not,
+
+1562
+01:08:27,700 --> 01:08:29,510
+instead of using if then
+
+1563
+01:08:29,510 --> 01:08:31,710
+that makes them completely
+disappear or not.
+
+1564
+01:08:32,560 --> 01:08:35,080
+So this is a different
+way of thinking about
+
+1565
+01:08:35,080 --> 01:08:37,060
+what's going on in this ZStack.
+
+1566
+01:08:37,060 --> 01:08:40,310
+Instead of thinking of it
+as these front Views come
+
+1567
+01:08:40,310 --> 01:08:41,490
+when it's a face-up
+
+1568
+01:08:41,490 --> 01:08:43,167
+and then they go when it's face-down
+
+1569
+01:08:43,167 --> 01:08:45,900
+and this one comes when it's
+face-down, this goes face-up.
+
+1570
+01:08:45,900 --> 01:08:49,630
+Instead, I'm gonna have
+all four of these always
+
+1571
+01:08:49,630 --> 01:08:51,170
+on the card.
+
+1572
+01:08:51,170 --> 01:08:52,450
+And when it's face-down,
+
+1573
+01:08:52,450 --> 01:08:55,530
+I'm not gonna be able to see these three.
+
+1574
+01:08:55,530 --> 01:08:57,400
+So let's take these three,
+
+1575
+01:08:57,400 --> 01:09:00,830
+I'm gonna even group them
+to make it easier on myself.
+
+1576
+01:09:00,830 --> 01:09:05,230
+And let's set their opacity so
+that if the card is face-up,
+
+1577
+01:09:05,230 --> 01:09:06,750
+they're fully opaque
+
+1578
+01:09:06,750 --> 01:09:08,930
+otherwise they're fully transparent.
+
+1579
+01:09:08,930 --> 01:09:12,920
+And this one similarly
+will say its opacity
+
+1580
+01:09:12,920 --> 01:09:16,980
+if it's face-up, it's fully transparent.
+
+1581
+01:09:16,980 --> 01:09:19,203
+Otherwise, based off of this,
+
+1582
+01:09:19,203 --> 01:09:21,690
+move these things around, so
+they're a little easier to read
+
+1583
+01:09:24,420 --> 01:09:27,230
+So here now, there's no ifs in here,
+
+1584
+01:09:27,230 --> 01:09:28,990
+there are no ifs inside this ViewBuilder
+
+1585
+01:09:28,990 --> 01:09:31,700
+Views are not coming and going anymore.
+
+1586
+01:09:31,700 --> 01:09:34,070
+It also means that this content,
+
+1587
+01:09:34,070 --> 01:09:35,950
+this text is always on screen
+
+1588
+01:09:35,950 --> 01:09:38,290
+even when we're face-down,
+it's just hidden.
+
+1589
+01:09:38,290 --> 01:09:41,270
+So that means that when it
+gets set to matched later,
+
+1590
+01:09:41,270 --> 01:09:44,580
+this implicit animation will be a change
+
+1591
+01:09:44,580 --> 01:09:45,913
+until it'll get to run.
+
+1592
+01:09:46,880 --> 01:09:47,980
+Let's give that a try.
+
+1593
+01:09:50,350 --> 01:09:54,880
+Here's our card, whoop,
+still works perfectly there,
+
+1594
+01:09:54,880 --> 01:09:56,870
+the front of the card was not showing
+
+1595
+01:09:56,870 --> 01:09:58,730
+see the front of the
+card is there right now
+
+1596
+01:09:58,730 --> 01:10:00,380
+it's on the other side of this card
+
+1597
+01:10:00,380 --> 01:10:01,930
+if you want to think of it that way,
+
+1598
+01:10:01,930 --> 01:10:04,077
+it's hidden though, its opacity is zero.
+
+1599
+01:10:04,077 --> 01:10:05,747
+And when I click it its
+opacity is still zero
+
+1600
+01:10:05,747 --> 01:10:07,280
+and now its opacity is one
+
+1601
+01:10:07,280 --> 01:10:09,203
+and the back's opacity gets set to zero.
+
+1602
+01:10:10,120 --> 01:10:12,687
+So hopefully if we find
+a match here somewhere,
+
+1603
+01:10:14,240 --> 01:10:15,073
+this guy
+
+1604
+01:10:16,580 --> 01:10:18,850
+and this guy, they'll both be spinning
+
+1605
+01:10:18,850 --> 01:10:22,083
+and you can see as that card
+turned around it was spinning.
+
+1606
+01:10:23,174 --> 01:10:24,930
+Let's match another one here, this one
+
+1607
+01:10:24,930 --> 01:10:26,880
+watch the card as it's turning around
+
+1608
+01:10:26,880 --> 01:10:29,430
+you are gonna can see its already spinning
+
+1609
+01:10:29,430 --> 01:10:33,170
+because it was there
+hidden, and it was spinning,
+
+1610
+01:10:33,170 --> 01:10:35,860
+hidden until it now became visible.
+
+1611
+01:10:35,860 --> 01:10:40,860
+This trick of using opacity
+to make things come and go
+
+1612
+01:10:41,320 --> 01:10:43,780
+it's really a way that you can
+control whether you're doing
+
+1613
+01:10:43,780 --> 01:10:46,840
+an animation by Views coming
+and going with transitions,
+
+1614
+01:10:46,840 --> 01:10:50,500
+or whether you're controlling
+it directly on screen
+
+1615
+01:10:50,500 --> 01:10:52,420
+using opacity.
+
+1616
+01:10:52,420 --> 01:10:55,860
+And both of them perfectly
+valid ways to go.
+
+1617
+01:10:55,860 --> 01:10:58,180
+You can just decide whether
+it makes sense or not
+
+1618
+01:10:58,180 --> 01:10:59,743
+later in this demo, you're gonna see
+
+1619
+01:10:59,743 --> 01:11:02,220
+that we actually are gonna take advantage
+
+1620
+01:11:02,220 --> 01:11:04,930
+of making our little Pie come and go.
+
+1621
+01:11:04,930 --> 01:11:06,350
+When our Pie is animating,
+
+1622
+01:11:06,350 --> 01:11:08,630
+we want it there as an animating thing,
+
+1623
+01:11:08,630 --> 01:11:10,510
+but we're gonna put a
+different Pie out there
+
+1624
+01:11:10,510 --> 01:11:12,750
+when it's not, there's
+gonna be a huge advantage
+
+1625
+01:11:12,750 --> 01:11:14,680
+to knowing when it's coming and going.
+
+1626
+01:11:14,680 --> 01:11:17,040
+So it's not always the case
+that you want to use opacity
+
+1627
+01:11:17,040 --> 01:11:19,450
+sometimes you want the
+Views coming and going,
+
+1628
+01:11:19,450 --> 01:11:22,480
+it just depends whether you're
+triggering things off of that
+
+1629
+01:11:22,480 --> 01:11:24,130
+and whether you want to use transitions,
+
+1630
+01:11:24,130 --> 01:11:26,950
+or just normal animations.
+
+1631
+01:11:26,950 --> 01:11:28,900
+Now the last thing I'm gonna do here is,
+
+1632
+01:11:28,900 --> 01:11:32,130
+now that we have our animation,
+
+1633
+01:11:32,130 --> 01:11:34,570
+working pretty well for flipping cards,
+
+1634
+01:11:34,570 --> 01:11:36,580
+and for having them disappear,
+
+1635
+01:11:36,580 --> 01:11:38,780
+I'm going to speed them back up again
+
+1636
+01:11:38,780 --> 01:11:40,410
+and then we're gonna go
+work on the animation
+
+1637
+01:11:40,410 --> 01:11:41,660
+of this little Pie.
+
+1638
+01:11:41,660 --> 01:11:44,120
+So let's speed it back
+up, that's easy to do.
+
+1639
+01:11:44,120 --> 01:11:47,490
+Go back here and just make our durations,
+
+1640
+01:11:47,490 --> 01:11:49,010
+maybe we have the default durations,
+
+1641
+01:11:49,010 --> 01:11:52,890
+let's try the default
+durations of both of these,
+
+1642
+01:11:52,890 --> 01:11:57,310
+usually under a second
+most the default durations.
+
+1643
+01:11:57,310 --> 01:11:58,657
+See what this looks like,
+
+1644
+01:11:58,657 --> 01:12:00,930
+mhh that might be a little quick actually,
+
+1645
+01:12:00,930 --> 01:12:03,080
+I'm not super happy with that
+
+1646
+01:12:03,080 --> 01:12:05,460
+I'm okay with the disappearing that fast
+
+1647
+01:12:05,460 --> 01:12:07,920
+but when flipping the
+cards I wanna slow it down
+
+1648
+01:12:07,920 --> 01:12:08,753
+a little bit.
+
+1649
+01:12:08,753 --> 01:12:10,180
+So I'm gonna say duration,
+
+1650
+01:12:10,180 --> 01:12:13,050
+let's say 0.75,
+
+1651
+01:12:13,050 --> 01:12:14,683
+see how fast that works.
+
+1652
+01:12:17,952 --> 01:12:19,720
+Okay, it looks better to me yeah,
+
+1653
+01:12:19,720 --> 01:12:22,560
+certainly wouldn't won't
+be any slower than that
+
+1654
+01:12:22,560 --> 01:12:24,310
+but I think that looks pretty good.
+
+1655
+01:12:25,760 --> 01:12:28,110
+This blue would obviously be something
+
+1656
+01:12:28,110 --> 01:12:30,610
+we wanna put down in
+our drawing constants.
+
+1657
+01:12:30,610 --> 01:12:32,050
+I'm not gonna do it right
+now for time savings
+
+1658
+01:12:32,050 --> 01:12:34,420
+but anytime you see a
+blue number in there,
+
+1659
+01:12:34,420 --> 01:12:36,960
+these blue numbers here also
+we didn't do from last time
+
+1660
+01:12:36,960 --> 01:12:38,780
+these things should all be put down here
+
+1661
+01:12:38,780 --> 01:12:41,240
+in drawing constants, which
+you have a control panel
+
+1662
+01:12:41,240 --> 01:12:42,810
+down here to tweak and turn the dials
+
+1663
+01:12:42,810 --> 01:12:44,563
+to make your UI look how you want.
+
+1664
+01:12:45,650 --> 01:12:47,417
+We have this Pie
+
+1665
+01:12:47,417 --> 01:12:50,530
+and right now the Pie is stuck
+in this position right here,
+
+1666
+01:12:50,530 --> 01:12:52,800
+but we really whenever a card flips up,
+
+1667
+01:12:52,800 --> 01:12:54,390
+we want it to start counting down
+
+1668
+01:12:54,390 --> 01:12:55,400
+and when it flips back down,
+
+1669
+01:12:55,400 --> 01:12:57,260
+we stopped counting and then push back up.
+
+1670
+01:12:57,260 --> 01:12:58,610
+It keeps counting and then flipped down
+
+1671
+01:12:58,610 --> 01:13:00,050
+it stopped counting and then of course
+
+1672
+01:13:00,050 --> 01:13:02,280
+when it matches, then we stopped counting
+
+1673
+01:13:02,280 --> 01:13:03,690
+because now you've matched it.
+
+1674
+01:13:03,690 --> 01:13:05,030
+And if it totally disappears,
+
+1675
+01:13:05,030 --> 01:13:08,300
+you don't get as many
+points as if you do it
+
+1676
+01:13:08,300 --> 01:13:09,950
+before it disappears.
+
+1677
+01:13:09,950 --> 01:13:12,670
+To do this, we got a couple
+of things that we have to do.
+
+1678
+01:13:12,670 --> 01:13:15,830
+One is we're gonna have to
+kind of enhance our Model
+
+1679
+01:13:15,830 --> 01:13:20,050
+to know how much bonus
+time is left, and all that.
+
+1680
+01:13:20,050 --> 01:13:23,630
+So I have actually put some code
+
+1681
+01:13:23,630 --> 01:13:26,220
+in here that I made available to you guys
+
+1682
+01:13:26,220 --> 01:13:30,020
+on the forum before, so
+you students all have it.
+
+1683
+01:13:30,020 --> 01:13:32,840
+If you don't have it, you
+can pause this video actually
+
+1684
+01:13:32,840 --> 01:13:34,670
+and copy it from here if you can't
+
+1685
+01:13:34,670 --> 01:13:36,780
+get a hold of it some other way.
+
+1686
+01:13:36,780 --> 01:13:40,060
+But what this code is
+basically doing is tracking
+
+1687
+01:13:40,060 --> 01:13:41,980
+every time the card comes up and down
+
+1688
+01:13:41,980 --> 01:13:44,500
+or gets mapped it tracking the time used
+
+1689
+01:13:44,500 --> 01:13:45,958
+and then it answers questions like
+
+1690
+01:13:45,958 --> 01:13:47,840
+how much time is remaining
+
+1691
+01:13:47,840 --> 01:13:51,830
+or what percentage of
+the time is remaining
+
+1692
+01:13:51,830 --> 01:13:54,030
+and we can learn whether we earn the bonus
+
+1693
+01:13:54,030 --> 01:13:56,370
+and start using the bonus time
+
+1694
+01:13:56,370 --> 01:13:58,320
+and stop using the bonus time.
+
+1695
+01:13:58,320 --> 01:14:00,130
+By the way these functions,
+I'm gonna make sure
+
+1696
+01:14:00,130 --> 01:14:03,290
+I call these when the card
+goes face-up and face-down
+
+1697
+01:14:03,290 --> 01:14:05,440
+in my Model and also when it's matched.
+
+1698
+01:14:05,440 --> 01:14:08,010
+So let's use those property
+observers we talked about
+
+1699
+01:14:08,010 --> 01:14:10,090
+to call those functions.
+
+1700
+01:14:10,090 --> 01:14:12,040
+Here is my
+
+1701
+01:14:12,040 --> 01:14:13,770
+Cards' vars.
+
+1702
+01:14:13,770 --> 01:14:15,233
+And I'm gonna make it so that every time
+
+1703
+01:14:15,233 --> 01:14:16,657
+isFaceUp changed here,
+
+1704
+01:14:16,657 --> 01:14:19,790
+and I'm gonna use didSet I
+showed willSet in the slides,
+
+1705
+01:14:19,790 --> 01:14:21,357
+but I'm just being different here
+
+1706
+01:14:21,357 --> 01:14:23,040
+and showing you didSet.
+
+1707
+01:14:23,040 --> 01:14:24,560
+When this happens, I'm gonna say
+
+1708
+01:14:24,560 --> 01:14:28,790
+if the isFaceUp changed to true.
+
+1709
+01:14:28,790 --> 01:14:30,490
+So the Card went face-up,
+
+1710
+01:14:30,490 --> 01:14:33,370
+then I'm gonna start that
+bonus time running again,
+
+1711
+01:14:33,370 --> 01:14:35,240
+start using the bonus time.
+
+1712
+01:14:35,240 --> 01:14:36,970
+Otherwise, if the Card went face-down,
+
+1713
+01:14:36,970 --> 01:14:39,223
+I'm gonna stop using the bonus time.
+
+1714
+01:14:40,060 --> 01:14:43,170
+So I'm just watching this
+face-up and face-down in my Card
+
+1715
+01:14:43,170 --> 01:14:44,407
+and whenever it changes that happens.
+
+1716
+01:14:44,407 --> 01:14:47,280
+And this is more reliable than trying to
+
+1717
+01:14:47,280 --> 01:14:51,320
+look at all the times I
+say isFaceUp true or false
+
+1718
+01:14:51,320 --> 01:14:55,210
+and try to also call
+startUsingBonusTime then
+
+1719
+01:14:55,210 --> 01:14:57,440
+I might make a mistake and
+forget it somewhere whatever.
+
+1720
+01:14:57,440 --> 01:14:59,830
+This way, it's reliable
+every time I change this
+
+1721
+01:14:59,830 --> 01:15:01,860
+boom we start and stop the time.
+
+1722
+01:15:01,860 --> 01:15:03,850
+And similarly for isMatched here,
+
+1723
+01:15:03,850 --> 01:15:08,430
+when didSet, we can stop using bonus time.
+
+1724
+01:15:08,430 --> 01:15:10,320
+If isMatched is set to false, probably
+
+1725
+01:15:10,320 --> 01:15:12,550
+maybe we're resetting the
+game or resetting the Cards,
+
+1726
+01:15:12,550 --> 01:15:14,620
+not sure what we're doing there.
+
+1727
+01:15:14,620 --> 01:15:15,940
+But it seems like the bonus time
+
+1728
+01:15:15,940 --> 01:15:17,810
+shouldn't start going again.
+
+1729
+01:15:17,810 --> 01:15:21,030
+This property observer, a
+really powerful way to sync up
+
+1730
+01:15:21,030 --> 01:15:23,540
+what's going on inside your code.
+
+1731
+01:15:23,540 --> 01:15:27,050
+So now our Model knows
+how much time is remaining
+
+1732
+01:15:27,050 --> 01:15:28,430
+on the bonus and all that stuff.
+
+1733
+01:15:28,430 --> 01:15:30,640
+That's what all this code I did down here.
+
+1734
+01:15:30,640 --> 01:15:32,560
+So let's use that stuff
+
+1735
+01:15:32,560 --> 01:15:35,560
+in our UI to show that animation.
+
+1736
+01:15:35,560 --> 01:15:38,910
+Now for our card Pie to animate,
+
+1737
+01:15:38,910 --> 01:15:42,980
+we have to enhance our Shape
+over here to do animation.
+
+1738
+01:15:42,980 --> 01:15:46,300
+Now shapes really already
+have this Animatable,
+
+1739
+01:15:46,300 --> 01:15:49,210
+the same protocol we
+had with ViewModifier,
+
+1740
+01:15:49,210 --> 01:15:51,070
+it's pretty much on all Shapes,
+
+1741
+01:15:51,070 --> 01:15:55,160
+all Shapes are assumed to
+be able to do animation
+
+1742
+01:15:55,160 --> 01:15:57,320
+it's just kind of part of being a Shape.
+
+1743
+01:15:57,320 --> 01:15:59,480
+It's so common that we
+don't even have to say
+
+1744
+01:15:59,480 --> 01:16:00,750
+comma Animatable here,
+
+1745
+01:16:00,750 --> 01:16:02,790
+shape just assumes that
+you're gonna do it.
+
+1746
+01:16:02,790 --> 01:16:04,870
+Now if you don't put animatableData,
+
+1747
+01:16:04,870 --> 01:16:06,980
+you won't get any animation it'll build
+
+1748
+01:16:06,980 --> 01:16:09,010
+but usually we want it.
+
+1749
+01:16:09,010 --> 01:16:10,580
+So what do we want to animate here
+
+1750
+01:16:10,580 --> 01:16:12,500
+in our Cardify ViewModifier,
+
+1751
+01:16:12,500 --> 01:16:15,170
+we animated our rotation
+as we went around,
+
+1752
+01:16:15,170 --> 01:16:18,540
+well, in our animation of the Pie,
+
+1753
+01:16:18,540 --> 01:16:20,720
+we kind of want to animate this angle,
+
+1754
+01:16:20,720 --> 01:16:22,200
+see this angle that goes here,
+
+1755
+01:16:22,200 --> 01:16:25,110
+as it goes around this
+angle is gonna change
+
+1756
+01:16:25,110 --> 01:16:26,520
+the end angle here.
+
+1757
+01:16:26,520 --> 01:16:28,130
+And if we're gonna be a good pie,
+
+1758
+01:16:28,130 --> 01:16:30,970
+let's make it so both
+angles can be animated
+
+1759
+01:16:30,970 --> 01:16:32,800
+the starting one and the ending one.
+
+1760
+01:16:32,800 --> 01:16:34,370
+That way we can animate either side,
+
+1761
+01:16:34,370 --> 01:16:36,470
+depending on what we thought look nice.
+
+1762
+01:16:36,470 --> 01:16:40,320
+So how do I animate two
+things at once, essentially,
+
+1763
+01:16:40,320 --> 01:16:42,503
+I'm gonna use that AnimatablePair,
+
+1764
+01:16:43,830 --> 01:16:44,663
+right.
+
+1765
+01:16:44,663 --> 01:16:46,510
+And the AnimatablePair is
+gonna be a pair of Doubles,
+
+1766
+01:16:46,510 --> 01:16:49,990
+those Doubles are gonna be my Angles here
+
+1767
+01:16:49,990 --> 01:16:52,250
+they're in radians.
+
+1768
+01:16:52,250 --> 01:16:56,180
+Angle itself is not a
+VectorArithmetic thing
+
+1769
+01:16:56,180 --> 01:17:00,480
+but obviously the angle in
+radians is a Double so that is.
+
+1770
+01:17:00,480 --> 01:17:02,110
+So this animatableData again,
+
+1771
+01:17:02,110 --> 01:17:03,870
+I'm gonna use the same trick of having
+
+1772
+01:17:03,870 --> 01:17:06,936
+the get and set. It's a little trickier
+
+1773
+01:17:06,936 --> 01:17:09,486
+because we have to use
+AnimatablePair here,
+
+1774
+01:17:09,486 --> 01:17:12,820
+but AnimatablePair just has
+two vars, first and second,
+
+1775
+01:17:12,820 --> 01:17:14,700
+which return the first Animatable thing
+
+1776
+01:17:14,700 --> 01:17:17,060
+on the second Animatable thing.
+
+1777
+01:17:17,060 --> 01:17:19,900
+So for us, we're just gonna
+return an AnimatablePair
+
+1778
+01:17:21,020 --> 01:17:24,950
+and the first thing is gonna
+be the startAngle's radians.
+
+1779
+01:17:26,590 --> 01:17:28,893
+And the second one is the endAngle's,
+
+1780
+01:17:30,906 --> 01:17:32,580
+angle radians.
+
+1781
+01:17:32,580 --> 01:17:34,770
+That's getting our animatableData
+
+1782
+01:17:34,770 --> 01:17:37,750
+and then setting it is
+just setting our startAngle
+
+1783
+01:17:37,750 --> 01:17:42,160
+to be an Angle whose radians are
+
+1784
+01:17:42,160 --> 01:17:46,850
+this AnimatablePair's, which
+is the newValue, dot first
+
+1785
+01:17:46,850 --> 01:17:49,660
+and the endAngle
+
+1786
+01:17:49,660 --> 01:17:52,600
+is an Angle, radians,
+
+1787
+01:17:52,600 --> 01:17:55,463
+which is the AnimatablePair's second.
+
+1788
+01:17:56,930 --> 01:18:01,240
+So here we have connected
+up two of our vars
+
+1789
+01:18:01,240 --> 01:18:04,720
+to this animation, piecewise animation
+
+1790
+01:18:04,720 --> 01:18:07,720
+and that is it that is all we need to do.
+
+1791
+01:18:07,720 --> 01:18:10,020
+Because it just means that
+this Shape is gonna be
+
+1792
+01:18:10,020 --> 01:18:13,460
+redrawn over and over during animation
+
+1793
+01:18:13,460 --> 01:18:15,410
+with these two things being animated
+
+1794
+01:18:15,410 --> 01:18:17,100
+because they're the
+things are being sliced up
+
+1795
+01:18:17,100 --> 01:18:19,730
+into little pieces by
+the animation system.
+
+1796
+01:18:19,730 --> 01:18:22,000
+That's what animatableData is all about.
+
+1797
+01:18:22,000 --> 01:18:24,210
+Now, I told you this
+animation system is elegant,
+
+1798
+01:18:24,210 --> 01:18:26,290
+and it is, having just this one var
+
+1799
+01:18:26,290 --> 01:18:29,800
+as being the only entry
+point in both directions in
+
+1800
+01:18:29,800 --> 01:18:34,740
+something to animate.
+Pretty nice design, I think.
+
+1801
+01:18:34,740 --> 01:18:35,740
+And I don't work for Apple
+
+1802
+01:18:35,740 --> 01:18:39,220
+so I'm an independent
+third party, in my opinion,
+
+1803
+01:18:39,220 --> 01:18:41,640
+I think they did a good job of that.
+
+1804
+01:18:41,640 --> 01:18:45,140
+All right, so now this Pie is animatable
+
+1805
+01:18:45,140 --> 01:18:48,950
+and now our Model knows how to keep track
+
+1806
+01:18:48,950 --> 01:18:50,120
+of the time remaining.
+
+1807
+01:18:50,120 --> 01:18:53,800
+So let's take our View and
+put those two things together.
+
+1808
+01:18:53,800 --> 01:18:56,220
+So here's our Pie, right here
+
+1809
+01:18:56,220 --> 01:18:59,240
+and we wanted, I'm gonna
+leave the startAngle
+
+1810
+01:18:59,240 --> 01:19:02,650
+always straight up, zero
+degrees, up at the top.
+
+1811
+01:19:02,650 --> 01:19:05,100
+I'm gonna vary my endAngle depending on
+
+1812
+01:19:05,100 --> 01:19:06,980
+how much time I have remaining.
+
+1813
+01:19:06,980 --> 01:19:09,530
+Let's start with a simple one, which is,
+
+1814
+01:19:09,530 --> 01:19:13,110
+let's take the Card's bonus remaining,
+
+1815
+01:19:13,110 --> 01:19:17,300
+which is the percentage bonus
+remaining it has times 360.
+
+1816
+01:19:17,300 --> 01:19:20,560
+And I'm going backwards because this Pie
+
+1817
+01:19:20,560 --> 01:19:22,460
+is negatively going down to zero
+
+1818
+01:19:22,460 --> 01:19:25,580
+I eventually want this to be down to zero.
+
+1819
+01:19:25,580 --> 01:19:26,693
+See what that does.
+
+1820
+01:19:29,990 --> 01:19:33,150
+All right, here we go
+oh, it's not animating.
+
+1821
+01:19:33,150 --> 01:19:34,400
+Huh, that's weird.
+
+1822
+01:19:34,400 --> 01:19:37,100
+Oh, but I thought I saw something there.
+
+1823
+01:19:37,100 --> 01:19:41,060
+Oh, look so it is actually
+showing us the time remaining
+
+1824
+01:19:41,060 --> 01:19:43,660
+because I had that card
+up for about, that much,
+
+1825
+01:19:43,660 --> 01:19:46,470
+and this is six seconds, I
+set it to be to go around.
+
+1826
+01:19:46,470 --> 01:19:49,800
+So I think that card was up
+face-up for about four seconds
+
+1827
+01:19:49,800 --> 01:19:51,730
+so it did but it didn't
+actually animate it,
+
+1828
+01:19:51,730 --> 01:19:54,680
+and then this one look, it
+looks like all the time is there
+
+1829
+01:19:54,680 --> 01:19:56,650
+but if I click away and then click back,
+
+1830
+01:19:56,650 --> 01:19:58,140
+oh, actually I used up all the time
+
+1831
+01:19:58,140 --> 01:20:00,660
+cause that card was
+sitting face-up so long.
+
+1832
+01:20:00,660 --> 01:20:03,130
+Now this one, I think was
+only up for a little bit.
+
+1833
+01:20:03,130 --> 01:20:05,383
+Yeah see, that was only a tiny bit.
+
+1834
+01:20:06,290 --> 01:20:09,550
+This one just showed up,
+so it's actually working
+
+1835
+01:20:09,550 --> 01:20:13,230
+it's adjusting this, but
+it's not animating it.
+
+1836
+01:20:13,230 --> 01:20:15,570
+So how are we gonna animate it?
+
+1837
+01:20:15,570 --> 01:20:18,890
+There's a bit of a
+challenge to animate this
+
+1838
+01:20:18,890 --> 01:20:22,700
+because what this is really
+animating is this angle
+
+1839
+01:20:22,700 --> 01:20:27,700
+going from where it is now,
+like right here, around to zero.
+
+1840
+01:20:28,260 --> 01:20:31,250
+And I told you that animation
+only shows you things
+
+1841
+01:20:31,250 --> 01:20:32,970
+that have already happened.
+
+1842
+01:20:32,970 --> 01:20:36,830
+But when the card appears,
+this clock starts going,
+
+1843
+01:20:36,830 --> 01:20:38,590
+it hasn't gotten to zero yet.
+
+1844
+01:20:38,590 --> 01:20:41,210
+So how do I start an
+animation that's gonna have
+
+1845
+01:20:41,210 --> 01:20:44,230
+this thing go to zero when
+zero hasn't happened yet?
+
+1846
+01:20:44,230 --> 01:20:47,840
+That's a little bit of a
+conundrum a catch 22 there.
+
+1847
+01:20:47,840 --> 01:20:51,620
+So this catch 22 is gonna prevent us
+
+1848
+01:20:51,620 --> 01:20:56,620
+from using this bonusRemaining
+directly from the Model.
+
+1849
+01:20:56,660 --> 01:20:58,780
+Now if I ask the Model,
+
+1850
+01:20:58,780 --> 01:21:01,020
+what's the bonus remaining percentage?
+
+1851
+01:21:01,020 --> 01:21:03,140
+It'll tell me the right
+answer it always does
+
+1852
+01:21:03,140 --> 01:21:04,600
+that's the Model's job.
+
+1853
+01:21:04,600 --> 01:21:06,260
+So the Model's doing its job
+
+1854
+01:21:06,260 --> 01:21:08,880
+however, the Model is
+not constantly changing.
+
+1855
+01:21:08,880 --> 01:21:10,570
+Oh, there's 4.1 seconds left,
+
+1856
+01:21:10,570 --> 01:21:12,360
+oh, I changed now there's
+only four seconds,
+
+1857
+01:21:12,360 --> 01:21:15,080
+oh, I changed now
+there's 3.9 seconds left,
+
+1858
+01:21:15,080 --> 01:21:18,050
+the Model can't be
+doing that's ridiculous.
+
+1859
+01:21:18,050 --> 01:21:20,300
+It's doing its job but it does it in a way
+
+1860
+01:21:20,300 --> 01:21:23,160
+that it's not causing our UI to change
+
+1861
+01:21:23,160 --> 01:21:26,180
+and animations only animate change.
+
+1862
+01:21:26,180 --> 01:21:28,770
+We just can't use this
+directly from the Model,
+
+1863
+01:21:28,770 --> 01:21:31,040
+we still have to be in
+sync with the Model,
+
+1864
+01:21:31,040 --> 01:21:33,560
+but we can't use this directly.
+
+1865
+01:21:33,560 --> 01:21:35,470
+So I'm gonna animate this angle
+
+1866
+01:21:35,470 --> 01:21:39,580
+using my own little temporary var here
+
+1867
+01:21:39,580 --> 01:21:41,580
+its gonna have to be writable.
+
+1868
+01:21:41,580 --> 01:21:43,450
+I'm gonna have to sync
+it up with the Model.
+
+1869
+01:21:43,450 --> 01:21:45,000
+So it is gonna be an @State
+
+1870
+01:21:45,000 --> 01:21:47,540
+as we talked about in the slides,
+
+1871
+01:21:47,540 --> 01:21:50,080
+and it's private, it's just for me to use
+
+1872
+01:21:50,080 --> 01:21:54,400
+so, var, I'm gonna call it
+my animatedBonusRemaining.
+
+1873
+01:21:54,400 --> 01:21:56,720
+We'll make it be a Double
+the number of degrees
+
+1874
+01:21:56,720 --> 01:21:58,430
+and of course it has to be initialized
+
+1875
+01:21:58,430 --> 01:22:00,430
+because all vars have to be initialized
+
+1876
+01:22:00,430 --> 01:22:03,150
+even the ones that are @State.
+
+1877
+01:22:03,150 --> 01:22:05,980
+So I'm gonna use that
+instead of the bonusRemaining
+
+1878
+01:22:05,980 --> 01:22:08,070
+directly from the Model,
+
+1879
+01:22:08,070 --> 01:22:11,823
+I'm going to use my
+animatedBonusRemaining.
+
+1880
+01:22:13,120 --> 01:22:16,030
+Now somehow I have to make
+this be the right values
+
+1881
+01:22:16,030 --> 01:22:18,140
+to cause the animation to happen.
+
+1882
+01:22:18,140 --> 01:22:19,720
+The first thing that I have to do
+
+1883
+01:22:19,720 --> 01:22:21,800
+is get it to be synced up with the Model.
+
+1884
+01:22:21,800 --> 01:22:24,320
+This has to be synced up with the Model.
+
+1885
+01:22:24,320 --> 01:22:25,770
+How am I gonna do that?
+
+1886
+01:22:25,770 --> 01:22:28,590
+Well, really, when do I
+want it to be synced up?
+
+1887
+01:22:28,590 --> 01:22:30,970
+Every single time this
+View comes on screen,
+
+1888
+01:22:30,970 --> 01:22:32,620
+I want it to sync with the Model.
+
+1889
+01:22:33,500 --> 01:22:35,410
+Now, when does this come on screen?
+
+1890
+01:22:35,410 --> 01:22:38,320
+Right now it comes on
+screen with its container
+
+1891
+01:22:38,320 --> 01:22:39,880
+we don't get any transitions
+
+1892
+01:22:39,880 --> 01:22:42,320
+if we don't know when that happens, etc.
+
+1893
+01:22:42,320 --> 01:22:44,650
+So I'm gonna make it only be on screen
+
+1894
+01:22:44,650 --> 01:22:47,680
+if my card isConsumingBonusTime.
+
+1895
+01:22:47,680 --> 01:22:51,750
+So this is just a var I have
+in my Model that tells me
+
+1896
+01:22:51,750 --> 01:22:54,920
+whether a card is currently at the moment
+
+1897
+01:22:54,920 --> 01:22:56,410
+consuming bonus time.
+
+1898
+01:22:56,410 --> 01:22:59,230
+That means it's face-up,
+it's not matched yet
+
+1899
+01:22:59,230 --> 01:23:01,810
+there's some bonus time
+remaining might be other things.
+
+1900
+01:23:01,810 --> 01:23:04,120
+I don't care it's up
+to my Model to tell me
+
+1901
+01:23:04,120 --> 01:23:07,160
+whether bones time is
+currently being consumed.
+
+1902
+01:23:07,160 --> 01:23:10,363
+And if it is, then this
+View is gonna be on screen.
+
+1903
+01:23:11,240 --> 01:23:14,020
+Now, why do I only want
+this to be on screen
+
+1904
+01:23:14,020 --> 01:23:15,900
+when it's actually animating?
+
+1905
+01:23:15,900 --> 01:23:18,300
+Well, because I'm using
+this animated value
+
+1906
+01:23:18,300 --> 01:23:19,790
+as the bonus remaining, okay?
+
+1907
+01:23:19,790 --> 01:23:22,280
+That really, I only want to be doing that
+
+1908
+01:23:22,280 --> 01:23:23,790
+when I'm actually animating
+
+1909
+01:23:23,790 --> 01:23:26,553
+and also, it lets me use onAppear.
+
+1910
+01:23:27,820 --> 01:23:30,810
+So you remember onAppear we
+talked about in the slide.
+
+1911
+01:23:30,810 --> 01:23:33,790
+This is a function that calls this closure
+
+1912
+01:23:33,790 --> 01:23:36,920
+anytime this View appears on screen.
+
+1913
+01:23:36,920 --> 01:23:38,420
+And that's exactly what I want
+
+1914
+01:23:38,420 --> 01:23:40,790
+because every time this
+thing appears on screen,
+
+1915
+01:23:40,790 --> 01:23:44,250
+I'm gonna reset this my
+bonus time remaining up here
+
+1916
+01:23:44,250 --> 01:23:46,300
+to be what's in the Model.
+
+1917
+01:23:46,300 --> 01:23:48,450
+So this View is always gonna start out
+
+1918
+01:23:48,450 --> 01:23:50,030
+synced up with the Model,
+
+1919
+01:23:50,030 --> 01:23:51,950
+then I can proceed to animate it,
+
+1920
+01:23:51,950 --> 01:23:54,020
+but we got to get it synced up.
+
+1921
+01:23:54,020 --> 01:23:56,560
+So let's do that in a
+little function up here
+
+1922
+01:23:56,560 --> 01:23:59,393
+another little private, call it this func.
+
+1923
+01:24:00,592 --> 01:24:05,190
+startBonusTimeAnimation, let's say.
+
+1924
+01:24:05,190 --> 01:24:08,550
+And the very first thing I
+wanna do in here is to set
+
+1925
+01:24:08,550 --> 01:24:13,550
+my animatedBonusRemaining
+equal to what's in the Model.
+
+1926
+01:24:13,790 --> 01:24:15,000
+So that I'm always in sync.
+
+1927
+01:24:15,000 --> 01:24:17,675
+and always gonna call this thing,
+
+1928
+01:24:17,675 --> 01:24:19,930
+startBonusTimeAnimation.
+
+1929
+01:24:19,930 --> 01:24:22,710
+Every single time this
+Pie comes on screen,
+
+1930
+01:24:22,710 --> 01:24:25,300
+it's gonna sync up with
+the Model, really important
+
+1931
+01:24:25,300 --> 01:24:29,090
+if you're gonna be having
+your own version of something
+
+1932
+01:24:29,090 --> 01:24:31,070
+that's in the Model that
+you want to animate at least
+
+1933
+01:24:31,070 --> 01:24:33,723
+have it sync up when it
+first comes on screen.
+
+1934
+01:24:34,760 --> 01:24:36,400
+So now what do I need to do?
+
+1935
+01:24:36,400 --> 01:24:38,450
+My Pie comes on screen, it's showing
+
+1936
+01:24:38,450 --> 01:24:40,200
+the right amount of bonus time remaining,
+
+1937
+01:24:40,200 --> 01:24:43,690
+but now it wants to animate
+ticking down to zero.
+
+1938
+01:24:43,690 --> 01:24:46,050
+So I'm gonna do exactly what I just said
+
+1939
+01:24:46,050 --> 01:24:48,270
+animate ticking down to zero
+
+1940
+01:24:48,270 --> 01:24:50,370
+withAnimation
+
+1941
+01:24:50,370 --> 01:24:52,403
+let's use a linear animation.
+
+1942
+01:24:53,730 --> 01:24:56,173
+Please tick down to zero.
+
+1943
+01:24:57,570 --> 01:25:00,690
+I'm just animating my bonus remaining
+
+1944
+01:25:00,690 --> 01:25:02,330
+ticking down to zero.
+
+1945
+01:25:02,330 --> 01:25:03,210
+But wait a second,
+
+1946
+01:25:03,210 --> 01:25:06,540
+how long is it gonna take
+to do this animation?
+
+1947
+01:25:06,540 --> 01:25:10,150
+Well, it better be however
+much time is left, right,
+
+1948
+01:25:10,150 --> 01:25:12,260
+I don't want it to tick
+down to zero slower
+
+1949
+01:25:12,260 --> 01:25:14,250
+or faster than the time remaining.
+
+1950
+01:25:14,250 --> 01:25:15,120
+So I'm just gonna have
+
+1951
+01:25:15,120 --> 01:25:17,290
+my animation's duration,
+
+1952
+01:25:17,290 --> 01:25:20,090
+equal the Card's bonusTimeRemaining.
+
+1953
+01:25:20,090 --> 01:25:21,520
+That's how many seconds are left,
+
+1954
+01:25:21,520 --> 01:25:23,900
+this is the percentage left
+
+1955
+01:25:23,900 --> 01:25:27,572
+and this is the number of seconds left.
+
+1956
+01:25:27,572 --> 01:25:29,770
+That's it, so this is
+really all I need to do.
+
+1957
+01:25:29,770 --> 01:25:33,630
+I just have my own little
+bonus time remaining here,
+
+1958
+01:25:33,630 --> 01:25:35,000
+which I sync up to the Model
+
+1959
+01:25:35,000 --> 01:25:37,500
+and then immediately start
+animating towards zero.
+
+1960
+01:25:38,370 --> 01:25:40,540
+If Pie stays around that long,
+
+1961
+01:25:40,540 --> 01:25:42,520
+we're gonna see the animation
+go all the way to zero.
+
+1962
+01:25:42,520 --> 01:25:44,520
+If it stops consuming bonus time,
+
+1963
+01:25:44,520 --> 01:25:46,290
+this View is gonna go away.
+
+1964
+01:25:46,290 --> 01:25:48,010
+It won't have finished its animation maybe
+
+1965
+01:25:48,010 --> 01:25:51,380
+but that's okay it's just
+gonna disappear here.
+
+1966
+01:25:51,380 --> 01:25:54,800
+Now, what if we're not
+consuming bonus time,
+
+1967
+01:25:54,800 --> 01:25:57,080
+like let's say the Cards are matched.
+
+1968
+01:25:57,080 --> 01:25:59,110
+They've already been matched,
+not consuming bonus time.
+
+1969
+01:25:59,110 --> 01:26:01,110
+I actually still want pie up there,
+
+1970
+01:26:01,110 --> 01:26:03,560
+I just don't want it to be animating.
+
+1971
+01:26:03,560 --> 01:26:05,990
+That's easy, in the else case right here,
+
+1972
+01:26:05,990 --> 01:26:08,680
+I'm gonna put a Pie there as well.
+
+1973
+01:26:08,680 --> 01:26:10,030
+Now, this Pie,
+
+1974
+01:26:10,030 --> 01:26:11,620
+we don't care when it appears
+
+1975
+01:26:11,620 --> 01:26:12,850
+because we're not animating.
+
+1976
+01:26:12,850 --> 01:26:15,620
+And it certainly can't use
+this animatedBonusRemaining
+
+1977
+01:26:15,620 --> 01:26:17,250
+that's what this Pie up here is about.
+
+1978
+01:26:17,250 --> 01:26:20,110
+So let's just have it match up with
+
+1979
+01:26:20,110 --> 01:26:22,673
+whatever it says in the Model.
+
+1980
+01:26:23,860 --> 01:26:26,030
+Now, I don't like that
+duplicated code here,
+
+1981
+01:26:26,030 --> 01:26:28,430
+see this padding and
+opacity on both of them
+
+1982
+01:26:28,430 --> 01:26:30,567
+so let's take this out of here.
+
+1983
+01:26:30,567 --> 01:26:34,480
+And instead, we'll use a
+Group around this whole thing
+
+1984
+01:26:34,480 --> 01:26:37,790
+to apply padding and opacity to it.
+
+1985
+01:26:37,790 --> 01:26:40,380
+This hopefully should
+cover all the bases here.
+
+1986
+01:26:40,380 --> 01:26:43,200
+This is the Pie when it's
+animating when it appears,
+
+1987
+01:26:43,200 --> 01:26:44,750
+we sync up with the Model
+
+1988
+01:26:44,750 --> 01:26:46,960
+and then started going towards zero with
+
+1989
+01:26:46,960 --> 01:26:48,430
+however much time is left.
+
+1990
+01:26:48,430 --> 01:26:51,130
+And if we're not consuming
+bonus time we're not animating
+
+1991
+01:26:51,130 --> 01:26:52,760
+then we'll just do a normal Pie
+
+1992
+01:26:52,760 --> 01:26:54,310
+with the bonus remaining there.
+
+1993
+01:26:55,232 --> 01:26:56,132
+See if that works.
+
+1994
+01:26:59,390 --> 01:27:01,050
+All right, let's watch.
+
+1995
+01:27:01,050 --> 01:27:03,670
+Whoo, look at that
+animating over to this one
+
+1996
+01:27:03,670 --> 01:27:05,510
+oh, and even matched.
+
+1997
+01:27:05,510 --> 01:27:07,490
+This is a great example here because
+
+1998
+01:27:07,490 --> 01:27:09,220
+this one matched as soon as I clicked it,
+
+1999
+01:27:09,220 --> 01:27:12,210
+so I didn't use any of my
+bonus time so that looks right
+
+2000
+01:27:12,210 --> 01:27:13,760
+And then this one, as
+soon as I had a match,
+
+2001
+01:27:13,760 --> 01:27:15,700
+it switched over to
+using this Pie down here
+
+2002
+01:27:15,700 --> 01:27:17,950
+it's just showing me
+how much I had remaining
+
+2003
+01:27:17,950 --> 01:27:20,000
+when the thing matched.
+
+2004
+01:27:20,000 --> 01:27:20,842
+Right, let's look at another one here,
+
+2005
+01:27:20,842 --> 01:27:24,890
+ghost and this guy, let's
+click away from these
+
+2006
+01:27:24,890 --> 01:27:26,210
+and this will start and go back
+
+2007
+01:27:26,210 --> 01:27:28,380
+and see if the bonus
+time that was remaining
+
+2008
+01:27:28,380 --> 01:27:31,060
+when we went face-down continues.
+
+2009
+01:27:31,060 --> 01:27:32,850
+Whoo, it did.
+
+2010
+01:27:32,850 --> 01:27:34,653
+Whoo okay,
+
+2011
+01:27:35,810 --> 01:27:38,390
+see what's going on there, all right
+
+2012
+01:27:38,390 --> 01:27:39,240
+simple as that.
+
+2013
+01:27:39,240 --> 01:27:44,240
+Now, this was a little trickier to do than
+
+2014
+01:27:44,590 --> 01:27:45,810
+some animations
+
+2015
+01:27:45,810 --> 01:27:49,050
+but it is not uncommon to
+have a situation like this
+
+2016
+01:27:49,886 --> 01:27:52,060
+where your Model or
+whatever your data source
+
+2017
+01:27:52,060 --> 01:27:53,880
+can tell you what's going on,
+
+2018
+01:27:53,880 --> 01:27:56,040
+but it's not constantly changing.
+
+2019
+01:27:56,040 --> 01:27:57,380
+And that's why sometimes
+you'll have to create
+
+2020
+01:27:57,380 --> 01:28:01,130
+your own var here that
+you can animate towards,
+
+2021
+01:28:01,130 --> 01:28:02,820
+but make sure you sync
+it up with the Model
+
+2022
+01:28:02,820 --> 01:28:04,393
+before you do it.
+
+2023
+01:28:05,360 --> 01:28:08,180
+Okay, that is it for animation today
+
+2024
+01:28:08,180 --> 01:28:10,560
+we covered a lot of ground.
+
+2025
+01:28:10,560 --> 01:28:12,910
+We talked about implicit animations,
+
+2026
+01:28:12,910 --> 01:28:16,710
+where we had the somersaulting
+emojis being so excited
+
+2027
+01:28:16,710 --> 01:28:17,870
+that they had a match.
+
+2028
+01:28:17,870 --> 01:28:20,350
+We had a couple of explicit animations
+
+2029
+01:28:20,350 --> 01:28:22,880
+we did one right here,
+when we chose a card
+
+2030
+01:28:22,880 --> 01:28:25,533
+we did another one right
+here when we did a new game.
+
+2031
+01:28:26,450 --> 01:28:30,500
+We also showed animating ViewModifiers
+
+2032
+01:28:30,500 --> 01:28:33,120
+we had our card here be animating,
+
+2033
+01:28:33,120 --> 01:28:36,800
+we even showed how to not
+have Views coming and going
+
+2034
+01:28:36,800 --> 01:28:39,620
+if we didn't want them coming and going,
+
+2035
+01:28:39,620 --> 01:28:41,140
+we animated our Shape
+
+2036
+01:28:42,200 --> 01:28:43,880
+and all we had to do there was say
+
+2037
+01:28:43,880 --> 01:28:46,930
+what data inside of our
+Shape is animatable,
+
+2038
+01:28:46,930 --> 01:28:49,990
+which in our case was the
+starting end angle over here.
+
+2039
+01:28:49,990 --> 01:28:51,800
+And we also did some transitions, right,
+
+2040
+01:28:51,800 --> 01:28:54,510
+we had this scale transition
+so that when cards match,
+
+2041
+01:28:54,510 --> 01:28:55,630
+they would disappear.
+
+2042
+01:28:55,630 --> 01:28:58,440
+By the way we could do the
+similar kind of transitions
+
+2043
+01:28:58,440 --> 01:29:01,440
+with these Pies up here
+if we put, for example,
+
+2044
+01:29:01,440 --> 01:29:04,160
+a transition on the Pie of .scale,
+
+2045
+01:29:04,160 --> 01:29:06,450
+then when our Pie appears,
+
+2046
+01:29:09,280 --> 01:29:12,510
+it kind of zooms in to kind of a good look
+
+2047
+01:29:12,510 --> 01:29:13,490
+kind of zoomed in.
+
+2048
+01:29:13,490 --> 01:29:16,070
+If we don't have scale, I don't
+know if you noticed before,
+
+2049
+01:29:16,070 --> 01:29:18,007
+but it was actually kind of fading in
+
+2050
+01:29:18,007 --> 01:29:20,360
+and maybe we might want to
+say we don't want any of that
+
+2051
+01:29:20,360 --> 01:29:23,820
+and we're just gonna use
+an identity transition
+
+2052
+01:29:23,820 --> 01:29:26,398
+and then this Pie, when it comes and goes,
+
+2053
+01:29:26,398 --> 01:29:28,790
+it's just gonna appear. Which
+is fine because it's usually
+
+2054
+01:29:28,790 --> 01:29:30,890
+happens when the card is face-down
+
+2055
+01:29:30,890 --> 01:29:32,560
+or it's switching between two Pies
+
+2056
+01:29:32,560 --> 01:29:36,463
+that have the exact same
+value if we are matching.
+
+2057
+01:29:37,690 --> 01:29:39,000
+That is it for animation,
+
+2058
+01:29:39,000 --> 01:29:40,560
+hopefully, that's all
+you'll ever need to know
+
+2059
+01:29:40,560 --> 01:29:41,800
+about animation.
+
+2060
+01:29:41,800 --> 01:29:45,040
+I mean, of course animation
+is a powerful subsystem,
+
+2061
+01:29:45,040 --> 01:29:47,500
+we didn't have to add very
+many lines of code to our app
+
+2062
+01:29:47,500 --> 01:29:49,960
+to make it do all these crazy things.
+
+2063
+01:29:49,960 --> 01:29:52,240
+But I haven't shown you every possible way
+
+2064
+01:29:52,240 --> 01:29:54,680
+you could use in animation by any means.
+
+2065
+01:29:54,680 --> 01:29:55,830
+So there's still a lot to learn
+
+2066
+01:29:55,830 --> 01:29:57,593
+but to let you know the basics now.
+
+2067
+01:29:58,480 --> 01:30:00,560
+Next week, I'm not sure
+exactly what we're gonna do
+
+2068
+01:30:00,560 --> 01:30:03,420
+next week, either we're
+gonna do some gestures,
+
+2069
+01:30:03,420 --> 01:30:06,840
+possibly, you know, pinch
+gestures and things like that
+
+2070
+01:30:06,840 --> 01:30:09,410
+or we might actually do
+
+2071
+01:30:09,410 --> 01:30:13,070
+TextFields and Pickers
+and I saw that question
+
+2072
+01:30:13,070 --> 01:30:14,607
+on the class forums about that,
+
+2073
+01:30:14,607 --> 01:30:15,960
+and maybe we'll do that.
+
+2074
+01:30:15,960 --> 01:30:19,120
+We're not exactly quite sure
+where we're gonna go next week
+
+2075
+01:30:19,120 --> 01:30:21,593
+but stay tuned and you'll find out then,
+
+2076
+01:30:22,430 --> 01:30:25,130
+>> [旁白] 请访问 stanford.edu
+获取更多内容
