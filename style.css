@@ -1,0 +1,154 @@
+body {
+  color: #2e2d29;
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  font-size: 1.2em;
+  margin: 0;
+}
+
+header {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13), 0 3px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+header p {
+  margin: 0;
+  max-width: 1500px;
+  font-size: 1.3em;
+}
+
+nav ul {
+  max-width: 1500px;
+  margin: 0.5em 0 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul li {
+  list-style: none;
+  margin-inline-start: 20px;
+}
+
+a,
+a:visited {
+  color: #006cb8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+}
+
+body > main {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: calc(100% - 20px);
+}
+
+body > main section:first-child {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+main section:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+main section article {
+  margin-bottom: 40px;
+  max-width: 100%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+main section article main {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1.6rem;
+}
+
+main section article main span {
+  display: block;
+  margin-top: -0.3em;
+  margin-bottom: 0.3em;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+main section article main h2 {
+  margin-top: 0;
+  margin-bottom: 0.7em;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+main section article main p {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+main section article main > a {
+  display: block;
+  margin-top: 0;
+}
+
+main section article main a:not(:last-child) {
+  margin-bottom: 0.7em;
+}
+
+@media only screen and (min-width: 1200px) {
+  main,
+  header > ul,
+  header > p {
+    width: calc(100% - 200px);
+  }
+
+  main section article main {
+    padding: 1.9rem;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  header {
+    padding: 20px 40px 10px 40px;
+  }
+
+  header p {
+    margin: 0 auto;
+    font-size: 1.8em;
+  }
+
+  main,
+  header > ul,
+  header > p {
+    width: calc(100% - 160px);
+  }
+
+  main section article {
+    max-width: 44%;
+    margin-bottom: 80px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  main,
+  header > ul,
+  header > p {
+    width: calc(100% - 100px);
+  }
+
+  main section article main {
+    padding: 1.8rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  main,
+  header > ul,
+  header > p {
+    width: calc(100% - 60px);
+  }
+}
