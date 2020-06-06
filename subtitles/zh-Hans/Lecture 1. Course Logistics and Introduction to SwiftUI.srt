@@ -2663,670 +2663,630 @@ Text 就像基础砖块一样
 
 646
 00:27:33,800 --> 00:27:36,030
-And if you consider that
-couch and the kitchen table
+如果你将沙发和餐桌
+也看做乐高组件的话
 
 647
 00:27:36,030 --> 00:27:38,570
-as Legos, then you're
-putting those together
+你就可以把它们拼在一起
 
 648
 00:27:38,570 --> 00:27:39,403
-to make the house.
+去构建一个房子
 
 649
 00:27:39,403 --> 00:27:42,280
-You could even then
-have the house be a Lego
+你甚至可以把刚拼好的房子作为
+新的乐高组件
 
 650
 00:27:42,280 --> 00:27:45,370
-that you put together to
-make a Lego neighborhood.
+再拿着它去组合出一条街
 
 651
 00:27:45,370 --> 00:27:48,600
-Or the Lego world, Lego universe.
+或是一个乐高世界，乐高宇宙
 
 652
 00:27:48,600 --> 00:27:52,150
-That's the way we wanna
-think of making these Views.
+这就是我们构造界面的思维方式
 
 653
 00:27:52,150 --> 00:27:54,210
-Now, the difference
-between a Lego and a View
+乐高与 View 之间的不同点
 
 654
 00:27:54,210 --> 00:27:56,510
-is that there are special kinds of Views
+有一些特殊的 View
 
 655
 00:27:56,510 --> 00:27:59,050
-that are used to combine Legos.
+专门用来把乐高组合在一起
 
 656
 00:27:59,050 --> 00:28:01,807
-We've got these basic
-brick Legos like Text.
+这个 Text 类似于乐高中的基础砖块
 
 657
 00:28:01,807 --> 00:28:03,900
-And then we've got other kinds of Views
+之后我们会见到 View 组合器
 
 658
 00:28:03,900 --> 00:28:07,340
-that are combiners, Lego
-combiners, View combiners.
+乐高组合器，View 组合器
 
 659
 00:28:07,340 --> 00:28:11,100
-And you're gonna see us
-use those in detail here.
+将来我会详细介绍它们
 
 660
 00:28:11,100 --> 00:28:13,040
-That's why our body just returns
+这就是 body 仅仅返回
 
 661
 00:28:13,040 --> 00:28:17,120
-one single some View of some sort.
+一个 some View 的原因了
 
 662
 00:28:17,120 --> 00:28:19,670
-It might be returning a combiner.
+它可能返回一个组合器
 
 663
 00:28:19,670 --> 00:28:21,090
-If it returns a combiner View,
+如果它返回了一个组合器视图
 
 664
 00:28:21,090 --> 00:28:24,180
-then it could have tons
-and tons of Views inside
+那它里面可能包裹了一大堆
 
 665
 00:28:24,180 --> 00:28:25,333
-that are combined.
+被组合起来的 View
 
 666
 00:28:26,620 --> 00:28:30,530
-Now, this is also a kind
-of an interesting var here
+现在我们来看看这个有趣的变量
 
 667
 00:28:30,530 --> 00:28:34,010
-in that it's got this
-curly brace thing after it.
+它后面跟着一对大括号
 
 668
 00:28:34,010 --> 00:28:37,750
-This var, its value is
-not stored in memory.
+这个变量的值并没有保存在内存中
 
 669
 00:28:37,750 --> 00:28:41,000
-Instead this var is computed.
+而是被计算出来的
 
 670
 00:28:41,000 --> 00:28:44,900
-So every time someone, namely the system,
+所以每当有人（也就是系统）
 
 671
 00:28:44,900 --> 00:28:47,030
-asks for the value of this var,
+想获取这个变量的值的时候
 
 672
 00:28:47,030 --> 00:28:50,810
-this code in this curly
-brace gets executed.
+这对大括号里的代码就会被执行一次
 
 673
 00:28:50,810 --> 00:28:53,090
-And whatever the value that's returned,
+计算返回的结果
 
 674
 00:28:53,090 --> 00:28:54,680
-that's what the value of the body is.
+也就是 body 这个变量的值
 
 675
 00:28:54,680 --> 00:28:57,080
-And every time it's called,
-it gets called again,
+而且这个变量被访问之后
+很快就会被再次访问
 
 676
 00:28:57,080 --> 00:28:58,920
-it's constantly calling this thing.
+系统一直在不断地访问它
 
 677
 00:28:58,920 --> 00:29:01,770
-Now, this code in here
-seems kind of minimalistic
+这段代码看起来非常简洁
 
 678
 00:29:01,770 --> 00:29:03,330
-but it'll probably make more sense
+但是如果我把关键字补回去
 
 679
 00:29:03,330 --> 00:29:05,720
-if I put this keyword back.
+它的含义会变得更明确
 
 680
 00:29:05,720 --> 00:29:08,050
-This keyword, return, you see is magenta.
+这个紫红色的关键字 return
 
 681
 00:29:08,050 --> 00:29:10,450
-It's a Swift thing, it means return.
+它是 Swift 的关键字，意思是“返回”
 
 682
 00:29:10,450 --> 00:29:13,280
-Return a value from this piece of code,
+从这段大括号包围的代码
 
 683
 00:29:13,280 --> 00:29:15,540
-this little curly-braced piece of code.
+返回一个值
 
 684
 00:29:15,540 --> 00:29:20,160
-And it wasn't there because
-Swift loves to leave things out
+但是它并没有出现在这里
+因为 Swift 喜欢省略代码
 
 685
 00:29:20,160 --> 00:29:22,440
-and make it so you have to type
-as little code as possible.
+它希望你写的代码越少越好
 
 686
 00:29:22,440 --> 00:29:23,990
-You're gonna see that later.
+后面你会看到更多例子
 
 687
 00:29:23,990 --> 00:29:27,000
-And so if you have a
-one-line function like this
+如果你有个只有一行的函数
 
 688
 00:29:27,000 --> 00:29:29,530
-that returns a value,
-so that's what this is,
+并且这行代码返回了一个值，就像这里
 
 689
 00:29:29,530 --> 00:29:32,320
-a one-liner returns this Text thing.
+用一行代码返回了一个 Text
 
 690
 00:29:32,320 --> 00:29:34,910
-Then you can leave this return out.
+那么你就可以把 return 省略掉
 
 691
 00:29:34,910 --> 00:29:36,250
-It'll just infer that.
+它会自动推断出来
 
 692
 00:29:36,250 --> 00:29:38,263
-But I'm gonna leave it in
+但是我打算把 return 留下来
 
 693
 00:29:38,263 --> 00:29:40,220
-because I want you to realize
+因为我想让你明白
 
 694
 00:29:40,220 --> 00:29:41,290
-that that's what's going on here.
+这里具体发生了什么
 
 695
 00:29:41,290 --> 00:29:43,570
-We have this little piece of code,
+这有一小段代码
 
 696
 00:29:43,570 --> 00:29:46,450
-it returns this Text thing.
+它返回了一个 Text
 
 697
 00:29:46,450 --> 00:29:49,020
-And that's going to always
-be the value of body.
+这就是 body 的值
 
 698
 00:29:49,020 --> 00:29:51,460
-Anytime someone asks me
-for the value of body,
+每当有人需要访问 body 的值的时候
 
 699
 00:29:51,460 --> 00:29:54,853
-it's gonna execute this and
-return this Text right here.
+这行代码就会被执行并返回这个 Text
 
 700
 00:29:55,710 --> 00:29:59,490
-Now, this return type,
-remember, is some View.
+现在还记得吗？
+这个返回值类型是 some View
 
 701
 00:29:59,490 --> 00:30:02,137
-So if you're saying, "It's returning Text.
+所以你可能会疑惑
+“它返回了个 Text”
 
 702
 00:30:02,137 --> 00:30:03,270
-"What's going on here?"
+“这是怎么回事？”
 
 703
 00:30:03,270 --> 00:30:07,750
-Well, of course Text, it
-says it behaves like a View.
+这是因为 Text 说
+它会表现得和 View 一样
 
 704
 00:30:07,750 --> 00:30:09,070
-So this is "some View".
+所以它就是一种“some View”
 
 705
 00:30:09,070 --> 00:30:12,110
-In other words, somewhere
-off in Apple's code
+换句话说，在苹果的代码里
 
 706
 00:30:12,110 --> 00:30:13,607
-there is some line that looks like this.
+会有这么一行
 
 707
 00:30:13,607 --> 00:30:18,310
-"struct Text behaves like a View."
+“struct Text 表现得像 View 一样”
 
 708
 00:30:18,310 --> 00:30:23,160
-And that's why we can return
-a Text as the value of body
+这就是为什么我们能
+返回 Text 作为 body 的值
 
 709
 00:30:23,160 --> 00:30:23,993
-'cause it's some View.
+因为它就是 some View
 
 710
 00:30:23,993 --> 00:30:26,700
-In fact, we could even
-just type Text right here.
+实际上我们可以直接在这写上 Text
 
 711
 00:30:26,700 --> 00:30:30,800
-That would be valid because
-to behave like a View,
+这完全是合法的
+因为 ContentView 要表现得像 View
 
 712
 00:30:30,800 --> 00:30:35,460
-your var body just has to
-return something that is a View.
+只需要 body 变量返回一个 View
 
 713
 00:30:35,460 --> 00:30:37,830
-And of course, Text is a View.
+显然，Text 是一个 View
 
 714
 00:30:37,830 --> 00:30:40,080
-So why don't we type Text?
+那么为什么我们不直接写 Text 呢？
 
 715
 00:30:40,080 --> 00:30:42,320
-Why do we do this some View?
+为什么要写 some View？
 
 716
 00:30:42,320 --> 00:30:46,300
-Well, as our body of our
-View gets more complicated
+这是因为当 body 里开始用
+View 组合器之类的东西的时候
 
 717
 00:30:46,300 --> 00:30:48,170
-and we start using these View-combiners
+body 的内容会变的越来越复杂
 
 718
 00:30:48,170 --> 00:30:50,900
-and things like that, it's
-gonna be constantly changing.
+返回的 View 的类型
 
 719
 00:30:50,900 --> 00:30:53,430
-Which kind of View we're returning.
+可能会经常变化
 
 720
 00:30:53,430 --> 00:30:54,870
-Right now we're returning a Text.
+现在我们返回的是个 Text
 
 721
 00:30:54,870 --> 00:30:56,500
-But eventually we're gonna be returning
+但是最终我们要返回的
 
 722
 00:30:56,500 --> 00:30:58,780
-View-combining Views.
+是一组被组合起来的 View
 
 723
 00:30:58,780 --> 00:31:02,530
-And we wanna let the compiler
-figure it out for us.
+我们希望编译器来替我们推断这个类型
 
 724
 00:31:02,530 --> 00:31:06,187
-So this some View is basically
-saying to the compiler,
+所以这个“some View”
+就是在告诉编译器
 
 725
 00:31:06,187 --> 00:31:08,867
-"Go look in my code right here.
+“去看我写的代码”
 
 726
 00:31:08,867 --> 00:31:10,867
-"Figure out what it's returning.
+“搞清楚它返回了什么东西”
 
 727
 00:31:10,867 --> 00:31:13,897
-"Make sure that it behaves like a View.
+“确保返回的东西表现得像个 View”
 
 728
 00:31:13,897 --> 00:31:16,597
-"And then use that as
-the type of the body."
+“然后把它作为 body 的类型”
 
 729
 00:31:17,450 --> 00:31:20,310
-You're gonna find as we
-go through this course
+随着课程的进行你会发现
 
 730
 00:31:20,310 --> 00:31:24,060
-that Swift is what's called a
-very strongly-typed language.
+Swift 是强类型语言
 
 731
 00:31:24,060 --> 00:31:28,050
-That means every variable
-has a specific type.
+这意味着每一个变量
+都有一个明确的类型
 
 732
 00:31:28,050 --> 00:31:30,580
-It's not a language
-like JavaScript or other
+它不像 JavaScript 或一些其他语言
 
 733
 00:31:30,580 --> 00:31:32,230
-where it's like well, the variable
+它们的变量类型
 
 734
 00:31:32,230 --> 00:31:33,850
-depends on what you assign to it.
+取决于你分配的值
 
 735
 00:31:33,850 --> 00:31:34,683
-That's when it gets ...
+当它得到值的时候……
 
 736
 00:31:34,683 --> 00:31:38,250
-No, in Swift, every
-variable has a specific type
+不，在 Swift 中每一个变量
+都有一个明确的类型
 
 737
 00:31:38,250 --> 00:31:39,610
-and always has a value.
+并且永远都有一个值
 
 738
 00:31:39,610 --> 00:31:43,963
-That's just fundamental
-to the way Swift works.
+这是 Swift 基本的运作方式
 
 739
 00:31:45,740 --> 00:31:49,060
-So let's look at this Text right here.
+现在我们来看看这个 Text
 
 740
 00:31:49,060 --> 00:31:51,320
-We create this Text.
+我们创建了这个 Text
 
 741
 00:31:51,320 --> 00:31:53,680
-Anytime we're creating
-anything, any struct,
+每当我们要创建一个东西
+一个 struct 的时候……
 
 742
 00:31:53,680 --> 00:31:56,680
-so a Text is just a struct
-that behaves like a View.
+Text 是一个
+表现的像个 View 一样的 struct
 
 743
 00:31:56,680 --> 00:32:00,120
-And anytime we create
-one, we in parentheses
+每当我们要创建它的时候
+会在小括号里
 
 744
 00:32:00,120 --> 00:32:03,700
-give it whatever information
-it needs to create itself.
+写上创建它的时候需要的信息
 
 745
 00:32:03,700 --> 00:32:05,840
-Now, obviously for a Text,
+显然，对于 Text 来说
 
 746
 00:32:05,840 --> 00:32:09,007
-it needs the string that it's
-going to use to create itself.
+它需要一个字符串来创建它自己
 
 747
 00:32:09,007 --> 00:32:11,460
-and that's why you get
-this "Hello There, World!"
+这就是为什么这里会显示出
+“Hello There, World!”
 
 748
 00:32:11,460 --> 00:32:14,140
-And notice if I edit this,
-it's not changing this.
+注意这里我改变了字符串
+但预览并没有更新
 
 749
 00:32:14,140 --> 00:32:16,080
-That's because it's paused up here.
+这是因为预览更新被暂停了
 
 750
 00:32:16,080 --> 00:32:18,720
-But if I resume, then it's going
+只要我按下 Resume 它就恢复正常了
 
 751
 00:32:18,720 --> 00:32:23,303
-and now I can for example
-type, and it's tracking it.
+现在我改变字符串的值
+预览就可以实时更新了
 
 752
 00:32:24,250 --> 00:32:28,010
-So this is always the way we
-create new structs of any kind.
+这就是我们创建 struct
+或其他东西的方法
 
 753
 00:32:28,010 --> 00:32:30,030
-We put parentheses after it
+在后面写上小括号
 
 754
 00:32:30,030 --> 00:32:32,100
-and then we give it
-whatever arguments it wants.
+然后在括号里写上它想要的参数
 
 755
 00:32:32,100 --> 00:32:34,040
-And some things when you're creating them,
+甚至有些东西在创建的时候
 
 756
 00:32:34,040 --> 00:32:35,420
-can take different kinds of arguments
+可以接受不同种类的参数
 
 757
 00:32:35,420 --> 00:32:36,361
-depending on what they are.
+这取决于参数的内容
 
 758
 00:32:36,361 --> 00:32:38,511
-And you're gonna see
-that pretty soon here.
+你会在不久之后看到这一点
 
 759
 00:32:40,740 --> 00:32:43,960
-So let's see if we can start building
+现在我们来试着构建一个
 
 760
 00:32:43,960 --> 00:32:48,090
-a UI that looks a little
-bit more like a card.
+看起来更像卡片的 UI
 
 761
 00:32:48,090 --> 00:32:49,510
-Right now it just says, "Hello, World!"
+现在它只是显示一行“Hello World”
 
 762
 00:32:49,510 --> 00:32:53,550
-Let's remind ourselves what
-that's gonna look like.
+我们先来回忆一下 UI 长得什么样子
 
 763
 00:32:53,550 --> 00:32:55,730
-Kind of a screen capture of the game
+这是游戏的截屏
 
 764
 00:32:55,730 --> 00:32:57,670
-that I showed you earlier.
+我之前给你们展示过
 
 765
 00:32:57,670 --> 00:33:01,210
-And our cards, they kind of
-have these rounded rectangles
+可以看到卡片的外围
 
 766
 00:33:01,210 --> 00:33:03,030
-around the edge, you see that?
+是一圈圆角矩形，你看到了吗？
 
 767
 00:33:03,030 --> 00:33:04,470
-And this is a line.
+这就是边界
 
 768
 00:33:04,470 --> 00:33:06,040
-Then kind of a white background.
+然后背景是白色的
 
 769
 00:33:06,040 --> 00:33:08,010
-They have an emoji on the front.
+中央是个表情（Emoji）
 
 770
 00:33:08,010 --> 00:33:10,630
-So let's take care of
-each of these things.
+现在我们来一步步构建这张卡片
 
 771
 00:33:10,630 --> 00:33:11,710
-Let's start with the emoji.
+我们从表情开始
 
 772
 00:33:11,710 --> 00:33:13,000
-That's gonna be really easy
+这很容易
 
 773
 00:33:13,000 --> 00:33:15,420
-'cause an emoji is just a piece of text.
+因为表情就是一段文字而已
 
 774
 00:33:15,420 --> 00:33:17,160
-So I'm gonna delete that.
+我先把它删掉
 
 775
 00:33:17,160 --> 00:33:19,840
-I don't know if you know
-this but in any Mac app,
+我不清楚你们知不知道
+在任何一个 Mac 应用中
 
 776
 00:33:19,840 --> 00:33:22,850
-if you go to the Edit menu,
-go down to the bottom,
+如果你在菜单栏选择“编辑”
+然后往下看
 
 777
 00:33:22,850 --> 00:33:24,891
-there'll be Emoji &amp; Symbols.
+有个“表情与符号”
 
 778
 00:33:24,891 --> 00:33:26,460
-You see there, I can get an emoji.
+看到了吗，我现在能输入表情了
 
 779
 00:33:26,460 --> 00:33:29,090
-You can even search ghost.
+你还能搜索“ghost”
 
 780
 00:33:29,090 --> 00:33:30,040
-There it is, ghost.
+找到了，这就是幽灵表情
 
 781
 00:33:30,940 --> 00:33:32,280
-Let's double-click on it.
+现在双击它
 
 782
 00:33:32,280 --> 00:33:33,120
-Now we have a ghost.
+我们就有了一个幽灵表情
 
 783
 00:33:33,120 --> 00:33:34,360
-And sure enough, there's our ghost.
+毫无疑问，这里显示的就是幽灵表情
 
 784
 00:33:34,360 --> 00:33:35,690
-He's really small.
+现在他还很小
 
 785
 00:33:35,690 --> 00:33:38,400
-Although we can zoom in and see him there.
+不过我们可以放大来看清楚他
 
 786
 00:33:38,400 --> 00:33:40,370
-And we're gonna have to
-fix that he's so small.
+我们需要解决他尺寸太小的问题
 
 787
 00:33:40,370 --> 00:33:41,810
-It's not gonna work for our cards
+他这么小，在卡片上的
 
 788
 00:33:41,810 --> 00:33:43,100
-for him to be so tiny like that.
+展示效果很差
 
 789
 00:33:43,100 --> 00:33:44,973
-But one thing at a time.
+不过我们之后再来解决这个问题
 
 790
 00:33:45,930 --> 00:33:48,760
-The next thing we need
-is our rounded rectangle.
+下面我们需要画一个圆角矩形
 
 791
 00:33:48,760 --> 00:33:50,610
-So we need this rounded
-rectangle, it goes up there.
+就像像截屏里这样的圆角矩形
 
 792
 00:33:50,610 --> 00:33:53,490
-So let's comment this Text out.
+我们先把 Text 注释掉
 
 793
 00:33:53,490 --> 00:33:55,470
-So I'm doing Command
-slash by the way there
+顺带一提，我通过快捷键
+Command + /
 
 794
 00:33:55,470 --> 00:33:57,290
-to comment that Text out.
+注释了这行 Text
 
 795
 00:33:57,290 --> 00:34:01,180
-And instead put our
-rounded rectangle in there.
+然后把圆角矩形写在这
 
 796
 00:34:01,180 --> 00:34:04,000
-Luckily, Swift has an awesome thing here.
+幸运的是，Swift 有个很棒的东西
 
 797
 00:34:04,000 --> 00:34:07,760
