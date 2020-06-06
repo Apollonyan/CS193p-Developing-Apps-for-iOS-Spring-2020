@@ -1,18 +1,19 @@
 1
 00:00:00,121 --> 00:00:02,704
-(gentle music)
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名-非商业性使用-相同方式共享 3.0 美国
 
 2
 00:00:04,236 --> 00:00:06,250
-- [Narrator] Stanford University
+>> [旁白] 斯坦福大学
 
 3
 00:00:08,500 --> 00:00:12,012
-- [Instructor] CS193P Spring of 2020.
+2020 年春季学期 CS193p
 
 4
 00:00:12,012 --> 00:00:13,952
-This is lecture six
+这是本系列的第六课
 
 5
 00:00:13,952 --> 00:00:18,800
@@ -9184,5 +9185,5 @@ but stay tuned and you'll find out then,
 
 2076
 01:30:22,430 --> 01:30:25,130
-- [Narrator] For more, please
-visit us at stanford.edu
+>> [旁白] 请访问 stanford.edu
+获取更多内容

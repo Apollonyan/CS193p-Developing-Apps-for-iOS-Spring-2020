@@ -1,18 +1,19 @@
 1
 00:00:00,541 --> 00:00:03,208
-(air whooshing)
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名-非商业性使用-相同方式共享 3.0 美国
 
 2
 00:00:04,930 --> 00:00:06,580
-- [Narrator] Stanford University.
+>> [旁白] 斯坦福大学
 
 3
 00:00:08,470 --> 00:00:10,300
-- [Instructor] All righty, lecture five.
+好耶，第五节
 
 4
 00:00:10,300 --> 00:00:13,713
-Stanford CS193P spring of 2020.
+斯坦福大学 2020 年春季学期 CS193p
 
 5
 00:00:14,860 --> 00:00:18,220
@@ -6114,5 +6115,5 @@ I will talk to you then.
 
 1382
 01:01:50,530 --> 01:01:53,763
-- [Narrator] For more, please
-visit us @stanford.edu.
+>> [旁白] 请访问 stanford.edu
+获取更多内容
