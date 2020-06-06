@@ -5768,163 +5768,163 @@ CardView 是完美自洽的
 
 1385
 01:00:44,590 --> 01:00:46,950
-And the Fix will fix the error for you.
+点击 Fix 将为你修正错误
 
 1386
 01:00:46,950 --> 01:00:49,000
-Now, it's not always gonna fix it
+但并不总是会按照
 
 1387
 01:00:49,000 --> 01:00:51,990
-exactly the way you want so
-it doesn't work all the time.
+你期望的方式去修正
+所以，并非始终有效
 
 1388
 01:00:51,990 --> 01:00:54,310
-And there's not always a Fix option.
+而且也并不是总有 Fix 选项
 
 1389
 01:00:54,310 --> 01:00:55,460
-'Cause sometimes it can't figure out
+因为有时 Xcode 不知道
 
 1390
 01:00:55,460 --> 01:00:56,940
-how to fix what you're saying.
+如何修正你的代码
 
 1391
 01:00:56,940 --> 01:00:58,040
-But here it does work.
+但是它在我们这里有效
 
 1392
 01:00:58,040 --> 01:01:02,410
-If I hit Fix, it actually adds an argument
+如果我点击 Fix
+Xcode 会在创建 CardView 时
 
 1393
 01:01:02,410 --> 01:01:03,780
-to the creation of CardView
+添加一个参数
 
 1394
 01:01:04,630 --> 01:01:08,030
-to set this variable isFaceUp.
+来为 isFaecUp 变量赋值
 
 1395
 01:01:08,030 --> 01:01:09,863
-So if I say false right here,
+所以，例如这里我传入 false
 
 1396
 01:01:10,990 --> 01:01:14,270
-it's going to initialize this variable.
+它将初始化这个变量
 
 1397
 01:01:14,270 --> 01:01:15,103
-Let's resume.
+点击 Resume
 
 1398
 01:01:18,430 --> 01:01:19,830
-And there it is.
+好了
 
 1399
 01:01:19,830 --> 01:01:21,700
-False, face up is false.
+isFaceUp 传入 false
 
 1400
 01:01:21,700 --> 01:01:22,890
-This gets initialized false.
+这个变量被初始化为 false
 
 1401
 01:01:22,890 --> 01:01:25,210
-All these are not face up.
+所有卡片都不朝上
 
 1402
 01:01:25,210 --> 01:01:29,273
-Now, hopefully this pattern
-is looking familiar to you.
+希望你们已经熟悉
+创建 CardView 这种模式
 
 1403
 01:01:29,273 --> 01:01:31,953
-It's the same as this pattern.
+与创建 RoundedRectangle 模式相同
 
 1404
 01:01:32,870 --> 01:01:34,860
-Here I'm creating a ZStack.
+我在这里创建了一个 RoundedRectangle
 
 1405
 01:01:34,860 --> 01:01:36,740
-It has some var probably.
+它可能有一些变量
 
 1406
 01:01:36,740 --> 01:01:38,430
-Not necessarily because
-there are other ways
+但并不是必须的
+因为还有其他方式
 
 1407
 01:01:38,430 --> 01:01:39,810
-to pass these variables.
+来传入这些变量的值
 
 1408
 01:01:39,810 --> 01:01:42,130
-But it might have a var
-called cornerRadius.
+但是它可能有一个
+叫做 cornerRadius 的变量
 
 1409
 01:01:42,130 --> 01:01:46,140
-And so it's forcing us to set it,
+因此，我们必须
+要为 cornerRadius 赋值
 
 1410
 01:01:46,140 --> 01:01:48,390
-to define it 'cause we
-can't have unset vars.
+明确它的值
+因为不能有未赋值的变量
 
 1411
 01:01:49,460 --> 01:01:51,010
-This is the same kind of thing.
+都是差不多的
 
 1412
 01:01:52,040 --> 01:01:55,950
-Okay, that is it for this lecture.
+好了，以上就是这节课的内容
 
 1413
 01:01:55,950 --> 01:01:57,080
-In the next lecture,
+在下一讲中
 
 1414
 01:01:57,080 --> 01:01:59,210
-I'm gonna actually start with some slides,
+我会从幻灯片开始
 
 1415
 01:01:59,210 --> 01:02:00,620
-some conceptual stuff.
+介绍一些概念性的东西
 
 1416
 01:02:00,620 --> 01:02:03,000
-Then we'll get right back to this demo.
+然后我们会回到演示中
 
 1417
 01:02:03,000 --> 01:02:04,830
-Normally I would tell
-you a little bit more
+一般我还会多讲一些
 
 1418
 01:02:04,830 --> 01:02:07,220
-about what's gonna happen
-in the next lecture.
+有关下节课的内容
 
 1419
 01:02:07,220 --> 01:02:09,380
-Except for that I'm releasing lecture two
+但考虑到我会同时发布
 
 1420
 01:02:09,380 --> 01:02:10,910
-along with lecture one.
+第一课与第二课
 
 1421
 01:02:10,910 --> 01:02:12,690
-So if you really want to
-see what's in lecture two,
+所以如果你真的想
+看看第二节课讲了什么
 
 1422
 01:02:12,690 --> 01:02:14,113
-just go watch it right now.
+现在就去看吧
 
 1423
 01:02:15,760 --> 01:02:18,993

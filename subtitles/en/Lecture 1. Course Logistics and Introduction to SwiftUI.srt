@@ -6174,7 +6174,7 @@ It's the same as this pattern.
 
 1404
 01:01:32,870 --> 01:01:34,860
-Here I'm creating a ZStack.
+Here I'm creating a RoundedRectangle.
 
 1405
 01:01:34,860 --> 01:01:36,740
