@@ -2270,224 +2270,209 @@ Swift 里的结构体和其他语言类似
 
 555
 00:23:28,440 --> 00:23:29,860
-This is not object-oriented programming.
+这不是面向对象编程
 
 556
 00:23:29,860 --> 00:23:31,450
-This is functional programming.
+这是函数式编程
 
 557
 00:23:31,450 --> 00:23:33,410
-And that's why we may be more likely
+这也是为什么我们更倾向于
 
 558
 00:23:33,410 --> 00:23:36,680
-to say something like a
-ContentView functions like a View
+说 ContentView 像 View 一样运作
 
 559
 00:23:36,680 --> 00:23:39,290
-or it behaves like a View.
+或者它的行为像 View
 
 560
 00:23:39,290 --> 00:23:41,330
-And this is super important.
+这是非常重要的
 
 561
 00:23:41,330 --> 00:23:44,680
-This behavior, View, is crucial
+你会发现 View 这个行为
 
 562
 00:23:44,680 --> 00:23:47,810
-to how all of SwiftUI
-works as you will see.
+是 SwiftUI 实现中非常关键的
 
 563
 00:23:47,810 --> 00:23:49,950
-We are going to be using so many Views
+我们将会使用非常多的 View
 
 564
 00:23:49,950 --> 00:23:53,320
-in the next couple of lectures,
-you can't even imagine it.
+在接下来的几节课中
+你甚至都想象不到有多少
 
 565
 00:23:53,320 --> 00:23:55,730
-And we're gonna talk
-all about the concepts
+通过第二节课开始的幻灯片
 
 566
 00:23:55,730 --> 00:23:59,110
-behind this behavior specification
+我们也会讨论声明这个行为
 
 567
 00:23:59,110 --> 00:24:01,650
-using slides at the
-beginning of lecture two.
+背后所有的概念
 
 568
 00:24:01,650 --> 00:24:03,870
-In the meantime, we're
-just going to understand
+同时，现在我们只要理解
 
 569
 00:24:03,870 --> 00:24:07,133
-that this means that
-ContentView behaves like a View.
+这个意思是 ContentView
+有 View 一样的行为
 
 570
 00:24:07,980 --> 00:24:11,390
-A View is just a
-rectangular area on screen.
+一个 View 只是屏幕上的一个长方形区域
 
 571
 00:24:11,390 --> 00:24:14,280
-So here I've put my mouse on this Text
+这里我把鼠标放在这个 Text 上
 
 572
 00:24:14,280 --> 00:24:15,853
-and it's selected it
-over here in the preview.
+它就在这边预览里被选中了
 
 573
 00:24:15,853 --> 00:24:19,970
-And you can see it's put this
-blue border around that Text.
+你可以看到这里 Text 的周围有蓝色边框
 
 574
 00:24:19,970 --> 00:24:22,310
-That blue border is bordering this View.
+那个蓝色边框就是这个 View 的边界
 
 575
 00:24:22,310 --> 00:24:25,210
-So a Text, it also behaves like a View.
+所以 Text 也有 View 一样的行为
 
 576
 00:24:25,210 --> 00:24:26,520
-It "is a" View.
+它也“是”个 View
 
 577
 00:24:26,520 --> 00:24:28,120
-And so you're seeing it right here.
+所以你能在这里看到它
 
 578
 00:24:28,120 --> 00:24:29,440
-So that's all Views are.
+这就是 View
 
 579
 00:24:29,440 --> 00:24:31,610
-They're rectangular areas on screen,
+它们是屏幕上的长方形区域
 
 580
 00:24:31,610 --> 00:24:34,560
-both for drawing and also for multi-touch.
+既用于显示，也支持多点触控
 
 581
 00:24:34,560 --> 00:24:37,870
-For swipes and taps, pinches,
+滑动、点击、缩放
 
 582
 00:24:37,870 --> 00:24:41,120
-those kinds of things
-happen in these rectangles.
+这类操作都在这个长方形里面发生
 
 583
 00:24:41,120 --> 00:24:42,640
-So that's what a View is.
+所以这就是 View
 
 584
 00:24:42,640 --> 00:24:44,670
-So when something behaves like a View,
+当一个东西有 View 一样的行为
 
 585
 00:24:44,670 --> 00:24:46,330
-it's a rectangular area on screen.
+它就是屏幕上一个长方形的区域
 
 586
 00:24:46,330 --> 00:24:49,250
-So our ContentView which
-behaves like a View
+我们的 ContentView 有 View 一样的行为
 
 587
 00:24:49,250 --> 00:24:51,900
-is this entire rectangle.
+它就是这里的一整个长方形
 
 588
 00:24:51,900 --> 00:24:54,640
-The whole rectangle that fills the screen
+充满屏幕的整个长方形
 
 589
 00:24:54,640 --> 00:24:56,173
-is our ContentView.
+就是我们的 ContentView
 
 590
 00:24:57,296 --> 00:24:59,890
-All right, if you are somebody,
+如果你是
 
 591
 00:24:59,890 --> 00:25:02,260
-some struct like this ContentView,
+比如像这个 ContentView 一样的结构体
 
 592
 00:25:02,260 --> 00:25:05,320
-and you want to say that
-you behave like a View,
+且你想有 View 一样的行为
 
 593
 00:25:05,320 --> 00:25:10,320
-you must in your struct
-have this var right here,
+在你的结构体中必须有这个变量
 
 594
 00:25:10,360 --> 00:25:12,850
-this var called body.
+这个叫做 body 的变量
 
 595
 00:25:12,850 --> 00:25:14,330
-I'll select it for you here.
+就是我这里选中的这个
 
 596
 00:25:14,330 --> 00:25:17,190
-So here's the declaration of var body.
+这里就是变量 body 的声明
 
 597
 00:25:17,190 --> 00:25:20,890
-So Swift variables, they
-have the keyword var,
+Swift 的变量使用关键词 var
 
 598
 00:25:20,890 --> 00:25:22,210
-short for variable.
+单词 variable 的缩写
 
 599
 00:25:22,210 --> 00:25:24,910
-Although we don't tend to call variables
+尽管在一个结构体中
 
 600
 00:25:24,910 --> 00:25:27,700
-inside a struct like this vars.
+我们一般不称它为变量
 
 601
 00:25:27,700 --> 00:25:29,770
-We call them properties.
+我们把它们称为属性
 
 602
 00:25:29,770 --> 00:25:32,870
-So you're gonna hear me use
-the word property all the time.
+你们将会一直听我使用属性这个词
 
 603
 00:25:32,870 --> 00:25:36,010
-It means a var inside a struct or a class.
+它的意思是类或者结构体中的变量
 
 604
 00:25:36,010 --> 00:25:38,120
-Also, if we're doing
-object-oriented programming,
+如果我们做面向对象编程
 
 605
 00:25:38,120 --> 00:25:40,210
-we call them properties.
+我们把它们称为属性
 
 606
 00:25:40,210 --> 00:25:44,680
