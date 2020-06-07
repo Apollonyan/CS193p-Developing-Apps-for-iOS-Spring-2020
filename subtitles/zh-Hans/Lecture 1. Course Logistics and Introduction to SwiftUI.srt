@@ -4103,7 +4103,8 @@ ZStack 是一个 View
 
 998
 00:43:02,970 --> 00:43:07,500
-我们可以在这里写上 foregroundColor(Color.blue)
+我们可以在这里写上
+.foregroundColor(Color.blue)
 
 999
 00:43:08,850 --> 00:43:12,360
@@ -4115,7 +4116,8 @@ ZStack 是一个 View
 
 1001
 00:43:16,470 --> 00:43:19,380
-因为我只把这个描边后的 RoundedRectangle View
+因为我只把这个描边后的
+RoundedRectangle View
 
 1002
 00:43:19,380 --> 00:43:23,580
