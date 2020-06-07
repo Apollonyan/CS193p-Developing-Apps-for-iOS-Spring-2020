@@ -1,7 +1,7 @@
-﻿1
+1
 00:00:00,000 --> 00:00:03,250
 本字幕由志愿者义务贡献，采用许可协议
-知识共享 署名-非商业性使用-相同方式共享 3.0 美国
+知识共享 署名—非商业性使用—相同方式共享 3.0 美国
 
 2
 00:00:04,930 --> 00:00:06,630
@@ -18,657 +18,606 @@
 
 5
 00:00:15,452 --> 00:00:17,640
-I'm gonna dive right back into the demo
+这节课我会继续完成
 
 6
 00:00:17,640 --> 00:00:19,250
-that we started in lecture one,
+第一节课所做的演示
 
 7
 00:00:19,250 --> 00:00:22,070
-however, first, I'm gonna cover these two
+不过首先我想先讲一讲
 
 8
 00:00:22,070 --> 00:00:24,810
-really important conceptual ideas.
+这两个非常重要的概念
 
 9
 00:00:24,810 --> 00:00:26,840
-First is MVVM.
+第一个是 MVVM
 
 10
 00:00:26,840 --> 00:00:29,430
-This is a design paradigm we're gonna use
+这是我们将要使用的设计范式
 
 11
 00:00:29,430 --> 00:00:33,220
-to design our app, kind
-of organize our code
+用它来组织我们的代码
 
 12
 00:00:33,220 --> 00:00:34,550
-and then the second thing
+然后第二个概念
 
 13
 00:00:34,550 --> 00:00:37,630
-is I'm gonna talk about
-the type system in Swift.
+是 Swift 中的类型系统
 
 14
 00:00:37,630 --> 00:00:40,370
-So let's do this MVVM thing first.
+我们先来看 MVVM
 
 15
 00:00:40,370 --> 00:00:44,270
-MVVM is a code organizing model.
+MVVM 是一种代码组织模式
 
 16
 00:00:44,270 --> 00:00:46,400
-Basically, a place to determine
+简单地说，就是如何决定你的
 
 17
 00:00:46,400 --> 00:00:48,810
-where all your code lives in your app
+每一段代码应该放在项目的什么位置
 
 18
 00:00:48,810 --> 00:00:50,890
-and it works in concert with this concept
+并且能很好地支持
 
 19
 00:00:50,890 --> 00:00:55,460
-of reactive user interfaces
-that I mentioned last time.
+我上节课提到的响应式用户界面
 
 20
 00:00:55,460 --> 00:00:59,700
-It has to be adhered to for
-SwiftUI to work, this MVVM.
+要想 SwiftUI 正常工作
+就必须要遵循 MVVM 设计范式
 
 21
 00:00:59,700 --> 00:01:02,250
-You can't do SwiftUI without it.
+没有它就没办法写 SwiftUI
 
 22
 00:01:02,250 --> 00:01:04,590
-And for those of you have seen this class
+对于看过前几年的这门课的同学来说
 
 23
 00:01:04,590 --> 00:01:08,510
-in previous quarters, this
-is different from MVC,
+你们会发现它和 MVC 不同
 
 24
 00:01:08,510 --> 00:01:12,150
-which is Model-View-Controller
-that the UIKit,
+MVC 指的是 Model-View-Controller
+（模型—视图—控制器），适用于 UIKit
 
 25
 00:01:12,150 --> 00:01:16,463
-the old-style iOS
-development mechanism uses.
+之前的 iOS 开发机制会用到它
 
 26
 00:01:17,810 --> 00:01:22,520
-Okay, so MVVM, it shares a lot with MVC
+MVVM 和 MVC 有一些相通之处
 
 27
 00:01:22,520 --> 00:01:25,750
-in that we're trying
-to separate the Model,
+我们都要把模型（Model）拆分出来
 
 28
 00:01:25,750 --> 00:01:27,607
-which is our back-end of our app, right?
+把它作为 app 的后端，对吧？
 
 29
 00:01:27,607 --> 00:01:30,270
-The UI independent part with the View,
+它是与 UI 完全不相关的部分
 
 30
 00:01:30,270 --> 00:01:32,310
-which is what's in front of the users.
+而视图（View）则是面向用户的界面
 
 31
 00:01:32,310 --> 00:01:34,380
-Let's talk about the
-Model and the View first
+我们先来讲一下模型和视图
 
 32
 00:01:34,380 --> 00:01:38,393
-and then we'll talk about how
-MVVM hooks them up together.
+然后再来讲 MVVM
+是如何把它们组合在一起的
 
 33
 00:01:39,490 --> 00:01:42,840
-So the Model is UI independent.
+模型是独立于 UI 的
 
 34
 00:01:42,840 --> 00:01:46,720
-The Model doesn't import
-SwiftUI, for example.
+例如它是不会导入 SwiftUI 的
 
 35
 00:01:46,720 --> 00:01:50,580
-It is trying to encapsulate
-the data and the logic
+模型会封装应用程序中的
 
 36
 00:01:50,580 --> 00:01:53,280
-about what your application does.
+数据和逻辑
 
 37
 00:01:53,280 --> 00:01:55,870
-So in the case of our card matching game,
+具体到我们的卡片配对游戏上来说
 
 38
 00:01:55,870 --> 00:01:59,200
-this is the cards, that's the data,
+模型包含卡片（数据）
 
 39
 00:01:59,200 --> 00:02:02,840
-and it's also the logic, what
-happens when I choose a card,
+和内在的逻辑，例如当我选中一张
+卡片的时候应该发生什么
 
 40
 00:02:02,840 --> 00:02:06,650
-how do I match, how many
-points do I get when I match,
+我该如何配对，当我配成一对之后
+应该得到多少分
 
 41
 00:02:06,650 --> 00:02:08,400
-what happens if I have a mismatch.
+配对失败会发生什么
 
 42
 00:02:08,400 --> 00:02:12,773
-All of that logic and the
-card data lives in the Model.
+所有这些逻辑和卡片数据
+都保存在模型里
 
 43
 00:02:14,180 --> 00:02:16,870
-The Model is the truth, okay?
+模型就是事实
 
 44
 00:02:16,870 --> 00:02:19,340
-For all that data and
-logic, it's the truth.
+对于所有的数据和逻辑而言
+这就是事实
 
 45
 00:02:19,340 --> 00:02:22,680
-We're never going to store
-that data somewhere else
+我们从不把数据存在其他地方
 
 46
 00:02:22,680 --> 00:02:24,610
-and have two different versions of it.
+让数据有两个版本
 
 47
 00:02:24,610 --> 00:02:27,923
-We're always gonna go to
-the Model for the truth.
+我们一直都是从模型中获取事实
 
 48
 00:02:28,770 --> 00:02:31,730
-Now, the View reflects the Model.
+而视图反映了模型
 
 49
 00:02:31,730 --> 00:02:35,410
-The data is always flowing
-from the Model to the View.
+数据永远是从模型流向视图的
 
 50
 00:02:35,410 --> 00:02:37,770
-We're always going to
-try and make our View
+我们会让视图
 
 51
 00:02:37,770 --> 00:02:39,450
-look just like our Model.
+不管它如何绘制
 
 52
 00:02:39,450 --> 00:02:42,040
-However our View draws
-what's in the Model,
+都应该反映模型中的内容
 
 53
 00:02:42,040 --> 00:02:46,090
-so, however our card matching
-game appears on screen,
+所以不管卡片配对游戏
+在屏幕上显示的是什么样子
 
 54
 00:02:46,090 --> 00:02:49,130
-it's always going to reflect
-the state of the game
+它永远反映模型中的
 
 55
 00:02:49,130 --> 00:02:50,110
-in the Model.
+游戏状态
 
 56
 00:02:50,110 --> 00:02:51,850
-So that's important thing to
-understand about the View.
+了解视图永远反映模型的数据
 
 57
 00:02:51,850 --> 00:02:54,410
-Always reflecting what's in the Model.
+是一件很重要的事情
 
 58
 00:02:54,410 --> 00:02:57,030
-The View is pretty much stateless
+视图是不保存状态的
 
 59
 00:02:57,030 --> 00:03:00,510
-because all the state about
-the game is in the Model.
+因为所有的状态都保存在模型里
 
 60
 00:03:00,510 --> 00:03:03,660
-So the View itself doesn't
-need to have any state.
+所以视图本身不需要有任何状态
 
 61
 00:03:03,660 --> 00:03:05,580
-The View essentially just takes
+视图实际上每时每刻
 
 62
 00:03:05,580 --> 00:03:08,110
-whatever the current state of
-the Model is and displays it
+都在获取模型中的状态
 
 63
 00:03:08,110 --> 00:03:10,420
-and it should be able
-to do that at any time,
+然后显示它
 
 64
 00:03:10,420 --> 00:03:13,070
-just at any time should
-be able to say to View,
+在任何时候
 
 65
 00:03:13,070 --> 00:03:15,393
-look at the Model and
-look like that right now.
+视图都应该准确反映模型当前的状态
 
 66
 00:03:15,393 --> 00:03:18,650
-And that's the way we're
-gonna design our View.
+这就是我们设计视图的思路
 
 67
 00:03:18,650 --> 00:03:22,870
-And that makes the View
-what we call declarative.
+所以我们的视图是声明式（declarative）的
 
 68
 00:03:22,870 --> 00:03:25,220
-Declarative means we're
-just going to declare
+声明式的意思是我们只是声明
 
 69
 00:03:25,220 --> 00:03:26,950
-that the View looks this way
+视图长什么样子
 
 70
 00:03:26,950 --> 00:03:30,030
-and we're only going to actually
-change anything on screen
+并且只有当模型改变的时候
 
 71
 00:03:30,030 --> 00:03:31,503
-when the Model changes.
+屏幕上的内容才会改变
 
 72
 00:03:32,703 --> 00:03:35,843
-If you look at the code
-that we wrote last time,
+如果你看看我们上次写的代码
 
 73
 00:03:35,843 --> 00:03:39,300
-notice we don't call functions
-to put things in places,
+会发现我们没有通过调用函数
+向屏幕上添加内容
 
 74
 00:03:39,300 --> 00:03:44,300
-we just create RoundedRectangles
-and Texts and HStacks
+我们只是创建了 RoundedRectangle
+Text 和 HStack
 
 75
 00:03:44,560 --> 00:03:47,520
-and ZStacks and things so
-that we just create them
+和 ZStack 之类的东西
+我们仅仅创建了它们
 
 76
 00:03:47,520 --> 00:03:49,870
-and place them where
-we want them in the UI.
+然后把它们放到 UI 中我们想要的位置
 
 77
 00:03:49,870 --> 00:03:54,100
-The only functions we call
-in this code that we wrote
+代码中调用的唯一的函数
 
 78
 00:03:54,100 --> 00:03:57,750
-are modifiers, things to
-change the look of things
+是用来改变
+这些东西外观的修饰符
 
 79
 00:03:57,750 --> 00:03:59,960
-and they're doing it right in place.
+并且在原地就能看到效果
 
 80
 00:03:59,960 --> 00:04:02,760
-So, while all this code
-that we wrote yesterday
+所以我们昨天写的代码
 
 81
 00:04:02,760 --> 00:04:06,350
-is just declaring what our
-user interface looks like.
+只是在声明用户界面看起来是什么样的
 
 82
 00:04:06,350 --> 00:04:11,300
-Now, that's different than
-the old way of doing iOS apps
+它与之前 iOS 程序
 
 83
 00:04:11,300 --> 00:04:12,905
-and also a lot of other systems
+和很多其他已经存在很多年的系统
 
 84
 00:04:12,905 --> 00:04:14,090
-that have been around for years,
+的开发方法不同
 
 85
 00:04:14,090 --> 00:04:16,615
-which we would call imperative.
+我们称那些为命令式（imperative）
 
 86
 00:04:16,615 --> 00:04:20,730
-So if you hear this imperative
-model of doing user interface
+如果你按照命令式的模式来做用户界面
 
 87
 00:04:20,730 --> 00:04:24,530
-or coding in general, think of imperative,
+或编写代码，命令式这个词
 
 88
 00:04:24,530 --> 00:04:27,620
-the same root as the word imperial, right?
+和帝国（imperial）这个词同根，对吧？
 
 89
 00:04:27,620 --> 00:04:32,090
-An imperial state is one
-in which an emperor rules
+帝国就是皇帝统治的国家
 
 90
 00:04:32,090 --> 00:04:33,820
-and the emperor goes around saying,
+皇帝对所有人发号施令
 
 91
 00:04:33,820 --> 00:04:37,650
-oh, you do that and build this
-and then plant these fields,
+“你，来做这件事，建造这个
+然后在这片地上种植”
 
 92
 00:04:37,650 --> 00:04:40,890
-and so, he's telling people
-what to do, he's the emperor
+皇帝就像这样告诉别人要做什么
 
 93
 00:04:40,890 --> 00:04:43,640
-and that's how the country gets run.
+这就是帝国的运作方式
 
 94
 00:04:43,640 --> 00:04:46,650
-Well, to use that
-metaphor in the UI world,
+类比到做 UI 这件事来说
 
 95
 00:04:46,650 --> 00:04:48,570
-you're saying put this button here
+你需要说“把按钮放到这”
 
 96
 00:04:48,570 --> 00:04:51,590
-and arrange these things on UI over there
+“把这些 UI 元素放在那儿”
 
 97
 00:04:51,590 --> 00:04:54,540
-and you're calling functions
-to do this over time.
+随着时间的推移
+通过调用函数来做这些事情
 
 98
 00:04:54,540 --> 00:04:58,430
-So, why is the imperative
-model kind of bad for UI?
+所以为什么命令式不适用于构建 UI？
 
 99
 00:04:58,430 --> 00:05:00,860
-Well, the main reason has to do with time.
+最主要的原因是构建 UI 与时间有关
 
 100
 00:05:00,860 --> 00:05:03,400
-These things, these functions
-are called over time.
+这些东西，这些函数是
+随着时间的推移逐步调用的
 
 101
 00:05:03,400 --> 00:05:04,950
-Put the button here and then later,
+先放按钮到这里
 
 102
 00:05:04,950 --> 00:05:06,130
-we're gonna arrange this over here
+之后再来安排另一个地方
 
 103
 00:05:06,130 --> 00:05:08,140
-and then later, something's
-gonna happen here.
+然后其他事情再发生
 
 104
 00:05:08,140 --> 00:05:11,440
-So if you want to understand
-how your UI is built,
+所以如果你想理解 UI 是如何被构建的
 
 105
 00:05:11,440 --> 00:05:14,610
-you need this other dimension of time
+你需要在时间维度上
 
 106
 00:05:14,610 --> 00:05:16,750
-to know when this function can be called
+知道哪一个函数在什么时间被调用
 
 107
 00:05:16,750 --> 00:05:20,050
-and what function call
-depends on some other call
+哪些函数在调用之前必须先调用其他函数
 
 108
 00:05:20,050 --> 00:05:23,100
-happening first and then once
-your UI is up and running,
+一旦 UI 构建完成了
 
 109
 00:05:23,100 --> 00:05:25,790
-someone could call a function
-to change your UI at any time
+在任何时候都可能
+有人调用函数来改变 UI
 
 110
 00:05:25,790 --> 00:05:27,720
-so you have to kind of be always on guard
+所以你必须时刻保持警惕
 
 111
 00:05:27,720 --> 00:05:28,850
-and ready for that.
+并时刻准备着
 
 112
 00:05:28,850 --> 00:05:31,340
-Well, that is kind of
-a nightmare to manage
+所以要管理这样的 UI 简直是一场噩梦
 
 113
 00:05:31,340 --> 00:05:35,260
-and almost impossible to prove
-that your UI really works
+而且几乎不可能证明
+你的 UI 真的能正常工作
 
 114
 00:05:35,260 --> 00:05:37,690
-because you can't call every function
+因为你不可能把每一种调用函数的
 
 115
 00:05:37,690 --> 00:05:39,230
-in every possible order,
+顺序都试一遍
 
 116
 00:05:39,230 --> 00:05:40,810
-so it just doesn't make any sense,
+这是没有道理的
 
 117
 00:05:40,810 --> 00:05:43,040
-whereas declarative, you can always look
+而对于声明式来说，你随时可以
 
 118
 00:05:43,040 --> 00:05:45,540
-at what you've declared for your UI
+看到你声明了什么样的 UI
 
 119
 00:05:45,540 --> 00:05:47,520
-and see this is what this thing does.
+并且这就是 UI 运行起来的样子
 
 120
 00:05:47,520 --> 00:05:50,480
-At anytime, it's really time independent,
+任何时候它都与时间无关
 
 121
 00:05:50,480 --> 00:05:52,900
-it should be able to at any time be asked
+在任何时间它都能被叫去做
 
 122
 00:05:52,900 --> 00:05:55,310
-to do what it does, to draw what it does
+它需要做的事情，去画它需要画的东西
 
 123
 00:05:55,310 --> 00:05:57,530
-and it's just going to look like the code
+并且最终的效果和你面前的代码
 
 124
 00:05:57,530 --> 00:05:58,950
-you're looking in front of you.
+完全一样
 
 125
 00:05:58,950 --> 00:06:01,200
-It also localizes all the code.
+它还将代码局部化
 
 126
 00:06:01,200 --> 00:06:06,110
-So all the code to draw your
-UI all right in front of you.
+所有绘制 UI 代码就在你面前
 
 127
 00:06:06,110 --> 00:06:08,350
-That code we wrote yesterday, that was it,
+我们昨天写的那些代码
 
 128
 00:06:08,350 --> 00:06:12,080
-that was the entire code for
-showing the UI of our cards
+就是展示卡片 UI 需要的全部代码了
 
 129
 00:06:12,080 --> 00:06:13,680
-and there wasn't some
-code some other where else
+并不会有其他地方的代码
 
 130
 00:06:13,680 --> 00:06:17,420
-that was gonna call a function
-on this and mess it up.
+来调用这里的函数
+然后把 UI 搞的一团糟
 
 131
 00:06:17,420 --> 00:06:21,000
-In fact, you're gonna learn
-later today that structs,
+实际上，稍后你将会学到结构体
 
 132
 00:06:21,000 --> 00:06:22,620
-our Views are structs,
+视图就是一种结构体
 
 133
 00:06:22,620 --> 00:06:25,370
-they're actually read-only by default.
+它们默认是只读的
 
 134
 00:06:25,370 --> 00:06:28,850
-No one is allowed to call a
-function that would change it.
+没人能够通过调用函数来改变它
 
 135
 00:06:28,850 --> 00:06:30,700
-It's not even possible to do.
+这是不可能做到的
 
 136
 00:06:30,700 --> 00:06:32,850
-So that way, you can
-be sure that this View
+因此你就能够确信
 
 137
 00:06:32,850 --> 00:06:36,060
-is always gonna look
-like exactly what you see
+这个视图的样子永远是
 
 138
 00:06:36,060 --> 00:06:38,560
-in the code that you've
-declared right in front of you.
+你这里代码所声明的样子
 
 139
 00:06:38,560 --> 00:06:40,820
-As huge advantage is for understanding
+这对于理解你的代码是如何工作的
 
 140
 00:06:40,820 --> 00:06:42,660
-how your code is gonna be working,
+这个问题上是个巨大的优势
 
 141
 00:06:42,660 --> 00:06:43,770
-making sure that you,
+你可以确信
 
 142
 00:06:43,770 --> 00:06:46,300
-and that random things aren't happening
+在应用运行过程中不会出现
 
 143
 00:06:46,300 --> 00:06:48,130
-as your application runs.
+随机事件
 
 144
 00:06:48,130 --> 00:06:49,170
-It's fantastic.
+这太棒了
 
 145
 00:06:49,170 --> 00:06:52,523
-Big improvement over
-imperative models for UI.
+相对于命令式来说
+这是 UI 构建方式的巨大进步
 
 146
 00:06:54,018 --> 00:06:56,150
-And then the last part of the View
+最后关于视图要说的是
 
 147
 00:06:56,150 --> 00:06:58,180
-is it's going to be reactive.
+它是响应式的
 
 148
 00:06:58,180 --> 00:07:00,430
-That means that anytime the Model changes,
+这意味着当模型改变的时候
 
 149
 00:07:00,430 --> 00:07:03,260
-it's going to automatically
-update the View
+视图会自动更新
 
 150
 00:07:03,260 --> 00:07:05,290
-'cause I told you the View is stateless.
+因为我之前说过视图不保存状态
 
 151
 00:07:05,290 --> 00:07:07,420
@@ -10109,4 +10058,3 @@ to answer them for you.
 01:43:48,470 --> 01:43:51,693
 >> [旁白] 请访问 stanford.edu
 获取更多内容
-
