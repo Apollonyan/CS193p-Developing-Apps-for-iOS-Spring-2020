@@ -1,0 +1,6119 @@
+1
+00:00:00,541 --> 00:00:03,208
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名-非商业性使用-相同方式共享 3.0 美国
+
+2
+00:00:04,930 --> 00:00:06,580
+>> [旁白] 斯坦福大学
+
+3
+00:00:08,470 --> 00:00:10,300
+好耶，第五节
+
+4
+00:00:10,300 --> 00:00:13,713
+斯坦福大学 2020 年春季学期 CS193p
+
+5
+00:00:14,860 --> 00:00:18,220
+Today we are going to start
+off with a little demo
+
+6
+00:00:18,220 --> 00:00:21,190
+of access control in Memorize.
+
+7
+00:00:21,190 --> 00:00:24,260
+Access control is something
+you've all already read about
+
+8
+00:00:24,260 --> 00:00:26,080
+in your reading assignments
+
+9
+00:00:26,080 --> 00:00:29,860
+and we actually used access
+control a little tiny bit
+
+10
+00:00:29,860 --> 00:00:32,580
+in Memorize, but now it's
+time to apply access control
+
+11
+00:00:32,580 --> 00:00:35,330
+to all of Memorize and
+to use it going forward
+
+12
+00:00:35,330 --> 00:00:36,450
+and you should be using it
+
+13
+00:00:36,450 --> 00:00:39,823
+in all your SwiftUI programming
+forever going forward.
+
+14
+00:00:41,130 --> 00:00:42,797
+After the demo, we're gonna come back
+
+15
+00:00:42,797 --> 00:00:45,040
+and talk a little bit about ViewBuilder.
+
+16
+00:00:45,040 --> 00:00:48,061
+Very important, pretty
+simple little concept
+
+17
+00:00:48,061 --> 00:00:50,930
+and I have mentioned it a
+few times in past lecture,
+
+18
+00:00:50,930 --> 00:00:54,160
+but now we just wanna clearly clarify
+
+19
+00:00:54,160 --> 00:00:55,716
+what ViewBuilder is all about.
+
+20
+00:00:55,716 --> 00:00:57,990
+Then we're gonna go to
+the main topic of the day,
+
+21
+00:00:57,990 --> 00:00:59,285
+which is Shapes.
+
+22
+00:00:59,285 --> 00:01:01,860
+What if I want to draw my View
+
+23
+00:01:01,860 --> 00:01:04,410
+instead of making my
+View out of other Views?
+
+24
+00:01:04,410 --> 00:01:06,180
+How do I do that?
+
+25
+00:01:06,180 --> 00:01:08,614
+And we will do a demo in
+Memorize where we add a Shape,
+
+26
+00:01:08,614 --> 00:01:12,130
+that little pie that's behind the emoji
+
+27
+00:01:12,130 --> 00:01:15,254
+that you saw in lecture one,
+
+28
+00:01:15,254 --> 00:01:18,467
+and then we're gonna move
+on to the topic of animation
+
+29
+00:01:18,467 --> 00:01:21,340
+and we're gonna realize that
+animation is super important
+
+30
+00:01:21,340 --> 00:01:24,460
+in a mobile app and also
+that it's super easy in Swift
+
+31
+00:01:24,460 --> 00:01:27,420
+almost just for free in some ways,
+
+32
+00:01:27,420 --> 00:01:29,240
+but when we start talking about animation
+
+33
+00:01:29,240 --> 00:01:31,030
+we're gonna rapidly get to this point
+
+34
+00:01:31,030 --> 00:01:33,250
+where we need to talk
+about this other concept
+
+35
+00:01:33,250 --> 00:01:35,022
+called ViewModifiers.
+
+36
+00:01:35,022 --> 00:01:36,750
+ViewModifiers are fundamental
+
+37
+00:01:36,750 --> 00:01:40,120
+to how we're building these Views
+
+38
+00:01:40,120 --> 00:01:41,710
+and you've been using
+ViewModifiers all over the place
+
+39
+00:01:41,710 --> 00:01:44,747
+and probably just not even
+realizing you're doing it
+
+40
+00:01:44,747 --> 00:01:47,950
+and we're gonna dive into
+exactly what's going on
+
+41
+00:01:47,950 --> 00:01:50,283
+in all that SwiftUI code
+that you're writing.
+
+42
+00:01:52,110 --> 00:01:56,040
+By the way, following along
+is not required this week
+
+43
+00:01:56,040 --> 00:01:57,300
+by the homework.
+
+44
+00:01:57,300 --> 00:01:59,010
+In fact, your homework this week
+
+45
+00:01:59,010 --> 00:02:00,980
+is not even going to be Memorize.
+
+46
+00:02:00,980 --> 00:02:03,490
+It's time for you to
+write your own application
+
+47
+00:02:03,490 --> 00:02:04,500
+from scratch.
+
+48
+00:02:04,500 --> 00:02:08,230
+But this access control stuff
+that I'm going to do right now
+
+49
+00:02:08,230 --> 00:02:10,030
+is something that you're
+gonna have to apply
+
+50
+00:02:10,030 --> 00:02:11,220
+to all your code.
+
+51
+00:02:11,220 --> 00:02:13,430
+So following along with Memorize
+
+52
+00:02:13,430 --> 00:02:15,495
+might be a good learning experience.
+
+53
+00:02:15,495 --> 00:02:19,170
+And later in the quarter it's
+quite possible we'll come back
+
+54
+00:02:19,170 --> 00:02:21,440
+to Memorize as a homework thing,
+
+55
+00:02:21,440 --> 00:02:23,500
+you're not done with Memorize yet.
+
+56
+00:02:23,500 --> 00:02:26,700
+And in that case I will
+do my best to make it
+
+57
+00:02:26,700 --> 00:02:30,670
+so that the code that I'm
+gonna show you this week
+
+58
+00:02:30,670 --> 00:02:35,500
+does not have to be included
+in future homework submissions
+
+59
+00:02:35,500 --> 00:02:36,333
+of Memorize.
+
+60
+00:02:36,333 --> 00:02:37,966
+I can't a hundred percent promise that,
+
+61
+00:02:37,966 --> 00:02:40,710
+but I'm hoping to make that be the case.
+
+62
+00:02:40,710 --> 00:02:43,930
+Having said that, a lot of students find
+
+63
+00:02:43,930 --> 00:02:46,880
+that following along or
+really helps them learn,
+
+64
+00:02:46,880 --> 00:02:51,120
+so I guess I actually
+recommend that you do that.
+
+65
+00:02:51,120 --> 00:02:54,130
+And so let's start by diving
+
+66
+00:02:54,130 --> 00:02:57,823
+into this whole access
+control change to Memorize.
+
+67
+00:02:58,920 --> 00:03:03,610
+Now, we've already used act
+as control once in Memorize
+
+68
+00:03:03,610 --> 00:03:06,960
+only once, right here, private.
+
+69
+00:03:06,960 --> 00:03:10,230
+And access control is about
+controlling the access
+
+70
+00:03:10,230 --> 00:03:14,220
+that different structs
+have to each other's vars.
+
+71
+00:03:14,220 --> 00:03:16,925
+And by making this
+Model completely private
+
+72
+00:03:16,925 --> 00:03:19,030
+in our ViewModel here,
+
+73
+00:03:19,030 --> 00:03:23,460
+we've forced the ViewModel
+to make this var cards
+
+74
+00:03:23,460 --> 00:03:25,118
+so that the View could get the Cards,
+
+75
+00:03:25,118 --> 00:03:28,650
+and of course we want to have this Intent
+
+76
+00:03:28,650 --> 00:03:30,700
+so that if someone wants
+to change the Model,
+
+77
+00:03:30,700 --> 00:03:34,417
+they have to express their
+intent, how they want to do it
+
+78
+00:03:34,417 --> 00:03:36,870
+and that was good, that made this private.
+
+79
+00:03:36,870 --> 00:03:40,640
+However we could have taken
+this one step further.
+
+80
+00:03:40,640 --> 00:03:44,170
+In our Model, the Cards themselves
+
+81
+00:03:44,170 --> 00:03:47,890
+probably want to be private.
+
+82
+00:03:47,890 --> 00:03:48,870
+Why is that?
+
+83
+00:03:48,870 --> 00:03:51,540
+Well we don't want anyone going in here
+
+84
+00:03:51,540 --> 00:03:53,000
+and mucking with these Cards.
+
+85
+00:03:53,000 --> 00:03:54,660
+Setting them isMatched
+
+86
+00:03:54,660 --> 00:03:57,100
+or even setting them face up or face down.
+
+87
+00:03:57,100 --> 00:04:00,323
+Whether a Card is matched
+is purely in the purview
+
+88
+00:04:00,323 --> 00:04:02,510
+of this MemoryGame Model.
+
+89
+00:04:02,510 --> 00:04:05,670
+Only it knows whether
+Cards should be matched
+
+90
+00:04:05,670 --> 00:04:08,400
+and all that logic is
+in here in choose card.
+
+91
+00:04:08,400 --> 00:04:11,950
+So we really would want
+to make this private.
+
+92
+00:04:11,950 --> 00:04:15,000
+But making this private is
+actually gonna be a problem.
+
+93
+00:04:15,000 --> 00:04:17,580
+If we go back here and
+look at this line of code
+
+94
+00:04:17,580 --> 00:04:20,490
+and compile it now with
+that private in there,
+
+95
+00:04:20,490 --> 00:04:21,780
+you can see we get an error.
+
+96
+00:04:21,780 --> 00:04:23,870
+It says cards is inaccessible
+
+97
+00:04:23,870 --> 00:04:26,240
+due to private protection level.
+
+98
+00:04:26,240 --> 00:04:28,483
+And indeed the Cards are now private
+
+99
+00:04:28,483 --> 00:04:32,110
+and so the ViewModel is no longer allowed
+
+100
+00:04:32,110 --> 00:04:33,686
+to access this var.
+
+101
+00:04:33,686 --> 00:04:35,847
+But the ViewModel does need to access
+
+102
+00:04:35,847 --> 00:04:38,200
+at least to read the Cards.
+
+103
+00:04:38,200 --> 00:04:41,240
+How else are we gonna
+show the Cards in our UI?
+
+104
+00:04:41,240 --> 00:04:44,080
+So we can't really have this be private,
+
+105
+00:04:44,080 --> 00:04:46,470
+but we can use a different
+access control level
+
+106
+00:04:46,470 --> 00:04:48,600
+which is set.
+
+107
+00:04:48,600 --> 00:04:53,600
+Private set means setting this is private,
+
+108
+00:04:53,610 --> 00:04:56,392
+but reading it is not.
+
+109
+00:04:56,392 --> 00:04:58,670
+And that's exactly what
+we want in this case.
+
+110
+00:04:58,670 --> 00:05:00,970
+We want people to able
+to look at our Cards
+
+111
+00:05:00,970 --> 00:05:04,080
+so they can put them in
+the UI, display them.
+
+112
+00:05:04,080 --> 00:05:07,020
+However, when it comes
+to changing the Cards,
+
+113
+00:05:07,020 --> 00:05:10,090
+we definitely want that
+reserved for ourself.
+
+114
+00:05:10,090 --> 00:05:14,993
+So private set, a real common
+access control to want to set.
+
+115
+00:05:16,240 --> 00:05:21,240
+Now access control is not just
+something we set on our vars.
+
+116
+00:05:21,540 --> 00:05:23,860
+This is something we can
+also set on our functions
+
+117
+00:05:23,860 --> 00:05:26,910
+and our own internal computer vars.
+
+118
+00:05:26,910 --> 00:05:29,700
+For example,
+indexOfTheOneAndOnlyFaceUpCard
+
+119
+00:05:29,700 --> 00:05:32,440
+here in our Model, that's
+purely a private thing.
+
+120
+00:05:32,440 --> 00:05:35,920
+That's private logic how
+we figure out how to do
+
+121
+00:05:35,920 --> 00:05:37,200
+our matching game.
+
+122
+00:05:37,200 --> 00:05:40,150
+This definitely wants to be private.
+
+123
+00:05:40,150 --> 00:05:43,090
+We certainly wouldn't
+want anyone setting this,
+
+124
+00:05:43,090 --> 00:05:45,170
+that could totally mess us up
+
+125
+00:05:45,170 --> 00:05:47,550
+and we really don't even
+want someone looking at it
+
+126
+00:05:47,550 --> 00:05:49,830
+because if they started looking at it
+
+127
+00:05:49,830 --> 00:05:50,958
+they might depend on it
+
+128
+00:05:50,958 --> 00:05:54,950
+and then now I have to always
+use this particular strategy
+
+129
+00:05:54,950 --> 00:05:56,682
+to do my logic I might not want,
+
+130
+00:05:56,682 --> 00:06:00,090
+so that's what we have
+to keep this private.
+
+131
+00:06:00,090 --> 00:06:02,100
+Of course choose can't be private.
+
+132
+00:06:02,100 --> 00:06:04,540
+It is the way that people play our game
+
+133
+00:06:04,540 --> 00:06:07,490
+and our init doesn't wanna be private.
+
+134
+00:06:07,490 --> 00:06:09,961
+You are allowed to have private inits.
+
+135
+00:06:09,961 --> 00:06:11,810
+It'd be a rare circumstance,
+
+136
+00:06:11,810 --> 00:06:14,590
+but you could have init's only
+used inside of your struct
+
+137
+00:06:14,590 --> 00:06:18,333
+to create maybe private instances
+that this is going to use.
+
+138
+00:06:19,270 --> 00:06:21,720
+Now struct Card is kind
+of interesting here.
+
+139
+00:06:21,720 --> 00:06:25,280
+You probably are thinking,
+oh, private set, private set,
+
+140
+00:06:25,280 --> 00:06:26,630
+private set, private set.
+
+141
+00:06:26,630 --> 00:06:29,270
+We don't want anybody to be setting these.
+
+142
+00:06:29,270 --> 00:06:32,770
+However, the only way you can get a Card
+
+143
+00:06:32,770 --> 00:06:36,838
+outside of our Model
+is through this Array.
+
+144
+00:06:36,838 --> 00:06:38,946
+And this Array is already private set.
+
+145
+00:06:38,946 --> 00:06:40,810
+This is a value type.
+
+146
+00:06:40,810 --> 00:06:43,520
+The actual Cards are in this Array.
+
+147
+00:06:43,520 --> 00:06:45,861
+When someone calls this var to get this,
+
+148
+00:06:45,861 --> 00:06:49,900
+they're getting a copy
+and that copy is read only
+
+149
+00:06:49,900 --> 00:06:51,340
+because of private set.
+
+150
+00:06:51,340 --> 00:06:54,470
+So since there's no way for
+anyone to get a writeable Card,
+
+151
+00:06:54,470 --> 00:06:57,423
+it's perfectly fine for us
+to leave these vars this way.
+
+152
+00:06:58,350 --> 00:07:01,610
+Okay, what about back in
+our ViewModel over here?
+
+153
+00:07:01,610 --> 00:07:03,600
+Clearly access to the Model.
+
+154
+00:07:03,600 --> 00:07:06,700
+This doesn't have to be private.
+
+155
+00:07:06,700 --> 00:07:10,440
+It's read only anyway
+'cause it's a read only var.
+
+156
+00:07:10,440 --> 00:07:13,490
+Definitely Intents have be non-private.
+
+157
+00:07:13,490 --> 00:07:16,130
+How else will people express their intent?
+
+158
+00:07:16,130 --> 00:07:18,830
+But this createMemoryGame,
+this static func
+
+159
+00:07:18,830 --> 00:07:21,290
+that probably wants to be private.
+
+160
+00:07:21,290 --> 00:07:25,370
+We likely do not want other people,
+
+161
+00:07:25,370 --> 00:07:28,600
+especially our View, to
+be creating a MemoryGame.
+
+162
+00:07:28,600 --> 00:07:30,460
+Creating a MemoryGame, creating our Model,
+
+163
+00:07:30,460 --> 00:07:32,200
+that's something we do.
+
+164
+00:07:32,200 --> 00:07:34,780
+In your homework you have
+to have a new game function.
+
+165
+00:07:34,780 --> 00:07:37,250
+You might well be creating
+a new MemoryGame here,
+
+166
+00:07:37,250 --> 00:07:39,710
+but that's gonna have to
+happen in your ViewModel
+
+167
+00:07:39,710 --> 00:07:43,600
+because there's no way
+that Views, for example,
+
+168
+00:07:43,600 --> 00:07:45,426
+could take responsibility
+for creating a Model.
+
+169
+00:07:45,426 --> 00:07:48,823
+So the ViewModel really wants
+this to be private function.
+
+170
+00:07:50,860 --> 00:07:52,270
+What about in our View?
+
+171
+00:07:52,270 --> 00:07:54,300
+So here's our View over here.
+
+172
+00:07:54,300 --> 00:07:55,550
+Now let's look at CardView.
+
+173
+00:07:55,550 --> 00:07:56,710
+It's kind of an interesting one.
+
+174
+00:07:56,710 --> 00:07:58,850
+It's got these drawing
+constants down here.
+
+175
+00:07:58,850 --> 00:08:00,460
+Those definitely can be private.
+
+176
+00:08:00,460 --> 00:08:03,750
+There's really no reason
+that anyone would be, they're
+
+177
+00:08:03,750 --> 00:08:05,422
+lets anyway, but there's no reason someone
+
+178
+00:08:05,422 --> 00:08:08,710
+will want to be accessing
+these things down here,
+
+179
+00:08:08,710 --> 00:08:10,599
+so this can definitely be private.
+
+180
+00:08:10,599 --> 00:08:14,060
+This var body has to be non-private
+
+181
+00:08:14,060 --> 00:08:16,580
+'cause the system is going to call that.
+
+182
+00:08:16,580 --> 00:08:18,980
+That's, how it gets the body for our View
+
+183
+00:08:18,980 --> 00:08:21,740
+and it's gonna be calling
+in any time it needs to
+
+184
+00:08:21,740 --> 00:08:24,263
+to find out how to draw this CardView.
+
+185
+00:08:25,180 --> 00:08:27,400
+But this little helper function
+
+186
+00:08:27,400 --> 00:08:29,015
+that we call from inside
+our GeometryReader,
+
+187
+00:08:29,015 --> 00:08:31,600
+there's no reason for
+that to be public, okay?
+
+188
+00:08:31,600 --> 00:08:33,870
+Only we call that from our own code
+
+189
+00:08:33,870 --> 00:08:35,253
+inside of CardView here.
+
+190
+00:08:36,380 --> 00:08:37,430
+What about this var?
+
+191
+00:08:37,430 --> 00:08:38,860
+Can this be private?
+
+192
+00:08:38,860 --> 00:08:42,160
+No, because when we create a CardView,
+
+193
+00:08:42,160 --> 00:08:44,617
+we are required to give
+this thing an initial value,
+
+194
+00:08:44,617 --> 00:08:47,400
+so we have to be able to access it here.
+
+195
+00:08:47,400 --> 00:08:48,414
+If we made this private,
+
+196
+00:08:48,414 --> 00:08:50,263
+then we wouldn't be able to
+set it when we created it
+
+197
+00:08:50,263 --> 00:08:52,110
+and this will be uninitialized
+
+198
+00:08:52,110 --> 00:08:54,303
+and that was not allowed in Swift.
+
+199
+00:08:55,920 --> 00:08:57,580
+What about up here?
+
+200
+00:08:57,580 --> 00:09:00,839
+Well, again, var body has to be public
+
+201
+00:09:00,839 --> 00:09:04,560
+and also the ViewModel here
+is going to have to be public
+
+202
+00:09:04,560 --> 00:09:07,380
+because for example, when
+we create our previewer,
+
+203
+00:09:07,380 --> 00:09:08,770
+we're specifying the ViewModel,
+
+204
+00:09:08,770 --> 00:09:10,810
+and over here in our little SceneDelegate,
+
+205
+00:09:10,810 --> 00:09:15,660
+when we're creating the main
+View of our window of our app,
+
+206
+00:09:15,660 --> 00:09:17,070
+we're expressing it here.
+
+207
+00:09:17,070 --> 00:09:19,313
+So again, this has to be public for that.
+
+208
+00:09:21,270 --> 00:09:23,225
+What about down here in Grid?
+
+209
+00:09:23,225 --> 00:09:26,910
+So in Grid, it's an
+interesting case in Grid.
+
+210
+00:09:26,910 --> 00:09:29,490
+Do these vars have to be public?
+
+211
+00:09:29,490 --> 00:09:32,940
+Well, not really because we
+have this public initializer
+
+212
+00:09:32,940 --> 00:09:34,510
+that sets these vars.
+
+213
+00:09:34,510 --> 00:09:36,861
+So we could make these fully private
+
+214
+00:09:36,861 --> 00:09:39,183
+and that would be perfectly fine.
+
+215
+00:09:40,430 --> 00:09:42,610
+These vars only needed to be public
+
+216
+00:09:42,610 --> 00:09:46,000
+if you're gonna ask people
+to initialize them directly.
+
+217
+00:09:46,000 --> 00:09:47,899
+But since we have an
+initializer to initialize them,
+
+218
+00:09:47,899 --> 00:09:49,550
+they don't need to be public.
+
+219
+00:09:49,550 --> 00:09:51,550
+Probably would want these to be private.
+
+220
+00:09:52,820 --> 00:09:55,146
+Var body has to be public, of course.
+
+221
+00:09:55,146 --> 00:09:57,917
+But again, these little
+body helper functions,
+
+222
+00:09:57,917 --> 00:10:00,113
+they don't need to be public.
+
+223
+00:10:04,390 --> 00:10:06,160
+How about here in GridLayout?
+
+224
+00:10:06,160 --> 00:10:07,400
+So we've got GridLayout.
+
+225
+00:10:07,400 --> 00:10:09,270
+Of course we need the constructor
+
+226
+00:10:09,270 --> 00:10:10,910
+or the initializer to be public
+
+227
+00:10:10,910 --> 00:10:13,450
+and we need the itemSize
+and location to be public,
+
+228
+00:10:13,450 --> 00:10:14,995
+otherwise, how are people gonna use it?
+
+229
+00:10:14,995 --> 00:10:19,995
+But these vars, very important
+to make these private set.
+
+230
+00:10:20,640 --> 00:10:24,870
+Why is it so important to make
+these three vars private set?
+
+231
+00:10:24,870 --> 00:10:27,970
+These three vars are calculated
+
+232
+00:10:31,270 --> 00:10:32,740
+from the initializer,
+
+233
+00:10:32,740 --> 00:10:35,610
+the values that come through
+in the initializer are here.
+
+234
+00:10:35,610 --> 00:10:37,570
+And if we didn't make these private set,
+
+235
+00:10:37,570 --> 00:10:41,020
+someone might think that
+they can reset this size var
+
+236
+00:10:41,020 --> 00:10:43,460
+and that these would automatically reset.
+
+237
+00:10:43,460 --> 00:10:44,503
+But that's not true.
+
+238
+00:10:45,540 --> 00:10:49,170
+Once you initialize the
+GridLayout, it's fixed forever.
+
+239
+00:10:49,170 --> 00:10:50,620
+So we want people to know that
+
+240
+00:10:50,620 --> 00:10:53,020
+they can only read these
+values out of here.
+
+241
+00:10:53,020 --> 00:10:55,870
+You can't set this and
+expect these to change
+
+242
+00:10:55,870 --> 00:10:56,920
+or something as such.
+
+243
+00:10:58,261 --> 00:11:00,861
+So that's a case where access control
+
+244
+00:11:00,861 --> 00:11:04,063
+actually helps people understand
+how to use this thing.
+
+245
+00:11:05,713 --> 00:11:09,070
+Okay, obviously our firstIndex,
+we want that public.
+
+246
+00:11:09,070 --> 00:11:10,352
+We're adding that to all Arrays.
+
+247
+00:11:10,352 --> 00:11:12,400
+Same thing with our var only.
+
+248
+00:11:12,400 --> 00:11:13,993
+We're doing that public.
+
+249
+00:11:16,330 --> 00:11:17,300
+So that's it.
+
+250
+00:11:17,300 --> 00:11:20,666
+That's how we got our access
+control set up in Memorize.
+
+251
+00:11:20,666 --> 00:11:22,740
+Every time we add new functions,
+
+252
+00:11:22,740 --> 00:11:24,054
+and when you do this in your homework,
+
+253
+00:11:24,054 --> 00:11:27,735
+you should definitely be putting privates
+
+254
+00:11:27,735 --> 00:11:30,145
+wherever things should be private.
+
+255
+00:11:30,145 --> 00:11:33,140
+Now many of you are already
+working on your homework.
+
+256
+00:11:33,140 --> 00:11:35,100
+You haven't done this yet,
+I encourage you to go do it.
+
+257
+00:11:35,100 --> 00:11:36,960
+We're not gonna hold
+you accountable for it
+
+258
+00:11:36,960 --> 00:11:38,030
+in assignment number two,
+
+259
+00:11:38,030 --> 00:11:40,920
+but we definitely will in
+assignment number three.
+
+260
+00:11:40,920 --> 00:11:41,753
+Let's run our app
+
+261
+00:11:41,753 --> 00:11:44,780
+and make sure that putting
+all this private worked
+
+262
+00:11:44,780 --> 00:11:45,613
+and it did.
+
+263
+00:11:45,613 --> 00:11:47,800
+Sometimes you'll run your
+app and you'll realize,
+
+264
+00:11:47,800 --> 00:11:50,970
+oh, I made that private but
+this thing actually needs it.
+
+265
+00:11:50,970 --> 00:11:52,070
+And then you have to decide,
+
+266
+00:11:52,070 --> 00:11:54,800
+does it really want us to access that?
+
+267
+00:11:54,800 --> 00:11:57,543
+And if so, should it be
+private set or just private?
+
+268
+00:11:58,590 --> 00:12:01,302
+So that's it for our little
+access control foray.
+
+269
+00:12:01,302 --> 00:12:03,280
+Let's get back to our slides
+
+270
+00:12:03,280 --> 00:12:05,634
+and talk more about ViewBuilder.
+
+271
+00:12:05,634 --> 00:12:08,990
+So ViewBuilder is based
+on a general technology
+
+272
+00:12:08,990 --> 00:12:10,860
+that was added to Swift recently
+
+273
+00:12:10,860 --> 00:12:14,350
+to support list-oriented syntax.
+
+274
+00:12:14,350 --> 00:12:17,440
+There's a lot of things that
+are expressed as a list,
+
+275
+00:12:17,440 --> 00:12:19,942
+like HTML for example, it's just a list.
+
+276
+00:12:19,942 --> 00:12:22,324
+A paragraph and then an embedded thing
+
+277
+00:12:22,324 --> 00:12:25,570
+and then another paragraph,
+header or whatever,
+
+278
+00:12:25,570 --> 00:12:27,820
+they're just listed on the page.
+
+279
+00:12:27,820 --> 00:12:29,100
+And so it'd be nice in Swift
+
+280
+00:12:29,100 --> 00:12:30,318
+to be able to represent these
+
+281
+00:12:30,318 --> 00:12:34,431
+somewhat native list-oriented syntaxes.
+
+282
+00:12:34,431 --> 00:12:37,990
+And once you have this mechanism
+then you rapidly realize,
+
+283
+00:12:37,990 --> 00:12:39,110
+oh, there's a lot of places
+
+284
+00:12:39,110 --> 00:12:40,935
+where we just want a list of View,
+
+285
+00:12:40,935 --> 00:12:42,455
+like the front of our Cards.
+
+286
+00:12:42,455 --> 00:12:44,521
+We just wanna list the
+two RoundedRectangles
+
+287
+00:12:44,521 --> 00:12:46,690
+and the emoji.
+
+288
+00:12:46,690 --> 00:12:50,374
+So ViewBuilder lets developers do this
+
+289
+00:12:50,374 --> 00:12:52,990
+and @ViewBuilder is the key word.
+
+290
+00:12:52,990 --> 00:12:55,050
+It's again, not part of the language.
+
+291
+00:12:55,050 --> 00:12:58,250
+@ViewBuilder is like @Published
+
+292
+00:12:58,250 --> 00:12:59,770
+or @ObservedObject,
+
+293
+00:12:59,770 --> 00:13:02,398
+it's the thing that's based
+on these other technologies.
+
+294
+00:13:02,398 --> 00:13:06,440
+But @ViewBuilder, this
+keyword can be tagged
+
+295
+00:13:06,440 --> 00:13:10,740
+onto any function that returns some View.
+
+296
+00:13:10,740 --> 00:13:12,312
+So as long as a function
+returns some View,
+
+297
+00:13:12,312 --> 00:13:16,460
+you can tag that function
+with @ViewBuilder
+
+298
+00:13:16,460 --> 00:13:19,380
+and now the compiler will interpret
+
+299
+00:13:19,380 --> 00:13:21,560
+what's in the curly
+braces of that function
+
+300
+00:13:21,560 --> 00:13:25,400
+to be a list of Views, instead
+of just arbitrary code,
+
+301
+00:13:25,400 --> 00:13:27,030
+a list of Views.
+
+302
+00:13:27,030 --> 00:13:29,660
+That's how ViewBuilder works.
+
+303
+00:13:29,660 --> 00:13:31,810
+Now that function that you're tagging
+
+304
+00:13:31,810 --> 00:13:32,860
+with @ViewBuilder,
+
+305
+00:13:32,860 --> 00:13:36,170
+it returns some View
+which is a single View.
+
+306
+00:13:36,170 --> 00:13:38,375
+So ViewBuilder, that's why
+it's called ViewBuilder,
+
+307
+00:13:38,375 --> 00:13:41,603
+it builds that list of
+Views into a single View.
+
+308
+00:13:42,470 --> 00:13:44,650
+That one View that it combines it to
+
+309
+00:13:44,650 --> 00:13:47,410
+many times is going to be a TupleView.
+
+310
+00:13:47,410 --> 00:13:49,647
+So if there's two to 10
+Views lifted in there,
+
+311
+00:13:49,647 --> 00:13:51,990
+it's gonna be a TupleView.
+
+312
+00:13:51,990 --> 00:13:55,080
+TupleView has up to 10 don't cares,
+
+313
+00:13:55,080 --> 00:13:57,768
+which are the 10 Views in there.
+
+314
+00:13:57,768 --> 00:14:00,590
+And notice it is limited to 10.
+
+315
+00:14:00,590 --> 00:14:02,810
+So if you started having
+more than 11 Views,
+
+316
+00:14:02,810 --> 00:14:05,460
+you're gonna have to
+break it up into groups,
+
+317
+00:14:05,460 --> 00:14:08,770
+TupleViews of TupleViews to
+get that many Views in there.
+
+318
+00:14:08,770 --> 00:14:12,540
+It's pretty rare to imagine
+having more than 10 Views
+
+319
+00:14:12,540 --> 00:14:14,070
+just listed straight in a row.
+
+320
+00:14:14,070 --> 00:14:15,971
+You're almost certainly
+going to be breaking that up
+
+321
+00:14:15,971 --> 00:14:19,277
+with some kind of
+sub-Views like CardViews,
+
+322
+00:14:19,277 --> 00:14:22,428
+the sub-View of our
+EmojiGameView, et cetera.
+
+323
+00:14:22,428 --> 00:14:26,620
+So it's not really much of a
+limitation but it is there.
+
+324
+00:14:26,620 --> 00:14:28,730
+The other kind of View could be maybe
+
+325
+00:14:28,730 --> 00:14:30,740
+as a ConditionalContent View,
+
+326
+00:14:30,740 --> 00:14:32,970
+under-bar ConditionalContent View,
+
+327
+00:14:32,970 --> 00:14:34,079
+and that's what the View creates
+
+328
+00:14:34,079 --> 00:14:36,010
+when there's an if-else in there.
+
+329
+00:14:36,010 --> 00:14:38,150
+Remember that the if-elses
+inside of ViewBuilder
+
+330
+00:14:38,150 --> 00:14:41,210
+are just to choose which Views
+get included in the list,
+
+331
+00:14:41,210 --> 00:14:43,500
+like whether it's the
+front of the CardViews
+
+332
+00:14:43,500 --> 00:14:45,075
+or the back of the CardView.
+
+333
+00:14:45,075 --> 00:14:48,023
+And so that's going to create
+this ConditionalContent View
+
+334
+00:14:48,023 --> 00:14:51,870
+which just has the predicate
+to test against isFaceUp
+
+335
+00:14:51,870 --> 00:14:55,070
+and then it has the two Views,
+
+336
+00:14:55,070 --> 00:14:58,170
+might be a TupleView or some other View
+
+337
+00:14:58,170 --> 00:14:59,870
+that it's going to choose from.
+
+338
+00:14:59,870 --> 00:15:01,763
+Could even be an EmptyView
+that's allowed as well.
+
+339
+00:15:01,763 --> 00:15:03,730
+I don't know why you would
+want that necessarily,
+
+340
+00:15:03,730 --> 00:15:04,872
+but you could have it.
+
+341
+00:15:04,872 --> 00:15:06,640
+But the most important
+thing to remember is that
+
+342
+00:15:06,640 --> 00:15:08,970
+it can be any combination of these things.
+
+343
+00:15:08,970 --> 00:15:10,130
+So you could have a TupleView
+
+344
+00:15:10,130 --> 00:15:11,919
+or one of the things in the
+TupleView is a conditional View
+
+345
+00:15:11,919 --> 00:15:13,470
+and inside that conditional View
+
+346
+00:15:13,470 --> 00:15:16,030
+there's another TupleView, et cetera.
+
+347
+00:15:16,030 --> 00:15:19,573
+And that lets you build these
+kind of arbitrarily complex
+
+348
+00:15:19,573 --> 00:15:21,710
+conditional lists of Views
+
+349
+00:15:21,710 --> 00:15:23,993
+and that's really what
+this thing is all about.
+
+350
+00:15:23,993 --> 00:15:26,664
+Now note that some of this ViewBuilder API
+
+351
+00:15:26,664 --> 00:15:28,370
+is not fully public.
+
+352
+00:15:28,370 --> 00:15:31,510
+Like see that under-bar
+ConditionalContent,
+
+353
+00:15:31,510 --> 00:15:33,900
+Obviously something with an
+under-bar in the front of it
+
+354
+00:15:33,900 --> 00:15:36,930
+is not ready for prime
+time, it's not fully public.
+
+355
+00:15:36,930 --> 00:15:38,710
+I'll bet if you look that
+up in the documentation
+
+356
+00:15:38,710 --> 00:15:40,720
+you won't even find anything there,
+
+357
+00:15:40,720 --> 00:15:44,017
+but that's okay, because
+we actually don't care
+
+358
+00:15:44,017 --> 00:15:46,270
+what kind of Views these are.
+
+359
+00:15:46,270 --> 00:15:48,410
+TupleViews, ConditionalContent, whatever,
+
+360
+00:15:48,410 --> 00:15:50,890
+all that we care is that
+it's some View, right?
+
+361
+00:15:50,890 --> 00:15:53,691
+We can only tag a function
+that returns some View
+
+362
+00:15:53,691 --> 00:15:55,300
+with this thing.
+
+363
+00:15:55,300 --> 00:15:56,420
+That's all we care about.
+
+364
+00:15:56,420 --> 00:15:58,010
+All of these things are some View
+
+365
+00:15:58,010 --> 00:15:59,803
+and so that's good enough for us.
+
+366
+00:16:00,730 --> 00:16:04,370
+Again, any function, also
+read-only computed vars
+
+367
+00:16:04,370 --> 00:16:06,460
+can also be tagged with this ViewBuilder
+
+368
+00:16:06,460 --> 00:16:09,840
+and tagging it on there just
+makes it so that function
+
+369
+00:16:09,840 --> 00:16:11,800
+is interpreted as a ViewBuilder.
+
+370
+00:16:11,800 --> 00:16:14,140
+Here's a sample from our Memorize.
+
+371
+00:16:14,140 --> 00:16:17,860
+Let's say that I wanted to
+factor out the front of the Card,
+
+372
+00:16:17,860 --> 00:16:20,920
+those two RoundedRectangles
+and the Text that you see here
+
+373
+00:16:20,920 --> 00:16:23,020
+into its own little function.
+
+374
+00:16:23,020 --> 00:16:25,560
+Well I could have func, front of card,
+
+375
+00:16:25,560 --> 00:16:27,580
+it returns some View
+
+376
+00:16:27,580 --> 00:16:31,990
+and in here I would normally
+have to put it in a Group
+
+377
+00:16:31,990 --> 00:16:33,270
+or something like that,
+
+378
+00:16:33,270 --> 00:16:36,280
+but instead I can just
+mark it @ViewBuilder
+
+379
+00:16:36,280 --> 00:16:38,660
+and now the curly braces within there
+
+380
+00:16:38,660 --> 00:16:40,990
+is going to be interpreted
+as a list of Views.
+
+381
+00:16:40,990 --> 00:16:43,788
+And I could have if-thens
+and stuff in here,
+
+382
+00:16:43,788 --> 00:16:47,080
+if I wanted to do the whole
+Card inside here I could
+
+383
+00:16:47,080 --> 00:16:49,280
+and have the if isFaceUp,
+
+384
+00:16:49,280 --> 00:16:50,770
+all that stuff perfectly allowed.
+
+385
+00:16:50,770 --> 00:16:53,339
+This is just a list of
+Views with those if-thens
+
+386
+00:16:53,339 --> 00:16:54,733
+allowed in there.
+
+387
+00:16:55,958 --> 00:16:59,421
+This particular green code
+would return a TupleView
+
+388
+00:16:59,421 --> 00:17:01,869
+where it's three don't cares
+
+389
+00:17:01,869 --> 00:17:04,600
+are RoundedRectangle,
+RoundedRectangle, Text.
+
+390
+00:17:04,600 --> 00:17:08,150
+Of course there are two
+TupleViews with eight don't cares
+
+391
+00:17:08,150 --> 00:17:10,653
+and nine or this will
+be the one with three.
+
+392
+00:17:11,560 --> 00:17:14,540
+And again we don't care that
+it's doing a TupleView there.
+
+393
+00:17:14,540 --> 00:17:15,650
+Absolutely don't care.
+
+394
+00:17:15,650 --> 00:17:17,453
+All we care is this some View.
+
+395
+00:17:19,470 --> 00:17:21,970
+Now you could also use this @ViewBuilder
+
+396
+00:17:21,970 --> 00:17:25,470
+to mark parameters to functions
+
+397
+00:17:25,470 --> 00:17:28,840
+that are themselves functions
+that return some View.
+
+398
+00:17:28,840 --> 00:17:33,450
+For example, our viewForItem
+argument to Grid, right?
+
+399
+00:17:33,450 --> 00:17:35,030
+That was a function that took an Item
+
+400
+00:17:35,030 --> 00:17:38,920
+and returned a View, and
+that would be eligible
+
+401
+00:17:38,920 --> 00:17:42,240
+to be marked with @ViewBuilder.
+
+402
+00:17:42,240 --> 00:17:43,610
+Now we didn't do that in Grid
+
+403
+00:17:43,610 --> 00:17:45,700
+and I'll talk about that
+in a second, why we didn't,
+
+404
+00:17:45,700 --> 00:17:48,187
+but someone who does do
+that is GeometryReader
+
+405
+00:17:48,187 --> 00:17:51,960
+and HStack and VStack and
+ForEach they all do this,
+
+406
+00:17:51,960 --> 00:17:53,858
+but let's look at what the declaration
+
+407
+00:17:53,858 --> 00:17:58,200
+of GeometryReader's initializer
+probably looks like.
+
+408
+00:17:58,200 --> 00:17:59,860
+You've got GeometryReader, right?
+
+409
+00:17:59,860 --> 00:18:01,549
+It's got this don't care Content,
+
+410
+00:18:01,549 --> 00:18:04,240
+which is constrained to be a View.
+
+411
+00:18:04,240 --> 00:18:07,300
+So the initializer for GeometryReader
+
+412
+00:18:07,300 --> 00:18:10,160
+we know takes content,
+this curly brace thing,
+
+413
+00:18:10,160 --> 00:18:12,340
+that gives you the GeometryProxy,
+
+414
+00:18:12,340 --> 00:18:14,330
+the thing that we get the size out of,
+
+415
+00:18:14,330 --> 00:18:17,320
+and it returns Content that's some View.
+
+416
+00:18:17,320 --> 00:18:19,810
+So since this content argument
+
+417
+00:18:19,810 --> 00:18:22,060
+is a function that returns some View,
+
+418
+00:18:22,060 --> 00:18:23,910
+it can be marked @ViewBuilder
+
+419
+00:18:23,910 --> 00:18:25,550
+which GeometryReader does.
+
+420
+00:18:25,550 --> 00:18:27,230
+It marks it @ViewBuilder.
+
+421
+00:18:27,230 --> 00:18:29,223
+That means that what's
+inside your GeometryReader's,
+
+422
+00:18:29,223 --> 00:18:31,850
+little curly braces, is a list of Views,
+
+423
+00:18:31,850 --> 00:18:35,340
+is going to be interpreted
+as a list of Views.
+
+424
+00:18:35,340 --> 00:18:36,490
+It's as simple as that.
+
+425
+00:18:37,340 --> 00:18:40,393
+And it's usually up to
+things like GeometryReader,
+
+426
+00:18:40,393 --> 00:18:41,970
+Hstack, VStack,
+
+427
+00:18:41,970 --> 00:18:44,923
+to decide whether the argument
+that you're passing them
+
+428
+00:18:44,923 --> 00:18:46,980
+makes sense to be a list of Views.
+
+429
+00:18:46,980 --> 00:18:49,563
+And for those guys that's
+what they determine.
+
+430
+00:18:51,870 --> 00:18:55,590
+Now, you might ask, why
+didn't we do this in Grid?
+
+431
+00:18:55,590 --> 00:19:00,590
+Grid is asking you to provide
+a View for a certain item
+
+432
+00:19:01,170 --> 00:19:02,830
+and we pass a function.
+
+433
+00:19:02,830 --> 00:19:04,620
+Why didn't we say @ViewBuilder
+
+434
+00:19:04,620 --> 00:19:07,200
+for our View for item argument in Grid?
+
+435
+00:19:07,200 --> 00:19:10,110
+Well the answer had its part
+to do with this thing where
+
+436
+00:19:10,110 --> 00:19:12,900
+ViewBuilder's still kind of private.
+
+437
+00:19:12,900 --> 00:19:14,930
+It's implementation for example,
+
+438
+00:19:14,930 --> 00:19:17,834
+has no way to extract the Views
+
+439
+00:19:17,834 --> 00:19:19,684
+from a TupleView, ConditionalContent,
+
+440
+00:19:20,573 --> 00:19:23,160
+it's just you can't get them out of there.
+
+441
+00:19:23,160 --> 00:19:26,258
+So there's no way Grid could
+know what they all are.
+
+442
+00:19:26,258 --> 00:19:30,600
+That's not public in the
+current @ViewBuilder.
+
+443
+00:19:30,600 --> 00:19:32,020
+I'm sure this will be made public
+
+444
+00:19:32,020 --> 00:19:33,040
+and eventually you could do it
+
+445
+00:19:33,040 --> 00:19:36,080
+and then maybe it might make
+sense to have Grid's argument,
+
+446
+00:19:36,080 --> 00:19:38,840
+but even then Grid is a
+two-dimensional Array.
+
+447
+00:19:38,840 --> 00:19:40,567
+That's usually gonna be
+a fair number of Views.
+
+448
+00:19:40,567 --> 00:19:43,017
+It's unlikely you're
+gonna be listing them,
+
+449
+00:19:43,017 --> 00:19:46,219
+especially if you're gonna
+have 10 or less of them,
+
+450
+00:19:46,219 --> 00:19:48,330
+possible, but unlikely.
+
+451
+00:19:48,330 --> 00:19:50,870
+So the fact that Grid
+gets in bed with ForEach
+
+452
+00:19:50,870 --> 00:19:52,980
+and represents it the
+same way ForEach does
+
+453
+00:19:52,980 --> 00:19:54,663
+is probably just fine.
+
+454
+00:19:56,780 --> 00:19:58,080
+Just before we leave ViewBuilder,
+
+455
+00:19:58,080 --> 00:19:59,570
+I'd just like to reiterate this.
+
+456
+00:19:59,570 --> 00:20:01,063
+This slide is nothing new.
+
+457
+00:20:01,063 --> 00:20:04,590
+Things that are marked ViewBuilder
+are just a list of Views.
+
+458
+00:20:04,590 --> 00:20:06,680
+Yes, there's conditional in there
+
+459
+00:20:06,680 --> 00:20:09,060
+to see whether you include
+a View in the list,
+
+460
+00:20:09,060 --> 00:20:10,280
+but there's just a list of Views.
+
+461
+00:20:10,280 --> 00:20:12,677
+So no vars can be declared in there,
+
+462
+00:20:12,677 --> 00:20:14,910
+you can't have arbitrary code.
+
+463
+00:20:14,910 --> 00:20:16,710
+Anytime you have something
+that's a ViewBuilder,
+
+464
+00:20:16,710 --> 00:20:18,965
+it's just this list of Views
+with the if-thens in there
+
+465
+00:20:18,965 --> 00:20:20,613
+to pick which Views.
+
+466
+00:20:22,550 --> 00:20:24,570
+Main topic of the day, Shape.
+
+467
+00:20:24,570 --> 00:20:26,526
+Shape is a protocol.
+
+468
+00:20:26,526 --> 00:20:30,650
+It inherits from View,
+so all Shapes are Views.
+
+469
+00:20:30,650 --> 00:20:33,290
+So you can always put a
+Shape in a ZStack or whatever
+
+470
+00:20:33,290 --> 00:20:34,123
+as we saw,
+
+471
+00:20:34,123 --> 00:20:36,494
+RoundedRectangle, we threw
+it in there, no problem.
+
+472
+00:20:36,494 --> 00:20:38,791
+There are of course built in common Shapes
+
+473
+00:20:38,791 --> 00:20:40,572
+like RoundedRectangle, there's Circle,
+
+474
+00:20:40,572 --> 00:20:44,440
+there's Capsule which is a
+kind-of oval sort of thing
+
+475
+00:20:44,440 --> 00:20:45,993
+and other ones in there.
+
+476
+00:20:47,450 --> 00:20:49,888
+Now Shapes draw themselves by default
+
+477
+00:20:49,888 --> 00:20:53,720
+by filling themselves with
+the current foreground color.
+
+478
+00:20:53,720 --> 00:20:56,510
+We saw this with the backs of our Cards.
+
+479
+00:20:56,510 --> 00:21:00,380
+They take a RoundedRectangle,
+it just by default fills.
+
+480
+00:21:00,380 --> 00:21:03,470
+But we also learned that
+we can call stroke or fill
+
+481
+00:21:03,470 --> 00:21:08,090
+with arguments to change
+the way the Shape looks.
+
+482
+00:21:08,090 --> 00:21:11,107
+Now I wanna talk about fill and stroke
+
+483
+00:21:11,107 --> 00:21:14,271
+and the arguments that
+can be passed to it.
+
+484
+00:21:14,271 --> 00:21:17,900
+It might have looked like,
+when we did our Memorize code,
+
+485
+00:21:17,900 --> 00:21:21,470
+that the argument that's passed
+to fill is actually a Color
+
+486
+00:21:21,470 --> 00:21:24,370
+because you'll remember that
+the second RoundedRectangle
+
+487
+00:21:24,370 --> 00:21:26,519
+from the back, actually no,
+
+488
+00:21:26,519 --> 00:21:28,550
+the rectangle all the way
+in the back, is white.
+
+489
+00:21:28,550 --> 00:21:30,590
+And then we put the
+stroked one on top of it.
+
+490
+00:21:30,590 --> 00:21:33,210
+So that white one we
+said fill Color.white.
+
+491
+00:21:33,210 --> 00:21:35,660
+So it seemed like, oh, fill takes a Color.
+
+492
+00:21:35,660 --> 00:21:38,239
+But in fact fills argument is not a Color
+
+493
+00:21:38,239 --> 00:21:40,837
+and I'm gonna take this
+opportunity with fill and stroke
+
+494
+00:21:40,837 --> 00:21:43,610
+to talk about another feature in Swift
+
+495
+00:21:43,610 --> 00:21:46,530
+called generic functions.
+
+496
+00:21:46,530 --> 00:21:48,040
+You already know about generic types
+
+497
+00:21:48,040 --> 00:21:49,990
+like Array and like our MemoryGame,
+
+498
+00:21:49,990 --> 00:21:52,400
+it has CardContent as a don't care.
+
+499
+00:21:52,400 --> 00:21:54,720
+Well, functions can have
+don't cares as well.
+
+500
+00:21:54,720 --> 00:21:55,914
+They can be generic as well.
+
+501
+00:21:55,914 --> 00:21:59,250
+And they do this similar kind of syntax.
+
+502
+00:21:59,250 --> 00:22:03,620
+You can see that fill
+has this don't care S,
+
+503
+00:22:03,620 --> 00:22:05,753
+what to fill with type S,
+
+504
+00:22:05,753 --> 00:22:07,980
+see that's a type of S,
+
+505
+00:22:07,980 --> 00:22:09,780
+and it's constraining it
+
+506
+00:22:09,780 --> 00:22:11,200
+so that it's not a full don't care
+
+507
+00:22:11,200 --> 00:22:13,340
+it's kind of like a care a little bit
+
+508
+00:22:13,340 --> 00:22:17,530
+where that S has to implement
+the ShapeStyle protocol.
+
+509
+00:22:17,530 --> 00:22:19,884
+So this ShapeStyle protocol,
+we're not gonna talk about it,
+
+510
+00:22:19,884 --> 00:22:22,640
+but if you implement
+this ShapeStyle protocol,
+
+511
+00:22:22,640 --> 00:22:27,520
+then you can be used to
+fill or stroke a Shape.
+
+512
+00:22:27,520 --> 00:22:29,700
+What kinds of things implement ShapeStyle?
+
+513
+00:22:29,700 --> 00:22:30,909
+Well Color, obviously we know
+
+514
+00:22:30,909 --> 00:22:33,380
+'cause we've called fill with Color,
+
+515
+00:22:33,380 --> 00:22:36,450
+but also ImagePaint,
+which takes JPEG image
+
+516
+00:22:36,450 --> 00:22:38,380
+and tiles it in there to paint with
+
+517
+00:22:38,380 --> 00:22:41,230
+as if it were a paintbrush of
+that image just painting it.
+
+518
+00:22:41,230 --> 00:22:44,060
+Also there are Gradients,
+angular and linear Gradients
+
+519
+00:22:44,060 --> 00:22:46,897
+that show a band of colors or whatever.
+
+520
+00:22:46,897 --> 00:22:48,630
+So these things are all quite different,
+
+521
+00:22:48,630 --> 00:22:53,470
+Color, Gradient, ImagePainting,
+very different things,
+
+522
+00:22:53,470 --> 00:22:55,620
+and really fill doesn't
+care what they are.
+
+523
+00:22:55,620 --> 00:22:57,330
+That's why S is a don't care.
+
+524
+00:22:57,330 --> 00:22:59,480
+But it does care 'cause they
+all implement this ShapeStyle
+
+525
+00:22:59,480 --> 00:23:00,932
+'cause if they don't
+implement the ShapeStyle
+
+526
+00:23:00,932 --> 00:23:04,410
+then a Shape doesn't
+really know how to use them
+
+527
+00:23:04,410 --> 00:23:06,370
+to do the fill and stroke.
+
+528
+00:23:06,370 --> 00:23:08,290
+Again, I'm mostly showing you this,
+
+529
+00:23:08,290 --> 00:23:11,320
+yes, so that you can know
+that you can fill with Images
+
+530
+00:23:11,320 --> 00:23:12,840
+or Gradients or Colors,
+
+531
+00:23:12,840 --> 00:23:14,050
+but also so you should realize
+
+532
+00:23:14,050 --> 00:23:16,190
+that there are these generic functions,
+
+533
+00:23:16,190 --> 00:23:18,283
+functions that have don't cares
+
+534
+00:23:18,283 --> 00:23:20,673
+as the types of some of their arguments.
+
+535
+00:23:21,950 --> 00:23:24,060
+What if you wanna create your own Shape?
+
+536
+00:23:24,060 --> 00:23:26,218
+You don't wanna use
+RoundedRectangle, Circle,
+
+537
+00:23:26,218 --> 00:23:28,500
+whatever, you want your own Shape.
+
+538
+00:23:28,500 --> 00:23:31,620
+Well, the Shape protocol uses an extension
+
+539
+00:23:31,620 --> 00:23:34,296
+to implement View's
+body var for you, right?
+
+540
+00:23:34,296 --> 00:23:38,022
+'Cause Shape inherits from
+View, so Shape is a View.
+
+541
+00:23:38,022 --> 00:23:39,876
+So it would have to
+implement the body var.
+
+542
+00:23:39,876 --> 00:23:41,640
+All Views have to implement that body var.
+
+543
+00:23:41,640 --> 00:23:42,970
+But Shape implements that for you.
+
+544
+00:23:42,970 --> 00:23:45,110
+The protocol and
+extension of that protocol
+
+545
+00:23:45,110 --> 00:23:46,290
+implements it for you.
+
+546
+00:23:46,290 --> 00:23:48,739
+However, Shape introduces a new func
+
+547
+00:23:48,739 --> 00:23:51,770
+that you are required to implement.
+
+548
+00:23:51,770 --> 00:23:54,390
+It's called path in rect.
+
+549
+00:23:54,390 --> 00:23:58,830
+So this function path in
+rect is going to just return
+
+550
+00:23:58,830 --> 00:24:00,960
+something called a Path.
+
+551
+00:24:00,960 --> 00:24:03,560
+Now a Path has a whole
+bunch of functions on it,
+
+552
+00:24:03,560 --> 00:24:08,249
+like line to and arc and Bezier curve.
+
+553
+00:24:08,249 --> 00:24:11,330
+All these things that
+let you essentially draw
+
+554
+00:24:11,330 --> 00:24:13,700
+like you're drawing with a pen.
+
+555
+00:24:13,700 --> 00:24:17,110
+And so you're going to build some Path
+
+556
+00:24:17,110 --> 00:24:20,690
+by drawing with this
+pen and return it here.
+
+557
+00:24:20,690 --> 00:24:23,670
+Now, once you return it, now
+Shape has all it needs to know
+
+558
+00:24:23,670 --> 00:24:24,810
+to do what it does,
+
+559
+00:24:24,810 --> 00:24:28,333
+which is provide a Shape that
+can be stroked and filled.
+
+560
+00:24:29,730 --> 00:24:33,710
+Now this is best shown, how
+this works, with a demo.
+
+561
+00:24:33,710 --> 00:24:36,310
+So we're gonna go back to Memorize
+
+562
+00:24:36,310 --> 00:24:38,240
+and implement that little pie.
+
+563
+00:24:38,240 --> 00:24:40,894
+If you remember from our first lecture
+
+564
+00:24:40,894 --> 00:24:43,820
+there was that little pie and it animated
+
+565
+00:24:43,820 --> 00:24:46,010
+and it kind of ran the clock down
+
+566
+00:24:46,010 --> 00:24:47,630
+so that if you match the card fast enough,
+
+567
+00:24:47,630 --> 00:24:49,210
+you got extra points.
+
+568
+00:24:49,210 --> 00:24:52,280
+So we're gonna draw that
+pie in our memory game.
+
+569
+00:24:52,280 --> 00:24:53,371
+We're not gonna animate it yet.
+
+570
+00:24:53,371 --> 00:24:55,410
+Animation is our next topic.
+
+571
+00:24:55,410 --> 00:24:56,840
+We will get back to that.
+
+572
+00:24:56,840 --> 00:25:00,300
+So today we're just learning
+how to create our own Shape
+
+573
+00:25:00,300 --> 00:25:01,713
+by building that pie.
+
+574
+00:25:04,720 --> 00:25:09,720
+I've taken a screenshot of
+that video of the game in play
+
+575
+00:25:09,720 --> 00:25:12,615
+so that we can see what
+it is we're shooting for.
+
+576
+00:25:12,615 --> 00:25:16,673
+We're trying to build this
+little pie chart thing
+
+577
+00:25:16,673 --> 00:25:20,890
+that maybe looks like
+a Pac-Man or something
+
+578
+00:25:20,890 --> 00:25:22,540
+behind our ghost.
+
+579
+00:25:22,540 --> 00:25:26,230
+And there's no such Shape
+built in to SwiftUI,
+
+580
+00:25:26,230 --> 00:25:27,600
+this kind of Pac-Man Shape,
+
+581
+00:25:27,600 --> 00:25:30,100
+so we're gonna have to
+build this ourselves.
+
+582
+00:25:30,100 --> 00:25:32,221
+But before we start
+building this custom Shape,
+
+583
+00:25:32,221 --> 00:25:34,510
+let's just try and get a circle
+
+584
+00:25:34,510 --> 00:25:37,650
+behind this ghost right here.
+
+585
+00:25:37,650 --> 00:25:39,887
+'Cause we know there is
+this built-in Circle,
+
+586
+00:25:39,887 --> 00:25:42,703
+just like there's a big built
+in RoundedRectangle here.
+
+587
+00:25:43,890 --> 00:25:45,500
+So to do that, pretty straightforward.
+
+588
+00:25:45,500 --> 00:25:48,124
+Here's our View, here's our CardView.
+
+589
+00:25:48,124 --> 00:25:52,930
+Right here and here is
+yep, here's the background.
+
+590
+00:25:52,930 --> 00:25:54,660
+Here's where our emoji is
+
+591
+00:25:54,660 --> 00:25:57,380
+and this Circle kind of just wants to live
+
+592
+00:25:57,380 --> 00:25:58,970
+right in between here,
+
+593
+00:25:58,970 --> 00:26:01,400
+right between the
+background and the emojis.
+
+594
+00:26:01,400 --> 00:26:02,320
+So let's see.
+
+595
+00:26:02,320 --> 00:26:03,153
+This just works.
+
+596
+00:26:03,153 --> 00:26:05,841
+Maybe this is all we need to get started.
+
+597
+00:26:05,841 --> 00:26:06,910
+All right, let's click.
+
+598
+00:26:06,910 --> 00:26:10,160
+Oh that's actually getting there.
+
+599
+00:26:10,160 --> 00:26:10,993
+Take a look.
+
+600
+00:26:10,993 --> 00:26:12,890
+Oh, that's pretty close.
+
+601
+00:26:12,890 --> 00:26:15,167
+Now it's not quite right.
+
+602
+00:26:15,167 --> 00:26:17,890
+It's a little too close
+to the edges there,
+
+603
+00:26:17,890 --> 00:26:19,650
+there's supposed to be a little gap,
+
+604
+00:26:19,650 --> 00:26:23,510
+and this color is a little
+too bright of orange,
+
+605
+00:26:23,510 --> 00:26:25,640
+but it's in the ballpark.
+
+606
+00:26:25,640 --> 00:26:28,980
+Now we could go back
+here and try and fix this
+
+607
+00:26:28,980 --> 00:26:31,450
+and then run again and then fix some more
+
+608
+00:26:31,450 --> 00:26:33,630
+and then run again and tweak it some more.
+
+609
+00:26:33,630 --> 00:26:35,170
+But that's a little tedious
+
+610
+00:26:35,170 --> 00:26:38,060
+and of course we have a
+much better tool for that,
+
+611
+00:26:38,060 --> 00:26:41,037
+which is our canvas over here
+
+612
+00:26:41,037 --> 00:26:45,283
+and we can just resume and
+see what our thing looks like
+
+613
+00:26:45,283 --> 00:26:47,315
+and it looks like...
+
+614
+00:26:47,315 --> 00:26:51,010
+Oh no, all the cards are face down.
+
+615
+00:26:51,010 --> 00:26:54,452
+Which kind of makes sense
+because that's how game starts,
+
+616
+00:26:54,452 --> 00:26:56,400
+but it's kind of useless to me
+
+617
+00:26:56,400 --> 00:26:58,020
+to have all these cards face down.
+
+618
+00:26:58,020 --> 00:27:00,770
+I really want at least one
+of these cards to be face up
+
+619
+00:27:00,770 --> 00:27:02,519
+so I can be working on this.
+
+620
+00:27:02,519 --> 00:27:04,920
+How do we do that?
+
+621
+00:27:04,920 --> 00:27:07,160
+Turns out that this
+code down at the bottom
+
+622
+00:27:07,160 --> 00:27:08,690
+that I pushed out of the way,
+
+623
+00:27:08,690 --> 00:27:11,810
+it's not as scary as
+maybe I made it out to be
+
+624
+00:27:11,810 --> 00:27:13,690
+by pushing it out of the way.
+
+625
+00:27:13,690 --> 00:27:18,430
+This is really just a static
+var that is of type, some View
+
+626
+00:27:18,430 --> 00:27:23,430
+that is returning this
+whole View to preview our
+
+627
+00:27:25,070 --> 00:27:26,670
+EmojiMemoryGameView.
+
+628
+00:27:26,670 --> 00:27:28,600
+And right now we're creating one
+
+629
+00:27:28,600 --> 00:27:29,790
+an EmojiMemoryGameView.
+
+630
+00:27:29,790 --> 00:27:31,720
+and we're giving it this ViewModel
+
+631
+00:27:31,720 --> 00:27:33,950
+that we just created on the fly.
+
+632
+00:27:33,950 --> 00:27:34,950
+But there's no reason
+
+633
+00:27:34,950 --> 00:27:36,980
+that we couldn't just
+take this out of here,
+
+634
+00:27:36,980 --> 00:27:39,650
+put it in a variable, I'll call it game,
+
+635
+00:27:39,650 --> 00:27:42,340
+ask that game to choose one of the Cards,
+
+636
+00:27:42,340 --> 00:27:45,497
+how about choose the
+first card in the game,
+
+637
+00:27:45,497 --> 00:27:47,150
+something like that,
+
+638
+00:27:47,150 --> 00:27:49,040
+and then use that game here
+
+639
+00:27:49,040 --> 00:27:51,219
+as the thing that we're going to preview.
+
+640
+00:27:51,219 --> 00:27:52,630
+Of course we have to return
+
+641
+00:27:52,630 --> 00:27:54,290
+since we don't have a one line function,
+
+642
+00:27:54,290 --> 00:27:57,584
+and voila, right away we're
+seeing the face-up Card
+
+643
+00:27:57,584 --> 00:28:02,110
+and I could maybe have
+it choose the third Card
+
+644
+00:28:02,110 --> 00:28:03,990
+and now it's showing me the third Card.
+
+645
+00:28:03,990 --> 00:28:05,732
+So I could have it pick a couple of Cards.
+
+646
+00:28:05,732 --> 00:28:08,220
+Of course, if I pick three Cards,
+
+647
+00:28:08,220 --> 00:28:10,553
+then it's going play the game and match.
+
+648
+00:28:11,510 --> 00:28:13,460
+But this is perfect for our needs.
+
+649
+00:28:13,460 --> 00:28:15,900
+We can go back up here and
+start working on this Circle
+
+650
+00:28:15,900 --> 00:28:20,440
+and try to make it look more
+like we're intending over here.
+
+651
+00:28:20,440 --> 00:28:22,670
+Let's start by trying to
+get it in from the edge
+
+652
+00:28:22,670 --> 00:28:25,150
+a little bit so it doesn't
+smash into the edge.
+
+653
+00:28:25,150 --> 00:28:26,520
+We know how to do that.
+
+654
+00:28:26,520 --> 00:28:29,501
+Just put some padding around this Circle.
+
+655
+00:28:29,501 --> 00:28:33,563
+Well, now, that's not quite
+what we're looking for.
+
+656
+00:28:33,563 --> 00:28:34,640
+A little too much padding.
+
+657
+00:28:34,640 --> 00:28:36,140
+How about if we just, I don't know,
+
+658
+00:28:36,140 --> 00:28:38,240
+put less padding around there?
+
+659
+00:28:38,240 --> 00:28:40,381
+Yeah, I'm pretty happy with that.
+
+660
+00:28:40,381 --> 00:28:43,892
+Although my ghost there is a little big,
+
+661
+00:28:43,892 --> 00:28:47,170
+I don't think I wanna smash
+in right up at the edge there.
+
+662
+00:28:47,170 --> 00:28:50,340
+So maybe I'll go down to my
+control panel of constants here
+
+663
+00:28:50,340 --> 00:28:52,600
+and change this to like 0.7 yeah,
+
+664
+00:28:52,600 --> 00:28:57,300
+maybe 0.65 no, 70% that looks good.
+
+665
+00:28:57,300 --> 00:28:58,570
+I don't want this to be too small.
+
+666
+00:28:58,570 --> 00:29:01,210
+This is the purpose of that
+card is really to show this.
+
+667
+00:29:01,210 --> 00:29:03,611
+So I don't wanna go too small there.
+
+668
+00:29:03,611 --> 00:29:08,140
+What about this really
+kind of vivid orange?
+
+669
+00:29:08,140 --> 00:29:10,460
+Well, it turns out we can make an orange
+
+670
+00:29:10,460 --> 00:29:14,300
+that's kinda light or kinda
+see through right here
+
+671
+00:29:14,300 --> 00:29:17,002
+by making it semi-transparent.
+
+672
+00:29:17,002 --> 00:29:21,320
+And View has an awesome
+modifier for that, opacity,
+
+673
+00:29:21,320 --> 00:29:24,330
+it's called, takes a double between zero,
+
+674
+00:29:24,330 --> 00:29:26,970
+which means completely transparent
+
+675
+00:29:26,970 --> 00:29:29,300
+to one, completely opaque.
+
+676
+00:29:29,300 --> 00:29:33,210
+Now we can go in the
+middle, maybe like 70%,
+
+677
+00:29:33,210 --> 00:29:36,107
+maybe 10% oh it's too light.
+
+678
+00:29:36,107 --> 00:29:39,570
+30%, 40%, I kinda like 40%.
+
+679
+00:29:39,570 --> 00:29:42,240
+I think that's what I
+ended up with over here.
+
+680
+00:29:42,240 --> 00:29:44,053
+It's close, something like that.
+
+681
+00:29:45,170 --> 00:29:48,450
+You can see we've got this
+really looking the way we want
+
+682
+00:29:48,450 --> 00:29:52,420
+except that this is a
+Circle instead of our pie.
+
+683
+00:29:52,420 --> 00:29:54,410
+To do our Pac-Man pie thing,
+
+684
+00:29:54,410 --> 00:29:57,000
+we just need to replace Circle right here
+
+685
+00:29:57,000 --> 00:29:59,365
+with our own custom Shape.
+
+686
+00:29:59,365 --> 00:30:01,080
+So let's do that, let's create that.
+
+687
+00:30:01,080 --> 00:30:02,120
+I'm gonna go File, New
+
+688
+00:30:02,120 --> 00:30:04,782
+because we're creating a new thing here.
+
+689
+00:30:04,782 --> 00:30:08,158
+It is gonna be a SwiftUI View
+because Shapes are Views,
+
+690
+00:30:08,158 --> 00:30:11,500
+but if we pick this template,
+we're gonna get that var body
+
+691
+00:30:11,500 --> 00:30:14,090
+and the Shape protocol
+provides that for us.
+
+692
+00:30:14,090 --> 00:30:16,549
+So we're just gonna pick
+Swift file right here,
+
+693
+00:30:16,549 --> 00:30:18,260
+make sure we put it in the right place.
+
+694
+00:30:18,260 --> 00:30:22,057
+I'm gonna call it Pie, is
+the name of my custom Shape.
+
+695
+00:30:22,057 --> 00:30:25,010
+Let's create that.
+
+696
+00:30:25,010 --> 00:30:25,843
+Here we go.
+
+697
+00:30:25,843 --> 00:30:28,370
+Now of course Shapes are
+very much a UI thing,
+
+698
+00:30:28,370 --> 00:30:32,050
+so we're gonna import
+SwiftUI, not Foundation there.
+
+699
+00:30:32,050 --> 00:30:35,410
+And creating a Shape, so easy, struct Pie.
+
+700
+00:30:35,410 --> 00:30:38,010
+It conforms to the Shape protocol
+
+701
+00:30:38,010 --> 00:30:40,900
+just constrains and gains with that,
+
+702
+00:30:40,900 --> 00:30:43,070
+and it's gonna gain the
+fact that it's a View
+
+703
+00:30:43,070 --> 00:30:45,930
+and it can be filled and
+stroked, all kinds of gains,
+
+704
+00:30:45,930 --> 00:30:49,330
+and the only real constraint
+here is this func,
+
+705
+00:30:49,330 --> 00:30:51,960
+that's called path in rect,
+
+706
+00:30:53,605 --> 00:30:57,520
+and it returns a Path
+that we have to create,
+
+707
+00:30:57,520 --> 00:31:00,860
+and this Path is just
+going to be the edges
+
+708
+00:31:00,860 --> 00:31:01,770
+of what we're drawing.
+
+709
+00:31:01,770 --> 00:31:04,394
+So for us it's gonna start
+here in the middle and go up,
+
+710
+00:31:04,394 --> 00:31:07,600
+around here, back to the middle.
+
+711
+00:31:07,600 --> 00:31:09,630
+That is the Path that we're gonna build.
+
+712
+00:31:09,630 --> 00:31:11,970
+And we're gonna build that
+with functions in Path
+
+713
+00:31:11,970 --> 00:31:14,943
+like draw a line to here
+and draw an arc over here.
+
+714
+00:31:14,943 --> 00:31:16,960
+We're just gonna combine all those
+
+715
+00:31:16,960 --> 00:31:18,490
+to make this nice path.
+
+716
+00:31:18,490 --> 00:31:21,010
+And once we do, Shape we'll
+take care of all the rest.
+
+717
+00:31:21,010 --> 00:31:22,050
+Being able to fill it and all that
+
+718
+00:31:22,050 --> 00:31:25,350
+is gonna all be taken care of for us.
+
+719
+00:31:25,350 --> 00:31:28,110
+How do we return this path thing?
+
+720
+00:31:28,110 --> 00:31:31,960
+I'm just gonna create an empty
+one, I'll call it p Path.
+
+721
+00:31:31,960 --> 00:31:34,800
+That's an empty Path,
+and I'm gonna return it.
+
+722
+00:31:34,800 --> 00:31:38,450
+And in between here I just
+have to call functions in Path
+
+723
+00:31:38,450 --> 00:31:42,050
+that move around, draw the
+lines that I wanna draw.
+
+724
+00:31:42,050 --> 00:31:45,110
+Now what is this rect that's passed to us?
+
+725
+00:31:45,110 --> 00:31:49,020
+That is the rect in which we're
+supposed to fit our Shape.
+
+726
+00:31:49,020 --> 00:31:51,650
+Now almost all, if not all Shapes
+
+727
+00:31:51,650 --> 00:31:54,880
+usually use all the space in
+the rect that's given to them
+
+728
+00:31:54,880 --> 00:31:58,800
+and yes, you guessed it,
+because Shape is a View,
+
+729
+00:31:58,800 --> 00:32:00,098
+the rect it's gonna give you here
+
+730
+00:32:00,098 --> 00:32:03,920
+is the space that was offered to it.
+
+731
+00:32:03,920 --> 00:32:05,990
+Space offered to it.
+
+732
+00:32:05,990 --> 00:32:08,290
+We've got this Path, got this rect,
+
+733
+00:32:08,290 --> 00:32:09,640
+how are we gonna do this?
+
+734
+00:32:09,640 --> 00:32:13,120
+Let's start by gonna the
+center of the rectangle.
+
+735
+00:32:13,120 --> 00:32:15,600
+So we're gonna be given
+this rectangle to draw in.
+
+736
+00:32:15,600 --> 00:32:18,420
+Let's go right to its
+center and start there,
+
+737
+00:32:18,420 --> 00:32:19,730
+right here, and then we're gonna move up.
+
+738
+00:32:19,730 --> 00:32:21,400
+So let's start in the middle.
+
+739
+00:32:21,400 --> 00:32:24,030
+So getting the middle is pretty easy.
+
+740
+00:32:24,030 --> 00:32:27,530
+I'm just gonna go to the
+middle by saying p Path,
+
+741
+00:32:27,530 --> 00:32:32,530
+that's this Path, dot move to the center.
+
+742
+00:32:32,790 --> 00:32:35,390
+And center is gonna be a var.
+
+743
+00:32:35,390 --> 00:32:36,841
+Let center equal.
+
+744
+00:32:36,841 --> 00:32:39,480
+To get the center I'm just
+gonna create a CGPoint.
+
+745
+00:32:39,480 --> 00:32:41,910
+Now notice that all of
+these drawing things,
+
+746
+00:32:41,910 --> 00:32:45,330
+not just CGFloat, but
+CGRect, CGPoint, CGSize
+
+747
+00:32:45,330 --> 00:32:48,180
+that we saw with GeometryReader,
+they all start with CG.
+
+748
+00:32:48,180 --> 00:32:50,680
+This CG stands for Core Graphics.
+
+749
+00:32:50,680 --> 00:32:52,560
+That's the underlying graphics system
+
+750
+00:32:52,560 --> 00:32:55,348
+that all this is built on.
+
+751
+00:32:55,348 --> 00:32:58,670
+So finding the center of
+this rect is really easy.
+
+752
+00:32:58,670 --> 00:33:01,033
+The X position is just the rect midX
+
+753
+00:33:02,108 --> 00:33:04,858
+and the Y is the rectangles midY.
+
+754
+00:33:06,536 --> 00:33:07,369
+So that's it.
+
+755
+00:33:07,369 --> 00:33:10,160
+We got the center, we're
+started already here,
+
+756
+00:33:10,160 --> 00:33:11,550
+but we haven't drawn anything.
+
+757
+00:33:11,550 --> 00:33:13,850
+We haven't actually drawn
+any lines or anything.
+
+758
+00:33:13,850 --> 00:33:15,630
+So the next thing we're gonna do
+
+759
+00:33:16,790 --> 00:33:20,123
+is draw a line from the center up to here.
+
+760
+00:33:21,330 --> 00:33:23,400
+Now I'm gonna make it so that my Pie,
+
+761
+00:33:23,400 --> 00:33:26,730
+this starting angle and this ending angle,
+
+762
+00:33:26,730 --> 00:33:27,727
+can be anything you want.
+
+763
+00:33:27,727 --> 00:33:31,060
+So you can make your Pie a
+small little piece of pie
+
+764
+00:33:31,060 --> 00:33:33,240
+or big pie pointing in any direction.
+
+765
+00:33:33,240 --> 00:33:34,710
+So I'm gonna need a couple of vars
+
+766
+00:33:34,710 --> 00:33:36,630
+One is gonna be my starting angle
+
+767
+00:33:36,630 --> 00:33:38,940
+and one is my ending angle.
+
+768
+00:33:38,940 --> 00:33:41,000
+So let's put those vars in our Shape.
+
+769
+00:33:41,000 --> 00:33:41,930
+This is just a struct.
+
+770
+00:33:41,930 --> 00:33:44,700
+So he can have vars startAngle,
+
+771
+00:33:44,700 --> 00:33:46,150
+but what type would the angle be?
+
+772
+00:33:46,150 --> 00:33:49,330
+Well, you could make it a
+CGFloat or something like that,
+
+773
+00:33:49,330 --> 00:33:52,580
+but there's a really nice
+thing in Swift called Angle
+
+774
+00:33:52,580 --> 00:33:53,890
+and I'll show you that in a second.
+
+775
+00:33:53,890 --> 00:33:58,370
+So we're gonna make these start
+and end angles, the Angles.
+
+776
+00:33:58,370 --> 00:33:59,550
+What is an Angle?
+
+777
+00:33:59,550 --> 00:34:03,203
+Let's go ahead and take a look
+at it in the documentation.
+
+778
+00:34:04,180 --> 00:34:05,975
+Here it is, struct
+Angle, it's just a struct
+
+779
+00:34:05,975 --> 00:34:09,880
+It lets you create an Angle
+using degrees or using radians.
+
+780
+00:34:09,880 --> 00:34:12,580
+Hopefully everyone remembers
+from trigonometry class
+
+781
+00:34:12,580 --> 00:34:15,950
+what radians are, right?
+Degrees zero to 360
+
+782
+00:34:15,950 --> 00:34:16,880
+around the circle,
+
+783
+00:34:16,880 --> 00:34:20,810
+radians it's zero to 2π.
+
+784
+00:34:20,810 --> 00:34:23,984
+2πr that's the circumference of a circle.
+
+785
+00:34:23,984 --> 00:34:28,120
+So radians is zero to
+2π around the circle.
+
+786
+00:34:28,120 --> 00:34:29,990
+And notice this Angle's animatable.
+
+787
+00:34:29,990 --> 00:34:32,670
+That's gonna be nice for us later.
+
+788
+00:34:32,670 --> 00:34:33,930
+Also it can be hashed,
+
+789
+00:34:33,930 --> 00:34:36,170
+that means a can be put in
+a dictionary or hash table.
+
+790
+00:34:36,170 --> 00:34:38,773
+We don't need to do that,
+but this Angle, very nice
+
+791
+00:34:38,773 --> 00:34:41,520
+little type for us.
+
+792
+00:34:41,520 --> 00:34:44,327
+I need to somehow
+calculate a start position
+
+793
+00:34:44,327 --> 00:34:48,030
+up at the top up here,
+this little position here,
+
+794
+00:34:48,030 --> 00:34:50,210
+so that I can draw a
+line from here to here.
+
+795
+00:34:50,210 --> 00:34:51,718
+So I'm gonna draw that line by saying
+
+796
+00:34:51,718 --> 00:34:56,718
+addLine to the start at the top there.
+
+797
+00:34:56,834 --> 00:34:58,023
+So I need start.
+
+798
+00:34:58,023 --> 00:35:02,843
+How about start equals a
+point also, so CGPoint.
+
+799
+00:35:02,843 --> 00:35:06,410
+Let's go ahead and put
+this on multiple lines
+
+800
+00:35:06,410 --> 00:35:11,130
+and have the X on one line
+and the Y on another line.
+
+801
+00:35:11,130 --> 00:35:13,580
+So the X position, horizontal position,
+
+802
+00:35:13,580 --> 00:35:18,580
+is the center's X plus
+the radius of our circle,
+
+803
+00:35:19,130 --> 00:35:20,325
+which we're gonna have to figure out,
+
+804
+00:35:20,325 --> 00:35:22,941
+times, and again, I'm
+hoping you're remembering
+
+805
+00:35:22,941 --> 00:35:27,630
+your trigonometry from
+eighth grade or ninth grade
+
+806
+00:35:27,630 --> 00:35:29,918
+or whenever trigonometry
+is taught these days,
+
+807
+00:35:29,918 --> 00:35:34,420
+and I wanna do the cosine
+of that start angle,
+
+808
+00:35:34,420 --> 00:35:36,260
+and I have to do it in radians
+
+809
+00:35:36,260 --> 00:35:39,921
+because this cosine function
+in Swift does radians,
+
+810
+00:35:39,921 --> 00:35:43,670
+and also I wanna do this
+all in CGFloat world,
+
+811
+00:35:43,670 --> 00:35:46,240
+not in Double's.
+
+812
+00:35:46,240 --> 00:35:48,560
+And similarly the Y is
+just the center dot Y
+
+813
+00:35:48,560 --> 00:35:52,820
+plus the radius times
+the sine of the CGFloat
+
+814
+00:35:52,820 --> 00:35:55,990
+startAngle dot radians.
+
+815
+00:35:55,990 --> 00:35:57,390
+And so I need the radius.
+
+816
+00:35:57,390 --> 00:36:02,390
+What's gonna be the
+radius of my circle here?
+
+817
+00:36:02,555 --> 00:36:07,160
+Well, I could make it the width
+
+818
+00:36:07,160 --> 00:36:09,210
+or I could make it the height.
+
+819
+00:36:09,210 --> 00:36:11,560
+I really want it to be
+the smaller of the two.
+
+820
+00:36:11,560 --> 00:36:14,730
+So in this case I definitely
+don't wanna have my radius
+
+821
+00:36:14,730 --> 00:36:18,310
+be half the height of this space
+
+822
+00:36:18,310 --> 00:36:20,520
+because then it's gonna be way too big.
+
+823
+00:36:20,520 --> 00:36:22,780
+So I'm gonna pick the smaller
+of the width or height
+
+824
+00:36:22,780 --> 00:36:24,540
+and divide it by two so that it's radius
+
+825
+00:36:24,540 --> 00:36:26,020
+instead of diameter.
+
+826
+00:36:26,020 --> 00:36:29,827
+So let's do that and let
+our radius equal the minimum
+
+827
+00:36:29,827 --> 00:36:34,348
+of the rect's width and
+the rect's height and
+
+828
+00:36:34,348 --> 00:36:35,714
+we divide by two.
+
+829
+00:36:36,984 --> 00:36:38,890
+So I think that's all we need to do
+
+830
+00:36:38,890 --> 00:36:42,370
+to get up to that point
+up at the top over here.
+
+831
+00:36:42,370 --> 00:36:45,500
+Now we need to go in this big arc.
+
+832
+00:36:45,500 --> 00:36:46,720
+Okay, turn this arc.
+
+833
+00:36:46,720 --> 00:36:51,240
+Luckily Path has a function
+for arcing as well.
+
+834
+00:36:51,240 --> 00:36:55,780
+It's called addArc and you
+can do it different ways.
+
+835
+00:36:55,780 --> 00:36:58,060
+I'm gonna choose the simplest one here,
+
+836
+00:36:58,060 --> 00:36:59,330
+which lets you create an arc
+
+837
+00:36:59,330 --> 00:37:03,320
+by specifying the center of
+the arc, the radius of the arc,
+
+838
+00:37:03,320 --> 00:37:05,400
+the start angle, and the end angle,
+
+839
+00:37:05,400 --> 00:37:08,121
+and whether you're going
+clockwise around the arc,
+
+840
+00:37:08,121 --> 00:37:10,420
+or counter-clockwise, right?
+
+841
+00:37:10,420 --> 00:37:12,912
+So whether we're gonna go
+counterclockwise like this
+
+842
+00:37:12,912 --> 00:37:15,423
+or whether we're gonna
+go clockwise like this.
+
+843
+00:37:16,620 --> 00:37:17,930
+So let's give this center.
+
+844
+00:37:17,930 --> 00:37:20,330
+We know the center it's
+that center radius.
+
+845
+00:37:20,330 --> 00:37:21,921
+Yep, we know that too.
+
+846
+00:37:21,921 --> 00:37:23,223
+Start angle?
+
+847
+00:37:23,223 --> 00:37:25,490
+Yeah, we know the start angle.
+
+848
+00:37:25,490 --> 00:37:26,720
+End angle?
+
+849
+00:37:26,720 --> 00:37:28,520
+Yeah, that's this var up here.
+
+850
+00:37:28,520 --> 00:37:29,530
+This is really easy.
+
+851
+00:37:29,530 --> 00:37:31,750
+And how about clockwise?
+
+852
+00:37:31,750 --> 00:37:33,376
+This is a boolean, whether
+we're going clockwise,
+
+853
+00:37:33,376 --> 00:37:36,720
+let's allow people using
+us to tell us that too.
+
+854
+00:37:36,720 --> 00:37:38,480
+So we'll say clockwise is a Bool,
+
+855
+00:37:39,530 --> 00:37:40,983
+put clockwise down here.
+
+856
+00:37:41,958 --> 00:37:44,960
+And let's not make them say it though.
+
+857
+00:37:44,960 --> 00:37:49,070
+We'll have a default, we'll
+have a clockwise false.
+
+858
+00:37:49,070 --> 00:37:51,341
+That happens to be the
+way we wanna go, right?
+
+859
+00:37:51,341 --> 00:37:54,560
+Counter clockwise, so
+we'll do clockwise false
+
+860
+00:37:54,560 --> 00:37:56,130
+work for our Pie.
+
+861
+00:37:56,130 --> 00:37:58,260
+But this is just a default,
+we had to pick one of them,
+
+862
+00:37:58,260 --> 00:37:59,810
+we might as well pick this one.
+
+863
+00:38:01,010 --> 00:38:02,190
+That's the arc.
+
+864
+00:38:02,190 --> 00:38:05,060
+We're almost done with
+our little Path here.
+
+865
+00:38:05,060 --> 00:38:07,890
+It goes around, now it needs
+to come back to the middle.
+
+866
+00:38:07,890 --> 00:38:10,780
+So we need a line back
+to the center there.
+
+867
+00:38:10,780 --> 00:38:14,823
+So that's p dot addLine to the center.
+
+868
+00:38:15,658 --> 00:38:16,960
+And that is it.
+
+869
+00:38:16,960 --> 00:38:18,640
+We have done a custom Shape here.
+
+870
+00:38:18,640 --> 00:38:21,974
+All we had to do was define
+this Path and return it,
+
+871
+00:38:21,974 --> 00:38:23,780
+and we have a custom Shape.
+
+872
+00:38:23,780 --> 00:38:25,520
+Shape is gonna take
+care of everything else,
+
+873
+00:38:25,520 --> 00:38:27,477
+filling it, stroking it, all that stuff
+
+874
+00:38:27,477 --> 00:38:28,773
+it knows how to do that.
+
+875
+00:38:29,930 --> 00:38:31,120
+So let's go back to our View
+
+876
+00:38:31,120 --> 00:38:33,980
+and where we used Circle right here,
+
+877
+00:38:33,980 --> 00:38:36,540
+we're gonna use our Pie instead.
+
+878
+00:38:36,540 --> 00:38:37,963
+So let's do Pie.
+
+879
+00:38:39,770 --> 00:38:42,480
+Oops, sorry, quit Xcode there.
+
+880
+00:38:42,480 --> 00:38:45,270
+Let's get our thing back here.
+
+881
+00:38:45,270 --> 00:38:46,243
+Sorry about that.
+
+882
+00:38:47,130 --> 00:38:49,470
+We know that Pie has some vars.
+
+883
+00:38:49,470 --> 00:38:52,090
+I'm gonna initialize the
+starting angle and the end angle.
+
+884
+00:38:52,090 --> 00:38:54,870
+Notice that the clockwise
+is an optional one.
+
+885
+00:38:54,870 --> 00:38:56,580
+We don't have to specify that.
+
+886
+00:38:56,580 --> 00:38:58,950
+So let's choose to do the
+start and end angles here.
+
+887
+00:38:58,950 --> 00:39:01,163
+Now what angles are we
+looking to start at here?
+
+888
+00:39:01,163 --> 00:39:04,716
+Well, we want to start straight up here
+
+889
+00:39:04,716 --> 00:39:08,170
+and go counterclockwise over to here.
+
+890
+00:39:08,170 --> 00:39:12,840
+So the straight up that's
+probably Angle dot degrees zero,
+
+891
+00:39:14,570 --> 00:39:17,023
+and then the end angle,
+where are we ending?
+
+892
+00:39:17,960 --> 00:39:20,070
+We are ending over here.
+
+893
+00:39:20,070 --> 00:39:23,460
+Well if this is zero and this would be 90
+
+894
+00:39:23,460 --> 00:39:26,540
+so this would be like what, 110 degrees,
+
+895
+00:39:26,540 --> 00:39:28,150
+something like that.
+
+896
+00:39:28,150 --> 00:39:31,357
+Let's try that Angle dot degrees 110.
+
+897
+00:39:33,950 --> 00:39:36,560
+Oh, that didn't quite work.
+
+898
+00:39:36,560 --> 00:39:37,990
+What is going on here?
+
+899
+00:39:37,990 --> 00:39:41,870
+This does not look anything like this.
+
+900
+00:39:41,870 --> 00:39:43,313
+So why is this a problem?
+
+901
+00:39:44,200 --> 00:39:46,301
+Well, the first thing to understand in iOS
+
+902
+00:39:46,301 --> 00:39:51,260
+is that Angle zero,
+zero degrees is not up,
+
+903
+00:39:51,260 --> 00:39:53,640
+it's out to the right.
+
+904
+00:39:53,640 --> 00:39:55,200
+Angle zero's out to the right.
+
+905
+00:39:55,200 --> 00:39:58,110
+So if we wanted this to
+be in the kind of degrees
+
+906
+00:39:58,110 --> 00:39:59,620
+where zero is straight up,
+
+907
+00:39:59,620 --> 00:40:02,396
+we're gonna have to subtract 90 degrees
+
+908
+00:40:02,396 --> 00:40:04,110
+from all these angles.
+
+909
+00:40:04,110 --> 00:40:06,100
+So 90 degrees off of that one
+
+910
+00:40:06,100 --> 00:40:08,366
+and 90 degrees off of that one.
+
+911
+00:40:08,366 --> 00:40:10,420
+But that didn't really work either.
+
+912
+00:40:10,420 --> 00:40:13,042
+That's still not what we're
+looking for over here.
+
+913
+00:40:13,042 --> 00:40:15,540
+It looks like it started up here at zero,
+
+914
+00:40:15,540 --> 00:40:20,025
+but it went clockwise
+instead of counterclockwise.
+
+915
+00:40:20,025 --> 00:40:24,100
+I'm certain over here that
+I said clockwise false.
+
+916
+00:40:24,100 --> 00:40:25,120
+Yeah, counter-clockwise.
+
+917
+00:40:25,120 --> 00:40:26,453
+What's going on?
+
+918
+00:40:27,710 --> 00:40:30,644
+That's impossible, that
+couldn't possibly be happening.
+
+919
+00:40:30,644 --> 00:40:33,683
+Well, this is happening because in iOS,
+
+920
+00:40:37,130 --> 00:40:40,230
+the drawing coordinate
+system that you're drawing in
+
+921
+00:40:40,230 --> 00:40:41,063
+right here,
+
+922
+00:40:41,063 --> 00:40:46,063
+has (0, 0) in the upper
+left and is upside down.
+
+923
+00:40:46,170 --> 00:40:47,800
+So this is increasing Y.
+
+924
+00:40:47,800 --> 00:40:49,210
+Starting up here at (0, 0)
+
+925
+00:40:49,210 --> 00:40:51,130
+Y is getting bigger as we get down here.
+
+926
+00:40:51,130 --> 00:40:53,976
+It's not Cartesian coordinates
+that you're used to
+
+927
+00:40:53,976 --> 00:40:56,150
+from your trigonometry class.
+
+928
+00:40:56,150 --> 00:40:59,700
+This is not (0, 0),
+this is (0, 0) up here.
+
+929
+00:40:59,700 --> 00:41:01,584
+So since this whole thing is upside down,
+
+930
+00:41:01,584 --> 00:41:03,440
+clockwise and counterclockwise
+
+931
+00:41:03,440 --> 00:41:05,720
+are going the other way as well.
+
+932
+00:41:05,720 --> 00:41:09,190
+So we actually need this
+start angle, end angle,
+
+933
+00:41:09,190 --> 00:41:14,190
+and we also want clockwise true.
+
+934
+00:41:14,240 --> 00:41:17,173
+So even though we're really
+going the opposite direction,
+
+935
+00:41:17,173 --> 00:41:19,423
+we're having to say clockwise true.
+
+936
+00:41:20,600 --> 00:41:24,130
+And sure enough, that has
+given us exactly what we want.
+
+937
+00:41:26,320 --> 00:41:29,920
+Now in the next lecture, we
+will start animating this.
+
+938
+00:41:29,920 --> 00:41:32,350
+For example, we'll have
+it still start at zero,
+
+939
+00:41:32,350 --> 00:41:34,320
+but as the time ticks down,
+
+940
+00:41:34,320 --> 00:41:37,313
+it'll go from 110, 150,
+
+941
+00:41:38,280 --> 00:41:39,733
+200,
+
+942
+00:41:40,680 --> 00:41:41,890
+300,
+
+943
+00:41:41,890 --> 00:41:44,710
+it's ticking down 350,
+
+944
+00:41:44,710 --> 00:41:47,980
+times almost up 360 times up.
+
+945
+00:41:47,980 --> 00:41:50,990
+So we're going to just animate this Angle
+
+946
+00:41:50,990 --> 00:41:53,133
+going down to zero.
+
+947
+00:41:54,570 --> 00:41:55,800
+That's all gonna be in the next lecture
+
+948
+00:41:55,800 --> 00:41:57,420
+when we talk about animation.
+
+949
+00:41:57,420 --> 00:41:59,080
+The first thing we're gonna
+talk about in animation though
+
+950
+00:41:59,080 --> 00:42:00,680
+is animating Views.
+
+951
+00:42:00,680 --> 00:42:02,390
+Views are coming and going,
+
+952
+00:42:02,390 --> 00:42:04,090
+they're getting larger and smaller.
+
+953
+00:42:04,090 --> 00:42:05,330
+Sometimes they're doing special thing
+
+954
+00:42:05,330 --> 00:42:07,677
+like a CardView might flip over.
+
+955
+00:42:07,677 --> 00:42:11,966
+Okay, kind of do a 3D
+rotation to flip over.
+
+956
+00:42:11,966 --> 00:42:14,913
+Now View animation is
+not done in the same way.
+
+957
+00:42:14,913 --> 00:42:18,032
+Shapes are animated, they
+animate themselves directly.
+
+958
+00:42:18,032 --> 00:42:21,647
+Views are animated
+through their modifiers.
+
+959
+00:42:21,647 --> 00:42:24,654
+And so to understand how to animate Views,
+
+960
+00:42:24,654 --> 00:42:26,635
+we're gonna have to take
+a time out from animation
+
+961
+00:42:26,635 --> 00:42:30,498
+and talk about what is a ViewModifier.
+
+962
+00:42:30,498 --> 00:42:32,009
+Now you've been using ViewModifiers
+
+963
+00:42:32,009 --> 00:42:34,760
+all over the place so far in Memorize,
+
+964
+00:42:34,760 --> 00:42:38,167
+aspectRatio, padding,
+font, foregroundColor.
+
+965
+00:42:38,167 --> 00:42:41,310
+All of these things are ViewModifiers.
+
+966
+00:42:41,310 --> 00:42:44,490
+They modify a View and return a new View
+
+967
+00:42:44,490 --> 00:42:47,290
+that is a modified version
+of View you called them on.
+
+968
+00:42:47,290 --> 00:42:50,190
+That's what ViewModifiers do.
+
+969
+00:42:50,190 --> 00:42:53,340
+Now most of these modifiers,
+not all, but most of them,
+
+970
+00:42:53,340 --> 00:42:55,829
+are probably implemented by
+just turning right around
+
+971
+00:42:55,829 --> 00:43:00,103
+and calling a very important
+function in View protocol,
+
+972
+00:43:00,103 --> 00:43:03,830
+added to the View protocol via extension
+
+973
+00:43:03,830 --> 00:43:05,953
+called modifier.
+
+974
+00:43:05,953 --> 00:43:08,270
+This function modifier in View,
+
+975
+00:43:08,270 --> 00:43:10,200
+it takes one argument,
+
+976
+00:43:10,200 --> 00:43:12,514
+which is essentially
+something that implements
+
+977
+00:43:12,514 --> 00:43:15,090
+the ViewModifier protocol.
+
+978
+00:43:15,090 --> 00:43:16,240
+So here aspectRatio 2/3
+
+979
+00:43:17,719 --> 00:43:20,240
+and I've left off the fit
+and fill for space reasons,
+
+980
+00:43:20,240 --> 00:43:21,792
+but aspectRatio 2/3
+
+981
+00:43:21,792 --> 00:43:25,600
+is likely doing something
+like calling on the View,
+
+982
+00:43:25,600 --> 00:43:28,090
+on the same View that you're
+sending your aspectRatio to,
+
+983
+00:43:28,090 --> 00:43:29,224
+it's saying dot modifier,
+
+984
+00:43:29,224 --> 00:43:32,803
+AspectModifier, which
+is some struct, of 2/3.
+
+985
+00:43:33,800 --> 00:43:37,400
+So let's talk about what that
+ViewModifier protocol is.
+
+986
+00:43:37,400 --> 00:43:39,324
+By its name you can probably almost guess.
+
+987
+00:43:39,324 --> 00:43:41,720
+It only has one function in it
+
+988
+00:43:41,720 --> 00:43:43,979
+and that functions only
+job is to take something
+
+989
+00:43:43,979 --> 00:43:46,220
+and modify it to produce a View.
+
+990
+00:43:46,220 --> 00:43:49,730
+You could for example, adjust the space
+
+991
+00:43:49,730 --> 00:43:52,770
+to provide the aspectRatio 2/3,
+
+992
+00:43:52,770 --> 00:43:55,820
+or ViewModifier could add some
+padding around the outside.
+
+993
+00:43:55,820 --> 00:43:59,440
+That's what the padding
+ViewModifier I'm sure does.
+
+994
+00:43:59,440 --> 00:44:01,270
+So what does this code
+look like for protocol?
+
+995
+00:44:01,270 --> 00:44:03,811
+So here's the protocol ViewModifier.
+
+996
+00:44:03,811 --> 00:44:07,030
+That first line associatedtype Content.
+
+997
+00:44:07,030 --> 00:44:10,940
+Again, you guys read your
+reading assignment, I hope
+
+998
+00:44:10,940 --> 00:44:13,175
+and you understand that what
+associatedtype Content is
+
+999
+00:44:13,175 --> 00:44:16,740
+is a don't care for protocols.
+
+1000
+00:44:16,740 --> 00:44:19,610
+Protocols, just like functions and types
+
+1001
+00:44:19,610 --> 00:44:21,660
+they also have don't cares,
+
+1002
+00:44:21,660 --> 00:44:25,070
+but their syntax is
+associatedtype Content,
+
+1003
+00:44:25,070 --> 00:44:28,230
+not the angle brackets like
+you would see on struct.
+
+1004
+00:44:28,230 --> 00:44:30,450
+So the ViewModifier
+protocol has a don't care
+
+1005
+00:44:30,450 --> 00:44:31,700
+called Content.
+
+1006
+00:44:31,700 --> 00:44:34,957
+Doesn't really care what type Content is.
+
+1007
+00:44:34,957 --> 00:44:36,610
+All right, so now once
+you understand that,
+
+1008
+00:44:36,610 --> 00:44:38,950
+we can look at the only
+function in ViewModifier,
+
+1009
+00:44:38,950 --> 00:44:40,480
+which is body.
+
+1010
+00:44:40,480 --> 00:44:43,160
+Body takes a Content
+which is a don't care,
+
+1011
+00:44:43,160 --> 00:44:44,298
+we don't really care what that is,
+
+1012
+00:44:44,298 --> 00:44:47,843
+and it returns very importantly some View.
+
+1013
+00:44:48,810 --> 00:44:51,930
+And inside that body it
+just has to take the Content
+
+1014
+00:44:51,930 --> 00:44:52,763
+that was given to it
+
+1015
+00:44:52,763 --> 00:44:56,450
+and somehow make up a View and return it.
+
+1016
+00:44:56,450 --> 00:45:00,900
+Now when you call dot modifier on View,
+
+1017
+00:45:00,900 --> 00:45:02,395
+the Content that's passed
+
+1018
+00:45:02,395 --> 00:45:06,680
+is the View you sent
+dot modifier to, right?
+
+1019
+00:45:06,680 --> 00:45:08,830
+The View you called dot modifier on,
+
+1020
+00:45:08,830 --> 00:45:10,215
+that is the content.
+
+1021
+00:45:10,215 --> 00:45:12,605
+That makes it so any ViewModifier
+
+1022
+00:45:12,605 --> 00:45:16,290
+that is called with dot modifier
+
+1023
+00:45:16,290 --> 00:45:19,560
+is going to get the View it's
+called on as the Content.
+
+1024
+00:45:19,560 --> 00:45:22,790
+That's why we say it modifies that View.
+
+1025
+00:45:22,790 --> 00:45:23,972
+It's gonna create a new View
+
+1026
+00:45:23,972 --> 00:45:27,763
+using that View you sent
+it to as its Content.
+
+1027
+00:45:29,000 --> 00:45:32,350
+Right, so let's see, an example of this,
+
+1028
+00:45:32,350 --> 00:45:35,150
+to make this all more concrete.
+
+1029
+00:45:35,150 --> 00:45:38,130
+Let's say I wanted to have a ViewModifier
+
+1030
+00:45:38,130 --> 00:45:41,420
+that took any View like our Text ghost,
+
+1031
+00:45:41,420 --> 00:45:43,950
+or any View an Image, anything,
+
+1032
+00:45:43,950 --> 00:45:47,240
+and it modified it so that
+it looked like a card.
+
+1033
+00:45:47,240 --> 00:45:50,695
+Cardifies it, basically.
+
+1034
+00:45:50,695 --> 00:45:52,274
+That's what we wanna build.
+
+1035
+00:45:52,274 --> 00:45:55,800
+Now that sounds like that's a
+pretty complicated modifier.
+
+1036
+00:45:55,800 --> 00:45:58,450
+It's more complicated than
+just putting padding around it
+
+1037
+00:45:58,450 --> 00:46:00,300
+or something, perfectly fine though.
+
+1038
+00:46:00,300 --> 00:46:02,184
+It's actually gonna be
+quite simple modifier,
+
+1039
+00:46:02,184 --> 00:46:04,260
+but conceptually it makes sense.
+
+1040
+00:46:04,260 --> 00:46:07,160
+Now in our app we wouldn't
+necessarily even need a modifier
+
+1041
+00:46:07,160 --> 00:46:10,460
+like this because we only
+have one kind of View
+
+1042
+00:46:10,460 --> 00:46:12,134
+that ever gets cardified,
+
+1043
+00:46:12,134 --> 00:46:14,980
+but you could imagine an app
+where you have some cards
+
+1044
+00:46:14,980 --> 00:46:17,300
+that have images on them, some have emoji,
+
+1045
+00:46:17,300 --> 00:46:19,328
+some just have text or
+something, other flashcards,
+
+1046
+00:46:19,328 --> 00:46:21,610
+but they're all having the same card.
+
+1047
+00:46:21,610 --> 00:46:24,423
+That might make sense to be
+able to cardify any View.
+
+1048
+00:46:25,300 --> 00:46:26,491
+Here's what the code would look like.
+
+1049
+00:46:26,491 --> 00:46:28,360
+The first line there is actually
+
+1050
+00:46:28,360 --> 00:46:30,690
+how we would call the modifier.
+
+1051
+00:46:30,690 --> 00:46:32,202
+For example, if we wanted to cardify
+
+1052
+00:46:32,202 --> 00:46:36,750
+our ghost text right there,
+we would say dot modifier,
+
+1053
+00:46:36,750 --> 00:46:38,470
+that very important View function
+
+1054
+00:46:38,470 --> 00:46:40,810
+and the argument is a ViewModifier.
+
+1055
+00:46:40,810 --> 00:46:42,660
+Now I'm gonna call my ViewModifier,
+
+1056
+00:46:42,660 --> 00:46:45,920
+you can see struct Cardify
+there in the next line.
+
+1057
+00:46:45,920 --> 00:46:48,500
+I'm gonna call it Cardify and
+it actually takes an argument.
+
+1058
+00:46:48,500 --> 00:46:49,800
+We'll talk about that.
+
+1059
+00:46:49,800 --> 00:46:52,706
+But eventually though, I
+actually want this to say
+
+1060
+00:46:52,706 --> 00:46:55,860
+Text goes dot Cardify,
+
+1061
+00:46:55,860 --> 00:46:58,890
+just like I say dot
+foregroundColor, dot padding,
+
+1062
+00:46:58,890 --> 00:47:00,330
+I wanna say dot Cardify.
+
+1063
+00:47:00,330 --> 00:47:02,470
+I don't wanna have to
+say dot modifier Cardify.
+
+1064
+00:47:02,470 --> 00:47:03,303
+So on the next slide
+
+1065
+00:47:03,303 --> 00:47:06,320
+we're gonna show how we get
+from dot modifier Cardify
+
+1066
+00:47:06,320 --> 00:47:08,360
+to dot Cardify.
+
+1067
+00:47:08,360 --> 00:47:09,408
+But for now, let's focus on
+
+1068
+00:47:09,408 --> 00:47:12,770
+how we would implement
+this Cardify ViewModifier
+
+1069
+00:47:12,770 --> 00:47:16,840
+'cause this has to be something
+that takes the Text ghost
+
+1070
+00:47:16,840 --> 00:47:19,470
+and modifies it, turns it into a new View
+
+1071
+00:47:19,470 --> 00:47:20,490
+that looks like a card.
+
+1072
+00:47:20,490 --> 00:47:22,190
+That's what this thing's gonna do.
+
+1073
+00:47:23,040 --> 00:47:26,220
+First thing I wanna look at
+here is the Content argument
+
+1074
+00:47:26,220 --> 00:47:28,753
+to that body function in ViewModifier.
+
+1075
+00:47:28,753 --> 00:47:32,503
+I made it yellow here all
+the places it appears,
+
+1076
+00:47:32,503 --> 00:47:34,216
+it's the argument to body.
+
+1077
+00:47:34,216 --> 00:47:38,950
+You can see up top the Text
+ghost is what that Content is
+
+1078
+00:47:38,950 --> 00:47:41,650
+and then also look down inside the ZStack
+
+1079
+00:47:41,650 --> 00:47:45,010
+I'm embedding that Content, it's a View
+
+1080
+00:47:45,010 --> 00:47:47,520
+and I'm embedding it inside my ZStack
+
+1081
+00:47:47,520 --> 00:47:51,070
+in the same place I would've
+put that back in my old code.
+
+1082
+00:47:51,070 --> 00:47:54,320
+So now it's gonna take any
+View and embed it right there
+
+1083
+00:47:54,320 --> 00:47:58,330
+in my ZStack on the face of the card.
+
+1084
+00:47:58,330 --> 00:48:02,010
+So do you see how this is
+going to modify the View
+
+1085
+00:48:02,010 --> 00:48:04,653
+that you send it to to look like a card.
+
+1086
+00:48:05,780 --> 00:48:07,392
+Now, one thing to note
+here that's interesting is
+
+1087
+00:48:07,392 --> 00:48:10,350
+this ViewModifier needs some information,
+
+1088
+00:48:10,350 --> 00:48:12,677
+needs to know whether the
+card is face up or face down.
+
+1089
+00:48:12,677 --> 00:48:17,040
+It's a struct so I just
+add a var isFaceUp to it
+
+1090
+00:48:17,040 --> 00:48:20,210
+and we know that if you have a
+var and it's not initialized,
+
+1091
+00:48:20,210 --> 00:48:21,899
+then whoever creates this struct,
+
+1092
+00:48:21,899 --> 00:48:24,390
+which is up there in the top line,
+
+1093
+00:48:24,390 --> 00:48:27,060
+it needs to specify the value of it.
+
+1094
+00:48:27,060 --> 00:48:29,720
+So hopefully this is looking
+from kind of familiar to you
+
+1095
+00:48:29,720 --> 00:48:30,553
+when you do these modifiers,
+
+1096
+00:48:30,553 --> 00:48:33,160
+obviously a lot of them take arguments
+
+1097
+00:48:33,160 --> 00:48:34,990
+foregroundColor takes a Color
+
+1098
+00:48:34,990 --> 00:48:38,411
+and padding can take things
+like the top or bottom
+
+1099
+00:48:38,411 --> 00:48:42,000
+and how many points to pad
+and all these other arguments.
+
+1100
+00:48:42,000 --> 00:48:45,230
+Those are just gonna be inside
+the ViewModifier for padding,
+
+1101
+00:48:45,230 --> 00:48:46,123
+for example.
+
+1102
+00:48:47,850 --> 00:48:51,413
+So dot modifier, that
+function, it returns a View,
+
+1103
+00:48:51,413 --> 00:48:53,663
+returns something that conforms to View
+
+1104
+00:48:53,663 --> 00:48:58,663
+that is going use this purple
+contents of body right here
+
+1105
+00:48:59,035 --> 00:49:01,283
+to draw the View.
+
+1106
+00:49:02,280 --> 00:49:06,240
+Now modifier doesn't directly
+return this purple code
+
+1107
+00:49:06,240 --> 00:49:08,437
+returns something else that's also a View,
+
+1108
+00:49:08,437 --> 00:49:09,270
+but that's something else
+
+1109
+00:49:09,270 --> 00:49:12,193
+is going to use this purple
+code to draw what it draws.
+
+1110
+00:49:13,310 --> 00:49:14,274
+And simple as that.
+
+1111
+00:49:14,274 --> 00:49:18,070
+Dot modifier is just going to
+use this ViewModifier thing,
+
+1112
+00:49:18,070 --> 00:49:21,753
+pass the View that it
+is sent to to the body,
+
+1113
+00:49:21,753 --> 00:49:25,371
+it's gonna get whatever built
+into whatever's necessary
+
+1114
+00:49:25,371 --> 00:49:27,690
+and returned as the new View to use.
+
+1115
+00:49:27,690 --> 00:49:29,730
+And then of course since
+that thing is a View,
+
+1116
+00:49:29,730 --> 00:49:31,470
+we can send another modifier to it
+
+1117
+00:49:31,470 --> 00:49:34,190
+and another modifier to that, et cetera
+
+1118
+00:49:34,190 --> 00:49:36,540
+and Swift is very smart
+about keeping track
+
+1119
+00:49:36,540 --> 00:49:38,766
+when it's modifications,
+modifications, modifications
+
+1120
+00:49:38,766 --> 00:49:41,583
+so that it can do things like animation.
+
+1121
+00:49:43,420 --> 00:49:47,120
+So how do we get from this
+text dot modifier syntax
+
+1122
+00:49:47,120 --> 00:49:48,564
+to dot Cardify,
+
+1123
+00:49:48,564 --> 00:49:51,050
+'cause really that's
+why we want dot Cardify.
+
+1124
+00:49:51,050 --> 00:49:52,760
+Really easy, you actually
+know how to do this.
+
+1125
+00:49:52,760 --> 00:49:55,408
+I'm gonna create an extension
+to the View protocol,
+
+1126
+00:49:55,408 --> 00:49:57,529
+add the function cardify
+
+1127
+00:49:57,529 --> 00:50:00,400
+that cardify obviously returns some View
+
+1128
+00:50:00,400 --> 00:50:03,190
+and it's just gonna
+return self dot modifier
+
+1129
+00:50:03,190 --> 00:50:04,023
+of the Cardify.
+
+1130
+00:50:04,023 --> 00:50:05,170
+Remember this is an extension to View,
+
+1131
+00:50:05,170 --> 00:50:06,535
+so self is the View.
+
+1132
+00:50:06,535 --> 00:50:09,349
+So of course I can call
+dot modifier on self
+
+1133
+00:50:09,349 --> 00:50:11,930
+and pass it the right ViewModifier,
+
+1134
+00:50:11,930 --> 00:50:13,230
+in this case, our Cardify.
+
+1135
+00:50:15,980 --> 00:50:18,149
+All right, so let's go implement this
+
+1136
+00:50:18,149 --> 00:50:21,043
+in our Memorize application.
+
+1137
+00:50:22,300 --> 00:50:26,560
+Our goal in this demo is to
+make it so that any View,
+
+1138
+00:50:26,560 --> 00:50:31,260
+including our ghost and
+Pac-Man here can be cardified.
+
+1139
+00:50:31,260 --> 00:50:35,020
+That means putting this border
+around it when it's face up
+
+1140
+00:50:35,020 --> 00:50:38,183
+or just drawing this
+back when it's face down.
+
+1141
+00:50:39,190 --> 00:50:41,490
+Let's start this demo by just imagining
+
+1142
+00:50:41,490 --> 00:50:45,360
+what our code would look like
+if we had this cardifier.
+
+1143
+00:50:45,360 --> 00:50:48,710
+Let's make some space here so
+we can see what's going on.
+
+1144
+00:50:48,710 --> 00:50:53,460
+I'm gonna take the part
+of our card right now
+
+1145
+00:50:53,460 --> 00:50:54,730
+that's gonna get cardified,
+
+1146
+00:50:54,730 --> 00:50:56,759
+which is just the Pie and the Text.
+
+1147
+00:50:56,759 --> 00:50:59,300
+We're gonna separate
+them out from the code
+
+1148
+00:50:59,300 --> 00:51:01,870
+that actually is doing the cardification.
+
+1149
+00:51:01,870 --> 00:51:04,760
+Then we're gonna take this ZStack
+
+1150
+00:51:04,760 --> 00:51:07,230
+that has the stuff we want in it,
+
+1151
+00:51:07,230 --> 00:51:09,520
+and I'm gonna cardify it
+by saying dot cardify.
+
+1152
+00:51:09,520 --> 00:51:12,131
+Of course the cardifier needs to know
+
+1153
+00:51:12,131 --> 00:51:14,292
+whether this thing is face up or not.
+
+1154
+00:51:14,292 --> 00:51:17,980
+So I'm gonna pass that is face up in there
+
+1155
+00:51:17,980 --> 00:51:21,180
+and we're gonna see how this
+is going to be specified
+
+1156
+00:51:21,180 --> 00:51:22,301
+in a bit.
+
+1157
+00:51:22,301 --> 00:51:24,490
+Now this code, that's the thing
+
+1158
+00:51:24,490 --> 00:51:26,354
+that actually does the
+cardification, right?
+
+1159
+00:51:26,354 --> 00:51:28,903
+Puts the RoundedRectangles
+in the back or in the front.
+
+1160
+00:51:28,903 --> 00:51:30,297
+Just gonna cut that out of here
+
+1161
+00:51:30,297 --> 00:51:34,990
+and I'm gonna go put that
+in my Cardify ViewModifier.
+
+1162
+00:51:34,990 --> 00:51:35,823
+Before I go over there,
+
+1163
+00:51:35,823 --> 00:51:38,570
+I eventually do want this to say this,
+
+1164
+00:51:38,570 --> 00:51:40,718
+but we know that really the ViewModifiers
+
+1165
+00:51:40,718 --> 00:51:44,680
+are calling this View
+function called modifier
+
+1166
+00:51:44,680 --> 00:51:48,240
+then you just specify the
+ViewModifier you want.
+
+1167
+00:51:48,240 --> 00:51:50,360
+So the ViewModifier we're
+gonna create to do this,
+
+1168
+00:51:50,360 --> 00:51:51,530
+I'm gonna call it Cardify
+
+1169
+00:51:51,530 --> 00:51:55,770
+and it's of course going to
+have to take that face up
+
+1170
+00:51:55,770 --> 00:51:57,813
+as an argument.
+
+1171
+00:51:57,813 --> 00:52:01,733
+So this is what this cardifier
+right here is really gonna do
+
+1172
+00:52:01,733 --> 00:52:04,800
+and this is gonna end up being
+a function we're gonna create
+
+1173
+00:52:04,800 --> 00:52:07,610
+that it's just one line that calls this.
+
+1174
+00:52:07,610 --> 00:52:10,640
+So we'll comment this
+out and we'll put it back
+
+1175
+00:52:10,640 --> 00:52:13,470
+once we add this one
+liner that calls this.
+
+1176
+00:52:13,470 --> 00:52:15,181
+But this is what this is going to do
+
+1177
+00:52:15,181 --> 00:52:18,698
+and of course it says
+unresolved identifier Cardify,
+
+1178
+00:52:18,698 --> 00:52:23,579
+we have to go write the code
+that does this ViewModifier.
+
+1179
+00:52:23,579 --> 00:52:24,990
+So let's hop over and do that.
+
+1180
+00:52:24,990 --> 00:52:26,393
+File, New File.
+
+1181
+00:52:27,690 --> 00:52:32,380
+This is not a SwiftUI
+View, it's a ViewModifier.
+
+1182
+00:52:32,380 --> 00:52:34,725
+So we'll click this, we'll go here,
+
+1183
+00:52:34,725 --> 00:52:37,140
+I'm gonna call this Cardify,
+
+1184
+00:52:37,140 --> 00:52:39,190
+that's the name of my new modifier.
+
+1185
+00:52:39,190 --> 00:52:41,500
+Notice it's not putting
+it in the right place.
+
+1186
+00:52:41,500 --> 00:52:43,160
+It's a good example of seeing that.
+
+1187
+00:52:43,160 --> 00:52:45,480
+I don't want it in this
+blue thing at the top.
+
+1188
+00:52:45,480 --> 00:52:48,240
+I want this down here,
+and this yellow folder
+
+1189
+00:52:48,240 --> 00:52:49,734
+and I want this to be the same place
+
+1190
+00:52:49,734 --> 00:52:53,310
+that this yellow folder is up here.
+
+1191
+00:52:53,310 --> 00:52:55,050
+So hopefully you all are
+remembering to do that
+
+1192
+00:52:55,050 --> 00:52:57,610
+so you're not ending up with
+files all over the place
+
+1193
+00:52:57,610 --> 00:52:58,443
+they shouldn't be.
+
+1194
+00:52:58,443 --> 00:53:00,030
+So create Cardify.
+
+1195
+00:53:00,030 --> 00:53:01,088
+Here is Cardify.
+
+1196
+00:53:01,088 --> 00:53:05,960
+Now of course ViewModifiers
+are very much a UI thing,
+
+1197
+00:53:05,960 --> 00:53:08,470
+so we don't say import
+Foundation right there,
+
+1198
+00:53:08,470 --> 00:53:11,011
+and creating a ViewModifier, very simple.
+
+1199
+00:53:11,011 --> 00:53:15,333
+Struct Cardify, it's a ViewModifier
+
+1200
+00:53:16,320 --> 00:53:18,920
+and when we do this we're
+immediately gonna get an error
+
+1201
+00:53:18,920 --> 00:53:22,974
+that says Cardify does not
+conform to protocol ViewModifier.
+
+1202
+00:53:22,974 --> 00:53:26,350
+This protocol only has one function in it,
+
+1203
+00:53:26,350 --> 00:53:30,275
+it's called body and it takes
+content as the argument.
+
+1204
+00:53:30,275 --> 00:53:34,430
+This Content right here is
+a don't care that we get
+
+1205
+00:53:34,430 --> 00:53:37,110
+from this protocol.
+
+1206
+00:53:37,110 --> 00:53:39,230
+So protocols can have don't cares too.
+
+1207
+00:53:39,230 --> 00:53:43,010
+They specify them with
+that associatedtype syntax
+
+1208
+00:53:43,010 --> 00:53:45,810
+that you read about in
+your reading homework
+
+1209
+00:53:45,810 --> 00:53:47,370
+and so this can be anything.
+
+1210
+00:53:47,370 --> 00:53:49,080
+This is a don't care.
+
+1211
+00:53:49,080 --> 00:53:51,280
+We'll talk about what it's
+gonna be in just a second.
+
+1212
+00:53:51,280 --> 00:53:52,491
+Then of course this is a ViewModifier,
+
+1213
+00:53:52,491 --> 00:53:56,870
+it's modifying a View and
+then returning some new View
+
+1214
+00:53:56,870 --> 00:54:00,070
+that is the modified version of this.
+
+1215
+00:54:00,070 --> 00:54:01,117
+So this argument right here,
+
+1216
+00:54:01,117 --> 00:54:03,324
+just to remind you from the slides
+
+1217
+00:54:03,324 --> 00:54:07,420
+when we call back here, modifier Cardify,
+
+1218
+00:54:07,420 --> 00:54:10,880
+the content that we're
+being asked to modify
+
+1219
+00:54:10,880 --> 00:54:15,610
+is going to be whatever
+View we call modifier on.
+
+1220
+00:54:15,610 --> 00:54:18,120
+So we're gonna be calling
+modifier on the ZStack.
+
+1221
+00:54:18,120 --> 00:54:20,290
+So inside our cardifier in this case
+
+1222
+00:54:20,290 --> 00:54:22,580
+the content will be that ZStack.
+
+1223
+00:54:22,580 --> 00:54:27,027
+This is always the View that
+you're calling dot modifier on.
+
+1224
+00:54:27,027 --> 00:54:28,790
+So what goes in here?
+
+1225
+00:54:28,790 --> 00:54:31,890
+Well in here we just have
+to create the modified View,
+
+1226
+00:54:31,890 --> 00:54:33,440
+in other words, a cardified View.
+
+1227
+00:54:33,440 --> 00:54:37,710
+So I'm just gonna paste
+that thing we had before
+
+1228
+00:54:37,710 --> 00:54:40,850
+and of course this still
+has to be in a ZStack
+
+1229
+00:54:40,850 --> 00:54:44,290
+because we still have
+these RoundedRectangles
+
+1230
+00:54:44,290 --> 00:54:45,670
+stacked on top of each other.
+
+1231
+00:54:45,670 --> 00:54:47,960
+So let's go ahead and do that.
+
+1232
+00:54:47,960 --> 00:54:51,370
+And we have some things undefined in here,
+
+1233
+00:54:51,370 --> 00:54:53,800
+like cornerRadius and edgeLineWidth.
+
+1234
+00:54:53,800 --> 00:54:55,970
+Those are over here,
+that's drawing constants.
+
+1235
+00:54:55,970 --> 00:54:57,680
+We don't need them over here anymore
+
+1236
+00:54:57,680 --> 00:55:00,630
+since we're using
+cardification to do our card.
+
+1237
+00:55:00,630 --> 00:55:03,379
+So we'll just pop those over here.
+
+1238
+00:55:03,379 --> 00:55:05,840
+That fixes most of our problem.
+
+1239
+00:55:05,840 --> 00:55:09,324
+We do know that we have
+to pass this is space up
+
+1240
+00:55:09,324 --> 00:55:11,450
+as an argument here
+
+1241
+00:55:11,450 --> 00:55:14,013
+and Cardify needs to
+know whether it's face up
+
+1242
+00:55:14,013 --> 00:55:17,822
+so it's gonna have a var
+isFaceUp which is a bool
+
+1243
+00:55:17,822 --> 00:55:20,169
+and I'm not gonna set
+it equal to something
+
+1244
+00:55:20,169 --> 00:55:23,260
+so anytime someone creates
+a Cardify like here,
+
+1245
+00:55:23,260 --> 00:55:27,090
+they have to tell me what
+the value of this isFaceUp is
+
+1246
+00:55:27,090 --> 00:55:29,833
+And then I'm gonna use
+this isFaceUp inside
+
+1247
+00:55:29,833 --> 00:55:33,380
+anytime I wanna check
+and see if I'm face up.
+
+1248
+00:55:33,380 --> 00:55:35,123
+Now what about this isMatched thing.
+
+1249
+00:55:35,123 --> 00:55:39,810
+Well isMatched really does
+not belong in Cardify.
+
+1250
+00:55:39,810 --> 00:55:42,300
+Matching has to do with our card game.
+
+1251
+00:55:42,300 --> 00:55:45,070
+This Cardify can Cardify any View,
+
+1252
+00:55:45,070 --> 00:55:47,450
+not just Views in our card game.
+
+1253
+00:55:47,450 --> 00:55:51,250
+This could put a card face
+up, face down on any View.
+
+1254
+00:55:51,250 --> 00:55:53,290
+so we wanna keep this generic.
+
+1255
+00:55:53,290 --> 00:55:56,840
+We don't want it to be tied
+to the rest of our app.
+
+1256
+00:55:56,840 --> 00:55:58,460
+This is a nice reusable thing
+
+1257
+00:55:58,460 --> 00:55:59,910
+we could actually use another game--
+
+1258
+00:55:59,910 --> 00:56:02,030
+Let's say we wrote some other game
+
+1259
+00:56:02,030 --> 00:56:05,298
+that had some Texts on
+cards and Images on cards
+
+1260
+00:56:05,298 --> 00:56:08,430
+and emoji on cards all
+mixed in the same app.
+
+1261
+00:56:08,430 --> 00:56:11,570
+Well, we can use Cardify to
+Cardify any of those things.
+
+1262
+00:56:11,570 --> 00:56:13,230
+But we couldn't really
+have the matching in there
+
+1263
+00:56:13,230 --> 00:56:17,183
+because matching is specific
+to this app, Memorize.
+
+1264
+00:56:18,409 --> 00:56:19,860
+And then the last thing we wanna do here
+
+1265
+00:56:19,860 --> 00:56:23,023
+is obviously this Content
+needs to be somewhere in here.
+
+1266
+00:56:23,023 --> 00:56:25,930
+Well I'm gonna put it
+exactly where it was before.
+
+1267
+00:56:25,930 --> 00:56:26,819
+Just to put content.
+
+1268
+00:56:26,819 --> 00:56:30,710
+Content is the View, the ZStack
+
+1269
+00:56:30,710 --> 00:56:33,318
+that modifier is being sent to here.
+
+1270
+00:56:33,318 --> 00:56:34,410
+So I'm just gonna take this,
+
+1271
+00:56:34,410 --> 00:56:37,350
+it's going to pop right in here.
+
+1272
+00:56:37,350 --> 00:56:38,344
+Now I've done it.
+
+1273
+00:56:38,344 --> 00:56:41,520
+This is a ViewModifier
+that takes this Content,
+
+1274
+00:56:41,520 --> 00:56:43,979
+any View that dot modifier sent here
+
+1275
+00:56:43,979 --> 00:56:47,461
+and it puts it in a ZStack
+with the RoundedRectangles
+
+1276
+00:56:47,461 --> 00:56:50,260
+or if it's faced up, it
+does this, et cetera.
+
+1277
+00:56:50,260 --> 00:56:55,013
+This is something that
+cardifies this content.
+
+1278
+00:56:56,700 --> 00:56:58,380
+What did, let's go back here.
+
+1279
+00:56:58,380 --> 00:57:01,963
+Let's go ahead and run, see if this works.
+
+1280
+00:57:05,018 --> 00:57:07,130
+It looks like the backs
+of cards are working.
+
+1281
+00:57:07,130 --> 00:57:09,370
+Let's try the front.
+
+1282
+00:57:09,370 --> 00:57:12,157
+Ooh, this is working nicely.
+
+1283
+00:57:12,157 --> 00:57:14,975
+Now there is one problem here
+
+1284
+00:57:14,975 --> 00:57:16,902
+which is that if I get a match
+
+1285
+00:57:16,902 --> 00:57:20,476
+and then I click on another
+card, oh these don't go away.
+
+1286
+00:57:20,476 --> 00:57:24,033
+That's 'cause I took that
+matching stuff out of there.
+
+1287
+00:57:25,080 --> 00:57:26,880
+So we've gotta fix that.
+
+1288
+00:57:26,880 --> 00:57:28,300
+And the other thing we gotta fix is
+
+1289
+00:57:28,300 --> 00:57:31,270
+we want this nicer syntax dot cardify.
+
+1290
+00:57:31,270 --> 00:57:33,160
+So let's fix this nicer syntax first
+
+1291
+00:57:33,160 --> 00:57:35,750
+and then we'll fix the
+problem where matched cards
+
+1292
+00:57:35,750 --> 00:57:37,610
+are are still being included here
+
+1293
+00:57:37,610 --> 00:57:39,450
+when they should be taken away.
+
+1294
+00:57:39,450 --> 00:57:41,610
+This function that does cardify
+
+1295
+00:57:41,610 --> 00:57:45,010
+is just something we're gonna
+add to View with an extension.
+
+1296
+00:57:45,010 --> 00:57:46,690
+And it really makes the
+most sense obviously
+
+1297
+00:57:46,690 --> 00:57:48,400
+to put it in this file
+
+1298
+00:57:48,400 --> 00:57:51,198
+'cause this is where the
+Cardify ViewModifier is.
+
+1299
+00:57:51,198 --> 00:57:54,800
+So this is the place we would
+wanna put an extension to View
+
+1300
+00:57:54,800 --> 00:57:57,210
+that has the func cardify.
+
+1301
+00:57:57,210 --> 00:57:59,388
+Now cardify is also going to have to take
+
+1302
+00:57:59,388 --> 00:58:01,350
+whether it's face up as an argument
+
+1303
+00:58:01,350 --> 00:58:04,990
+and it's just gonna return
+that cardified View,
+
+1304
+00:58:04,990 --> 00:58:06,413
+really easy to implement.
+
+1305
+00:58:06,413 --> 00:58:07,810
+Just gonna call self,
+
+1306
+00:58:07,810 --> 00:58:10,061
+self is a View, we're an
+extension to View here,
+
+1307
+00:58:10,061 --> 00:58:13,528
+modifier, we're gonna give it a Cardify
+
+1308
+00:58:13,528 --> 00:58:18,528
+with isFaceUp being this
+isFaceUp that's passed to us.
+
+1309
+00:58:18,817 --> 00:58:20,200
+And that's it.
+
+1310
+00:58:20,200 --> 00:58:21,463
+Simple as pie.
+
+1311
+00:58:22,320 --> 00:58:23,650
+No pun intended.
+
+1312
+00:58:23,650 --> 00:58:27,420
+We have made cardify here
+into a nice little function
+
+1313
+00:58:27,420 --> 00:58:30,807
+that we can call on any
+View just like this.
+
+1314
+00:58:30,807 --> 00:58:35,200
+You don't need this slightly
+more bulky way of doing it
+
+1315
+00:58:35,200 --> 00:58:37,947
+and this should feel to you just like font
+
+1316
+00:58:37,947 --> 00:58:42,543
+of some dot largeTitle,
+foregroundColor Color.
+
+1317
+00:58:43,430 --> 00:58:47,260
+What about the fact that matched
+cards are not disappearing?
+
+1318
+00:58:47,260 --> 00:58:51,350
+I'm just gonna do that by
+only doing this whole card
+
+1319
+00:58:51,350 --> 00:58:56,350
+if the card is face up or
+the card is not yet matched.
+
+1320
+00:58:58,120 --> 00:59:00,460
+The card is faced up or
+I haven't matched it yet,
+
+1321
+00:59:00,460 --> 00:59:02,920
+then boom, I'm going to
+put that card up there.
+
+1322
+00:59:02,920 --> 00:59:05,970
+Otherwise I just want blank space,
+
+1323
+00:59:05,970 --> 00:59:08,120
+which is exactly what we had before.
+
+1324
+00:59:08,120 --> 00:59:09,773
+Now this is giving an error here that says
+
+1325
+00:59:09,773 --> 00:59:13,910
+function declares an opaque
+return type, yep, some View,
+
+1326
+00:59:13,910 --> 00:59:15,990
+but has no return return statements.
+
+1327
+00:59:15,990 --> 00:59:16,850
+Oh, that's right.
+
+1328
+00:59:16,850 --> 00:59:19,060
+There's no return statement in here.
+
+1329
+00:59:19,060 --> 00:59:22,830
+I guess I could say
+return that fixes that,
+
+1330
+00:59:22,830 --> 00:59:25,220
+but what about in the
+else case of this if.
+
+1331
+00:59:25,220 --> 00:59:27,170
+We have this if no else,
+
+1332
+00:59:27,170 --> 00:59:29,210
+we're not returning anything in that case.
+
+1333
+00:59:29,210 --> 00:59:32,810
+So that's no good and I'm gonna fix this
+
+1334
+00:59:32,810 --> 00:59:35,640
+in a kind of novel interesting way,
+
+1335
+00:59:35,640 --> 00:59:38,863
+which is I'm just gonna make
+this into a ViewBuilder.
+
+1336
+00:59:39,860 --> 00:59:41,900
+If I turn this function
+into a ViewBuilder,
+
+1337
+00:59:41,900 --> 00:59:46,640
+then this gets now interpreted
+as a list of Views.
+
+1338
+00:59:46,640 --> 00:59:49,807
+Yes with ifs to decide whether
+certain Views are in or out,
+
+1339
+00:59:49,807 --> 00:59:52,630
+but this is a list of Views.
+
+1340
+00:59:52,630 --> 00:59:55,290
+It's either gonna end up
+being the ZStack, the View,
+
+1341
+00:59:55,290 --> 00:59:58,750
+or it's gonna be EmptyView
+if this is not true.
+
+1342
+00:59:58,750 --> 01:00:00,910
+Look no errors, simple as that.
+
+1343
+01:00:00,910 --> 01:00:03,525
+We've got our ViewBuilder.
+
+1344
+01:00:03,525 --> 01:00:04,821
+Run it over here, let's try and see.
+
+1345
+01:00:04,821 --> 01:00:06,380
+This is working.
+
+1346
+01:00:06,380 --> 01:00:09,870
+Let's make a match and
+oh, it took 'em away
+
+1347
+01:00:09,870 --> 01:00:12,303
+'cause this if was not
+true and they're gone.
+
+1348
+01:00:13,760 --> 01:00:15,027
+Now one other thing we can do
+
+1349
+01:00:15,027 --> 01:00:18,052
+and just make sure that our
+cardify is really working,
+
+1350
+01:00:18,052 --> 01:00:21,810
+instead of doing this ZStack,
+let's try some other Views.
+
+1351
+01:00:21,810 --> 01:00:23,450
+How about like a Circle
+
+1352
+01:00:24,380 --> 01:00:27,490
+and let's go ahead and bring
+back our canvas over here.
+
+1353
+01:00:27,490 --> 01:00:29,253
+We can see this in action.
+
+1354
+01:00:33,330 --> 01:00:34,163
+Yep, look at that.
+
+1355
+01:00:34,163 --> 01:00:35,690
+It's a Circle put on a card.
+
+1356
+01:00:35,690 --> 01:00:36,820
+We can even do Circle
+
+1357
+01:00:36,820 --> 01:00:39,930
+with a little bit of padding on it, right?
+
+1358
+01:00:39,930 --> 01:00:42,640
+Or maybe we'll put a Capsule in here.
+
+1359
+01:00:42,640 --> 01:00:44,550
+That's another built in Shape Capsule.
+
+1360
+01:00:44,550 --> 01:00:47,580
+That's what Capsule Shapes
+look like if you're wondering.
+
+1361
+01:00:47,580 --> 01:00:51,643
+We could put maybe something like Text.
+
+1362
+01:00:52,500 --> 01:00:57,500
+Hello world, look at that, cardified that.
+
+1363
+01:00:57,750 --> 01:01:01,570
+So cardify is a general
+cardifier, ViewModifier
+
+1364
+01:01:01,570 --> 01:01:04,093
+that we built that can modify any View.
+
+1365
+01:01:05,620 --> 01:01:07,480
+All right, this is good
+
+1366
+01:01:07,480 --> 01:01:10,630
+that we have done all
+this ViewModifier stuff
+
+1367
+01:01:10,630 --> 01:01:13,993
+because the next lecture we're
+gonna talk about animation,
+
+1368
+01:01:13,993 --> 01:01:16,660
+and when it comes to animating Views,
+
+1369
+01:01:16,660 --> 01:01:20,520
+not shapes like this Pie, but
+animating Views themselves,
+
+1370
+01:01:20,520 --> 01:01:22,443
+it's all about ViewModifiers.
+
+1371
+01:01:22,443 --> 01:01:25,490
+They were really only
+animating ViewModifiers,
+
+1372
+01:01:25,490 --> 01:01:28,460
+we don't actually
+animate Views themselves.
+
+1373
+01:01:28,460 --> 01:01:30,690
+We'll be looking into that next lecture
+
+1374
+01:01:30,690 --> 01:01:32,980
+and seeing how we can animate this card.
+
+1375
+01:01:32,980 --> 01:01:35,440
+Cards have a lot of
+animation that they want.
+
+1376
+01:01:35,440 --> 01:01:37,560
+They want to flip over, for example.
+
+1377
+01:01:37,560 --> 01:01:39,890
+That's a nice animation that a card wants,
+
+1378
+01:01:39,890 --> 01:01:42,297
+so it's really good that
+we've put this cardification
+
+1379
+01:01:42,297 --> 01:01:46,130
+to a ViewModifier so that
+we can animate it next time.
+
+1380
+01:01:46,130 --> 01:01:48,450
+That is it for today.
+
+1381
+01:01:48,450 --> 01:01:49,650
+I will talk to you then.
+
+1382
+01:01:50,530 --> 01:01:53,763
+>> [旁白] 请访问 stanford.edu
+获取更多内容
