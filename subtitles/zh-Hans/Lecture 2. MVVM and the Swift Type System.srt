@@ -621,224 +621,207 @@ Text 和 HStack
 
 151
 00:07:05,290 --> 00:07:07,420
-At any time you should be able to say
+任何时刻你都可以让视图
 
 152
 00:07:07,420 --> 00:07:09,030
-make it look like the Model
+按照模型中的数据来显示
 
 153
 00:07:09,030 --> 00:07:11,900
-and so, we are gonna have a system
+在 Swift 中有一种机制
 
 154
 00:07:11,900 --> 00:07:13,530
-where whenever the Model changes,
+可以在模型发生变化时
 
 155
 00:07:13,530 --> 00:07:16,700
-it asks the View to look
-like it automatically.
+自动更新视图
 
 156
 00:07:16,700 --> 00:07:18,690
-Call that reactive programming,
+叫做响应式编程
 
 157
 00:07:18,690 --> 00:07:22,410
-it's reacting to changes in the Model.
+它会对模型中的变化作出响应
 
 158
 00:07:22,410 --> 00:07:23,470
-So that's it.
+就是这样一种机制
 
 159
 00:07:23,470 --> 00:07:26,303
-This is what we got to make happen
+我们引入视图模型（ViewModel）
 
 160
 00:07:27,980 --> 00:07:32,980
-is it introduces another
-thing called the ViewModel.
+来实现这种机制
 
 161
 00:07:33,044 --> 00:07:36,870
-The ViewModel's job is to
-bind the View to the Model.
+视图模型的工作就是将视图
+绑定到对应的模型上
 
 162
 00:07:36,870 --> 00:07:38,940
-So the one change has
-happened in the Model,
+模型中的数据一旦发生变化
 
 163
 00:07:38,940 --> 00:07:41,530
-the View get reflected.
+视图就会对其作出响应
 
 164
 00:07:41,530 --> 00:07:43,130
-And along the way,
+在视图模型
 
 165
 00:07:43,130 --> 00:07:45,920
-as it does that binding
-between the Model and the View,
+对模型和视图进行绑定的过程中
 
 166
 00:07:45,920 --> 00:07:49,150
-it might be interpreting
-the Model for the View
+会将模型中的数据转换为
+视图可以理解的形式
 
 167
 00:07:49,150 --> 00:07:50,980
-because we want the View to be very simple
+因为我们希望在声明式编程中
 
 168
 00:07:50,980 --> 00:07:53,870
-since we're writing it
-in a declarative way,
+视图能够尽量简洁
 
 169
 00:07:53,870 --> 00:07:55,790
-we don't want it to have
-a lot of code in there
+我们不希望视图中的代码过多
 
 170
 00:07:55,790 --> 00:07:58,750
-that's like converting from
-one data type to another
+例如数据类型转换之类的工作
 
 171
 00:07:58,750 --> 00:07:59,770
-and things like that.
+都不要交给视图
 
 172
 00:07:59,770 --> 00:08:02,320
-So we're gonna ask the
-ViewModel to do that.
+而是交给视图模型去做
 
 173
 00:08:02,320 --> 00:08:05,480
-Our Model in our game
-that we're writing here,
+我们这里构建的记忆游戏中的模型
 
 174
 00:08:05,480 --> 00:08:08,150
-this memory game, our Model
-is just gonna be a struct.
+是一个结构体
 
 175
 00:08:08,150 --> 00:08:10,130
-This is a very simple little demo
+这是一个非常简单的示例程序
 
 176
 00:08:10,130 --> 00:08:11,940
-but you could imagine that your Model
+但是你可以设想这里的模型
 
 177
 00:08:11,940 --> 00:08:15,560
-is a SQL database or it's
-something over the network
+是一个 SQL 数据库，或是向网络发出的
 
 178
 00:08:15,560 --> 00:08:17,610
-where you're making HTTP requests.
+HTTP 请求
 
 179
 00:08:17,610 --> 00:08:19,760
-So it can be quite complicated over there
+这样的模型就相当复杂了
 
 180
 00:08:19,760 --> 00:08:22,460
-and your ViewModel can simplify that,
+视图模型可以将其封装到
 
 181
 00:08:22,460 --> 00:08:25,080
-boil it down into maybe
-some simpler data structures
+更简洁的数据结构中
 
 182
 00:08:25,080 --> 00:08:27,420
-that it can pass to the View
+之后再传递给视图
 
 183
 00:08:27,420 --> 00:08:30,340
-that will let the View be
-simple code that draws it.
+这样视图中就只有实现绘制的代码了
 
 184
 00:08:30,340 --> 00:08:32,760
-So, the ViewModel does
-have this role a little bit
+视图模型在这里扮演的角色
 
 185
 00:08:32,760 --> 00:08:36,053
-as an interpreter of that Model data.
+就像一个模型数据的解释者
 
 186
 00:08:36,990 --> 00:08:40,101
-So we're gonna interpose the ViewModel
+这样我们就引入了介于模型和视图
 
 187
 00:08:40,101 --> 00:08:41,960
-between the Model and the View.
+之间的视图模型
 
 188
 00:08:41,960 --> 00:08:44,750
-It's gonna be the thing that
+它帮助视图实现
 
 189
 00:08:44,750 --> 00:08:48,020
-helps make this automatic
-updating happening.
+自动更新
 
 190
 00:08:48,020 --> 00:08:50,430
-So how does it do what it does?
+那么它是如何做到的呢？
 
 191
 00:08:50,430 --> 00:08:51,890
-Well, first of all the ViewModel
+首先，视图模型
 
 192
 00:08:51,890 --> 00:08:54,710
-is always trying to notice
-changes in the Model
+会随时关注模型的变化
 
 193
 00:08:54,710 --> 00:08:57,390
-and it can do that any way that it wants.
+它可以通过任何方式实现
 
 194
 00:08:57,390 --> 00:09:00,900
-If your Model is a struct,
-it's actually quite easy.
+如果你的模型是一个结构体
+那相当容易
 
 195
 00:09:00,900 --> 00:09:02,600
-Again, I'm gonna talk about a struct,
+我又一次谈到了结构体
 
 196
 00:09:02,600 --> 00:09:05,450
-more about that type in
-Swift in a few moments
+之后还会讲到更多关于 Swift 中
+结构体这个类型的特性
 
 197
 00:09:05,450 --> 00:09:07,980
-but one great feature of a struct
+其中一个重要的特性是
 
 198
 00:09:07,980 --> 00:09:09,460
-since it's copied around
+因为将结构体
 
 199
 00:09:09,460 --> 00:09:11,431
-when it's passed to functions and stuff
+传递给函数时会被复制一份
 
 200
 00:09:11,431 --> 00:09:15,030
-is that Swift knows when
-a struct has changed.
+所以 Swift 知道结构体发生变化的时机
 
 201
 00:09:15,030 --> 00:09:16,998
