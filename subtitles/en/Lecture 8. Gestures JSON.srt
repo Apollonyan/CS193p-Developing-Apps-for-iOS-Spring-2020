@@ -1,0 +1,7439 @@
+1
+00:00:04,940 --> 00:00:06,640
+- Stanford University.
+
+2
+00:00:08,600 --> 00:00:10,270
+- Okay, welcome to lecture eight,
+
+3
+00:00:10,270 --> 00:00:14,580
+Stanford CS193p, spring of 2020.
+
+4
+00:00:14,580 --> 00:00:17,470
+I'm gonna try to keep
+the slides short today
+
+5
+00:00:17,470 --> 00:00:20,430
+so we can jump into another big demo,
+
+6
+00:00:20,430 --> 00:00:22,910
+but I need to talk about conceptual stuff
+
+7
+00:00:22,910 --> 00:00:25,470
+behind a couple of things
+we're gonna do in the demo,
+
+8
+00:00:25,470 --> 00:00:28,750
+namely UserDefaults, which
+is a very lightweight,
+
+9
+00:00:28,750 --> 00:00:30,890
+persistent store that we're just gonna use
+
+10
+00:00:30,890 --> 00:00:32,440
+for demo purposes.
+
+11
+00:00:32,440 --> 00:00:36,510
+And then, the main meaty topic
+of today, which is gestures,
+
+12
+00:00:36,510 --> 00:00:40,193
+getting input from your user
+using their fingers basically.
+
+13
+00:00:41,040 --> 00:00:43,130
+So, let's talk about
+this UserDefaults thing.
+
+14
+00:00:43,130 --> 00:00:46,600
+Before I do that, I wanna talk
+about persistence in general.
+
+15
+00:00:46,600 --> 00:00:48,670
+By persistence I just mean that
+
+16
+00:00:48,670 --> 00:00:52,273
+making things stick on your iOS device
+
+17
+00:00:52,273 --> 00:00:55,340
+even when you quit your
+app and restart it.
+
+18
+00:00:55,340 --> 00:00:58,110
+And there's numerous ways
+to make data persist.
+
+19
+00:00:58,110 --> 00:01:01,107
+You can put it in a file system, iOS.
+
+20
+00:01:01,107 --> 00:01:04,670
+Basically there's a Unix
+machine underneath it all,
+
+21
+00:01:04,670 --> 00:01:06,400
+and it has a Unix file system,
+
+22
+00:01:06,400 --> 00:01:08,370
+and you can certainly store
+things in the file system.
+
+23
+00:01:08,370 --> 00:01:11,200
+I hope to cover that later in the quarter.
+
+24
+00:01:11,200 --> 00:01:13,090
+You could put things in a SQL database
+
+25
+00:01:13,090 --> 00:01:14,480
+or some other database.
+
+26
+00:01:14,480 --> 00:01:18,200
+iOS has an awesome
+framework called CoreData
+
+27
+00:01:18,200 --> 00:01:21,650
+that essentially does an object
+oriented programming layer
+
+28
+00:01:21,650 --> 00:01:23,950
+on top of a SQL database.
+
+29
+00:01:23,950 --> 00:01:25,090
+Really fantastic.
+
+30
+00:01:25,090 --> 00:01:26,859
+Don't think we're gonna
+get to that this quarter,
+
+31
+00:01:26,859 --> 00:01:30,139
+but I'd like to at least talk
+about it later in the quarter.
+
+32
+00:01:30,139 --> 00:01:32,306
+Of course, we can store things in iCloud.
+
+33
+00:01:32,306 --> 00:01:33,390
+That's great way,
+
+34
+00:01:33,390 --> 00:01:36,380
+because it's shared
+between all of our devices.
+
+35
+00:01:36,380 --> 00:01:39,260
+And, in fact, there's an entire
+framework called CloudKit,
+
+36
+00:01:39,260 --> 00:01:42,810
+which let's us do database
+operations essentially,
+
+37
+00:01:42,810 --> 00:01:44,490
+that get stored in the cloud.
+
+38
+00:01:44,490 --> 00:01:46,540
+So that's a cool way.
+
+39
+00:01:46,540 --> 00:01:48,772
+And there's many third
+party options as well.
+
+40
+00:01:48,772 --> 00:01:51,200
+Different frameworks
+provided by third parties
+
+41
+00:01:51,200 --> 00:01:53,592
+that do the kind of same
+thing, network databases,
+
+42
+00:01:53,592 --> 00:01:56,468
+places to store things, et cetera.
+
+43
+00:01:56,468 --> 00:01:59,244
+But one of the simplest
+ways to store things
+
+44
+00:01:59,244 --> 00:02:01,520
+is using something called UserDefaults,
+
+45
+00:02:01,520 --> 00:02:05,240
+and you can think of it as
+a persistent Dictionary.
+
+46
+00:02:05,240 --> 00:02:08,632
+It feels a lot like a Dictionary
+that just sticks on disk,
+
+47
+00:02:08,632 --> 00:02:11,390
+but it really should only be used,
+
+48
+00:02:11,390 --> 00:02:13,440
+when you're shipping your app,
+
+49
+00:02:13,440 --> 00:02:15,420
+you probably only wanna use UserDefaults
+
+50
+00:02:15,420 --> 00:02:18,832
+for user preferences, small little things.
+
+51
+00:02:18,832 --> 00:02:21,270
+You don't wanna use it to, for example,
+
+52
+00:02:21,270 --> 00:02:22,480
+store your documents,
+
+53
+00:02:22,480 --> 00:02:24,030
+which is what we're gonna do in our demo,
+
+54
+00:02:24,030 --> 00:02:26,160
+it's why I'm telling
+you about UserDefaults,
+
+55
+00:02:26,160 --> 00:02:29,470
+so we need some lightweight
+way to store our documents,
+
+56
+00:02:29,470 --> 00:02:30,303
+so we're gonna do it.
+
+57
+00:02:30,303 --> 00:02:32,880
+But I mean, UserDefaults
+is valuable though,
+
+58
+00:02:32,880 --> 00:02:34,720
+for storing these lightweight things,
+
+59
+00:02:34,720 --> 00:02:37,970
+but you're gonna see there's
+some quirkiness to it as well.
+
+60
+00:02:37,970 --> 00:02:39,922
+Now UserDefaults is quite limited
+
+61
+00:02:39,922 --> 00:02:42,000
+in the type of data it can store.
+
+62
+00:02:42,000 --> 00:02:44,740
+This is not just a full
+database or a full Dictionary,
+
+63
+00:02:44,740 --> 00:02:46,790
+you can put any type you want in there.
+
+64
+00:02:46,790 --> 00:02:50,658
+It's an ancient API I call it,
+it's been around a long time,
+
+65
+00:02:50,658 --> 00:02:54,450
+it far predates SwiftUI or even Swift,
+
+66
+00:02:54,450 --> 00:02:56,950
+and its API is a little strange
+
+67
+00:02:56,950 --> 00:02:58,570
+for those of you in this class
+
+68
+00:02:58,570 --> 00:03:01,610
+who are now really used
+to functional programming.
+
+69
+00:03:01,610 --> 00:03:03,836
+But if we squint at this API,
+
+70
+00:03:03,836 --> 00:03:08,836
+we can make it look close enough to Swift
+
+71
+00:03:09,040 --> 00:03:11,579
+and functional programming
+for it to fit in.
+
+72
+00:03:11,579 --> 00:03:15,450
+The data that's stored in UserDefaults
+
+73
+00:03:15,450 --> 00:03:17,040
+is called a property list.
+
+74
+00:03:17,040 --> 00:03:21,030
+Now, of property list is
+not a protocol or a struct,
+
+75
+00:03:21,030 --> 00:03:24,630
+or any tangible thing from Swift,
+
+76
+00:03:24,630 --> 00:03:26,227
+'cause this is all pretty Swift.
+
+77
+00:03:26,227 --> 00:03:29,140
+But property list is
+really just a concept.
+
+78
+00:03:29,140 --> 00:03:30,390
+It's an idea.
+
+79
+00:03:30,390 --> 00:03:33,840
+And that idea is that it's
+any combination of Strings,
+
+80
+00:03:33,840 --> 00:03:37,530
+Ints, Bools, floating point
+numbers like Float or Double,
+
+81
+00:03:37,530 --> 00:03:42,530
+Dates, Datas, which are bags
+of bits, just arbitrary data,
+
+82
+00:03:42,540 --> 00:03:43,940
+Arrays and Dictionaries.
+
+83
+00:03:43,940 --> 00:03:46,171
+So you put any combination
+of those together,
+
+84
+00:03:46,171 --> 00:03:50,891
+like an Array that it has
+Dictionaries with Strings
+
+85
+00:03:50,891 --> 00:03:53,260
+as the keys and Ints as the values,
+
+86
+00:03:53,260 --> 00:03:54,493
+that would be a property list.
+
+87
+00:03:54,493 --> 00:03:56,930
+A kinda goofy one, but that
+would be a property list
+
+88
+00:03:56,930 --> 00:04:00,120
+'cause all the things in
+there are one of these things.
+
+89
+00:04:00,120 --> 00:04:01,220
+So that's all we can store there,
+
+90
+00:04:01,220 --> 00:04:02,470
+we can't store anything else.
+
+91
+00:04:02,470 --> 00:04:03,800
+If you wanna store anything else,
+
+92
+00:04:03,800 --> 00:04:07,630
+you have to convert it into
+a property list somehow.
+
+93
+00:04:07,630 --> 00:04:10,200
+Now, a really powerful way in Swift
+
+94
+00:04:10,200 --> 00:04:14,190
+to convert an arbitrary
+struct into a property list
+
+95
+00:04:14,190 --> 00:04:16,580
+is using this Codable protocol,
+
+96
+00:04:16,580 --> 00:04:19,410
+and I'm just going to put
+that off and show you that
+
+97
+00:04:19,410 --> 00:04:22,420
+in the demo, rather than having
+a bunch of slides about it.
+
+98
+00:04:22,420 --> 00:04:24,893
+And you'll see, pretty
+quickly, how Codable works.
+
+99
+00:04:24,893 --> 00:04:27,610
+It's a great way to turn
+a struct into a Data,
+
+100
+00:04:27,610 --> 00:04:31,210
+and of course a Data, a bag
+of bits, is a property list,
+
+101
+00:04:31,210 --> 00:04:33,480
+and so we can throw it in UserDefaults.
+
+102
+00:04:33,480 --> 00:04:35,230
+And we'll see that all in the demo.
+
+103
+00:04:36,860 --> 00:04:39,880
+Now, why is the API of UserDefaults weird?
+
+104
+00:04:39,880 --> 00:04:44,010
+Well, because prominently in
+that API, is a type in Swift,
+
+105
+00:04:44,010 --> 00:04:47,780
+which we have not talked about,
+intentionally, called Any.
+
+106
+00:04:47,780 --> 00:04:51,360
+So Any is basically a
+type that means untyped.
+
+107
+00:04:51,360 --> 00:04:52,570
+If something's of type Any,
+
+108
+00:04:52,570 --> 00:04:54,780
+it's like it doesn't really have a type.
+
+109
+00:04:54,780 --> 00:04:57,330
+Well Swift is a strongly typed language,
+
+110
+00:04:57,330 --> 00:04:59,300
+it does not like Any.
+
+111
+00:04:59,300 --> 00:05:02,003
+Any is antithetical to Swift.
+
+112
+00:05:02,003 --> 00:05:06,260
+But, it has this type Any just
+for backwards compatibility
+
+113
+00:05:06,260 --> 00:05:08,480
+with things like UserDefaults.
+
+114
+00:05:08,480 --> 00:05:10,530
+So, we really don't wanna
+have anything to do with Any
+
+115
+00:05:10,530 --> 00:05:13,732
+as SwiftUI and Swift
+programmers in general.
+
+116
+00:05:13,732 --> 00:05:14,840
+But we wanna use UserDefaults,
+
+117
+00:05:14,840 --> 00:05:19,550
+so we're gonna try to ignore
+Any in UserDefaults' API,
+
+118
+00:05:19,550 --> 00:05:22,400
+which is a challenge, but you can do it.
+
+119
+00:05:22,400 --> 00:05:24,917
+And yet we still wanna understand
+how to use UserDefaults.
+
+120
+00:05:24,917 --> 00:05:26,453
+So, let's dive in here.
+
+121
+00:05:27,290 --> 00:05:29,190
+First thing you need
+to use UserDefaults is,
+
+122
+00:05:29,190 --> 00:05:31,380
+you need an instance of UserDefaults,
+
+123
+00:05:31,380 --> 00:05:33,908
+all the methods functions
+that you're gonna use
+
+124
+00:05:33,908 --> 00:05:36,500
+in UserDefaults are instance methods.
+
+125
+00:05:36,500 --> 00:05:39,950
+So, we do that usually by this static var
+
+126
+00:05:39,950 --> 00:05:42,670
+called standard on UserDefaults.
+
+127
+00:05:42,670 --> 00:05:43,739
+Already kinda weird, right?
+
+128
+00:05:43,739 --> 00:05:45,880
+So you say UserDefaults dot standard,
+
+129
+00:05:45,880 --> 00:05:47,730
+and you get this shared
+instance you can use
+
+130
+00:05:47,730 --> 00:05:48,563
+in your entire app.
+
+131
+00:05:48,563 --> 00:05:52,700
+Now, you can make other instances,
+but this is, 99% of time,
+
+132
+00:05:52,700 --> 00:05:54,509
+how we do it.
+
+133
+00:05:54,509 --> 00:05:55,933
+And then, if we wanna store data,
+
+134
+00:05:55,933 --> 00:05:59,572
+we're gonna use this
+function called set forKey.
+
+135
+00:05:59,572 --> 00:06:03,590
+And set takes the first
+argument there, which is object,
+
+136
+00:06:03,590 --> 00:06:05,907
+that object has to be a property list.
+
+137
+00:06:05,907 --> 00:06:08,800
+So it has to be an Int or Array of Strings
+
+138
+00:06:08,800 --> 00:06:13,170
+or something that has only
+those things we talked about
+
+139
+00:06:13,170 --> 00:06:14,360
+that could be in a property list.
+
+140
+00:06:14,360 --> 00:06:15,339
+But it can be anything,
+
+141
+00:06:15,339 --> 00:06:18,010
+as long as that's all that's in there.
+
+142
+00:06:18,010 --> 00:06:21,610
+And then forKey is just some
+random String, and again,
+
+143
+00:06:21,610 --> 00:06:22,800
+this is like a Dictionary,
+
+144
+00:06:22,800 --> 00:06:26,040
+so that's the key to look it up later.
+
+145
+00:06:26,040 --> 00:06:29,120
+Now, for convenience, there's
+also things like setDouble,
+
+146
+00:06:29,120 --> 00:06:31,550
+which takes a double forKey.
+
+147
+00:06:31,550 --> 00:06:34,180
+It's syntactic sugar really,
+
+148
+00:06:34,180 --> 00:06:38,260
+it's no different than
+saying set with 37.5,
+
+149
+00:06:38,260 --> 00:06:39,783
+forKey is the same thing.
+
+150
+00:06:39,783 --> 00:06:42,230
+But you can see how this looks
+like a Dictionary, right?
+
+151
+00:06:42,230 --> 00:06:45,048
+Setting values for a certain key.
+
+152
+00:06:45,048 --> 00:06:47,740
+Now how do I get the data back out?
+
+153
+00:06:47,740 --> 00:06:48,573
+Really easy.
+
+154
+00:06:48,573 --> 00:06:51,260
+There's a whole bunch of
+functions like integer forKey,
+
+155
+00:06:51,260 --> 00:06:56,200
+data forKey, URL forKey,
+even String Array forKey,
+
+156
+00:06:56,200 --> 00:07:00,130
+where it will go look in
+UserDefaults, at that key,
+
+157
+00:07:00,130 --> 00:07:02,320
+see what anyone has stored there before,
+
+158
+00:07:02,320 --> 00:07:05,000
+and if it's able to make
+it into the type you want,
+
+159
+00:07:05,000 --> 00:07:08,010
+like a URL or a String
+Array, it will return it.
+
+160
+00:07:08,010 --> 00:07:11,240
+If not, it's going to return nil.
+
+161
+00:07:11,240 --> 00:07:13,840
+So this is great if it's
+one of those basic types,
+
+162
+00:07:13,840 --> 00:07:17,298
+but what if you have an Array
+of something besides Strings?
+
+163
+00:07:17,298 --> 00:07:18,990
+Well, it starts to get complicated,
+
+164
+00:07:18,990 --> 00:07:22,440
+and this is where Any starts to come out
+
+165
+00:07:22,440 --> 00:07:24,920
+in, a monster to get us.
+
+166
+00:07:24,920 --> 00:07:29,060
+And so, if I try to store
+an Array of, let's say,
+
+167
+00:07:29,060 --> 00:07:33,860
+Dictionaries, that's legal,
+but there's no function called
+
+168
+00:07:33,860 --> 00:07:35,420
+give me the Array of Dictionaries,
+
+169
+00:07:35,420 --> 00:07:36,253
+there's only Array of String,
+
+170
+00:07:36,253 --> 00:07:38,370
+that's only Array one there is.
+
+171
+00:07:38,370 --> 00:07:40,470
+So if you call just Array forKey,
+
+172
+00:07:40,470 --> 00:07:42,660
+you're gonna get an Array of Any.
+
+173
+00:07:42,660 --> 00:07:44,682
+And, how do I deal with this Any?
+
+174
+00:07:44,682 --> 00:07:47,550
+Well, you're gonna have to
+use this operator in Swift
+
+175
+00:07:47,550 --> 00:07:51,329
+called as to typecast
+the things in the Array
+
+176
+00:07:51,329 --> 00:07:54,360
+from Any's to being what
+type you hopefully know
+
+177
+00:07:54,360 --> 00:07:55,750
+what they are.
+
+178
+00:07:55,750 --> 00:07:57,200
+We're gonna stop right here.
+
+179
+00:07:57,200 --> 00:07:59,960
+I don't wanna really talk
+about typecasting and all that,
+
+180
+00:07:59,960 --> 00:08:02,860
+you really don't need to
+do that very much in Swift.
+
+181
+00:08:02,860 --> 00:08:04,430
+Now, your reading assignment this week
+
+182
+00:08:04,430 --> 00:08:05,790
+is going to talk about that,
+
+183
+00:08:05,790 --> 00:08:07,071
+so if you wanna know about this,
+
+184
+00:08:07,071 --> 00:08:09,760
+you'll see the section called typecasting,
+
+185
+00:08:09,760 --> 00:08:11,319
+it'll tell you all about it.
+
+186
+00:08:11,319 --> 00:08:15,043
+And hopefully though, you can
+just avoid this whole thing
+
+187
+00:08:15,043 --> 00:08:19,800
+by somehow figuring how to
+use one of these normal ones
+
+188
+00:08:19,800 --> 00:08:21,720
+from the top of the screen right here,
+
+189
+00:08:21,720 --> 00:08:23,490
+and Codable might really help you there,
+
+190
+00:08:23,490 --> 00:08:25,791
+because then you can use data forKey.
+
+191
+00:08:25,791 --> 00:08:28,030
+And Codable can help you
+turn almost any struct,
+
+192
+00:08:28,030 --> 00:08:31,823
+even an Array of some
+wacky thing, into a Data.
+
+193
+00:08:33,810 --> 00:08:37,337
+That's all I'm gonna say
+about UserDefaults for today.
+
+194
+00:08:37,337 --> 00:08:39,630
+And we're gonna get onto
+our main topic here,
+
+195
+00:08:39,630 --> 00:08:41,030
+which is gesture.
+
+196
+00:08:41,030 --> 00:08:44,462
+So gestures is really about
+getting input from the user.
+
+197
+00:08:44,462 --> 00:08:47,720
+We call this multitouch
+because, of course,
+
+198
+00:08:47,720 --> 00:08:50,390
+you can put multiple fingers
+down at the same time,
+
+199
+00:08:50,390 --> 00:08:54,430
+and do gestures and SwiftUI
+will recognize them.
+
+200
+00:08:54,430 --> 00:08:58,230
+Swift pretty much takes care
+of recognizing these gestures
+
+201
+00:08:58,230 --> 00:08:59,840
+when someone puts two fingers down
+
+202
+00:08:59,840 --> 00:09:01,856
+and start squeezing
+their fingers together,
+
+203
+00:09:01,856 --> 00:09:05,310
+Swift recognizes, whoa, that's
+a pinch, they're pinching,
+
+204
+00:09:05,310 --> 00:09:06,520
+I know that gesture.
+
+205
+00:09:06,520 --> 00:09:08,840
+So it recognizes them,
+all you have to do is say
+
+206
+00:09:08,840 --> 00:09:11,020
+which Views you want to
+recognize which things,
+
+207
+00:09:11,020 --> 00:09:13,000
+and it'll start recognizing them.
+
+208
+00:09:13,000 --> 00:09:15,880
+But, it's not just
+recognizing them that matters,
+
+209
+00:09:15,880 --> 00:09:17,935
+once it recognizes that
+this pinch is happening,
+
+210
+00:09:17,935 --> 00:09:21,490
+you and your code have
+to handle the gesture.
+
+211
+00:09:21,490 --> 00:09:23,423
+So there's recognizing
+it, Swift does that,
+
+212
+00:09:23,423 --> 00:09:26,270
+SwiftUI does that, and
+then there's handling it,
+
+213
+00:09:26,270 --> 00:09:27,750
+which is something you have to do.
+
+214
+00:09:27,750 --> 00:09:29,950
+And handling it just
+means deciding what to do
+
+215
+00:09:29,950 --> 00:09:32,433
+when there's a pinch or a drag or a tap.
+
+216
+00:09:34,300 --> 00:09:37,940
+So, let's talk first about how
+you make your Views recognize
+
+217
+00:09:37,940 --> 00:09:39,700
+that a certain gesture is happening
+
+218
+00:09:39,700 --> 00:09:42,890
+using SwiftUI's powerful
+gesture recognition.
+
+219
+00:09:42,890 --> 00:09:46,040
+And it's so simple, there is
+just a ViewModifier on View
+
+220
+00:09:46,040 --> 00:09:49,560
+called .gesture, and
+you just pass a Gesture.
+
+221
+00:09:49,560 --> 00:09:51,950
+This argument that you pass, a Gesture,
+
+222
+00:09:51,950 --> 00:09:53,430
+just needs to be anything
+
+223
+00:09:53,430 --> 00:09:55,340
+that implements the Gesture protocol,
+
+224
+00:09:55,340 --> 00:09:56,590
+and we're gonna talk about
+
+225
+00:09:56,590 --> 00:09:59,337
+what things implement the
+Gesture protocol, and that's it.
+
+226
+00:09:59,337 --> 00:10:02,230
+And then after that,
+your myView right there,
+
+227
+00:10:02,230 --> 00:10:04,704
+whenever that gesture starts
+to happen in your View,
+
+228
+00:10:04,704 --> 00:10:06,823
+you're going to be asked to handle it.
+
+229
+00:10:08,350 --> 00:10:09,790
+Now how do we create this Gesture?
+
+230
+00:10:09,790 --> 00:10:12,260
+How do we specify what
+gesture we want here?
+
+231
+00:10:12,260 --> 00:10:16,110
+We almost always do that with
+either a func in our View,
+
+232
+00:10:16,110 --> 00:10:18,020
+or maybe it's a computed var,
+
+233
+00:10:18,020 --> 00:10:21,279
+or it even could be a local
+var at the top of our body var,
+
+234
+00:10:21,279 --> 00:10:22,960
+right before we do it.
+
+235
+00:10:22,960 --> 00:10:25,031
+Anywhere you can store this thing is fine,
+
+236
+00:10:25,031 --> 00:10:27,900
+and this computer var or func or whatever
+
+237
+00:10:27,900 --> 00:10:30,680
+just has to return something
+that is some Gesture.
+
+238
+00:10:30,680 --> 00:10:31,860
+So you know what some means,
+
+239
+00:10:31,860 --> 00:10:34,200
+it means you can return
+anything you want in there
+
+240
+00:10:34,200 --> 00:10:37,420
+as long as it implements that protocol,
+
+241
+00:10:37,420 --> 00:10:39,950
+and Swift will figure out
+that return type for you.
+
+242
+00:10:39,950 --> 00:10:42,033
+So right here I have var theGesture,
+
+243
+00:10:42,033 --> 00:10:45,290
+and I'm returning TapGesture count of two.
+
+244
+00:10:45,290 --> 00:10:48,390
+Swift will know that some
+gesture there is TapGesture.
+
+245
+00:10:48,390 --> 00:10:51,230
+This TapGesture is one of the gestures
+
+246
+00:10:51,230 --> 00:10:52,110
+that's built into SwiftUI.
+
+247
+00:10:52,110 --> 00:10:54,470
+You know it well, TapGesture.
+
+248
+00:10:54,470 --> 00:10:57,380
+This particular one here,
+I've made with a count of two.
+
+249
+00:10:57,380 --> 00:10:58,959
+So this is actually a double tap.
+
+250
+00:10:58,959 --> 00:11:02,270
+TapGesture has an argument
+to its initializer,
+
+251
+00:11:02,270 --> 00:11:04,640
+which is how many taps,
+and my default is one,
+
+252
+00:11:04,640 --> 00:11:05,913
+but here I've said two.
+
+253
+00:11:06,840 --> 00:11:09,480
+With a combination of two
+things of code you see on here,
+
+254
+00:11:09,480 --> 00:11:11,140
+the one at the top, and the one at bottom,
+
+255
+00:11:11,140 --> 00:11:13,315
+Swift will start recognizing a double tap.
+
+256
+00:11:13,315 --> 00:11:16,530
+But, it won't do anything
+when the double tap happens,
+
+257
+00:11:16,530 --> 00:11:18,530
+'cause we haven't told Swift how to handle
+
+258
+00:11:18,530 --> 00:11:20,310
+a double tap happening.
+
+259
+00:11:20,310 --> 00:11:25,060
+So the next step we need
+to do is to explain to it
+
+260
+00:11:25,060 --> 00:11:28,930
+how to handle, and it depends
+on the kind of gestures,
+
+261
+00:11:28,930 --> 00:11:30,170
+how to do this.
+
+262
+00:11:30,170 --> 00:11:33,250
+So, some gestures are
+discrete, like TapGesture,
+
+263
+00:11:33,250 --> 00:11:36,840
+and LongPressGesture can be discrete,
+
+264
+00:11:36,840 --> 00:11:40,240
+where it just, the tap happens,
+and then go do something.
+
+265
+00:11:40,240 --> 00:11:42,860
+A LongPressGesture happens,
+and then go do something.
+
+266
+00:11:42,860 --> 00:11:44,760
+That's different than a pinch or a drag,
+
+267
+00:11:44,760 --> 00:11:47,490
+which, they're happening overtime,
+
+268
+00:11:47,490 --> 00:11:49,240
+we might wanna get involved in that.
+
+269
+00:11:49,240 --> 00:11:50,970
+So for discrete gestures, those are easy,
+
+270
+00:11:50,970 --> 00:11:52,490
+let's get those out of the way.
+
+271
+00:11:52,490 --> 00:11:55,317
+You do something by calling
+the function on your gesture
+
+272
+00:11:55,317 --> 00:11:58,260
+.onEnded, which takes a closure,
+
+273
+00:11:58,260 --> 00:12:00,360
+and in that closure you
+do whatever you want
+
+274
+00:12:00,360 --> 00:12:02,370
+when that TapGesture ends.
+
+275
+00:12:02,370 --> 00:12:04,930
+Which means when the finger
+comes back up for a tap,
+
+276
+00:12:04,930 --> 00:12:06,430
+or, if this is double tap,
+
+277
+00:12:06,430 --> 00:12:08,747
+the second time the finger comes back up.
+
+278
+00:12:08,747 --> 00:12:09,930
+And that's it.
+
+279
+00:12:09,930 --> 00:12:12,470
+Couldn't be easier to
+handle a discrete gesture.
+
+280
+00:12:12,470 --> 00:12:14,340
+And of course, discrete gestures
+
+281
+00:12:14,340 --> 00:12:15,880
+are so simple and easy to handle,
+
+282
+00:12:15,880 --> 00:12:18,780
+they have these nice
+convenience functions,
+
+283
+00:12:18,780 --> 00:12:21,240
+you've seen it on TapGesture.
+
+284
+00:12:21,240 --> 00:12:22,370
+I don't know if you know
+
+285
+00:12:22,370 --> 00:12:24,820
+that it takes the argument
+count too, it does.
+
+286
+00:12:24,820 --> 00:12:26,030
+And then you just do something.
+
+287
+00:12:26,030 --> 00:12:28,510
+So that's exactly the same
+thing as what we've seen
+
+288
+00:12:28,510 --> 00:12:29,650
+in the previous two slides.
+
+289
+00:12:29,650 --> 00:12:32,340
+Here we're just going
+to handle a TapGesture.
+
+290
+00:12:32,340 --> 00:12:33,934
+So, discrete gestures, easy.
+
+291
+00:12:33,934 --> 00:12:38,503
+Non-discrete gestures, little more work.
+
+292
+00:12:39,360 --> 00:12:40,650
+In a non-discrete gesture,
+
+293
+00:12:40,650 --> 00:12:43,560
+you do get to handle when it ends,
+
+294
+00:12:43,560 --> 00:12:44,720
+which we'll talk about in a second,
+
+295
+00:12:44,720 --> 00:12:46,320
+just like a discrete gesture.
+
+296
+00:12:46,320 --> 00:12:49,090
+But you can also handle as it's moving,
+
+297
+00:12:49,090 --> 00:12:51,600
+as the fingers are pinching together,
+
+298
+00:12:51,600 --> 00:12:53,360
+or as they're rotating around,
+
+299
+00:12:53,360 --> 00:12:56,870
+or as the finger is dragging
+itself around the screen,
+
+300
+00:12:56,870 --> 00:12:58,260
+you get to go do something,
+
+301
+00:12:58,260 --> 00:13:01,120
+redraw your View a whole bunch
+of times as it moves around,
+
+302
+00:13:01,120 --> 00:13:03,470
+whatever you wanna do, you get to do it.
+
+303
+00:13:03,470 --> 00:13:05,522
+Now, examples of these
+non-discrete gestures,
+
+304
+00:13:05,522 --> 00:13:10,522
+DragGesture, MagnificationGesture,
+that's like a pinch,
+
+305
+00:13:10,750 --> 00:13:13,490
+RotationGesture, that's
+like you're turning a dial
+
+306
+00:13:13,490 --> 00:13:15,350
+with two fingers, put two
+fingers on the screen,
+
+307
+00:13:15,350 --> 00:13:18,440
+it's like turning a dial and
+you're specifying some angle,
+
+308
+00:13:18,440 --> 00:13:20,620
+actually, that changes as you do that.
+
+309
+00:13:20,620 --> 00:13:23,800
+and even LongPressGesture
+can kind of be non-discrete,
+
+310
+00:13:23,800 --> 00:13:28,512
+where you press and hold,
+and so it's going to say
+
+311
+00:13:28,512 --> 00:13:31,000
+that the finger is holding,
+and then when it comes back up
+
+312
+00:13:31,000 --> 00:13:32,273
+you'll find out it came up.
+
+313
+00:13:32,273 --> 00:13:33,330
+That's different from a tap.
+
+314
+00:13:33,330 --> 00:13:35,020
+You don't find out when the tap goes down,
+
+315
+00:13:35,020 --> 00:13:36,070
+you only find when it goes up,
+
+316
+00:13:36,070 --> 00:13:37,833
+but a long press, you can find out.
+
+317
+00:13:38,680 --> 00:13:41,720
+So, let's start by talking
+about the end of them.
+
+318
+00:13:41,720 --> 00:13:43,810
+So, just like discrete,
+we can find out the end,
+
+319
+00:13:43,810 --> 00:13:46,490
+and it's exactly the same .onEnded.
+
+320
+00:13:46,490 --> 00:13:49,630
+The only difference is,
+the function that you pass,
+
+321
+00:13:49,630 --> 00:13:52,284
+the closure gets an argument.
+
+322
+00:13:52,284 --> 00:13:55,390
+Because, when a DragGesture ends,
+
+323
+00:13:55,390 --> 00:13:58,765
+you wanna find out, well, what
+happened during that drag?
+
+324
+00:13:58,765 --> 00:14:01,280
+And so, you're gonna get
+a little argument here,
+
+325
+00:14:01,280 --> 00:14:02,880
+this value argument,
+
+326
+00:14:02,880 --> 00:14:05,945
+and it's different for
+every kind of Gesture,
+
+327
+00:14:05,945 --> 00:14:08,720
+and that is going to
+tell you what happened.
+
+328
+00:14:08,720 --> 00:14:10,930
+For a DragGesture, the value is a struct
+
+329
+00:14:10,930 --> 00:14:13,450
+with things like the
+starting position of the drag
+
+330
+00:14:13,450 --> 00:14:15,510
+and the ending position of the finger.
+
+331
+00:14:15,510 --> 00:14:18,620
+For magnification, it's the
+scale of the magnification,
+
+332
+00:14:18,620 --> 00:14:21,590
+which is how far the fingers are apart
+
+333
+00:14:21,590 --> 00:14:23,850
+when they lifted up off the screen.
+
+334
+00:14:23,850 --> 00:14:25,810
+And the RotationGesture, similar, right.
+
+335
+00:14:25,810 --> 00:14:27,390
+It's like turning a
+dial, so it's gonna say
+
+336
+00:14:27,390 --> 00:14:31,120
+how much angle did it turn
+before the fingers lifted up?
+
+337
+00:14:31,120 --> 00:14:33,510
+Still get to ended, but you
+get to find out, of course,
+
+338
+00:14:33,510 --> 00:14:35,113
+what happens there.
+
+339
+00:14:36,300 --> 00:14:38,320
+But the more interesting thing is,
+
+340
+00:14:38,320 --> 00:14:39,725
+during a non-discrete gesture,
+
+341
+00:14:39,725 --> 00:14:43,096
+you wanna find out as things are changing.
+
+342
+00:14:43,096 --> 00:14:46,769
+We do this by having some state
+
+343
+00:14:46,769 --> 00:14:49,570
+that is only going to be in effect
+
+344
+00:14:49,570 --> 00:14:51,894
+while the Gesture is going on.
+
+345
+00:14:51,894 --> 00:14:54,990
+This state is stored in any var you want,
+
+346
+00:14:54,990 --> 00:14:55,960
+you just have to mark it
+
+347
+00:14:55,960 --> 00:14:58,260
+with this special marker, @GestureState
+
+348
+00:14:59,470 --> 00:15:02,080
+And you must also give
+this var an initial value
+
+349
+00:15:02,080 --> 00:15:03,450
+of some sort.
+
+350
+00:15:03,450 --> 00:15:05,210
+This var can be any type you want.
+
+351
+00:15:05,210 --> 00:15:07,470
+It could be a CGFloat,
+it could be a struct
+
+352
+00:15:07,470 --> 00:15:09,540
+with all kinds of your own stuff in it.
+
+353
+00:15:09,540 --> 00:15:12,990
+There's no limit on what this var can be.
+
+354
+00:15:12,990 --> 00:15:15,170
+And what this var is basically going to do
+
+355
+00:15:15,170 --> 00:15:18,220
+is tell your View, here's all
+the things you need to know
+
+356
+00:15:18,220 --> 00:15:20,450
+to draw yourself in the
+middle of this Gesture.
+
+357
+00:15:20,450 --> 00:15:21,520
+That's what's going on here.
+
+358
+00:15:21,520 --> 00:15:23,667
+That's what this var is all about.
+
+359
+00:15:23,667 --> 00:15:26,260
+But it is marked specially,
+and we're gonna talk about
+
+360
+00:15:26,260 --> 00:15:27,460
+what's special about it.
+
+361
+00:15:28,330 --> 00:15:30,620
+The first thing to understand
+that's special about this var
+
+362
+00:15:30,620 --> 00:15:33,674
+is that it's always gonna
+return to that starting value
+
+363
+00:15:33,674 --> 00:15:34,960
+when the Gesture ends.
+
+364
+00:15:34,960 --> 00:15:37,100
+That's why you must give
+it a starting value.
+
+365
+00:15:37,100 --> 00:15:38,640
+So while the Gesture is going on,
+
+366
+00:15:38,640 --> 00:15:42,080
+you're going to be updating
+this GestureState of yours
+
+367
+00:15:42,080 --> 00:15:43,450
+to reflect what's going on in the Gesture
+
+368
+00:15:43,450 --> 00:15:46,010
+every time the fingers move.
+
+369
+00:15:46,010 --> 00:15:48,320
+But as soon as the
+fingers go up and it ends,
+
+370
+00:15:48,320 --> 00:15:50,580
+this is gonna get reset
+back to starting value.
+
+371
+00:15:50,580 --> 00:15:52,870
+So you have to understand
+that this @GestureState
+
+372
+00:15:52,870 --> 00:15:55,890
+is only the state while
+the Gesture is active.
+
+373
+00:15:55,890 --> 00:15:57,060
+Very important to understand.
+
+374
+00:15:57,060 --> 00:15:57,970
+That's why I put this in red,
+
+375
+00:15:57,970 --> 00:16:01,283
+when the Gesture ends, it goes
+back to the starting value.
+
+376
+00:16:02,510 --> 00:16:04,031
+Now, while the Gesture is happening,
+
+377
+00:16:04,031 --> 00:16:06,680
+you are given the opportunity, of course,
+
+378
+00:16:06,680 --> 00:16:08,130
+to change this state.
+
+379
+00:16:08,130 --> 00:16:09,670
+It's your own state, your own type,
+
+380
+00:16:09,670 --> 00:16:11,340
+so you're the one who has to change it.
+
+381
+00:16:11,340 --> 00:16:13,120
+And here's how you do that.
+
+382
+00:16:13,120 --> 00:16:16,270
+Just like you had .onEnded,
+you have another function
+
+383
+00:16:16,270 --> 00:16:18,140
+on your DragGesture called .updating.
+
+384
+00:16:18,140 --> 00:16:20,200
+Now there's a lot of
+colors on the screen here,
+
+385
+00:16:20,200 --> 00:16:23,920
+so let's go through all these
+different colors we have.
+
+386
+00:16:23,920 --> 00:16:27,110
+The updating function takes two arguments,
+
+387
+00:16:27,110 --> 00:16:30,300
+and the first one in parentheses there is
+
+388
+00:16:30,300 --> 00:16:32,050
+your GestureState var.
+
+389
+00:16:32,050 --> 00:16:35,550
+So you're gonna pass your
+GestureState var to .updating.
+
+390
+00:16:35,550 --> 00:16:37,590
+Notice that you have to put
+a dollar in the front of it,
+
+391
+00:16:37,590 --> 00:16:40,350
+I'll talk a little bit about
+that in the demo, why that is,
+
+392
+00:16:40,350 --> 00:16:43,200
+but really, we're not gonna
+talk about this until next week.
+
+393
+00:16:43,200 --> 00:16:44,657
+But just always put a dollar
+
+394
+00:16:44,657 --> 00:16:46,883
+in front of your @GestureState var.
+
+395
+00:16:47,870 --> 00:16:50,860
+Just like .onEnded,
+.updating takes a closure
+
+396
+00:16:50,860 --> 00:16:51,693
+that it's gonna call.
+
+397
+00:16:51,693 --> 00:16:53,420
+Now, it's gonna call that thing repeatedly
+
+398
+00:16:53,420 --> 00:16:55,420
+as the fingers are moving closer together,
+
+399
+00:16:55,420 --> 00:16:58,030
+or the fingers dragging across
+the screen, or whatever,
+
+400
+00:16:58,030 --> 00:17:00,550
+it's gonna be calling this
+closure over and over and over.
+
+401
+00:17:00,550 --> 00:17:02,800
+So what are the three
+arguments we have there
+
+402
+00:17:02,800 --> 00:17:03,871
+to the closure?
+
+403
+00:17:03,871 --> 00:17:07,120
+The first one, that blue value argument,
+
+404
+00:17:07,120 --> 00:17:08,930
+that's the same thing is .onEnded.
+
+405
+00:17:08,930 --> 00:17:10,960
+That is, the state of this Gesture.
+
+406
+00:17:10,960 --> 00:17:13,294
+How close the fingers are
+together for pinching,
+
+407
+00:17:13,294 --> 00:17:16,800
+how far they finger has moved
+if we're dragging, whatever.
+
+408
+00:17:16,800 --> 00:17:17,633
+It's a struct.
+
+409
+00:17:17,633 --> 00:17:21,050
+It depends on which Gesture
+we're talking about here
+
+410
+00:17:21,050 --> 00:17:22,350
+as to what's in there.
+
+411
+00:17:22,350 --> 00:17:24,050
+Might not be a struct, like magnification
+
+412
+00:17:24,050 --> 00:17:26,240
+I think it's just a CGFloat with a scale.
+
+413
+00:17:26,240 --> 00:17:27,640
+But for DragGestures, it's a struct,
+
+414
+00:17:27,640 --> 00:17:29,990
+with start location, end
+location, timestamps,
+
+415
+00:17:29,990 --> 00:17:31,620
+other things in there.
+
+416
+00:17:31,620 --> 00:17:32,760
+So that's what that value is.
+
+417
+00:17:32,760 --> 00:17:35,540
+You're used to that, same as .onEnded.
+
+418
+00:17:35,540 --> 00:17:38,440
+The myGestureState purple argument there,
+
+419
+00:17:38,440 --> 00:17:42,010
+is essentially your @GestureState again.
+
+420
+00:17:42,010 --> 00:17:43,090
+And not only is it there,
+
+421
+00:17:43,090 --> 00:17:46,390
+it's also inside this little closure.
+
+422
+00:17:46,390 --> 00:17:48,270
+And you can assign it a value in there.
+
+423
+00:17:48,270 --> 00:17:52,130
+So, I'm gonna talk in
+the demo briefly about
+
+424
+00:17:52,130 --> 00:17:55,480
+what's going on here, that's
+essentially an inout parameter,
+
+425
+00:17:55,480 --> 00:17:57,180
+but all you really need to know
+
+426
+00:17:57,180 --> 00:17:59,040
+for the purposes of making this work,
+
+427
+00:17:59,040 --> 00:18:02,830
+is that your @GestureState variable
+
+428
+00:18:02,830 --> 00:18:06,213
+appears in these three places
+as the argument to .updating,
+
+429
+00:18:06,213 --> 00:18:08,550
+as the second argument to the closure,
+
+430
+00:18:08,550 --> 00:18:12,250
+and then inside as a
+changeable writable var
+
+431
+00:18:12,250 --> 00:18:13,640
+that you can change.
+
+432
+00:18:13,640 --> 00:18:16,011
+Now, if you wanna just put
+your hands over your eyes
+
+433
+00:18:16,011 --> 00:18:18,040
+and not think about it,
+
+434
+00:18:18,040 --> 00:18:20,090
+you can just think that
+inside this closure
+
+435
+00:18:20,090 --> 00:18:22,797
+you can change your @GestureState var.
+
+436
+00:18:22,797 --> 00:18:26,489
+That's not actually what's
+happening, but it feels like it.
+
+437
+00:18:26,489 --> 00:18:29,470
+But the conceptual semantic
+thing that's going on here,
+
+438
+00:18:29,470 --> 00:18:31,800
+in fact, is that this is the only way
+
+439
+00:18:31,800 --> 00:18:34,324
+you're supposed to change
+your @GestureState.
+
+440
+00:18:34,324 --> 00:18:38,270
+You cannot change your
+myGestureState any other place
+
+441
+00:18:38,270 --> 00:18:40,307
+except for right inside this closure.
+
+442
+00:18:40,307 --> 00:18:43,530
+And that makes sense,
+because this @GestureState
+
+443
+00:18:43,530 --> 00:18:47,420
+is only supposed to be active
+when the Gesture is going on.
+
+444
+00:18:47,420 --> 00:18:49,700
+So you would never wanna
+set it at any other time.
+
+445
+00:18:49,700 --> 00:18:51,690
+There's actually no reason
+to set it any other time
+
+446
+00:18:51,690 --> 00:18:53,140
+then while this thing's going on,
+
+447
+00:18:53,140 --> 00:18:55,303
+'cause that's all the @GestureState is.
+
+448
+00:18:56,600 --> 00:18:57,610
+Very important to understand,
+
+449
+00:18:57,610 --> 00:19:00,187
+this is the only place you
+change your @GestureState var.
+
+450
+00:19:00,187 --> 00:19:01,760
+And you can change it
+to anything you want,
+
+451
+00:19:01,760 --> 00:19:03,980
+and you're almost always going
+to change it to something
+
+452
+00:19:03,980 --> 00:19:06,010
+based on what that blue value is, right.
+
+453
+00:19:06,010 --> 00:19:08,160
+Depending on how close
+the fingers are together,
+
+454
+00:19:08,160 --> 00:19:09,370
+how much they've moved.
+
+455
+00:19:09,370 --> 00:19:12,232
+You're gonna update your
+little @GestureState struct
+
+456
+00:19:12,232 --> 00:19:14,830
+so that your View draws itself properly
+
+457
+00:19:14,830 --> 00:19:17,273
+in the middle of a drag or a pinch.
+
+458
+00:19:18,420 --> 00:19:20,420
+Now, the third argument
+there, transaction,
+
+459
+00:19:20,420 --> 00:19:21,726
+has to do with animation.
+
+460
+00:19:21,726 --> 00:19:23,640
+We're not gonna talk
+about that in this course.
+
+461
+00:19:23,640 --> 00:19:24,830
+There are some limits,
+
+462
+00:19:24,830 --> 00:19:26,570
+we just don't have time
+to talk about everything.
+
+463
+00:19:26,570 --> 00:19:27,920
+You can look at the documentation
+
+464
+00:19:27,920 --> 00:19:29,850
+if you wanna try and
+figure out transaction.
+
+465
+00:19:29,850 --> 00:19:33,040
+It's for advanced animation
+interactions between Views,
+
+466
+00:19:33,040 --> 00:19:36,083
+we just have to draw the line somewhere.
+
+467
+00:19:37,180 --> 00:19:40,840
+Now, there is actually
+simpler version of .updating,
+
+468
+00:19:40,840 --> 00:19:41,990
+it's called .onChanged.
+
+469
+00:19:43,090 --> 00:19:45,760
+And, when you first see
+this you might be like,
+
+470
+00:19:45,760 --> 00:19:47,630
+oh this is simpler, I'm gonna use this,
+
+471
+00:19:47,630 --> 00:19:50,250
+but it's only for
+certain kinds of changes.
+
+472
+00:19:50,250 --> 00:19:51,937
+And I'll explain that in a second.
+
+473
+00:19:51,937 --> 00:19:55,000
+So, .onChanged looks just like .updating,
+
+474
+00:19:55,000 --> 00:19:57,440
+except for, there's
+not that @GestureState.
+
+475
+00:19:57,440 --> 00:19:58,788
+Because in the .onChanged,
+
+476
+00:19:58,788 --> 00:20:01,710
+you don't get to update any @GestureState.
+
+477
+00:20:01,710 --> 00:20:03,342
+This value is passed to you,
+
+478
+00:20:03,342 --> 00:20:05,610
+and you just have to do
+something based on it.
+
+479
+00:20:05,610 --> 00:20:07,883
+And that's why it's
+quite limited to do this.
+
+480
+00:20:07,883 --> 00:20:10,703
+But, there are some kinds
+of things that you can do,
+
+481
+00:20:10,703 --> 00:20:12,560
+and what are those things?
+
+482
+00:20:12,560 --> 00:20:14,660
+Well, if you were doing something where
+
+483
+00:20:14,660 --> 00:20:18,280
+you're actually interested in
+the actual finger positions,
+
+484
+00:20:18,280 --> 00:20:20,440
+like you're doing, drag to select, right,
+
+485
+00:20:20,440 --> 00:20:22,120
+you're dragging your
+finger across the screen
+
+486
+00:20:22,120 --> 00:20:24,400
+to select objects or something like that,
+
+487
+00:20:24,400 --> 00:20:29,003
+then you just wanna know where
+that drag out is right now.
+
+488
+00:20:29,900 --> 00:20:32,200
+That's different then if you're pinching
+
+489
+00:20:32,200 --> 00:20:35,530
+to scale something up or down,
+or moving something around,
+
+490
+00:20:35,530 --> 00:20:38,530
+or whatever, relative
+to where it was before.
+
+491
+00:20:38,530 --> 00:20:40,340
+It's like absolute finger position, or,
+
+492
+00:20:40,340 --> 00:20:43,263
+you're gonna follow the finger
+around and draw like a pen
+
+493
+00:20:43,263 --> 00:20:45,170
+in your app or something.
+
+494
+00:20:45,170 --> 00:20:46,820
+Then you might want this.
+
+495
+00:20:46,820 --> 00:20:48,150
+But, most of the time you're interested
+
+496
+00:20:48,150 --> 00:20:49,450
+in the relative change.
+
+497
+00:20:49,450 --> 00:20:51,390
+How much you've pinched down?
+
+498
+00:20:51,390 --> 00:20:53,630
+How far you've dragged across screen?
+
+499
+00:20:53,630 --> 00:20:55,283
+And when you're interested
+in relative changes,
+
+500
+00:20:55,283 --> 00:20:57,693
+that's when you need .updating.
+
+501
+00:20:59,410 --> 00:21:02,210
+All right, so I'm gonna summarize
+
+502
+00:21:02,210 --> 00:21:04,600
+all the things I just
+said here in one slide.
+
+503
+00:21:04,600 --> 00:21:06,580
+So this is a chance for you to review
+
+504
+00:21:06,580 --> 00:21:07,630
+and get it all at once.
+
+505
+00:21:07,630 --> 00:21:10,900
+So here's how we handle
+non-discrete gestures
+
+506
+00:21:10,900 --> 00:21:12,510
+when the fingers are moving.
+
+507
+00:21:12,510 --> 00:21:14,950
+First, we're gonna collect
+any information that we need
+
+508
+00:21:14,950 --> 00:21:17,223
+to draw our View while
+the gesture's happening
+
+509
+00:21:17,223 --> 00:21:19,130
+into a @GestureState var.
+
+510
+00:21:19,130 --> 00:21:22,397
+Might only just be a CGFloat,
+might be a whole struct.
+
+511
+00:21:22,397 --> 00:21:25,208
+Then, we're gonna add
+.updating to our Gesture.
+
+512
+00:21:25,208 --> 00:21:28,160
+Whatever our pinch or drag is.
+
+513
+00:21:28,160 --> 00:21:31,420
+And inside the .updating
+closure that we passed,
+
+514
+00:21:31,420 --> 00:21:32,660
+we're gonna get the value
+
+515
+00:21:32,660 --> 00:21:35,350
+of what's going on with
+the Gesture, repeatedly.
+
+516
+00:21:35,350 --> 00:21:37,450
+It's gonna constantly call
+us with the latest value
+
+517
+00:21:37,450 --> 00:21:39,080
+of what's going on.
+
+518
+00:21:39,080 --> 00:21:42,030
+We are going to update our @GestureState,
+
+519
+00:21:42,030 --> 00:21:44,100
+but we're gonna understand
+that that @GestureState,
+
+520
+00:21:44,100 --> 00:21:46,800
+when the thing ends, is gonna go away.
+
+521
+00:21:46,800 --> 00:21:48,540
+And go back to its starting value.
+
+522
+00:21:48,540 --> 00:21:51,770
+So, in .onEnded of a non-discrete Gesture,
+
+523
+00:21:51,770 --> 00:21:54,210
+we're gonna be sure to update
+whatever we need to do,
+
+524
+00:21:54,210 --> 00:21:56,520
+so that when that thing goes
+back to its starting value,
+
+525
+00:21:56,520 --> 00:21:58,253
+our View still draws properly.
+
+526
+00:22:00,080 --> 00:22:02,980
+All right, so let's hop into the demo.
+
+527
+00:22:02,980 --> 00:22:04,870
+I'm gonna show you that
+Codable thing I talked about.
+
+528
+00:22:04,870 --> 00:22:07,070
+We're gonna use UserDefaults
+to store our document,
+
+529
+00:22:07,070 --> 00:22:09,470
+because I didn't have time so far
+
+530
+00:22:09,470 --> 00:22:11,350
+to teach you about the
+file system and all that.
+
+531
+00:22:11,350 --> 00:22:12,920
+There's quite a bit involved there,
+
+532
+00:22:12,920 --> 00:22:14,090
+so we'll do that later.
+
+533
+00:22:14,090 --> 00:22:16,855
+I'm gonna do some other
+cool stuff, animating fonts,
+
+534
+00:22:16,855 --> 00:22:20,025
+but mostly what we're gonna
+do today is do some gestures
+
+535
+00:22:20,025 --> 00:22:21,290
+in our EmojiArt,
+
+536
+00:22:21,290 --> 00:22:23,650
+make it so we can make our
+document bigger and smaller,
+
+537
+00:22:23,650 --> 00:22:25,693
+and pan around in it, that kinda stuff.
+
+538
+00:22:27,560 --> 00:22:30,860
+All right, let's continue
+to improve our EmojiArt.
+
+539
+00:22:30,860 --> 00:22:34,300
+And it has a big problem, currently.
+
+540
+00:22:34,300 --> 00:22:39,300
+For example, if start building
+a really beautiful EmojiArt,
+
+541
+00:22:39,444 --> 00:22:43,243
+some apples at the base of our tree,
+
+542
+00:22:43,243 --> 00:22:47,227
+and then, I quit my app, when I come back,
+
+543
+00:22:47,227 --> 00:22:49,800
+I've lost all the work that I've done.
+
+544
+00:22:49,800 --> 00:22:52,000
+So, that's not good.
+
+545
+00:22:52,000 --> 00:22:53,380
+Next week or the week after,
+
+546
+00:22:53,380 --> 00:22:55,720
+we'll actually work on
+having multiple documents,
+
+547
+00:22:55,720 --> 00:22:58,850
+and a document chooser, and all that.
+
+548
+00:22:58,850 --> 00:23:00,685
+But today, let's just try and work on
+
+549
+00:23:00,685 --> 00:23:03,560
+making our document persist.
+
+550
+00:23:03,560 --> 00:23:07,080
+When we make something
+persist, what do we need?
+
+551
+00:23:07,080 --> 00:23:08,330
+Kinda need two things.
+
+552
+00:23:08,330 --> 00:23:12,210
+One, need some sort of
+file format to store it in.
+
+553
+00:23:12,210 --> 00:23:13,951
+And then we need a place to put it.
+
+554
+00:23:13,951 --> 00:23:16,380
+Probably the place
+we're gonna wanna put it
+
+555
+00:23:16,380 --> 00:23:17,800
+is in the file system,
+
+556
+00:23:17,800 --> 00:23:20,370
+and I'm hoping to get
+around to showing you that
+
+557
+00:23:20,370 --> 00:23:21,870
+in a couple of weeks.
+
+558
+00:23:21,870 --> 00:23:23,000
+But, in the meantime,
+
+559
+00:23:23,000 --> 00:23:25,270
+we're just gonna put it in UserDefaults,
+
+560
+00:23:25,270 --> 00:23:27,440
+which we talked about in the slides today.
+
+561
+00:23:27,440 --> 00:23:29,430
+Now, UserDefaults is
+totally the wrong place
+
+562
+00:23:29,430 --> 00:23:32,130
+to put a document, but it's a really easy,
+
+563
+00:23:32,130 --> 00:23:35,060
+one line of code, bam,
+it's in the UserDefaults.
+
+564
+00:23:35,060 --> 00:23:36,960
+And really, what we're focused on here,
+
+565
+00:23:36,960 --> 00:23:39,570
+is not where we're storing it, but more,
+
+566
+00:23:39,570 --> 00:23:41,510
+what file format are we gonna use,
+
+567
+00:23:41,510 --> 00:23:44,270
+and how do we generate that file format.
+
+568
+00:23:44,270 --> 00:23:47,100
+And the file format
+we're gonna use is JSON.
+
+569
+00:23:47,100 --> 00:23:50,649
+So, most of you probably
+have heard of JSON before.
+
+570
+00:23:50,649 --> 00:23:52,622
+It's a file format that's used,
+
+571
+00:23:52,622 --> 00:23:55,910
+mostly to pass things
+around on the Internet.
+
+572
+00:23:55,910 --> 00:23:57,965
+It's a public file format.
+
+573
+00:23:57,965 --> 00:24:01,460
+And iOS has awesome feature built in
+
+574
+00:24:01,460 --> 00:24:03,715
+where it will generate JSON
+
+575
+00:24:03,715 --> 00:24:08,715
+from almost any struct
+that you can imagine.
+
+576
+00:24:08,740 --> 00:24:12,800
+So, we have our EmojiArtDocument
+as a struct in our Model,
+
+577
+00:24:12,800 --> 00:24:15,288
+and we can use this cool iOS feature
+
+578
+00:24:15,288 --> 00:24:18,750
+to generate a JSON version of it.
+
+579
+00:24:18,750 --> 00:24:19,640
+So let's do that.
+
+580
+00:24:19,640 --> 00:24:23,340
+Let's hop back in here, go to
+our Model, here's our Model.
+
+581
+00:24:23,340 --> 00:24:26,333
+And we just wanna turn
+this whole thing here
+
+582
+00:24:26,333 --> 00:24:28,580
+into a blob of JSON.
+
+583
+00:24:28,580 --> 00:24:29,730
+So how do we do that?
+
+584
+00:24:29,730 --> 00:24:32,870
+I'm going to have a var called json.
+
+585
+00:24:32,870 --> 00:24:34,448
+It's gonna return a Data.
+
+586
+00:24:34,448 --> 00:24:38,848
+Now, this Data is just a bag of bits.
+
+587
+00:24:38,848 --> 00:24:42,599
+In our case, it's going
+to have JSON in there.
+
+588
+00:24:42,599 --> 00:24:47,130
+So I'm just gonna return
+trying to use a JSONEncoder
+
+589
+00:24:48,879 --> 00:24:53,280
+to encode myself.
+
+590
+00:24:53,280 --> 00:24:55,930
+This is the only line
+of code we really need
+
+591
+00:24:55,930 --> 00:24:59,320
+to generate a JSON version of ourself.
+
+592
+00:24:59,320 --> 00:25:01,230
+But you can see we have an error here.
+
+593
+00:25:01,230 --> 00:25:03,910
+It says instance method encode
+
+594
+00:25:03,910 --> 00:25:08,020
+requires that EmojiArt
+conform to Encodable.
+
+595
+00:25:08,020 --> 00:25:10,830
+All right, so, this is
+functional programming,
+
+596
+00:25:10,830 --> 00:25:14,260
+of course there's a protocol
+involved, Encodable.
+
+597
+00:25:14,260 --> 00:25:16,210
+So, our EmojiArt, essentially,
+
+598
+00:25:16,210 --> 00:25:19,862
+Encodable has to be
+something it conforms to.
+
+599
+00:25:19,862 --> 00:25:23,370
+And, amazingly, because
+of extensions, again,
+
+600
+00:25:23,370 --> 00:25:26,830
+that are in Swift, usually
+you could just put Encodable
+
+601
+00:25:26,830 --> 00:25:29,370
+on a struct and it'll just work.
+
+602
+00:25:29,370 --> 00:25:31,690
+But, this one doesn't quite work.
+
+603
+00:25:31,690 --> 00:25:35,640
+And, it's gonna work or not,
+depending on whether each var
+
+604
+00:25:35,640 --> 00:25:39,640
+that's in your struct is itself Encodable.
+
+605
+00:25:39,640 --> 00:25:40,710
+So let's look at our vars.
+
+606
+00:25:40,710 --> 00:25:42,327
+We got the background URL.
+
+607
+00:25:42,327 --> 00:25:46,348
+URL, definitely that's Encodable,
+I can guarantee you that.
+
+608
+00:25:46,348 --> 00:25:48,470
+Emojis, what type is it?
+
+609
+00:25:48,470 --> 00:25:49,670
+It's an Array.
+
+610
+00:25:49,670 --> 00:25:51,890
+Arrays, definitely Encodable.
+
+611
+00:25:51,890 --> 00:25:53,033
+But what's in the Array?
+
+612
+00:25:53,033 --> 00:25:54,470
+Emoji.
+
+613
+00:25:54,470 --> 00:25:55,809
+Oh, that's this struct.
+
+614
+00:25:55,809 --> 00:25:59,170
+Ah, okay, this struct is not Encodable.
+
+615
+00:25:59,170 --> 00:26:03,640
+No problem, we'll just
+say Encodable, and again,
+
+616
+00:26:03,640 --> 00:26:05,290
+using the same mechanism,
+
+617
+00:26:05,290 --> 00:26:08,010
+Swift has automatically made it Encodable,
+
+618
+00:26:08,010 --> 00:26:10,770
+and now everything in my
+EmojiArt is Encodable.
+
+619
+00:26:10,770 --> 00:26:14,490
+So, it's Encodable, and
+everything in this Emoji struct
+
+620
+00:26:14,490 --> 00:26:15,760
+is also Encodable.
+
+621
+00:26:15,760 --> 00:26:17,689
+Strings, Ints, those are Encodable.
+
+622
+00:26:17,689 --> 00:26:20,172
+So, this is Encodable.
+
+623
+00:26:20,172 --> 00:26:24,270
+Now, we almost never
+make a struct Encodable
+
+624
+00:26:24,270 --> 00:26:26,717
+without also being Decodable.
+
+625
+00:26:27,622 --> 00:26:30,020
+It's no use turning something into a JSON
+
+626
+00:26:30,020 --> 00:26:33,740
+if you can't turn it back
+into one of these things.
+
+627
+00:26:33,740 --> 00:26:36,693
+And we'll make both of
+these Decodable, of course.
+
+628
+00:26:37,530 --> 00:26:39,220
+It's so common, in fact,
+
+629
+00:26:39,220 --> 00:26:41,650
+to have both Encodable and Decodable.
+
+630
+00:26:41,650 --> 00:26:44,760
+Now there's another protocol
+that inherits both of them
+
+631
+00:26:44,760 --> 00:26:46,820
+which is Codable.
+
+632
+00:26:46,820 --> 00:26:49,715
+So this is the protocol
+we're gonna specify
+
+633
+00:26:49,715 --> 00:26:54,715
+when we wanna make something
+be turnable into JSON.
+
+634
+00:26:56,510 --> 00:26:59,687
+So nothing more is required
+in making this Codable.
+
+635
+00:26:59,687 --> 00:27:01,264
+If you have a struct
+
+636
+00:27:01,264 --> 00:27:05,460
+that doesn't have standard types like this
+
+637
+00:27:05,460 --> 00:27:07,912
+or sub structs that can be marked Codable,
+
+638
+00:27:07,912 --> 00:27:09,980
+Codable is a protocol,
+
+639
+00:27:09,980 --> 00:27:12,320
+it's got functions in
+there that you can use
+
+640
+00:27:12,320 --> 00:27:16,180
+to turn anything into an encoded thing
+
+641
+00:27:16,180 --> 00:27:18,220
+that can be JSON-ized.
+
+642
+00:27:18,220 --> 00:27:21,970
+But, most of the time, we
+try to use simple types
+
+643
+00:27:21,970 --> 00:27:23,330
+that we can do it on.
+
+644
+00:27:23,330 --> 00:27:26,860
+So, it's not really within the realm,
+
+645
+00:27:26,860 --> 00:27:28,810
+we're only in week four of this class,
+
+646
+00:27:28,810 --> 00:27:31,640
+and not really in our knowledge base yet
+
+647
+00:27:31,640 --> 00:27:33,790
+to go off and make something Codable
+
+648
+00:27:33,790 --> 00:27:35,070
+that doesn't use standard types,
+
+649
+00:27:35,070 --> 00:27:36,300
+but you know where to start.
+
+650
+00:27:36,300 --> 00:27:37,640
+You can go look at this protocol,
+
+651
+00:27:37,640 --> 00:27:40,070
+see what the description of it is,
+
+652
+00:27:40,070 --> 00:27:41,893
+and, if you ever needed to,
+
+653
+00:27:41,893 --> 00:27:45,150
+you could make your own structs Codable,
+
+654
+00:27:45,150 --> 00:27:47,633
+even if they weren't using
+these standard types.
+
+655
+00:27:48,622 --> 00:27:51,970
+So now we have the JSON,
+I wanna look at this,
+
+656
+00:27:51,970 --> 00:27:53,390
+I wanna see this JSON.
+
+657
+00:27:53,390 --> 00:27:56,270
+So what I'm gonna do, actually,
+is go back to my document,
+
+658
+00:27:56,270 --> 00:27:58,520
+and every time I change my EmojiArt,
+
+659
+00:27:58,520 --> 00:28:00,527
+I'm gonna print out on the console
+
+660
+00:28:00,527 --> 00:28:03,490
+a JSON representation of it.
+
+661
+00:28:03,490 --> 00:28:05,410
+When I say every time this changes,
+
+662
+00:28:05,410 --> 00:28:09,344
+some of you are thinking oh
+yeah, we know how to do that,
+
+663
+00:28:09,344 --> 00:28:13,690
+didSet right, this is a property observer.
+
+664
+00:28:13,690 --> 00:28:18,240
+This is gonna get called every
+time EmojiArt gets changed.
+
+665
+00:28:18,240 --> 00:28:21,650
+Unfortunately, there's a
+bug in Swift right now,
+
+666
+00:28:21,650 --> 00:28:23,740
+and if you're watching this
+
+667
+00:28:23,740 --> 00:28:25,470
+after the Stanford quarter is over,
+
+668
+00:28:25,470 --> 00:28:28,830
+it's quite possible that this
+bug has been fixed in Swift.
+
+669
+00:28:28,830 --> 00:28:31,506
+But during the Stanford
+quarter, it's not yet fixed.
+
+670
+00:28:31,506 --> 00:28:34,223
+And the problem is that property wrappers,
+
+671
+00:28:34,223 --> 00:28:37,417
+which is what this @Published is,
+
+672
+00:28:37,417 --> 00:28:41,010
+and @State is also a
+property wrapper, et cetera.
+
+673
+00:28:41,010 --> 00:28:45,820
+These don't play well currently
+with property observers.
+
+674
+00:28:45,820 --> 00:28:49,440
+That's a known problem
+that's gonna get fixed soon,
+
+675
+00:28:49,440 --> 00:28:50,730
+at least I hope.
+
+676
+00:28:50,730 --> 00:28:53,330
+But it keeps us from
+doing this nice thing,
+
+677
+00:28:53,330 --> 00:28:56,000
+where in here we could just say print
+
+678
+00:28:56,000 --> 00:29:00,000
+the JSON version of my EmojiArt equals,
+
+679
+00:29:00,000 --> 00:29:03,930
+and here I'll just say emojiArt.json.
+
+680
+00:29:03,930 --> 00:29:07,930
+And this JSON is a data, of
+course, an Optional data,
+
+681
+00:29:07,930 --> 00:29:10,630
+and I wanna turn it into a UTF-8 String.
+
+682
+00:29:10,630 --> 00:29:15,630
+So UTF-8 is a String in
+coding that JSON always uses.
+
+683
+00:29:16,370 --> 00:29:18,840
+And since this might be nil, if it's nil,
+
+684
+00:29:18,840 --> 00:29:21,430
+then return the String nil.
+
+685
+00:29:21,430 --> 00:29:24,840
+This utf8 var is something
+that I added to data
+
+686
+00:29:24,840 --> 00:29:28,410
+in the EmojiArt extension,
+so you can check that out.
+
+687
+00:29:28,410 --> 00:29:31,810
+So, it would be nice if we
+could just have this print out
+
+688
+00:29:31,810 --> 00:29:33,350
+every time this changes.
+
+689
+00:29:33,350 --> 00:29:35,950
+Since these two aren't
+compatible, what we're gonna do
+
+690
+00:29:35,950 --> 00:29:39,470
+is stop having this be @Published,
+
+691
+00:29:39,470 --> 00:29:41,203
+we're gonna take that out of there.
+
+692
+00:29:41,203 --> 00:29:43,030
+And we're even gonna
+mark here that this is
+
+693
+00:29:43,030 --> 00:29:48,030
+a workaround for property observer problem
+
+694
+00:29:49,820 --> 00:29:53,160
+with property wrappers.
+
+695
+00:29:53,160 --> 00:29:56,830
+And instead, we still need this EmojiArt
+
+696
+00:29:56,830 --> 00:30:00,030
+when it's going to change to
+do the ObservableObject thing.
+
+697
+00:30:00,030 --> 00:30:02,890
+And this is a good
+reminder what that's doing,
+
+698
+00:30:02,890 --> 00:30:04,838
+and I'm gonna do it in my willSet,
+
+699
+00:30:04,838 --> 00:30:07,853
+objectWillChange.send.
+
+700
+00:30:09,300 --> 00:30:12,730
+That's what this
+ObservableObject thing is doing
+
+701
+00:30:12,730 --> 00:30:15,130
+when we're Published, its publishing this
+
+702
+00:30:15,130 --> 00:30:17,730
+something changed message.
+
+703
+00:30:17,730 --> 00:30:19,560
+So we mentioned that way back when
+
+704
+00:30:19,560 --> 00:30:22,150
+we first talked about ObervableObject,
+
+705
+00:30:22,150 --> 00:30:23,690
+but just as reminder.
+
+706
+00:30:23,690 --> 00:30:24,840
+So I'm doing that myself,
+
+707
+00:30:24,840 --> 00:30:26,777
+now this is not quite as good
+
+708
+00:30:26,777 --> 00:30:29,520
+as having this being published.
+
+709
+00:30:29,520 --> 00:30:32,540
+We really haven't learned
+enough about @Publish
+
+710
+00:30:32,540 --> 00:30:34,580
+and what it's doing to understand
+
+711
+00:30:34,580 --> 00:30:36,390
+why this is not quite as good.
+
+712
+00:30:36,390 --> 00:30:38,970
+It's gonna work for
+our purposes just fine,
+
+713
+00:30:38,970 --> 00:30:41,450
+but @Publish, actually
+is providing something
+
+714
+00:30:41,450 --> 00:30:44,220
+called a publisher for
+this thing changing,
+
+715
+00:30:44,220 --> 00:30:45,180
+and we can use that.
+
+716
+00:30:45,180 --> 00:30:47,147
+In fact, if we knew more about published
+
+717
+00:30:47,147 --> 00:30:48,660
+at this point in the quarter,
+
+718
+00:30:48,660 --> 00:30:51,450
+we could use it to do this
+workaround in a different way
+
+719
+00:30:51,450 --> 00:30:53,620
+that would probably be a little better.
+
+720
+00:30:53,620 --> 00:30:56,130
+But this is fine, this
+makes it work for us.
+
+721
+00:30:56,130 --> 00:30:57,080
+We're still going to have
+
+722
+00:30:57,080 --> 00:30:59,580
+our ObservableObject notice changes,
+
+723
+00:30:59,580 --> 00:31:01,790
+and we're gonna print
+out JSON on every time
+
+724
+00:31:01,790 --> 00:31:04,340
+our EmojiArt changes.
+
+725
+00:31:04,340 --> 00:31:06,393
+Let's take a look, see if that worked.
+
+726
+00:31:10,800 --> 00:31:14,380
+And I'm gonna drag something,
+now, as soon as I drop this,
+
+727
+00:31:14,380 --> 00:31:17,590
+I believe my EmojiArt should
+change and I should see JSON.
+
+728
+00:31:17,590 --> 00:31:18,530
+Ready?
+
+729
+00:31:18,530 --> 00:31:20,370
+Boom, woo hoo, we did.
+
+730
+00:31:20,370 --> 00:31:21,410
+In fact, let's make this smaller,
+
+731
+00:31:21,410 --> 00:31:23,070
+we can see it going at the same time.
+
+732
+00:31:23,070 --> 00:31:25,864
+There's our JSON down here,
+it's got the background image.
+
+733
+00:31:25,864 --> 00:31:27,300
+Let's see the emojis.
+
+734
+00:31:27,300 --> 00:31:29,471
+No emojis 'cause I
+haven't put any emojis in.
+
+735
+00:31:29,471 --> 00:31:31,189
+Let's go and put an emoji in.
+
+736
+00:31:31,189 --> 00:31:33,590
+Maybe an apple below the tree again.
+
+737
+00:31:33,590 --> 00:31:34,730
+There is an apple.
+
+738
+00:31:34,730 --> 00:31:38,880
+How about maybe planet Earth
+up in the sky up there?
+
+739
+00:31:38,880 --> 00:31:40,560
+Or Mars or something here?
+
+740
+00:31:40,560 --> 00:31:43,560
+And you can see that it is generating JSON
+
+741
+00:31:43,560 --> 00:31:45,379
+that represents our whole document.
+
+742
+00:31:45,379 --> 00:31:47,345
+So that was super easy
+
+743
+00:31:47,345 --> 00:31:50,213
+to be able to generate JSON like that.
+
+744
+00:31:50,213 --> 00:31:53,580
+And now, we're going to do
+another super easy thing is,
+
+745
+00:31:53,580 --> 00:31:57,250
+we're gonna throw that
+JSON into UserDefaults
+
+746
+00:31:57,250 --> 00:32:00,310
+as a way of making our document permanent.
+
+747
+00:32:00,310 --> 00:32:03,050
+Now, again, we don't have
+multiple documents yet,
+
+748
+00:32:03,050 --> 00:32:04,305
+we can't name documents,
+
+749
+00:32:04,305 --> 00:32:07,040
+we really should be putting
+them in the file system
+
+750
+00:32:07,040 --> 00:32:09,960
+or even in iCloud or something
+like that, but for now,
+
+751
+00:32:09,960 --> 00:32:12,883
+let's just make it persist
+so that when we quit,
+
+752
+00:32:12,883 --> 00:32:17,883
+and then we go back, we don't
+lose our beautiful images.
+
+753
+00:32:19,130 --> 00:32:19,963
+Now how're we gonna do that?
+
+754
+00:32:19,963 --> 00:32:21,370
+So I'm gonna stop printing here,
+
+755
+00:32:21,370 --> 00:32:24,660
+I'm just gonna say UserDefault.standard,
+
+756
+00:32:24,660 --> 00:32:28,260
+that's the standard UserDefaults database.
+
+757
+00:32:28,260 --> 00:32:30,210
+You can have others, but
+that's the standard one,
+
+758
+00:32:30,210 --> 00:32:32,652
+we use that 99% of the time.
+
+759
+00:32:32,652 --> 00:32:37,652
+Set this EmojiArt JSON
+value for a certain key,
+
+760
+00:32:39,950 --> 00:32:41,300
+and you'll remember that from the slides,
+
+761
+00:32:41,300 --> 00:32:43,480
+that UserDefaults is like a Dictionary,
+
+762
+00:32:43,480 --> 00:32:45,220
+feels like a Dictionary.
+
+763
+00:32:45,220 --> 00:32:46,620
+Now you just have to specify a key,
+
+764
+00:32:46,620 --> 00:32:49,630
+I'll say EmojiArtDocument dot,
+
+765
+00:32:49,630 --> 00:32:53,440
+this is like an untitled
+document or something.
+
+766
+00:32:53,440 --> 00:32:54,639
+This key can be anything,
+
+767
+00:32:54,639 --> 00:32:57,990
+we tend to put something
+like the class name
+
+768
+00:32:57,990 --> 00:33:00,130
+or the struct name at the beginning of it,
+
+769
+00:33:00,130 --> 00:33:02,620
+just because this UserDefaults standard
+
+770
+00:33:02,620 --> 00:33:03,830
+is used for a whole app,
+
+771
+00:33:03,830 --> 00:33:07,020
+we might have other structs
+that wanna be storing things
+
+772
+00:33:07,020 --> 00:33:09,880
+in UserDefaults, and we
+don't want their keys
+
+773
+00:33:09,880 --> 00:33:12,193
+to collide with ours.
+
+774
+00:33:13,170 --> 00:33:16,380
+And that's it, that's going
+to write this thing in there.
+
+775
+00:33:16,380 --> 00:33:17,958
+Notice this is a Data,
+
+776
+00:33:17,958 --> 00:33:20,970
+and it knows that, this UserDefaults
+
+777
+00:33:20,970 --> 00:33:22,360
+knows how to put in Datas,
+
+778
+00:33:22,360 --> 00:33:24,900
+and Strings, and Dates,
+and Ints, and Floats,
+
+779
+00:33:24,900 --> 00:33:26,900
+and Arrays of those things,
+
+780
+00:33:26,900 --> 00:33:27,753
+and Dictionaries of those things.
+
+781
+00:33:27,753 --> 00:33:28,605
+And that's it.
+
+782
+00:33:28,605 --> 00:33:30,610
+It also knows how to handle an Optional,
+
+783
+00:33:30,610 --> 00:33:31,640
+because this is an Optional.
+
+784
+00:33:31,640 --> 00:33:33,600
+If I say set, and this is nil,
+
+785
+00:33:33,600 --> 00:33:36,610
+it'll just clear out
+anything for this key.
+
+786
+00:33:36,610 --> 00:33:38,500
+Now, we wanna get it out.
+
+787
+00:33:38,500 --> 00:33:40,790
+How do we get that thing out?
+
+788
+00:33:40,790 --> 00:33:42,440
+Well, back in our EmojiArt,
+
+789
+00:33:42,440 --> 00:33:45,028
+we know how to encode ourself as a JSON.
+
+790
+00:33:45,028 --> 00:33:48,714
+But we need some code over
+here to decode ourself.
+
+791
+00:33:48,714 --> 00:33:51,090
+Let me do that with an init.
+
+792
+00:33:51,090 --> 00:33:51,923
+I'm gonna have an init
+
+793
+00:33:51,923 --> 00:33:55,024
+that takes a JSON Data as an argument,
+
+794
+00:33:55,024 --> 00:33:59,012
+and tries to look at
+this Data and decode it
+
+795
+00:33:59,012 --> 00:34:00,873
+to be an EmojiArt.
+
+796
+00:34:01,850 --> 00:34:03,410
+So, how would we do that?
+
+797
+00:34:03,410 --> 00:34:07,110
+I'm just gonna say if this JSON
+Data does not equal to nil,
+
+798
+00:34:07,110 --> 00:34:09,337
+I obviously can't decode nil,
+
+799
+00:34:09,337 --> 00:34:14,042
+then I'm going to let a new
+EmojiArt that I'm gonna create
+
+800
+00:34:14,042 --> 00:34:19,042
+equal trying to use a JSONDecoder
+to decode an EmojiArt.
+
+801
+00:34:24,020 --> 00:34:28,190
+And here I'm specifying the
+type of thing I want to decode,
+
+802
+00:34:28,190 --> 00:34:29,680
+and when we specify type, remember,
+
+803
+00:34:29,680 --> 00:34:34,552
+we put .self like URL.self we
+did for the drop last time.
+
+804
+00:34:34,552 --> 00:34:38,063
+And I'm gonna do this from
+the JSON that was passed in.
+
+805
+00:34:38,063 --> 00:34:40,840
+And this is either gonna work or not.
+
+806
+00:34:40,840 --> 00:34:43,599
+It also has a try, just
+like this had a try,
+
+807
+00:34:43,599 --> 00:34:46,680
+and the Data contentsOf had a try.
+
+808
+00:34:46,680 --> 00:34:48,560
+If just fails, it's gonna return nil.
+
+809
+00:34:48,560 --> 00:34:50,800
+So this if let is just gonna do nothing,
+
+810
+00:34:50,800 --> 00:34:52,340
+or we won't get in here.
+
+811
+00:34:52,340 --> 00:34:56,340
+But if this doesn't fail,
+now I have a new EmojiArt.
+
+812
+00:34:56,340 --> 00:34:59,580
+So now I kinda wanna replace my whole self
+
+813
+00:34:59,580 --> 00:35:02,364
+with this new EmojiArt, 'cause
+I'm initializing myself,
+
+814
+00:35:02,364 --> 00:35:05,240
+and believe it or not, for
+a value type you can say,
+
+815
+00:35:05,240 --> 00:35:07,430
+self equals something.
+
+816
+00:35:07,430 --> 00:35:09,790
+You are allowed, with a value type,
+
+817
+00:35:09,790 --> 00:35:11,980
+to assign something to self,
+
+818
+00:35:11,980 --> 00:35:14,670
+and it'll replace the whole thing.
+
+819
+00:35:14,670 --> 00:35:16,770
+Can do it with enums too.
+
+820
+00:35:16,770 --> 00:35:18,550
+And that's great, that's
+exactly what I want.
+
+821
+00:35:18,550 --> 00:35:19,383
+I'm initializing.
+
+822
+00:35:19,383 --> 00:35:22,250
+I'm just gonna set myself
+equal to whatever EmojiArt
+
+823
+00:35:22,250 --> 00:35:25,563
+I was able to decode from
+the JSON that you gave me.
+
+824
+00:35:26,500 --> 00:35:29,156
+But, what if I can't decode it though?
+
+825
+00:35:29,156 --> 00:35:31,099
+If I don't do anything here,
+
+826
+00:35:31,099 --> 00:35:34,240
+I'm gonna get a blank EmojiArtDocument.
+
+827
+00:35:34,240 --> 00:35:36,640
+'Cause I won't have
+initialized any of these
+
+828
+00:35:36,640 --> 00:35:38,650
+to something different
+than their defaults, which,
+
+829
+00:35:38,650 --> 00:35:40,920
+this one is nil, and
+this is an empty Array,
+
+830
+00:35:40,920 --> 00:35:43,219
+so I'd get a blank EmojiArtDocument.
+
+831
+00:35:43,219 --> 00:35:45,890
+But, I don't think
+that's what I want here.
+
+832
+00:35:45,890 --> 00:35:47,600
+If someone asked me to create
+
+833
+00:35:47,600 --> 00:35:50,080
+an EmojiArtDocument with JSON,
+
+834
+00:35:50,080 --> 00:35:53,550
+and I'm unable to do it for some reason,
+
+835
+00:35:53,550 --> 00:35:56,730
+I really need to let them know.
+
+836
+00:35:56,730 --> 00:35:57,860
+And, the way I'm gonna do that
+
+837
+00:35:57,860 --> 00:36:00,550
+is with a failable initializer.
+
+838
+00:36:00,550 --> 00:36:03,630
+If you put question mark right after init,
+
+839
+00:36:03,630 --> 00:36:05,870
+then when people call this initializer,
+
+840
+00:36:05,870 --> 00:36:08,228
+if this initializer returns nil,
+
+841
+00:36:08,228 --> 00:36:11,980
+then they'll get nil back as the object
+
+842
+00:36:11,980 --> 00:36:14,110
+they were trying to create.
+
+843
+00:36:14,110 --> 00:36:16,220
+And that really is gonna send the message,
+
+844
+00:36:16,220 --> 00:36:19,700
+I tried to create EmojiArt
+with the JSON, but I couldn't.
+
+845
+00:36:19,700 --> 00:36:21,610
+So a failable initializer, really easy,
+
+846
+00:36:21,610 --> 00:36:25,350
+you just put question,
+return nil whenever you fail,
+
+847
+00:36:25,350 --> 00:36:26,930
+and then people are creating you,
+
+848
+00:36:26,930 --> 00:36:28,600
+they have to check for nil,
+
+849
+00:36:28,600 --> 00:36:30,020
+because you're returning, essentially,
+
+850
+00:36:30,020 --> 00:36:32,483
+an Optional version of EmojiArt here.
+
+851
+00:36:33,427 --> 00:36:35,440
+Now we added an init here,
+
+852
+00:36:35,440 --> 00:36:37,054
+and I don't know if
+you remember the rules?
+
+853
+00:36:37,054 --> 00:36:40,840
+But if you add an init, then
+you lose your free init,
+
+854
+00:36:40,840 --> 00:36:44,090
+the free init that
+specifies each argument.
+
+855
+00:36:44,090 --> 00:36:45,270
+These all have defaults,
+
+856
+00:36:45,270 --> 00:36:47,240
+so you could say init with no arguments,
+
+857
+00:36:47,240 --> 00:36:49,170
+which is what we do over here, actually,
+
+858
+00:36:49,170 --> 00:36:51,950
+we created an EmojiArt
+empty with no arguments.
+
+859
+00:36:51,950 --> 00:36:54,551
+We lost that init, so
+we have to add it back.
+
+860
+00:36:54,551 --> 00:36:57,620
+So, an init with no arguments
+does nothing in our structs,
+
+861
+00:36:57,620 --> 00:37:00,943
+it just takes these default
+values and uses them.
+
+862
+00:37:02,920 --> 00:37:06,644
+So now we have a way of
+creating an EmojiArtDocument
+
+863
+00:37:06,644 --> 00:37:10,660
+from this JSON data, so
+let's use that over here.
+
+864
+00:37:10,660 --> 00:37:13,738
+Instead of doing this, where
+we create an empty one,
+
+865
+00:37:13,738 --> 00:37:16,307
+I'm going to have an init for my document.
+
+866
+00:37:16,307 --> 00:37:20,390
+And in my init, I'm just
+gonna set my EmojiArt equal to
+
+867
+00:37:20,390 --> 00:37:23,423
+the EmojiArt that I get
+from passing the JSON
+
+868
+00:37:23,423 --> 00:37:26,220
+that I get out of UserDefaults.
+
+869
+00:37:26,220 --> 00:37:28,649
+So I'm gonna use my standard UserDefaults,
+
+870
+00:37:28,649 --> 00:37:33,630
+this time I'm gonna ask for
+a Data for that same key.
+
+871
+00:37:33,630 --> 00:37:38,630
+Now, I could just copy and
+paste this down to here,
+
+872
+00:37:39,000 --> 00:37:40,560
+but that's a dangerous move,
+
+873
+00:37:40,560 --> 00:37:43,850
+if I miss a character or
+whatever, then these won't match.
+
+874
+00:37:43,850 --> 00:37:46,000
+So let's be good programmers and instead,
+
+875
+00:37:46,000 --> 00:37:47,890
+create a little static var.
+
+876
+00:37:47,890 --> 00:37:50,203
+I'm gonna call it untitled.
+
+877
+00:37:51,610 --> 00:37:56,610
+Lets make it private static let
+untitled equals that String,
+
+878
+00:37:59,890 --> 00:38:02,514
+and then I'll use that down here,
+
+879
+00:38:02,514 --> 00:38:05,333
+EmojiArtDocument.untitled.
+
+880
+00:38:06,250 --> 00:38:09,260
+This way I'm guaranteed
+that whatever I'm saving out
+
+881
+00:38:09,260 --> 00:38:11,623
+is the same key I'm
+using to get it back in.
+
+882
+00:38:12,720 --> 00:38:16,410
+By the way, once we load
+this EmojiArt back up,
+
+883
+00:38:16,410 --> 00:38:20,079
+we're for sure going to want
+to fetch our background image,
+
+884
+00:38:20,079 --> 00:38:22,760
+because your EmojiArtDocument
+doesn't store the image,
+
+885
+00:38:22,760 --> 00:38:23,920
+just the URL.
+
+886
+00:38:23,920 --> 00:38:26,210
+So we gotta go back out on the Internet
+
+887
+00:38:26,210 --> 00:38:29,330
+and get the image data when we load it up.
+
+888
+00:38:29,330 --> 00:38:30,480
+Now we're still having an error here,
+
+889
+00:38:30,480 --> 00:38:33,600
+value of Optional type EmojiArt,
+
+890
+00:38:33,600 --> 00:38:38,600
+EmojiArt Optional must be
+unwrapped to a type EmojiArt.
+
+891
+00:38:39,379 --> 00:38:40,320
+And that makes sense, right?
+
+892
+00:38:40,320 --> 00:38:44,957
+Because this is a failable
+initializer, it could return nil.
+
+893
+00:38:44,957 --> 00:38:47,320
+EmojiArt up here can't take nil,
+
+894
+00:38:47,320 --> 00:38:49,700
+it's not an Optional EmojiArt.
+
+895
+00:38:49,700 --> 00:38:52,220
+So what I'm gonna do here
+is, if it returns nil,
+
+896
+00:38:52,220 --> 00:38:54,470
+I'm gonna create a blank document.
+
+897
+00:38:54,470 --> 00:38:56,170
+So at least we have some document.
+
+898
+00:38:57,340 --> 00:38:59,313
+Okay, let's fire this thing up.
+
+899
+00:39:00,236 --> 00:39:01,069
+Let's see if it works.
+
+900
+00:39:01,069 --> 00:39:03,470
+Okay, we start out with a
+blank document, of course,
+
+901
+00:39:03,470 --> 00:39:06,170
+that's this question mark
+question mark blank document
+
+902
+00:39:06,170 --> 00:39:09,421
+because we couldn't load
+anything up from UserDefaults
+
+903
+00:39:09,421 --> 00:39:11,820
+at the start, there was nothing in there.
+
+904
+00:39:11,820 --> 00:39:15,357
+But if we start building our
+thing here, let's do that.
+
+905
+00:39:15,357 --> 00:39:18,280
+Put our apples back in here.
+
+906
+00:39:18,280 --> 00:39:22,174
+Put our Earth up in the sky up here.
+
+907
+00:39:22,174 --> 00:39:26,610
+This is hopefully writing
+out the JSON as we speak
+
+908
+00:39:26,610 --> 00:39:28,270
+to our UserDefaults.
+
+909
+00:39:28,270 --> 00:39:32,743
+Let's quit, and then run it
+again and see what happens.
+
+910
+00:39:32,743 --> 00:39:34,930
+Woo hoo, there's our document.
+
+911
+00:39:34,930 --> 00:39:36,791
+Now, sometimes you have
+to be a little careful.
+
+912
+00:39:36,791 --> 00:39:40,490
+If we, I don't know, drop a
+baseball in the front yard,
+
+913
+00:39:40,490 --> 00:39:44,363
+there it is, and now we press
+stop, and then we run again,
+
+914
+00:39:45,950 --> 00:39:47,640
+oh, we lost her baseball.
+
+915
+00:39:47,640 --> 00:39:49,421
+Why didn't the baseball work?
+
+916
+00:39:49,421 --> 00:39:52,950
+Well, UserDefaults, when you
+put things in UserDefaults,
+
+917
+00:39:52,950 --> 00:39:55,890
+it doesn't run right out to
+the disk and write it out,
+
+918
+00:39:55,890 --> 00:39:58,290
+it buffers them up and writes them out
+
+919
+00:39:58,290 --> 00:40:01,015
+at an appropriate time,
+when it's convenient.
+
+920
+00:40:01,015 --> 00:40:04,180
+And, we don't give it a chance to do that
+
+921
+00:40:04,180 --> 00:40:07,970
+because we picked this baseball
+up, we put it down here,
+
+922
+00:40:07,970 --> 00:40:11,390
+and we hit stop, and that kills our app.
+
+923
+00:40:11,390 --> 00:40:12,670
+It just kills it.
+
+924
+00:40:12,670 --> 00:40:15,390
+There's no chance to go
+do something like that.
+
+925
+00:40:15,390 --> 00:40:18,020
+So when you're doing
+debugging and you're using,
+
+926
+00:40:18,020 --> 00:40:19,746
+we got lucky that time, it wrote it out.
+
+927
+00:40:19,746 --> 00:40:22,830
+When you're doing that,
+one thing you wanna do is,
+
+928
+00:40:22,830 --> 00:40:25,540
+when you have a change
+and you want UserDefaults
+
+929
+00:40:25,540 --> 00:40:29,110
+to write things out, just
+switch to another app.
+
+930
+00:40:29,110 --> 00:40:31,240
+Here I'm gonna switch to the files app.
+
+931
+00:40:31,240 --> 00:40:33,110
+Doesn't really matter, and switch back.
+
+932
+00:40:33,110 --> 00:40:34,600
+Because when you switch to another app,
+
+933
+00:40:34,600 --> 00:40:37,740
+UserDefaults is always gonna
+write the database out.
+
+934
+00:40:37,740 --> 00:40:42,263
+That way when you quit, and
+you come back, it's there.
+
+935
+00:40:43,750 --> 00:40:45,530
+That's all I really wanted to talk about
+
+936
+00:40:45,530 --> 00:40:47,611
+in terms of storage for now,
+
+937
+00:40:47,611 --> 00:40:49,600
+and we're gonna be working on this more
+
+938
+00:40:49,600 --> 00:40:50,960
+as the quarter goes on.
+
+939
+00:40:50,960 --> 00:40:54,690
+But the next thing I wanna
+talk about is gestures.
+
+940
+00:40:54,690 --> 00:40:59,004
+What I wanna be able to do
+here is to zoom in and out
+
+941
+00:40:59,004 --> 00:41:00,950
+on my document.
+
+942
+00:41:00,950 --> 00:41:01,783
+And I'll show you why.
+
+943
+00:41:01,783 --> 00:41:03,840
+Here's another image down here.
+
+944
+00:41:03,840 --> 00:41:08,840
+Let's go ahead and drag
+and drop this image in here
+
+945
+00:41:09,110 --> 00:41:10,193
+and see what happens.
+
+946
+00:41:11,280 --> 00:41:12,950
+Whoa.
+
+947
+00:41:12,950 --> 00:41:16,620
+Okay, it definitely put that
+image in here, but it's huge.
+
+948
+00:41:16,620 --> 00:41:18,600
+This is just a huge image.
+
+949
+00:41:18,600 --> 00:41:22,270
+And so, I really want to
+be able to zoom in here.
+
+950
+00:41:22,270 --> 00:41:24,610
+I'm holding down option by
+the way, in the simulator,
+
+951
+00:41:24,610 --> 00:41:28,350
+that's how you can simulate
+two fingers being down.
+
+952
+00:41:28,350 --> 00:41:31,493
+And I really wanna zoom in and
+see the whole picture here.
+
+953
+00:41:31,493 --> 00:41:33,870
+There's another horse, whole
+bunch of other animals,
+
+954
+00:41:33,870 --> 00:41:36,343
+I wanna be able to see these things.
+
+955
+00:41:37,370 --> 00:41:38,330
+Now, I don't know if you know this,
+
+956
+00:41:38,330 --> 00:41:40,532
+another terrible problem
+with this huge image,
+
+957
+00:41:40,532 --> 00:41:44,240
+it blasted our emoji palette.
+
+958
+00:41:44,240 --> 00:41:46,290
+We can't even add more emojis,
+
+959
+00:41:46,290 --> 00:41:48,650
+they all got wiped out up here.
+
+960
+00:41:48,650 --> 00:41:50,862
+This is somehow drawing outside
+
+961
+00:41:50,862 --> 00:41:52,908
+of where it's supposed to draw.
+
+962
+00:41:52,908 --> 00:41:55,200
+And that's actually normal in SwiftUI.
+
+963
+00:41:55,200 --> 00:41:57,760
+The default in SwiftUI is for Views
+
+964
+00:41:57,760 --> 00:42:00,985
+to be able to draw outside
+of their boundaries.
+
+965
+00:42:00,985 --> 00:42:03,884
+So if we wanna keep a View
+inside its boundaries,
+
+966
+00:42:03,884 --> 00:42:06,590
+we have to do a modifier on it.
+
+967
+00:42:06,590 --> 00:42:09,087
+So let's start with that,
+let's get our pallet back
+
+968
+00:42:09,087 --> 00:42:10,563
+before we do anything.
+
+969
+00:42:11,450 --> 00:42:13,918
+The modifier we use,
+really, really simple.
+
+970
+00:42:13,918 --> 00:42:18,760
+Gonna put it, let's put it
+on the ZStack right here.
+
+971
+00:42:18,760 --> 00:42:20,879
+So here's our ZStack of stuff.
+
+972
+00:42:20,879 --> 00:42:23,917
+It's called .clipped
+
+973
+00:42:23,917 --> 00:42:26,060
+.clipped just means
+all the drawing it does
+
+974
+00:42:26,060 --> 00:42:29,500
+is gonna be clipped to
+the bounds of the View.
+
+975
+00:42:29,500 --> 00:42:32,280
+By the way, while I'm here,
+let's move this stuff,
+
+976
+00:42:32,280 --> 00:42:34,555
+the edges stuff, and the dropping stuff,
+
+977
+00:42:34,555 --> 00:42:37,453
+let's move that down here as well.
+
+978
+00:42:38,452 --> 00:42:40,810
+Reason I'm moving that out here is,
+
+979
+00:42:40,810 --> 00:42:43,610
+these do semantically apply to the ZStack,
+
+980
+00:42:43,610 --> 00:42:45,940
+we do want the ZStack going
+all the way to the edges,
+
+981
+00:42:45,940 --> 00:42:48,187
+and we wanna be able to
+drop anywhere in the ZStack.
+
+982
+00:42:48,187 --> 00:42:49,942
+And it cleans up this in here
+
+983
+00:42:49,942 --> 00:42:53,807
+so it's much cleaner of
+what's going on in here.
+
+984
+00:42:53,807 --> 00:42:56,661
+Although, this is not
+very clean right here.
+
+985
+00:42:56,661 --> 00:42:59,350
+Let's go make sure this clipped worked,
+
+986
+00:42:59,350 --> 00:43:00,390
+then we're gonna run back in here
+
+987
+00:43:00,390 --> 00:43:02,623
+and fix this not so
+clean code right there.
+
+988
+00:43:07,860 --> 00:43:09,460
+All right, here's our big thing.
+
+989
+00:43:09,460 --> 00:43:12,160
+And it's still big, so we
+still need our gesture,
+
+990
+00:43:12,160 --> 00:43:15,897
+but look, woo, we still
+have our various emoji
+
+991
+00:43:15,897 --> 00:43:18,180
+and we can still drop them in there.
+
+992
+00:43:18,180 --> 00:43:19,660
+All right, let's go
+back and clean that code
+
+993
+00:43:19,660 --> 00:43:20,580
+I was talking about.
+
+994
+00:43:20,580 --> 00:43:24,000
+This code, why is this not really clean?
+
+995
+00:43:24,000 --> 00:43:27,900
+In SwiftUI, it's all really
+about breaking these Views down
+
+996
+00:43:27,900 --> 00:43:30,490
+into small little Views.
+
+997
+00:43:30,490 --> 00:43:34,230
+Especially when you have a
+semantic boundary of a View
+
+998
+00:43:34,230 --> 00:43:35,812
+like we have here.
+
+999
+00:43:35,812 --> 00:43:38,220
+What is this code all about?
+
+1000
+00:43:38,220 --> 00:43:40,864
+This code is all just about
+showing this background image,
+
+1001
+00:43:40,864 --> 00:43:43,548
+but unfortunately it might be nil,
+
+1002
+00:43:43,548 --> 00:43:45,460
+so we have to check for that.
+
+1003
+00:43:45,460 --> 00:43:47,230
+That's all we're doing here.
+
+1004
+00:43:47,230 --> 00:43:49,730
+And, if someone's
+reading through our code,
+
+1005
+00:43:49,730 --> 00:43:51,560
+they're having to pass a lot of code here
+
+1006
+00:43:51,560 --> 00:43:53,960
+just to realize that
+we're showing an image
+
+1007
+00:43:53,960 --> 00:43:55,173
+that might be Optional.
+
+1008
+00:43:56,040 --> 00:43:57,835
+We shouldn't ask readers of our code
+
+1009
+00:43:57,835 --> 00:44:02,450
+to have this much trouble
+understanding what's going on.
+
+1010
+00:44:02,450 --> 00:44:04,810
+I'm gonna make another sub-View,
+
+1011
+00:44:04,810 --> 00:44:06,710
+and this is the way we break this down.
+
+1012
+00:44:06,710 --> 00:44:09,410
+We just make, either
+called functions and vars
+
+1013
+00:44:09,410 --> 00:44:11,460
+to put our View somewhere else,
+
+1014
+00:44:11,460 --> 00:44:15,480
+or we can make new Views,
+like we made CardView.
+
+1015
+00:44:15,480 --> 00:44:18,387
+So I'm gonna make another
+View down here, I'm gonna say
+
+1016
+00:44:18,387 --> 00:44:20,710
+struct. I'm gonna call it OptionalImage.
+
+1017
+00:44:20,710 --> 00:44:25,630
+And it's just gonna be
+a View that takes a var,
+
+1018
+00:44:25,630 --> 00:44:29,900
+which is a UIImage, Optional UIImage.
+
+1019
+00:44:29,900 --> 00:44:33,570
+And then my var body is gonna
+return some View, as always.
+
+1020
+00:44:33,570 --> 00:44:35,110
+I'm just gonna put this code in there,
+
+1021
+00:44:35,110 --> 00:44:38,150
+so I'm gonna go grab this code,
+let's get this outta here.
+
+1022
+00:44:38,150 --> 00:44:41,860
+Cut, just down in here, paste.
+
+1023
+00:44:41,860 --> 00:44:43,289
+Of course, I'm using this uiImage
+
+1024
+00:44:43,289 --> 00:44:45,737
+instead of this backgroundImage.
+
+1025
+00:44:51,753 --> 00:44:52,586
+That's it.
+
+1026
+00:44:52,586 --> 00:44:56,112
+So I've just created this
+little utility thing right here,
+
+1027
+00:44:56,112 --> 00:45:01,112
+and all it does is handle a
+UIImage that might be nil.
+
+1028
+00:45:01,460 --> 00:45:04,620
+And now, my code up here
+turns from all that mess
+
+1029
+00:45:04,620 --> 00:45:09,620
+to just OptionalImage of a
+self.document.backgroundImage.
+
+1030
+00:45:12,580 --> 00:45:15,890
+Much cleaner up here to
+understand what's going on.
+
+1031
+00:45:15,890 --> 00:45:19,840
+Especially looking at
+this ZStack right here,
+
+1032
+00:45:19,840 --> 00:45:21,830
+it's clear that this
+is my background image
+
+1033
+00:45:21,830 --> 00:45:23,550
+and these are my emojis.
+
+1034
+00:45:23,550 --> 00:45:25,510
+Much simpler.
+
+1035
+00:45:25,510 --> 00:45:26,674
+Now this OptionalImage,
+
+1036
+00:45:26,674 --> 00:45:30,890
+this has nothing to do
+with EmojiArt, whatsoever.
+
+1037
+00:45:30,890 --> 00:45:32,117
+So I'm gonna take it outta here
+
+1038
+00:45:32,117 --> 00:45:34,400
+and put it in its own file.
+
+1039
+00:45:34,400 --> 00:45:36,090
+Which, you really wanna do that,
+
+1040
+00:45:36,090 --> 00:45:37,750
+when you have something that's unrelated,
+
+1041
+00:45:37,750 --> 00:45:41,880
+don't bury those things
+inside unrelated code.
+
+1042
+00:45:41,880 --> 00:45:46,180
+So this is called OptionalImage,
+put in its own file.
+
+1043
+00:45:46,180 --> 00:45:49,560
+And this file that I've
+created right here,
+
+1044
+00:45:49,560 --> 00:45:51,263
+I might well use this,
+
+1045
+00:45:51,263 --> 00:45:54,560
+pick it up and drag it into
+some other app that I'm writing,
+
+1046
+00:45:54,560 --> 00:45:57,980
+it's quite a useful little View here,
+
+1047
+00:45:57,980 --> 00:46:00,333
+and quite reusable in that sense.
+
+1048
+00:46:02,148 --> 00:46:03,740
+Wanted to take that little detour,
+
+1049
+00:46:03,740 --> 00:46:07,760
+just because I didn't want
+you to be creating these Views
+
+1050
+00:46:07,760 --> 00:46:10,020
+that just had hundreds
+of lines of code in here,
+
+1051
+00:46:10,020 --> 00:46:12,970
+and then just completely
+un-understandable.
+
+1052
+00:46:12,970 --> 00:46:15,770
+Okay, back to what we wanna do which is,
+
+1053
+00:46:15,770 --> 00:46:20,707
+we want to be able to, in
+our EmojiArt over here,
+
+1054
+00:46:20,707 --> 00:46:24,560
+zoom in on these huge images so we can see
+
+1055
+00:46:24,560 --> 00:46:25,763
+what's going on there.
+
+1056
+00:46:26,600 --> 00:46:31,356
+We're gonna do that by
+introducing a new piece of @State
+
+1057
+00:46:31,356 --> 00:46:36,356
+into our View, which I'm
+gonna call our zoomScale.
+
+1058
+00:46:36,750 --> 00:46:39,920
+This is just @State because
+it's only going to affect
+
+1059
+00:46:39,920 --> 00:46:41,260
+the way our View looks.
+
+1060
+00:46:41,260 --> 00:46:45,150
+This has nothing to do with
+our EmojiArt document itself,
+
+1061
+00:46:45,150 --> 00:46:49,530
+it's purely a UI visual
+thing, and it's temporary.
+
+1062
+00:46:49,530 --> 00:46:50,580
+As we zoom in and out,
+
+1063
+00:46:50,580 --> 00:46:54,147
+it's just showing us how
+much zooming there is.
+
+1064
+00:46:54,147 --> 00:46:56,031
+It's just gonna be a CGFloat.
+
+1065
+00:46:56,031 --> 00:46:57,481
+I'm gonna start out equal 1.0.
+
+1066
+00:46:58,550 --> 00:47:00,410
+And this is room scale is gonna be
+
+1067
+00:47:00,410 --> 00:47:04,704
+how much were zoomed in or
+out on our entire document.
+
+1068
+00:47:04,704 --> 00:47:07,300
+zoomScale 1.0 means our document is
+
+1069
+00:47:07,300 --> 00:47:11,530
+whatever the size of its
+background URL's image is.
+
+1070
+00:47:11,530 --> 00:47:14,410
+But 2.0 means it's twice as big as that.
+
+1071
+00:47:14,410 --> 00:47:16,993
+And .5 means it's half as big as that.
+
+1072
+00:47:17,930 --> 00:47:19,940
+The first thing I'm gonna
+do with this zoomScale
+
+1073
+00:47:19,940 --> 00:47:22,730
+is go apply it to everywhere in my View
+
+1074
+00:47:22,730 --> 00:47:24,119
+where it would matter.
+
+1075
+00:47:24,119 --> 00:47:29,100
+So, for example, my background
+image, clearly that matters,
+
+1076
+00:47:29,100 --> 00:47:33,947
+I want to scaleEffect
+it to be our zoomScale.
+
+1077
+00:47:35,240 --> 00:47:37,750
+So that's gonna make my
+background image the right size.
+
+1078
+00:47:37,750 --> 00:47:41,570
+Of course, my emojis here
+also need to get bigger
+
+1079
+00:47:41,570 --> 00:47:43,030
+when I zoom in.
+
+1080
+00:47:43,030 --> 00:47:44,120
+So that's their font.
+
+1081
+00:47:44,120 --> 00:47:45,910
+So let's go down to
+their font, here it is.
+
+1082
+00:47:45,910 --> 00:47:47,810
+We're seeing their font to this font size,
+
+1083
+00:47:47,810 --> 00:47:52,800
+we gotta zoom that up by our zoomScale.
+
+1084
+00:47:52,800 --> 00:47:54,120
+And the other thing we need to do is
+
+1085
+00:47:54,120 --> 00:47:57,704
+every time we're converting
+from this iOS coordinate system,
+
+1086
+00:47:57,704 --> 00:48:00,090
+which is (0, 0) in the upper left,
+
+1087
+00:48:00,090 --> 00:48:02,060
+to the EmojiArt coordinate system,
+
+1088
+00:48:02,060 --> 00:48:03,920
+which is (0, 0) in the middle,
+
+1089
+00:48:03,920 --> 00:48:05,580
+we have to be careful because
+
+1090
+00:48:05,580 --> 00:48:07,240
+when things are far away from the middle,
+
+1091
+00:48:07,240 --> 00:48:09,760
+when they're zoomed up, they're
+very far from the middle,
+
+1092
+00:48:09,760 --> 00:48:11,000
+so it effects that.
+
+1093
+00:48:11,000 --> 00:48:13,389
+So where are the two
+places that we convert
+
+1094
+00:48:13,389 --> 00:48:14,969
+those coordinate systems?
+
+1095
+00:48:14,969 --> 00:48:17,710
+One is here when we're dropping.
+
+1096
+00:48:17,710 --> 00:48:20,330
+And also here where we're
+positioning the emojis,
+
+1097
+00:48:20,330 --> 00:48:22,560
+this place where we're
+going through the emojis
+
+1098
+00:48:22,560 --> 00:48:23,820
+and putting them down.
+
+1099
+00:48:23,820 --> 00:48:26,020
+Well, obviously we're
+being told where they are
+
+1100
+00:48:26,020 --> 00:48:29,500
+in EmojiArt's (0, 0)
+centered coordinate system,
+
+1101
+00:48:29,500 --> 00:48:30,950
+we need to convert them.
+
+1102
+00:48:30,950 --> 00:48:33,261
+So we need to fix both of these cases.
+
+1103
+00:48:33,261 --> 00:48:37,410
+Our location of the drop
+is now just going to be
+
+1104
+00:48:37,410 --> 00:48:42,410
+the location it was, but
+divided by the zoomScale.
+
+1105
+00:48:43,790 --> 00:48:44,920
+Same thing with y.
+
+1106
+00:48:44,920 --> 00:48:46,120
+So that fixes
+
+1107
+00:48:46,120 --> 00:48:49,720
+the coordinate system
+transformation for drops.
+
+1108
+00:48:49,720 --> 00:48:52,290
+And for position, kinda
+have this embedded here,
+
+1109
+00:48:52,290 --> 00:48:53,580
+let's clean this up a little bit,
+
+1110
+00:48:53,580 --> 00:48:57,177
+I'm gonna say my location
+is my emoji's location,
+
+1111
+00:48:57,177 --> 00:49:02,177
+and I'm gonna modify the
+location to be this essentially,
+
+1112
+00:49:03,530 --> 00:49:04,900
+except for that.
+
+1113
+00:49:04,900 --> 00:49:07,083
+Now I put it in location.
+
+1114
+00:49:10,170 --> 00:49:11,790
+I'm gonna return that location
+
+1115
+00:49:11,790 --> 00:49:12,920
+and by splitting that out,
+
+1116
+00:49:12,920 --> 00:49:15,621
+it makes it really easy for us to add this
+
+1117
+00:49:15,621 --> 00:49:19,210
+little zoomScale modification
+to it right before.
+
+1118
+00:49:19,210 --> 00:49:20,043
+So I'm gonna say
+
+1119
+00:49:20,043 --> 00:49:24,710
+location equals CGPoint
+location.x times our zoomScale,
+
+1120
+00:49:26,615 --> 00:49:31,615
+and the y is location.y
+times our zoomScale.
+
+1121
+00:49:31,730 --> 00:49:33,940
+That seems to be all the places I think
+
+1122
+00:49:33,940 --> 00:49:36,350
+that our zoomScale would apply.
+
+1123
+00:49:36,350 --> 00:49:39,790
+We're zooming our document in nicely.
+
+1124
+00:49:39,790 --> 00:49:42,060
+What gesture are we gonna use?
+
+1125
+00:49:42,060 --> 00:49:43,820
+Well, we wanna pinch.
+
+1126
+00:49:43,820 --> 00:49:46,204
+But I'm gonna have another
+gesture that's kinda fun,
+
+1127
+00:49:46,204 --> 00:49:48,290
+which is double tap.
+
+1128
+00:49:48,290 --> 00:49:51,214
+And double tap is going
+to zoom my entire document
+
+1129
+00:49:51,214 --> 00:49:54,365
+to exactly fit the space available.
+
+1130
+00:49:54,365 --> 00:49:56,630
+We get a certain amount
+of space for our document,
+
+1131
+00:49:56,630 --> 00:50:00,560
+depending on where our app is in the UI,
+
+1132
+00:50:00,560 --> 00:50:03,170
+and I'm gonna zoom it to fit that.
+
+1133
+00:50:03,170 --> 00:50:06,420
+So let's create a new private func here,
+
+1134
+00:50:06,420 --> 00:50:08,887
+that I'm gonna call zoomToFit.
+
+1135
+00:50:08,887 --> 00:50:12,453
+And it's gonna take the
+image to have it fit.
+
+1136
+00:50:14,060 --> 00:50:16,580
+Might be nil 'cause our
+background image can be nil,
+
+1137
+00:50:16,580 --> 00:50:17,973
+in some size.
+
+1138
+00:50:19,280 --> 00:50:22,113
+And it's just going to set our zoomScale.
+
+1139
+00:50:22,113 --> 00:50:24,393
+It's gonna set the zoomScale to fit.
+
+1140
+00:50:25,240 --> 00:50:28,010
+Now, I'm only gonna do
+this if we have an image.
+
+1141
+00:50:28,010 --> 00:50:30,540
+We have an image, I'm not
+gonna touch the zoomScale,
+
+1142
+00:50:30,540 --> 00:50:33,940
+and I'm also only gonna do this
+if that image has some size,
+
+1143
+00:50:33,940 --> 00:50:35,520
+so I'm gonna check to make sure
+
+1144
+00:50:35,520 --> 00:50:38,370
+that the image.size.width
+is greater than zero,
+
+1145
+00:50:38,370 --> 00:50:42,100
+and that the image.size.height
+is greater than zero.
+
+1146
+00:50:42,100 --> 00:50:44,480
+So, we have some image of some size
+
+1147
+00:50:44,480 --> 00:50:46,530
+and now we're going to zoomToFit it.
+
+1148
+00:50:46,530 --> 00:50:50,760
+Now we could zoom it based
+on the horizontal zoom
+
+1149
+00:50:50,760 --> 00:50:55,160
+by saying size.width divided
+by images.size.width.
+
+1150
+00:50:55,160 --> 00:50:57,900
+Or we could do it by the vertical zooming,
+
+1151
+00:50:57,900 --> 00:51:00,080
+which would be the size.height divided by
+
+1152
+00:51:00,080 --> 00:51:02,760
+the image.size.height.
+
+1153
+00:51:02,760 --> 00:51:04,610
+So which of these two should we use,
+
+1154
+00:51:04,610 --> 00:51:06,560
+the horizontal or the vertical?
+
+1155
+00:51:06,560 --> 00:51:09,200
+I think we're gonna use
+the smaller of the two.
+
+1156
+00:51:09,200 --> 00:51:12,042
+So I'm gonna set my zoomScale
+
+1157
+00:51:12,042 --> 00:51:15,930
+equal to the min of the horizontal zoom
+
+1158
+00:51:15,930 --> 00:51:18,020
+or the vertical zoom.
+
+1159
+00:51:18,020 --> 00:51:19,250
+So whichever is gonna make it smaller.
+
+1160
+00:51:19,250 --> 00:51:22,210
+That way the image will
+always be fully on screen
+
+1161
+00:51:22,210 --> 00:51:23,043
+no matter what.
+
+1162
+00:51:24,180 --> 00:51:25,420
+Almost there.
+
+1163
+00:51:25,420 --> 00:51:28,430
+Now we just need to add to
+the gesture to our Views.
+
+1164
+00:51:28,430 --> 00:51:30,280
+We just need to mark whichever Views
+
+1165
+00:51:30,280 --> 00:51:32,720
+we want that double tap to work on,
+
+1166
+00:51:32,720 --> 00:51:34,330
+to be able to do this.
+
+1167
+00:51:34,330 --> 00:51:35,560
+So I'm gonna make it
+
+1168
+00:51:35,560 --> 00:51:39,810
+so that double tapping on the
+background here does that.
+
+1169
+00:51:39,810 --> 00:51:42,132
+So let's go here and add a gesture.
+
+1170
+00:51:42,132 --> 00:51:45,302
+We do that with the gesture ViewModifier,
+
+1171
+00:51:45,302 --> 00:51:48,167
+and we just specify the gesture we want.
+
+1172
+00:51:48,167 --> 00:51:50,260
+Now I'm going to make a little function
+
+1173
+00:51:50,260 --> 00:51:51,620
+to make that gesture
+
+1174
+00:51:51,620 --> 00:51:56,620
+called doubleTapToZoom in geometry.size.
+
+1175
+00:51:57,970 --> 00:51:59,316
+And this function has to return
+
+1176
+00:51:59,316 --> 00:52:01,702
+something that is some Gesture.
+
+1177
+00:52:01,702 --> 00:52:05,980
+This gesture only takes a
+Gesture as its argument.
+
+1178
+00:52:05,980 --> 00:52:10,780
+So I'm gonna go down here
+and create a private func
+
+1179
+00:52:10,780 --> 00:52:15,713
+called doubleTapToZoom in size.
+
+1180
+00:52:15,713 --> 00:52:18,973
+And it has to return some Gesture.
+
+1181
+00:52:19,910 --> 00:52:24,480
+That's what this ViewModifier
+takes, it takes some Gesture.
+
+1182
+00:52:24,480 --> 00:52:27,330
+So we have to return some Gesture.
+
+1183
+00:52:27,330 --> 00:52:29,090
+What Gesture are we gonna return?
+
+1184
+00:52:29,090 --> 00:52:30,540
+Well, we're doing double tap,
+
+1185
+00:52:30,540 --> 00:52:32,350
+so that is a TapGesture.
+
+1186
+00:52:33,240 --> 00:52:34,600
+There are a number of Gestures,
+
+1187
+00:52:34,600 --> 00:52:36,000
+we talked about this in the slides.
+
+1188
+00:52:36,000 --> 00:52:39,286
+TapGesture is a good one doing double tap.
+
+1189
+00:52:39,286 --> 00:52:43,583
+In fact, I want a TapGesture
+whose count is two.
+
+1190
+00:52:44,970 --> 00:52:46,370
+And I'm gonna return that.
+
+1191
+00:52:46,370 --> 00:52:48,291
+But of course, I have to specify,
+
+1192
+00:52:48,291 --> 00:52:51,640
+when this TapGesture
+happens, what am I gonna do?
+
+1193
+00:52:51,640 --> 00:52:54,592
+In this case I wanna call zoomToFit.
+
+1194
+00:52:54,592 --> 00:52:58,509
+We do that by the .onEnded
+function in Gesture.
+
+1195
+00:53:00,880 --> 00:53:04,175
+Now .onEnded takes a function to execute
+
+1196
+00:53:04,175 --> 00:53:07,410
+when this Gesture, whatever it is,
+
+1197
+00:53:07,410 --> 00:53:09,970
+in this case a double tap, ends.
+
+1198
+00:53:09,970 --> 00:53:13,520
+So a double tap is when that
+second tap finger comes up,
+
+1199
+00:53:13,520 --> 00:53:16,563
+it ended, and we can do .onEnded here.
+
+1200
+00:53:17,710 --> 00:53:19,060
+What are we gonna do in here?
+
+1201
+00:53:19,060 --> 00:53:20,777
+self.zoomToFit.
+
+1202
+00:53:23,220 --> 00:53:24,190
+And what are we gonna fit?
+
+1203
+00:53:24,190 --> 00:53:27,527
+We're gonna fit our
+document's backgroundImage.
+
+1204
+00:53:29,460 --> 00:53:32,543
+And the size is the
+size that was passed in.
+
+1205
+00:53:33,790 --> 00:53:34,840
+So let's take a look.
+
+1206
+00:53:39,170 --> 00:53:40,320
+Here's our huge image.
+
+1207
+00:53:40,320 --> 00:53:41,760
+I'm gonna double tap.
+
+1208
+00:53:41,760 --> 00:53:43,410
+Woo, we made it small.
+
+1209
+00:53:43,410 --> 00:53:46,430
+Let's go for the smaller
+image, this little guy.
+
+1210
+00:53:46,430 --> 00:53:49,248
+It's a really small image,
+'cause we're zoomed in right now.
+
+1211
+00:53:49,248 --> 00:53:50,550
+(vocalizing)
+
+1212
+00:53:50,550 --> 00:53:52,320
+Now the only thing I don't really like
+
+1213
+00:53:52,320 --> 00:53:56,430
+about what I've done here is it's jarring.
+
+1214
+00:53:56,430 --> 00:54:01,430
+And we know that in
+mobile apps we want things
+
+1215
+00:54:01,560 --> 00:54:02,840
+not to jump like that.
+
+1216
+00:54:02,840 --> 00:54:04,920
+We want some animation.
+
+1217
+00:54:04,920 --> 00:54:06,110
+So let's throw some animation in here.
+
+1218
+00:54:06,110 --> 00:54:07,830
+You know how to do that,
+
+1219
+00:54:07,830 --> 00:54:10,543
+with animation, explicit animation.
+
+1220
+00:54:11,532 --> 00:54:13,220
+With the zoomToFit in there.
+
+1221
+00:54:13,220 --> 00:54:14,470
+Let's see how that works.
+
+1222
+00:54:19,780 --> 00:54:22,283
+Woo, that looks a lot lot better.
+
+1223
+00:54:23,450 --> 00:54:26,163
+But, I actually think I
+notice something weird
+
+1224
+00:54:26,163 --> 00:54:31,016
+with the emojis there.
+
+1225
+00:54:31,016 --> 00:54:33,053
+So let's go get the small one here.
+
+1226
+00:54:34,854 --> 00:54:36,093
+And watch these emojis.
+
+1227
+00:54:37,090 --> 00:54:39,107
+Ooh, they're kinda jerky.
+
+1228
+00:54:39,107 --> 00:54:41,110
+Anytime I see in an animation
+
+1229
+00:54:41,110 --> 00:54:42,512
+I don't really like what I'm seeing,
+
+1230
+00:54:42,512 --> 00:54:45,300
+I'm gonna go over here
+and slow it way down.
+
+1231
+00:54:45,300 --> 00:54:49,110
+Let's use a linear animation here.
+
+1232
+00:54:49,110 --> 00:54:51,363
+Duration, let's say 4 seconds.
+
+1233
+00:54:52,260 --> 00:54:54,413
+And let's just watch that thing in action.
+
+1234
+00:54:56,291 --> 00:54:59,663
+All right, let's pick up the
+bigger one again, here it is.
+
+1235
+00:55:01,750 --> 00:55:03,330
+Right, now I'm gonna double tap.
+
+1236
+00:55:03,330 --> 00:55:05,830
+And we're gonna watch these emoji.
+
+1237
+00:55:05,830 --> 00:55:10,120
+Oh whoa, so the emoji aren't animating,
+
+1238
+00:55:10,120 --> 00:55:13,110
+they just jumped to the
+size they should be.
+
+1239
+00:55:13,110 --> 00:55:14,920
+And actually, I think
+it's even worse than that.
+
+1240
+00:55:14,920 --> 00:55:17,380
+Let's go and watch them now going bigger,
+
+1241
+00:55:17,380 --> 00:55:19,290
+ready, ready, watch here.
+
+1242
+00:55:19,290 --> 00:55:20,240
+Oh, see that?
+
+1243
+00:55:20,240 --> 00:55:22,130
+They went big and then they got cut off
+
+1244
+00:55:22,130 --> 00:55:25,600
+because the size of
+the View was animating,
+
+1245
+00:55:25,600 --> 00:55:27,800
+but it hadn't caught
+up to how big they are.
+
+1246
+00:55:28,810 --> 00:55:30,420
+This is a problem.
+
+1247
+00:55:30,420 --> 00:55:34,940
+We have to somehow animate
+the size of this font
+
+1248
+00:55:34,940 --> 00:55:36,820
+that's being used.
+
+1249
+00:55:36,820 --> 00:55:38,520
+Well, we know how to do this.
+
+1250
+00:55:38,520 --> 00:55:41,410
+This is a little bit of
+review for you actually.
+
+1251
+00:55:41,410 --> 00:55:44,250
+How does animation work in SwiftUI?
+
+1252
+00:55:44,250 --> 00:55:47,480
+It happens with ViewModifiers.
+
+1253
+00:55:47,480 --> 00:55:49,150
+Now, I'm not gonna go through,
+
+1254
+00:55:49,150 --> 00:55:50,920
+we're already pressed
+for time in this demo,
+
+1255
+00:55:50,920 --> 00:55:52,850
+so I'm not gonna go
+through all the details
+
+1256
+00:55:52,850 --> 00:55:56,912
+of making our own Animatable
+font size ViewModifier,
+
+1257
+00:55:56,912 --> 00:55:58,220
+but I did do it.
+
+1258
+00:55:58,220 --> 00:56:01,450
+So let's go over here and drag it in.
+
+1259
+00:56:01,450 --> 00:56:05,913
+Here is my Animatable modifier.
+
+1260
+00:56:06,960 --> 00:56:08,810
+I'm gonna take a brief look at this code.
+
+1261
+00:56:08,810 --> 00:56:11,690
+You can look at it at your leisure later.
+
+1262
+00:56:11,690 --> 00:56:14,750
+But all it's doing is
+essentially making animatableData
+
+1263
+00:56:14,750 --> 00:56:16,350
+that is the font size.
+
+1264
+00:56:16,350 --> 00:56:19,087
+So I have this font size,
+it's the animatableData,
+
+1265
+00:56:19,087 --> 00:56:24,087
+and my content is just a Font,
+the system font of that size.
+
+1266
+00:56:24,288 --> 00:56:26,280
+Couldn't be easier.
+
+1267
+00:56:26,280 --> 00:56:28,297
+I've even made a nice
+little extension on View
+
+1268
+00:56:28,297 --> 00:56:31,660
+that let's me be able to
+say .font animatableWithSize
+
+1269
+00:56:32,530 --> 00:56:36,780
+and give it the size, and it
+will automatically modify it.
+
+1270
+00:56:36,780 --> 00:56:38,820
+This is really easy to apply this.
+
+1271
+00:56:38,820 --> 00:56:41,060
+Wherever we set the font,
+which is right here,
+
+1272
+00:56:41,060 --> 00:56:45,050
+instead of calling this
+self set font for emoji,
+
+1273
+00:56:45,050 --> 00:56:45,883
+which is down here,
+
+1274
+00:56:45,883 --> 00:56:49,338
+I'm just gonna take this
+size, cut it out of there,
+
+1275
+00:56:49,338 --> 00:56:53,370
+not gonna need this anymore,
+and put it right up in here
+
+1276
+00:56:53,370 --> 00:56:58,030
+in my new font animatableWithSize.
+
+1277
+00:56:58,030 --> 00:56:58,863
+There it is.
+
+1278
+00:57:00,330 --> 00:57:01,703
+That's the size I want.
+
+1279
+00:57:06,923 --> 00:57:08,390
+And we need self.
+
+1280
+00:57:08,390 --> 00:57:12,501
+This is going to modify this
+Text in an animatable way
+
+1281
+00:57:12,501 --> 00:57:15,120
+to this new font size.
+
+1282
+00:57:15,120 --> 00:57:17,903
+And again, can double tap here.
+
+1283
+00:57:19,160 --> 00:57:21,810
+Okay, it's a little slow, it
+looks like it's working there.
+
+1284
+00:57:21,810 --> 00:57:24,083
+Let's make the really big one over here.
+
+1285
+00:57:29,470 --> 00:57:32,320
+Okay, watching carefully now, here we go.
+
+1286
+00:57:32,320 --> 00:57:34,700
+Ooh yeah, looking good.
+
+1287
+00:57:34,700 --> 00:57:37,260
+Much smoother animation there.
+
+1288
+00:57:37,260 --> 00:57:40,653
+And, the real test, try the smaller one.
+
+1289
+00:57:42,470 --> 00:57:47,470
+Ooh, okay, so it looks like our animation
+
+1290
+00:57:47,730 --> 00:57:49,784
+is working perfectly here.
+
+1291
+00:57:49,784 --> 00:57:52,233
+Let's go ahead and speed it back up.
+
+1292
+00:57:54,850 --> 00:57:57,123
+And move on to doing our pinch.
+
+1293
+00:57:58,150 --> 00:58:02,020
+So the pinch is just a
+different kind of gesture.
+
+1294
+00:58:02,020 --> 00:58:04,820
+And you'll remember from the
+slides that we did today,
+
+1295
+00:58:04,820 --> 00:58:08,200
+that the way these
+non-discrete gestures work,
+
+1296
+00:58:08,200 --> 00:58:13,200
+like drags and pinches, is that
+while the gesture's active,
+
+1297
+00:58:14,450 --> 00:58:16,467
+we are going to modify some state,
+
+1298
+00:58:16,467 --> 00:58:19,930
+and that state is going to
+affect the way things look
+
+1299
+00:58:19,930 --> 00:58:22,840
+while we're doing the pinch or the drag.
+
+1300
+00:58:22,840 --> 00:58:25,850
+And then, when the drag ends,
+whatever the end state is,
+
+1301
+00:58:25,850 --> 00:58:29,790
+we are going to update
+our steady state value
+
+1302
+00:58:29,790 --> 00:58:32,443
+for whatever, modifying our View.
+
+1303
+00:58:33,430 --> 00:58:35,510
+And it stays in that state.
+
+1304
+00:58:35,510 --> 00:58:39,090
+The key to understanding
+how these gestures work,
+
+1305
+00:58:39,090 --> 00:58:40,940
+these non-discrete gestures is,
+
+1306
+00:58:40,940 --> 00:58:44,620
+that you're gonna have two
+different pieces of state.
+
+1307
+00:58:44,620 --> 00:58:46,150
+So we're gonna have our state,
+
+1308
+00:58:46,150 --> 00:58:48,080
+which is our zoomScale normally,
+
+1309
+00:58:48,080 --> 00:58:52,517
+I'm gonna rename that
+to steadyStateZoomScale.
+
+1310
+00:58:52,517 --> 00:58:54,900
+So this is gonna be the
+zoomScale that we have
+
+1311
+00:58:54,900 --> 00:58:58,230
+just in steady state, not
+while a gesture is going on.
+
+1312
+00:58:58,230 --> 00:59:00,980
+And then we're gonna have
+a new piece of state,
+
+1313
+00:59:00,980 --> 00:59:03,020
+which is going to be @GestureState,
+
+1314
+00:59:03,020 --> 00:59:05,660
+which is different than
+@State, slightly different,
+
+1315
+00:59:05,660 --> 00:59:08,844
+and it's going to be the gestureZoomScale.
+
+1316
+00:59:08,844 --> 00:59:11,128
+So this is going to be the
+zoomScale we're going to use
+
+1317
+00:59:11,128 --> 00:59:13,490
+while the gesture is going on.
+
+1318
+00:59:13,490 --> 00:59:16,110
+Now, it's important to know
+that this @GestureState
+
+1319
+00:59:16,110 --> 00:59:17,340
+could be of any type.
+
+1320
+00:59:17,340 --> 00:59:20,720
+It doesn't actually even have
+to be the same kind of thing
+
+1321
+00:59:20,720 --> 00:59:22,590
+that your steady state one is doing.
+
+1322
+00:59:22,590 --> 00:59:26,190
+This just has to be whatever
+information is going to change
+
+1323
+00:59:26,190 --> 00:59:29,680
+every time the pinch moves,
+or a drag moves, or whatever,
+
+1324
+00:59:29,680 --> 00:59:32,100
+that let's you keep track of it.
+
+1325
+00:59:32,100 --> 00:59:34,010
+Now, in our case, when we're pinching,
+
+1326
+00:59:34,010 --> 00:59:37,920
+we do just wanna keep track
+of whatever the scale is.
+
+1327
+00:59:37,920 --> 00:59:41,333
+So, that makes it so that our
+zoomScale that we had before,
+
+1328
+00:59:41,333 --> 00:59:45,120
+we're still gonna have that,
+and it's gonna be computed
+
+1329
+00:59:45,120 --> 00:59:46,340
+by just returning
+
+1330
+00:59:46,340 --> 00:59:51,340
+the steadyStateZoomScale
+times the gestureZoomScale.
+
+1331
+00:59:53,290 --> 00:59:56,100
+Now this gestureZoomScale is 1.0,
+
+1332
+00:59:56,100 --> 00:59:57,940
+so when a gesture's not going on,
+
+1333
+00:59:57,940 --> 01:00:00,138
+it's just, this is gonna be equal right?
+
+1334
+01:00:00,138 --> 01:00:02,404
+steadyStateZoomScale times 1.0
+
+1335
+01:00:02,404 --> 01:00:04,810
+is gonna be the same as
+steadyStateZoomScale.
+
+1336
+01:00:04,810 --> 01:00:06,580
+But when our gesture's working,
+
+1337
+01:00:06,580 --> 01:00:08,820
+and a pinch moves out a little bit,
+
+1338
+01:00:08,820 --> 01:00:10,390
+it starts to be greater than one
+
+1339
+01:00:10,390 --> 01:00:12,170
+and our zoomScale's gonna go up.
+
+1340
+01:00:12,170 --> 01:00:15,950
+And when this pinch comes back
+in, it's gonna go back lower.
+
+1341
+01:00:15,950 --> 01:00:20,550
+So our job is to make a
+gesture, a pinching gesture,
+
+1342
+01:00:20,550 --> 01:00:23,260
+that modifies this gestureZoomScale
+
+1343
+01:00:23,260 --> 01:00:25,990
+only while we are pinching.
+
+1344
+01:00:25,990 --> 01:00:28,010
+And then, right at the end of the gesture,
+
+1345
+01:00:28,010 --> 01:00:31,290
+it's going to update this
+to our steadyState value.
+
+1346
+01:00:31,290 --> 01:00:33,830
+And that's how we do gestures.
+
+1347
+01:00:33,830 --> 01:00:35,550
+Now, notice down here
+we're getting an error,
+
+1348
+01:00:35,550 --> 01:00:37,720
+that's because the resuming to fit,
+
+1349
+01:00:37,720 --> 01:00:39,640
+we obviously are trying to zoomToFit
+
+1350
+01:00:39,640 --> 01:00:41,753
+our steadyStateZoomScale.
+
+1351
+01:00:43,690 --> 01:00:47,100
+We make a gesture for
+pinching exactly the same way
+
+1352
+01:00:47,100 --> 01:00:49,699
+as we do this gesture for doubleTapToZoom.
+
+1353
+01:00:49,699 --> 01:00:51,810
+We're just gonna have .gesture,
+
+1354
+01:00:51,810 --> 01:00:53,420
+and we're gonna have a different function.
+
+1355
+01:00:53,420 --> 01:00:55,483
+I'm gonna call this my zoomGesture.
+
+1356
+01:00:56,407 --> 01:00:59,000
+And my zoomGesture actually
+doesn't need the size,
+
+1357
+01:00:59,000 --> 01:01:01,810
+it's not like double tap
+where it needs the size.
+
+1358
+01:01:01,810 --> 01:01:03,111
+So I have this zoomGesture.
+
+1359
+01:01:03,111 --> 01:01:04,890
+By the way, this could be a var,
+
+1360
+01:01:04,890 --> 01:01:06,080
+this doesn't have to be a func
+
+1361
+01:01:06,080 --> 01:01:08,090
+since it doesn't take any arguments.
+
+1362
+01:01:08,090 --> 01:01:10,780
+Let's go ahead and put
+our zoomGesture down here.
+
+1363
+01:01:10,780 --> 01:01:15,333
+Let's put it right in here,
+private func zoomGesture.
+
+1364
+01:01:17,339 --> 01:01:20,117
+And it's also gonna return some Gesture.
+
+1365
+01:01:21,660 --> 01:01:25,670
+Because we're passing it to
+this gesture function here,
+
+1366
+01:01:25,670 --> 01:01:27,680
+it has to, some zoom Gesture.
+
+1367
+01:01:27,680 --> 01:01:30,080
+Also, by the way, I think
+I'm gonna put my zoomGesture
+
+1368
+01:01:30,080 --> 01:01:31,420
+on the whole document.
+
+1369
+01:01:31,420 --> 01:01:34,560
+So I'm just gonna put this down
+here on the whole document,
+
+1370
+01:01:34,560 --> 01:01:36,210
+not just on our background.
+
+1371
+01:01:36,210 --> 01:01:37,390
+I don't think there's a difference
+
+1372
+01:01:37,390 --> 01:01:40,970
+because our background, it
+fills our entire document.
+
+1373
+01:01:40,970 --> 01:01:43,980
+But again, more just for code clarity,
+
+1374
+01:01:43,980 --> 01:01:47,150
+I'm going to separate these things out.
+
+1375
+01:01:47,150 --> 01:01:48,940
+This zoomGesture returns some Gesture.
+
+1376
+01:01:48,940 --> 01:01:49,910
+What kind of Gesture?
+
+1377
+01:01:49,910 --> 01:01:52,930
+It's gonna return what's
+called a MagnificationGesture,
+
+1378
+01:01:52,930 --> 01:01:55,280
+that's how we do a pinch.
+
+1379
+01:01:55,280 --> 01:01:56,480
+So it's just gonna return it.
+
+1380
+01:01:56,480 --> 01:01:58,450
+And in fact, it's the
+same as the double tap
+
+1381
+01:01:58,450 --> 01:02:00,810
+in that has an .onEnded.
+
+1382
+01:02:00,810 --> 01:02:01,750
+The only difference with the .onEnded
+
+1383
+01:02:01,750 --> 01:02:05,550
+of a MagnificationGesture
+is that it gives you,
+
+1384
+01:02:05,550 --> 01:02:09,473
+as an argument, the finalGestureScale.
+
+1385
+01:02:10,570 --> 01:02:13,560
+So this is the gestureScale
+that was at the end
+
+1386
+01:02:13,560 --> 01:02:16,680
+when the user's fingers
+went up from the pinch.
+
+1387
+01:02:16,680 --> 01:02:18,320
+Now with this finalGestureScale,
+
+1388
+01:02:18,320 --> 01:02:23,320
+I can just reset my
+steadyStateZoomScale to times equals
+
+1389
+01:02:24,100 --> 01:02:26,390
+my finalGestureScale.
+
+1390
+01:02:26,390 --> 01:02:28,700
+So if the gesture went to twice as big,
+
+1391
+01:02:28,700 --> 01:02:31,610
+and the fingers went up,
+now in my steady state,
+
+1392
+01:02:31,610 --> 01:02:33,450
+I'm gonna be twice as big.
+
+1393
+01:02:33,450 --> 01:02:37,343
+And same thing if it
+went down to half as big.
+
+1394
+01:02:37,343 --> 01:02:40,390
+So, the .onEnded, just
+like the .onEnded down here
+
+1395
+01:02:40,390 --> 01:02:42,523
+with double tap was easy to implement.
+
+1396
+01:02:43,410 --> 01:02:45,350
+The trick, or the key parts
+
+1397
+01:02:45,350 --> 01:02:47,741
+of doing these non-discrete gestures,
+
+1398
+01:02:47,741 --> 01:02:49,732
+is while it's changing.
+
+1399
+01:02:49,732 --> 01:02:51,670
+So here's what that looks like.
+
+1400
+01:02:51,670 --> 01:02:53,448
+It's called .updating.
+
+1401
+01:02:53,448 --> 01:02:57,699
+And .updating takes an
+argument which is your,
+
+1402
+01:02:57,699 --> 01:03:01,069
+whatever your @GestureState
+is for this gesture.
+
+1403
+01:03:01,069 --> 01:03:03,870
+So, we'll say gestureZoomScale.
+
+1404
+01:03:05,000 --> 01:03:08,330
+However, you have to put
+a dollar sign in front,
+
+1405
+01:03:08,330 --> 01:03:09,470
+and we're gonna talk about
+
+1406
+01:03:09,470 --> 01:03:11,500
+what this dollar sign means next week.
+
+1407
+01:03:11,500 --> 01:03:13,890
+It turns this into
+what's called a Binding.
+
+1408
+01:03:13,890 --> 01:03:16,296
+So it is bound to this other var.
+
+1409
+01:03:16,296 --> 01:03:18,153
+But, you really don't need to know that
+
+1410
+01:03:18,153 --> 01:03:21,660
+to make this Gesture stuff at work.
+
+1411
+01:03:21,660 --> 01:03:24,010
+Understand it's just
+essentially linking up
+
+1412
+01:03:24,010 --> 01:03:25,679
+to your @GestureState.
+
+1413
+01:03:25,679 --> 01:03:28,630
+And, of course, this
+takes an argument as well,
+
+1414
+01:03:28,630 --> 01:03:29,550
+which is a function.
+
+1415
+01:03:29,550 --> 01:03:31,200
+This function is called
+
+1416
+01:03:31,200 --> 01:03:34,310
+every time the pinch gesture changes.
+
+1417
+01:03:34,310 --> 01:03:36,160
+So this is constantly being called,
+
+1418
+01:03:36,160 --> 01:03:38,020
+this little function is
+constantly being called
+
+1419
+01:03:38,020 --> 01:03:40,490
+as the pinch moves in and out.
+
+1420
+01:03:40,490 --> 01:03:43,140
+And this thing has three arguments.
+
+1421
+01:03:43,140 --> 01:03:45,470
+The first one, very easy to understand,
+
+1422
+01:03:45,470 --> 01:03:47,667
+it's the latestGestureScale.
+
+1423
+01:03:49,169 --> 01:03:53,822
+That's just telling you what
+the latest pinch looked like.
+
+1424
+01:03:53,822 --> 01:03:56,041
+The second argument is really weird.
+
+1425
+01:03:56,041 --> 01:04:00,260
+It's our @GestureState
+as an inout parameter,
+
+1426
+01:04:00,260 --> 01:04:01,940
+we'll talk about that in a second.
+
+1427
+01:04:01,940 --> 01:04:05,482
+And the last argument
+here is a transaction.
+
+1428
+01:04:05,482 --> 01:04:07,616
+I'm not gonna talk about transactions.
+
+1429
+01:04:07,616 --> 01:04:09,784
+Transactions are essentially capturing
+
+1430
+01:04:09,784 --> 01:04:13,470
+the animation environment
+that this is all happening in.
+
+1431
+01:04:13,470 --> 01:04:17,550
+That's a little bit of
+advanced use for animation
+
+1432
+01:04:17,550 --> 01:04:20,130
+that we're gonna pretty
+much ignore in this class.
+
+1433
+01:04:20,130 --> 01:04:23,470
+So, we're gonna ignore
+this argument as well.
+
+1434
+01:04:23,470 --> 01:04:26,480
+But we are gonna focus on
+this ourGestureStateInOut.
+
+1435
+01:04:26,480 --> 01:04:29,150
+So, an inout parameter,
+hopefully you got this from
+
+1436
+01:04:29,150 --> 01:04:31,289
+your reading assignment last week.
+
+1437
+01:04:31,289 --> 01:04:34,990
+But, it takes an argument in normally,
+
+1438
+01:04:34,990 --> 01:04:36,610
+so when something calls this function,
+
+1439
+01:04:36,610 --> 01:04:38,470
+the argument comes in normally.
+
+1440
+01:04:38,470 --> 01:04:43,118
+But then, if you actually
+assign a value to this,
+
+1441
+01:04:43,118 --> 01:04:47,540
+then it gets copied
+back out on the way out.
+
+1442
+01:04:47,540 --> 01:04:50,640
+So this gesture is
+essentially passing you,
+
+1443
+01:04:50,640 --> 01:04:54,520
+your own @GestureState var in,
+
+1444
+01:04:54,520 --> 01:04:56,770
+letting you modify it in here.
+
+1445
+01:04:56,770 --> 01:04:58,190
+And then when you pass it out,
+
+1446
+01:04:58,190 --> 01:05:00,870
+it turns it up here and changes it.
+
+1447
+01:05:00,870 --> 01:05:02,690
+So why is that happening?
+
+1448
+01:05:02,690 --> 01:05:06,650
+Why are we not just changing
+our gestureZoomScale
+
+1449
+01:05:06,650 --> 01:05:07,510
+directly in here,
+
+1450
+01:05:07,510 --> 01:05:10,380
+why am I not saying
+gestureZoomScale equals something?
+
+1451
+01:05:10,380 --> 01:05:13,070
+Why do I do it through this variable?
+
+1452
+01:05:13,070 --> 01:05:15,930
+Well the answer for that is
+that this @GestureState var,
+
+1453
+01:05:15,930 --> 01:05:20,380
+while it's in your View, is
+really owned by this Gesture.
+
+1454
+01:05:20,380 --> 01:05:22,570
+Other than the initial
+value that you give it,
+
+1455
+01:05:22,570 --> 01:05:25,590
+you should never assign
+a value to this directly.
+
+1456
+01:05:25,590 --> 01:05:28,370
+Always let the Gesture handle it.
+
+1457
+01:05:28,370 --> 01:05:30,540
+What does the Gesture
+do with it, by the way?
+
+1458
+01:05:30,540 --> 01:05:32,500
+Well, when the Gesture is not happening,
+
+1459
+01:05:32,500 --> 01:05:34,190
+it leaves it at 1.0.
+
+1460
+01:05:34,190 --> 01:05:36,110
+And then while the Gesture is happening,
+
+1461
+01:05:36,110 --> 01:05:39,100
+it's passing it to you and
+you can modify it here.
+
+1462
+01:05:39,100 --> 01:05:42,060
+And then when it's over,
+it goes back to 1.0.
+
+1463
+01:05:42,060 --> 01:05:45,770
+So, the Gesture wants to own that var,
+
+1464
+01:05:45,770 --> 01:05:47,620
+and so you are not allowed to own it.
+
+1465
+01:05:47,620 --> 01:05:49,190
+This inout business,
+
+1466
+01:05:49,190 --> 01:05:50,640
+if you don't really
+understand what I'm saying
+
+1467
+01:05:50,640 --> 01:05:52,980
+about inout parameters,
+didn't understand the reading,
+
+1468
+01:05:52,980 --> 01:05:54,580
+maybe go back and do the reading.
+
+1469
+01:05:54,580 --> 01:05:56,560
+But even then if you don't understand it,
+
+1470
+01:05:56,560 --> 01:05:59,790
+then just understand
+that the Gesture here,
+
+1471
+01:05:59,790 --> 01:06:00,890
+this MagnificationGesture
+
+1472
+01:06:00,890 --> 01:06:04,420
+only wants you to modify
+your @GestureState
+
+1473
+01:06:04,420 --> 01:06:07,140
+inside this function
+that's called repeatedly
+
+1474
+01:06:07,140 --> 01:06:09,060
+as the pinch happens.
+
+1475
+01:06:09,060 --> 01:06:11,920
+Now, because that's what this is doing,
+
+1476
+01:06:11,920 --> 01:06:16,372
+a lot of people will rename
+this to be the exact same name
+
+1477
+01:06:16,372 --> 01:06:20,301
+as their @GestureState variable.
+
+1478
+01:06:20,301 --> 01:06:23,732
+And when they do this, call
+it the exact same thing,
+
+1479
+01:06:23,732 --> 01:06:27,183
+now it kinda looks like you
+are changing this in here.
+
+1480
+01:06:28,160 --> 01:06:29,360
+I'm actually a fan of that,
+
+1481
+01:06:29,360 --> 01:06:31,320
+I don't say this at the beginning,
+
+1482
+01:06:31,320 --> 01:06:34,040
+because I want you to understand
+what's happening here.
+
+1483
+01:06:34,040 --> 01:06:37,853
+But, I think naming this
+the same is a good idea.
+
+1484
+01:06:38,980 --> 01:06:40,200
+So, what do we wanna do
+
+1485
+01:06:40,200 --> 01:06:42,500
+every time that pinch goes in and out
+
+1486
+01:06:42,500 --> 01:06:44,332
+or changes a little bit?
+
+1487
+01:06:44,332 --> 01:06:47,727
+Well, here we just want to
+grab the latestGestureScale.
+
+1488
+01:06:47,727 --> 01:06:51,766
+So whatever this is, the
+last time the pinch moved,
+
+1489
+01:06:51,766 --> 01:06:54,528
+we want to set that as
+our gestureZoomScale.
+
+1490
+01:06:54,528 --> 01:06:59,360
+So this is the simplest possible
+thing to do while updating.
+
+1491
+01:06:59,360 --> 01:07:00,780
+We're gonna do a little
+more complicated thing
+
+1492
+01:07:00,780 --> 01:07:04,333
+when we do the DragGesture
+and panning the thing around.
+
+1493
+01:07:04,333 --> 01:07:08,870
+So that's all that's required
+to support this zoom gesture.
+
+1494
+01:07:08,870 --> 01:07:11,700
+We created a zoom gesture,
+a MagnificationGesture,
+
+1495
+01:07:11,700 --> 01:07:14,230
+it updates our steady state when it ends.
+
+1496
+01:07:14,230 --> 01:07:17,052
+While it's going on, it
+updates this @GestureState,
+
+1497
+01:07:17,052 --> 01:07:18,689
+which is transient, we only do it
+
+1498
+01:07:18,689 --> 01:07:19,973
+while the gesture is happening.
+
+1499
+01:07:19,973 --> 01:07:23,984
+And all we do is attach this
+zoom gesture to our ZStack,
+
+1500
+01:07:23,984 --> 01:07:27,151
+so that when that gesture
+happens in our ZStack,
+
+1501
+01:07:27,151 --> 01:07:29,520
+we recognize it.
+
+1502
+01:07:29,520 --> 01:07:31,720
+All right, so here's our little document.
+
+1503
+01:07:31,720 --> 01:07:34,257
+Hold down option to get two fingers,
+
+1504
+01:07:34,257 --> 01:07:37,493
+and we can zoom in and zoom out.
+
+1505
+01:07:38,414 --> 01:07:41,970
+And we can still double tap
+to show the whole image.
+
+1506
+01:07:41,970 --> 01:07:46,083
+We could also go over here
+and get our huge background.
+
+1507
+01:07:46,970 --> 01:07:50,887
+And we can zoom in and out, double tap.
+
+1508
+01:07:53,210 --> 01:07:55,890
+We can do the same thing
+for panning around,
+
+1509
+01:07:55,890 --> 01:07:57,570
+'cause if I'm zoomed way in here
+
+1510
+01:07:57,570 --> 01:07:59,110
+and I wanna see this other horse,
+
+1511
+01:07:59,110 --> 01:08:02,490
+I'd like to be able to drag this over.
+
+1512
+01:08:02,490 --> 01:08:05,540
+For pan, I'm not gonna
+go through all the detail
+
+1513
+01:08:05,540 --> 01:08:07,770
+of the code again, typing this all in,
+
+1514
+01:08:07,770 --> 01:08:12,110
+because it's very similar
+to doing the same thing
+
+1515
+01:08:12,110 --> 01:08:14,040
+we did here with the zoom gesture,
+
+1516
+01:08:14,040 --> 01:08:17,812
+but I am gonna walk
+through the code with you.
+
+1517
+01:08:17,812 --> 01:08:21,620
+And for the pan, this is
+the code that I just added.
+
+1518
+01:08:21,620 --> 01:08:24,490
+We are going to still
+have steadyStatePanOffset,
+
+1519
+01:08:24,490 --> 01:08:26,590
+and still gonna have the gesturePanOffset,
+
+1520
+01:08:26,590 --> 01:08:29,310
+which is gonna be only the
+pan while we're dragging,
+
+1521
+01:08:29,310 --> 01:08:31,070
+and then that'll make a pan offset
+
+1522
+01:08:31,070 --> 01:08:33,350
+by adding the two together
+
+1523
+01:08:33,350 --> 01:08:35,860
+and multiplying by zoomScale, of course.
+
+1524
+01:08:35,860 --> 01:08:37,770
+By the way, I am doing some things here
+
+1525
+01:08:37,770 --> 01:08:39,330
+like adding points together,
+
+1526
+01:08:39,330 --> 01:08:41,079
+normally you can't do that in Swift,
+
+1527
+01:08:41,079 --> 01:08:44,600
+but I added some EmojiArt
+extensions down here
+
+1528
+01:08:44,600 --> 01:08:48,070
+for point and size, to be
+able to make this code here
+
+1529
+01:08:48,070 --> 01:08:49,260
+look a lot simpler.
+
+1530
+01:08:49,260 --> 01:08:51,940
+So you can check those
+out if you want as well.
+
+1531
+01:08:51,940 --> 01:08:53,327
+This feels exactly the same, right,
+
+1532
+01:08:53,327 --> 01:08:54,480
+panOffset feels like zoomScale.
+
+1533
+01:08:54,480 --> 01:08:58,541
+It's just taking the steady
+state and adding the gesture's
+
+1534
+01:08:58,541 --> 01:09:01,990
+while-in-motion value.
+
+1535
+01:09:01,990 --> 01:09:04,260
+So let's look at panGesture,
+looking slightly different
+
+1536
+01:09:04,260 --> 01:09:05,870
+than a MagnificationGesture.
+
+1537
+01:09:05,870 --> 01:09:07,010
+It's a DragGesture.
+
+1538
+01:09:07,010 --> 01:09:09,480
+And on the ended, it's
+pretty much the same,
+
+1539
+01:09:09,480 --> 01:09:12,300
+we get our final drag value.
+
+1540
+01:09:12,300 --> 01:09:13,950
+The only thing about this is that
+
+1541
+01:09:13,950 --> 01:09:16,790
+the drag value that's passed to us
+
+1542
+01:09:16,790 --> 01:09:21,370
+is a little more complicated
+than it is for a magnification.
+
+1543
+01:09:21,370 --> 01:09:23,730
+For magnification it's
+just a simple scale,
+
+1544
+01:09:23,730 --> 01:09:27,130
+that is the value that's passed,
+both while we're updating
+
+1545
+01:09:27,130 --> 01:09:28,600
+and when it ends.
+
+1546
+01:09:28,600 --> 01:09:30,500
+But a drag has more information.
+
+1547
+01:09:30,500 --> 01:09:32,930
+So we're gonna go and
+actually take a look at this
+
+1548
+01:09:32,930 --> 01:09:34,980
+in the documentation.
+
+1549
+01:09:34,980 --> 01:09:36,490
+Open it up.
+
+1550
+01:09:36,490 --> 01:09:38,230
+Here's DragGesture.
+
+1551
+01:09:38,230 --> 01:09:40,843
+And it's explaining a
+little bit this up here.
+
+1552
+01:09:40,843 --> 01:09:42,970
+But down in here you can see,
+
+1553
+01:09:42,970 --> 01:09:45,269
+when we have the .updating and .onEnded,
+
+1554
+01:09:45,269 --> 01:09:47,690
+this value that's being passed to us,
+
+1555
+01:09:47,690 --> 01:09:50,760
+when we're handling things
+happening in the gesture,
+
+1556
+01:09:50,760 --> 01:09:54,630
+is actually a type
+DragGesture.Value right here.
+
+1557
+01:09:54,630 --> 01:09:56,850
+So I'm gonna click on this .Value
+
+1558
+01:09:56,850 --> 01:09:58,730
+and we're gonna see what it looks like.
+
+1559
+01:09:58,730 --> 01:10:01,350
+You can see that this
+value is not a simple Float
+
+1560
+01:10:01,350 --> 01:10:03,850
+like the scale was in
+MagnificationGesture.
+
+1561
+01:10:03,850 --> 01:10:06,888
+It's actually a struct
+and it has the location
+
+1562
+01:10:06,888 --> 01:10:11,240
+of where you are
+currently with the finger,
+
+1563
+01:10:11,240 --> 01:10:14,080
+and also the start location,
+where you started from.
+
+1564
+01:10:14,080 --> 01:10:15,626
+Even the time.
+
+1565
+01:10:15,626 --> 01:10:18,870
+So it's time stamped every
+single time it updates,
+
+1566
+01:10:18,870 --> 01:10:21,740
+so you can know how fast it's
+moving and things like that.
+
+1567
+01:10:21,740 --> 01:10:25,080
+And here's the translation,
+which is a CGSize,
+
+1568
+01:10:25,080 --> 01:10:28,050
+width and height, how far
+it's gone since the start
+
+1569
+01:10:28,050 --> 01:10:28,883
+of the pan.
+
+1570
+01:10:28,883 --> 01:10:33,487
+And we're gonna use this
+translation to update our offset.
+
+1571
+01:10:34,362 --> 01:10:37,889
+So here it is right here,
+we're gonna say translation,
+
+1572
+01:10:37,889 --> 01:10:40,361
+just drag value translation in here.
+
+1573
+01:10:40,361 --> 01:10:42,390
+And all we're gonna do
+is take the translation,
+
+1574
+01:10:42,390 --> 01:10:45,060
+we have to divide it by
+the zoomScale, of course,
+
+1575
+01:10:45,060 --> 01:10:49,040
+and we're gonna add it, in
+the end, to our steady state,
+
+1576
+01:10:49,040 --> 01:10:50,550
+and while it's updating,
+
+1577
+01:10:50,550 --> 01:10:52,960
+it's going to be our gesture pan state.
+
+1578
+01:10:52,960 --> 01:10:55,100
+And then we just add those two together.
+
+1579
+01:10:55,100 --> 01:10:55,933
+And off we go.
+
+1580
+01:10:55,933 --> 01:10:58,040
+Otherwise it's very, very similar.
+
+1581
+01:10:58,040 --> 01:10:59,710
+So now that we have this PanOffset,
+
+1582
+01:10:59,710 --> 01:11:02,030
+we just need to use it everywhere
+
+1583
+01:11:02,030 --> 01:11:04,710
+that it makes sense to have a pan.
+
+1584
+01:11:04,710 --> 01:11:06,440
+So that's easy, it's a
+lot of the same places
+
+1585
+01:11:06,440 --> 01:11:07,780
+we did the zoomScale.
+
+1586
+01:11:07,780 --> 01:11:10,570
+Right here where we do the
+scaleEffect, of course,
+
+1587
+01:11:10,570 --> 01:11:12,720
+we want to offset our View.
+
+1588
+01:11:12,720 --> 01:11:14,995
+Everyone remembers the offset,
+
+1589
+01:11:14,995 --> 01:11:18,390
+you probably used that a lot in homework 3
+
+1590
+01:11:18,390 --> 01:11:19,570
+or maybe through animation,
+
+1591
+01:11:19,570 --> 01:11:23,490
+but here's the offset
+for the background image.
+
+1592
+01:11:23,490 --> 01:11:25,040
+How about the offset for the emoji?
+
+1593
+01:11:25,040 --> 01:11:27,071
+So that's here in this position thing.
+
+1594
+01:11:27,071 --> 01:11:29,050
+And, position remember,
+
+1595
+01:11:29,050 --> 01:11:31,690
+is doing the coordinate
+system transformation
+
+1596
+01:11:31,690 --> 01:11:34,360
+from (0, 0) in the center and so is drop.
+
+1597
+01:11:34,360 --> 01:11:37,210
+So both of these are going
+to need to be adjusted,
+
+1598
+01:11:37,210 --> 01:11:38,540
+both position and this.
+
+1599
+01:11:38,540 --> 01:11:40,880
+Let's do this one first while we're here.
+
+1600
+01:11:40,880 --> 01:11:43,080
+Just gonna throw this right in here,
+
+1601
+01:11:43,080 --> 01:11:47,810
+location equals a CGPoint,
+that is the x-location,
+
+1602
+01:11:47,810 --> 01:11:52,810
+but minus the panOffset's width,
+
+1603
+01:11:53,550 --> 01:11:58,550
+and the y is the location.y
+minus the panOffset's height.
+
+1604
+01:12:00,970 --> 01:12:03,080
+And then that position right here,
+
+1605
+01:12:03,080 --> 01:12:04,554
+let's go down to fix that.
+
+1606
+01:12:04,554 --> 01:12:06,380
+It's doing the same transition
+
+1607
+01:12:06,380 --> 01:12:08,740
+in the opposite direction actually.
+
+1608
+01:12:08,740 --> 01:12:10,620
+It's right here.
+
+1609
+01:12:10,620 --> 01:12:15,620
+We'll say location equals
+a CGPoint which equals x.
+
+1610
+01:12:16,037 --> 01:12:19,640
+x plus the panOffset.width,
+
+1611
+01:12:19,640 --> 01:12:24,360
+and the y is the location.y
+plus the panOffset.height.
+
+1612
+01:12:26,090 --> 01:12:30,660
+Plus that, and the only
+other thing I wanna do with
+
+1613
+01:12:30,660 --> 01:12:33,470
+panOffset is when I double
+click the zoomToFit,
+
+1614
+01:12:33,470 --> 01:12:36,390
+we wanna, I think, reset it to the center.
+
+1615
+01:12:36,390 --> 01:12:41,390
+So let's say steady, our
+steadyStatePanOffset equals .zero,
+
+1616
+01:12:42,800 --> 01:12:46,080
+which is the same as
+CGSize.zero, by the way.
+
+1617
+01:12:46,080 --> 01:12:49,970
+But, Swift can infer the CGSize for us.
+
+1618
+01:12:49,970 --> 01:12:51,870
+And I think that's all we need to do.
+
+1619
+01:12:51,870 --> 01:12:54,450
+Those are the only places
+that the pan matters.
+
+1620
+01:12:54,450 --> 01:12:56,010
+Just moving the background around,
+
+1621
+01:12:56,010 --> 01:12:56,843
+and then making sure
+
+1622
+01:12:56,843 --> 01:12:59,560
+we're doing the right
+coordinate system transfer
+
+1623
+01:12:59,560 --> 01:13:01,580
+on the positions of the emojis.
+
+1624
+01:13:01,580 --> 01:13:04,840
+And just like we added the
+gesture for a zoomGesture,
+
+1625
+01:13:04,840 --> 01:13:08,983
+let's add the gesture for our panGesture.
+
+1626
+01:13:10,777 --> 01:13:13,719
+And you can add multiple gestures here.
+
+1627
+01:13:13,719 --> 01:13:17,250
+If they might conflict with
+each other in some ways,
+
+1628
+01:13:17,250 --> 01:13:20,997
+then there are methods that
+you can find in Gesture
+
+1629
+01:13:20,997 --> 01:13:24,750
+for doing Gestures simultaneously,
+or even exclusively,
+
+1630
+01:13:24,750 --> 01:13:27,410
+where one Gesture, once it wins,
+
+1631
+01:13:27,410 --> 01:13:28,440
+will not allow the other one.
+
+1632
+01:13:28,440 --> 01:13:31,963
+You can take a look at that
+in the Gesture documentation.
+
+1633
+01:13:35,330 --> 01:13:36,910
+All right, let's see.
+
+1634
+01:13:36,910 --> 01:13:38,370
+Woo, there we go.
+
+1635
+01:13:38,370 --> 01:13:42,460
+We can do that, we can
+zoom way in, look around,
+
+1636
+01:13:42,460 --> 01:13:43,947
+and zoom out.
+
+1637
+01:13:45,570 --> 01:13:48,714
+So we're now, nice combination
+of zooming and panning
+
+1638
+01:13:48,714 --> 01:13:50,683
+throughout our whole document.
+
+1639
+01:13:51,550 --> 01:13:54,780
+Now, you're homework
+assignment is going to be
+
+1640
+01:13:54,780 --> 01:13:57,146
+to do the same thing, zooming and panning,
+
+1641
+01:13:57,146 --> 01:14:00,150
+but with these little emoji.
+
+1642
+01:14:00,150 --> 01:14:03,360
+In that case is, moving the emojis around,
+
+1643
+01:14:03,360 --> 01:14:06,870
+and also resizing the emojis
+so that they're larger
+
+1644
+01:14:06,870 --> 01:14:08,830
+compared to the background.
+
+1645
+01:14:08,830 --> 01:14:12,790
+And that's really gonna let us
+build real beautiful EmojiArt
+
+1646
+01:14:12,790 --> 01:14:15,340
+because we can actually control the sizing
+
+1647
+01:14:15,340 --> 01:14:16,580
+and positioning of things.
+
+1648
+01:14:16,580 --> 01:14:18,680
+So you're gonna have
+to manage the selection
+
+1649
+01:14:18,680 --> 01:14:20,740
+of these things, selecting them.
+
+1650
+01:14:20,740 --> 01:14:21,925
+That homework, by the way, is next week.
+
+1651
+01:14:21,925 --> 01:14:24,610
+In your assignment A3, you don't have to,
+
+1652
+01:14:24,610 --> 01:14:27,010
+you're not using any Gestures
+in your assignment A3,
+
+1653
+01:14:27,010 --> 01:14:28,920
+this is next week's
+homework I'm talking about.
+
+1654
+01:14:28,920 --> 01:14:30,420
+And as I mentioned earlier,
+
+1655
+01:14:30,420 --> 01:14:32,290
+that one data structure
+you might wanna use
+
+1656
+01:14:32,290 --> 01:14:34,915
+to keep your selection, is a Set.
+
+1657
+01:14:34,915 --> 01:14:39,620
+So, if you're gonna put your
+little Emojis into a Set,
+
+1658
+01:14:39,620 --> 01:14:41,370
+they need to be Hashable.
+
+1659
+01:14:41,370 --> 01:14:43,200
+So let's talk about how that works.
+
+1660
+01:14:43,200 --> 01:14:47,034
+Back here in EmojiArt we
+have our Emojis, right here.
+
+1661
+01:14:47,034 --> 01:14:49,740
+And, they're Identifiable,
+and they're Codable,
+
+1662
+01:14:49,740 --> 01:14:51,833
+and you can also make them Hashable.
+
+1663
+01:14:52,810 --> 01:14:54,440
+And, if you mark it Hashable,
+
+1664
+01:14:54,440 --> 01:14:56,180
+it means they can be put in a Set.
+
+1665
+01:14:56,180 --> 01:14:59,710
+Note that you don't have to
+do anything, it just works.
+
+1666
+01:14:59,710 --> 01:15:01,630
+And that's because, again,
+
+1667
+01:15:01,630 --> 01:15:04,200
+the types in this struct
+are such that Swift
+
+1668
+01:15:04,200 --> 01:15:06,970
+can automatically do
+this hashability for you.
+
+1669
+01:15:06,970 --> 01:15:08,861
+So not only could you put this in a Set,
+
+1670
+01:15:08,861 --> 01:15:12,200
+but Emojis could also be if
+the key is in a Dictionary
+
+1671
+01:15:12,200 --> 01:15:13,033
+if you wanted.
+
+1672
+01:15:13,033 --> 01:15:14,916
+I don't think you're gonna
+need that for your homework.
+
+1673
+01:15:14,916 --> 01:15:17,990
+But, I just wanted to
+show you that real quick
+
+1674
+01:15:17,990 --> 01:15:20,400
+in case you wanted to do that.
+
+1675
+01:15:20,400 --> 01:15:22,431
+So that's it for today.
+
+1676
+01:15:22,431 --> 01:15:26,400
+We added a lot of cool
+features to our EmojiArt.
+
+1677
+01:15:26,400 --> 01:15:31,400
+And we can save it, and
+when we leave and come back,
+
+1678
+01:15:33,200 --> 01:15:36,070
+we don't lose all that
+wonderful work that we did.
+
+1679
+01:15:36,070 --> 01:15:38,300
+And of course we have double tap,
+
+1680
+01:15:38,300 --> 01:15:40,533
+and we can resize and pan.
+
+1681
+01:15:42,290 --> 01:15:43,830
+So there's a lot more things we can do
+
+1682
+01:15:43,830 --> 01:15:45,740
+to make our EmojiArt even better,
+
+1683
+01:15:45,740 --> 01:15:48,323
+and we'll dive into all of that next week.
+
+1684
+01:15:49,670 --> 01:15:53,133
+- For more, please visit
+us at standford.edu.
