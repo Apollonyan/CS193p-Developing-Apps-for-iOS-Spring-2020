@@ -5430,7 +5430,7 @@ That's why it does this.
 
 1232
 00:53:36,870 --> 00:53:38,370
-So each stack is smart.
+So HStack is smart.
 
 1233
 00:53:38,370 --> 00:53:40,610
@@ -5788,7 +5788,7 @@ this back of the card?
 
 1313
 00:57:33,300 --> 00:57:35,740
-Well, it's just a ZStack as well
+Well, it's just a RoundedRectangle as well
 
 1314
 00:57:35,740 --> 00:57:38,500
