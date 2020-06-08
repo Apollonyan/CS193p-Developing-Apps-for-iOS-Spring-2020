@@ -1,17 +1,17 @@
 1
 00:00:00,998 --> 00:00:03,498
-本字幕由志愿者义务贡献，采用许可协议 知识共享 署名—非商业性使用—相同方式共享 3.0 美国
-(regal music)
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名—非商业性使用—相同方式共享 3.0 美国
 
 2
 00:00:04,920 --> 00:00:06,513
->> [旁白] 斯坦福大学
-- [Announcer] Stanford University.
+斯坦福大学
+Stanford University.
 
 3
 00:00:08,430 --> 00:00:12,470
->> 欢迎收看斯坦福 CS193p 公开课
-- Welcome to Stanford CS193p.
+欢迎收看斯坦福 CS193p 公开课
+Welcome to Stanford CS193p.
 
 4
 00:00:12,470 --> 00:00:16,730
@@ -20,7 +20,7 @@ This is spring quarter of 2020.
 
 5
 00:00:16,730 --> 00:00:19,940
-我是 Paul Hegarty 我将带领你走进
+我是 Paul Hegarty，我将带领你走进
 I'm Paul Hegarty, and I'm going to be your tour guide
 
 6
@@ -40,7 +40,7 @@ And it's gonna be quite an adventure this quarter
 
 9
 00:00:28,530 --> 00:00:31,810
-因为你们都不像我 还留守在校园里
+因为你们都不像我还留守在校园里
 because none of you are here on campus with me
 
 10
@@ -55,7 +55,7 @@ It's gonna be a little bit strange.
 
 12
 00:00:35,570 --> 00:00:38,670
-我相信你们 也还没有完全适应
+我相信你们也还没有完全适应
 I'm sure it's gonna be very strange for you all.
 
 13
@@ -130,7 +130,7 @@ So don't miss that part of it.
 
 27
 00:01:13,290 --> 00:01:15,720
-因为所有的课程 都是提前录制好的
+因为所有的课程都是提前录制好的
 Now, all the lectures are gonna be pre-recorded
 
 28
@@ -175,7 +175,7 @@ I guess it's also gonna have a great benefit
 
 36
 00:01:33,810 --> 00:01:38,010
-就像我们这门课 之前也做过很多次一样
+就像我们这门课之前也做过很多次一样
 which is that as we do many times in this course,
 
 37
@@ -235,7 +235,7 @@ in the forums with the rest of the Stanford students
 
 48
 00:02:05,020 --> 00:02:07,593
-因为你看这个的时候 我们已经讲完了
+因为你看这个的时候，我们已经讲完了
 because you're watching this a little bit later.
 
 49
@@ -335,7 +335,7 @@ a new programming language, Swift.
 
 68
 00:02:53,640 --> 00:02:57,070
-我敢肯定几乎你们所有人 都是头一回听说
+我敢肯定几乎你们所有人都是头一回听说
 Entirely new for almost all of you, I'm sure.
 
 69
@@ -370,17 +370,17 @@ And that I'm not gonna assume you know.
 
 75
 00:03:09,000 --> 00:03:12,880
-所以，在这门课的过程中 我会教授你们相关的内容
+所以，我会在这门课程中教授你们相关的内容
 So I'm gonna be teaching you all about that along the way.
 
 76
 00:03:12,880 --> 00:03:16,670
-用户界面的编写方法 我们称之为响应式编程
+我们使用响应式的用户界面编写方法
 The user interface paradigm is also what's called reactive.
 
 77
 00:03:16,670 --> 00:03:19,440
-是一种声明式的写法 而不是我们平时常见的命令式
+是一种声明式的写法，而不是我们平时常见的命令式
 And it's declarative rather than imperative.
 
 78
@@ -395,7 +395,7 @@ so that's gonna be new to you.
 
 80
 00:03:22,950 --> 00:03:25,890
-当然，在这门课程中还有 其他各色各样的新话题
+当然，在这门课程中还有其他各色各样的新话题
 And there might be some other miscellaneous new topics.
 
 81
@@ -435,7 +435,7 @@ of stuff you're learning in your other CS classes here.
 
 88
 00:03:46,450 --> 00:03:49,760
-比如，显然我们会用到 人机交互界面的知识
+比如，显然我们会用到人机交互界面的知识
 For example computer-human interfaces, obviously.
 
 89
@@ -445,7 +445,7 @@ API design and language design.
 
 90
 00:03:52,310 --> 00:03:54,640
-我们还会学习动画、数据持久化 网络编程、多线程等
+我们还会学习动画、数据持久化、网络编程、多线程等
 Animation, persistence, networking, multithreading,
 
 91
@@ -565,7 +565,7 @@ how Swift works, to understand its type system.
 
 114
 00:04:50,830 --> 00:04:53,610
-但重申一下，如果可以的话 我更倾向于做演示
+但如果可以的话，我更倾向于做演示
 But again, if I can, I always lean towards the demo
 
 115
@@ -585,7 +585,7 @@ That's what we're here to learn.
 
 118
 00:04:58,930 --> 00:05:01,660
-在前三周，你会有一些
+在前三周你会有一些
 For your part, you are going to have some reading to do
 
 119
@@ -780,7 +780,7 @@ And it's got a lot more features than the previous ones.
 
 157
 00:06:27,640 --> 00:06:30,330
-SwiftUI 的特性 让这些新的功能易于构建
+SwiftUI 的特性让这些新的功能易于构建
 Some things are really easy to do in SwiftUI.
 
 158
@@ -820,7 +820,7 @@ So we're gonna be doing a lot of animation in this course.
 
 165
 00:06:45,670 --> 00:06:48,883
-它们对于精良的手机 用户界面至关重要
+它们对于精良的手机用户界面至关重要
 Animation is very important to a good mobile UI.
 
 166
@@ -885,17 +885,17 @@ So that's what we're gonna spend
 
 178
 00:07:17,690 --> 00:07:20,670
-前两至三周的课程中 通过课堂演示和
+前两至三周的课程中通过课堂演示和
 the first really two or three weeks in demo
 
 179
 00:07:20,670 --> 00:07:24,423
-课后作业的形式 构建这个 app
+课后作业的形式构建这个 app
 and in your homework, working on building this application.
 
 180
 00:07:26,610 --> 00:07:28,220
-顺带一提 在这个学期里
+顺带一提，在这个学期里
 By the way, you're probably not gonna see me
 
 181
@@ -1030,7 +1030,7 @@ in the first two lectures.
 
 207
 00:08:28,710 --> 00:08:33,580
-我建议你现在暂停视频 并下载 Xcode
+我建议你现在暂停视频并下载 Xcode
 So you might wanna pause this video and go download Xcode
 
 208
@@ -1060,7 +1060,7 @@ to satisfy that first required task.
 
 213
 00:08:46,720 --> 00:08:51,050
-这就是 Xcode 的启动屏幕 它分为两个部分
+这就是 Xcode 的启动屏幕。它分为两个部分
 So here this splash screen, it has two sides to it.
 
 214
@@ -1100,12 +1100,12 @@ not just for iOS apps but also Watch apps
 
 221
 00:09:10,160 --> 00:09:13,510
-还包括 Apple TV（tvOS） 甚至 Mac（macOS）的 app
+还包括 Apple TV（tvOS）甚至 Mac（macOS）的 app
 and Apple TV apps, even just Mac apps.
 
 222
 00:09:13,510 --> 00:09:16,820
-我们将会重点教授 如何构建 iOS 程序
+我们将会重点教授如何构建 iOS 程序
 We're gonna focus on building iOS apps in this course,
 
 223
@@ -1170,7 +1170,7 @@ Now, it wants to know some interesting things
 
 235
 00:09:49,540 --> 00:09:52,490
-app 的基本信息 第一项是它的名字
+app 的基本信息。第一项是它的名字
 about your app, most notably the name.
 
 236
@@ -1205,7 +1205,7 @@ Not in SwiftUI obviously, because that's brand new.
 
 242
 00:10:11,630 --> 00:10:14,978
-我称旧版为“翻牌游戏”（Concentration） 而新版为“记忆游戏”（Memorize）
+我称旧版为“翻牌游戏”，新版为“记忆游戏”
 And I called it Concentration instead of Memorize.
 
 243
@@ -1265,7 +1265,7 @@ that's your development team.
 
 254
 00:10:43,960 --> 00:10:46,550
-现在选择的是只有我 自己的开发者团队
+现在选择的是只有我自己的开发者团队
 In this case it's a personal team, just me.
 
 255
@@ -1280,7 +1280,7 @@ this is probably gonna say something like Add Team.
 
 257
 00:10:51,150 --> 00:10:54,250
-单击它后 你只需要一个 Apple ID
+单击它后，你只需要一个 Apple ID
 And when you click on it, all you'll need is any Apple ID
 
 258
@@ -1310,7 +1310,7 @@ This is going to appear at the top of files,
 
 263
 00:11:07,840 --> 00:11:10,570
-显示 written by CS193p Instructor (由 CS193p 教师创建)
+显示由 CS193p 教师创建
 written by CS193p instructor.
 
 264
@@ -1345,12 +1345,12 @@ to identify you.
 
 270
 00:11:29,100 --> 00:11:32,120
-如果想的话 你也可以加入“CS193p”字样
+如果想的话，你也可以加入“CS193p”字样
 You could put the CS193p in there if you want.
 
 271
 00:11:32,120 --> 00:11:34,840
-（如果你是斯坦福的学生） 加不加都关系不大
+（如果你是斯坦福的学生）加不加都关系不大
 If you're a Stanford student, it probably doesn't matter.
 
 272
@@ -1415,22 +1415,22 @@ which is this object-oriented version of C.
 
 284
 00:12:07,817 --> 00:12:10,450
-但在大约五六年前（2014 年）
+但在大约五六年前的 2014 年
 But about five or six years ago,
 
 285
 00:12:10,450 --> 00:12:12,830
-苹果公司（在 WWDC 14）公开了 新的 Swift 编程语言
+苹果公司（在 WWDC 14）公开了新的 Swift 编程语言
 Apple came out with this new language, Swift,
 
 286
 00:12:12,830 --> 00:12:15,600
-Swift 非常优秀 并能完全兼容
+Swift 非常优秀，并能完全
 which is awesome because it's completely compatible
 
 287
 00:12:15,600 --> 00:12:16,680
-Objective-C
+兼容 Objective-C
 with Objective-C.
 
 288
@@ -1440,7 +1440,7 @@ So all their existing libraries all just worked.
 
 289
 00:12:19,200 --> 00:12:22,190
-Swift 也引入了许多 现代编程语言的特性
+Swift 也引入了许多现代编程语言的特性
 But it introduced a lot of modern language features,
 
 290
@@ -1465,7 +1465,7 @@ in SwiftUI because SwiftUI is based on
 
 294
 00:12:31,690 --> 00:12:34,300
-因为 SwiftUI 基于函数式编程 而非面向对象式编程
+因为 SwiftUI 基于函数式编程，而非面向对象式编程
 functional programming, not object-oriented programming.
 
 295
@@ -1515,7 +1515,7 @@ We're gonna do all our development in SwiftUI,
 
 304
 00:13:01,340 --> 00:13:04,510
-不过如果有时间的话 我会在这学期最后一两周
+不过如果有时间的话，我会在这学期最后一两周
 although the last week or two of the quarter,
 
 305
@@ -1640,7 +1640,7 @@ so you can leave all of that unchecked.
 
 329
 00:13:56,150 --> 00:13:58,114
-现在我点 Next 然后 Xcode 弹出了一个窗口
+现在我点 Next，然后 Xcode 弹出了一个窗口
 So I hit Next here and now it wants to know,
 
 330
@@ -1895,7 +1895,7 @@ You can probably can imagine from this code over here.
 
 380
 00:16:01,140 --> 00:16:04,280
-显示一行“Hello, World” 就是第一个 app 唯一能做的事情了
+显示一行“Hello, World”就是第一个 app 唯一能做的事情了
 And that's what all first apps do, they say "Hello, World."
 
 381
@@ -1950,7 +1950,7 @@ I don't know if you also notice that this device
 
 391
 00:16:27,920 --> 00:16:30,580
-这台设备刚巧处在 深色模式（Dark Mode）
+这台设备刚巧处在深色模式（Dark Mode）
 is similar, it happens to be in Dark Mode
 
 392
@@ -1975,7 +1975,7 @@ in both Dark Mode and non-Dark Mode.
 
 396
 00:16:39,830 --> 00:16:42,113
-这些区别大部分都 被 SwiftUI 自动适配了
+这些区别大部分都被 SwiftUI 自动适配了
 And SwiftUI handles most of that for us.
 
 397
@@ -2060,7 +2060,7 @@ Like you can navigate by searching.
 
 413
 00:17:20,080 --> 00:17:23,140
-还可以在调试器（debugger）中 查看断点（breakpoint）
+还可以在调试器（debugger）中查看断点（breakpoint）
 You can navigate your breakpoints in the debugger.
 
 414
@@ -2155,7 +2155,7 @@ This actually brings something up from the bottom.
 
 432
 00:18:09,530 --> 00:18:14,080
-它们是调试器和 控制台（console）输出
+它们是调试器和控制台（console）输出
 This is your debugger and your console output down here.
 
 433
@@ -2210,7 +2210,7 @@ That's what this little plus button over here does.
 
 443
 00:18:42,470 --> 00:18:45,380
-它能在右边添加另一个 也就是第三个编辑器
+它能在右边添加另一个，也就是第三个编辑器
 It lets you add another, a third editor on the right.
 
 444
@@ -2295,7 +2295,7 @@ which is called the Preview window.
 
 460
 00:19:26,980 --> 00:19:30,020
-看这里写着“自动更新已暂停” Automatic preview updating paused
+看，这里写着“自动更新已暂停”
 See, it says automatic preview updating paused.
 
 461
@@ -2375,7 +2375,7 @@ I'm not really going to pay much attention to it.
 
 476
 00:20:09,690 --> 00:20:12,750
-因此我要（多敲几个空行） 把它从屏幕上隐藏
+因此我要（多敲几个空行）把它从屏幕上隐藏
 In fact, I'm going to move it out of the way.
 
 477
@@ -2620,7 +2620,7 @@ This first key word here.
 
 525
 00:22:07,600 --> 00:22:10,930
-你可以看到，所有的 Swift 关键字 都是紫红色的
+你可以看到，所有的 Swift 关键字都是紫红色的
 Notice all the Swift keywords are in magenta.
 
 526
@@ -2750,7 +2750,7 @@ Or some would even say it "is a" View.
 
 551
 00:23:18,370 --> 00:23:22,830
-但如果我说 “ContentView 是一个 View”
+但如果我说“ContentView 是一个 View”
 Although if I use the statement that it "is a" View,
 
 552
@@ -2815,7 +2815,7 @@ We are going to be using so many Views
 
 564
 00:23:49,950 --> 00:23:53,320
-在接下来的几节课中 你甚至都想象不到有多少
+你甚至都想象不到在接下来的几节课中有多少
 in the next couple of lectures, you can't even imagine it.
 
 565
@@ -3025,7 +3025,7 @@ we call them properties.
 
 606
 00:25:40,210 --> 00:25:44,680
-你可以很容易地使用 var 关键字 来声明一个属性
+你可以很容易地使用 var 关键字来声明一个属性
 So the syntax for a property, really easy, you got a var.
 
 607
@@ -3035,7 +3035,7 @@ This is the name of the property.
 
 608
 00:25:46,487 --> 00:25:49,410
-因为这是我们声明的 所以它也是绿色的字体
+因为这是我们声明的，所以它也是绿色的字体
 Again, it's green 'cause it's something we chose.
 
 609
@@ -3050,7 +3050,7 @@ or of this var.
 
 611
 00:25:57,290 --> 00:26:01,020
-即使在 Swift 这门语言中 它也是一种相当有趣的类型
+它即使在 Swift 这门语言中也是一种相当有趣的类型
 Now, this is a pretty interesting type even in Swift.
 
 612
@@ -3105,7 +3105,7 @@ is that the type of this variable, this property,
 
 622
 00:26:28,820 --> 00:26:33,820
-可以是任何一种类型，任何一种结构体 只要表现得像一个 View 就行
+可以是任何一种类型，任何一种结构体，只要表现得像一个 View 就行
 is any type, any struct, as long as it behaves like a View.
 
 623
@@ -3135,7 +3135,7 @@ you have to have a var called body
 
 628
 00:26:47,480 --> 00:26:51,674
-它是另一个表现得 像个 View 一样的东西
+它是另一个表现得像个 View 一样的东西
 that also is another thing that behaves like a View.
 
 629
@@ -3165,7 +3165,7 @@ And you might be kind of thinking, "What?
 
 634
 00:27:01,357 --> 00:27:05,460
-但是你可以 把 View 当做乐高玩具
+但是你可以把 View 当做乐高玩具
 But you could kind of think of Views as Legos.
 
 635
@@ -3175,7 +3175,7 @@ So of course there are some brick Legos,
 
 636
 00:27:07,580 --> 00:27:11,170
-那些积木就像 Text 一样 是基础的东西
+那些积木就像 Text 一样是基础的东西
 Legos that are like the basic thing like Text.
 
 637
@@ -3185,7 +3185,7 @@ Text is like a brick Lego.
 
 638
 00:27:13,330 --> 00:27:16,930
-你可以将乐高积木 拼成其他的东西
+你可以将乐高积木拼成其他的东西
 But then you can put Legos together to make something else.
 
 639
@@ -3200,12 +3200,12 @@ you could call that a new Lego.
 
 641
 00:27:20,590 --> 00:27:24,350
-就像一个新组成的乐高 或者一个更强大的乐高
+就像一个新组成的乐高或者一个更强大的乐高
 It's like a combined Lego or a more powerful Lego.
 
 642
 00:27:24,350 --> 00:27:26,520
-例如，如果你想要 建造一个乐高房子
+例如，如果你想要建造一个乐高房子
 For example, if you were building a Lego house,
 
 643
@@ -3225,7 +3225,7 @@ all those things out of other Legos.
 
 646
 00:27:33,800 --> 00:27:36,030
-如果你将沙发和餐桌 也看做乐高组件的话
+如果你将沙发和餐桌也看做乐高组件的话
 And if you consider that couch and the kitchen table
 
 647
@@ -3240,7 +3240,7 @@ to make the house.
 
 649
 00:27:39,403 --> 00:27:42,280
-你甚至可以把刚拼好的房子作为 新的乐高组件
+你甚至可以把刚拼好的房子作为新的乐高组件
 You could even then have the house be a Lego
 
 650
@@ -3370,7 +3370,7 @@ that's what the value of the body is.
 
 675
 00:28:54,680 --> 00:28:57,080
-而且这个变量被访问之后 很快就会被再次访问
+而且这个变量被访问之后，很快就会被再次访问
 And every time it's called, it gets called again,
 
 676
@@ -3415,7 +3415,7 @@ this little curly-braced piece of code.
 
 684
 00:29:15,540 --> 00:29:20,160
-但是它并没有出现在这里 因为 Swift 喜欢省略代码
+因为 Swift 喜欢省略代码，所以它并没有出现在这里
 And it wasn't there because Swift loves to leave things out
 
 685
@@ -3495,12 +3495,12 @@ it's gonna execute this and return this Text right here.
 
 700
 00:29:55,710 --> 00:29:59,490
-还记得吗？这个返回值 类型是 some View
+还记得吗？这个返回值类型是 some View
 Now, this return type, remember, is some View.
 
 701
 00:29:59,490 --> 00:30:02,137
-所以你可能会疑惑 “它返回了个 Text”
+所以你可能会疑惑：“它返回了个 Text”
 So if you're saying, "It's returning Text.
 
 702
@@ -3510,12 +3510,12 @@ So if you're saying, "It's returning Text.
 
 703
 00:30:03,270 --> 00:30:07,750
-这是因为 Text 说它 会表现得和 View 一样
+这是因为 Text 说它会表现得和 View 一样
 Well, of course Text, it says it behaves like a View.
 
 704
 00:30:07,750 --> 00:30:09,070
-所以它就是 some View （“某种 View”）
+所以它就是“某种 View”
 So this is "some View".
 
 705
@@ -3535,7 +3535,7 @@ struct Text: View “struct Text 表现得像 View 一样”
 
 708
 00:30:18,310 --> 00:30:23,160
-这就是为什么我们能 返回 Text 作为 body 的值
+这就是为什么我们能返回 Text 作为 body 的值
 And that's why we can return a Text as the value of body
 
 709
@@ -3550,7 +3550,7 @@ In fact, we could even just type Text right here.
 
 711
 00:30:26,700 --> 00:30:30,800
-这完全是合法的 因为 ContentView 要表现得像 View
+这完全是合法的，因为 ContentView 要表现得像 View
 That would be valid because to behave like a View,
 
 712
@@ -3575,7 +3575,7 @@ Why do we do this some View?
 
 716
 00:30:42,320 --> 00:30:46,300
-这是因为当 body 里开始用 组合器视图之类的东西的时候
+这是因为当 body 里开始用组合器视图的时候
 Well, as our body of our View gets more complicated
 
 717
@@ -3615,7 +3615,7 @@ And we wanna let the compiler figure it out for us.
 
 724
 00:31:02,530 --> 00:31:06,187
-所以这个“some View” 就是在告诉编译器
+所以这个“some View”就是在告诉编译器
 So this some View is basically saying to the compiler,
 
 725
@@ -3650,7 +3650,7 @@ that Swift is what's called a very strongly-typed language.
 
 731
 00:31:24,060 --> 00:31:28,050
-这意味着每一个变量 都有一个明确的类型
+这意味着每一个变量都有一个明确的类型
 That means every variable has a specific type.
 
 732
@@ -3675,7 +3675,7 @@ That's when it gets ...
 
 736
 00:31:34,683 --> 00:31:38,250
-不，在 Swift 中每一个变量 都有一个明确的类型
+不，在 Swift 中每一个变量都有一个明确的类型
 No, in Swift, every variable has a specific type
 
 737
@@ -3700,17 +3700,17 @@ We create this Text.
 
 741
 00:31:51,320 --> 00:31:53,680
-每当我们要创建一个东西 一个 struct 的时候……
+每当我们要创建一个东西，一个 struct 的时候……
 Anytime we're creating anything, any struct,
 
 742
 00:31:53,680 --> 00:31:56,680
-Text 是一个 表现的像个 View 一样的 struct
+Text 是一个表现的像个 View 一样的 struct
 so a Text is just a struct that behaves like a View.
 
 743
 00:31:56,680 --> 00:32:00,120
-每当我们要创建它的时候 会在小括号里
+每当我们要创建它的时候会在小括号里
 And anytime we create one, we in parentheses
 
 744
@@ -3730,12 +3730,12 @@ it needs the string that it's going to use to create itself.
 
 747
 00:32:09,007 --> 00:32:11,460
-这就是为什么这里会显示出 “Hello There, World!”
+这就是为什么这里会显示出“Hello There, World!”
 and that's why you get this "Hello There, World!"
 
 748
 00:32:11,460 --> 00:32:14,140
-注意这里我改变了字符串 但预览并没有更新
+注意这里我改变了字符串，但预览并没有更新
 And notice if I edit this, it's not changing this.
 
 749
@@ -3750,12 +3750,12 @@ But if I resume, then it's going
 
 751
 00:32:18,720 --> 00:32:23,303
-现在我改变字符串的值 预览就可以实时更新了
+现在我改变字符串的值，预览就可以实时更新了
 and now I can for example type, and it's tracking it.
 
 752
 00:32:24,250 --> 00:32:28,010
-这就是我们创建任意类型结构体 新实例的方法
+这就是我们创建任意类型结构体新实例的方法
 So this is always the way we create new structs of any kind.
 
 753
@@ -3870,12 +3870,12 @@ So I'm gonna delete that.
 
 775
 00:33:17,160 --> 00:33:19,840
-我不清楚你们知不知道 在任何一个 Mac 应用中
+我不清楚你们知不知道，在任何一个 Mac 应用中
 I don't know if you know this but in any Mac app,
 
 776
 00:33:19,840 --> 00:33:22,850
-如果你在菜单栏选择“编辑” 然后往下看
+如果你在菜单栏选择“编辑”然后往下看
 if you go to the Edit menu, go down to the bottom,
 
 777
@@ -4000,7 +4000,7 @@ to create a RoundedRectangle.
 
 801
 00:34:14,790 --> 00:34:17,980
-你可以通过以下方法 轻松地知道需要补充什么
+你可以通过以下方法轻松地知道需要补充什么
 You can by the way, easily find out what that is
 
 802
@@ -4025,7 +4025,7 @@ to create a RoundedRectangle.
 
 806
 00:34:26,197 --> 00:34:29,350
-你可以指定圆角的半径 或者圆角的尺寸
+你可以指定圆角的半径或者尺寸
 You can specify the corner radius or the corner size,
 
 807
@@ -4040,12 +4040,12 @@ I'm gonna do the cornerRadius.
 
 809
 00:34:33,340 --> 00:34:37,363
-你可以按下 Tab 键 或者鼠标双击这里
+你可以按下 Tab 键或者鼠标双击这里
 So you can hit Tab here or you can double-click on this.
 
 810
 00:34:38,970 --> 00:34:43,040
-接着，它会提示你输入半径 以点（point）为单位
+接着，它会提示你输入以点（point）为单位的半径
 Then it wants the radius and this is in points.
 
 811
@@ -4055,7 +4055,7 @@ So I'm gonna do 10 points.
 
 812
 00:34:45,235 --> 00:34:48,050
-点与字体的点值 是相同的标准
+点与字体的点值是相同的标准
 A point is the same as the point size of a font,
 
 813
@@ -4065,7 +4065,7 @@ like 10-point font.
 
 814
 00:34:49,830 --> 00:34:53,780
-举个例子，方便你们感受一点是多长
+举个例子，方便你们感受 1 点是多长
 It's also, just to give you an idea of the size of a point,
 
 815
@@ -4080,7 +4080,7 @@ and maybe seven or 800 points high.
 
 817
 00:35:00,230 --> 00:35:05,230
-一台 iPad 的宽度大约一千点 高度约七百点
+一台 iPad 的宽度大约一千点，高度约七百点
 An iPad might be 1,000 by 700 and something.
 
 818
@@ -4115,7 +4115,7 @@ It just adapts and adjusts to any size screen.
 
 824
 00:35:20,010 --> 00:35:22,530
-当我们在 记忆游戏 中开始拥有 成行成列的按钮时
+当我们在 记忆游戏 中开始拥有成行成列的按钮时
 You're really gonna see that with our Memorize game
 
 825
@@ -4130,12 +4130,12 @@ On big screens they're gonna be large.
 
 827
 00:35:27,740 --> 00:35:30,940
-当设备在竖屏模式下 它会用一种方式调整大小
+当设备在竖屏模式下，它会用一种方式调整大小
 When we're in portrait mode it's gonna kind of resize things
 
 828
 00:35:30,940 --> 00:35:32,970
-而在横屏模式下会以另一种方式调整
+而会以另一种方式在横屏模式下调整
 one way and landscape another.
 
 829
@@ -4155,7 +4155,7 @@ But that's the approximate size of a point
 
 832
 00:35:39,670 --> 00:35:41,820
-“点”大约尺寸的印象
+“1 点”大约尺寸的印象
 to give you an idea of a point.
 
 833
@@ -4205,7 +4205,7 @@ It's unusual to have something like Text
 
 842
 00:36:07,620 --> 00:36:10,770
-没有实际参数标签 是不同寻常的
+没有实际参数标签是不同寻常的
 where there's no label here for an argument.
 
 843
@@ -4270,7 +4270,7 @@ And this is something that was inherited from Objective-C.
 
 855
 00:36:40,500 --> 00:36:43,167
-实际上这个东西非常好 因为如果没有这个（标签）
+实际上这个东西非常好，因为如果没有这个（标签）
 It's actually quite nice because if we didn't have this
 
 856
@@ -4295,7 +4295,7 @@ But as soon as we put this cornerRadius in there,
 
 860
 00:36:53,080 --> 00:36:54,597
-一下子真相大白了： “噢，我在创建“
+一下子真相大白了：“噢，我在创建“
 it's like all of a sudden, "Oh, I'm creating
 
 861
@@ -4435,7 +4435,7 @@ A ZStack does need an argument to be created here.
 
 888
 00:38:08,100 --> 00:38:12,910
-用的是标签为 content 的构造器 并用大括号
+用的是标签为 content 的构造器，并用大括号
 The argument we're gonna use is content then in curly braces
 
 889
@@ -4460,7 +4460,7 @@ RoundedRectangle in the back, Text in the front.
 
 893
 00:38:24,890 --> 00:38:26,960
-这是第一个视图…… 这里列出了两个视图
+这是第一个视图……这里列出了两个视图
 First thing in the list and this is two items
 
 894
@@ -4545,7 +4545,7 @@ Now, we're getting there.
 
 910
 00:39:06,030 --> 00:39:09,760
-但是这里仍有些地方 （我们点这里的 Resume 恢复下）
+但是这里仍有些地方（我们点这里的 Resume 恢复下）
 But there's still some things, we'll kind of resume here,
 
 911
@@ -4630,7 +4630,7 @@ which is a Shape.
 
 927
 00:39:50,350 --> 00:39:54,410
-其他的形状有 Circle、Capsule 贝塞尔曲线（Path）
+其他的形状有 Circle、Capsule、贝塞尔曲线（Path）
 Other Shapes are Circle, Capsule, bezier paths,
 
 928
@@ -4690,7 +4690,7 @@ It returns something that behaves like a View.
 
 939
 00:40:19,060 --> 00:40:24,060
-这是必要的 因为这里一定要是一个 View
+这是必要的，因为这里一定要是一个 View
 And it has to because whatever this is has to be a View.
 
 940
@@ -4745,7 +4745,7 @@ This is the first time you've seen a Swift function call.
 
 950
 00:40:53,920 --> 00:40:57,460
-它非常简洁 仅需“.<方法名>”
+它非常简洁，仅需“.<方法名>”
 Really simple, it's just dot and the name of the function.
 
 951
@@ -4760,7 +4760,7 @@ Now, stroke actually can take arguments
 
 953
 00:41:02,490 --> 00:41:05,110
-但即使不传入任何实参 它也能正常运转
+但它即使不传入任何实参也能正常运转
 but it works perfectly fine without its arguments.
 
 954
@@ -4820,7 +4820,7 @@ Well, this is a View right here, some View.
 
 965
 00:41:32,810 --> 00:41:36,440
-对于所有 View （所有与 View 行为一致的视图）来说
+对于所有 View，所有与 View 行为一致的视图来说
 And all Views, anything that behaves like a View,
 
 966
@@ -4860,7 +4860,7 @@ It's changed it to orange right there.
 
 973
 00:41:56,700 --> 00:42:00,920
-值得一提的是 我们可以在任一视图上调用这个方法
+值得一提的是，我们可以在任一视图上调用这个方法
 Now, this function can be called on any View.
 
 974
@@ -4920,7 +4920,7 @@ ZStack is just a View.
 
 985
 00:42:30,960 --> 00:42:33,600
-它和 View 有一样的行为 所以它和所有其他 View 一样
+它和 View 有一样的行为，所以它和所有其他 View 一样
 It behaves like a View so it has foregroundColor
 
 986
@@ -5000,7 +5000,7 @@ But this would still be orange.
 
 1001
 00:43:16,470 --> 00:43:19,380
-因为我只把这个 描边后的 RoundedRectangle
+因为我只把这个描边后的 RoundedRectangle
 Because I only overrode this foregroundColor blue
 
 1002
@@ -5010,7 +5010,7 @@ for this View right here, this stroked RoundedRectangle.
 
 1003
 00:43:23,580 --> 00:43:26,823
-而并没有覆盖这个 “X”的 foregroundColor
+而并没有覆盖这个“X”的 foregroundColor
 I didn't override it for this X right here.
 
 1004
@@ -5090,7 +5090,7 @@ on a separate line as well.
 
 1019
 00:44:04,240 --> 00:44:07,150
-但我不打算这么做 随便你
+但我不打算这么做，随便你
 But we're not gonna do it here, but you might.
 
 1020
@@ -5110,12 +5110,12 @@ and most understandable.
 
 1023
 00:44:13,600 --> 00:44:16,440
-目前为止我们的卡片 看上去还不错
+目前为止我们的卡片看上去还不错
 So we're making good progress on our card here.
 
 1024
 00:44:16,440 --> 00:44:19,730
-但有一个问题是 卡片的边缘不是很明显
+但有一个问题是卡片的边缘不是很明显
 One thing, it's really hard to see the edges here.
 
 1025
@@ -5135,12 +5135,12 @@ called padding.
 
 1028
 00:44:29,080 --> 00:44:32,120
-注意，当我在 Text 后面 添加 padding 方法后
+注意，当我在 Text 后面添加 padding 方法后
 And here notice when I put padding around my Text,
 
 1029
 00:44:32,120 --> 00:44:35,040
-Text 的周围瞬间 蹦出了一圈空白填充
+Text 的周围瞬间蹦出了一圈空白填充
 oop, it popped out, it got some padding around it.
 
 1030
@@ -5155,7 +5155,7 @@ to my stroked RoundedRectangle since it's a View.
 
 1032
 00:44:40,960 --> 00:44:43,920
-输入 padding()，效果不错
+输入 .padding()，效果不错
 padding, ooh, that's nice.
 
 1033
@@ -5200,12 +5200,12 @@ Like the RoundedRectangle we'll use
 
 1041
 00:45:02,880 --> 00:45:05,690
-卡片背面的 RoundedRectangle 或者是一些其它类似的情况
+卡片背面的 RoundedRectangle 这类的情况
 for the back of my card eventually and things like that.
 
 1042
 00:45:05,690 --> 00:45:07,980
-能在外围调用这些函数 省了不少功夫
+能在外围调用这些函数省了不少功夫
 So this is nice to be able to put these on the outside.
 
 1043
@@ -5295,12 +5295,12 @@ And ah, kind of interesting.
 
 1060
 00:45:45,550 --> 00:45:49,097
-应用正常运作了 但看上去不太好看
+应用正常运作了，但看上去不太好看
 It's working but it doesn't look very good here.
 
 1061
 00:45:49,097 --> 00:45:52,240
-这是因为我们的模拟器 现在是深色模式
+这是因为我们的模拟器现在是深色模式
 That's because our simulator's in Dark Mode.
 
 1062
@@ -5315,7 +5315,7 @@ Even in Dark Mode we want it to be white.
 
 1064
 00:45:57,570 --> 00:46:00,760
-我们不想看到黑色的卡片 堆在黑乎乎的背景前面
+我们不想看到黑色的卡片堆在黑乎乎的背景前面
 We don't want it to be black cards on black background.
 
 1065
@@ -5345,7 +5345,7 @@ and then fill it with another Color.
 
 1070
 00:46:13,350 --> 00:46:16,610
-但没关系，因为我们 现在是在一个 ZStack 中
+但没关系，因为我们现在是在一个 ZStack 中
 But that's no problem because we're in a ZStack right here.
 
 1071
@@ -5390,7 +5390,7 @@ which is the Color to fill with.
 
 1079
 00:46:40,250 --> 00:46:43,810
-而且这样会覆盖 这里的 foregroundColor
+而且这样会覆盖这里的 foregroundColor
 And that overrides this foregroundColor here.
 
 1080
@@ -5440,7 +5440,7 @@ So let's make it a line width of three.
 
 1089
 00:47:07,060 --> 00:47:10,540
-我们点 Resume 恢复下 看它运行在浅色模式中
+我们点 Resume 恢复下，看它运行在浅色模式中
 Again, we could resume here to see it in Light Mode.
 
 1090
@@ -5450,7 +5450,7 @@ There it is.
 
 1091
 00:47:11,373 --> 00:47:16,096
-我们也可以通过运行应用 来看看深色模式中的效果
+我们也可以通过运行应用来看看深色模式中的效果
 And we can run over here to see this in Dark Mode.
 
 1092
@@ -5475,7 +5475,7 @@ You see this Interface Style?
 
 1096
 00:47:24,200 --> 00:47:27,580
-你可以打开它，然后将深色模式 改成浅色模式
+你可以打开它，然后将深色模式改成浅色模式
 You can turn that on and go from Dark Mode to Light Mode.
 
 1097
@@ -5535,7 +5535,7 @@ and body and other things.
 
 1108
 00:47:58,900 --> 00:48:02,253
-但 largeTitle 是我能找到的 最大的字体了
+但 largeTitle 是我能找到的最大的字体了
 largeTitle happens to be the largest one I can find.
 
 1109
@@ -5615,7 +5615,7 @@ that had multiple pieces of Text
 
 1124
 00:48:40,997 --> 00:48:43,350
-包含多个 Text 的视图 使这些 Text 的字体都相同
+包含多个 Text 的视图，使这些 Text 的字体都相同
 and you want them all to be the same Font.
 
 1125
@@ -5635,7 +5635,7 @@ So I've kind of got the card somewhat looking like I want.
 
 1128
 00:48:53,500 --> 00:48:57,370
-现在我需要更多的卡片 因为这里我们只创建了一个卡片
+现在我需要更多的卡片，因为这里我们只创建了一个卡片
 Now I want multiple cards 'cause I only have one card here
 
 1129
@@ -5675,7 +5675,7 @@ The first argument, it takes two arguments.
 
 1136
 00:49:15,170 --> 00:49:20,170
-第一个参数是某种 可迭代类型的实例
+第一个参数是某种可迭代类型的实例
 The first argument is like an iterable thing of some sort.
 
 1137
@@ -5690,7 +5690,7 @@ Then the second argument, just like a ZStack, is content.
 
 1139
 00:49:26,500 --> 00:49:30,263
-这个 content 中的内容就是 我们之前构建的这个 ZStack
+这个 content 中的内容就是我们之前构建的这个 ZStack
 And that content is going to be this ZStack.
 
 1140
@@ -5715,7 +5715,7 @@ it's going to build one of these Views.
 
 1144
 00:49:44,020 --> 00:49:48,000
-所以 ForEach 本质上是一种 创建多个 View 的方法
+所以 ForEach 本质上是一种创建多个 View 的方法
 So it essentially is a way to make multiple Views.
 
 1145
@@ -5730,7 +5730,7 @@ if you wanna think of it like that.
 
 1147
 00:49:53,160 --> 00:49:56,980
-那么我们这里提到的 可迭代的类型是什么呢？
+那么我们这里提到的可迭代类型是什么呢？
 So what is this iterable thing we're talking about here?
 
 1148
@@ -5765,7 +5765,7 @@ We'll eventually switch to using an array
 
 1154
 00:50:08,800 --> 00:50:12,780
-但是现在我要用另一种 可迭代的类型：Range（区间）
+但是现在我要用另一种可迭代类型：Range（区间）
 but I'm using another iterable thing called a Range.
 
 1155
@@ -5840,7 +5840,7 @@ But we could have multiple things.
 
 1169
 00:50:54,910 --> 00:50:56,960
-就像在 ZStack 中一样 我们有多个视图
+就像我们在 ZStack 中有多个视图一样
 Just like in the ZStack, we have multiple things.
 
 1170
@@ -5875,7 +5875,7 @@ But essentially this is the iteration variable.
 
 1176
 00:51:13,390 --> 00:51:16,770
-在这个情况下 这里的 index 初始值是 0
+在这个情况下，这里的 index 初始值是 0
 So in this case, this index is zero.
 
 1177
@@ -5925,7 +5925,7 @@ on top of each other from back to front.
 
 1186
 00:51:39,960 --> 00:51:42,680
-ForEach 并不会这样 如果你运行
+ForEach 并不会这样。如果你运行
 ForEach doesn't do that and if you run,
 
 1187
@@ -5940,7 +5940,7 @@ it would probably put the View somewhere
 
 1189
 00:51:45,620 --> 00:51:49,460
-因为模拟器显然无法 模拟多个 iPhone
+因为模拟器显然无法模拟多个 iPhone
 because it obviously can't simulate multiple iPhones.
 
 1190
@@ -5950,7 +5950,7 @@ But really the preview is actually showing more
 
 1191
 00:51:51,760 --> 00:51:54,410
-显示发生了什么 即创建了四个这样的视图
+显示发生了什么：创建了四个这样的视图
 of what's happening where it's creating four of these Views.
 
 1192
@@ -6000,12 +6000,12 @@ And for that we need another stack.
 
 1201
 00:52:11,450 --> 00:52:13,750
-这里，我们不想把它们 从后往前堆叠在一起
+这里，我们不想把它们从后往前堆叠在一起
 Now, we don't wanna stack them on top of each other
 
 1202
 00:52:13,750 --> 00:52:16,130
-这样我们就无法看到 后面的视图
+这样我们就无法看到后面的视图
 and we wouldn't be able to see the ones in the back.
 
 1203
@@ -6020,12 +6020,12 @@ which is we're gonna return an HStack.
 
 1205
 00:52:20,698 --> 00:52:23,683
-HStack 像 ZStack 一样 有 content 参数
+HStack 像 ZStack 一样有 content 参数
 Our HStack just like ZStack has content.
 
 1206
 00:52:24,640 --> 00:52:26,960
-你把需要排列的视图 放入 content 中
+你把需要排列的视图放入 content 中
 And you put in the content the things
 
 1207
@@ -6105,7 +6105,7 @@ That is the one View that's being returned.
 
 1222
 00:53:11,500 --> 00:53:14,540
-当然了，HStack 是一个组合器 它组合了那些 View
+当然了，HStack 是一个组合器，它组合了那些 View
 Of course, HStack is a combiner so it's combining things.
 
 1223
@@ -6125,7 +6125,7 @@ Now, notice also that the HStack
 
 1226
 00:53:22,600 --> 00:53:25,710
-遇到 ForEach 时 因为这里可以有多个视图
+遇到 ForEach 时，因为这里可以有多个视图
 when it sees a ForEach 'cause this could be a list,
 
 1227
@@ -6175,7 +6175,7 @@ each of the ForEach things separately.
 
 1236
 00:53:45,050 --> 00:53:48,400
-另一个值得注意的事是 这里的空隙
+另一个值得注意的是这里的空隙
 Now, another thing to notice here is the spacing.
 
 1237
@@ -6210,7 +6210,7 @@ That spacing is actually something the HStack is doing
 
 1243
 00:54:06,670 --> 00:54:08,800
-并且它有一个参数 可以设置空隙的大小
+并且它有一个参数可以设置空隙的大小
 and it has an argument that lets you set that.
 
 1244
@@ -6245,22 +6245,22 @@ Same thing with padding down here.
 
 1250
 00:54:24,930 --> 00:54:26,940
-我们没有设置它的参数 但是在 padding 方法中
+我们没有设置它的参数，但是在 padding 方法中
 We didn't specify anything here but in padding
 
 1251
 00:54:26,940 --> 00:54:30,170
-你甚至可以设置上边的 边缘填充为 100
+你甚至可以设置上边的边缘填充为 100
 you can actually even do padding on the top is 100.
 
 1252
 00:54:30,170 --> 00:54:34,730
-或者设置所有方向的 边缘填充都是 10
+或者设置所有方向的边缘填充都是 10
 Or padding is 10 on all sides.
 
 1253
 00:54:34,730 --> 00:54:38,870
-通常我们尽可能使用 标准的边缘填充
+通常我们尽可能使用标准的边缘填充
 But usually we go for standard padding as much as we can.
 
 1254
@@ -6270,7 +6270,7 @@ Standard padding and spacing.
 
 1255
 00:54:42,180 --> 00:54:46,900
-我前面说过，还记得我们 删掉了这里的 return
+我前面说过，还记得我们删掉了这里的 return
 Now, I told you, remember we took away this return.
 
 1256
@@ -6280,12 +6280,12 @@ There's another thing we can take away.
 
 1257
 00:54:49,430 --> 00:54:54,430
-在 Swift 中，如果函数的 最后一个参数
+在 Swift 中，如果函数的最后一个参数
 In Swift, if the last argument to a function
 
 1258
 00:54:54,633 --> 00:54:57,310
-或者构造器的最后一个参数 比如这里的 ForEach
+或者比如这里 ForEach 构造器的最后一个参数
 or the creation of something, so here's ForEach.
 
 1259
@@ -6300,7 +6300,7 @@ This and then it has this as its second argument.
 
 1261
 00:55:02,640 --> 00:55:06,320
-如果第二个参数 是由大括号包含的
+如果第二个参数是由大括号包含的
 If the second argument is a curly-braced thing,
 
 1262
@@ -6340,7 +6340,7 @@ So this seems kind of crazy.
 
 1269
 00:55:27,420 --> 00:55:30,240
-但是，先看看它会让我们的 代码变成什么样子
+但是，先看看它会让我们的代码变成什么样子
 But actually, look what it makes our code look like.
 
 1270
@@ -6360,7 +6360,7 @@ So I'm gonna get rid of that.
 
 1273
 00:55:39,190 --> 00:55:43,440
-然后我在 HStack 上 进行同样的处理
+然后我在 HStack 上进行同样的处理
 And I'm gonna do the same thing here for my HStack.
 
 1274
@@ -6405,12 +6405,12 @@ and these HStacks all the time.
 
 1282
 00:56:07,610 --> 00:56:09,920
-现在，如果我想设置 spacing 参数 我仍然可以写
+现在，如果我想设置 spacing 参数，我仍然可以写
 Now, if I wanna put this spacing back, I could.
 
 1283
 00:56:09,920 --> 00:56:13,050
-spacing: 0 完全没问题
+spacing: 0，完全没问题
 Spacing, zero, perfectly fine.
 
 1284
@@ -6470,7 +6470,7 @@ Which means what?
 
 1295
 00:56:42,940 --> 00:56:47,280
-它必须有一个 类型是 some View 的 body 变量
+它必须有一个类型是 some View 的 body 变量
 It has to have a var body that is some View.
 
 1296
@@ -6545,7 +6545,7 @@ is do fronts and backs of cards.
 
 1310
 00:57:25,430 --> 00:57:29,090
-因为到目前为止 我们只展示了卡片的正面
+因为我们到目前为止只展示了卡片的正面
 'Cause right now, we only have the front of the card shown.
 
 1311
@@ -6610,7 +6610,7 @@ Notice that this foregroundColor
 
 1323
 00:57:58,520 --> 00:58:01,900
-不仅仅应用在 HStack 里 所有的东西上
+不仅仅应用在 HStack 里所有的东西上
 not only applies to everything in the HStack
 
 1324
@@ -6675,7 +6675,7 @@ and backs of cards somehow be conditional.
 
 1336
 00:58:31,200 --> 00:58:34,900
-因为卡片要么正面朝上 要么背面朝上
+因为卡片要么正面朝上，要么背面朝上
 Or the card is either face up or face down.
 
 1337
@@ -6710,7 +6710,7 @@ if, let's say, isFaceUp for now.
 
 1343
 00:58:53,080 --> 00:58:57,000
-我们把这三行代码 移到 isFaceUp 的分支里
+我们把这三行代码移到 isFaceUp 的分支里
 And we'll put these three things in the isFaceUp case.
 
 1344
@@ -6730,7 +6730,7 @@ So we can actually put an if.
 
 1347
 00:59:05,580 --> 00:59:07,550
-现在这里有一些错误和警告 （译者注：这里没有警告）
+现在这里有一些错误和警告（译者注：这里没有警告）
 Now, we got all kinds of errors and warnings here
 
 1348
@@ -6775,7 +6775,7 @@ It's just a normal in memory var.
 
 1356
 00:59:28,180 --> 00:59:30,690
-然后你看到这样做修复了 这下面所有的代码
+然后你看到这样做修复了这下面所有的代码
 And you see that fixed up all of our code down here.
 
 1357
@@ -6820,7 +6820,7 @@ Well, I told you earlier.
 
 1365
 00:59:50,360 --> 00:59:53,650
-在 Swift 中 所有的变量都是强类型的
+在 Swift 中所有的变量都是强类型的
 Swift, all variables, it's strongly typed
 
 1366
@@ -6850,7 +6850,7 @@ Face up is false, does that.
 
 1371
 01:00:08,840 --> 01:00:13,313
-如果我把 isFaceUp 改成 true 然后点下 Resume
+如果我把 isFaceUp 改成 true，然后点下 Resume
 And if I change thisFaceUp to be true and resume,
 
 1372
@@ -6865,7 +6865,7 @@ So that's one way to set this.
 
 1374
 01:00:18,940 --> 01:00:21,400
-如果可以的话 我们会经常用这种方式
+如果可以的话，我们会经常用这种方式
 And we often will set this if it makes sense.
 
 1375
@@ -6930,7 +6930,7 @@ Now, it's not always gonna fix it
 
 1387
 01:00:49,000 --> 01:00:51,990
-你期望的方式去修正 所以，并非始终有效
+你期望的方式去修正，所以并非始终有效
 exactly the way you want so it doesn't work all the time.
 
 1388
@@ -6955,7 +6955,7 @@ But here it does work.
 
 1392
 01:00:58,040 --> 01:01:02,410
-如果我点击 Fix Xcode 会在创建 CardView 时
+如果我点击 Fix，Xcode 会在创建 CardView 时
 If I hit Fix, it actually adds an argument
 
 1393
@@ -7005,7 +7005,7 @@ All these are not face up.
 
 1402
 01:01:25,210 --> 01:01:29,273
-希望你们已经熟悉 创建 CardView 这种模式
+希望你们已经熟悉创建 CardView 这种模式
 Now, hopefully this pattern is looking familiar to you.
 
 1403
@@ -7025,7 +7025,7 @@ It has some var probably.
 
 1406
 01:01:36,740 --> 01:01:38,430
-但并不一定是这样 因为还有其他方式
+但并不一定是这样，因为还有其他方式
 Not necessarily because there are other ways
 
 1407
@@ -7035,17 +7035,17 @@ to pass these variables.
 
 1408
 01:01:39,810 --> 01:01:42,130
-但是它可能有一个 叫做 cornerRadius 的变量
+但是它可能有一个叫做 cornerRadius 的变量
 But it might have a var called cornerRadius.
 
 1409
 01:01:42,130 --> 01:01:46,140
-因此，我们必须 要为 cornerRadius 赋值
+因此，我们必须要为 cornerRadius 赋值
 And so it's forcing us to set it,
 
 1410
 01:01:46,140 --> 01:01:48,390
-明确它的值 因为不能有未赋值的变量
+因为不能有未赋值的变量
 to define it 'cause we can't have unset vars.
 
 1411
@@ -7100,7 +7100,7 @@ along with lecture one.
 
 1421
 01:02:10,910 --> 01:02:12,690
-所以如果你真的想 看看第二节课讲了什么
+所以如果你真的想看看第二节课讲了什么
 So if you really want to see what's in lecture two,
 
 1422
@@ -7110,5 +7110,5 @@ just go watch it right now.
 
 1423
 01:02:15,760 --> 01:02:18,993
->> [旁白] 请访问 stanford.edu 获取更多内容
-- [Announcer] For more, please visit us at stanford.edu.
+请访问 stanford.edu 获取更多内容
+For more, please visit us at stanford.edu.
