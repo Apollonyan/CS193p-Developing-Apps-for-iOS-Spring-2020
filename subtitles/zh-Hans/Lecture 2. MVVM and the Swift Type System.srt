@@ -1510,174 +1510,219 @@ that we saw in the demo from last time.
 
 351
 00:15:52,070 --> 00:15:54,760
+它们都可以有计算变量
 They also both can have computed variables
 
 352
 00:15:54,760 --> 00:15:56,790
+就像我们上次做的演示那样
 like we saw from the
 demo last time, right?
 
 353
 00:15:56,790 --> 00:15:57,800
+var body
 Var body.
 
 354
 00:15:57,800 --> 00:16:00,010
+每当有人访问这个变量的时候
 Its value is computed each time
 
 355
 00:16:00,010 --> 00:16:02,530
+它就会被计算一次
 someone asked for classes and structs.
 
 356
 00:16:02,530 --> 00:16:03,763
+类和结构体都能有计算变量
 Both can have that.
 
 357
 00:16:04,610 --> 00:16:07,310
+它们还可以有一种被称为 let 的东西
 They can also have these
 things called lets.
 
 358
 00:16:07,310 --> 00:16:10,440
+let 实际上就是一个 var
 Okay, a let is just a var where the var
 
 359
 00:16:10,440 --> 00:16:11,620
+只不过这个 var 并不能 vary（变化）
 does not actually vary.
 
 360
 00:16:11,620 --> 00:16:13,810
+它不是变量，它是常量
 It's not variable, it's a constant.
 
 361
 00:16:13,810 --> 00:16:15,600
+所以 let 本质上是一个常量
 So, a let is essentially a constant.
 
 362
 00:16:15,600 --> 00:16:18,280
+它们俩都能含有常量
 They can both have constants in them.
 
 363
 00:16:18,280 --> 00:16:20,350
+它们还能含有函数
 They also both have functions.
 
 364
 00:16:20,350 --> 00:16:23,260
+我还没有讲太多函数的语法
 We haven't talked a lot
 about the syntax of functions
 
 365
 00:16:23,260 --> 00:16:27,240
+所以这里我们花点时间讲一下
 so let me take just a moment
 here to talk about that.
 
 366
 00:16:27,240 --> 00:16:29,640
+我们已经知道，对于一个函数来说
 We do already know that for a function,
 
 367
 00:16:29,640 --> 00:16:34,230
+它的每个参数都有标签
+对于这个 multiply 函数来说
 the arguments have labels or
 in this multiply function,
 
 368
 00:16:34,230 --> 00:16:35,610
+它有两个参数
 it's got two arguments.
 
 369
 00:16:35,610 --> 00:16:37,217
+第一个参数叫做 operand
 The first argument is called operand
 
 370
 00:16:37,217 --> 00:16:38,997
+第二个叫做 by
 and the second one is called by,
 
 371
 00:16:38,997 --> 00:16:42,105
+它们都是 Int 类型
+并且函数返回一个 Int
 out of both of type Int,
 this function returns an Int
 
 372
 00:16:42,105 --> 00:16:44,540
+在 multiply 内部
 and inside of multiply.
 
 373
 00:16:44,540 --> 00:16:48,520
+我使用标签 operand
+和 by 来做乘法
 I just use the labels operand
 and by to make it operate.
 
 374
 00:16:48,520 --> 00:16:52,750
+这里如果我写上
+multiply(operand: 5, by: 6)
 so if I say multiply operand five by six,
 
 375
 00:16:52,750 --> 00:16:56,050
+显然它会给我们返回 30
 that's obviously going
 to return 30 for us.
 
 376
 00:16:56,050 --> 00:16:58,960
+我想告诉你的是这些标签
 I do wanna tell you that those labels,
 
 377
 00:16:58,960 --> 00:17:02,760
+实际上，每个参数可以有两个标签
 actually, each parameter
 can have two labels.
 
 378
 00:17:02,760 --> 00:17:04,980
+这里我还有一个 multiply
 So here, I have multiply again
 
 379
 00:17:04,980 --> 00:17:07,350
+但每个参数都有两个标签
 but each of them has two labels.
 
 380
 00:17:07,350 --> 00:17:11,550
+第一个参数有个下划线标签
 I have the first parameter
 has the label underbar
 
 381
 00:17:11,550 --> 00:17:16,020
+和 operand 标签
+第二个参数有 by 标签
 and the label operand and the
 second one has the label by
 
 382
 00:17:16,020 --> 00:17:18,114
+和 otherOperand 标签
 and the label otherOperand.
 
 383
 00:17:18,114 --> 00:17:21,130
+每一个参数都有一个蓝色的标签
 See how there's two, a
 blue one and a purple one
 
 384
 00:17:21,130 --> 00:17:24,740
+和一个紫色的标签
+所以为什么会有两个标签呢？
 for each of the arguments
 and why are there two?
 
 385
 00:17:24,740 --> 00:17:29,040
+实际上，蓝色标签是在调用函数时使用的
 Well, the blue ones are used
 by callers of the function
 
 386
 00:17:29,040 --> 00:17:32,720
+紫色标签是在函数内使用的
 and the purple ones are
 used inside the function.
 
 387
 00:17:32,720 --> 00:17:35,520
+因此紫色标签看起来和前一个函数相同
 So the purple ones look the
 same as our previous one,
 
 388
 00:17:35,520 --> 00:17:37,660
+return operand * otherOperand
 return operand times other operand.
 
 389
 00:17:37,660 --> 00:17:42,660
+这就是两个标签中的第二个标签
 That's the second of the
 two labels for each of them
 
