@@ -2585,225 +2585,226 @@ MVVM is always a class.
 
 601
 00:27:05,040 --> 00:27:07,450
-Also the old way of doing iOS programming,
+也是 iOS 编程的旧方法
 
 602
 00:27:07,450 --> 00:27:08,770
-that was all class-based,
+一切都是基于类的
 
 603
 00:27:08,770 --> 00:27:12,180
-that was all object-oriented,
-not functional programming.
+一切都是面向对象的
+并不是函数式编程
 
 604
 00:27:12,180 --> 00:27:15,100
-Why is the ViewModel in MVVM a class?
+那为什么 MVVM 中的视图模型是一个类？
 
 605
 00:27:15,100 --> 00:27:17,680
-By the way, look, I'm gonna
-talk about this in the demo
+顺便说一下，我们将要
+在示例里讨论这个问题
 
 606
 00:27:17,680 --> 00:27:19,530
-but it has to do with the fact
+但是它一定和
 
 607
 00:27:19,530 --> 00:27:21,820
-that a ViewModel needs to be shared
+视图模型也许需要在许多的视图
 
 608
 00:27:21,820 --> 00:27:24,780
-amongst a lot of different Views, perhaps.
+之间共享有关
 
 609
 00:27:24,780 --> 00:27:27,550
-The ViewModel is kind of
-the portal on to the Model.
+视图模型就像是
+模型的“门户”
 
 610
 00:27:27,550 --> 00:27:29,260
-A lot of different Views
-might wanna be looking
+许多不同的视图
+可能想要看
 
 611
 00:27:29,260 --> 00:27:33,530
-at that Model and they
-wanna share that portal.
+那个模型
+并且共享这个“门户”（指视图模型）
 
 612
 00:27:33,530 --> 00:27:35,000
-Classes are great for sharing
+类很适合用来共享
 
 613
 00:27:35,000 --> 00:27:37,110
-because we all have a pointer to them.
+因为我们都有一个指向它的指针
 
 614
 00:27:37,110 --> 00:27:38,560
-There's a downside on sharing,
+共享也有缺点
 
 615
 00:27:38,560 --> 00:27:40,990
-we try to mitigate that in MVVM,
+我们会在 MVVM 中尽量减轻它
 
 616
 00:27:40,990 --> 00:27:43,080
-I'll show you that in the demo as well
+我也会在示例中向你展示
 
 617
 00:27:43,080 --> 00:27:44,650
-but that's an example of a class.
+但那时一个类的示例
 
 618
 00:27:44,650 --> 00:27:47,380
-Pretty much everything else
-you've seen, it's been a struct.
+其他你看到的一切
+都是结构体
 
 619
 00:27:47,380 --> 00:27:49,570
-All these Views that
-obviously you've seen,
+所有这些视图
+显然你都看到过
 
 620
 00:27:49,570 --> 00:27:51,050
-they're all structs.
+它们都是结构体
 
 621
 00:27:51,050 --> 00:27:53,160
-I said, Arrays, Ints, Bools, Doubles,
+比如数组，整数，布尔变量，双精度小数
 
 622
 00:27:53,160 --> 00:27:54,830
-everything, all at range,
+一切都在范围内
 
 623
 00:27:54,830 --> 00:27:58,720
-everything is a struct
-pretty much, except View.
+一切都是结构体
+除了视图
 
 624
 00:27:58,720 --> 00:28:02,720
-View is actually a different
-type called a protocol.
+视图实际上是不同的
+类型，叫做协议
 
 625
 00:28:02,720 --> 00:28:05,980
-A View is not a struct or
-a class, it is a protocol
+视图不是结构体或者类
+它是一个协议
 
 626
 00:28:05,980 --> 00:28:07,870
-and we'll be talking about protocols
+下个周，我们也会详细地
 
 627
 00:28:07,870 --> 00:28:10,223
-in great detail next week.
+讲解协议
 
 628
 00:28:11,360 --> 00:28:15,540
-Okay, the next thing I wanna
-talk about is generics.
+下面我想
+讲一下泛型
 
 629
 00:28:15,540 --> 00:28:18,350
-We may want to manipulate
-some data structure
+我们可能想要操控
+某种数据结构
 
 630
 00:28:18,350 --> 00:28:21,170
-that we're kind of type agnostic about it.
+但是我们并不清楚它的类型
 
 631
 00:28:21,170 --> 00:28:24,330
-We don't really care about
-the types, like whatever.
+或者我们并不关心
+它的类型
 
 632
 00:28:24,330 --> 00:28:27,200
-Give me whatever type but
-the problem with Swift
+给我任何一种类型
+但问题是 Swift
 
 633
 00:28:27,200 --> 00:28:30,250
-is it's an extremely
-strongly typed language,
+它是一种非常
+强类型的语言
 
 634
 00:28:30,250 --> 00:28:33,450
-every var, every parameter
-to every function,
+所有变量，所有参数
+到所有函数
 
 635
 00:28:33,450 --> 00:28:36,080
-everything has to have a type.
+任何事物必须有一个类型
 
 636
 00:28:36,080 --> 00:28:38,490
 No such thing isn't really, well,
+没有东西是真的没有
 
 637
 00:28:38,490 --> 00:28:41,080
-for backwards compatibility to old UIKit,
+为了向后兼容老的 UIKit
 
 638
 00:28:41,080 --> 00:28:43,180
-there's kind of is an untype thing.
+的确有一种无类型的东西
 
 639
 00:28:43,180 --> 00:28:45,790
-But, really, in Swift,
-in SwiftUI, for sure,
+但是，真的，在 Swift 中
+在 SwiftUI 中
 
 640
 00:28:45,790 --> 00:28:47,700
-we don't use untyped variables.
+我们一定不使用无类型的变量
 
 641
 00:28:47,700 --> 00:28:50,370
-Variables all have to have types.
+所有变量必须有类型
 
 642
 00:28:50,370 --> 00:28:52,630
-So, how do we specify this type
+所以，我们怎么能指定这种类型
 
 643
 00:28:52,630 --> 00:28:54,880
-when we're in a situation
-where we don't care
+当我们
+不关心
 
 644
 00:28:54,880 --> 00:28:56,030
-what the type is?
+类型具体是什么？
 
 645
 00:28:56,030 --> 00:28:59,160
-So we have something
-that we're manipulating
+所以我们有某种事物
+我们正在操控
 
 646
 00:28:59,160 --> 00:29:02,010
-but we don't really care
-what its type is, all right?
+但是我们并不关心
+它的类型是什么
 
 647
 00:29:02,010 --> 00:29:03,370
-So, how do we do this?
+所以，我们该怎么做到这一点呢？
 
 648
 00:29:03,370 --> 00:29:05,740
-Well, this is best shown by example.
+好的，这个问题在示例里很好地展示了
 
 649
 00:29:05,740 --> 00:29:09,080
-One of the best example
-in the world is Array.
+世界上最好的例子之一
+是数组
 
 650
 00:29:09,080 --> 00:29:13,000
-An Array contains a bunch of
-things, that's what an Array is
+一个数组包含一些东西
+这也是数组功能所在
 
 651
 00:29:13,000 --> 00:29:15,910
