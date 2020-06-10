@@ -3034,116 +3034,108 @@ the actual type that Element is.
 
 702
 00:31:24,790 --> 00:31:26,970
-Now, it's sort of almost like someone did
+这就像是有人在 Array 的代码里
 
 703
 00:31:26,970 --> 00:31:29,820
-a search and replace
-in all of Array's code
+使用了查找替换功能
 
 704
 00:31:29,820 --> 00:31:32,620
-where they searched and
-replaced Element with Int.
+将所有的 Element 换成了 Int
 
 705
 00:31:32,620 --> 00:31:36,460
-So the function append now
-takes an Int as an argument.
+这样一来
+append 方法就会将 Int 类型作为参数
 
 706
 00:31:36,460 --> 00:31:39,990
-That's why I can say a.append(5)
-and that works perfectly
+这就是为什么我写下了 a.append(5)
+并且毫无问题
 
 707
 00:31:39,990 --> 00:31:41,440
-'cause five is an Int
+因为 5 是一个 Int
 
 708
 00:31:41,440 --> 00:31:44,403
-and append now takes
-an Int as an argument.
+append 方法已将 Int 类型作为参数
 
 709
 00:31:45,290 --> 00:31:47,320
-So, it's the using of Array
+所以说
+Array 中的 Element 类型
 
 710
 00:31:47,320 --> 00:31:49,760
-when Element's actual
-type gets determined,
+在 Array 被使用时确立
 
 711
 00:31:49,760 --> 00:31:52,090
-when the code in Array is being written,
+而当 Array 的代码被写出时
 
 712
 00:31:52,090 --> 00:31:53,160
-it's all a don't care.
+类型是剥离的
 
 713
 00:31:53,160 --> 00:31:56,870
-It just uses the type Element,
-which is a don't care.
+它直接用上 Element 作为类型
+并非实际特定的类型
 
 714
 00:31:56,870 --> 00:31:59,140
-Notice that when you use
-a don't care like this,
+注意当你这样使用时
 
 715
 00:31:59,140 --> 00:32:01,620
-you have to let the world know about it
+你需要让其他代码也明确这一点
 
 716
 00:32:01,620 --> 00:32:03,000
-because they're gonna have to tell you
+因为你需要依赖它们
 
 717
 00:32:03,000 --> 00:32:05,080
-what it actually is when they use it
+来确定这里的具体类型和使用情况
 
 718
 00:32:05,080 --> 00:32:07,700
-and that's what the angle
-bracket Element there
+这就是这里的三角括号
 
 719
 00:32:07,700 --> 00:32:09,580
-at the top is all about.
+存在的意义
 
 720
 00:32:09,580 --> 00:32:12,096
-And it's perfectly legal to
-have multiple don't cares.
+多个不定类型的存在也是合法的
+
 
 721
 00:32:12,096 --> 00:32:15,748
-Struct Array, angle bracket
-Element, comma, Foo, comma,
+Struct Array, 三角括号，Element, 逗号, Foo, 逗号,
 
 722
 00:32:15,748 --> 00:32:18,890
-so you may have as many
-don't care as you want
+你可以想使用几个不定类型就使用几个
 
 723
 00:32:18,890 --> 00:32:21,650
-and then the person who's
-using it has to specify
+只是使用时注意要确定
 
 724
 00:32:21,650 --> 00:32:23,433
-what all those types are.
+他们的类型就好
 
 725
 00:32:24,940 --> 00:32:27,690
-Okay, I call these don't care types,
+OK，我要调用这些不定类型的元素
 
 726
 00:32:27,690 --> 00:32:29,310
-elements that don't care type.
+他们没有确立元素类型
 
 727
 00:32:29,310 --> 00:32:31,843
