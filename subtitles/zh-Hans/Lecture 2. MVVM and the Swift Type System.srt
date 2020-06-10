@@ -1728,190 +1728,239 @@ two labels for each of them
 
 390
 00:17:42,870 --> 00:17:44,260
+但是看看调用
 but look at the caller.
 
 391
 00:17:44,260 --> 00:17:48,550
+写的是 myltiply(5, by: 6)
 He now says multiply five by six.
 
 392
 00:17:48,550 --> 00:17:52,560
+所以下划线的意思是“没有标签”
 So the underbar label means no label.
 
 393
 00:17:52,560 --> 00:17:55,680
+之前我们看到在创建 Text
 That's why we've seen things like text,
 
 394
 00:17:55,680 --> 00:17:57,500
+的时候后跟着一个表情字符串
 which takes a little emoji string,
 
 395
 00:17:57,500 --> 00:17:58,833
+它看起来没有标签
 it doesn't have to have a label there,
 
 396
 00:17:58,833 --> 00:18:03,360
+就是因为它在代码中使用了下划线
 it's because it's using this
 underbar somewhere in its code
 
 397
 00:18:03,360 --> 00:18:04,704
+让你可以省略它
 to mean you can leave it out.
 
 398
 00:18:04,704 --> 00:18:08,100
+下划线永远表示“省略”
 Underbar always means leave it out, okay?
 
 399
 00:18:08,100 --> 00:18:10,130
+或者“没用过的”，你可以把它视作
 Unused, you wanna think of it that way,
 
 400
 00:18:10,130 --> 00:18:13,060
+Swift 中没有用过的字符
 it's the unused character in Swift.
 
 401
 00:18:13,060 --> 00:18:16,090
+在今天的演示中你也会看到这一点
 We'll see that in the demo today as well.
 
 402
 00:18:16,090 --> 00:18:19,800
+第二个参数依然使用实参标签 by
 And then the second one still
 uses by as the external name.
 
 403
 00:18:19,800 --> 00:18:21,763
+我们把它叫做实参标签
 We call that the external name of this,
 
 404
 00:18:21,763 --> 00:18:24,883
+而 otherOperand 是形参名
 and it's using otherOperand
 as the internal name.
 
 405
 00:18:25,720 --> 00:18:27,550
+稍后你可以看到更多例子
 So you can stare at
 this a little bit later
 
 406
 00:18:27,550 --> 00:18:31,180
+但这基本上就是函数的语法了
 but this is the syntax,
 basically, for functions
 
 407
 00:18:31,180 --> 00:18:35,600
+函数在结构体和类中都可以存在
 and functions exist in both
 structs and in classes.
 
 408
 00:18:35,600 --> 00:18:38,330
+另外，结构体和类都有一种特殊函数
 Now, structs and classes
 also have special functions
 
 409
 00:18:38,330 --> 00:18:40,461
+叫做构造函数（initializer）
 called initializers.
 
 410
 00:18:40,461 --> 00:18:45,133
+它的功能是通过一些不是变量的参数
 And initializer are used to
 create your struct or class
 
 411
 00:18:46,230 --> 00:18:50,220
+来创建结构体或类
 with some argument that is
 not one of your variables.
 
 412
 00:18:50,220 --> 00:18:51,710
+我们已经在 CardView 中看到这一点了
 We've already seen like with CardView
 
 413
 00:18:51,710 --> 00:18:53,698
+还记得吗
 and remember CardView,
 
 414
 00:18:53,698 --> 00:18:56,954
+我们创建它的时候
+把参数 isFaceUp 设定为 true
 we created it with the
 argument isFaceUp true
 
 415
 00:18:56,954 --> 00:19:00,560
+通过这种方式把 CardView 中的变量
+isFaceUp 的值设定好了
 and it set the var
 isFaceUp in our CardView.
 
 416
 00:19:00,560 --> 00:19:04,410
+你可以用这种方法进行初始化
 So we can always
 initialize things that way
 
 417
 00:19:04,410 --> 00:19:08,060
+但是如果我们想用其他类型的参数
 but what if we want to use
 some other kind of argument
 
 418
 00:19:08,060 --> 00:19:09,915
+来进行初始化呢？
 to get something initialized?
 
 419
 00:19:09,915 --> 00:19:12,900
+一个很好的例子
+就是我们的 MemoryGame
 And a great example it's
 gonna be our MemoryGame
 
 420
 00:19:12,900 --> 00:19:15,310
+因为当你创建 MemoryGame 的时候
 because when you create a MemoryGame,
 
 421
 00:19:15,310 --> 00:19:18,910
+它的变量应该是卡片或者其他一些东西
 it's vars are gonna be like
 it's cards or things like that
 
 422
 00:19:18,910 --> 00:19:20,750
+但实际上当你
+创建 MemoryGame 的时候
 but really, a MemoryGame,
 when you create it,
 
 423
 00:19:20,750 --> 00:19:23,650
+你希望设定的是游戏中有几对卡片
 you wanna say how many pairs
 of cards are in the game.
 
 424
 00:19:23,650 --> 00:19:25,428
+这是一个比较大的有 20 张卡片的
 Is this a big MemoryGame with 20 cards
 
 425
 00:19:25,428 --> 00:19:29,120
+MemoryGame 吗？
+或者是一个小一点的
 or a smaller MemoryGame
 with only six pairs of cards
 
 426
 00:19:29,120 --> 00:19:30,100
+只有 6 对卡片那种？
 or something like that?
 
 427
 00:19:30,100 --> 00:19:32,750
+所以创建 MemoryGame 的参数
 So, I wanna be able to have the argument
 
 428
 00:19:32,750 --> 00:19:36,110
+应该是 numberOfPairsOfCards
+（卡片对数）
 to creating a MemoryGame
 be numberOfPairsOfCards
 
 429
 00:19:36,110 --> 00:19:38,270
+它应该是一个 Int 
 which is an Int and I can do that
 
 430
 00:19:38,270 --> 00:19:41,352
+然后我在 MemoryGame 中
+写一个 init 函数
 by putting an init function
 inside my MemoryGame,
 
 431
 00:19:41,352 --> 00:19:43,280
+并把卡片对数作为参数
 which takes that as an argument.
 
 432
