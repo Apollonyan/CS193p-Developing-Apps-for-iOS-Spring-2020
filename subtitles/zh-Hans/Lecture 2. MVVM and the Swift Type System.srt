@@ -3030,7 +3030,7 @@ the actual type that Element is.
 
 701
 00:31:22,690 --> 00:31:24,790
-So this is an Array of Ints.
+这就是 Int 类型的 Array
 
 702
 00:31:24,790 --> 00:31:26,970
