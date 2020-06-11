@@ -3131,78 +3131,73 @@ Struct Array, 三角括号，Element, 逗号, Foo, 逗号,
 
 725
 00:32:24,940 --> 00:32:27,690
-OK，我要调用这些不定类型的元素
+OK，我把它们称作不定类型的元素
 
 726
 00:32:27,690 --> 00:32:29,310
-他们没有确立元素类型
+他们没有确立的数据类型
 
 727
 00:32:29,310 --> 00:32:31,843
-The real name for these is type parameter.
+它们的真实名称应当是类型参数
 
 728
 00:32:33,750 --> 00:32:36,710
-And the last type I wanna
-talk about is functions.
+最后一种我会讲的类型是方法
 
 729
 00:32:36,710 --> 00:32:39,120
-So, functions are people too.
+方法也是类型
 
 730
 00:32:39,120 --> 00:32:42,450
-Functions can serve as a type
+方法可以作为一种类型
 
 731
 00:32:42,450 --> 00:32:47,020
-and the syntax for it is really
-simple and straightforward.
+并且其运用的语法简单直白
 
 732
 00:32:47,020 --> 00:32:51,070
-Here's some example of some
-functions that are types.
+这里有一些将方法用作类型的例子
 
 733
 00:32:51,070 --> 00:32:54,940
-This in yellow, the stuff you
-see in yellow, that is a type.
+屏幕上黄色字体标出的就是一个类型
 
 734
 00:32:54,940 --> 00:32:59,940
-Just imagine the yellow part
-is Int or String, right?
+你可以联想到 Int 或者 String 类型
 
 735
 00:33:00,000 --> 00:33:02,040
-Or Array of Int, okay?
+或者是 Int 的数组类型
 
 736
 00:33:02,040 --> 00:33:04,070
-It's exactly, it's just as much a type
+和那些类型一样
 
 737
 00:33:04,070 --> 00:33:05,320
-as any of those things.
+这里也是一种类型
 
 738
 00:33:05,320 --> 00:33:09,320
-So this type is a function
-that takes two Ints
+所以这个类型指的就是
+一个传入两个 Int 参数
 
 739
 00:33:09,320 --> 00:33:11,030
-and returns a Bool.
+且返回值为 Bool 类型的方法
 
 740
 00:33:11,030 --> 00:33:12,240
-That's what that type is.
+就是这样的一种类型
 
 741
 00:33:12,240 --> 00:33:15,390
-So you could have the parameter
-to a function of this type.
+所以说
+你可以将方法的参数作为这个方法的类型
 
 742
 00:33:15,390 --> 00:33:18,290
