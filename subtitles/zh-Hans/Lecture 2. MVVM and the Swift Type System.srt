@@ -1965,209 +1965,266 @@ which takes that as an argument.
 
 432
 00:19:43,280 --> 00:19:45,270
+而且很酷的是我可以
 And the cool thing is I can have
 
 433
 00:19:45,270 --> 00:19:47,570
+有多个 init 函数
 any number of these inits that I want,
 
 434
 00:19:47,570 --> 00:19:49,300
+每一个 init 都接受不同的参数
 each of which taking a different argument.
 
 435
 00:19:49,300 --> 00:19:51,750
+因为可能有其他创建
+MemoryGame 的方法
 Maybe there's other ways
 to create a MemoryGame.
 
 436
 00:19:51,750 --> 00:19:55,733
+所以结构体和类都有构造函数
 So structs and classes
 both have initializers.
 
 437
 00:19:56,660 --> 00:19:59,210
+那结构体和类的区别在哪呢？
 So what's the difference then
 between structs and classes?
 
 438
 00:19:59,210 --> 00:20:02,250
+它们看起来非常相似
+实际上也的确比较相似
 They looked awfully similar
 and they are roughly similar
 
 439
 00:20:02,250 --> 00:20:04,050
+但它们也有一些根本性的不同
 but there are some fundamental differences
 
 440
 00:20:04,050 --> 00:20:06,730
+现在我们来谈谈它们的不同之处
 so let's talk about what
 those differences are.
 
 441
 00:20:06,730 --> 00:20:11,130
+最大的不同点是
+结构体是值类型
 The biggest difference is
 that struct is a value type
 
 442
 00:20:11,130 --> 00:20:13,940
+而类是引用类型
 and class is a reference type.
 
 443
 00:20:13,940 --> 00:20:16,610
+现在我仔细解释一下
 So let's talk a little bit
 more about what that means.
 
 444
 00:20:16,610 --> 00:20:18,861
+值类型和引用类型
 Value type versus reference type.
 
 445
 00:20:18,861 --> 00:20:23,430
+引用类型是通过指针传递的
 A reference type is
 passed around by pointers.
 
 446
 00:20:23,430 --> 00:20:25,710
+它保存在堆中
 Reference types live in the heap.
 
 447
 00:20:25,710 --> 00:20:27,570
+所以当你创建类的时候
 Okay, so classes, when you create them,
 
 448
 00:20:27,570 --> 00:20:30,130
+它们会被存储在堆里
 the storage for them is in the heap.
 
 449
 00:20:30,130 --> 00:20:31,570
+你们应该都懂这是什么意思
 Everyone knows what that means.
 
 450
 00:20:31,570 --> 00:20:34,730
+换句话说就是保存在内存里
+当我传递它的时候
 That's just like stored in
 memory and when I pass it around,
 
 451
 00:20:34,730 --> 00:20:36,120
+我传递的是指向它的指针
 I'm passing around pointers to it.
 
 452
 00:20:36,120 --> 00:20:37,610
+所以可能会有很多人都有
 So a lot of people might have a pointer
 
 453
 00:20:37,610 --> 00:20:39,670
+指向同一个类实例的指针
 to the same class somewhere.
 
 454
 00:20:39,670 --> 00:20:44,670
+结构体并不传递指针
+它们会被复制
 Structs are not passed around
 by pointer, they are copied.
 
 455
 00:20:45,550 --> 00:20:49,720
+所以如果你给函数的
+参数传递一个结构体
 So if you pass a struct to
 a function as an argument,
 
 456
 00:20:49,720 --> 00:20:51,535
+那个函数就会有一个原结构体的拷贝
 that function gets a copy of it
 
 457
 00:20:51,535 --> 00:20:53,811
+甚至假如我只是
 even if I just have one variable
 
 458
 00:20:53,811 --> 00:20:56,090
+有两个变量，然后我让
 and I have another variable that I said
 
 459
 00:20:56,090 --> 00:20:57,720
+第二个变量等于第一个
 equal to the first variable,
 
 460
 00:20:57,720 --> 00:21:01,690
+这两个变量都会是独立的拷贝
 both variables are a separate copy of it.
 
 461
 00:21:01,690 --> 00:21:04,560
+你可能会觉得
+“哇哦你在开玩笑吧”
 This might seem like,
 whoa, you're kidding me.
 
 462
 00:21:04,560 --> 00:21:08,010
+“因为数组是个结构体”
 I'm making copies of, I
 mean arrays are structs
 
 463
 00:21:08,010 --> 00:21:10,700
+“所以每当我把一个巨大的数组”
 so I'm making copies of huge arrays
 
 464
 00:21:10,700 --> 00:21:14,200
+“传递到一个函数中的时候
+我都要复制一次吗？”
 every time I pass it to a
 function or something like that?
 
 465
 00:21:14,200 --> 00:21:17,840
+显然，答案是不会
 And the answer is, of course,
 that's not actually happening.
 
 466
 00:21:17,840 --> 00:21:20,340
+在 Swift 底层中
 Behind the scenes, Swift is,
 
 467
 00:21:20,340 --> 00:21:21,640
+当你传递一些东西
 when you're passing these things around
 
 468
 00:21:21,640 --> 00:21:23,530
+复制这些结构体的时候
 and it's copying these structs,
 
 469
 00:21:23,530 --> 00:21:26,720
+它并不会每个比特都做复制
 it is not really copying the bits of it,
 
 470
 00:21:26,720 --> 00:21:30,880
+它们会共享同一份拷贝
+直到你尝试改变其中的内容
 it's somehow sharing them until
 you then try to write to it.
 
 471
 00:21:30,880 --> 00:21:33,513
+所以如果你给函数传递一个数组
 So if you pass an array to a function,
 
 472
 00:21:33,513 --> 00:21:36,650
+它不会完全复制出一个新的数组
 it might copy that into another variable
 
 473
 00:21:36,650 --> 00:21:40,630
+当你想在数组后面添加一些东西的时候
 and then it wants to add
 something to that array,
 
 474
 00:21:40,630 --> 00:21:44,015
+它才会进行比特级别的复制
 then it's gonna make a
 copy, an actual bitwise copy
 
 475
 00:21:44,015 --> 00:21:46,410
+然后你才可以在数组里添加东西
 of the array so that you can add to it
 
 476
 00:21:46,410 --> 00:21:49,750
+这时你添加的数组是与原来不同的
 because the one you added
 it to is a different copy
 
 477
 00:21:49,750 --> 00:21:50,590
+一份拷贝
 than the other one.
 
 478
 00:21:50,590 --> 00:21:52,630
+我们称这种机制为写时复制
+（copy-on-write）
 So that's called copy-on-write,
 
 479
