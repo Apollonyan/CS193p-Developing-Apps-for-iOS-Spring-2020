@@ -3577,17 +3577,17 @@ end of our slides for today.
 
 824
 00:36:49,820 --> 00:36:53,160
-Let's take our Memorize
-app here to the next level
+现在让我们用MVVM架构
+把这个记忆游戏App
 
 825
 00:36:53,160 --> 00:36:58,160
-by using this MVVM architecture
-to give it some brains,
+进行改造升级，
+让这些牌更聪明一些，
 
 826
 00:36:58,510 --> 00:37:02,003
-some logic and some data being the cards.
+变得更有逻辑和数据。
 
 827
 00:37:02,003 --> 00:37:03,510
