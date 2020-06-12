@@ -3739,38 +3739,38 @@ Swift 空文件，因为
 
 859
 00:38:32,590 --> 00:38:34,840
-Also, no matter which
-group you choose here,
+另外，无论你在这里
+选择了哪个组，
 
 860
 00:38:34,840 --> 00:38:36,570
-you wanna make sure it's in the same place
+都应该确保这个文件
 
 861
 00:38:36,570 --> 00:38:39,440
-in a filesystem as things
-like your content View.
+和诸如内容视图之类的文件
+在文件系统中的位置相同。
 
 862
 00:38:39,440 --> 00:38:41,230
-You see the content View there,
+你在此处看到了内容视图，
 
 863
 00:38:41,230 --> 00:38:45,370
-we wanna make sure that's
-what's selected in here.
+我们要确保这里就是
+我们所选择的位置。
 
 864
 00:38:45,370 --> 00:38:47,280
-So let's create this.
+我们来创建这个文件。
 
 865
 00:38:47,280 --> 00:38:48,251
-Here it is, right?
+它就在那儿,看到了吧？
 
 866
 00:38:48,251 --> 00:38:49,084
-MemoryGame.
+MemoryGame。
 
 867
 00:38:49,084 --> 00:38:50,900
