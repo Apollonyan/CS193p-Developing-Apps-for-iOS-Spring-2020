@@ -3657,7 +3657,7 @@ struct xxx: View
 
 841
 00:37:43,720 --> 00:37:47,960
-和 var body 这些所有的代码,
+和 var body 这些所有的代码，
 这个则会创建一个我们
 
 842
@@ -3671,39 +3671,39 @@ Swift 空文件，因为
 
 844
 00:37:54,620 --> 00:37:56,360
-So let's double click on this.
+所以我们双击它。
 
 845
 00:37:56,360 --> 00:37:58,500
-Now, it's asking you
-where you wanna store it
+现在，它在问你
+想把它存储在哪里
 
 846
 00:37:58,500 --> 00:38:00,000
-and what you wanna call it.
+以及你想怎么命名它。
 
 847
 00:38:00,000 --> 00:38:02,600
-Well, this is gonna be the
-heart of our memory game
+这个文件将成为我们这个
+记忆游戏的核心文件，
 
 848
 00:38:02,600 --> 00:38:05,440
-so I'm actually gonna
-call this file MemoryGame
+所以我要给这个文件直接
+命名为 MemoryGame，
 
 849
 00:38:05,440 --> 00:38:08,230
-because the struct that I'm
-gonna create inside of it,
+因为我要在这个文件里
+创建的最主要的结构体，
 
 850
 00:38:08,230 --> 00:38:11,210
-the main struct, is a MemoryGame struct
+就是这个在 MemoryGame 文件中
 
 851
 00:38:11,210 --> 00:38:12,910
-that plays the MemoryGame.
+起主要作用的 MemoryGame 结构体。
 
 852
 00:38:12,910 --> 00:38:15,190
