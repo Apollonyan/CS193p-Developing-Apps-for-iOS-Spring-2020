@@ -3541,21 +3541,21 @@ end of our slides for today.
 
 816
 00:36:25,580 --> 00:36:27,660
-So this is what we talked about
+以上就是我们所讨论的，
 
 817
 00:36:27,660 --> 00:36:31,140
-and so now, we're gonna
-go back to the demo
+现在我们
+回到项目中，
 
 818
 00:36:31,140 --> 00:36:34,890
-and we're gonna try and
-talk about everything
+接下来我们会在
+项目中试着讨论
 
 819
 00:36:34,890 --> 00:36:37,990
-that I covered in the slides in the demo.
+幻灯片中介绍到的所有内容。
 
 820
 00:36:37,990 --> 00:36:40,490
