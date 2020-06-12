@@ -3647,27 +3647,27 @@ end of our slides for today.
 
 839
 00:37:37,350 --> 00:37:40,890
-This creates a new SwiftUI
-View for you, right?
+选择这项会创建一个
+新的 SwiftUI 视图，是吧？
 
 840
 00:37:40,890 --> 00:37:43,720
-Something that's gonna say
-struct whatever colon View
+它会生成
+struct xxx: View
 
 841
 00:37:43,720 --> 00:37:47,960
-with var body, all that and
-this one creates a non-UI,
+和 var body 这些所有的代码,
+这个则会创建一个我们
 
 842
 00:37:47,960 --> 00:37:50,480
-just blank Swift file,
-which is what we want
+现在所需的不是 UI 类型的
+Swift 空文件，因为
 
 843
 00:37:50,480 --> 00:37:54,620
-because our Model is not a UI struct.
+我们的模型并不是 UI 结构。
 
 844
 00:37:54,620 --> 00:37:56,360
