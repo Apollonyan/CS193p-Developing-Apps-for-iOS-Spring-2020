@@ -3614,16 +3614,16 @@ end of our slides for today.
 
 832
 00:37:16,510 --> 00:37:19,260
-And again, the Model is UI independent,
+需要再说一次的是，模型独立于UI，
 
 833
 00:37:19,260 --> 00:37:21,260
-it's not gonna know
-anything about how the game
+它不会知道
+这个记忆游戏
 
 834
 00:37:21,260 --> 00:37:23,130
-is going to be displayed.
+是如何显示的。
 
 835
 00:37:23,130 --> 00:37:26,820
