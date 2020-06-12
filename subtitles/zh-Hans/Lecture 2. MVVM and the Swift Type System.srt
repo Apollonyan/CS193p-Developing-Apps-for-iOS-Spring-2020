@@ -3627,23 +3627,23 @@ end of our slides for today.
 
 835
 00:37:23,130 --> 00:37:26,820
-Anytime we're gonna add a
-new Swift file to Xcode,
+每当我们要向 Xcode 中添加
+新的 Swift 文件时，
 
 836
 00:37:26,820 --> 00:37:30,763
-that we do that with the
-File menu under New, File.
+我们都可以通过菜单 File，
+选中 New 下的 File 选项来新建。
 
 837
 00:37:31,770 --> 00:37:34,470
-There's a lot of different
-kinds of files you can create
+这里有很多种可以
+用来创建的文件类型，
 
 838
 00:37:34,470 --> 00:37:37,350
-but really, comes down
-to these two right here.
+但实际上，可以
+归结为这两种。
 
 839
 00:37:37,350 --> 00:37:40,890
