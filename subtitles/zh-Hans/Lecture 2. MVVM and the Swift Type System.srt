@@ -3559,21 +3559,21 @@ end of our slides for today.
 
 820
 00:36:37,990 --> 00:36:40,490
-Remember that you're gonna
-have to reproduce this demo
+需要记住的是你们
+要在第一次作业中
 
 821
 00:36:40,490 --> 00:36:43,700
-for your first homework
-assignment, which is out there,
+重写这个示例程序，
+务必登录 Piazza，
 
 822
 00:36:43,700 --> 00:36:45,410
-kind of came out with these lectures
+因为作业的相关内容
 
 823
 00:36:45,410 --> 00:36:48,283
-so make sure you check Piazza for that.
+已经随讲义一起发布在 Piazza。
 
 824
 00:36:49,820 --> 00:36:53,160
