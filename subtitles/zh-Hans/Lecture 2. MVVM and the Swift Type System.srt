@@ -3707,35 +3707,35 @@ Swift 空文件，因为
 
 852
 00:38:12,910 --> 00:38:15,190
-So, what the other thing
-down here, it's asking
+下面还有另一个选项，
+就是问你要把这个
 
 853
 00:38:15,190 --> 00:38:16,850
-is where do you wanna put it?
+文件存放在哪里？
 
 854
 00:38:16,850 --> 00:38:20,810
-This yellow is the same
-as this yellow over here
+这个黄色的和
+这里的黄色的是一样的，
 
 855
 00:38:20,810 --> 00:38:25,120
-and similarly, this blue is
-the same as this blue up here.
+这个蓝色的和
+这里的蓝色的是一样的。
 
 856
 00:38:25,120 --> 00:38:28,690
-We don't really ever wanna put
-things up here in the blue.
+我们通常不会把文件
+存放在这个蓝色的里面。
 
 857
 00:38:28,690 --> 00:38:30,650
-We wanna put them in these folders,
+我们会把它们放在这些文件夹中，
 
 858
 00:38:30,650 --> 00:38:32,590
-okay, these yellow folders.
+这些黄色文件夹。
 
 859
 00:38:32,590 --> 00:38:34,840
