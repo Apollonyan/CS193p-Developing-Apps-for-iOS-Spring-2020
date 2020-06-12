@@ -3591,26 +3591,26 @@ end of our slides for today.
 
 827
 00:37:02,003 --> 00:37:03,510
-How are we gonna do this?
+我们该从何下手呢？
 
 828
 00:37:03,510 --> 00:37:05,350
-Well, we've been working so far,
+到目前为止，
 
 829
 00:37:05,350 --> 00:37:08,690
-all this code that you see
-here on the screen on the View.
+屏幕上看到的这些代码
+都是在构建一个视图。
 
 830
 00:37:08,690 --> 00:37:13,580
-So in MVVM, we've been working
-on the first V, the View
+对应到 MVVM 中，
+就是其中的第一个字母“V”，
 
 831
 00:37:13,580 --> 00:37:16,510
-and the next piece we're gonna
-work on is the Model, okay?
+视图之后我们接下来
+要学习的是模型。
 
 832
 00:37:16,510 --> 00:37:19,260
