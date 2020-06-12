@@ -2807,226 +2807,224 @@ things, that's what an Array is
 
 651
 00:29:13,000 --> 00:29:15,910
-but it doesn't care what
-type those things are.
+但我们不关心
+数组里存储内容的具体类型
 
 652
 00:29:15,910 --> 00:29:18,480
-Inside Array's code though,
-it's got to store those things,
+在数组的代码里
+我们会存储数据
 
 653
 00:29:18,480 --> 00:29:21,983
-it's got to have some vars
-or something inside of it.
+我们会将变量或其他类型的数据
+放在里面
 
 654
 00:29:21,983 --> 00:29:25,270
-They're storing the things inside of it.
+数组的作用就是将数据内容存储在其中
 
 655
 00:29:25,270 --> 00:29:28,140
-So how do we fix this conundrum
+所以当我们需要向数组里面存储
+不同类型的数据内容
 
 656
 00:29:28,140 --> 00:29:30,560
-of where array needs to be storing things
+具体该怎么做呢
 
 657
 00:29:30,560 --> 00:29:31,860
-but it actually doesn't even care
+实际上我们甚至不关心
 
 658
 00:29:31,860 --> 00:29:33,820
-whether it's an Array of
-Int, Array of Strings,
+这是一个整数类型的数组，
+还是一个字符串类型的数组
 
 659
 00:29:33,820 --> 00:29:37,060
-Array of another Arrays,
-Set of Array, whatever,
+或是存储数组的数组，
+一系列的数组
 
 660
 00:29:37,060 --> 00:29:38,740
-Array doesn't care.
+数组实际上不关心其要存储
+数据的实际的类型
 
 661
 00:29:38,740 --> 00:29:42,110
-Also, Array has functions and vars on it.
+另外，数组本身有函数方法和变量
 
 662
 00:29:42,110 --> 00:29:44,500
-They'll let you do things
-like add to the Array
+这些方法会让你很方便的进行操作
+比如向数组里增加元素
 
 663
 00:29:44,500 --> 00:29:46,134
-or get the values of the Array.
+或者是取得数组里的某个值
 
 664
 00:29:46,134 --> 00:29:48,930
-How are those going to
-declare their return types
+我们要如何
+声明他们的返回类型
 
 665
 00:29:48,930 --> 00:29:50,630
-and their argument types?
+和他们的参数类型呢？
 
 666
 00:29:50,630 --> 00:29:53,580
-Well, the answer is you
-do this with generics.
+答案是使用泛型
 
 667
 00:29:53,580 --> 00:29:56,940
-Now, other languages, Java, for example,
+现在，像其他的编程语言，比如 Java
 
 668
 00:29:56,940 --> 00:29:58,080
-have generics as well.
+同样有泛型
 
 669
 00:29:58,080 --> 00:30:00,280
-For some of you, just
-a little bit of review
+对于你们中的有些人来说
+这实际上相当于复习
 
 670
 00:30:00,280 --> 00:30:02,810
-but we're going to take these generics
+但是我们会把泛型
 
 671
 00:30:02,810 --> 00:30:05,600
-to the next level next
-week when we combine them
+作为下一个层次以及下一个星期的内容
 
 672
 00:30:05,600 --> 00:30:08,760
-with some of the other
-type features in Swift.
+我们会把泛型和 Swift 语言
+的一些其他特性一起来说
 
 673
 00:30:08,760 --> 00:30:12,020
-So let's talk about how
-generics work with Array.
+现在我们来聊聊
+在数组里使用泛型
 
 674
 00:30:12,020 --> 00:30:13,510
-Array's declaration
+首先是数组的声明
 
 675
 00:30:13,510 --> 00:30:15,760
-looks something like this, approximately.
+看起来大致是这样的
 
 676
 00:30:15,760 --> 00:30:19,460
-Struct Array, angle bracket, Element
+Struct Array, 尖括号，Element
 
 677
 00:30:19,460 --> 00:30:23,350
-and then, for example, the
-function append takes an argument
+之后，我来举个例子
+我们写一个用来增加元素的函数
 
 678
 00:30:23,350 --> 00:30:25,910
-which is of type Element.
+函数接受的类型为 Element 类型
 
 679
 00:30:25,910 --> 00:30:28,600
-This type Element, what is it?
+Element 类型，是什么？
 
 680
 00:30:28,600 --> 00:30:32,320
-It's what I like to
-call a don't care type.
+我喜欢称之为
+不在乎的类型
 
 681
 00:30:32,320 --> 00:30:36,010
-It's a type that Array
-just made up the name of,
+这是数组里编好的名字
 
 682
 00:30:36,010 --> 00:30:38,860
-that means I don't care what this type is.
+意味着我不在乎它具体表示的类型
 
 683
 00:30:38,860 --> 00:30:40,140
-So it's a don't care type,
+所以这是一个不在乎的类型
 
 684
 00:30:40,140 --> 00:30:41,120
-and Array doesn't care.
+数组也不在乎它实际的类型
 
 685
 00:30:41,120 --> 00:30:43,880
-It could be an Array of Int,
-Array of String, whatever.
+它可以是 Int 的类型，String 类型
+无论什么都可以
 
 686
 00:30:43,880 --> 00:30:46,660
-This is essentially another
-kind of type in Swift
+这本质是
+Swift 中的另一种类型
 
 687
 00:30:46,660 --> 00:30:50,430
-called I got to call
-anyway, I don't care type.
+每次我使用的时候
+都表示我不在乎它的类型
 
 688
 00:30:50,430 --> 00:30:53,530
-So now, Array's
-implementation about append
+那么现在这个增加元素的函数接受一个
+Element 类型作为参数
 
 689
 00:30:53,530 --> 00:30:56,310
-doesn't know anything
-about the Element's type.
+意味着数组不用知道增加的数据是什么类型
 
 690
 00:30:56,310 --> 00:30:58,520
-It does not gonna send any messages to
+数组不会像元素发送任何信息
 
 691
 00:30:58,520 --> 00:30:59,673
-or access any vars on the element,
+或者是访问任何具体的变量
 
 692
 00:30:59,673 --> 00:31:02,550
-it's just gonna store it in
-vars and stuff like that.
+数组只是将其存储在变量
+或者是类似的东西中
 
 693
 00:31:02,550 --> 00:31:04,730
-So Element, is kind of like a placeholder
+所以 Element，实际有点像占位符
 
 694
 00:31:04,730 --> 00:31:06,400
-for whatever type that is.
+不管什么类型都可以用它来替代
 
 695
 00:31:06,400 --> 00:31:10,090
-When does that type actually
-get set to be a real type,
+那么什么时候
+设置为真正的类型
 
 696
 00:31:10,090 --> 00:31:11,150
-not a placeholder?
+而不仅仅是一个占位符
 
 697
 00:31:11,150 --> 00:31:13,360
-Well, that's when people use Array.
+我们使用数组的时候
 
 698
 00:31:13,360 --> 00:31:17,900
-So if I declare an Array, I
-can say var a equals Array
+声明数组之后
+可以说 a 是一个数组
 
 699
 00:31:17,900 --> 00:31:19,910
-and now, I put in angle brackets
+现在，我在尖括号里
 
 700
 00:31:19,910 --> 00:31:22,690
-the actual type that Element is.
+放了一个实际元素的类型
 
 701
 00:31:22,690 --> 00:31:24,790
