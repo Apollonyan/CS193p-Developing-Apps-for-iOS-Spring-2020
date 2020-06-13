@@ -1511,844 +1511,630 @@ that we saw in the demo from last time.
 351
 00:15:52,070 --> 00:15:54,760
 它们都可以有计算变量
-They also both can have computed variables
 
 352
 00:15:54,760 --> 00:15:56,790
 例如我们上次做的演示里的
-like we saw from the
-demo last time, right?
 
 353
 00:15:56,790 --> 00:15:57,800
 body 变量
-Var body.
 
 354
 00:15:57,800 --> 00:16:00,010
 每当有人访问这个变量的时候
-Its value is computed each time
 
 355
 00:16:00,010 --> 00:16:02,530
 它就会被计算一次
-someone asked for classes and structs.
 
 356
 00:16:02,530 --> 00:16:03,763
 类和结构体都能有计算变量
-Both can have that.
 
 357
 00:16:04,610 --> 00:16:07,310
 它们还可以有一种被称为 let 的东西
-They can also have these
-things called lets.
 
 358
 00:16:07,310 --> 00:16:10,440
 let 实际上就是一个 var
-Okay, a let is just a var where the var
 
 359
 00:16:10,440 --> 00:16:11,620
 只不过这个 var 并不能变化（vary）
-does not actually vary.
 
 360
 00:16:11,620 --> 00:16:13,810
 它不是变量，它是常量
-It's not variable, it's a constant.
 
 361
 00:16:13,810 --> 00:16:15,600
 所以 let 本质上是一个常量
-So, a let is essentially a constant.
 
 362
 00:16:15,600 --> 00:16:18,280
 它们俩都能含有常量
-They can both have constants in them.
 
 363
 00:16:18,280 --> 00:16:20,350
 它们还能含有函数
-They also both have functions.
 
 364
 00:16:20,350 --> 00:16:23,260
 我还没有讲太多函数的语法
-We haven't talked a lot
-about the syntax of functions
 
 365
 00:16:23,260 --> 00:16:27,240
 所以这里我们花点时间讲一下
-so let me take just a moment
-here to talk about that.
 
 366
 00:16:27,240 --> 00:16:29,640
 我们已经知道，对于一个函数来说
-We do already know that for a function,
 
 367
 00:16:29,640 --> 00:16:34,230
 它的每个参数都有标签
 对于这个 multiply 函数来说
-the arguments have labels or
-in this multiply function,
 
 368
 00:16:34,230 --> 00:16:35,610
 它有两个参数
-it's got two arguments.
 
 369
 00:16:35,610 --> 00:16:37,217
 第一个参数叫做 operand
-The first argument is called operand
 
 370
 00:16:37,217 --> 00:16:38,997
 第二个叫做 by
-and the second one is called by,
 
 371
 00:16:38,997 --> 00:16:42,105
 它们都是 Int 类型
 并且函数返回一个 Int
-out of both of type Int,
-this function returns an Int
 
 372
 00:16:42,105 --> 00:16:44,540
 在 multiply 内部
-and inside of multiply.
 
 373
 00:16:44,540 --> 00:16:48,520
 我使用标签 operand
 和 by 来做乘法
-I just use the labels operand
-and by to make it operate.
 
 374
 00:16:48,520 --> 00:16:52,750
 然后我写上
 multiply(operand: 5, by: 6)
-so if I say multiply operand five by six,
 
 375
 00:16:52,750 --> 00:16:56,050
 显然它会给我们返回 30
-that's obviously going
-to return 30 for us.
 
 376
 00:16:56,050 --> 00:16:58,960
 我想告诉你的是这些标签
-I do wanna tell you that those labels,
 
 377
 00:16:58,960 --> 00:17:02,760
 实际上，每个参数可以有两个标签
-actually, each parameter
-can have two labels.
 
 378
 00:17:02,760 --> 00:17:04,980
 这里我还有一个 multiply
-So here, I have multiply again
 
 379
 00:17:04,980 --> 00:17:07,350
 但每个参数都有两个标签
-but each of them has two labels.
 
 380
 00:17:07,350 --> 00:17:11,550
 第一个参数有个下划线标签
-I have the first parameter
-has the label underbar
 
 381
 00:17:11,550 --> 00:17:16,020
 和 operand 标签
 第二个参数有 by 标签
-and the label operand and the
-second one has the label by
 
 382
 00:17:16,020 --> 00:17:18,114
 和 otherOperand 标签
-and the label otherOperand.
 
 383
 00:17:18,114 --> 00:17:21,130
 每一个参数都有一个蓝色的标签
-See how there's two, a
-blue one and a purple one
 
 384
 00:17:21,130 --> 00:17:24,740
 和一个紫色的标签
 所以为什么会有两个标签呢？
-for each of the arguments
-and why are there two?
 
 385
 00:17:24,740 --> 00:17:29,040
 实际上，蓝色标签是在调用函数时使用的
-Well, the blue ones are used
-by callers of the function
 
 386
 00:17:29,040 --> 00:17:32,720
 紫色标签是在函数内使用的
-and the purple ones are
-used inside the function.
 
 387
 00:17:32,720 --> 00:17:35,520
 因此紫色标签看起来和前一个函数相同
-So the purple ones look the
-same as our previous one,
 
 388
 00:17:35,520 --> 00:17:37,660
 return operand * otherOperand
-return operand times other operand.
 
 389
 00:17:37,660 --> 00:17:42,660
 这就是两个标签中的第二个标签
-That's the second of the
-two labels for each of them
 
 390
 00:17:42,870 --> 00:17:44,260
 但是看看调用
-but look at the caller.
 
 391
 00:17:44,260 --> 00:17:48,550
 写的是 myltiply(5, by: 6)
-He now says multiply five by six.
 
 392
 00:17:48,550 --> 00:17:52,560
 所以下划线的意思是“没有标签”
-So the underbar label means no label.
 
 393
 00:17:52,560 --> 00:17:55,680
 之前我们看到在创建 Text
-That's why we've seen things like text,
 
 394
 00:17:55,680 --> 00:17:57,500
 的时候后跟着一个表情字符串
-which takes a little emoji string,
 
 395
 00:17:57,500 --> 00:17:58,833
 它看起来没有标签
-it doesn't have to have a label there,
 
 396
 00:17:58,833 --> 00:18:03,360
 就是因为它在代码中使用了下划线
-it's because it's using this
-underbar somewhere in its code
 
 397
 00:18:03,360 --> 00:18:04,704
 让你可以省略它
-to mean you can leave it out.
 
 398
 00:18:04,704 --> 00:18:08,100
 下划线永远表示“省略”
-Underbar always means leave it out, okay?
 
 399
 00:18:08,100 --> 00:18:10,130
 或者“没用过的”，你可以把它视作
-Unused, you wanna think of it that way,
 
 400
 00:18:10,130 --> 00:18:13,060
 Swift 中没有用过的字符
-it's the unused character in Swift.
 
 401
 00:18:13,060 --> 00:18:16,090
 在今天的演示中你也会看到这一点
-We'll see that in the demo today as well.
 
 402
 00:18:16,090 --> 00:18:19,800
 第二个参数依然使用实参标签 by
-And then the second one still
-uses by as the external name.
 
 403
 00:18:19,800 --> 00:18:21,763
 我们把它叫做实参标签
-We call that the external name of this,
 
 404
 00:18:21,763 --> 00:18:24,883
 而 otherOperand 是形参名
-and it's using otherOperand
-as the internal name.
 
 405
 00:18:25,720 --> 00:18:27,550
 稍后你可以看到更多例子
-So you can stare at
-this a little bit later
 
 406
 00:18:27,550 --> 00:18:31,180
 但这基本上就是函数的语法了
-but this is the syntax,
-basically, for functions
 
 407
 00:18:31,180 --> 00:18:35,600
 函数在结构体和类中都可以存在
-and functions exist in both
-structs and in classes.
 
 408
 00:18:35,600 --> 00:18:38,330
 另外，结构体和类都有一种特殊函数
-Now, structs and classes
-also have special functions
 
 409
 00:18:38,330 --> 00:18:40,461
 叫做构造函数（initializer）
-called initializers.
 
 410
 00:18:40,461 --> 00:18:45,133
 它的功能是通过一些不是变量的参数
-And initializer are used to
-create your struct or class
 
 411
 00:18:46,230 --> 00:18:50,220
 来创建结构体或类
-with some argument that is
-not one of your variables.
 
 412
 00:18:50,220 --> 00:18:51,710
 我们已经在 CardView 中看到这一点了
-We've already seen like with CardView
 
 413
 00:18:51,710 --> 00:18:53,698
 还记得吗
-and remember CardView,
 
 414
 00:18:53,698 --> 00:18:56,954
 我们创建它的时候
 把参数 isFaceUp 设定为 true
-we created it with the
-argument isFaceUp true
 
 415
 00:18:56,954 --> 00:19:00,560
 通过这种方式把 CardView 中的变量
 isFaceUp 的值设定好了
-and it set the var
-isFaceUp in our CardView.
 
 416
 00:19:00,560 --> 00:19:04,410
 你可以用这种方法进行初始化
-So we can always
-initialize things that way
 
 417
 00:19:04,410 --> 00:19:08,060
 但是如果我们想用其他类型的参数
-but what if we want to use
-some other kind of argument
 
 418
 00:19:08,060 --> 00:19:09,915
 来进行初始化呢？
-to get something initialized?
 
 419
 00:19:09,915 --> 00:19:12,900
 一个很好的例子
 就是我们的 MemoryGame
-And a great example it's
-gonna be our MemoryGame
 
 420
 00:19:12,900 --> 00:19:15,310
 因为当你创建 MemoryGame 的时候
-because when you create a MemoryGame,
 
 421
 00:19:15,310 --> 00:19:18,910
 它的变量应该是卡片或者其他一些东西
-it's vars are gonna be like
-it's cards or things like that
 
 422
 00:19:18,910 --> 00:19:20,750
 但实际上当你
 创建 MemoryGame 的时候
-but really, a MemoryGame,
-when you create it,
 
 423
 00:19:20,750 --> 00:19:23,650
 你希望设定的是游戏中有几对卡片
-you wanna say how many pairs
-of cards are in the game.
 
 424
 00:19:23,650 --> 00:19:25,428
 这是一个比较大的
 有 20 张卡片的 MemoryGame 吗？
-Is this a big MemoryGame with 20 cards
 
 425
 00:19:25,428 --> 00:19:29,120
 或者是一个小一点的
 只有 6 对卡片那种？
-or a smaller MemoryGame
-with only six pairs of cards
 
 426
 00:19:29,120 --> 00:19:30,100
 又或者是其他大小的？
-or something like that?
 
 427
 00:19:30,100 --> 00:19:32,750
 所以创建 MemoryGame 的参数
-So, I wanna be able to have the argument
 
 428
 00:19:32,750 --> 00:19:36,110
 应该是卡片对数
 （numberOfPairsOfCards）
-to creating a MemoryGame
-be numberOfPairsOfCards
 
 429
 00:19:36,110 --> 00:19:38,270
-它应该是一个 Int 
-which is an Int and I can do that
+它应该是一个 Int
 
 430
 00:19:38,270 --> 00:19:41,352
 然后我在 MemoryGame 中
 写一个 init 函数
-by putting an init function
-inside my MemoryGame,
 
 431
 00:19:41,352 --> 00:19:43,280
 并把卡片对数作为参数
-which takes that as an argument.
 
 432
 00:19:43,280 --> 00:19:45,270
 而且很酷的是我可以
-And the cool thing is I can have
 
 433
 00:19:45,270 --> 00:19:47,570
 有多个 init 函数
-any number of these inits that I want,
 
 434
 00:19:47,570 --> 00:19:49,300
 每一个 init 都接受不同的参数
-each of which taking a different argument.
 
 435
 00:19:49,300 --> 00:19:51,750
 因为可能有其他创建
 MemoryGame 的方法
-Maybe there's other ways
-to create a MemoryGame.
 
 436
 00:19:51,750 --> 00:19:55,733
 所以结构体和类都有构造函数
-So structs and classes
-both have initializers.
 
 437
 00:19:56,660 --> 00:19:59,210
 那结构体和类的区别在哪呢？
-So what's the difference then
-between structs and classes?
 
 438
 00:19:59,210 --> 00:20:02,250
 它们看起来非常相似
 实际上也的确比较相似
-They looked awfully similar
-and they are roughly similar
 
 439
 00:20:02,250 --> 00:20:04,050
 但它们也有一些根本性的不同
-but there are some fundamental differences
 
 440
 00:20:04,050 --> 00:20:06,730
 现在我们来谈谈它们的不同之处
-so let's talk about what
-those differences are.
 
 441
 00:20:06,730 --> 00:20:11,130
 最大的不同点是
 结构体是值类型
-The biggest difference is
-that struct is a value type
 
 442
 00:20:11,130 --> 00:20:13,940
 而类是引用类型
-and class is a reference type.
 
 443
 00:20:13,940 --> 00:20:16,610
 现在我仔细解释一下
-So let's talk a little bit
-more about what that means.
 
 444
 00:20:16,610 --> 00:20:18,861
 值类型和引用类型
-Value type versus reference type.
 
 445
 00:20:18,861 --> 00:20:23,430
 引用类型是通过指针传递的
-A reference type is
-passed around by pointers.
 
 446
 00:20:23,430 --> 00:20:25,710
 它保存在堆中
-Reference types live in the heap.
 
 447
 00:20:25,710 --> 00:20:27,570
 所以当你创建类的时候
-Okay, so classes, when you create them,
 
 448
 00:20:27,570 --> 00:20:30,130
 它们会被存储在堆里
-the storage for them is in the heap.
 
 449
 00:20:30,130 --> 00:20:31,570
 你们应该都懂这是什么意思
-Everyone knows what that means.
 
 450
 00:20:31,570 --> 00:20:34,730
 换句话说就是保存在内存里
 当我传递它的时候
-That's just like stored in
-memory and when I pass it around,
 
 451
 00:20:34,730 --> 00:20:36,120
 我传递的是指向它的指针
-I'm passing around pointers to it.
 
 452
 00:20:36,120 --> 00:20:37,610
 所以可能会有很多人都有
-So a lot of people might have a pointer
 
 453
 00:20:37,610 --> 00:20:39,670
 指向同一个类实例的指针
-to the same class somewhere.
 
 454
 00:20:39,670 --> 00:20:44,670
 结构体并不传递指针
 它们会被复制
-Structs are not passed around
-by pointer, they are copied.
 
 455
 00:20:45,550 --> 00:20:49,720
 所以如果你给函数的
 参数传递一个结构体
-So if you pass a struct to
-a function as an argument,
 
 456
 00:20:49,720 --> 00:20:51,535
 那个函数就会有一个原结构体的拷贝
-that function gets a copy of it
 
 457
 00:20:51,535 --> 00:20:53,811
 甚至假如我只是有两个变量
-even if I just have one variable
 
 458
 00:20:53,811 --> 00:20:56,090
 然后我让第二个变量
-and I have another variable that I said
 
 459
 00:20:56,090 --> 00:20:57,720
 等于第一个
-equal to the first variable,
 
 460
 00:20:57,720 --> 00:21:01,690
 这两个变量都会是独立的拷贝
-both variables are a separate copy of it.
 
 461
 00:21:01,690 --> 00:21:04,560
 你可能会觉得
 “哇哦你在开玩笑吧”
-This might seem like,
-whoa, you're kidding me.
 
 462
 00:21:04,560 --> 00:21:08,010
 “因为数组是个结构体”
-I'm making copies of, I
-mean arrays are structs
 
 463
 00:21:08,010 --> 00:21:10,700
 “所以每当我把一个巨大的数组”
-so I'm making copies of huge arrays
 
 464
 00:21:10,700 --> 00:21:14,200
 “传递到一个函数中的时候
 我都要复制一次吗？”
-every time I pass it to a
-function or something like that?
 
 465
 00:21:14,200 --> 00:21:17,840
 显然，答案是不会
-And the answer is, of course,
-that's not actually happening.
 
 466
 00:21:17,840 --> 00:21:20,340
 在 Swift 底层中
-Behind the scenes, Swift is,
 
 467
 00:21:20,340 --> 00:21:21,640
 当你传递一些东西
-when you're passing these things around
 
 468
 00:21:21,640 --> 00:21:23,530
 复制这些结构体的时候
-and it's copying these structs,
 
 469
 00:21:23,530 --> 00:21:26,720
 它并不会每个比特都做复制
-it is not really copying the bits of it,
 
 470
 00:21:26,720 --> 00:21:30,880
 它们会共享同一份拷贝
 直到你尝试改变其中的内容
-it's somehow sharing them until
-you then try to write to it.
 
 471
 00:21:30,880 --> 00:21:33,513
 所以如果你给函数传递一个数组
-So if you pass an array to a function,
 
 472
 00:21:33,513 --> 00:21:36,650
 它不会完全复制出一个新的数组
-it might copy that into another variable
 
 473
 00:21:36,650 --> 00:21:40,630
 当你想在数组后面添加一些东西的时候
-and then it wants to add
-something to that array,
 
 474
 00:21:40,630 --> 00:21:44,015
 它才会进行比特级别的复制
-then it's gonna make a
-copy, an actual bitwise copy
 
 475
 00:21:44,015 --> 00:21:46,410
 然后你才可以在数组里添加东西
-of the array so that you can add to it
 
 476
 00:21:46,410 --> 00:21:49,750
 这时你添加的数组是与原来不同的
-because the one you added
-it to is a different copy
 
 477
 00:21:49,750 --> 00:21:50,590
 一份拷贝
-than the other one.
 
 478
 00:21:50,590 --> 00:21:52,630
 我们称这种机制为写时复制
 （copy-on-write）
-So that's called copy-on-write,
 
 479
 00:21:52,630 --> 00:21:54,950
 当你打算改变结构体的内容的时候
-when you actually write to a struct,
 
 480
 00:21:54,950 --> 00:21:57,520
 它才会进行完整的复制
-it actually really makes a copy.
 
 481
 00:21:57,520 --> 00:22:01,810
 但是从语义上来说
 每次你传递一个结构体
-But semantically, every
-time you pass struct around,
 
 482
 00:22:01,810 --> 00:22:03,220
 它都会进行复制
-it's getting copied.
 
 483
 00:22:03,220 --> 00:22:04,840
 总是会复制
-It's just always copied.
 
 484
 00:22:04,840 --> 00:22:06,810
 所以你的代码不会共享结构体
-So you're not sharing, these structs,
 
 485
 00:22:06,810 --> 00:22:10,240
 当你传递它们的时候
 它们不会共享，而会复制
-as you pass them around, are
-never shared, they're copied.
 
 486
 00:22:10,240 --> 00:22:12,248
 在另一方面，对于类
-Now, a class, on the other hand,
 
 487
 00:22:12,248 --> 00:22:13,770
 你传递的是指针
-you're passing pointers to it,
 
 488
 00:22:13,770 --> 00:22:17,625
 所以与结构体不同
 这里需要做的是引用计数
-so instead, what it's doing
-is counting the references.
 
 489
 00:22:17,625 --> 00:22:21,145
 数清有多少指针指向同一个实例
-Seeing how many pointers
-there are to this thing
 
 490
 00:22:21,145 --> 00:22:22,540
 并且这是自动进行的
-and this happens automatically
 
 491
 00:22:22,540 --> 00:22:25,870
 当最后没有人再指向堆中的实例时
-and when finally, no one is left pointing
 
 492
 00:22:25,870 --> 00:22:29,543
 堆中被占用的内存就会
-to the classes in the heap,
-then the memory gets freed up
 
 493
 00:22:29,543 --> 00:22:30,923
 被释放
-out of the heap.
 
 494
 00:22:31,920 --> 00:22:34,640
 这叫做自动引用计数
 （Automatic Reference Counting）
-So that's called automatic
-reference counting.
 
 495
 00:22:34,640 --> 00:22:36,470
 所以这是两种非常不同的
-So this is two very different ways
 
 496
 00:22:36,470 --> 00:22:38,840
 思维方式，对吧？
-of thinking about the world, right?
 
 497
 00:22:38,840 --> 00:22:43,180
 传递拷贝和传递指针
-Copying it as you pass
-it around or by pointer.
 
 498
 00:22:43,180 --> 00:22:45,710
 大多是你见到的东西都是结构体
-Most things that you see are structs.
 
 499
 00:22:45,710 --> 00:22:48,480
 例如数组、字典、整形数、布尔、浮点数
-So arrays, dictionaries,
-Ints, Bools, Doubles,
 
 500
 00:22:48,480 --> 00:22:50,690
 这些都是结构体
-those are all structs.
 
 501
 00:22:50,690 --> 00:22:54,120
