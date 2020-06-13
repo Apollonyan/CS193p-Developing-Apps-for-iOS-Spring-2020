@@ -1515,13 +1515,13 @@ They also both can have computed variables
 
 352
 00:15:54,760 --> 00:15:56,790
-就像我们上次做的演示那样
+例如我们上次做的演示里的
 like we saw from the
 demo last time, right?
 
 353
 00:15:56,790 --> 00:15:57,800
-var body
+body 变量
 Var body.
 
 354
@@ -1552,7 +1552,7 @@ Okay, a let is just a var where the var
 
 359
 00:16:10,440 --> 00:16:11,620
-只不过这个 var 并不能 vary（变化）
+只不过这个 var 并不能变化（vary）
 does not actually vary.
 
 360
@@ -1635,7 +1635,7 @@ and by to make it operate.
 
 374
 00:16:48,520 --> 00:16:52,750
-这里如果我写上
+然后我写上
 multiply(operand: 5, by: 6)
 so if I say multiply operand five by six,
 
@@ -1919,19 +1919,20 @@ of cards are in the game.
 
 424
 00:19:23,650 --> 00:19:25,428
-这是一个比较大的有 20 张卡片的
+这是一个比较大的
+有 20 张卡片的 MemoryGame 吗？
 Is this a big MemoryGame with 20 cards
 
 425
 00:19:25,428 --> 00:19:29,120
-MemoryGame 吗？
 或者是一个小一点的
+只有 6 对卡片那种？
 or a smaller MemoryGame
 with only six pairs of cards
 
 426
 00:19:29,120 --> 00:19:30,100
-只有 6 对卡片那种？
+又或者是其他大小的？
 or something like that?
 
 427
@@ -1941,8 +1942,8 @@ So, I wanna be able to have the argument
 
 428
 00:19:32,750 --> 00:19:36,110
-应该是 numberOfPairsOfCards
-（卡片对数）
+应该是卡片对数
+（numberOfPairsOfCards）
 to creating a MemoryGame
 be numberOfPairsOfCards
 
@@ -2107,17 +2108,17 @@ that function gets a copy of it
 
 457
 00:20:51,535 --> 00:20:53,811
-甚至假如我只是
+甚至假如我只是有两个变量
 even if I just have one variable
 
 458
 00:20:53,811 --> 00:20:56,090
-有两个变量，然后我让
+然后我让第二个变量
 and I have another variable that I said
 
 459
 00:20:56,090 --> 00:20:57,720
-第二个变量等于第一个
+等于第一个
 equal to the first variable,
 
 460
@@ -2229,98 +2230,124 @@ So that's called copy-on-write,
 
 479
 00:21:52,630 --> 00:21:54,950
+当你打算改变结构体的内容的时候
 when you actually write to a struct,
 
 480
 00:21:54,950 --> 00:21:57,520
+它才会进行完整的复制
 it actually really makes a copy.
 
 481
 00:21:57,520 --> 00:22:01,810
+但是从语义上来说
+每次你传递一个结构体
 But semantically, every
 time you pass struct around,
 
 482
 00:22:01,810 --> 00:22:03,220
+它都会进行复制
 it's getting copied.
 
 483
 00:22:03,220 --> 00:22:04,840
+总是会复制
 It's just always copied.
 
 484
 00:22:04,840 --> 00:22:06,810
+所以你的代码不会共享结构体
 So you're not sharing, these structs,
 
 485
 00:22:06,810 --> 00:22:10,240
+当你传递它们的时候
+它们不会共享，而会复制
 as you pass them around, are
 never shared, they're copied.
 
 486
 00:22:10,240 --> 00:22:12,248
+在另一方面，对于类
 Now, a class, on the other hand,
 
 487
 00:22:12,248 --> 00:22:13,770
+你传递的是指针
 you're passing pointers to it,
 
 488
 00:22:13,770 --> 00:22:17,625
+所以与结构体不同
+这里需要做的是引用计数
 so instead, what it's doing
 is counting the references.
 
 489
 00:22:17,625 --> 00:22:21,145
+数清有多少指针指向同一个实例
 Seeing how many pointers
 there are to this thing
 
 490
 00:22:21,145 --> 00:22:22,540
+并且这是自动进行的
 and this happens automatically
 
 491
 00:22:22,540 --> 00:22:25,870
+当最后没有人再指向堆中的实例时
 and when finally, no one is left pointing
 
 492
 00:22:25,870 --> 00:22:29,543
+堆中被占用的内存就会
 to the classes in the heap,
 then the memory gets freed up
 
 493
 00:22:29,543 --> 00:22:30,923
+被释放
 out of the heap.
 
 494
 00:22:31,920 --> 00:22:34,640
+这叫做自动引用计数
+（Automatic Reference Counting）
 So that's called automatic
 reference counting.
 
 495
 00:22:34,640 --> 00:22:36,470
+所以这是两种非常不同的
 So this is two very different ways
 
 496
 00:22:36,470 --> 00:22:38,840
+思维方式，对吧？
 of thinking about the world, right?
 
 497
 00:22:38,840 --> 00:22:43,180
+传递拷贝和传递指针
 Copying it as you pass
 it around or by pointer.
 
 498
 00:22:43,180 --> 00:22:45,710
+大多是你见到的东西都是结构体
 Most things that you see are structs.
 
 499
 00:22:45,710 --> 00:22:48,480
+例如数组、字典、整形数、布尔、浮点数
 So arrays, dictionaries,
 Ints, Bools, Doubles,
 
 500
 00:22:48,480 --> 00:22:50,690
+这些都是结构体
 those are all structs.
 
 501
