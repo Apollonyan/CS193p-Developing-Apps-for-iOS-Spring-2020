@@ -3770,151 +3770,157 @@ Here it is, right?
 
 866
 00:38:48,251 --> 00:38:49,084
-MemoryGame.
+MemoryGame
 
 867
 00:38:49,084 --> 00:38:50,900
-Notice that it does not import SwiftUI
+注意到它没有导入 SwiftUI
 
 868
 00:38:50,900 --> 00:38:53,780
-'cause it's not a UI thing.
+因为它不是 UI
 
 869
 00:38:53,780 --> 00:38:56,170
-Foundation here, this, I
-talked about this last time.
+这里的 Foundation
+我上次讲述过它
 
 870
 00:38:56,170 --> 00:38:59,580
-It has Array and Dictionary
-and String and Int and Bool
+它有 Array、Dictionary
+String、Int、Bool
 
 871
 00:38:59,580 --> 00:39:00,680
-and all the basic types
+以及所有基本类型
 
 872
 00:39:00,680 --> 00:39:02,900
-but now, it doesn't have View or Text
+但是这里的 MemoryGame
+没有 View、Text
 
 873
 00:39:02,900 --> 00:39:06,710
-or RoundedRectangle or
-any of those UI things.
+RoundedRectangle 或者
+任何 UI
 
 874
 00:39:06,710 --> 00:39:08,010
-So we're gonna create a struct here.
+我们在这里创建一个 struct
 
 875
 00:39:08,010 --> 00:39:10,720
-Remember, struct as our
-go-to data structure
+记住，struct 就像我们的
+go-to 数据结构
 
 876
 00:39:10,720 --> 00:39:12,427
-and I'm gonna call it MemoryGame
+我称它为 MemoryGame
 
 877
 00:39:13,510 --> 00:39:15,430
-and it's not gonna have colon View
+它没有冒号和 View
 
 878
 00:39:15,430 --> 00:39:17,250
-because it's not gonna behave like a View,
+因为它不会表现得像个 View
 
 879
 00:39:17,250 --> 00:39:20,490
-it's a non-UI thing.
+它是非 UI 的
 
 880
 00:39:20,490 --> 00:39:24,080
-And when I create a struct
-that's gonna represent my Model,
+当我创建一个结构体
+它将呈现我的 Model
 
 881
 00:39:24,080 --> 00:39:26,630
-by the way, my Model might
-not be a struct like this,
+顺便提下，Model 可能不会
+是像这里的 struct 一样
 
 882
 00:39:26,630 --> 00:39:30,580
-it might be a SQL database
-or some network thing
+它可能是一个 SQL 数据库
+或者与网络相关
 
 883
 00:39:30,580 --> 00:39:32,640
-that I'm getting information from
+我可以获取从它们那里
+获取信息
 
 884
 00:39:32,640 --> 00:39:34,377
-but a lot of times, there's a struct
+大多数时候
 
 885
 00:39:34,377 --> 00:39:37,760
-that's at least wrapping
-around a lot of that stuff.
+一个结构体都会封装
+这些行为
 
 886
 00:39:37,760 --> 00:39:39,110
-It could also be a class.
+它也可以是一个类
 
 887
 00:39:39,110 --> 00:39:41,350
-It's possible in some circumstances
+在某些情形下
 
 888
 00:39:41,350 --> 00:39:44,000
-to have Models that are classes
+Model 以类的形式是
+可能的
 
 889
 00:39:44,000 --> 00:39:46,250
-but you don't get structs as our go-to
+但是你还没有写过像
+go-to 的结构体
 
 890
 00:39:46,250 --> 00:39:47,800
-so we're definitely gonna start
+所以我们以
 
 891
 00:39:47,800 --> 00:39:49,703
-with our go-to data structure here.
+这里的 go-to 数据结构
+作为开始
 
 892
 00:39:51,000 --> 00:39:54,600
-Now, when I create a Model,
-I'm always asking myself
+当我创建一个 Model
+我总是会问自己
 
 893
 00:39:54,600 --> 00:39:56,350
-what does this Model do?
+这个 Model 是做什么的
 
 894
 00:39:56,350 --> 00:39:59,630
-And let me see if I can get
-the vars and functions in place
+然后我看是否在这里
+使用变量和函数
 
 895
 00:39:59,630 --> 00:40:04,000
-that could really describe
-what this thing does.
+能够真正描述 Model
+做的事
 
 896
 00:40:04,000 --> 00:40:05,590
-And so, when I think of a MemoryGame,
+如此一来，当我思考
+这个 MemoryGame
 
 897
 00:40:05,590 --> 00:40:07,480
-a card-matching MemoryGame,
+一个卡片匹配的
+记忆游戏
 
 898
 00:40:07,480 --> 00:40:09,720
-the most important
-thing I'm thinking about
+我认为最重要的事就是
 
 899
 00:40:09,720 --> 00:40:11,290
-is gotta have some cards.
+有一些卡片
 
 900
 00:40:11,290 --> 00:40:15,410
