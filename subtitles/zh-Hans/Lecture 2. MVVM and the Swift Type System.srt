@@ -1,7 +1,7 @@
 1
 00:00:00,000 --> 00:00:03,250
 本字幕由志愿者义务贡献，采用许可协议
-知识共享 署名-非商业性使用-相同方式共享 3.0 美国
+知识共享 署名—非商业性使用—相同方式共享 3.0 美国
 
 2
 00:00:04,930 --> 00:00:06,630
@@ -13,7 +13,8 @@
 
 4
 00:00:10,560 --> 00:00:15,452
-2020 年春季学期斯坦福 CS193p 公开课
+2020 年春季学期
+斯坦福 CS193p 公开课
 
 5
 00:00:15,452 --> 00:00:17,640
@@ -95,7 +96,7 @@ MVVM 是一种代码组织模式
 24
 00:01:08,510 --> 00:01:12,150
 MVC 指的是 Model-View-Controller
-（模型-视图-控制器），适用于 UIKit
+（模型—视图—控制器），适用于 UIKit
 
 25
 00:01:12,150 --> 00:01:16,463
@@ -620,448 +621,419 @@ Text 和 HStack
 
 151
 00:07:05,290 --> 00:07:07,420
-At any time you should be able to say
+任何时刻你都可以让视图
 
 152
 00:07:07,420 --> 00:07:09,030
-make it look like the Model
+按照模型中的数据来显示
 
 153
 00:07:09,030 --> 00:07:11,900
-and so, we are gonna have a system
+在 Swift 中有一种机制
 
 154
 00:07:11,900 --> 00:07:13,530
-where whenever the Model changes,
+可以在模型发生变化时
 
 155
 00:07:13,530 --> 00:07:16,700
-it asks the View to look
-like it automatically.
+自动更新视图
 
 156
 00:07:16,700 --> 00:07:18,690
-Call that reactive programming,
+叫做响应式编程
 
 157
 00:07:18,690 --> 00:07:22,410
-it's reacting to changes in the Model.
+它会对模型中的变化作出响应
 
 158
 00:07:22,410 --> 00:07:23,470
-So that's it.
+就是这样一种机制
 
 159
 00:07:23,470 --> 00:07:26,303
-This is what we got to make happen
+我们引入视图模型（ViewModel）
 
 160
 00:07:27,980 --> 00:07:32,980
-is it introduces another
-thing called the ViewModel.
+来实现这种机制
 
 161
 00:07:33,044 --> 00:07:36,870
-The ViewModel's job is to
-bind the View to the Model.
+视图模型的工作就是将视图
+绑定到对应的模型上
 
 162
 00:07:36,870 --> 00:07:38,940
-So the one change has
-happened in the Model,
+模型中的数据一旦发生变化
 
 163
 00:07:38,940 --> 00:07:41,530
-the View get reflected.
+视图就会对其作出响应
 
 164
 00:07:41,530 --> 00:07:43,130
-And along the way,
+在视图模型
 
 165
 00:07:43,130 --> 00:07:45,920
-as it does that binding
-between the Model and the View,
+对模型和视图进行绑定的过程中
 
 166
 00:07:45,920 --> 00:07:49,150
-it might be interpreting
-the Model for the View
+会将模型中的数据转换为
+视图可以理解的形式
 
 167
 00:07:49,150 --> 00:07:50,980
-because we want the View to be very simple
+因为我们希望在声明式编程中
 
 168
 00:07:50,980 --> 00:07:53,870
-since we're writing it
-in a declarative way,
+视图能够尽量简洁
 
 169
 00:07:53,870 --> 00:07:55,790
-we don't want it to have
-a lot of code in there
+我们不希望视图中的代码过多
 
 170
 00:07:55,790 --> 00:07:58,750
-that's like converting from
-one data type to another
+例如数据类型转换之类的工作
 
 171
 00:07:58,750 --> 00:07:59,770
-and things like that.
+都不要交给视图
 
 172
 00:07:59,770 --> 00:08:02,320
-So we're gonna ask the
-ViewModel to do that.
+而是交给视图模型去做
 
 173
 00:08:02,320 --> 00:08:05,480
-Our Model in our game
-that we're writing here,
+我们这里构建的记忆游戏中的模型
 
 174
 00:08:05,480 --> 00:08:08,150
-this memory game, our Model
-is just gonna be a struct.
+是一个结构体
 
 175
 00:08:08,150 --> 00:08:10,130
-This is a very simple little demo
+这是一个非常简单的示例程序
 
 176
 00:08:10,130 --> 00:08:11,940
-but you could imagine that your Model
+但是你可以设想这里的模型
 
 177
 00:08:11,940 --> 00:08:15,560
-is a SQL database or it's
-something over the network
+是一个 SQL 数据库，或是向网络发出的
 
 178
 00:08:15,560 --> 00:08:17,610
-where you're making HTTP requests.
+HTTP 请求
 
 179
 00:08:17,610 --> 00:08:19,760
-So it can be quite complicated over there
+这样的模型就相当复杂了
 
 180
 00:08:19,760 --> 00:08:22,460
-and your ViewModel can simplify that,
+视图模型可以将其封装到
 
 181
 00:08:22,460 --> 00:08:25,080
-boil it down into maybe
-some simpler data structures
+更简洁的数据结构中
 
 182
 00:08:25,080 --> 00:08:27,420
-that it can pass to the View
+之后再传递给视图
 
 183
 00:08:27,420 --> 00:08:30,340
-that will let the View be
-simple code that draws it.
+这样视图中就只有实现绘制的代码了
 
 184
 00:08:30,340 --> 00:08:32,760
-So, the ViewModel does
-have this role a little bit
+视图模型在这里扮演的角色
 
 185
 00:08:32,760 --> 00:08:36,053
-as an interpreter of that Model data.
+就像一个模型数据的解释者
 
 186
 00:08:36,990 --> 00:08:40,101
-So we're gonna interpose the ViewModel
+这样我们就引入了介于模型和视图
 
 187
 00:08:40,101 --> 00:08:41,960
-between the Model and the View.
+之间的视图模型
 
 188
 00:08:41,960 --> 00:08:44,750
-It's gonna be the thing that
+它帮助视图实现
 
 189
 00:08:44,750 --> 00:08:48,020
-helps make this automatic
-updating happening.
+自动更新
 
 190
 00:08:48,020 --> 00:08:50,430
-So how does it do what it does?
+那么它是如何做到的呢？
 
 191
 00:08:50,430 --> 00:08:51,890
-Well, first of all the ViewModel
+首先，视图模型
 
 192
 00:08:51,890 --> 00:08:54,710
-is always trying to notice
-changes in the Model
+会随时关注模型的变化
 
 193
 00:08:54,710 --> 00:08:57,390
-and it can do that any way that it wants.
+它可以通过任何方式实现
 
 194
 00:08:57,390 --> 00:09:00,900
-If your Model is a struct,
-it's actually quite easy.
+如果你的模型是一个结构体
+那相当容易
 
 195
 00:09:00,900 --> 00:09:02,600
-Again, I'm gonna talk about a struct,
+我又一次谈到了结构体
 
 196
 00:09:02,600 --> 00:09:05,450
-more about that type in
-Swift in a few moments
+之后还会讲到更多关于 Swift 中
+结构体这个类型的特性
 
 197
 00:09:05,450 --> 00:09:07,980
-but one great feature of a struct
+其中一个重要的特性是
 
 198
 00:09:07,980 --> 00:09:09,460
-since it's copied around
+因为将结构体
 
 199
 00:09:09,460 --> 00:09:11,431
-when it's passed to functions and stuff
+传递给函数时会被复制一份
 
 200
 00:09:11,431 --> 00:09:15,030
-is that Swift knows when
-a struct has changed.
+所以 Swift 知道结构体发生变化的时机
 
 201
 00:09:15,030 --> 00:09:16,998
-It can track when a struct changes
+这个特性可以用于追踪结构体
+什么时候发生改变
 
 202
 00:09:16,998 --> 00:09:19,110
-and so it's very easy for a ViewModel
+所以，当模型是结构体时
 
 203
 00:09:19,110 --> 00:09:22,710
-whose Model is a struct
-to see when it's changing.
+视图模型很容易就能知道模型
+什么时候发生改变
 
 204
 00:09:22,710 --> 00:09:24,600
-But if the Model were a SQL database,
+如果模型是一个 SQL 数据库的话
 
 205
 00:09:24,600 --> 00:09:26,980
-I don't know how much you
-all know about databases
+我不知道大家对数据库了解多少
 
 206
 00:09:26,980 --> 00:09:30,610
-but it's quite easy to insert
-things into SQL database
+但把数据插入到数据库中是十分简单的
 
 207
 00:09:30,610 --> 00:09:33,270
-so that when it changes, you get notified.
+这样当数据库发生改变时
+你就会收到通知
 
 208
 00:09:33,270 --> 00:09:34,303
-But it's up to the ViewModel
+但模型的这些改变
 
 209
 00:09:34,303 --> 00:09:36,980
-to know these changes in the Model.
+能否被收到就要看视图模型的了
 
 210
 00:09:36,980 --> 00:09:40,477
-That's one of the primary
-things it has to be able to do.
+这是视图模型主要的工作之一
 
 211
 00:09:40,477 --> 00:09:44,250
-Now, when that data changes,
-it might interpret that data,
+接下来，当数据发生改变的时候
+视图模型可能会对数据进行转换
 
 212
 00:09:44,250 --> 00:09:46,140
-it might convert it to some other format
+它可能将数据转换成另一种格式
 
 213
 00:09:46,140 --> 00:09:48,560
-or something like that
-but then what it does
+或者做一些类似的事情
 
 214
 00:09:48,560 --> 00:09:53,370
-is it publishes something
-changed to the world, okay?
+然后它就会向全世界对此
+感兴趣的人发布通知
 
 215
 00:09:53,370 --> 00:09:54,930
-To anybody who's interested.
+通知它们某些东西发生了改变
 
 216
 00:09:54,930 --> 00:09:58,090
-That's all it does,
-publishes something changed.
+这就是它在做的事儿
+通知大家有东西发生了改变
 
 217
 00:09:58,090 --> 00:10:01,820
-It doesn't actually have any
-pointers to any Views, okay?
+但要知道，它没有引用任何一个视图
 
 218
 00:10:01,820 --> 00:10:04,270
-The ViewModel never has
-a pointer to its View.
+视图模型不会直接引用它的视图
 
 219
 00:10:04,270 --> 00:10:05,860
-This is an important thing to understand.
+理解这点相当重要
 
 220
 00:10:05,860 --> 00:10:10,590
-The ViewModel does not
-talk directly to its Views.
+视图模型不会直接和它的视图进行通信
 
 221
 00:10:10,590 --> 00:10:11,934
-When things change in the Model,
+当模型发生改变的时候
 
 222
 00:10:11,934 --> 00:10:15,610
-it publishes something changed.
+视图模型会发布相关通知
 
 223
 00:10:15,610 --> 00:10:20,350
-But then the View subscribes
-to that publication
+然后视图也订阅了相关的通知
 
 224
 00:10:20,350 --> 00:10:22,760
-and when it sees that
-something has changed,
+当它知道有东西发生了改变
 
 225
 00:10:22,760 --> 00:10:25,780
-it goes back to the ViewModel and asks,
+它就会去问视图模型
 
 226
 00:10:25,780 --> 00:10:27,480
-okay, what's the current
-state of the world?
+世界当前是什么状态
 
 227
 00:10:27,480 --> 00:10:30,297
-And I'm gonna draw myself to
-match that state of the world.
+然后它按照世界当前的状态
+重新绘制它自己
 
 228
 00:10:30,297 --> 00:10:32,490
-And the reason it asks the ViewModel that,
+至于为什么它不直接去问模型
 
 229
 00:10:32,490 --> 00:10:34,610
-it doesn't go directly back to the Model,
+而是去问视图模型
 
 230
 00:10:34,610 --> 00:10:36,480
-is because the ViewModel might be doing
+是因为视图模型可能需要
 
 231
 00:10:36,480 --> 00:10:38,240
-this interpreting for it
+帮视图转换一下模型的数据
 
 232
 00:10:38,240 --> 00:10:40,720
-or it might be protecting the Model
+也可能是视图模型需要
 
 233
 00:10:40,720 --> 00:10:42,870
-to make sure that some nefarious View
+保护模型，避免那些不怀好意的视图
 
 234
 00:10:42,870 --> 00:10:44,780
-doesn't do something bad to the Model.
+对模型做一些不好的事情
 
 235
 00:10:44,780 --> 00:10:46,927
-This is how this whole thing
-works, it's as simple as that.
+整个系统就是这么工作的
+就是这么简单
 
 236
 00:10:46,927 --> 00:10:49,098
-ViewModel notices changes in the Model
+视图模型负责通知模型的改变
 
 237
 00:10:49,098 --> 00:10:50,920
-but anytime something changes,
+任何时候有东西发生改变了
 
 238
 00:10:50,920 --> 00:10:53,130
-it says, oh, something has changed
+它就会说，有东西发生了改变
 
 239
 00:10:53,130 --> 00:10:57,180
-and then the Views just
-observe those something changed
+然后视图们就会观察到这些改变
 
 240
 00:10:57,180 --> 00:10:59,550
-things happening and
-then it pulls the data
+之后视图就会从视图模型那里
 
 241
 00:10:59,550 --> 00:11:01,260
-from the ViewModel and redraws itself
+获取相关数据并且重新绘制自己
 
 242
 00:11:01,260 --> 00:11:02,829
-because that's what a View can do,
+而这就是视图在做的事情
 
 243
 00:11:02,829 --> 00:11:06,400
-can always redraw itself with
-the current state of the Model
+根据模型当下的状态
+不断更新自己
 
 244
 00:11:06,400 --> 00:11:09,790
-which it gets it through
-this ViewModel interpreter.
+当然这中间少不了视图模型这个解释者
 
 245
 00:11:09,790 --> 00:11:13,780
-This is all there is to it
-and as the quarter goes on,
+这就是所有相关知识的说明
 
 246
 00:11:13,780 --> 00:11:18,200
-we're gonna see the Swift
-syntax for making this all work.
+接下来我们来看一下在 Swift 里
+它是如何运转的
 
 247
 00:11:18,200 --> 00:11:21,760
-I've put some of the syntax
-up here like ObservableObjects
+我放了一些语法关键词在这里，比如
+ObservableObjects
 
 248
 00:11:21,760 --> 00:11:25,080
-and onReceive, and
-objectWillChange going on,
+还有 onReceive
+objectWillChange 等等
 
 249
 00:11:25,080 --> 00:11:26,960
-these are all things which I'm gonna start
+这些东西就是我将在下周
 
 250
 00:11:26,960 --> 00:11:28,167
-talking about next week.
+讲授的内容
 
 251
 00:11:28,167 --> 00:11:29,560
