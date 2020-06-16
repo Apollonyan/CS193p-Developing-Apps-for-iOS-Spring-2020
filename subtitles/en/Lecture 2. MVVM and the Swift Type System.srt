@@ -835,7 +835,7 @@ between the Model and the View.
 
 188
 00:08:41,960 --> 00:08:44,750
-It's gonna be the thing that
+It's going be the thing that
 
 189
 00:08:44,750 --> 00:08:48,020
