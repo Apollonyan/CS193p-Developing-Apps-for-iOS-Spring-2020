@@ -1,0 +1,7968 @@
+1
+00:00:01,219 --> 00:00:03,802
+本字幕由志愿者义务贡献，采用许可协议
+知识共享 署名—非商业性使用—相同方式共享 3.0 美国
+
+2
+00:00:04,940 --> 00:00:06,590
+>> [旁白] 斯坦福大学
+
+3
+00:00:08,170 --> 00:00:10,580
+> 欢迎回到第四节
+
+4
+00:00:10,580 --> 00:00:15,160
+2020 年春季学期
+斯坦福 CS193p 公开课
+
+5
+00:00:15,160 --> 00:00:18,210
+Today, I'm going to start
+off with a big demo,
+
+6
+00:00:18,210 --> 00:00:20,670
+and it's going to be to make our card game
+
+7
+00:00:20,670 --> 00:00:23,980
+be in rows and columns, instead
+of all across in one row,
+
+8
+00:00:23,980 --> 00:00:27,280
+which is gonna make our
+game a lot better, no doubt,
+
+9
+00:00:27,280 --> 00:00:29,640
+but it's also gonna be
+a super good example
+
+10
+00:00:29,640 --> 00:00:32,430
+of doing generics with protocols,
+
+11
+00:00:32,430 --> 00:00:34,730
+and also functions as types.
+
+12
+00:00:34,730 --> 00:00:37,040
+And we're gonna learn more
+about being a container View
+
+13
+00:00:37,040 --> 00:00:38,470
+because we're gonna build our own
+
+14
+00:00:38,470 --> 00:00:41,970
+rows and columns container
+View for our cards.
+
+15
+00:00:41,970 --> 00:00:44,820
+After that demo, we're gonna
+hop back into the slides here.
+
+16
+00:00:44,820 --> 00:00:47,300
+We're gonna talk more about
+the Swift type systems,
+
+17
+00:00:47,300 --> 00:00:51,050
+specifically the type enum.
+
+18
+00:00:51,050 --> 00:00:53,780
+And then after that, we're
+gonna continue in the slides
+
+19
+00:00:53,780 --> 00:00:56,590
+and talk about one of
+the most important types
+
+20
+00:00:56,590 --> 00:00:59,583
+in all of Swift, Optional,
+which happens to be an enum.
+
+21
+00:01:01,001 --> 00:01:03,650
+And Optional is so
+important that I'm gonna go
+
+22
+00:01:03,650 --> 00:01:05,440
+right back into a demo after that
+
+23
+00:01:05,440 --> 00:01:08,390
+and show you two really important examples
+
+24
+00:01:08,390 --> 00:01:12,393
+of using an Optional to
+design your code in Swift.
+
+25
+00:01:13,380 --> 00:01:15,853
+So, let's get started with that demo.
+
+26
+00:01:16,920 --> 00:01:20,550
+All right, well, it's type
+to fix this major deficiency
+
+27
+00:01:20,550 --> 00:01:23,020
+in our game, which is
+that all of the cards
+
+28
+00:01:23,020 --> 00:01:24,410
+are in one row,
+
+29
+00:01:24,410 --> 00:01:26,900
+and we know that we could
+much more efficiently
+
+30
+00:01:26,900 --> 00:01:30,280
+use this space if we had rows and columns.
+
+31
+00:01:30,280 --> 00:01:33,930
+We're gonna do that by
+replacing our HStack here
+
+32
+00:01:33,930 --> 00:01:35,770
+with a Grid.
+
+33
+00:01:35,770 --> 00:01:39,770
+Now as of the taping of this class,
+
+34
+00:01:39,770 --> 00:01:42,580
+there was no such thing
+as a Grid in SwiftUI,
+
+35
+00:01:42,580 --> 00:01:44,017
+so we're gonna have to write that.
+
+36
+00:01:44,017 --> 00:01:47,160
+And it actually provides
+us with a great opportunity
+
+37
+00:01:47,160 --> 00:01:51,570
+to learn a lot about how
+things like ZStack work.
+
+38
+00:01:51,570 --> 00:01:55,080
+So, ZStack we know takes
+this argument right here,
+
+39
+00:01:55,080 --> 00:01:56,830
+which is a function.
+
+40
+00:01:56,830 --> 00:01:58,397
+This curly brace means it's a function.
+
+41
+00:01:58,397 --> 00:02:00,920
+It's a function that takes no arguments,
+
+42
+00:02:00,920 --> 00:02:05,420
+unlike for example, ForEach,
+its function to create a View
+
+43
+00:02:05,420 --> 00:02:06,960
+takes an argument.
+
+44
+00:02:06,960 --> 00:02:09,900
+But ZStack, the View that gets built here
+
+45
+00:02:09,900 --> 00:02:11,200
+is quite powerful.
+
+46
+00:02:11,200 --> 00:02:13,960
+It could be a list of other Views.
+
+47
+00:02:13,960 --> 00:02:17,800
+It could be a if-then,
+a combination thereof.
+
+48
+00:02:17,800 --> 00:02:20,990
+So this particular function that can build
+
+49
+00:02:20,990 --> 00:02:24,783
+these complicated View
+is called a ViewBuilder.
+
+50
+00:02:25,830 --> 00:02:28,300
+And we're not gonna use
+ViewBuilder quite yet.
+
+51
+00:02:28,300 --> 00:02:30,600
+We'll eventually learn about ViewBuilder.
+
+52
+00:02:30,600 --> 00:02:34,420
+So our Grid is just
+gonna have a simple View
+
+53
+00:02:34,420 --> 00:02:38,020
+that it's going to
+replicate using a ForEach,
+
+54
+00:02:38,020 --> 00:02:39,950
+exactly the same way as a ForEach,
+
+55
+00:02:39,950 --> 00:02:42,790
+to put a certain View at every spot
+
+56
+00:02:42,790 --> 00:02:44,530
+in the row and column.
+
+57
+00:02:44,530 --> 00:02:49,240
+So our Grid is really going
+to combine HStack like Grid,
+
+58
+00:02:49,240 --> 00:02:51,980
+except for 2D HStack if
+you wanna think of it,
+
+59
+00:02:51,980 --> 00:02:54,480
+with ForEach like this.
+
+60
+00:02:54,480 --> 00:02:59,110
+We're gonna take an Array
+of Identifiable things,
+
+61
+00:02:59,110 --> 00:03:03,620
+like these Cards, and then
+we're going to pass a function
+
+62
+00:03:03,620 --> 00:03:07,260
+that takes one of the Identifiable
+things as its argument,
+
+63
+00:03:07,260 --> 00:03:09,290
+and returns the View to use
+
+64
+00:03:09,290 --> 00:03:11,820
+to draw at that location in the Grid.
+
+65
+00:03:11,820 --> 00:03:13,433
+Very simple here.
+
+66
+00:03:14,460 --> 00:03:15,893
+So let's go create that View.
+
+67
+00:03:15,893 --> 00:03:17,720
+We're gonna go over here to New, File.
+
+68
+00:03:17,720 --> 00:03:20,530
+We're gonna put it in its own
+file because this is really
+
+69
+00:03:20,530 --> 00:03:23,380
+a very powerful reusable object.
+
+70
+00:03:23,380 --> 00:03:26,690
+We could use it in all our
+apps that needed a Grid.
+
+71
+00:03:26,690 --> 00:03:29,500
+So it is a SwiftUI View,
+so I'm gonna click there.
+
+72
+00:03:29,500 --> 00:03:31,070
+I'm gonna call it Grid.
+
+73
+00:03:31,070 --> 00:03:33,260
+Gonna double-check that
+it's in one of these
+
+74
+00:03:33,260 --> 00:03:36,110
+yellow folders here and that this content
+
+75
+00:03:36,110 --> 00:03:39,850
+kinda matches that, and
+it does, so we're good.
+
+76
+00:03:39,850 --> 00:03:43,500
+And here's our Grid, and of
+course, we get "Hello, World!"
+
+77
+00:03:43,500 --> 00:03:46,270
+This code down here, you'll
+remember, at the bottom
+
+78
+00:03:46,270 --> 00:03:50,270
+is to hook us up to our canvas over here.
+
+79
+00:03:50,270 --> 00:03:53,160
+But this Grid is completely generic.
+
+80
+00:03:53,160 --> 00:03:55,950
+And so, if we were gonna
+make this preview work,
+
+81
+00:03:55,950 --> 00:03:59,390
+we would need to come up
+with some test data for it.
+
+82
+00:03:59,390 --> 00:04:01,700
+And we're not gonna do that in this demo,
+
+83
+00:04:01,700 --> 00:04:04,270
+but someday in the future,
+maybe you could do it
+
+84
+00:04:04,270 --> 00:04:05,690
+as an exercise.
+
+85
+00:04:05,690 --> 00:04:08,330
+But if you ever delete
+this and need it back,
+
+86
+00:04:08,330 --> 00:04:11,863
+it'll say Create Preview
+here in your canvas.
+
+87
+00:04:13,000 --> 00:04:16,020
+All right, so we gotta
+get started on Grid.
+
+88
+00:04:16,020 --> 00:04:19,000
+First thing we're gonna
+do is its two arguments.
+
+89
+00:04:19,000 --> 00:04:23,880
+The first argument is this
+Array of Identifiable,
+
+90
+00:04:23,880 --> 00:04:25,860
+and the second argument is this function
+
+91
+00:04:25,860 --> 00:04:28,480
+that takes one of the
+Identifiables and provides a View.
+
+92
+00:04:28,480 --> 00:04:31,980
+So let's get those two
+arguments there as vars.
+
+93
+00:04:31,980 --> 00:04:36,980
+So the first var is I'll call
+it items, an Array of Item.
+
+94
+00:04:38,310 --> 00:04:41,640
+And this Item for us in
+Grid is a don't-care.
+
+95
+00:04:41,640 --> 00:04:45,750
+We really don't-care what that thing is.
+
+96
+00:04:45,750 --> 00:04:46,583
+It could be anything.
+
+97
+00:04:46,583 --> 00:04:50,230
+It's gonna be a Card over
+here, but there's no reason
+
+98
+00:04:50,230 --> 00:04:51,600
+for it to be any particular thing,
+
+99
+00:04:51,600 --> 00:04:53,430
+so it's a don't-care for us.
+
+100
+00:04:53,430 --> 00:04:56,379
+And similarly, that second argument,
+
+101
+00:04:56,379 --> 00:04:59,240
+viewForItem I'll call
+it, that's a function.
+
+102
+00:04:59,240 --> 00:05:02,420
+It's a function that takes
+an Item as the argument,
+
+103
+00:05:02,420 --> 00:05:05,500
+and it returns some ItemView,
+
+104
+00:05:05,500 --> 00:05:07,460
+which is another don't-care for us.
+
+105
+00:05:07,460 --> 00:05:10,540
+We really don't-care what
+kind of View you provide
+
+106
+00:05:10,540 --> 00:05:13,957
+for each item, so that's
+a don't-care, ItemView.
+
+107
+00:05:14,980 --> 00:05:19,060
+Good start, and we could actually
+get this going over here.
+
+108
+00:05:19,060 --> 00:05:23,000
+Unfortunately, we have to
+name this items right there.
+
+109
+00:05:23,000 --> 00:05:27,030
+This one is really viewForItem,
+
+110
+00:05:27,030 --> 00:05:29,170
+and put that right there.
+
+111
+00:05:29,170 --> 00:05:32,860
+But this is the last
+argument to this function,
+
+112
+00:05:32,860 --> 00:05:35,350
+so we know that when the last argument
+
+113
+00:05:35,350 --> 00:05:38,320
+to a function is another function,
+
+114
+00:05:38,320 --> 00:05:41,630
+then we can just get rid of
+that label, close it off,
+
+115
+00:05:41,630 --> 00:05:44,940
+and have our function
+kinda float on the outside.
+
+116
+00:05:44,940 --> 00:05:48,360
+So this is the last argument to our Grid.
+
+117
+00:05:48,360 --> 00:05:52,000
+And that is both of its vars,
+this one and the viewForItem.
+
+118
+00:05:52,000 --> 00:05:54,320
+Just like when we called CardView here,
+
+119
+00:05:54,320 --> 00:05:58,380
+we had to initialize its
+vars as this one Card var,
+
+120
+00:05:58,380 --> 00:06:00,000
+same thing here with Grid.
+
+121
+00:06:00,000 --> 00:06:02,030
+We're initializing its two vars.
+
+122
+00:06:03,250 --> 00:06:05,850
+This might be a good time
+to talk about how is it
+
+123
+00:06:05,850 --> 00:06:09,050
+that ForEach doesn't have
+to have this label items?
+
+124
+00:06:09,050 --> 00:06:13,510
+When we had ForEach, it just
+had the iteratable thing
+
+125
+00:06:13,510 --> 00:06:15,280
+that had Identifiables in it.
+
+126
+00:06:15,280 --> 00:06:16,970
+How come it didn't have an argument?
+
+127
+00:06:16,970 --> 00:06:20,410
+Well, it's using technology
+that you know well to do that.
+
+128
+00:06:20,410 --> 00:06:22,240
+So let's do it in Grid as well,
+
+129
+00:06:22,240 --> 00:06:24,460
+which is it's just an init.
+
+130
+00:06:24,460 --> 00:06:27,780
+So normally you might
+have your init say items
+
+131
+00:06:27,780 --> 00:06:32,780
+is an Array of Item,
+viewForItem is a function
+
+132
+00:06:32,910 --> 00:06:36,353
+that takes an Item and
+returns some ItemView.
+
+133
+00:06:37,246 --> 00:06:38,847
+That would be a normal kind of init.
+
+134
+00:06:38,847 --> 00:06:41,020
+And in here, you just want to
+
+135
+00:06:41,020 --> 00:06:43,210
+initialize your vars, like items.
+
+136
+00:06:43,210 --> 00:06:45,790
+Well, that's equal to the
+Items that are passed in.
+
+137
+00:06:45,790 --> 00:06:49,530
+And then viewForItem, that's
+equal to the viewForItem
+
+138
+00:06:49,530 --> 00:06:50,930
+that's passed in.
+
+139
+00:06:50,930 --> 00:06:53,960
+By the way, Swift is gonna
+be very confused here
+
+140
+00:06:53,960 --> 00:06:58,240
+because it doesn't know
+which items this is
+
+141
+00:06:58,240 --> 00:06:59,680
+and which items this is.
+
+142
+00:06:59,680 --> 00:07:02,570
+We've got a local argument to
+this function called items,
+
+143
+00:07:02,570 --> 00:07:05,760
+and then we have a property called items.
+
+144
+00:07:05,760 --> 00:07:08,520
+So you can easily fix
+Swift's confusion here
+
+145
+00:07:08,520 --> 00:07:13,520
+by saying self.items,
+and self.viewForItem.
+
+146
+00:07:13,570 --> 00:07:15,813
+This is a different reason
+to have to put self here
+
+147
+00:07:15,813 --> 00:07:20,700
+than we saw with the explicit
+self blah-blah-blah hit fix.
+
+148
+00:07:20,700 --> 00:07:22,160
+But it makes sense here, right?
+
+149
+00:07:22,160 --> 00:07:24,970
+By doing self.items, now
+Swift knows that we're talking
+
+150
+00:07:24,970 --> 00:07:26,210
+about the green one,
+
+151
+00:07:26,210 --> 00:07:28,263
+and that this one must be the black one.
+
+152
+00:07:29,620 --> 00:07:33,230
+Now, this allows us to put this under-bar
+
+153
+00:07:33,230 --> 00:07:34,550
+as the external name.
+
+154
+00:07:34,550 --> 00:07:36,710
+Remember under-bar is external name
+
+155
+00:07:36,710 --> 00:07:40,260
+means do not provide an external name,
+
+156
+00:07:40,260 --> 00:07:42,877
+and that's exactly what's going on here.
+
+157
+00:07:42,877 --> 00:07:45,980
+And if I rebuild, you're gonna see
+
+158
+00:07:45,980 --> 00:07:48,300
+that this code over here, perfectly fine.
+
+159
+00:07:49,590 --> 00:07:53,570
+However, we still have a
+problem back here in our Grid.
+
+160
+00:07:53,570 --> 00:07:55,270
+This error right here.
+
+161
+00:07:55,270 --> 00:07:58,157
+It says, "Assigning non-escaping parameter
+
+162
+00:07:58,157 --> 00:08:02,500
+"'viewForItem' to an @escaping closure."
+
+163
+00:08:02,500 --> 00:08:05,450
+So I'm gonna try and explain
+this escaping closure
+
+164
+00:08:05,450 --> 00:08:06,840
+in just a few minutes.
+
+165
+00:08:06,840 --> 00:08:10,097
+Normally, I would actually
+probably have slides on it.
+
+166
+00:08:10,097 --> 00:08:14,270
+I'm gonna skip that this
+quarter because in SwiftUI,
+
+167
+00:08:14,270 --> 00:08:16,190
+since we're doing functional programming,
+
+168
+00:08:16,190 --> 00:08:18,270
+almost everything is a value type,
+
+169
+00:08:18,270 --> 00:08:21,560
+and the problem that this
+escaping closure thing
+
+170
+00:08:21,560 --> 00:08:23,660
+is trying to address here
+
+171
+00:08:23,660 --> 00:08:26,510
+really, really rare in SwiftUI.
+
+172
+00:08:26,510 --> 00:08:30,617
+Happened a lot more when we
+had object-oriented programming
+
+173
+00:08:30,617 --> 00:08:31,450
+in UIkit.
+
+174
+00:08:32,570 --> 00:08:34,920
+So, here's what's going on.
+
+175
+00:08:34,920 --> 00:08:37,090
+This function that's passed in here
+
+176
+00:08:37,090 --> 00:08:39,600
+that creates a View for a given item
+
+177
+00:08:39,600 --> 00:08:42,780
+is not actually used in this initializer.
+
+178
+00:08:42,780 --> 00:08:46,090
+We salt it away into a
+var and call it later.
+
+179
+00:08:46,090 --> 00:08:47,950
+We're gonna call it down here in our body
+
+180
+00:08:47,950 --> 00:08:50,050
+when we need to actually create the Views
+
+181
+00:08:50,050 --> 00:08:52,120
+for all of our Items.
+
+182
+00:08:52,120 --> 00:08:56,350
+So, we have to mark this
+kind of function, @escaping.
+
+183
+00:08:57,980 --> 00:09:00,140
+You can think of it as this function
+
+184
+00:09:00,140 --> 00:09:04,190
+is going to escape from this initializer
+
+185
+00:09:04,190 --> 00:09:05,703
+without getting called.
+
+186
+00:09:06,550 --> 00:09:08,330
+Now, Swift has to be careful,
+
+187
+00:09:08,330 --> 00:09:10,230
+and it's actually very powerful
+
+188
+00:09:10,230 --> 00:09:12,270
+and knows how to deal with these functions
+
+189
+00:09:12,270 --> 00:09:14,250
+that might get called later.
+
+190
+00:09:14,250 --> 00:09:15,990
+Why can that be an issue?
+
+191
+00:09:15,990 --> 00:09:18,420
+Well, let's look back
+here where we actually
+
+192
+00:09:18,420 --> 00:09:20,170
+pass this function in.
+
+193
+00:09:20,170 --> 00:09:24,980
+Whatever code is in here has
+to be able to be called later.
+
+194
+00:09:24,980 --> 00:09:27,810
+So if we use any variables,
+especially if we use
+
+195
+00:09:27,810 --> 00:09:31,150
+a local variable or
+something from this function,
+
+196
+00:09:31,150 --> 00:09:34,420
+that has to be around in the future
+
+197
+00:09:34,420 --> 00:09:36,563
+when this function gets executed.
+
+198
+00:09:37,410 --> 00:09:41,040
+Now, how does Swift
+accomplish this wonderful feat
+
+199
+00:09:41,040 --> 00:09:45,440
+of keeping everything in
+here around until the future?
+
+200
+00:09:45,440 --> 00:09:48,400
+Well, it does this by
+making function types
+
+201
+00:09:48,400 --> 00:09:50,150
+be reference types.
+
+202
+00:09:50,150 --> 00:09:55,080
+Just like classes, our
+ViewModel are reference types,
+
+203
+00:09:55,080 --> 00:09:56,670
+they live in the heap.
+
+204
+00:09:56,670 --> 00:09:57,750
+They're stored in memory.
+
+205
+00:09:57,750 --> 00:09:59,140
+People have pointers to them.
+
+206
+00:09:59,140 --> 00:10:02,680
+Same thing with these functions
+that can be called later.
+
+207
+00:10:02,680 --> 00:10:06,160
+They live in the heap and
+they have pointers to them.
+
+208
+00:10:06,160 --> 00:10:11,160
+Now, the things inside of here
+might also live in the heap.
+
+209
+00:10:11,550 --> 00:10:15,290
+If any of the things in here
+are classes, for example,
+
+210
+00:10:15,290 --> 00:10:18,340
+then the self in here
+is gonna be a pointer
+
+211
+00:10:18,340 --> 00:10:19,760
+to something in the heap.
+
+212
+00:10:19,760 --> 00:10:23,490
+And the problem we're trying
+to avoid here in Swift
+
+213
+00:10:23,490 --> 00:10:27,960
+is having self have some var in it
+
+214
+00:10:27,960 --> 00:10:30,480
+that actually points to this function
+
+215
+00:10:30,480 --> 00:10:34,880
+because we know this function
+points to self inside here.
+
+216
+00:10:34,880 --> 00:10:36,430
+They're both gonna be in the heap.
+
+217
+00:10:36,430 --> 00:10:37,630
+The function's kept in the heap
+
+218
+00:10:37,630 --> 00:10:39,520
+because it's gonna be executed later.
+
+219
+00:10:39,520 --> 00:10:42,210
+All the things inside the
+function have be kept in the heap
+
+220
+00:10:42,210 --> 00:10:44,720
+so that it will properly execute later.
+
+221
+00:10:44,720 --> 00:10:47,440
+And so if anything in here points back,
+
+222
+00:10:47,440 --> 00:10:49,810
+we've got a situation where
+two things in the heap
+
+223
+00:10:49,810 --> 00:10:51,840
+are pointing to each other.
+
+224
+00:10:51,840 --> 00:10:54,670
+And the way that Swift cleans up memory
+
+225
+00:10:54,670 --> 00:10:57,060
+is when nobody points
+to something anymore,
+
+226
+00:10:57,060 --> 00:10:59,010
+it cleans up the memory and frees it up
+
+227
+00:10:59,010 --> 00:11:00,390
+for someone else to use.
+
+228
+00:11:00,390 --> 00:11:02,520
+Well, if two things are
+pointing to each other
+
+229
+00:11:02,520 --> 00:11:03,800
+and they're both in the heap,
+
+230
+00:11:03,800 --> 00:11:05,870
+they're never gonna be able to go away
+
+231
+00:11:05,870 --> 00:11:07,740
+because they're always gonna
+have a pointer to each other.
+
+232
+00:11:07,740 --> 00:11:10,750
+That's called a memory cycle.
+
+233
+00:11:10,750 --> 00:11:14,440
+So, this whole thing is to try to make it
+
+234
+00:11:14,440 --> 00:11:17,210
+so that we can detect memory cycles
+
+235
+00:11:17,210 --> 00:11:20,590
+by seeing these escaping functions.
+
+236
+00:11:20,590 --> 00:11:25,590
+Amazingly, this is also why you
+get this warning about self.
+
+237
+00:11:26,190 --> 00:11:28,590
+You know when we don't
+put a self-dot in here
+
+238
+00:11:28,590 --> 00:11:30,560
+in our onTapGesture function,
+
+239
+00:11:30,560 --> 00:11:32,360
+we're gonna get this error that says
+
+240
+00:11:32,360 --> 00:11:34,660
+this requires explicit self
+
+241
+00:11:34,660 --> 00:11:37,400
+to make the capture semantics explicit.
+
+242
+00:11:37,400 --> 00:11:40,140
+Capture semantics means
+the fact that it's going
+
+243
+00:11:40,140 --> 00:11:42,720
+to capture everything in here,
+
+244
+00:11:42,720 --> 00:11:46,010
+inside this onTapGesture's function,
+
+245
+00:11:46,010 --> 00:11:48,510
+and keep it in the heap
+so that when onTapGesture
+
+246
+00:11:48,510 --> 00:11:52,500
+executes it in the future when
+someone taps on this Card,
+
+247
+00:11:52,500 --> 00:11:54,600
+that this stuff is still around.
+
+248
+00:11:54,600 --> 00:11:55,720
+Well if you look at this code,
+
+249
+00:11:55,720 --> 00:11:58,420
+you're thinking, "Oh well, I
+guess it captures ViewModel,"
+
+250
+00:11:58,420 --> 00:12:02,120
+but it actually would
+have to capture self.
+
+251
+00:12:02,120 --> 00:12:04,120
+So it makes you type the self
+
+252
+00:12:04,120 --> 00:12:05,950
+so that you realize, oh yes,
+
+253
+00:12:05,950 --> 00:12:08,797
+this function is going to
+make self be in memory.
+
+254
+00:12:08,797 --> 00:12:11,160
+And then you can verify
+that self doesn't actually
+
+255
+00:12:11,160 --> 00:12:13,870
+somehow directly or
+indirectly come back around
+
+256
+00:12:13,870 --> 00:12:16,820
+and point to this function,
+
+257
+00:12:16,820 --> 00:12:19,920
+which it doesn't do in
+this case because in here,
+
+258
+00:12:19,920 --> 00:12:22,270
+our ViewModel never points to our Views.
+
+259
+00:12:22,270 --> 00:12:24,900
+Views point to the ViewModel
+but not backwards direction,
+
+260
+00:12:24,900 --> 00:12:26,160
+so it's no problem.
+
+261
+00:12:26,160 --> 00:12:29,580
+But even more it's no
+problem because this self-dot
+
+262
+00:12:29,580 --> 00:12:31,410
+does not live in the heap anyway.
+
+263
+00:12:31,410 --> 00:12:35,260
+This self-dot is this
+struct, self is this struct.
+
+264
+00:12:35,260 --> 00:12:36,950
+Structs are value types.
+
+265
+00:12:36,950 --> 00:12:38,300
+They don't live in the heap.
+
+266
+00:12:38,300 --> 00:12:41,080
+So, this is not necessary anyway.
+
+267
+00:12:41,080 --> 00:12:45,130
+And that is the fix that
+has been publicly approved,
+
+268
+00:12:45,130 --> 00:12:47,220
+that you're probably gonna
+see a couple of months
+
+269
+00:12:47,220 --> 00:12:49,120
+after this video is made.
+
+270
+00:12:49,120 --> 00:12:52,310
+So this is gonna be out of
+date quickly, this video.
+
+271
+00:12:52,310 --> 00:12:55,530
+But the fix is basically
+if self, in this case,
+
+272
+00:12:55,530 --> 00:12:57,990
+inside of one of these escaping functions
+
+273
+00:12:57,990 --> 00:12:59,620
+is gonna be held around in the heap,
+
+274
+00:12:59,620 --> 00:13:01,680
+if self doesn't live in the heap,
+
+275
+00:13:01,680 --> 00:13:05,600
+in other words, it's a value
+type, a struct or an enum,
+
+276
+00:13:05,600 --> 00:13:09,010
+then you don't need to
+have this error come up
+
+277
+00:13:09,010 --> 00:13:11,747
+and warn you, "Hey, put self-dot there
+
+278
+00:13:11,747 --> 00:13:13,807
+"so you make sure you
+don't have a memory cycle
+
+279
+00:13:13,807 --> 00:13:15,187
+"where self points to this function,
+
+280
+00:13:15,187 --> 00:13:16,620
+"this function points to self."
+
+281
+00:13:16,620 --> 00:13:19,230
+That can't happen because
+there aren't two things
+
+282
+00:13:19,230 --> 00:13:20,470
+in the heap that could point to each other
+
+283
+00:13:20,470 --> 00:13:22,280
+because self is a struct.
+
+284
+00:13:22,280 --> 00:13:24,530
+It's a value type, does
+not live in the heap.
+
+285
+00:13:26,000 --> 00:13:29,600
+So, there you got just a
+little quick explanation
+
+286
+00:13:29,600 --> 00:13:32,550
+of all this escaping, and
+you even understand now
+
+287
+00:13:32,550 --> 00:13:34,060
+what this self-dot is.
+
+288
+00:13:34,060 --> 00:13:36,480
+If you don't understand
+all of things I just said
+
+289
+00:13:36,480 --> 00:13:40,540
+about these escaping
+functions and this self-dot,
+
+290
+00:13:40,540 --> 00:13:43,280
+really, I don't think you have
+to worry about it that much
+
+291
+00:13:43,280 --> 00:13:44,113
+for a couple reasons.
+
+292
+00:13:44,113 --> 00:13:46,440
+One, this week's reading,
+you're gonna read
+
+293
+00:13:46,440 --> 00:13:48,550
+about these closures, these functions
+
+294
+00:13:48,550 --> 00:13:51,870
+that are in-line that
+capture the stuff they need
+
+295
+00:13:51,870 --> 00:13:53,670
+to be able to execute later.
+
+296
+00:13:53,670 --> 00:13:56,090
+So when you read that,
+maybe you'll understand it.
+
+297
+00:13:56,090 --> 00:13:57,440
+Of course, you always have the option,
+
+298
+00:13:57,440 --> 00:14:01,090
+go on the class forums, ask
+more about it to clarify.
+
+299
+00:14:01,090 --> 00:14:05,160
+And finally, with SwiftUI,
+it's just not that important
+
+300
+00:14:05,160 --> 00:14:09,110
+because so many of the
+self-dots are just value types.
+
+301
+00:14:09,110 --> 00:14:12,840
+Everything in the View, for
+example, is all value types.
+
+302
+00:14:12,840 --> 00:14:15,170
+Our ViewModel, it's a class.
+
+303
+00:14:15,170 --> 00:14:17,730
+It has possibilities.
+
+304
+00:14:17,730 --> 00:14:20,070
+But since the ViewModel
+never points to anything
+
+305
+00:14:20,070 --> 00:14:22,160
+in the View, we never really have to worry
+
+306
+00:14:22,160 --> 00:14:25,720
+about anything in the View
+creating these memory cycles.
+
+307
+00:14:25,720 --> 00:14:26,553
+It'd be very rare.
+
+308
+00:14:26,553 --> 00:14:28,840
+It's possible to do, but very, very rare.
+
+309
+00:14:28,840 --> 00:14:30,800
+So the bottom line is I
+don't think you have to worry
+
+310
+00:14:30,800 --> 00:14:31,890
+about it that much.
+
+311
+00:14:31,890 --> 00:14:33,240
+The only thing that's gonna bother you
+
+312
+00:14:33,240 --> 00:14:36,160
+is that you're always
+gonna have to put self-dot
+
+313
+00:14:36,160 --> 00:14:37,500
+in front of these things,
+
+314
+00:14:37,500 --> 00:14:39,910
+or you're gonna have
+to deal with this error
+
+315
+00:14:39,910 --> 00:14:44,360
+and do this, click on
+it, and fix all the time.
+
+316
+00:14:44,360 --> 00:14:47,290
+Again, that's something
+you're only gonna have to do
+
+317
+00:14:47,290 --> 00:14:49,750
+till the beta of this
+public thing comes out,
+
+318
+00:14:49,750 --> 00:14:51,850
+and hopefully, in a couple of months.
+
+319
+00:14:51,850 --> 00:14:53,890
+But, at worst, a few months.
+
+320
+00:14:53,890 --> 00:14:56,380
+And after that, then you
+won't have to worry about this
+
+321
+00:14:56,380 --> 00:14:58,460
+at all because not putting self here
+
+322
+00:14:58,460 --> 00:15:02,120
+when self is a value type will
+not generate this warning.
+
+323
+00:15:02,120 --> 00:15:04,063
+That is the proposed fix.
+
+324
+00:15:05,330 --> 00:15:07,600
+All right, that's enough of that aside.
+
+325
+00:15:07,600 --> 00:15:10,290
+This all started because
+we had this warning
+
+326
+00:15:10,290 --> 00:15:12,180
+that told us we had to put escaping here
+
+327
+00:15:12,180 --> 00:15:16,288
+because indeed, this function
+does escape from this init
+
+328
+00:15:16,288 --> 00:15:18,530
+because we put it in this var.
+
+329
+00:15:18,530 --> 00:15:19,853
+Let's do our body.
+
+330
+00:15:21,500 --> 00:15:24,180
+Our body's not "Hello, World!" obviously.
+
+331
+00:15:24,180 --> 00:15:25,630
+Our body is actually quite simple.
+
+332
+00:15:25,630 --> 00:15:28,985
+It's just a ForEach of all of our Items.
+
+333
+00:15:28,985 --> 00:15:31,993
+And for each of our Items,
+we are going to return
+
+334
+00:15:31,993 --> 00:15:35,070
+a viewForItem of that Item.
+
+335
+00:15:35,070 --> 00:15:37,345
+We're gonna call our function viewForItem.
+
+336
+00:15:37,345 --> 00:15:39,927
+This is a var, that's a
+function we're gonna call it.
+
+337
+00:15:39,927 --> 00:15:41,480
+And of course, we wanna ForEach.
+
+338
+00:15:41,480 --> 00:15:44,520
+It also has an escaping
+function there for the View,
+
+339
+00:15:44,520 --> 00:15:46,663
+so we have to say self-dot.
+
+340
+00:15:48,250 --> 00:15:52,050
+This creates some errors for
+us, so let's look at these.
+
+341
+00:15:52,050 --> 00:15:54,827
+The first one says, "Cannot
+convert value of type
+
+342
+00:15:54,827 --> 00:15:58,880
+"Array of Item to expected
+argument type 'Range of Int'."
+
+343
+00:15:58,880 --> 00:16:01,880
+Oh no, we saw this exact argument problem
+
+344
+00:16:01,880 --> 00:16:05,230
+when we were over here doing
+ForEach the first time.
+
+345
+00:16:05,230 --> 00:16:06,770
+We were passing this Array of Cards
+
+346
+00:16:06,770 --> 00:16:09,080
+and we were like, oh, I
+thought I could do that.
+
+347
+00:16:09,080 --> 00:16:11,670
+We used to pass zero dot dot less than for
+
+348
+00:16:11,670 --> 00:16:14,350
+and we went to Array,
+and I had told you that
+
+349
+00:16:14,350 --> 00:16:16,310
+this ForEach takes an Array.
+
+350
+00:16:16,310 --> 00:16:18,060
+But we learned that it was an Array
+
+351
+00:16:18,060 --> 00:16:21,160
+only of Identifiable things.
+
+352
+00:16:21,160 --> 00:16:23,580
+So we have the same exact problem here.
+
+353
+00:16:23,580 --> 00:16:27,060
+This ForEach of this
+items has to be an Array
+
+354
+00:16:27,060 --> 00:16:29,290
+of Identifiable things.
+
+355
+00:16:29,290 --> 00:16:33,730
+Well, that's a problem for us
+because Item is a don't-care.
+
+356
+00:16:33,730 --> 00:16:36,260
+We have no idea what this thing is.
+
+357
+00:16:36,260 --> 00:16:39,590
+But here is where we get
+constrains and gains into the act.
+
+358
+00:16:39,590 --> 00:16:44,590
+We're gonna say where
+Item is Identifiable.
+
+359
+00:16:44,640 --> 00:16:47,360
+So now we've created
+a Grid that only works
+
+360
+00:16:47,360 --> 00:16:50,750
+with this don't-care when that
+don't-care is Identifiable.
+
+361
+00:16:50,750 --> 00:16:52,600
+So this can still be anything.
+
+362
+00:16:52,600 --> 00:16:54,500
+But it has to be Identifiable.
+
+363
+00:16:54,500 --> 00:16:56,970
+This is what I was talking
+about in the slides,
+
+364
+00:16:56,970 --> 00:16:59,270
+a care-a-little-bit kind of thing.
+
+365
+00:16:59,270 --> 00:17:00,910
+We care a little bit about Item.
+
+366
+00:17:00,910 --> 00:17:02,833
+We care that it's Identifiable.
+
+367
+00:17:03,780 --> 00:17:05,905
+So now we have a different error here.
+
+368
+00:17:05,905 --> 00:17:07,287
+This ForEach error is saying,
+
+369
+00:17:07,287 --> 00:17:10,967
+"Return type of property
+'body'," this is our body,
+
+370
+00:17:10,967 --> 00:17:15,680
+"requires that 'ItemView'
+conform to 'View'."
+
+371
+00:17:15,680 --> 00:17:17,230
+So what is ItemView?
+
+372
+00:17:17,230 --> 00:17:19,847
+That's the return type of this function.
+
+373
+00:17:19,847 --> 00:17:21,670
+And of course, that makes sense
+
+374
+00:17:21,670 --> 00:17:26,320
+because ForEach can only
+use Views to have Views
+
+375
+00:17:26,320 --> 00:17:27,153
+for these items.
+
+376
+00:17:27,153 --> 00:17:29,040
+This has to be a View.
+
+377
+00:17:29,040 --> 00:17:32,590
+So, this viewForItem return
+type here of ItemView,
+
+378
+00:17:32,590 --> 00:17:33,680
+it has to be a View.
+
+379
+00:17:33,680 --> 00:17:34,930
+And what type is it?
+
+380
+00:17:34,930 --> 00:17:37,240
+It's a don't-care as well.
+
+381
+00:17:37,240 --> 00:17:38,550
+We'll do the same thing here.
+
+382
+00:17:38,550 --> 00:17:41,523
+ItemView has to be a View.
+
+383
+00:17:42,550 --> 00:17:45,550
+You all seeing how we're
+connecting generics,
+
+384
+00:17:45,550 --> 00:17:50,550
+this is a very generic struct
+right here, with protocols.
+
+385
+00:17:50,750 --> 00:17:55,420
+These are protocols, and
+we're using them to constrain
+
+386
+00:17:55,420 --> 00:17:57,623
+these don't-cares to work.
+
+387
+00:18:00,140 --> 00:18:03,600
+The next thing we have to do
+here is we're a container.
+
+388
+00:18:03,600 --> 00:18:05,980
+Grid contains all these Views.
+
+389
+00:18:05,980 --> 00:18:07,450
+It puts them in rows and columns.
+
+390
+00:18:07,450 --> 00:18:08,770
+It contains them.
+
+391
+00:18:08,770 --> 00:18:11,530
+And we know the container's
+job is to take the space
+
+392
+00:18:11,530 --> 00:18:14,260
+that's offered to them and divide it up
+
+393
+00:18:14,260 --> 00:18:16,270
+amongst the things inside.
+
+394
+00:18:16,270 --> 00:18:18,660
+That means we need to
+figure out how much space
+
+395
+00:18:18,660 --> 00:18:19,997
+has been allocated to us.
+
+396
+00:18:19,997 --> 00:18:21,580
+And we know how to do that.
+
+397
+00:18:21,580 --> 00:18:23,587
+That's GeometryReader.
+
+398
+00:18:23,587 --> 00:18:24,883
+Okay, GeometryReader.
+
+399
+00:18:26,050 --> 00:18:28,710
+Geometry in is going to allow us
+
+400
+00:18:28,710 --> 00:18:31,350
+to find out how much space
+was given to the Grid,
+
+401
+00:18:31,350 --> 00:18:34,643
+which we're then going to
+hand off to these guys.
+
+402
+00:18:36,410 --> 00:18:37,593
+So, put this in here.
+
+403
+00:18:38,620 --> 00:18:40,730
+Now, as soon as put it in here,
+
+404
+00:18:40,730 --> 00:18:43,780
+of course we're gonna get the
+self-dot problem with items.
+
+405
+00:18:43,780 --> 00:18:46,830
+I'm gonna use the same
+solution I used last time,
+
+406
+00:18:46,830 --> 00:18:48,420
+which is I'm gonna
+create a func here called
+
+407
+00:18:48,420 --> 00:18:49,570
+body(for size: CGSize).
+
+408
+00:18:51,330 --> 00:18:54,260
+It's gonna return some View of course.
+
+409
+00:18:54,260 --> 00:18:58,907
+I'm gonna put my code
+for my body inside here.
+
+410
+00:18:58,907 --> 00:19:01,807
+And here I'm just gonna do a
+self.body(for: geometry.size).
+
+411
+00:19:04,200 --> 00:19:05,820
+Again, this is just purely to make it
+
+412
+00:19:05,820 --> 00:19:08,950
+so I don't have to do
+self-dot inside this body.
+
+413
+00:19:08,950 --> 00:19:11,610
+Just like GeometryReader is escaping
+
+414
+00:19:11,610 --> 00:19:13,420
+and so we did this self.body,
+
+415
+00:19:13,420 --> 00:19:16,610
+ForEach is also escaping,
+
+416
+00:19:16,610 --> 00:19:18,010
+and so I'm gonna do the same thing here.
+
+417
+00:19:18,010 --> 00:19:19,560
+self.body(for item, in size).
+
+418
+00:19:22,374 --> 00:19:23,820
+I'm gonna move this to
+
+419
+00:19:25,540 --> 00:19:30,350
+another little func
+body(for item, in size)
+
+420
+00:19:30,350 --> 00:19:31,463
+turn some View.
+
+421
+00:19:33,050 --> 00:19:35,960
+And now I don't need the self-dot here.
+
+422
+00:19:35,960 --> 00:19:37,003
+Just return that.
+
+423
+00:19:38,780 --> 00:19:41,660
+So, we've arranged our code nicely here.
+
+424
+00:19:41,660 --> 00:19:43,760
+All we have left to do, believe it or not,
+
+425
+00:19:43,760 --> 00:19:48,070
+is to actually offer these
+Views some of our space,
+
+426
+00:19:48,070 --> 00:19:49,440
+and then to position them.
+
+427
+00:19:49,440 --> 00:19:50,530
+That's what containers do.
+
+428
+00:19:50,530 --> 00:19:53,178
+Offer space, and they position.
+
+429
+00:19:53,178 --> 00:19:54,970
+To do this, we need to do some math
+
+430
+00:19:54,970 --> 00:19:56,550
+because we've been offered this space,
+
+431
+00:19:56,550 --> 00:20:00,250
+and now we need to divide
+it up by however many items
+
+432
+00:20:00,250 --> 00:20:01,840
+we have here.
+
+433
+00:20:01,840 --> 00:20:05,150
+And to do that math, I
+actually wrote some code
+
+434
+00:20:05,150 --> 00:20:07,973
+that I gave you, and we're gonna use here.
+
+435
+00:20:07,973 --> 00:20:09,350
+Let's drag it in.
+
+436
+00:20:09,350 --> 00:20:11,410
+By the way, when you drag code in,
+
+437
+00:20:11,410 --> 00:20:13,660
+be sure to do this Copy items if needed.
+
+438
+00:20:13,660 --> 00:20:15,370
+That's almost always what you want.
+
+439
+00:20:15,370 --> 00:20:18,520
+You want a copy of that
+code to put in your project.
+
+440
+00:20:18,520 --> 00:20:21,250
+Otherwise, it's going to be
+referring to your desktop
+
+441
+00:20:21,250 --> 00:20:22,850
+or wherever you dragged it from.
+
+442
+00:20:23,830 --> 00:20:25,430
+All right, so we finished that.
+
+443
+00:20:25,430 --> 00:20:27,310
+So here let's take a look at this little.
+
+444
+00:20:27,310 --> 00:20:28,860
+This is the math, this GridLayout.
+
+445
+00:20:28,860 --> 00:20:30,440
+The math, it does this calculation,
+
+446
+00:20:30,440 --> 00:20:32,170
+so let's take a look.
+
+447
+00:20:32,170 --> 00:20:37,170
+Now I've collapsed the init
+and this two var and func here
+
+448
+00:20:38,520 --> 00:20:41,680
+'cause we're not gonna look at
+the implementation of these.
+
+449
+00:20:41,680 --> 00:20:44,530
+I do encourage you, after this lecture,
+
+450
+00:20:44,530 --> 00:20:47,190
+to go and take a look
+at the implementation,
+
+451
+00:20:47,190 --> 00:20:48,700
+and see if you can figure it out.
+
+452
+00:20:48,700 --> 00:20:51,550
+You'll need the rest of this
+lecture to have the knowledge
+
+453
+00:20:51,550 --> 00:20:54,010
+to be able to really
+understand what this is doing,
+
+454
+00:20:54,010 --> 00:20:56,380
+but it's a good exercise to
+try and understand this thing.
+
+455
+00:20:56,380 --> 00:20:57,710
+It's only about 10 lines of code,
+
+456
+00:20:57,710 --> 00:21:00,060
+so you shouldn't have
+too much trouble with it.
+
+457
+00:21:00,910 --> 00:21:02,760
+But here's what a GridLayout does.
+
+458
+00:21:02,760 --> 00:21:07,760
+Its initializer takes a
+number of items and a size,
+
+459
+00:21:08,090 --> 00:21:10,510
+and it divides that
+size up by those items.
+
+460
+00:21:10,510 --> 00:21:12,650
+It does exactly what Grid wants.
+
+461
+00:21:12,650 --> 00:21:17,310
+Now, it also even lets you
+specify a desired aspect ratio.
+
+462
+00:21:17,310 --> 00:21:20,200
+It can't guarantee that, but
+it can try and get close to it.
+
+463
+00:21:20,200 --> 00:21:23,350
+And that's it, we just create
+a GridLayout that does that.
+
+464
+00:21:23,350 --> 00:21:25,530
+Then we have a var here
+that will tell us the size
+
+465
+00:21:25,530 --> 00:21:27,180
+of the items that are all the same size,
+
+466
+00:21:27,180 --> 00:21:28,680
+so this would be the size.
+
+467
+00:21:28,680 --> 00:21:31,840
+And then also the location
+of each item as a point.
+
+468
+00:21:31,840 --> 00:21:34,030
+This is the center of each item,
+
+469
+00:21:34,030 --> 00:21:36,120
+which again, exactly what Grid wants.
+
+470
+00:21:36,120 --> 00:21:38,600
+So GridLayout was definitely
+made with Grid in mind,
+
+471
+00:21:38,600 --> 00:21:43,060
+but it's pretty much a
+generic divider-up of CGSize
+
+472
+00:21:43,910 --> 00:21:46,710
+by a certain number of items.
+
+473
+00:21:46,710 --> 00:21:48,450
+So, let's create this GridLayout
+
+474
+00:21:48,450 --> 00:21:50,280
+by calling this initializer right here.
+
+475
+00:21:50,280 --> 00:21:53,430
+I'm gonna do it up in my GeometryReader.
+
+476
+00:21:53,430 --> 00:21:56,930
+In fact, I'm gonna change
+this passing of the size
+
+477
+00:21:56,930 --> 00:21:59,890
+to instead pass a GridLayout.
+
+478
+00:21:59,890 --> 00:22:03,000
+And the itemCount is
+just the number of Items
+
+479
+00:22:03,000 --> 00:22:03,860
+that we have.
+
+480
+00:22:03,860 --> 00:22:07,180
+This is our items Array
+right here, its count.
+
+481
+00:22:07,180 --> 00:22:10,620
+And I'm gonna skip the
+desired aspect ratio thing.
+
+482
+00:22:10,620 --> 00:22:13,260
+We'll just use whatever the default is.
+
+483
+00:22:13,260 --> 00:22:15,410
+Hopefully in your reading,
+you saw that you can have
+
+484
+00:22:15,410 --> 00:22:19,040
+default arguments for functions
+and GridLayout uses that.
+
+485
+00:22:19,040 --> 00:22:20,350
+But you do have to have the size,
+
+486
+00:22:20,350 --> 00:22:24,057
+and this is of course going
+to be in geometry.size.
+
+487
+00:22:24,057 --> 00:22:26,310
+And we're still inside
+of GeometryReader here
+
+488
+00:22:26,310 --> 00:22:29,130
+so this items is gonna
+have to be self.items.
+
+489
+00:22:29,130 --> 00:22:31,103
+It's an instance variable there.
+
+490
+00:22:32,220 --> 00:22:33,520
+So, I've changed this body(for).
+
+491
+00:22:33,520 --> 00:22:37,963
+Instead of body for size, it's
+now our body for the layout.
+
+492
+00:22:39,450 --> 00:22:40,773
+GridLayout here.
+
+493
+00:22:42,080 --> 00:22:44,680
+And same thing, I'm gonna
+have to pass this on through,
+
+494
+00:22:44,680 --> 00:22:46,830
+so this is now body(for:
+item, in: layout).
+
+495
+00:22:49,383 --> 00:22:52,590
+So that makes this a layout as well,
+
+496
+00:22:52,590 --> 00:22:54,453
+passing it on down along the line.
+
+497
+00:22:56,140 --> 00:22:58,460
+And now we're in here,
+we've got this layout,
+
+498
+00:22:58,460 --> 00:23:01,970
+and we've laid it out with the
+number of Items in our size.
+
+499
+00:23:01,970 --> 00:23:06,660
+So we can easily do things like
+offer space to these Views,
+
+500
+00:23:06,660 --> 00:23:08,470
+which we do with frame.
+
+501
+00:23:08,470 --> 00:23:10,270
+So we're gonna say frame's width
+
+502
+00:23:10,270 --> 00:23:13,600
+is the layout's itemSize.width,
+
+503
+00:23:13,600 --> 00:23:18,133
+and the frame's height is
+the layout.itemSize.height.
+
+504
+00:23:18,133 --> 00:23:21,490
+We're gonna offer the same little subspace
+
+505
+00:23:21,490 --> 00:23:25,330
+of our space to each of the items.
+
+506
+00:23:25,330 --> 00:23:28,680
+That's what itemSize in GridLayout does.
+
+507
+00:23:28,680 --> 00:23:31,570
+Again, GridLayout was
+created with this many items
+
+508
+00:23:31,570 --> 00:23:33,440
+in the size that was offered to us.
+
+509
+00:23:33,440 --> 00:23:35,510
+That's how we divided it up.
+
+510
+00:23:35,510 --> 00:23:37,860
+And then we have to position the View,
+
+511
+00:23:37,860 --> 00:23:39,410
+so we do that with position.
+
+512
+00:23:39,410 --> 00:23:41,380
+That's the function we do it with.
+
+513
+00:23:41,380 --> 00:23:45,570
+And we're gonna position
+it at the layout's location
+
+514
+00:23:45,570 --> 00:23:48,000
+ofItemAt index.
+
+515
+00:23:48,000 --> 00:23:51,630
+So this is indexed, just like
+we had with our Cards in fact.
+
+516
+00:23:51,630 --> 00:23:55,230
+So we have to find the index of this Item
+
+517
+00:23:55,230 --> 00:23:57,173
+in our Item Array.
+
+518
+00:23:58,040 --> 00:23:59,460
+No problem, we kinda know how to do that.
+
+519
+00:23:59,460 --> 00:24:01,850
+We'll say let index equal,
+
+520
+00:24:01,850 --> 00:24:03,690
+mm, I know how to do this.
+
+521
+00:24:03,690 --> 00:24:08,620
+I'm gonna create a function
+on my self index of this Item.
+
+522
+00:24:09,460 --> 00:24:12,777
+And I'm gonna go down here
+and say func index (of item).
+
+523
+00:24:14,541 --> 00:24:18,320
+And it's gonna return an
+Int, an index into the Array.
+
+524
+00:24:18,320 --> 00:24:20,570
+We'll return zero here first,
+
+525
+00:24:20,570 --> 00:24:23,340
+and then we'll fill it out in a second.
+
+526
+00:24:23,340 --> 00:24:25,780
+Now, this is gonna confuse
+Swift again a little bit
+
+527
+00:24:25,780 --> 00:24:28,080
+'cause you've got index,
+this local variable,
+
+528
+00:24:28,080 --> 00:24:30,640
+and then index, this function.
+
+529
+00:24:30,640 --> 00:24:34,260
+So, we can fix that
+again, same way, self-dot.
+
+530
+00:24:34,260 --> 00:24:37,710
+Now it knows this index is the function,
+
+531
+00:24:37,710 --> 00:24:40,890
+and this index is a local
+variable we're creating.
+
+532
+00:24:40,890 --> 00:24:43,000
+So, we do actually use self-dot.
+
+533
+00:24:43,000 --> 00:24:46,870
+Even once they make that
+change with the value type
+
+534
+00:24:46,870 --> 00:24:49,350
+self-dots not being flagged like that,
+
+535
+00:24:49,350 --> 00:24:51,600
+we still sometimes wanna use self-dot
+
+536
+00:24:51,600 --> 00:24:56,410
+to define the difference between
+something that's a property
+
+537
+00:24:56,410 --> 00:24:58,480
+or a function versus a local variable
+
+538
+00:24:58,480 --> 00:25:00,173
+or a parameter to the function.
+
+539
+00:25:01,660 --> 00:25:04,410
+All right, in index here, how
+are we gonna find this Item
+
+540
+00:25:04,410 --> 00:25:05,243
+in the Array?
+
+541
+00:25:05,243 --> 00:25:06,270
+Well, guess what?
+
+542
+00:25:06,270 --> 00:25:09,000
+These Items are Identifiable.
+
+543
+00:25:09,000 --> 00:25:10,387
+And probably some of you are like,
+
+544
+00:25:10,387 --> 00:25:12,530
+"Hmm, this seems awfully familiar."
+
+545
+00:25:12,530 --> 00:25:15,160
+Well yeah, we're gonna do for index
+
+546
+00:25:15,160 --> 00:25:19,470
+in zero dot dot less than items.count
+
+547
+00:25:19,470 --> 00:25:20,540
+that we have.
+
+548
+00:25:20,540 --> 00:25:24,590
+And if the items at that [index].id
+
+549
+00:25:24,590 --> 00:25:27,590
+equals this Item's id,
+
+550
+00:25:27,590 --> 00:25:30,985
+then we're going to return that index.
+
+551
+00:25:30,985 --> 00:25:33,120
+Otherwise we're gonna return zero,
+
+552
+00:25:33,120 --> 00:25:38,120
+which is just as bogus as it
+was the last time we did this.
+
+553
+00:25:38,320 --> 00:25:41,900
+Okay now, this function
+is kinda double bogus.
+
+554
+00:25:41,900 --> 00:25:44,850
+It's bogus in that we're
+still doing this return zero.
+
+555
+00:25:44,850 --> 00:25:47,060
+In other words, if we can't find the item
+
+556
+00:25:47,060 --> 00:25:50,070
+in our items, well, we'll
+just return the first item,
+
+557
+00:25:50,070 --> 00:25:51,387
+index zero right there.
+
+558
+00:25:51,387 --> 00:25:52,800
+That's bogus.
+
+559
+00:25:52,800 --> 00:25:56,220
+But what's also bogus is that
+this code is exactly the same,
+
+560
+00:25:56,220 --> 00:26:01,220
+yes, as this code over here in our Model.
+
+561
+00:26:01,520 --> 00:26:03,770
+So, man, you'd never wanna write
+
+562
+00:26:03,770 --> 00:26:06,160
+the exact same code like this twice.
+
+563
+00:26:06,160 --> 00:26:09,400
+That is just terrible programming.
+
+564
+00:26:09,400 --> 00:26:11,850
+Well, we're gonna fix that in a minute.
+
+565
+00:26:11,850 --> 00:26:13,820
+But first let's just
+see if our Grid works.
+
+566
+00:26:13,820 --> 00:26:16,200
+Believe it or not, this is
+all we need for our Grid.
+
+567
+00:26:16,200 --> 00:26:17,033
+There's nothing else.
+
+568
+00:26:17,033 --> 00:26:19,390
+So we get the space that's offered to us.
+
+569
+00:26:19,390 --> 00:26:21,640
+We use this GridLayout to divide it up,
+
+570
+00:26:21,640 --> 00:26:25,800
+and then we offer it to our
+little sub-Views in there,
+
+571
+00:26:25,800 --> 00:26:28,370
+and then we position
+them at those locations
+
+572
+00:26:28,370 --> 00:26:29,871
+in the GridLayout.
+
+573
+00:26:29,871 --> 00:26:33,000
+That's all that's required,
+so let's take a run here.
+
+574
+00:26:33,000 --> 00:26:34,023
+See if it worked.
+
+575
+00:26:35,478 --> 00:26:36,450
+Ah, and it did.
+
+576
+00:26:36,450 --> 00:26:39,410
+Look at that, there's our six
+cards not in a row anymore.
+
+577
+00:26:39,410 --> 00:26:43,190
+Let's go landscape, and
+look, it resized the cards
+
+578
+00:26:43,190 --> 00:26:44,600
+to fit the space better.
+
+579
+00:26:44,600 --> 00:26:46,700
+Now, I would like a little bit of padding
+
+580
+00:26:46,700 --> 00:26:50,000
+between the cards, but
+that's a matter back here
+
+581
+00:26:50,000 --> 00:26:52,040
+of when we create our CardViews,
+
+582
+00:26:52,040 --> 00:26:55,460
+we can just put a little padding on there.
+
+583
+00:26:55,460 --> 00:26:57,990
+If we put some padding
+around these CardViews
+
+584
+00:26:57,990 --> 00:27:00,790
+inside of our Grid,
+huh, we get the padding.
+
+585
+00:27:00,790 --> 00:27:01,900
+Huh, works great.
+
+586
+00:27:01,900 --> 00:27:03,670
+Maybe we don't want quite so much padding.
+
+587
+00:27:03,670 --> 00:27:06,840
+Maybe we just want padding of five.
+
+588
+00:27:06,840 --> 00:27:07,743
+Run that.
+
+589
+00:27:10,179 --> 00:27:11,829
+Huh, that looks pretty darn good.
+
+590
+00:27:12,970 --> 00:27:15,820
+Okay well, now that our Grid is working,
+
+591
+00:27:15,820 --> 00:27:19,110
+let's go and fix the bogus
+code that we have right here,
+
+592
+00:27:19,110 --> 00:27:21,510
+which is this index of item.
+
+593
+00:27:21,510 --> 00:27:23,460
+And it's bogus 'cause
+this totally replicates
+
+594
+00:27:23,460 --> 00:27:24,810
+this other thing.
+
+595
+00:27:24,810 --> 00:27:26,933
+Let's think a little bit
+about what's going on here.
+
+596
+00:27:26,933 --> 00:27:30,810
+What're we actually asking,
+in both cases, to happen?
+
+597
+00:27:30,810 --> 00:27:34,660
+We have an Array of things
+that are Identifiable,
+
+598
+00:27:34,660 --> 00:27:38,010
+and we have one of
+those things, hopefully.
+
+599
+00:27:38,010 --> 00:27:40,500
+We know it's Identifiable as well.
+
+600
+00:27:40,500 --> 00:27:42,870
+And we want to look and
+see if we can find it.
+
+601
+00:27:42,870 --> 00:27:46,823
+So, that sounds to be
+more like an Array thing.
+
+602
+00:27:48,630 --> 00:27:51,460
+Let's add a function to
+Array that does this.
+
+603
+00:27:51,460 --> 00:27:53,123
+Extension Array.
+
+604
+00:27:54,190 --> 00:27:59,190
+But only to Arrays where
+the elements in the Array
+
+605
+00:27:59,730 --> 00:28:01,390
+are Identifiable.
+
+606
+00:28:01,390 --> 00:28:03,873
+So there it is again,
+constrains and gains.
+
+607
+00:28:04,890 --> 00:28:07,930
+This extension only is
+going to add this function
+
+608
+00:28:07,930 --> 00:28:10,483
+that we wanna add to those kind of Arrays.
+
+609
+00:28:11,380 --> 00:28:12,700
+And so, it's the same function.
+
+610
+00:28:12,700 --> 00:28:14,250
+In fact, I'm just gonna copy and paste
+
+611
+00:28:14,250 --> 00:28:16,820
+and we'll modify this,
+or even cut and paste.
+
+612
+00:28:16,820 --> 00:28:18,073
+Cut that outta there.
+
+613
+00:28:19,180 --> 00:28:20,370
+Paste this in here.
+
+614
+00:28:20,370 --> 00:28:21,740
+It's not quite the same in here
+
+615
+00:28:21,740 --> 00:28:23,883
+because here we were looking at items.
+
+616
+00:28:24,780 --> 00:28:27,420
+Obviously this is an Array function,
+
+617
+00:28:27,420 --> 00:28:29,790
+so now items is self.
+
+618
+00:28:29,790 --> 00:28:30,910
+And same thing here.
+
+619
+00:28:30,910 --> 00:28:32,320
+It's not the items' count.
+
+620
+00:28:32,320 --> 00:28:34,163
+It's self's count.
+
+621
+00:28:35,312 --> 00:28:39,470
+And the type of this item,
+index of item, it's not Item.
+
+622
+00:28:39,470 --> 00:28:42,540
+It's Element 'cause
+that's what we're looking
+
+623
+00:28:42,540 --> 00:28:43,373
+at an Array of.
+
+624
+00:28:43,373 --> 00:28:46,170
+We have an Array whose
+elements are all Identifiable
+
+625
+00:28:46,170 --> 00:28:48,630
+and what we're saying
+here is get the index
+
+626
+00:28:48,630 --> 00:28:52,010
+of one of the elements of
+this Array that's Identifiable
+
+627
+00:28:52,010 --> 00:28:52,973
+by looking it up.
+
+628
+00:28:54,270 --> 00:28:57,410
+Now, this is correct and
+this does the right thing,
+
+629
+00:28:57,410 --> 00:29:01,330
+but I actually don't like the
+naming that I've chosen here.
+
+630
+00:29:01,330 --> 00:29:03,980
+One thing about this is
+it doesn't actually return
+
+631
+00:29:03,980 --> 00:29:06,310
+the index of this item.
+
+632
+00:29:06,310 --> 00:29:10,120
+It returns the first one that it finds.
+
+633
+00:29:10,120 --> 00:29:12,870
+Going through the Array from zero on up,
+
+634
+00:29:12,870 --> 00:29:15,280
+and when it finds one, it returns it.
+
+635
+00:29:15,280 --> 00:29:19,743
+So this is really the
+first index of this item.
+
+636
+00:29:20,780 --> 00:29:22,860
+I also don't like the word item.
+
+637
+00:29:22,860 --> 00:29:25,230
+Item makes sense up here in Grid
+
+638
+00:29:25,230 --> 00:29:26,260
+because we have Item.
+
+639
+00:29:26,260 --> 00:29:28,140
+The word "item" is all over the place.
+
+640
+00:29:28,140 --> 00:29:31,690
+But really in Array, Item is not a thing.
+
+641
+00:29:31,690 --> 00:29:34,270
+There's Element, but there's no Item.
+
+642
+00:29:34,270 --> 00:29:37,470
+And really what this is is the first index
+
+643
+00:29:37,470 --> 00:29:40,220
+matching that Element.
+
+644
+00:29:40,220 --> 00:29:44,370
+So I'm gonna use firstIndex
+matching as my name.
+
+645
+00:29:44,370 --> 00:29:47,100
+This feels more like an Array function,
+
+646
+00:29:47,100 --> 00:29:49,103
+firstIndex matching this Element.
+
+647
+00:29:50,100 --> 00:29:52,080
+So, how do we use that up here?
+
+648
+00:29:52,080 --> 00:29:53,730
+Instead of self.index of,
+
+649
+00:29:53,730 --> 00:29:57,290
+we're just gonna say items, the Array,
+
+650
+00:29:57,290 --> 00:30:02,290
+dot firstIndex matching the Item.
+
+651
+00:30:03,720 --> 00:30:06,150
+So we're asking the Array to do this now,
+
+652
+00:30:06,150 --> 00:30:09,290
+to go find the first
+index matching this item.
+
+653
+00:30:09,290 --> 00:30:11,610
+And we can do exactly
+the same thing over here.
+
+654
+00:30:11,610 --> 00:30:14,260
+We no longer even need this function.
+
+655
+00:30:14,260 --> 00:30:17,740
+We get it outta here because
+we know that our Cards Array
+
+656
+00:30:17,740 --> 00:30:22,740
+right here can do firstIndex
+matching the Card.
+
+657
+00:30:26,000 --> 00:30:27,700
+So we are reusing this code.
+
+658
+00:30:27,700 --> 00:30:31,030
+And look how small our Model has become.
+
+659
+00:30:31,030 --> 00:30:33,307
+It's tiny, it's hardly any code in here.
+
+660
+00:30:33,307 --> 00:30:35,670
+And some of that is because
+we've just made Array
+
+661
+00:30:35,670 --> 00:30:38,140
+more powerful to look this thing up.
+
+662
+00:30:38,140 --> 00:30:39,380
+Same thing with Grid.
+
+663
+00:30:39,380 --> 00:30:42,180
+Grid's very small amount of code
+
+664
+00:30:42,180 --> 00:30:44,580
+because we're leveraging this Array.
+
+665
+00:30:44,580 --> 00:30:47,320
+Now, this Array thing has
+nothing to do with Grid,
+
+666
+00:30:47,320 --> 00:30:50,040
+so it does not belong here in Grid.swift.
+
+667
+00:30:50,040 --> 00:30:53,410
+So I'm going to cut it out Grid.swift.
+
+668
+00:30:53,410 --> 00:30:56,803
+And I'm gonna put it in its own file.
+
+669
+00:30:58,150 --> 00:30:59,550
+It's not a SwiftUI View.
+
+670
+00:30:59,550 --> 00:31:01,360
+It's just a regular Swift file.
+
+671
+00:31:01,360 --> 00:31:04,140
+Now when we do extensions like this,
+
+672
+00:31:04,140 --> 00:31:08,010
+we usually call the file Array,
+the thing we're extending,
+
+673
+00:31:08,010 --> 00:31:10,500
+plus some sort of descriptor
+
+674
+00:31:10,500 --> 00:31:12,210
+of what kind of thing this is.
+
+675
+00:31:12,210 --> 00:31:16,080
+And so, this is kind of Identifiable,
+
+676
+00:31:16,080 --> 00:31:17,963
+Array+Identifiable.
+
+677
+00:31:19,220 --> 00:31:20,540
+So let's go in here.
+
+678
+00:31:20,540 --> 00:31:21,610
+There it is.
+
+679
+00:31:21,610 --> 00:31:22,730
+Paste it in.
+
+680
+00:31:22,730 --> 00:31:26,720
+Notice that this is import Foundation,
+
+681
+00:31:26,720 --> 00:31:28,200
+which is perfectly fine.
+
+682
+00:31:28,200 --> 00:31:29,033
+This is not a UI thing.
+
+683
+00:31:29,033 --> 00:31:32,510
+This is purely Arrays and Identifiables.
+
+684
+00:31:32,510 --> 00:31:34,193
+None of those are UI things.
+
+685
+00:31:35,500 --> 00:31:37,360
+So we go back to Grid.
+
+686
+00:31:37,360 --> 00:31:40,437
+Do build here so it notices
+this all this stuff.
+
+687
+00:31:40,437 --> 00:31:44,830
+And make sure that our Model
+also is working, and it is.
+
+688
+00:31:44,830 --> 00:31:47,480
+No errors, in fact, no
+errors in our whole program.
+
+689
+00:31:47,480 --> 00:31:50,863
+Let's run, make sure that our
+Array is doing it, and it is.
+
+690
+00:31:53,770 --> 00:31:58,020
+All right, so once again, we
+are using this whole concept
+
+691
+00:31:58,020 --> 00:31:59,280
+of constrains and gains.
+
+692
+00:31:59,280 --> 00:32:04,060
+Here we are constraining the
+don't-care type of the Array
+
+693
+00:32:04,060 --> 00:32:05,500
+so that they're Identifiable,
+
+694
+00:32:05,500 --> 00:32:07,970
+and that allows us to gain this function.
+
+695
+00:32:07,970 --> 00:32:11,640
+For all Arrays where elements
+are identified they get this.
+
+696
+00:32:11,640 --> 00:32:15,060
+No Arrays that don't have
+Identifiable elements,
+
+697
+00:32:15,060 --> 00:32:17,223
+they don't even see this function.
+
+698
+00:32:17,223 --> 00:32:19,310
+Wouldn't even escape complete in Xcode.
+
+699
+00:32:19,310 --> 00:32:20,313
+It's not even there.
+
+700
+00:32:21,740 --> 00:32:22,650
+And we're doing the same thing
+
+701
+00:32:22,650 --> 00:32:24,280
+with constrains and gains here
+
+702
+00:32:24,280 --> 00:32:27,100
+to make it so that our
+Grid is always a Grid
+
+703
+00:32:27,100 --> 00:32:31,670
+of Identifiable things, matching
+two things that are Views.
+
+704
+00:32:31,670 --> 00:32:33,100
+That is it for this demo.
+
+705
+00:32:33,100 --> 00:32:35,860
+So I'm gonna go back to the slides,
+
+706
+00:32:35,860 --> 00:32:37,930
+and we're gonna fix this.
+
+707
+00:32:37,930 --> 00:32:40,700
+And we need the type in Swift
+called Optional to do this,
+
+708
+00:32:40,700 --> 00:32:43,540
+a very, very important
+type, which is an enum.
+
+709
+00:32:43,540 --> 00:32:46,060
+So let's do a quick
+review of what enums are,
+
+710
+00:32:46,060 --> 00:32:47,360
+and then we'll talk about
+
+711
+00:32:47,360 --> 00:32:49,785
+this very important type, Optional.
+
+712
+00:32:49,785 --> 00:32:53,250
+Enums are just another
+type like struct or class,
+
+713
+00:32:53,250 --> 00:32:57,320
+but in the case of an enum,
+the value is discrete.
+
+714
+00:32:57,320 --> 00:33:01,120
+Good example here, FastFoodMenuItem
+is either a hamburger
+
+715
+00:33:01,120 --> 00:33:03,350
+or it's fries or it's a
+drink or it's a cookie.
+
+716
+00:33:03,350 --> 00:33:04,260
+It can't be anything else.
+
+717
+00:33:04,260 --> 00:33:05,900
+Gotta be one of those four things.
+
+718
+00:33:05,900 --> 00:33:07,480
+That's the only things on the menu,
+
+719
+00:33:07,480 --> 00:33:10,683
+and it has to be one and
+only one of those things.
+
+720
+00:33:11,900 --> 00:33:15,350
+Enum, like a struct, is a value type.
+
+721
+00:33:15,350 --> 00:33:17,290
+Gets copied as you pass it around.
+
+722
+00:33:17,290 --> 00:33:18,400
+It does not live in the heap.
+
+723
+00:33:18,400 --> 00:33:19,970
+There's no pointers to it.
+
+724
+00:33:19,970 --> 00:33:21,253
+It's a value type.
+
+725
+00:33:22,410 --> 00:33:25,690
+Now what's cool about enums in Swift,
+
+726
+00:33:25,690 --> 00:33:27,840
+unlike most other languages,
+
+727
+00:33:27,840 --> 00:33:30,240
+is that each of the discrete values
+
+728
+00:33:30,240 --> 00:33:32,267
+can have some associated data with it
+
+729
+00:33:32,267 --> 00:33:35,840
+that's very specific to that
+particular discrete value.
+
+730
+00:33:35,840 --> 00:33:39,570
+For example, we have hamburger here.
+
+731
+00:33:39,570 --> 00:33:41,670
+And if the FastFoodMenuItem's a hamburger,
+
+732
+00:33:41,670 --> 00:33:43,380
+we're gonna say how many patties?
+
+733
+00:33:43,380 --> 00:33:46,360
+Is this a double or a triple or single?
+
+734
+00:33:46,360 --> 00:33:49,910
+If it's fries, is this a
+large fry, small fries?
+
+735
+00:33:49,910 --> 00:33:54,110
+If it's a drink, you'll see
+there, you have this drink,
+
+736
+00:33:54,110 --> 00:33:57,080
+which is Coke or Dr. Pepper or whatever.
+
+737
+00:33:57,080 --> 00:33:59,100
+Notice that that String
+is unnamed right there,
+
+738
+00:33:59,100 --> 00:34:01,680
+so these things don't have to have names.
+
+739
+00:34:01,680 --> 00:34:04,980
+This yellow syntax that you're seeing here
+
+740
+00:34:04,980 --> 00:34:07,990
+probably, hopefully, looks
+familiar from your reading.
+
+741
+00:34:07,990 --> 00:34:09,703
+This is just a tuple.
+
+742
+00:34:11,060 --> 00:34:15,190
+So all the rules of tuples
+which allow you to have labels
+
+743
+00:34:15,190 --> 00:34:18,600
+or not labels, and have as
+many items as you want here,
+
+744
+00:34:18,600 --> 00:34:20,440
+all perfectly valid
+
+745
+00:34:20,440 --> 00:34:23,023
+as the associated data values right here.
+
+746
+00:34:25,170 --> 00:34:28,040
+So how do you set the value of an enum?
+
+747
+00:34:28,040 --> 00:34:29,550
+It's very simple.
+
+748
+00:34:29,550 --> 00:34:31,970
+You just say the name of the enum,
+
+749
+00:34:31,970 --> 00:34:35,750
+like FastFoodMenuItem,
+dot, the discrete value,
+
+750
+00:34:35,750 --> 00:34:38,830
+hamburger or cookie, like here.
+
+751
+00:34:38,830 --> 00:34:41,890
+Now of course, in the case
+where there's associated data,
+
+752
+00:34:41,890 --> 00:34:44,630
+you have to provide that associated data.
+
+753
+00:34:44,630 --> 00:34:47,566
+Hamburger(patties: 2) in this case.
+
+754
+00:34:47,566 --> 00:34:51,233
+There's no way for it
+to create a hamburger
+
+755
+00:34:51,233 --> 00:34:53,220
+if it doesn't know how
+many patties there are.
+
+756
+00:34:54,160 --> 00:34:56,230
+Now Swift can do type inference here
+
+757
+00:34:56,230 --> 00:34:58,750
+so that you don't have
+to type FastFoodMenuItem
+
+758
+00:34:58,750 --> 00:35:01,130
+on both sides of this equals.
+
+759
+00:35:01,130 --> 00:35:02,670
+But you have to be a little bit careful.
+
+760
+00:35:02,670 --> 00:35:04,770
+You have to put it on
+one side of the equals
+
+761
+00:35:04,770 --> 00:35:06,560
+because in the case if you just say
+
+762
+00:35:06,560 --> 00:35:09,030
+var yetAnotherItem equals cookie,
+
+763
+00:35:09,030 --> 00:35:10,950
+Swift does not have enough information
+
+764
+00:35:10,950 --> 00:35:14,030
+to infer that we're talking
+about fast food menu items here.
+
+765
+00:35:14,030 --> 00:35:16,355
+It could be anything that has a cookie.
+
+766
+00:35:16,355 --> 00:35:20,210
+So you have to, somewhere,
+FastFoodMenuItem has to appear
+
+767
+00:35:20,210 --> 00:35:22,123
+so that Swift can infer.
+
+768
+00:35:23,660 --> 00:35:25,760
+How do we check the value?
+
+769
+00:35:25,760 --> 00:35:27,830
+You might think it would be like an if.
+
+770
+00:35:27,830 --> 00:35:30,943
+You know, if this menu
+item equals a hamburger,
+
+771
+00:35:30,943 --> 00:35:32,250
+then do something.
+
+772
+00:35:32,250 --> 00:35:33,710
+But we don't use if with enum.
+
+773
+00:35:33,710 --> 00:35:36,510
+We use this expression switch.
+
+774
+00:35:36,510 --> 00:35:38,600
+Now switch exists in other languages.
+
+775
+00:35:38,600 --> 00:35:40,230
+It's very powerful in Swift,
+
+776
+00:35:40,230 --> 00:35:43,410
+not only for checking enums
+as you're going to see,
+
+777
+00:35:43,410 --> 00:35:45,170
+but it has regular expression matching
+
+778
+00:35:45,170 --> 00:35:46,003
+and all kinds of stuff.
+
+779
+00:35:46,003 --> 00:35:48,310
+Again, you read about that hopefully
+
+780
+00:35:48,310 --> 00:35:49,683
+in your reading assignment.
+
+781
+00:35:50,960 --> 00:35:53,670
+So if I wanna check
+what value menuItem has,
+
+782
+00:35:53,670 --> 00:35:55,100
+I'm gonna switch on menuItem,
+
+783
+00:35:55,100 --> 00:35:57,340
+and then have a case statement
+
+784
+00:35:57,340 --> 00:35:59,547
+for every single possible menuItem.
+
+785
+00:35:59,547 --> 00:36:02,860
+And it has to be every single one.
+
+786
+00:36:02,860 --> 00:36:05,350
+Now, I'm not paying any attention here
+
+787
+00:36:05,350 --> 00:36:08,850
+to the associated data, and I'm
+allowed to ignore that here.
+
+788
+00:36:08,850 --> 00:36:12,320
+I can still have case
+FastFoodMenuItem.hamburger
+
+789
+00:36:12,320 --> 00:36:13,950
+print the word burger.
+
+790
+00:36:13,950 --> 00:36:15,650
+I can't say how many patties it is
+
+791
+00:36:15,650 --> 00:36:17,720
+'cause I haven't looked
+at the associated data.
+
+792
+00:36:17,720 --> 00:36:19,080
+I'm gonna show you that in a second.
+
+793
+00:36:19,080 --> 00:36:21,773
+But I can still print
+burger if I want here.
+
+794
+00:36:23,350 --> 00:36:25,430
+Swift can infer, of course,
+
+795
+00:36:25,430 --> 00:36:27,090
+that these are all fast food menu items,
+
+796
+00:36:27,090 --> 00:36:28,050
+so you don't have to say
+
+797
+00:36:28,050 --> 00:36:31,390
+case FastFoodMenuItem.hamburger
+every time.
+
+798
+00:36:31,390 --> 00:36:32,970
+You can just switch on the menuItem.
+
+799
+00:36:32,970 --> 00:36:35,190
+Use .hamburger, .fries, .drink.
+
+800
+00:36:35,190 --> 00:36:38,473
+It knows menuItem is a
+FastFoodMenuItem in this case.
+
+801
+00:36:40,260 --> 00:36:42,430
+By the way, switch requires you to cover
+
+802
+00:36:42,430 --> 00:36:44,110
+every single possible case.
+
+803
+00:36:44,110 --> 00:36:46,310
+So you might have a case, like hamburger,
+
+804
+00:36:46,310 --> 00:36:47,180
+that you don't care about.
+
+805
+00:36:47,180 --> 00:36:49,450
+You don't wanna print out hamburger.
+
+806
+00:36:49,450 --> 00:36:51,380
+In that case, you can just say break.
+
+807
+00:36:51,380 --> 00:36:53,980
+So, break breaks out of the switch,
+
+808
+00:36:53,980 --> 00:36:57,120
+and saying case .hamburger
+break means it will do nothing
+
+809
+00:36:57,120 --> 00:37:00,000
+if the menu item is a hamburger.
+
+810
+00:37:00,000 --> 00:37:03,310
+Similarly, if you really only
+care about a couple of cases
+
+811
+00:37:03,310 --> 00:37:06,120
+and all the rest, you could
+just do some default behavior,
+
+812
+00:37:06,120 --> 00:37:08,790
+you can use the special keyword default.
+
+813
+00:37:08,790 --> 00:37:12,010
+So a default will happen
+if you didn't list
+
+814
+00:37:12,010 --> 00:37:13,890
+a specific case for something.
+
+815
+00:37:13,890 --> 00:37:15,050
+But you have to do one or the other.
+
+816
+00:37:15,050 --> 00:37:17,210
+Either you have to have all the cases
+
+817
+00:37:17,210 --> 00:37:19,470
+and the ones you don't care
+about you break out of,
+
+818
+00:37:19,470 --> 00:37:21,090
+or you can only have some of the cases,
+
+819
+00:37:21,090 --> 00:37:22,863
+but then you have to
+provide this default case.
+
+820
+00:37:22,863 --> 00:37:24,870
+It's required in switch in general.
+
+821
+00:37:24,870 --> 00:37:27,070
+Not just for enums, but always in Swift,
+
+822
+00:37:27,070 --> 00:37:29,850
+switches require complete
+and utter coverage
+
+823
+00:37:29,850 --> 00:37:31,273
+of all possibilities.
+
+824
+00:37:33,350 --> 00:37:35,150
+What about that associated data?
+
+825
+00:37:35,150 --> 00:37:37,280
+Well we can do that in switch as well.
+
+826
+00:37:37,280 --> 00:37:40,100
+We just add the stuff
+you're seeing in yellow here
+
+827
+00:37:40,100 --> 00:37:41,820
+where when we say case .hamburger,
+
+828
+00:37:41,820 --> 00:37:44,570
+we say parentheses, let pattyCount.
+
+829
+00:37:44,570 --> 00:37:47,380
+And that is going to grab the
+associated data with hamburger
+
+830
+00:37:47,380 --> 00:37:51,490
+and assign it to this little
+very local variable pattyCount
+
+831
+00:37:51,490 --> 00:37:54,070
+that's only going to be valid
+for this print statement
+
+832
+00:37:54,070 --> 00:37:57,130
+or whatever that's happening
+after this hamburger.
+
+833
+00:37:57,130 --> 00:37:59,060
+Same thing with the fries.
+
+834
+00:37:59,060 --> 00:38:01,350
+And for example, the drink is interesting.
+
+835
+00:38:01,350 --> 00:38:04,640
+So the drink is going to grab
+the brand and the ounces.
+
+836
+00:38:04,640 --> 00:38:08,320
+Notice that ounces used to have
+a label when I declared it,
+
+837
+00:38:08,320 --> 00:38:11,016
+but I didn't do that here and that's okay
+
+838
+00:38:11,016 --> 00:38:11,849
+because this is tuples.
+
+839
+00:38:11,849 --> 00:38:15,560
+Tuples you can use the labels
+if you want on both sides,
+
+840
+00:38:15,560 --> 00:38:16,880
+declaring and using it.
+
+841
+00:38:16,880 --> 00:38:20,060
+And so, this is the exact same
+thing that's going on here
+
+842
+00:38:20,060 --> 00:38:22,850
+where the associated
+value, you can grab it
+
+843
+00:38:22,850 --> 00:38:24,583
+however you want to grab it.
+
+844
+00:38:26,500 --> 00:38:28,600
+All right, let's see.
+
+845
+00:38:28,600 --> 00:38:32,730
+Methods, yes, you can
+have methods on enums.
+
+846
+00:38:32,730 --> 00:38:36,000
+It's pretty much unlimited,
+whatever you wanna do.
+
+847
+00:38:36,000 --> 00:38:39,350
+And properties, you can
+have computed properties,
+
+848
+00:38:39,350 --> 00:38:41,910
+but you can't have any stored properties.
+
+849
+00:38:41,910 --> 00:38:44,720
+All the storage that goes with an enum
+
+850
+00:38:44,720 --> 00:38:47,260
+is only in these associated values,
+
+851
+00:38:47,260 --> 00:38:50,200
+which kinda makes sense 'cause
+an enum is a discrete thing.
+
+852
+00:38:50,200 --> 00:38:52,900
+It really wouldn't make
+sense to have other data
+
+853
+00:38:52,900 --> 00:38:54,110
+that applies to all of them.
+
+854
+00:38:54,110 --> 00:38:55,410
+That wouldn't be discrete.
+
+855
+00:38:56,402 --> 00:38:58,993
+So, this is why you have to do this.
+
+856
+00:39:02,250 --> 00:39:03,170
+Switching on self.
+
+857
+00:39:03,170 --> 00:39:07,190
+All right so, if you have
+a function in your enum,
+
+858
+00:39:07,190 --> 00:39:09,870
+and it's supposed to
+essentially tell you something
+
+859
+00:39:09,870 --> 00:39:12,210
+about the enum, which is really common
+
+860
+00:39:12,210 --> 00:39:13,520
+to have these kind of functions.
+
+861
+00:39:13,520 --> 00:39:17,340
+Here I have this function
+isIncludedInSpecialOrder number,
+
+862
+00:39:17,340 --> 00:39:20,610
+which is gonna say whether
+this FastFoodMenuItem
+
+863
+00:39:20,610 --> 00:39:22,910
+is included in a certain special order.
+
+864
+00:39:22,910 --> 00:39:25,830
+And to do that, I'm gonna
+have to switch on myself
+
+865
+00:39:25,830 --> 00:39:28,470
+and see what I am, to see if I am included
+
+866
+00:39:28,470 --> 00:39:29,790
+in that special order.
+
+867
+00:39:29,790 --> 00:39:32,400
+So you can see I have a
+bunch of examples here.
+
+868
+00:39:32,400 --> 00:39:35,620
+One of these examples I wanna
+look at a little bit closer,
+
+869
+00:39:35,620 --> 00:39:37,610
+which is this drink example.
+
+870
+00:39:37,610 --> 00:39:41,480
+Notice that it's getting the
+associated value in the switch
+
+871
+00:39:41,480 --> 00:39:43,910
+for the ounces, but it's ignoring
+
+872
+00:39:43,910 --> 00:39:45,280
+whether it's a Coke or Dr. Pepper.
+
+873
+00:39:45,280 --> 00:39:46,490
+We don't care.
+
+874
+00:39:46,490 --> 00:39:48,570
+It doesn't matter in terms
+of whether it's included
+
+875
+00:39:48,570 --> 00:39:49,890
+in a special order.
+
+876
+00:39:49,890 --> 00:39:54,290
+So, this under-bar is the don't
+pay any attention to this,
+
+877
+00:39:54,290 --> 00:39:56,330
+I'm not interested, essentially.
+
+878
+00:39:56,330 --> 00:39:58,140
+Just like when we have a function,
+
+879
+00:39:58,140 --> 00:40:00,770
+it has parameters that have external names
+
+880
+00:40:00,770 --> 00:40:03,160
+and internal names, we
+use that under-bar to say
+
+881
+00:40:03,160 --> 00:40:05,610
+we're not interested in the
+external name, don't use it.
+
+882
+00:40:05,610 --> 00:40:07,290
+That's what this means here as well.
+
+883
+00:40:07,290 --> 00:40:10,740
+So this is how if you
+had some associated value
+
+884
+00:40:10,740 --> 00:40:12,260
+as a tuple that had multiple things,
+
+885
+00:40:12,260 --> 00:40:14,020
+you can just ignore some of them
+
+886
+00:40:14,020 --> 00:40:15,570
+when you're getting the values.
+
+887
+00:40:19,890 --> 00:40:22,140
+Enums can do constrains
+and gains with protocols
+
+888
+00:40:22,140 --> 00:40:24,320
+just like structs and classes can.
+
+889
+00:40:24,320 --> 00:40:27,120
+There's a very interesting
+protocol called CaseIterable.
+
+890
+00:40:28,180 --> 00:40:32,046
+CaseIterable, you gain
+a var called allCases.
+
+891
+00:40:32,046 --> 00:40:34,570
+It's static var, so you
+send it to the type,
+
+892
+00:40:34,570 --> 00:40:37,850
+like here, a TeslaModel.allCases
+you see there.
+
+893
+00:40:37,850 --> 00:40:42,490
+And it's just going to return
+to you an iterable thing,
+
+894
+00:40:42,490 --> 00:40:46,207
+something you can do for-in
+over of all the cases.
+
+895
+00:40:46,207 --> 00:40:47,730
+And that can be super valuable.
+
+896
+00:40:47,730 --> 00:40:50,090
+In your assignment three,
+it's likely that you're going
+
+897
+00:40:50,090 --> 00:40:51,980
+to need to use this.
+
+898
+00:40:51,980 --> 00:40:53,920
+Now that we know what an enum is,
+
+899
+00:40:53,920 --> 00:40:57,550
+we can talk about, probably,
+the most important enum
+
+900
+00:40:57,550 --> 00:41:02,333
+in all of Swift, which is called Optional.
+
+901
+00:41:03,870 --> 00:41:07,000
+So, an Optional looks
+essentially like this.
+
+902
+00:41:07,000 --> 00:41:09,870
+It's got two discrete values.
+
+903
+00:41:09,870 --> 00:41:14,760
+One is the case none,
+and one is the case some.
+
+904
+00:41:14,760 --> 00:41:17,900
+And in the some case,
+it has associated value,
+
+905
+00:41:17,900 --> 00:41:19,077
+which is a don't-care.
+
+906
+00:41:19,077 --> 00:41:21,590
+So, Optional, Optional
+just works with any type.
+
+907
+00:41:21,590 --> 00:41:24,570
+It doesn't care what type it is.
+
+908
+00:41:24,570 --> 00:41:26,620
+So essentially, Optional is either
+
+909
+00:41:26,620 --> 00:41:29,560
+is an is set case, that's some,
+
+910
+00:41:29,560 --> 00:41:33,100
+or the not set case, that's the none.
+
+911
+00:41:33,100 --> 00:41:34,890
+And that's what an Optional is.
+
+912
+00:41:34,890 --> 00:41:36,350
+Essentially a type.
+
+913
+00:41:36,350 --> 00:41:38,370
+You're gonna have
+variables of type Optional.
+
+914
+00:41:38,370 --> 00:41:40,450
+They're either gonna be set or not set.
+
+915
+00:41:40,450 --> 00:41:43,370
+And if they're set, they're
+gonna have associated value
+
+916
+00:41:43,370 --> 00:41:48,370
+of some type, which Optional
+doesn't care what type that is.
+
+917
+00:41:48,940 --> 00:41:50,070
+So where do we use Optional?
+
+918
+00:41:50,070 --> 00:41:53,090
+Well, you can imagine we use it any time
+
+919
+00:41:53,090 --> 00:41:55,460
+we have a variable whose value
+
+920
+00:41:55,460 --> 00:42:00,020
+could either be not set or
+unspecified or undetermined,
+
+921
+00:42:00,020 --> 00:42:01,403
+anything like that.
+
+922
+00:42:02,450 --> 00:42:03,320
+What're some examples?
+
+923
+00:42:03,320 --> 00:42:08,080
+Well, that bogus return
+type of firstIndex matching.
+
+924
+00:42:08,080 --> 00:42:10,270
+If the matching thing is not in the Array,
+
+925
+00:42:10,270 --> 00:42:12,280
+we're currently returning zero.
+
+926
+00:42:12,280 --> 00:42:13,840
+And that's the first element in the Array.
+
+927
+00:42:13,840 --> 00:42:15,040
+That's totally wrong.
+
+928
+00:42:15,040 --> 00:42:17,450
+So instead, we're gonna
+have firstIndex matching's
+
+929
+00:42:17,450 --> 00:42:19,460
+return type be Optional.
+
+930
+00:42:19,460 --> 00:42:24,040
+It'll be an Optional with the
+associated value being an Int.
+
+931
+00:42:24,040 --> 00:42:26,190
+And so it's either gonna
+return set or not set.
+
+932
+00:42:26,190 --> 00:42:29,190
+It's gonna return set if it was able
+
+933
+00:42:30,420 --> 00:42:32,430
+and the associated
+value will be the index.
+
+934
+00:42:32,430 --> 00:42:36,180
+Or it's gonna return not set,
+the none case right there,
+
+935
+00:42:36,180 --> 00:42:40,270
+if it couldn't find that
+matching thing in there.
+
+936
+00:42:40,270 --> 00:42:43,770
+Another good example
+just of a normal variable
+
+937
+00:42:43,770 --> 00:42:47,250
+would be, let's say in my
+matching game in the Model,
+
+938
+00:42:47,250 --> 00:42:49,340
+what if I had a variable which is like
+
+939
+00:42:49,340 --> 00:42:52,440
+the index of the currently face-up Card?
+
+940
+00:42:52,440 --> 00:42:55,530
+Okay well, when the game starts,
+there is no face-up Card.
+
+941
+00:42:55,530 --> 00:42:56,750
+So what would that index be?
+
+942
+00:42:56,750 --> 00:42:58,360
+It's like, it's not set.
+
+943
+00:42:58,360 --> 00:43:01,660
+So we're gonna use an
+Optional to store that.
+
+944
+00:43:01,660 --> 00:43:04,865
+That var is not gonna be
+of type Int for the index.
+
+945
+00:43:04,865 --> 00:43:06,570
+It's gonna be of type Optional.
+
+946
+00:43:06,570 --> 00:43:08,160
+Now the associated value will be an Int
+
+947
+00:43:08,160 --> 00:43:10,020
+because of course, if it is set,
+
+948
+00:43:10,020 --> 00:43:12,070
+we wanna know what that Int is.
+
+949
+00:43:12,070 --> 00:43:14,070
+There's a couple good
+examples which I'm gonna show
+
+950
+00:43:14,070 --> 00:43:15,653
+in the demo right after this.
+
+951
+00:43:17,020 --> 00:43:18,620
+So this happens surprisingly often
+
+952
+00:43:18,620 --> 00:43:22,990
+that you need some variable
+that sometimes is not set,
+
+953
+00:43:22,990 --> 00:43:24,350
+it's unspecified.
+
+954
+00:43:24,350 --> 00:43:27,173
+You wanna return a value
+that says I couldn't do this,
+
+955
+00:43:27,173 --> 00:43:28,850
+that kinda stuff.
+
+956
+00:43:28,850 --> 00:43:33,220
+So, Swift introduces a
+lot of syntactic sugar,
+
+957
+00:43:33,220 --> 00:43:37,280
+basically special syntax, to
+be able to make it really easy
+
+958
+00:43:37,280 --> 00:43:39,430
+to use Optional, so much
+so that you're gonna think
+
+959
+00:43:39,430 --> 00:43:42,990
+that Optionals are just some
+kind of magic type in Swift.
+
+960
+00:43:42,990 --> 00:43:45,150
+But underlying it all,
+it's just this enum.
+
+961
+00:43:45,150 --> 00:43:48,230
+There's really nothing
+more to it than that.
+
+962
+00:43:48,230 --> 00:43:51,500
+So let's take a look at
+all this syntactic sugar.
+
+963
+00:43:51,500 --> 00:43:55,660
+First one is how do we declare or to say
+
+964
+00:43:55,660 --> 00:43:57,220
+that we want this type?
+
+965
+00:43:57,220 --> 00:44:00,590
+So right here in yellow,
+you see that String?.
+
+966
+00:44:00,590 --> 00:44:04,140
+That is declaring that
+hello, this var hello,
+
+967
+00:44:04,140 --> 00:44:06,550
+is of type Optional,
+
+968
+00:44:06,550 --> 00:44:09,770
+an Optional whose associated
+value is a String.
+
+969
+00:44:09,770 --> 00:44:12,360
+We would call this an Optional String.
+
+970
+00:44:12,360 --> 00:44:14,580
+When students are first exposed to this,
+
+971
+00:44:14,580 --> 00:44:18,220
+they think that the type
+of hello is a String
+
+972
+00:44:18,220 --> 00:44:21,410
+that somehow is modified to be Optional.
+
+973
+00:44:21,410 --> 00:44:24,730
+No, the type of hello here is an Optional.
+
+974
+00:44:24,730 --> 00:44:27,560
+Its associated value is a
+String, but it's an Optional.
+
+975
+00:44:27,560 --> 00:44:29,120
+So that's how we declare it.
+
+976
+00:44:29,120 --> 00:44:32,010
+That is how we type the type,
+
+977
+00:44:32,010 --> 00:44:36,083
+how we type in with our fingers
+the type Optional String.
+
+978
+00:44:37,200 --> 00:44:38,880
+Now how about setting the value?
+
+979
+00:44:38,880 --> 00:44:41,480
+Well remember, an Optional
+String, it's an Optional.
+
+980
+00:44:41,480 --> 00:44:43,760
+It only has two cases, none and some.
+
+981
+00:44:43,760 --> 00:44:47,490
+So we set the none case
+by just saying equals nil.
+
+982
+00:44:47,490 --> 00:44:52,240
+So the keyword nil in
+Swift means Optional.none.
+
+983
+00:44:52,240 --> 00:44:55,983
+That means the not set
+case of an Optional is nil.
+
+984
+00:44:57,340 --> 00:45:00,320
+And similarly, we can say, hello,
+
+985
+00:45:00,320 --> 00:45:02,620
+this Optional String
+equals the String hello.
+
+986
+00:45:02,620 --> 00:45:04,860
+And Swift is smart enough
+to know that that means
+
+987
+00:45:04,860 --> 00:45:07,130
+set this Optional to the some case
+
+988
+00:45:07,130 --> 00:45:10,023
+and use hello as the associated value.
+
+989
+00:45:11,330 --> 00:45:14,500
+So that String, hello
+in this case, is set,
+
+990
+00:45:14,500 --> 00:45:17,923
+and its associated value is hello.
+
+991
+00:45:19,690 --> 00:45:23,150
+Note that Optionals always start
+
+992
+00:45:23,150 --> 00:45:25,920
+with an implicit equals nil.
+
+993
+00:45:25,920 --> 00:45:28,940
+This is nice because remember
+that in structs and classes,
+
+994
+00:45:28,940 --> 00:45:31,110
+all vars have to have an initial value.
+
+995
+00:45:31,110 --> 00:45:32,390
+We've jumped through a lot of hoops
+
+996
+00:45:32,390 --> 00:45:33,800
+to try and get all of our vars
+
+997
+00:45:33,800 --> 00:45:36,000
+to have initial values so far.
+
+998
+00:45:36,000 --> 00:45:38,220
+Well, Optional, no hoops to jump through
+
+999
+00:45:38,220 --> 00:45:40,470
+because it gets an implicit equals nil,
+
+1000
+00:45:40,470 --> 00:45:45,350
+or in the enum world,
+dot-none, for all vars.
+
+1001
+00:45:45,350 --> 00:45:47,720
+It makes sense, right, because
+you've got an Optional here.
+
+1002
+00:45:47,720 --> 00:45:48,870
+It's either set or not set.
+
+1003
+00:45:48,870 --> 00:45:50,890
+Well, it's gonna start out not set.
+
+1004
+00:45:50,890 --> 00:45:54,390
+You could initialize it to
+equals hello if you wanted to,
+
+1005
+00:45:54,390 --> 00:45:56,550
+but you can just leave it uninitialized,
+
+1006
+00:45:56,550 --> 00:45:58,070
+but it's not really uninitialized.
+
+1007
+00:45:58,070 --> 00:46:00,593
+It does get initialized to the none case.
+
+1008
+00:46:01,510 --> 00:46:03,270
+So how about accessing the values?
+
+1009
+00:46:03,270 --> 00:46:06,070
+So let's say I have a var like hello,
+
+1010
+00:46:06,070 --> 00:46:08,890
+and it's an Optional,
+Optional String let's say,
+
+1011
+00:46:08,890 --> 00:46:10,680
+and I want the String.
+
+1012
+00:46:10,680 --> 00:46:12,690
+How do I get the String?
+
+1013
+00:46:12,690 --> 00:46:14,010
+How do I get that associated value?
+
+1014
+00:46:14,010 --> 00:46:16,390
+Am I gonna have to do, like
+you see down here in the right,
+
+1015
+00:46:16,390 --> 00:46:18,530
+switch on it and then do case this?
+
+1016
+00:46:18,530 --> 00:46:19,670
+Of course not.
+
+1017
+00:46:19,670 --> 00:46:22,350
+There's a simple way to
+do that switch on it.
+
+1018
+00:46:22,350 --> 00:46:23,300
+Two ways, actually.
+
+1019
+00:46:23,300 --> 00:46:25,070
+One is exclamation point.
+
+1020
+00:46:25,070 --> 00:46:27,910
+If you put an exclamation
+point after a var
+
+1021
+00:46:27,910 --> 00:46:31,000
+that is an Optional, it will assume
+
+1022
+00:46:31,000 --> 00:46:33,500
+that it's in the some case, the set case,
+
+1023
+00:46:33,500 --> 00:46:35,650
+and get to you the associated value.
+
+1024
+00:46:35,650 --> 00:46:38,630
+But if you're not, it
+crashes your program.
+
+1025
+00:46:38,630 --> 00:46:40,820
+Exclamation point is
+truly, well we call it
+
+1026
+00:46:40,820 --> 00:46:44,130
+force unwrapping, because
+you're forcing that thing
+
+1027
+00:46:44,130 --> 00:46:45,950
+to be unwrapped and give me that String.
+
+1028
+00:46:45,950 --> 00:46:47,100
+But if that String's not there
+
+1029
+00:46:47,100 --> 00:46:49,010
+because the Optional's
+in the not set case,
+
+1030
+00:46:49,010 --> 00:46:50,437
+then it crashes your program.
+
+1031
+00:46:50,437 --> 00:46:51,980
+And we're gonna see in the demo,
+
+1032
+00:46:51,980 --> 00:46:54,249
+this sounds like, ah,
+I would never use this.
+
+1033
+00:46:54,249 --> 00:46:55,820
+I would never want my program to crash.
+
+1034
+00:46:55,820 --> 00:46:57,210
+But it can actually be quite useful
+
+1035
+00:46:57,210 --> 00:46:59,040
+in cases where you know
+this is never supposed
+
+1036
+00:46:59,040 --> 00:47:00,180
+to be the case.
+
+1037
+00:47:00,180 --> 00:47:03,550
+You can easily find bugs
+in development and all that
+
+1038
+00:47:03,550 --> 00:47:05,040
+by making the thing crash and say,
+
+1039
+00:47:05,040 --> 00:47:07,350
+"Wah, that should never have crashed."
+
+1040
+00:47:07,350 --> 00:47:09,930
+But there is a safe way to do it,
+
+1041
+00:47:09,930 --> 00:47:12,980
+and that's by assigning
+it to another variable,
+
+1042
+00:47:12,980 --> 00:47:14,090
+a safe variable.
+
+1043
+00:47:14,090 --> 00:47:16,040
+And you do that with if let.
+
+1044
+00:47:16,040 --> 00:47:18,320
+So you see in the lower left corner here,
+
+1045
+00:47:18,320 --> 00:47:21,140
+all the yellow is surrounding
+how you do the if let.
+
+1046
+00:47:21,140 --> 00:47:23,970
+You say, if let, some safe version,
+
+1047
+00:47:23,970 --> 00:47:27,170
+equals the Optional, hello is an Optional,
+
+1048
+00:47:27,170 --> 00:47:31,160
+then that safehello is
+going to be of type String.
+
+1049
+00:47:31,160 --> 00:47:34,020
+It's going to get the
+value if the Optional
+
+1050
+00:47:34,020 --> 00:47:35,260
+is in the some case.
+
+1051
+00:47:35,260 --> 00:47:37,610
+And then inside the
+curly braces after there,
+
+1052
+00:47:37,610 --> 00:47:39,870
+if let safehello equals open curly brace,
+
+1053
+00:47:39,870 --> 00:47:43,090
+in that curly brace,
+safehello will exist in there,
+
+1054
+00:47:43,090 --> 00:47:44,580
+and it will be a String.
+
+1055
+00:47:44,580 --> 00:47:45,667
+Not an Optional.
+
+1056
+00:47:45,667 --> 00:47:50,250
+It's grabbed the associated
+value out of the Optional safely
+
+1057
+00:47:50,250 --> 00:47:51,320
+and is executing.
+
+1058
+00:47:51,320 --> 00:47:54,430
+Now, if that hello were
+in the not set case,
+
+1059
+00:47:54,430 --> 00:47:56,890
+then it just wouldn't
+even execute that code
+
+1060
+00:47:56,890 --> 00:47:58,466
+that says print(safehello).
+
+1061
+00:47:58,466 --> 00:47:59,600
+Wouldn't even be executed.
+
+1062
+00:47:59,600 --> 00:48:02,690
+It would do the do
+something else down there.
+
+1063
+00:48:02,690 --> 00:48:05,370
+That's like, on the right
+there, the lower right,
+
+1064
+00:48:05,370 --> 00:48:06,600
+switching on hello.
+
+1065
+00:48:06,600 --> 00:48:08,870
+And in the case that
+it's in the not set case,
+
+1066
+00:48:08,870 --> 00:48:11,520
+you're gonna do that
+something else that's an else.
+
+1067
+00:48:11,520 --> 00:48:13,000
+Otherwise, if it's in the some case,
+
+1068
+00:48:13,000 --> 00:48:15,360
+then you're just going to
+get the String outta there
+
+1069
+00:48:15,360 --> 00:48:17,963
+and do the print(safehello) in there.
+
+1070
+00:48:18,920 --> 00:48:22,260
+So that's how we get the
+value, the syntactic sugar
+
+1071
+00:48:22,260 --> 00:48:23,790
+for getting the value of an Optional.
+
+1072
+00:48:23,790 --> 00:48:25,510
+Either forcibly grabbing it out of there
+
+1073
+00:48:25,510 --> 00:48:27,180
+and crashing if we can't find it,
+
+1074
+00:48:27,180 --> 00:48:30,170
+or doing if let to a safe variable,
+
+1075
+00:48:30,170 --> 00:48:31,683
+a safe landing spot for it.
+
+1076
+00:48:32,610 --> 00:48:34,670
+Another cool little syntactic sugar
+
+1077
+00:48:34,670 --> 00:48:36,780
+is the Optional defaulting.
+
+1078
+00:48:36,780 --> 00:48:40,900
+So, this allows you to really
+simply provide a default
+
+1079
+00:48:40,900 --> 00:48:43,300
+when you're accessing an Optional
+
+1080
+00:48:43,300 --> 00:48:45,677
+in case that Optional
+is in the not set case,
+
+1081
+00:48:45,677 --> 00:48:47,630
+and so it's equal to nil.
+
+1082
+00:48:47,630 --> 00:48:50,610
+Here I have a little constant called x
+
+1083
+00:48:50,610 --> 00:48:54,570
+which is of type Optional
+String, Optional String.
+
+1084
+00:48:54,570 --> 00:48:56,040
+And I may have set it to something.
+
+1085
+00:48:56,040 --> 00:48:58,780
+Maybe I set it to nil, maybe
+I set it to have something.
+
+1086
+00:48:58,780 --> 00:49:02,830
+But now I'm saying let y equal x.
+
+1087
+00:49:02,830 --> 00:49:05,720
+But if x is nil, use foo.
+
+1088
+00:49:05,720 --> 00:49:07,340
+That's what that question
+mark-question mark
+
+1089
+00:49:07,340 --> 00:49:08,410
+means right there.
+
+1090
+00:49:08,410 --> 00:49:12,030
+So, y is always going to be,
+in this case, of type String.
+
+1091
+00:49:12,030 --> 00:49:15,667
+Because if x, which is an
+Optional, is in the set case
+
+1092
+00:49:15,667 --> 00:49:18,850
+and it has an associated
+value, y is gonna get it.
+
+1093
+00:49:18,850 --> 00:49:21,990
+But if x is in the not set case,
+
+1094
+00:49:21,990 --> 00:49:24,530
+then this question mark-question
+mark's gonna make y
+
+1095
+00:49:24,530 --> 00:49:25,743
+get the value of foo.
+
+1096
+00:49:26,680 --> 00:49:27,970
+All right, so that's shown on the right
+
+1097
+00:49:27,970 --> 00:49:30,363
+what it would look like
+in enum form there.
+
+1098
+00:49:31,780 --> 00:49:35,660
+All right, so Optionals are
+best learned about in action,
+
+1099
+00:49:35,660 --> 00:49:38,010
+so we're going to do two major things
+
+1100
+00:49:38,010 --> 00:49:39,183
+with Optionals in this demo.
+
+1101
+00:49:39,183 --> 00:49:41,570
+One, we're gonna fix that
+firstIndex of matching
+
+1102
+00:49:41,570 --> 00:49:42,580
+as I mentioned.
+
+1103
+00:49:42,580 --> 00:49:44,740
+And number two, we're gonna make our game,
+
+1104
+00:49:44,740 --> 00:49:48,570
+actually play the Memorize
+game, start matching cards.
+
+1105
+00:49:48,570 --> 00:49:51,470
+And to do that, a central piece of that,
+
+1106
+00:49:51,470 --> 00:49:53,720
+is to have a variable that keeps track
+
+1107
+00:49:53,720 --> 00:49:55,950
+of this card that's face-up.
+
+1108
+00:49:55,950 --> 00:49:57,120
+'Cause when there's a card face-up,
+
+1109
+00:49:57,120 --> 00:49:59,690
+I have to match it when
+someone picks another card.
+
+1110
+00:49:59,690 --> 00:50:02,253
+So, let's dive right into that demo.
+
+1111
+00:50:03,930 --> 00:50:06,740
+All righty, now that we
+know what Optionals are,
+
+1112
+00:50:06,740 --> 00:50:09,600
+we can use it to fix this bogus thing
+
+1113
+00:50:09,600 --> 00:50:11,110
+that we had right here.
+
+1114
+00:50:11,110 --> 00:50:12,940
+What was bogus about this?
+
+1115
+00:50:12,940 --> 00:50:16,350
+Well, we have this function
+that found the first index
+
+1116
+00:50:16,350 --> 00:50:19,570
+matching some element in
+an Array of Identifiables.
+
+1117
+00:50:19,570 --> 00:50:20,403
+Which it did.
+
+1118
+00:50:20,403 --> 00:50:22,400
+It went through and found the first one.
+
+1119
+00:50:22,400 --> 00:50:26,320
+But if it couldn't find
+it, it returned zero.
+
+1120
+00:50:26,320 --> 00:50:29,830
+And zero means the index of
+the first thing in the Array,
+
+1121
+00:50:29,830 --> 00:50:32,840
+which is especially bogus
+if this Array is empty,
+
+1122
+00:50:32,840 --> 00:50:34,290
+which it could be.
+
+1123
+00:50:34,290 --> 00:50:35,770
+So how're we going to fix this?
+
+1124
+00:50:35,770 --> 00:50:37,740
+We're gonna fix it by
+having our return type,
+
+1125
+00:50:37,740 --> 00:50:41,550
+instead of being an Int,
+it's going to be an Optional.
+
+1126
+00:50:41,550 --> 00:50:45,243
+Notice I said that this
+expression is an Optional.
+
+1127
+00:50:45,243 --> 00:50:48,160
+It's an Optional whose
+associated value is an Int,
+
+1128
+00:50:48,160 --> 00:50:50,330
+but it's an Optional.
+
+1129
+00:50:50,330 --> 00:50:52,390
+People sometimes get a little
+confused in the beginning
+
+1130
+00:50:52,390 --> 00:50:54,490
+thinking that this is somehow an Int
+
+1131
+00:50:54,490 --> 00:50:56,100
+with some modifier on it.
+
+1132
+00:50:56,100 --> 00:50:57,973
+No, this is a different type from Int.
+
+1133
+00:50:57,973 --> 00:51:00,550
+It's a type called Optional.
+
+1134
+00:51:00,550 --> 00:51:03,540
+This Optional Int, we might call it,
+
+1135
+00:51:03,540 --> 00:51:06,700
+allows us to return nil right here,
+
+1136
+00:51:06,700 --> 00:51:11,380
+or not set value of the Optional,
+when we couldn't find it.
+
+1137
+00:51:11,380 --> 00:51:13,590
+And it's really good at
+communicating to anyone
+
+1138
+00:51:13,590 --> 00:51:16,610
+who calls this, "I couldn't find this."
+
+1139
+00:51:16,610 --> 00:51:19,680
+Our normal return is returning an Int,
+
+1140
+00:51:19,680 --> 00:51:21,810
+and Swift is smart enough, of course,
+
+1141
+00:51:21,810 --> 00:51:25,240
+that if you have an Optional
+Int and you return an Int,
+
+1142
+00:51:25,240 --> 00:51:27,860
+it will return the
+Optional in the set state
+
+1143
+00:51:27,860 --> 00:51:29,980
+with the associated value being that Int,
+
+1144
+00:51:29,980 --> 00:51:31,363
+exactly what you want.
+
+1145
+00:51:32,220 --> 00:51:33,053
+So this is it.
+
+1146
+00:51:33,053 --> 00:51:36,340
+Now, this is no longer, in
+any way, a bogus function,
+
+1147
+00:51:36,340 --> 00:51:38,770
+it's a completely good function.
+
+1148
+00:51:38,770 --> 00:51:42,600
+And we can use it in the two
+places where we call this.
+
+1149
+00:51:42,600 --> 00:51:43,660
+Let's go over here to Grid.
+
+1150
+00:51:43,660 --> 00:51:45,080
+Let's start with this one.
+
+1151
+00:51:45,080 --> 00:51:47,270
+So here is Grid using firstIndex.
+
+1152
+00:51:47,270 --> 00:51:48,680
+It's getting the index.
+
+1153
+00:51:48,680 --> 00:51:50,740
+This local variable right here,
+
+1154
+00:51:50,740 --> 00:51:52,700
+if we option click on it now,
+
+1155
+00:51:52,700 --> 00:51:55,450
+is now of type Optional Int.
+
+1156
+00:51:55,450 --> 00:51:58,040
+Well, that's gonna be a problem down here,
+
+1157
+00:51:58,040 --> 00:51:59,810
+and we'll see an error appear here,
+
+1158
+00:51:59,810 --> 00:52:03,357
+which is "Value of Optional
+type Int must be unwrapped
+
+1159
+00:52:03,357 --> 00:52:04,960
+"to a value of Int."
+
+1160
+00:52:04,960 --> 00:52:08,370
+And indeed, layout.location ofItemAt
+
+1161
+00:52:08,370 --> 00:52:11,060
+does not take an Optional as its argument.
+
+1162
+00:52:11,060 --> 00:52:12,690
+It takes an Int.
+
+1163
+00:52:12,690 --> 00:52:15,350
+Now we could take this thing's advice
+
+1164
+00:52:15,350 --> 00:52:17,680
+and say all right, let's unwrap it.
+
+1165
+00:52:17,680 --> 00:52:20,490
+This is how we unwrap an Optional.
+
+1166
+00:52:20,490 --> 00:52:23,690
+This takes an Optional
+that's in the set state,
+
+1167
+00:52:23,690 --> 00:52:25,663
+and gets its associated value.
+
+1168
+00:52:26,610 --> 00:52:30,540
+However, when the Optional
+is in the not set state,
+
+1169
+00:52:30,540 --> 00:52:32,820
+this crashes your program.
+
+1170
+00:52:32,820 --> 00:52:33,957
+Now some of you might say,
+
+1171
+00:52:33,957 --> 00:52:37,487
+"Whoa, why are we ever
+gonna use exclamation point?
+
+1172
+00:52:37,487 --> 00:52:40,990
+"It's terrible, it crashes
+my program sometimes."
+
+1173
+00:52:40,990 --> 00:52:44,050
+Well yes, but in this case,
+might actually be good
+
+1174
+00:52:44,050 --> 00:52:46,230
+to leave this exclamation point in here.
+
+1175
+00:52:46,230 --> 00:52:48,370
+Because it should never be the case
+
+1176
+00:52:48,370 --> 00:52:51,360
+that we look up the first
+index of one of our items,
+
+1177
+00:52:51,360 --> 00:52:55,070
+which we only got by ForEach-ing
+through our Item Array.
+
+1178
+00:52:55,070 --> 00:52:56,660
+This should never be nil.
+
+1179
+00:52:56,660 --> 00:52:59,810
+And if it ever were nil,
+something is going terribly wrong
+
+1180
+00:52:59,810 --> 00:53:03,200
+somewhere in my code, and
+I'd kinda like it to crash
+
+1181
+00:53:03,200 --> 00:53:04,783
+so I find that problem.
+
+1182
+00:53:05,800 --> 00:53:07,600
+But maybe I'm really conservative,
+
+1183
+00:53:07,600 --> 00:53:09,870
+and when I ship my code to my customers,
+
+1184
+00:53:09,870 --> 00:53:12,080
+I really wanna make sure, no matter what,
+
+1185
+00:53:12,080 --> 00:53:15,670
+it doesn't crash with one
+of these exclamation points.
+
+1186
+00:53:15,670 --> 00:53:18,590
+So, I could kind of protect my customers
+
+1187
+00:53:18,590 --> 00:53:21,680
+by protecting this code, and say if index
+
+1188
+00:53:21,680 --> 00:53:25,410
+does not equal nil, then do this.
+
+1189
+00:53:25,410 --> 00:53:27,750
+And that will protect this code
+
+1190
+00:53:27,750 --> 00:53:29,203
+so that it can't crash.
+
+1191
+00:53:29,203 --> 00:53:33,880
+Because if index is not nil,
+then unwrapping it right here
+
+1192
+00:53:33,880 --> 00:53:36,000
+is always going to work.
+
+1193
+00:53:36,000 --> 00:53:38,053
+But this doesn't build.
+
+1194
+00:53:39,160 --> 00:53:41,900
+And why does this code not build?
+
+1195
+00:53:41,900 --> 00:53:44,077
+It says here "Missing return in a function
+
+1196
+00:53:44,077 --> 00:53:47,210
+"expected to return 'some View'."
+
+1197
+00:53:47,210 --> 00:53:50,890
+Indeed, this function is
+supposed to return "some View."
+
+1198
+00:53:50,890 --> 00:53:54,320
+And it does return "some
+View" in the case the index
+
+1199
+00:53:54,320 --> 00:53:56,960
+is not nil, but if index is nil,
+
+1200
+00:53:56,960 --> 00:53:58,853
+currently, it returns nothing.
+
+1201
+00:53:59,800 --> 00:54:01,320
+That's a problem.
+
+1202
+00:54:01,320 --> 00:54:03,343
+I'm not even sure what
+we would wanna return
+
+1203
+00:54:03,343 --> 00:54:05,610
+in that case here.
+
+1204
+00:54:05,610 --> 00:54:07,980
+So, we're gonna have to take
+a little different strategy
+
+1205
+00:54:07,980 --> 00:54:11,240
+to return "some View" here
+that has a conditional.
+
+1206
+00:54:11,240 --> 00:54:13,080
+And we've seen it before.
+
+1207
+00:54:13,080 --> 00:54:17,730
+It's over here in our View, ZStack.
+
+1208
+00:54:17,730 --> 00:54:19,200
+ZStack had a conditional.
+
+1209
+00:54:19,200 --> 00:54:21,760
+If the card was face-up, it did one thing.
+
+1210
+00:54:21,760 --> 00:54:24,260
+If it was face-down, it did another thing.
+
+1211
+00:54:24,260 --> 00:54:27,920
+This function right here
+that ZStack takes, remember,
+
+1212
+00:54:27,920 --> 00:54:28,790
+is called the ViewBiulder.
+
+1213
+00:54:28,790 --> 00:54:33,040
+It's the same thing that
+our GeometryReader takes,
+
+1214
+00:54:33,040 --> 00:54:35,090
+same thing ForEach takes, HStack,
+
+1215
+00:54:35,090 --> 00:54:38,350
+they all take this thing,
+ViewBuilder, which is a function,
+
+1216
+00:54:38,350 --> 00:54:39,670
+but it's a special kind of function
+
+1217
+00:54:39,670 --> 00:54:40,917
+where you can put these if-thens in there,
+
+1218
+00:54:40,917 --> 00:54:42,890
+and you can just list Views.
+
+1219
+00:54:42,890 --> 00:54:45,610
+And it turns that all into something
+
+1220
+00:54:45,610 --> 00:54:48,090
+that is "some View."
+
+1221
+00:54:48,090 --> 00:54:51,770
+So the ZStack can have
+"some View" as its content.
+
+1222
+00:54:51,770 --> 00:54:55,390
+Well, we can do this same
+thing over here in our Grid,
+
+1223
+00:54:55,390 --> 00:54:57,050
+but we don't need to do any layout.
+
+1224
+00:54:57,050 --> 00:54:59,890
+We're doing the layout with
+our frame and position.
+
+1225
+00:54:59,890 --> 00:55:02,190
+So we want something
+that takes a ViewBuilder
+
+1226
+00:55:02,190 --> 00:55:03,970
+that kinda does nothing.
+
+1227
+00:55:03,970 --> 00:55:05,510
+And there is such a thing.
+
+1228
+00:55:05,510 --> 00:55:07,303
+It's called Group.
+
+1229
+00:55:08,340 --> 00:55:12,550
+So, Group is like a ZStack
+or any of these other things
+
+1230
+00:55:12,550 --> 00:55:16,690
+in that its function argument
+here is a View builder.
+
+1231
+00:55:16,690 --> 00:55:20,730
+However, it doesn't do anything
+to what's inside of here.
+
+1232
+00:55:20,730 --> 00:55:23,640
+It allows you to do the
+if and thens and all that,
+
+1233
+00:55:23,640 --> 00:55:26,210
+and you can still list the things,
+
+1234
+00:55:26,210 --> 00:55:28,540
+but it does not lay them out
+
+1235
+00:55:28,540 --> 00:55:30,920
+or try to position them in any way.
+
+1236
+00:55:30,920 --> 00:55:33,863
+And so, our positioning will
+continue to work in here.
+
+1237
+00:55:35,030 --> 00:55:37,271
+So, we turn this to a two-line function
+
+1238
+00:55:37,271 --> 00:55:40,270
+instead of a one liner, so
+we have to put return in here
+
+1239
+00:55:40,270 --> 00:55:41,780
+to make sure we're returning the Group.
+
+1240
+00:55:41,780 --> 00:55:45,290
+But now we are returning
+Group, which is some View.
+
+1241
+00:55:45,290 --> 00:55:48,210
+And Group is just using
+the View builder stuff
+
+1242
+00:55:48,210 --> 00:55:49,610
+to go like this.
+
+1243
+00:55:49,610 --> 00:55:53,530
+Now, you might ask, "What does
+Group do if index is nil?"
+
+1244
+00:55:53,530 --> 00:55:55,360
+Well, it's gonna return a group
+
+1245
+00:55:55,360 --> 00:55:57,740
+that has some sort of empty content.
+
+1246
+00:55:57,740 --> 00:55:59,300
+Its body is gonna be an empty View.
+
+1247
+00:55:59,300 --> 00:56:01,410
+There's actually a View called EmptyView.
+
+1248
+00:56:01,410 --> 00:56:04,180
+Probably returns that,
+but we really don't care.
+
+1249
+00:56:04,180 --> 00:56:06,374
+We're just using the
+ViewBuilder functionality here
+
+1250
+00:56:06,374 --> 00:56:08,850
+when we know we can do ifs.
+
+1251
+00:56:08,850 --> 00:56:11,440
+And we're gonna find that Group is useful
+
+1252
+00:56:11,440 --> 00:56:14,170
+in a lot of other situations as well.
+
+1253
+00:56:14,170 --> 00:56:17,630
+As its name implies, it's
+good for grouping things.
+
+1254
+00:56:17,630 --> 00:56:20,760
+That's because Group, its View here
+
+1255
+00:56:20,760 --> 00:56:22,480
+is a ViewBuilder View.
+
+1256
+00:56:22,480 --> 00:56:24,350
+That's why we're able to do the if,
+
+1257
+00:56:24,350 --> 00:56:28,580
+but it's also why we would
+be able to list some Views,
+
+1258
+00:56:28,580 --> 00:56:30,290
+and thus group them.
+
+1259
+00:56:30,290 --> 00:56:33,760
+So that's really probably the
+primary reason Group exists.
+
+1260
+00:56:33,760 --> 00:56:36,010
+That's why it's called Group.
+
+1261
+00:56:36,010 --> 00:56:39,050
+But to be honest, I really
+probably wouldn't have
+
+1262
+00:56:39,050 --> 00:56:41,740
+gone through all the
+trouble of doing this.
+
+1263
+00:56:41,740 --> 00:56:43,710
+I don't think there's really any reason
+
+1264
+00:56:43,710 --> 00:56:45,860
+to check if this index is nil.
+
+1265
+00:56:45,860 --> 00:56:48,393
+It should never be nil,
+as I mentioned before.
+
+1266
+00:56:49,260 --> 00:56:54,170
+So I likely would have
+just removed all this.
+
+1267
+00:56:54,170 --> 00:56:56,590
+Gone back to where we were before.
+
+1268
+00:56:56,590 --> 00:56:59,890
+And let this index force unwrap happen.
+
+1269
+00:56:59,890 --> 00:57:02,053
+And if it crashed my
+app, it crashed my app.
+
+1270
+00:57:02,053 --> 00:57:05,310
+It never should, and so I
+wanna find in development,
+
+1271
+00:57:05,310 --> 00:57:07,860
+and this code is a lot
+cleaner without all that
+
+1272
+00:57:07,860 --> 00:57:10,453
+ViewBuilder stuff in there as well.
+
+1273
+00:57:11,470 --> 00:57:14,580
+The other thing I might do is
+move this exclamation point
+
+1274
+00:57:14,580 --> 00:57:17,460
+from down here where I'm passing this var
+
+1275
+00:57:17,460 --> 00:57:22,090
+to up here where I'm actually
+getting the value of this var.
+
+1276
+00:57:22,090 --> 00:57:23,890
+So, get that firstIndex,
+
+1277
+00:57:23,890 --> 00:57:25,920
+and immediately force unwrap it.
+
+1278
+00:57:25,920 --> 00:57:28,280
+That turns this index variable right here
+
+1279
+00:57:28,280 --> 00:57:30,723
+into an Int, and we can pass it directly.
+
+1280
+00:57:32,280 --> 00:57:34,040
+All right, so there was one other place
+
+1281
+00:57:34,040 --> 00:57:35,675
+where we used firstIndex.
+
+1282
+00:57:35,675 --> 00:57:38,050
+That's in our Model, so let's go over here
+
+1283
+00:57:38,050 --> 00:57:40,860
+and take a look at the damage we wrought
+
+1284
+00:57:40,860 --> 00:57:43,800
+by switching over to firstIndex here.
+
+1285
+00:57:43,800 --> 00:57:45,970
+Here we're gonna use a
+little different strategy
+
+1286
+00:57:45,970 --> 00:57:48,740
+to get around the error that
+the Optional must be unwrapped
+
+1287
+00:57:48,740 --> 00:57:51,930
+is I'm gonna use the
+if in front of my let,
+
+1288
+00:57:51,930 --> 00:57:53,700
+which is a really cool feature.
+
+1289
+00:57:53,700 --> 00:57:57,090
+Just put the if in front,
+and then you put curly braces
+
+1290
+00:57:57,090 --> 00:57:59,350
+and do anything you want.
+
+1291
+00:57:59,350 --> 00:58:03,230
+And this anything you want
+will only actually happen
+
+1292
+00:58:03,230 --> 00:58:06,490
+if this thing returns non nil.
+
+1293
+00:58:06,490 --> 00:58:09,980
+If it returns nil, this code
+just doesn't even get executed.
+
+1294
+00:58:09,980 --> 00:58:14,770
+In here, notice that this
+if let allowed us to keep
+
+1295
+00:58:14,770 --> 00:58:17,380
+colon Int as the type of chosenIndex.
+
+1296
+00:58:17,380 --> 00:58:20,410
+We don't need that, by the way,
+'cause it's gonna infer it,
+
+1297
+00:58:20,410 --> 00:58:22,740
+but chosenIndex is in fact an Int.
+
+1298
+00:58:22,740 --> 00:58:26,730
+It's only going to actually
+exist if this firstIndex
+
+1299
+00:58:26,730 --> 00:58:29,300
+returns a non nil, and
+that's the only time
+
+1300
+00:58:29,300 --> 00:58:31,970
+this code's gonna be executed either.
+
+1301
+00:58:31,970 --> 00:58:33,400
+But this does exactly what we want.
+
+1302
+00:58:33,400 --> 00:58:35,160
+It protects us against chosenIndex.
+
+1303
+00:58:35,160 --> 00:58:37,530
+It means choose does nothing.
+
+1304
+00:58:37,530 --> 00:58:39,740
+If we can't find this Card in our cards,
+
+1305
+00:58:39,740 --> 00:58:40,600
+then this does nothing.
+
+1306
+00:58:40,600 --> 00:58:41,433
+That's exactly what we want.
+
+1307
+00:58:41,433 --> 00:58:43,040
+We want it to do nothing.
+
+1308
+00:58:43,040 --> 00:58:46,040
+Let's run and make sure
+this Optional business
+
+1309
+00:58:46,040 --> 00:58:47,980
+didn't break anything.
+
+1310
+00:58:47,980 --> 00:58:48,813
+Here we go.
+
+1311
+00:58:48,813 --> 00:58:50,550
+Yup, we can still flip our cards over.
+
+1312
+00:58:50,550 --> 00:58:52,150
+face-up, face-down.
+
+1313
+00:58:52,150 --> 00:58:55,520
+But now, it's time to
+try and play the game.
+
+1314
+00:58:55,520 --> 00:58:57,650
+We'll need Optional for that as well.
+
+1315
+00:58:57,650 --> 00:59:00,030
+We're gonna try and make
+it so that these cards
+
+1316
+00:59:00,030 --> 00:59:02,200
+will actually match,
+and maybe matched cards
+
+1317
+00:59:02,200 --> 00:59:03,033
+will disappear from the game.
+
+1318
+00:59:03,033 --> 00:59:04,503
+That would be cool too.
+
+1319
+00:59:05,770 --> 00:59:06,967
+So how do we do that?
+
+1320
+00:59:06,967 --> 00:59:11,620
+How're we going to play
+our game, make it play?
+
+1321
+00:59:11,620 --> 00:59:13,290
+Well, we need a little bit of design.
+
+1322
+00:59:13,290 --> 00:59:15,040
+We are software designers.
+
+1323
+00:59:15,040 --> 00:59:16,350
+We have to think conceptually
+
+1324
+00:59:16,350 --> 00:59:18,300
+how are we gonna make this happen.
+
+1325
+00:59:18,300 --> 00:59:22,080
+So I'm gonna run through,
+in my mind, the scenarios.
+
+1326
+00:59:22,080 --> 00:59:24,770
+First, all of my Cards are face-down.
+
+1327
+00:59:24,770 --> 00:59:26,610
+And I click on a Card.
+
+1328
+00:59:26,610 --> 00:59:28,210
+And no matching happens then.
+
+1329
+00:59:28,210 --> 00:59:30,570
+The Card just flips face-up,
+which is what it's doing
+
+1330
+00:59:30,570 --> 00:59:32,610
+in our code right there now.
+
+1331
+00:59:32,610 --> 00:59:34,320
+So, okay that's fine.
+
+1332
+00:59:34,320 --> 00:59:36,800
+Second state is I got that one Card up
+
+1333
+00:59:36,800 --> 00:59:38,750
+and I click on a second Card.
+
+1334
+00:59:38,750 --> 00:59:40,880
+Well, that's when I really need to match.
+
+1335
+00:59:40,880 --> 00:59:42,640
+So if there's one Card face-up
+
+1336
+00:59:42,640 --> 00:59:44,250
+and there's a Card clicked on,
+
+1337
+00:59:44,250 --> 00:59:46,080
+that's when I'm gonna play my game.
+
+1338
+00:59:46,080 --> 00:59:49,850
+If there's two Cards face-up
+now and I press a third Card,
+
+1339
+00:59:49,850 --> 00:59:51,760
+now I need to essentially turn
+
+1340
+00:59:51,760 --> 00:59:53,230
+those other two Cards face-down.
+
+1341
+00:59:53,230 --> 00:59:54,250
+Whether they're matched or not,
+
+1342
+00:59:54,250 --> 00:59:55,960
+they need to be turned face-down.
+
+1343
+00:59:55,960 --> 00:59:58,210
+And the Card I just touched on,
+
+1344
+00:59:58,210 --> 01:00:00,310
+that's going to be the one that's face-up.
+
+1345
+01:00:01,180 --> 01:00:02,420
+In those three scenarios.
+
+1346
+01:00:02,420 --> 01:00:04,390
+That's all the scenarios there are.
+
+1347
+01:00:04,390 --> 01:00:06,830
+In those three scenarios, the
+only time I actually played
+
+1348
+01:00:06,830 --> 01:00:11,580
+a matching game is if there's
+one and only one Card face-up
+
+1349
+01:00:11,580 --> 01:00:14,210
+at the time I touch on a new Card.
+
+1350
+01:00:14,210 --> 01:00:16,030
+So I need to detect that case
+
+1351
+01:00:16,030 --> 01:00:17,210
+when there's one and only one.
+
+1352
+01:00:17,210 --> 01:00:19,580
+So I'm gonna have a var
+
+1353
+01:00:19,580 --> 01:00:21,470
+which keeps track of the index
+
+1354
+01:00:21,470 --> 01:00:26,253
+of the one and only face-up Card.
+
+1355
+01:00:27,990 --> 01:00:30,380
+And this is an index into my Array,
+
+1356
+01:00:30,380 --> 01:00:31,620
+so it's gonna be an Int.
+
+1357
+01:00:31,620 --> 01:00:34,620
+But it might be the start of my game
+
+1358
+01:00:34,620 --> 01:00:35,780
+and there's no face-up Card,
+
+1359
+01:00:35,780 --> 01:00:38,230
+or maybe there's two face-up Cards.
+
+1360
+01:00:38,230 --> 01:00:41,410
+So this really needs to be an Optional.
+
+1361
+01:00:41,410 --> 01:00:44,320
+Notice that I didn't
+get the error down here
+
+1362
+01:00:44,320 --> 01:00:45,830
+that I haven't initialized this.
+
+1363
+01:00:45,830 --> 01:00:49,260
+There's no errors, but I
+haven't initialized this yet.
+
+1364
+01:00:49,260 --> 01:00:50,093
+No errors.
+
+1365
+01:00:50,093 --> 01:00:53,010
+And that's because all Optionals
+
+1366
+01:00:53,010 --> 01:00:56,200
+get initialized to nil automatically.
+
+1367
+01:00:56,200 --> 01:00:57,430
+So there's an equals nil.
+
+1368
+01:00:57,430 --> 01:00:58,960
+You could type it if you want.
+
+1369
+01:00:58,960 --> 01:01:01,490
+But if you don't put it in
+there, it's gonna be there.
+
+1370
+01:01:01,490 --> 01:01:02,697
+And that makes sense, right?
+
+1371
+01:01:02,697 --> 01:01:05,203
+Optionals equals nil means it's not set.
+
+1372
+01:01:06,248 --> 01:01:10,760
+Makes total sense that this var
+starts out the game not set.
+
+1373
+01:01:10,760 --> 01:01:11,690
+So let's keep going here.
+
+1374
+01:01:11,690 --> 01:01:14,980
+I got this chosenIndex,
+and I really only want
+
+1375
+01:01:14,980 --> 01:01:19,980
+to pay attention to Cards that
+are obviously in my Array,
+
+1376
+01:01:20,720 --> 01:01:25,300
+but also that are not already face-up.
+
+1377
+01:01:25,300 --> 01:01:28,130
+If a Card is already
+face-up and I tap on it,
+
+1378
+01:01:28,130 --> 01:01:29,850
+I'm just gonna ignore it.
+
+1379
+01:01:29,850 --> 01:01:31,890
+Now, you'd think this would work, right?
+
+1380
+01:01:31,890 --> 01:01:33,430
+Get the chosenIndex here,
+
+1381
+01:01:33,430 --> 01:01:35,990
+and the chosenIndex is not face-up.
+
+1382
+01:01:35,990 --> 01:01:40,330
+But it's complaining that
+chosenIndex is unresolved.
+
+1383
+01:01:40,330 --> 01:01:42,310
+So if you wanna do an and like this
+
+1384
+01:01:42,310 --> 01:01:44,860
+where you're saying if let of something
+
+1385
+01:01:44,860 --> 01:01:47,490
+and then you wanna do
+and on that something,
+
+1386
+01:01:47,490 --> 01:01:50,550
+instead of and here,
+you're gonna use comma.
+
+1387
+01:01:50,550 --> 01:01:53,270
+So comma is like a sequential and,
+
+1388
+01:01:53,270 --> 01:01:55,520
+where it does this first.
+
+1389
+01:01:55,520 --> 01:01:59,870
+Then, that's done, it can do
+this, and chosenIndex is set.
+
+1390
+01:01:59,870 --> 01:02:01,630
+And you can even have more of these,
+
+1391
+01:02:01,630 --> 01:02:05,000
+like I might also want to ignore Cards
+
+1392
+01:02:05,000 --> 01:02:09,190
+where this shows an
+index is not not matched.
+
+1393
+01:02:09,190 --> 01:02:11,310
+So I'm only gonna touch on Cards
+
+1394
+01:02:11,310 --> 01:02:12,940
+that are face-up and unmatched.
+
+1395
+01:02:12,940 --> 01:02:14,843
+Otherwise I just ignore those Cards.
+
+1396
+01:02:15,940 --> 01:02:19,363
+We use that comma notation
+quite a bit with these if lets.
+
+1397
+01:02:20,290 --> 01:02:22,630
+Inside here, I know
+that I've chosen a Card
+
+1398
+01:02:22,630 --> 01:02:24,850
+that was face-down and not yet matched.
+
+1399
+01:02:24,850 --> 01:02:28,500
+So I just wanna see if
+there's one and only one
+
+1400
+01:02:28,500 --> 01:02:30,280
+face-up Card right now, so I'm gonna say
+
+1401
+01:02:30,280 --> 01:02:32,827
+if I can let potentialMatchIndex
+
+1402
+01:02:34,270 --> 01:02:38,040
+equal the indexOfTheOneAndOnlyFaceUpCard,
+
+1403
+01:02:38,040 --> 01:02:40,690
+now I might have a match
+
+1404
+01:02:40,690 --> 01:02:42,380
+because there's one and
+only one face-up Card.
+
+1405
+01:02:42,380 --> 01:02:44,420
+I just turned another Card over.
+
+1406
+01:02:44,420 --> 01:02:45,550
+We need to try and match it.
+
+1407
+01:02:45,550 --> 01:02:49,600
+No problem, if the Cards
+at the chosenIndex,
+
+1408
+01:02:49,600 --> 01:02:53,100
+if its contents, remember the content
+
+1409
+01:02:53,100 --> 01:02:55,940
+on the Card right here,
+that's what's on the Card,
+
+1410
+01:02:55,940 --> 01:03:00,940
+equals the Cards at the
+potentialMatchIndex content,
+
+1411
+01:03:01,330 --> 01:03:04,300
+then woohoo, got a match.
+
+1412
+01:03:04,300 --> 01:03:06,510
+Now this is making an error happen.
+
+1413
+01:03:06,510 --> 01:03:08,590
+Why is this making an error?
+
+1414
+01:03:08,590 --> 01:03:12,237
+It says "Binary operator
+equals-equals cannot be applied
+
+1415
+01:03:12,237 --> 01:03:15,790
+"to two CardContent operands."
+
+1416
+01:03:15,790 --> 01:03:20,790
+Hmm, indeed both of these
+things are type CardContent.
+
+1417
+01:03:21,710 --> 01:03:24,700
+That's our don't-care down here.
+
+1418
+01:03:24,700 --> 01:03:27,720
+Why can't we do
+equals-equals on CardContent?
+
+1419
+01:03:27,720 --> 01:03:30,090
+It's a String, right, emoji String.
+
+1420
+01:03:30,090 --> 01:03:31,900
+Op, wait a second.
+
+1421
+01:03:31,900 --> 01:03:35,750
+This is a generic memory
+game playing thing.
+
+1422
+01:03:35,750 --> 01:03:37,850
+These are no emoji in there.
+
+1423
+01:03:37,850 --> 01:03:41,950
+They're CardContent, which
+is a don't-care for us.
+
+1424
+01:03:41,950 --> 01:03:45,880
+This could be anything, Images,
+Strings, Ints, whatever.
+
+1425
+01:03:45,880 --> 01:03:47,680
+We're trying to say equals-equals.
+
+1426
+01:03:47,680 --> 01:03:49,700
+If it's a String, okay, it works fine.
+
+1427
+01:03:49,700 --> 01:03:50,910
+What if it's an Image?
+
+1428
+01:03:50,910 --> 01:03:53,290
+Can you say one Image
+equals-equals another?
+
+1429
+01:03:53,290 --> 01:03:55,160
+Maybe not, I don't know.
+
+1430
+01:03:55,160 --> 01:03:56,640
+Equals-equals is not something
+
+1431
+01:03:56,640 --> 01:03:58,992
+that just applies to everything.
+
+1432
+01:03:58,992 --> 01:04:02,830
+And in fact, how does
+equals-equals work in Swift?
+
+1433
+01:04:02,830 --> 01:04:06,480
+Equals-equals in Swift, believe
+it or not, is not built in
+
+1434
+01:04:06,480 --> 01:04:07,860
+to the language.
+
+1435
+01:04:07,860 --> 01:04:10,630
+It uses a feature in
+Swift called operators
+
+1436
+01:04:10,630 --> 01:04:13,310
+that lets you associate
+an operator like this
+
+1437
+01:04:13,310 --> 01:04:15,200
+with a function.
+
+1438
+01:04:15,200 --> 01:04:17,320
+And that's exactly what equal-equals does.
+
+1439
+01:04:17,320 --> 01:04:21,750
+It associates it with the
+type function equals-equals.
+
+1440
+01:04:21,750 --> 01:04:24,140
+Now, equals-equals might
+seem like a funny name
+
+1441
+01:04:24,140 --> 01:04:27,300
+for a function in Swift.
+
+1442
+01:04:27,300 --> 01:04:29,400
+And it is kinda funny, but also remember
+
+1443
+01:04:29,400 --> 01:04:32,870
+that smiley face, the emoji smiley face,
+
+1444
+01:04:32,870 --> 01:04:35,210
+is a valid function name in Swift.
+
+1445
+01:04:35,210 --> 01:04:39,060
+Any Unicode characters,
+pretty much, is valid Swift.
+
+1446
+01:04:39,060 --> 01:04:42,130
+So, equals-equals is just
+as valid as smiley face.
+
+1447
+01:04:42,130 --> 01:04:44,730
+So this equal-equals
+function is a type function,
+
+1448
+01:04:44,730 --> 01:04:46,460
+and it just takes two arguments,
+
+1449
+01:04:46,460 --> 01:04:48,567
+which is the two things on
+either side of the equals,
+
+1450
+01:04:48,567 --> 01:04:52,330
+and it returns a bool, whether
+they're the same or not.
+
+1451
+01:04:52,330 --> 01:04:54,370
+That's it, that's exactly
+what you'd expect.
+
+1452
+01:04:54,370 --> 01:04:58,090
+But not every type has
+this equals-equals in it.
+
+1453
+01:04:58,090 --> 01:05:00,000
+Only some types that can actually
+
+1454
+01:05:00,000 --> 01:05:02,130
+check for equality have that.
+
+1455
+01:05:02,130 --> 01:05:04,550
+But luckily, that equals-equals function
+
+1456
+01:05:04,550 --> 01:05:07,810
+is in a protocol called Equatable,
+
+1457
+01:05:07,810 --> 01:05:11,030
+so we can use our
+constrains and gains here
+
+1458
+01:05:11,030 --> 01:05:15,990
+to say where our CardContent
+implements Equatable.
+
+1459
+01:05:15,990 --> 01:05:18,060
+In other words, we're only gonna work,
+
+1460
+01:05:18,060 --> 01:05:20,580
+our MemoryGame only works
+when our CardContent
+
+1461
+01:05:21,470 --> 01:05:23,983
+can be equaled-equaled,
+could be Equatable.
+
+1462
+01:05:25,020 --> 01:05:28,760
+Let's go look at this
+protocol in the documentation.
+
+1463
+01:05:28,760 --> 01:05:31,050
+So I'm gonna do Option, click.
+
+1464
+01:05:31,050 --> 01:05:34,310
+This is a kind of top-level
+documentation about it,
+
+1465
+01:05:34,310 --> 01:05:35,883
+but let's go into the doc.
+
+1466
+01:05:37,070 --> 01:05:39,360
+Equal-equal's a very important protocol.
+
+1467
+01:05:39,360 --> 01:05:41,940
+You can see it's got a lot of explanation
+
+1468
+01:05:41,940 --> 01:05:44,530
+of what it means to say
+something is equal-equal
+
+1469
+01:05:44,530 --> 01:05:48,130
+to something else, transitive
+property, all this business.
+
+1470
+01:05:48,130 --> 01:05:50,540
+But when you get down to the
+list of functions about it,
+
+1471
+01:05:50,540 --> 01:05:53,470
+there's only one that is required.
+
+1472
+01:05:53,470 --> 01:05:54,600
+You see this required?
+
+1473
+01:05:54,600 --> 01:05:56,950
+That means it is part of the protocol,
+
+1474
+01:05:56,950 --> 01:05:59,100
+and there's no default implementation
+
+1475
+01:05:59,100 --> 01:06:03,200
+by an extension anywhere,
+so you must implement this.
+
+1476
+01:06:03,200 --> 01:06:06,970
+And it's exactly what I said,
+a static, a type function
+
+1477
+01:06:06,970 --> 01:06:09,570
+that takes two of those things,
+
+1478
+01:06:09,570 --> 01:06:12,070
+remember in the slides,
+we had is greater than
+
+1479
+01:06:12,070 --> 01:06:15,400
+and you had self, so the
+argument is greater than
+
+1480
+01:06:15,400 --> 01:06:17,180
+with an Int or it was a President.
+
+1481
+01:06:17,180 --> 01:06:18,140
+Same thing here.
+
+1482
+01:06:18,140 --> 01:06:20,950
+If you have equals-equals
+and if let's a String,
+
+1483
+01:06:20,950 --> 01:06:23,620
+then Self and Self would
+be String and String,
+
+1484
+01:06:23,620 --> 01:06:26,580
+so it takes two Strings and compares them.
+
+1485
+01:06:26,580 --> 01:06:29,460
+If it's Int, it takes two Ints, whatever.
+
+1486
+01:06:29,460 --> 01:06:31,180
+This is the only function
+you have to implement.
+
+1487
+01:06:31,180 --> 01:06:34,480
+Really easy function, simple
+function to understand,
+
+1488
+01:06:34,480 --> 01:06:36,380
+although you have to read
+all this to make sure
+
+1489
+01:06:36,380 --> 01:06:37,710
+you really understand it.
+
+1490
+01:06:37,710 --> 01:06:40,380
+And the only one we have
+to implement in Equatable.
+
+1491
+01:06:40,380 --> 01:06:42,020
+All these other ones are not required
+
+1492
+01:06:42,020 --> 01:06:44,810
+because you get them
+for free by extension.
+
+1493
+01:06:44,810 --> 01:06:48,320
+Swift Foundation gives you these things
+
+1494
+01:06:48,320 --> 01:06:51,290
+for tuples and other
+things here automatically.
+
+1495
+01:06:51,290 --> 01:06:53,610
+And does not equals, it
+gives you that one for free.
+
+1496
+01:06:53,610 --> 01:06:55,983
+They're all based on
+the equals-equals here.
+
+1497
+01:06:57,630 --> 01:07:00,550
+This is a protocol, protocol Equatable.
+
+1498
+01:07:00,550 --> 01:07:04,180
+So we are just forcing, or constraining,
+
+1499
+01:07:04,180 --> 01:07:07,620
+our CardContent, our
+don't-care, to be Equatable.
+
+1500
+01:07:07,620 --> 01:07:08,500
+We care a little bit.
+
+1501
+01:07:08,500 --> 01:07:11,540
+We care that it's Equatable
+so we can compare it.
+
+1502
+01:07:11,540 --> 01:07:13,310
+All right, so if these two things match,
+
+1503
+01:07:13,310 --> 01:07:14,810
+then I'm just gonna say they're matched.
+
+1504
+01:07:14,810 --> 01:07:19,810
+cards at the chosenIndex,
+isMatched equals true.
+
+1505
+01:07:20,900 --> 01:07:24,000
+And of course the cards at
+the potentialMatchIndex,
+
+1506
+01:07:24,000 --> 01:07:25,170
+it did turn out to be a match,
+
+1507
+01:07:25,170 --> 01:07:28,463
+so its isMatched also equals true.
+
+1508
+01:07:29,400 --> 01:07:30,400
+So these Cards are matched.
+
+1509
+01:07:30,400 --> 01:07:31,370
+That's awesome.
+
+1510
+01:07:31,370 --> 01:07:33,910
+Notice that no matter what,
+whether they match or not,
+
+1511
+01:07:33,910 --> 01:07:36,260
+there are two Cards face-up now.
+
+1512
+01:07:36,260 --> 01:07:41,083
+So the index of the one and
+only face-up Card is nil.
+
+1513
+01:07:41,988 --> 01:07:44,040
+There's not one and only one face-up Card.
+
+1514
+01:07:44,040 --> 01:07:46,090
+There are two, so that means this is nil.
+
+1515
+01:07:47,040 --> 01:07:48,900
+What about the else case here?
+
+1516
+01:07:48,900 --> 01:07:52,220
+So in this case, there is not
+one and only one face-up Card.
+
+1517
+01:07:52,220 --> 01:07:55,250
+So there's either zero
+or there's more than one.
+
+1518
+01:07:55,250 --> 01:07:58,220
+In this case, we wanna turn
+all the Cards face-down
+
+1519
+01:07:58,220 --> 01:08:00,470
+except for the one we
+just chose of course.
+
+1520
+01:08:00,470 --> 01:08:01,910
+So we're gonna do a little for loop,
+
+1521
+01:08:01,910 --> 01:08:05,073
+index in our cards.indices
+
+1522
+01:08:06,113 --> 01:08:08,970
+And we're just gonna go
+for every single Card
+
+1523
+01:08:08,970 --> 01:08:12,900
+isFaceUp equals false, and we'll make sure
+
+1524
+01:08:12,900 --> 01:08:17,900
+that we turn our Card to
+true, turn it face-up.
+
+1525
+01:08:18,010 --> 01:08:19,530
+Also notice in this case
+
+1526
+01:08:19,530 --> 01:08:24,530
+that the indexOfTheOneAndOnlyFaceUpCard
+is our chosenIndex.
+
+1527
+01:08:24,714 --> 01:08:26,961
+'Cause I just turned
+all of these face-down
+
+1528
+01:08:26,961 --> 01:08:29,446
+and I'm gonna turn this one back up,
+
+1529
+01:08:29,446 --> 01:08:33,921
+and so it's going to be
+the only face-up Card.
+
+1530
+01:08:33,921 --> 01:08:35,090
+So that's it.
+
+1531
+01:08:35,090 --> 01:08:36,010
+This is our logic.
+
+1532
+01:08:36,010 --> 01:08:38,947
+We don't need this Card chosen
+to print anymore right there.
+
+1533
+01:08:38,947 --> 01:08:41,430
+And that's the entirety
+of making this work.
+
+1534
+01:08:41,430 --> 01:08:44,803
+So let's run, see if our
+game plays like we want.
+
+1535
+01:08:45,770 --> 01:08:47,920
+Well, this game turns out
+to be one of the easiest
+
+1536
+01:08:47,920 --> 01:08:51,870
+memory games out there because
+all the Cards start face-up.
+
+1537
+01:08:51,870 --> 01:08:52,970
+So, that's no good.
+
+1538
+01:08:52,970 --> 01:08:54,690
+Let's go back to our Model here
+
+1539
+01:08:54,690 --> 01:08:58,040
+and change it so that all
+the Cards start face-down.
+
+1540
+01:08:58,040 --> 01:09:01,533
+I think that's gonna make for
+a much more challenging game.
+
+1541
+01:09:02,960 --> 01:09:04,100
+All right, let's try it.
+
+1542
+01:09:04,100 --> 01:09:05,800
+Ghost, yeah.
+
+1543
+01:09:05,800 --> 01:09:08,150
+Pumpkin, oh no, no match.
+
+1544
+01:09:08,150 --> 01:09:11,640
+Ghost, yeah, spider, no, no, not again.
+
+1545
+01:09:11,640 --> 01:09:14,109
+Pumpkin, ah, I think I
+know where the pumpkin is.
+
+1546
+01:09:14,109 --> 01:09:15,410
+It's right here.
+
+1547
+01:09:15,410 --> 01:09:16,270
+Yes.
+
+1548
+01:09:16,270 --> 01:09:18,280
+And then how about spider?
+
+1549
+01:09:18,280 --> 01:09:23,020
+Oh, now notice that it did turn
+my matched cards face-down,
+
+1550
+01:09:23,020 --> 01:09:24,500
+and if I try to touch on them,
+
+1551
+01:09:24,500 --> 01:09:27,280
+I'm currently clicking
+on these repeatedly,
+
+1552
+01:09:27,280 --> 01:09:29,940
+they don't turn back up because
+they're already matched.
+
+1553
+01:09:29,940 --> 01:09:32,140
+And we ignore cards that
+are already matched.
+
+1554
+01:09:32,140 --> 01:09:35,510
+But this is not very good UI
+to have these face-down cards
+
+1555
+01:09:35,510 --> 01:09:37,923
+that you can't touch on, it does nothing.
+
+1556
+01:09:37,923 --> 01:09:40,520
+I really wanna take these away.
+
+1557
+01:09:40,520 --> 01:09:43,250
+So if they're matched,
+I'm gonna take them away.
+
+1558
+01:09:43,250 --> 01:09:46,340
+So let's go back to our UI and do that.
+
+1559
+01:09:46,340 --> 01:09:48,200
+Here's our CardView.
+
+1560
+01:09:48,200 --> 01:09:51,380
+And here's where the cards
+are face-up, no problem there.
+
+1561
+01:09:51,380 --> 01:09:53,150
+Here's where they're face-down.
+
+1562
+01:09:53,150 --> 01:09:56,530
+I'm gonna say if the Card is not matched,
+
+1563
+01:09:56,530 --> 01:09:58,720
+then I'll draw it.
+
+1564
+01:09:58,720 --> 01:10:00,910
+But if it is matched and it's face-down,
+
+1565
+01:10:00,910 --> 01:10:02,600
+I'm gonna draw nothing.
+
+1566
+01:10:02,600 --> 01:10:04,350
+Again, this is ViewBuilder.
+
+1567
+01:10:04,350 --> 01:10:05,570
+It's got these simple ifs.
+
+1568
+01:10:05,570 --> 01:10:08,640
+You can even nest these
+ifs inside the elses
+
+1569
+01:10:08,640 --> 01:10:10,660
+or inside the ifs of other ifs.
+
+1570
+01:10:10,660 --> 01:10:12,200
+Nested ifs are okay.
+
+1571
+01:10:12,200 --> 01:10:14,350
+And notice we don't
+even need an else here.
+
+1572
+01:10:14,350 --> 01:10:16,523
+ViewBuilder knows how
+to deal with the fact
+
+1573
+01:10:16,523 --> 01:10:20,590
+that the if didn't happen, and
+so nothing is gonna be here.
+
+1574
+01:10:20,590 --> 01:10:21,980
+Essentially there's an empty View.
+
+1575
+01:10:21,980 --> 01:10:25,570
+And in fact in SwiftUI, there
+is a View called EmptyView.
+
+1576
+01:10:25,570 --> 01:10:27,930
+So that's what this
+ViewBuilder is going to make
+
+1577
+01:10:27,930 --> 01:10:30,280
+for ZStack in the case
+the Cards are face-down.
+
+1578
+01:10:31,886 --> 01:10:33,183
+See if that fixes that.
+
+1579
+01:10:35,273 --> 01:10:38,757
+And we get pumpkin, spider, ghost.
+
+1580
+01:10:39,940 --> 01:10:41,690
+Oh, got a match, ready?
+
+1581
+01:10:41,690 --> 01:10:43,840
+Woo, it took them away.
+
+1582
+01:10:43,840 --> 01:10:46,520
+Another match, takes those away.
+
+1583
+01:10:46,520 --> 01:10:47,920
+Okay, this is excellent.
+
+1584
+01:10:47,920 --> 01:10:51,197
+Our game is basically
+functioning beautifully.
+
+1585
+01:10:51,197 --> 01:10:54,370
+So one last thing I wanna
+do, though, to my Model.
+
+1586
+01:10:54,370 --> 01:10:57,430
+I'm a little concerned
+that I have this state,
+
+1587
+01:10:57,430 --> 01:10:59,690
+the indexOfTheOneAndOnlyFaceUpCard,
+
+1588
+01:10:59,690 --> 01:11:01,660
+that I'm having to keep in sync
+
+1589
+01:11:01,660 --> 01:11:04,410
+with my changes to the Cards.
+
+1590
+01:11:04,410 --> 01:11:07,720
+And this is kind of an
+error-prone way to program
+
+1591
+01:11:07,720 --> 01:11:09,960
+when you have state in two places.
+
+1592
+01:11:09,960 --> 01:11:13,000
+The indexOfTheOneAndOnlyFaceUpCard
+is here,
+
+1593
+01:11:13,000 --> 01:11:16,820
+and it's also determinable
+from these Cards.
+
+1594
+01:11:16,820 --> 01:11:20,160
+So, let's use a computed var here instead
+
+1595
+01:11:20,160 --> 01:11:25,160
+and get from the Cards the
+indexOfTheOneAndOnlyFaceUpCard.
+
+1596
+01:11:25,270 --> 01:11:28,490
+And we're also going to do here a set
+
+1597
+01:11:28,490 --> 01:11:32,070
+so that if someone sets the
+indexOfTheOneAndOnlyFaceUpCard,
+
+1598
+01:11:32,070 --> 01:11:35,030
+we turn all the other Cards face-down.
+
+1599
+01:11:35,030 --> 01:11:37,220
+This is the first time you've
+seen a computed property
+
+1600
+01:11:37,220 --> 01:11:38,860
+that we can get the value of,
+
+1601
+01:11:38,860 --> 01:11:41,553
+but we can also set the value of.
+
+1602
+01:11:42,760 --> 01:11:45,230
+Let's do the set one first.
+
+1603
+01:11:45,230 --> 01:11:48,170
+It's kind of the simpler of the two.
+
+1604
+01:11:48,170 --> 01:11:51,060
+How are we going to react when someone
+
+1605
+01:11:51,060 --> 01:11:56,060
+sets the value of the
+indexOfTheOneAndOnlyFaceUpCard?
+
+1606
+01:11:56,160 --> 01:11:58,020
+Well in that case, we need to go through
+
+1607
+01:11:58,020 --> 01:11:59,420
+all of our Cards.
+
+1608
+01:11:59,420 --> 01:12:02,350
+I'm just gonna go
+through our indices here.
+
+1609
+01:12:02,350 --> 01:12:07,233
+And I'm gonna pretty much set
+all the Cards to be face-down.
+
+1610
+01:12:09,070 --> 01:12:11,550
+Except I don't wanna do that
+
+1611
+01:12:11,550 --> 01:12:13,530
+if this is the one that you said
+
+1612
+01:12:13,530 --> 01:12:16,180
+was the indexOfTheOneAndOnlyFaceUpCard.
+
+1613
+01:12:16,180 --> 01:12:20,670
+Inside this set, there's a
+special variable called newValue.
+
+1614
+01:12:20,670 --> 01:12:23,353
+So I can tell you if
+index equals newValue,
+
+1615
+01:12:25,870 --> 01:12:28,730
+the value that the person
+said this was equal to,
+
+1616
+01:12:28,730 --> 01:12:31,070
+then it's face-up.
+
+1617
+01:12:31,070 --> 01:12:33,300
+So newValue is the special var,
+
+1618
+01:12:33,300 --> 01:12:37,850
+only appears inside this
+set for a computed property.
+
+1619
+01:12:37,850 --> 01:12:40,200
+And it's whatever the people set this to.
+
+1620
+01:12:40,200 --> 01:12:41,550
+Could be nil, by the way.
+
+1621
+01:12:41,550 --> 01:12:44,770
+This newValue, it's an
+Optional, so it could be nil.
+
+1622
+01:12:44,770 --> 01:12:48,410
+Index is an Int, and Int is never equal to
+
+1623
+01:12:48,410 --> 01:12:50,140
+an Optional that's not set,
+
+1624
+01:12:50,140 --> 01:12:52,420
+so this equals would only be true
+
+1625
+01:12:52,420 --> 01:12:54,140
+if this is an Optional that's set
+
+1626
+01:12:54,140 --> 01:12:57,563
+and its associated integer
+matches this integer
+
+1627
+01:12:59,040 --> 01:13:01,720
+So that's it for set, pretty simple.
+
+1628
+01:13:01,720 --> 01:13:03,720
+What about getting?
+
+1629
+01:13:03,720 --> 01:13:06,520
+Well, to get it, I really
+need to look at all the Cards
+
+1630
+01:13:06,520 --> 01:13:08,030
+and see which ones are face-up
+
+1631
+01:13:08,030 --> 01:13:09,620
+and see if there's only one.
+
+1632
+01:13:09,620 --> 01:13:12,840
+So let's start by getting
+all the face-up Cards.
+
+1633
+01:13:12,840 --> 01:13:15,820
+So I'm gonna say faceUpCardIndices.
+
+1634
+01:13:15,820 --> 01:13:18,440
+It's gonna be an Array of Int.
+
+1635
+01:13:18,440 --> 01:13:21,170
+By the way, I'm gonna use
+this syntax right here
+
+1636
+01:13:21,170 --> 01:13:22,670
+to mean Array of Int.
+
+1637
+01:13:22,670 --> 01:13:26,650
+This is exactly the same as Array of Int.
+
+1638
+01:13:26,650 --> 01:13:28,900
+I'm gonna say that out in the real world,
+
+1639
+01:13:28,900 --> 01:13:33,000
+this is actually slightly
+preferred as the syntax.
+
+1640
+01:13:33,000 --> 01:13:35,510
+Not 100% sure of that,
+but it sure seems to me
+
+1641
+01:13:35,510 --> 01:13:37,950
+people prefer this over Array of Int.
+
+1642
+01:13:37,950 --> 01:13:39,100
+I like Array of Int.
+
+1643
+01:13:39,100 --> 01:13:41,180
+It's clearer that that's a generic,
+
+1644
+01:13:41,180 --> 01:13:43,880
+and the don't-care is Int and all that,
+
+1645
+01:13:43,880 --> 01:13:47,340
+but Arrays are extremely common to use,
+
+1646
+01:13:47,340 --> 01:13:49,853
+so I can understand the shorthand there.
+
+1647
+01:13:50,740 --> 01:13:53,490
+So now, how am I gonna get
+this faceUpCardIndices?
+
+1648
+01:13:53,490 --> 01:13:55,060
+It's starting empty right there,
+
+1649
+01:13:55,060 --> 01:13:59,610
+so I'm gonna go for
+index in cards.indices,
+
+1650
+01:13:59,610 --> 01:14:01,260
+go through all my Cards.
+
+1651
+01:14:01,260 --> 01:14:05,840
+If a Card at a certain index is face-up,
+
+1652
+01:14:05,840 --> 01:14:09,368
+then I'm gonna put it in
+the faceUpCardIndices,
+
+1653
+01:14:09,368 --> 01:14:11,110
+append that index.
+
+1654
+01:14:11,110 --> 01:14:14,690
+All right, now I have all
+the face-up Card indices.
+
+1655
+01:14:14,690 --> 01:14:19,470
+I'm gonna say if the
+faceUpCardIndices.count equals one,
+
+1656
+01:14:19,470 --> 01:14:21,313
+so one and only one Card,
+
+1657
+01:14:21,313 --> 01:14:26,313
+then I'm gonna return that
+faceUpCardIndices sub zero.
+
+1658
+01:14:26,420 --> 01:14:28,550
+By the way, there's another
+nice little var for that,
+
+1659
+01:14:28,550 --> 01:14:30,340
+which is .first.
+
+1660
+01:14:30,340 --> 01:14:31,930
+And when we're typing first,
+
+1661
+01:14:31,930 --> 01:14:34,960
+notice that its return type of this var,
+
+1662
+01:14:34,960 --> 01:14:38,560
+or the type of this var,
+is Int, question mark,
+
+1663
+01:14:38,560 --> 01:14:39,960
+Optional Int, why?
+
+1664
+01:14:39,960 --> 01:14:42,410
+Because the Array might be empty.
+
+1665
+01:14:42,410 --> 01:14:44,740
+So if you say your Array.first,
+and the Array is empty,
+
+1666
+01:14:44,740 --> 01:14:46,840
+this will return nil.
+
+1667
+01:14:46,840 --> 01:14:49,973
+There's Swift using Optionals
+to communicate something.
+
+1668
+01:14:51,220 --> 01:14:53,810
+Otherwise, I'm gonna return nil.
+
+1669
+01:14:53,810 --> 01:14:57,210
+Because if there's not exactly one Card
+
+1670
+01:14:57,210 --> 01:15:00,520
+in the face-up Card list, then obviously,
+
+1671
+01:15:00,520 --> 01:15:03,683
+the indexOfTheOneAndOnlyFaceUpCard
+is nil, and that's it.
+
+1672
+01:15:05,500 --> 01:15:07,290
+So now that this is calculated,
+
+1673
+01:15:07,290 --> 01:15:10,750
+I don't have to work so hard
+to make sure it's kept in sync.
+
+1674
+01:15:10,750 --> 01:15:13,860
+For example, in here, I
+don't even need to say
+
+1675
+01:15:13,860 --> 01:15:16,480
+that the
+indexOfTheOneAndOnlyFaceUpCard is nil.
+
+1676
+01:15:16,480 --> 01:15:18,240
+Just get rid of that code altogether
+
+1677
+01:15:18,240 --> 01:15:20,370
+because it's always going to know
+
+1678
+01:15:20,370 --> 01:15:22,040
+when there's two face-up Cards.
+
+1679
+01:15:22,040 --> 01:15:23,700
+It calculates it.
+
+1680
+01:15:23,700 --> 01:15:26,520
+Kinda similarly down here, because I set
+
+1681
+01:15:26,520 --> 01:15:29,500
+the one and only face-up
+Card to be this index,
+
+1682
+01:15:29,500 --> 01:15:32,230
+I don't need to set all
+the rest of them face-down.
+
+1683
+01:15:32,230 --> 01:15:35,333
+That's gonna be automatically
+done by the setter of this.
+
+1684
+01:15:36,250 --> 01:15:38,810
+And also, this true of turning it face-up,
+
+1685
+01:15:38,810 --> 01:15:41,910
+we only need to do in here because again,
+
+1686
+01:15:41,910 --> 01:15:44,048
+setting the indexOfTheOneAndOnlyFaceUpCard
+
+1687
+01:15:44,048 --> 01:15:48,631
+is going to make sure that
+this chosenIndex is face-up.
+
+1688
+01:15:49,469 --> 01:15:52,340
+So that makes this code
+really pretty minimal
+
+1689
+01:15:52,340 --> 01:15:54,360
+to play an entire card-matching game.
+
+1690
+01:15:54,360 --> 01:15:57,567
+Now that's at the expense
+of a lot of code up here.
+
+1691
+01:15:57,567 --> 01:15:59,250
+And we're gonna fix that in a second,
+
+1692
+01:15:59,250 --> 01:16:02,623
+but let's make sure that
+this has not broken anything.
+
+1693
+01:16:03,650 --> 01:16:04,520
+Here we go.
+
+1694
+01:16:04,520 --> 01:16:08,840
+Pumpkin, spider, spider,
+spider, pumpkin, all right.
+
+1695
+01:16:08,840 --> 01:16:12,930
+Ghost, no, pumpkin, ghost,
+ghost, ghost, pumpkin.
+
+1696
+01:16:12,930 --> 01:16:14,630
+So this is working.
+
+1697
+01:16:14,630 --> 01:16:16,980
+Beautiful looking code right here.
+
+1698
+01:16:16,980 --> 01:16:20,500
+Little bit more code here than we need.
+
+1699
+01:16:20,500 --> 01:16:23,693
+So how can we reduce this code a bit?
+
+1700
+01:16:24,600 --> 01:16:26,200
+Down here, I can only think of one thing
+
+1701
+01:16:26,200 --> 01:16:28,700
+to make this a little more efficient,
+
+1702
+01:16:28,700 --> 01:16:31,580
+which is that here I'm
+saying if something is true,
+
+1703
+01:16:31,580 --> 01:16:34,710
+then set this to true, else set it false.
+
+1704
+01:16:34,710 --> 01:16:38,273
+I could just take this and put it here.
+
+1705
+01:16:39,249 --> 01:16:41,910
+Then I don't need all
+the rest of this overhead
+
+1706
+01:16:41,910 --> 01:16:43,723
+of the syntax of all this if.
+
+1707
+01:16:44,606 --> 01:16:45,860
+So I'm just gonna set every Card.
+
+1708
+01:16:45,860 --> 01:16:48,220
+I'm gonna set it to false unless the index
+
+1709
+01:16:48,220 --> 01:16:50,770
+is equal to what the person
+said this was equal to,
+
+1710
+01:16:50,770 --> 01:16:52,070
+like I'm doing right here.
+
+1711
+01:16:53,344 --> 01:16:54,177
+So that's nice.
+
+1712
+01:16:54,177 --> 01:16:56,060
+That's pretty minimal code.
+
+1713
+01:16:56,060 --> 01:16:57,350
+What about all this?
+
+1714
+01:16:57,350 --> 01:16:59,060
+Believe it or not, I'm gonna make it
+
+1715
+01:16:59,060 --> 01:17:00,690
+so this is one line of code.
+
+1716
+01:17:00,690 --> 01:17:03,170
+You know we love one line
+of code in this class.
+
+1717
+01:17:03,170 --> 01:17:05,860
+Your first homework
+assignment proved that.
+
+1718
+01:17:05,860 --> 01:17:08,230
+So how am I gonna make
+this one line of code?
+
+1719
+01:17:08,230 --> 01:17:12,140
+I'm gonna start by having
+all of this right here
+
+1720
+01:17:12,140 --> 01:17:13,930
+be one line, and I'm gonna do that
+
+1721
+01:17:13,930 --> 01:17:17,530
+with a function in a range called filter.
+
+1722
+01:17:17,530 --> 01:17:20,930
+So I'm gonna take my cards
+indices, that's a range
+
+1723
+01:17:20,930 --> 01:17:24,370
+between zero, dot dot,
+less than cards.count.
+
+1724
+01:17:24,370 --> 01:17:26,700
+And call this function filter.
+
+1725
+01:17:26,700 --> 01:17:29,150
+You see filter here in range.
+
+1726
+01:17:29,150 --> 01:17:31,200
+It returns an Array of Int.
+
+1727
+01:17:31,200 --> 01:17:33,760
+You see on the left here, Array of Int.
+
+1728
+01:17:33,760 --> 01:17:37,580
+And those Ints are all
+the Ints in this range
+
+1729
+01:17:37,580 --> 01:17:40,200
+where this function that takes an Int
+
+1730
+01:17:40,200 --> 01:17:42,293
+and returns a bool returns true.
+
+1731
+01:17:43,610 --> 01:17:44,443
+So it looks like this.
+
+1732
+01:17:44,443 --> 01:17:45,910
+Let's double-click on this.
+
+1733
+01:17:45,910 --> 01:17:46,743
+Here it is.
+
+1734
+01:17:46,743 --> 01:17:48,630
+I can double-click on this even.
+
+1735
+01:17:48,630 --> 01:17:50,200
+It fills it in for me.
+
+1736
+01:17:50,200 --> 01:17:52,880
+This is a function, an in-line function,
+
+1737
+01:17:52,880 --> 01:17:55,880
+that takes an Int and returns a Bool.
+
+1738
+01:17:55,880 --> 01:18:00,210
+And we're supposed to return
+whether to include this Int,
+
+1739
+01:18:00,210 --> 01:18:01,853
+which is one of the indices,
+
+1740
+01:18:02,920 --> 01:18:05,480
+in the resulting faceUpCardIndices.
+
+1741
+01:18:05,480 --> 01:18:09,080
+We're making a new Array by
+filtering out these other ones.
+
+1742
+01:18:09,080 --> 01:18:13,860
+This is what the index is,
+so we'll call this index.
+
+1743
+01:18:13,860 --> 01:18:14,860
+And what do we wanna do?
+
+1744
+01:18:14,860 --> 01:18:19,460
+We wanna say return Cards at that index,
+
+1745
+01:18:19,460 --> 01:18:20,857
+dot, isFaceUp.
+
+1746
+01:18:22,361 --> 01:18:24,440
+So this is all we wanna do.
+
+1747
+01:18:24,440 --> 01:18:27,820
+Of course, we like to make
+things less code in Swift,
+
+1748
+01:18:27,820 --> 01:18:31,053
+so we can take away this return.
+
+1749
+01:18:32,340 --> 01:18:35,113
+Maybe we'll put this up here, like this.
+
+1750
+01:18:36,990 --> 01:18:39,630
+We can infer this return type.
+
+1751
+01:18:39,630 --> 01:18:42,913
+Don't need that, don't need
+these parentheses in there.
+
+1752
+01:18:43,770 --> 01:18:45,370
+There's another thing I
+didn't show you last time
+
+1753
+01:18:45,370 --> 01:18:48,400
+that we can do to make these even smaller,
+
+1754
+01:18:48,400 --> 01:18:51,130
+which is that the arguments
+are specified here
+
+1755
+01:18:51,130 --> 01:18:52,150
+with index in.
+
+1756
+01:18:52,150 --> 01:18:55,630
+You can get rid of that
+and just use dollar-zero,
+
+1757
+01:18:55,630 --> 01:18:58,330
+and dollar-one, and dollar-two
+for each of the arguments.
+
+1758
+01:18:58,330 --> 01:18:59,670
+Dollar-zero for the first argument,
+
+1759
+01:18:59,670 --> 01:19:01,970
+dollar-one for the second
+argument, et cetera.
+
+1760
+01:19:02,870 --> 01:19:04,120
+So we're almost there.
+
+1761
+01:19:04,120 --> 01:19:07,210
+This is all gone right here.
+
+1762
+01:19:07,210 --> 01:19:11,040
+And because we now just
+calculate this in one fell swoop,
+
+1763
+01:19:11,040 --> 01:19:11,873
+we're getting this warning here
+
+1764
+01:19:11,873 --> 01:19:15,383
+that this can now be a let, which it can.
+
+1765
+01:19:16,240 --> 01:19:17,640
+How about this?
+
+1766
+01:19:17,640 --> 01:19:19,080
+How do we get rid of this?
+
+1767
+01:19:19,080 --> 01:19:20,030
+What's going on here?
+
+1768
+01:19:20,030 --> 01:19:23,410
+Here we're actually just
+saying to the Array of indices,
+
+1769
+01:19:23,410 --> 01:19:25,460
+if there's only one of you, give it to me.
+
+1770
+01:19:25,460 --> 01:19:27,300
+Otherwise, give me nil.
+
+1771
+01:19:27,300 --> 01:19:29,570
+Well, why don't we extend Array,
+
+1772
+01:19:29,570 --> 01:19:34,230
+using extension to Array, to
+have a var that does this?
+
+1773
+01:19:34,230 --> 01:19:36,120
+'Cause that seems like a
+reasonable Array thing.
+
+1774
+01:19:36,120 --> 01:19:39,180
+Hey Mr. Array, give me the
+only thing in yourself,
+
+1775
+01:19:39,180 --> 01:19:41,170
+otherwise give me nil.
+
+1776
+01:19:41,170 --> 01:19:44,563
+So let's create another little
+extension for Array here.
+
+1777
+01:19:45,411 --> 01:19:46,750
+Do a Swift file.
+
+1778
+01:19:46,750 --> 01:19:49,810
+We'll call this one Array+Only
+
+1779
+01:19:49,810 --> 01:19:53,350
+since it returns the
+only thing in an Array.
+
+1780
+01:19:53,350 --> 01:19:58,350
+And this extension to Array
+is gonna extend all Arrays.
+
+1781
+01:19:58,630 --> 01:20:01,120
+This extension to Array
+is not like this one
+
+1782
+01:20:01,120 --> 01:20:03,300
+where it's where Element's Identifiable.
+
+1783
+01:20:03,300 --> 01:20:05,530
+This one extends to all Arrays.
+
+1784
+01:20:05,530 --> 01:20:07,890
+It's gonna add this var
+I'm gonna call only.
+
+1785
+01:20:07,890 --> 01:20:12,290
+It's of type Element, question
+mark, Optional Element.
+
+1786
+01:20:12,290 --> 01:20:15,330
+And it's computed, and it
+just returns the Array's count
+
+1787
+01:20:15,330 --> 01:20:18,133
+equals one, first, colon, nil.
+
+1788
+01:20:19,060 --> 01:20:22,680
+So this is in Array, so count
+is the count of the Array.
+
+1789
+01:20:22,680 --> 01:20:23,820
+And if that equals one,
+
+1790
+01:20:23,820 --> 01:20:26,190
+we're using this ternary operator here
+
+1791
+01:20:26,190 --> 01:20:28,800
+to return the first item in the Array.
+
+1792
+01:20:28,800 --> 01:20:29,823
+Otherwise nil.
+
+1793
+01:20:32,140 --> 01:20:34,870
+Super simple, and that super simple code
+
+1794
+01:20:34,870 --> 01:20:37,310
+makes this all go away right here.
+
+1795
+01:20:37,310 --> 01:20:39,250
+We don't need any of this.
+
+1796
+01:20:39,250 --> 01:20:43,077
+Instead, we can just
+say dot-only over here,
+
+1797
+01:20:43,077 --> 01:20:45,500
+and get rid of all of this.
+
+1798
+01:20:45,500 --> 01:20:47,170
+Just return this.
+
+1799
+01:20:47,170 --> 01:20:50,770
+But since this is now a
+one-liner, we don't need return.
+
+1800
+01:20:50,770 --> 01:20:53,970
+And we can even make
+it all be one line here
+
+1801
+01:20:53,970 --> 01:20:55,077
+like this as well.
+
+1802
+01:20:55,077 --> 01:20:59,690
+And this code has all of a
+sudden gotten a lot more compact.
+
+1803
+01:20:59,690 --> 01:21:02,123
+So let's make sure we
+didn't break anything there.
+
+1804
+01:21:03,860 --> 01:21:08,860
+Click, yeah, ooh, what, yay, it works.
+
+1805
+01:21:09,450 --> 01:21:13,040
+Now this has set up this
+beautifully for your homework.
+
+1806
+01:21:13,040 --> 01:21:16,040
+You're going to now take this working game
+
+1807
+01:21:16,040 --> 01:21:18,670
+and do some enhancements to it.
+
+1808
+01:21:18,670 --> 01:21:20,490
+So check out the writeup for that.
+
+1809
+01:21:20,490 --> 01:21:22,630
+我们下节课再见
+
+1810
+01:21:22,630 --> 01:21:25,883
+>> [旁白] 请访问 stanford.edu
+获取更多内容
