@@ -2112,442 +2112,410 @@ MemoryGame 的方法
 
 501
 00:22:50,690 --> 00:22:54,120
-And struct is kind of basically built
+结构体基本上是为了支持
 
 502
 00:22:54,120 --> 00:22:55,540
-to support a kind of programming
+一种叫做函数式编程的
 
 503
 00:22:55,540 --> 00:22:58,230
-called functional programming.
+编程范式而创建的
 
 504
 00:22:58,230 --> 00:22:59,750
-Functional programming focuses
+函数式编程关注的是
 
 505
 00:22:59,750 --> 00:23:02,900
-on the functionality of things.
+事物的功能
 
 506
 00:23:02,900 --> 00:23:06,750
-Classes are built for
-object-oriented programming.
+类是为了面向对象编程而创建的
 
 507
 00:23:06,750 --> 00:23:09,125
-Object-oriented programming focuses on
+面向对象编程关注的是
 
 508
 00:23:09,125 --> 00:23:11,140
-encapsulating the data
+将数据和功能
 
 509
 00:23:11,140 --> 00:23:15,320
-and the functionality
-into some container, okay?
+封装到某个容器里面
 
 510
 00:23:15,320 --> 00:23:16,490
-An object.
+或者说一个对象里面
 
 511
 00:23:16,490 --> 00:23:18,740
-These are very different kind
-of concepts of the world.
+类和结构体这两种概念是十分不同的
 
 512
 00:23:18,740 --> 00:23:22,140
-They're both trying to
-achieve similar goals,
+但它们想达到的目的很类似
 
 513
 00:23:22,140 --> 00:23:24,900
-which is encapsulation a little bit
+将一些东西封装起来
 
 514
 00:23:24,900 --> 00:23:29,050
-and also just understanding
-where the functionality lives
+也清楚各种功能在你的程序中的位置
 
 515
 00:23:29,050 --> 00:23:32,140
-in your program but they're
-doing it quite differently.
+但它们两个的做法十分不同
 
 516
 00:23:32,140 --> 00:23:34,944
-And you can tell by the
-way their types are built.
+你可以通过它们的实现方式来区分
 
 517
 00:23:34,944 --> 00:23:37,932
-Copying it around versus
-having a pointer to it
+复制一个实例还是用指针指向一个实例
 
 518
 00:23:37,932 --> 00:23:40,700
-lead to a lot of different behavior
+会导致许多不同的行为
 
 519
 00:23:40,700 --> 00:23:42,780
-and over the course of this quarter,
+在这个学期的课程里
 
 520
 00:23:42,780 --> 00:23:45,390
-we're going to learn a lot
-about functional programming
+我们将要学习大量关于函数式编程的内容
 
 521
 00:23:45,390 --> 00:23:49,230
-and how it works even in the
-rest of this little lecture,
+以及它是如何运作的，哪怕
+在这节课剩余的时间里
 
 522
 00:23:49,230 --> 00:23:51,900
-we're gonna understand
-a lot more about that.
+我们会理解更多相关的知识
 
 523
 00:23:51,900 --> 00:23:53,620
-I'm assuming you all pretty much know
+我假设你们都十分了解
 
 524
 00:23:53,620 --> 00:23:54,930
-about object-oriented programming.
+面向对象编程
 
 525
 00:23:54,930 --> 00:23:57,700
-You programmed in Java or C++ or something
+使用过 Java 或 C++ 等
 
 526
 00:23:57,700 --> 00:23:58,853
-so you kinda know.
+所以你应该了解面向对象编程
 
 527
 00:23:59,872 --> 00:24:02,210
-Structs have no inheritance.
+结构体不支持继承
 
 528
 00:24:02,210 --> 00:24:03,770
-That's not really,
+实际上继承
 
 529
 00:24:03,770 --> 00:24:05,920
-that wouldn't make any sense, really,
+在函数式编程里
 
 530
 00:24:05,920 --> 00:24:08,020
-in functional programming
-to have inheritance.
+没有什么意义
 
 531
 00:24:08,020 --> 00:24:09,280
-We do have a kind of inheritance
+你会看到在函数式编程里面
 
 532
 00:24:09,280 --> 00:24:10,810
-in functional programming, you'll see,
+确实会有类似继承的地方
 
 533
 00:24:10,810 --> 00:24:12,090
-but not with structs, okay?
+但结构体不行
 
 534
 00:24:12,090 --> 00:24:13,680
-Struct can't have inheritance.
+结构体无法支持继承
 
 535
 00:24:13,680 --> 00:24:16,520
-And classes in Swift do
-you have inheritance.
+在 Swift 里，类是支持继承的
 
 536
 00:24:16,520 --> 00:24:18,830
-Of course, they can have
-a superclass if they want
+只要它想，就可以拥有一个超类
 
 537
 00:24:18,830 --> 00:24:20,040
-but it's single inheritance.
+但是只支持单继承
 
 538
 00:24:20,040 --> 00:24:22,861
-They can only inherit from one class.
+它们只能继承某一个类
 
 539
 00:24:22,861 --> 00:24:23,694
-That's what you're used to
+这点你们比较熟悉
 
 540
 00:24:23,694 --> 00:24:25,507
-and Java only has single inheritance,
+Java 也是单继承
 
 541
 00:24:25,507 --> 00:24:28,890
-C++ a single inheritance, et cetera.
+C++ 也是单继承
 
 542
 00:24:28,890 --> 00:24:30,833
-So that's a big difference as well.
+所以这也是一个很大的不同点
 
 543
 00:24:31,970 --> 00:24:34,130
-I told you about those init functions.
+我跟你们介绍过了它们的构造器
 
 544
 00:24:34,130 --> 00:24:36,804
-In a struct you get a free init
+结构体拥有一个逐一成员构造器
 
 545
 00:24:36,804 --> 00:24:40,050
-that initializes all
-the vars in your struct.
+初始化所有在结构体中的变量
 
 546
 00:24:40,050 --> 00:24:41,670
-Get that one for free,
+它是自动生成的
 
 547
 00:24:41,670 --> 00:24:44,753
-that's why we're able to say
-CardView isFaceUp colon true
+这也是为什么我们输入
+CardView(isFaceUp: true)
 
 548
 00:24:45,820 --> 00:24:49,353
-and it initializes that
-isFaceUp var that we had there
+它就能初始化 isFaceUp 属性为输入的值
 
 549
 00:24:49,353 --> 00:24:51,640
-because we got a free initializer
+因为我们有一个自动生成的构造器
 
 550
 00:24:51,640 --> 00:24:53,270
-that initialize all the vars.
+初始化所有的变量
 
 551
 00:24:53,270 --> 00:24:55,581
-In a class, you also
-get a free initializer
+类也有一个自动生成的构造器
 
 552
 00:24:55,581 --> 00:24:58,320
-but it doesn't initialize any of the vars.
+但它不会初始化任何一个变量
 
 553
 00:24:58,320 --> 00:25:00,160
-It's always open parentheses,
-close parentheses,
+自动生成的构造器
 
 554
 00:25:00,160 --> 00:25:01,540
-that's the free one.
+总是长这样 init()
 
 555
 00:25:01,540 --> 00:25:03,070
-So that would mean all of your vars
+所以这意味着你所有的变量
 
 556
 00:25:03,070 --> 00:25:05,770
-would have to have equal
-something after them
+都必须等于一个初始化的值
 
 557
 00:25:05,770 --> 00:25:08,930
-or you have to provide
-your own init in a class.
+或者你必须提供一个你自己写的构造器
 
 558
 00:25:08,930 --> 00:25:13,350
-So in classes, we almost
-always are providing inits.
+所以在类里面，我们几乎都得
+自己编写构造器
 
 559
 00:25:13,350 --> 00:25:15,920
-Because of this reason, we
-don't get a nice free one.
+因此，我们一般不使用自动生成的构造器
 
 560
 00:25:15,920 --> 00:25:17,610
-In structs, it's a mix.
+而结构体，一般是混合使用
 
 561
 00:25:17,610 --> 00:25:21,730
-Sometimes, we do the CardView
-way of using the free init,
+有时我们会像 CardView 那样
+使用逐一成员构造器
 
 562
 00:25:21,730 --> 00:25:23,710
-sometimes, we create our own init.
+有时我们得自己编写构造器
 
 563
 00:25:25,460 --> 00:25:27,150
-In value type programming,
+在对值类型编程时
 
 564
 00:25:27,150 --> 00:25:30,320
-we're copying these
-things around mutability
+很多情况需要对其复制
 
 565
 00:25:30,320 --> 00:25:35,320
-or changeability has to be
-explicitly stated with a struct.
+那么我们需要明确其可变性
 
 566
 00:25:35,910 --> 00:25:38,700
-If you have a struct and you
-want, like it's an Array,
+假如你有一个结构体，比如数组
 
 567
 00:25:38,700 --> 00:25:40,143
-and you wanna be able to add items to it,
+然后你想为它添加元素
 
 568
 00:25:40,143 --> 00:25:42,400
-like it wants to be a changeable Array,
+它得是一个可变的数组
 
 569
 00:25:42,400 --> 00:25:45,080
-then you have to explicitly say
+那么你就需要
 
 570
 00:25:45,080 --> 00:25:46,130
-that that's what you're gonna do
+明确它是可变的
 
 571
 00:25:46,130 --> 00:25:49,890
-and you do that by using var versus let.
+你得使用 var 关键字而不是 let
 
 572
 00:25:49,890 --> 00:25:52,270
-Remember I said that structs and classes
+还记得我说过结构体和类
 
 573
 00:25:52,270 --> 00:25:54,600
-both have this thing
-let which is a constant?
+都能使用 let 关键字声明为常量吗？
 
 574
 00:25:54,600 --> 00:25:57,950
-Well, if you say let a
-variable equal a struct,
+如果你使用 let 创建一个结构体
 
 575
 00:25:57,950 --> 00:26:00,920
-then you can't mutate it, you can't,
+那么你就无法再改变它
 
 576
 00:26:00,920 --> 00:26:03,450
-if it's an Array, you
-couldn't add items to it
+比如它是一个数组的话
+你就不能往里面添加元素
 
 577
 00:26:03,450 --> 00:26:07,940
-but if you say var something
-equals a struct, now, you can.
+但如果你使用 var 创建一个结构体
+这时你就能修改它了
 
 578
 00:26:07,940 --> 00:26:10,240
-Whereas classes are always mutable.
+然而类总是可变的
 
 579
 00:26:10,240 --> 00:26:12,470
-They live in the heap, you
-have a pointer to them,
+类存储在堆里面
+你有一个指针指向它们
 
 580
 00:26:12,470 --> 00:26:14,410
-you could always go through that pointer
+你总是可以通过那个指针
 
 581
 00:26:14,410 --> 00:26:16,570
-and modify the thing in the heap, okay?
+来修改存储在堆里面的东西
 
 582
 00:26:16,570 --> 00:26:20,750
-There's no control of
-mutability in a class,
+类的可变性是无法被控制的
 
 583
 00:26:20,750 --> 00:26:23,620
-which is really a bigger,
+这是一个很大的问题
 
 584
 00:26:23,620 --> 00:26:24,847
-when it comes to trying to build code,
+当你开始编写程序时
 
 585
 00:26:24,847 --> 00:26:29,250
-did you understand what it
-really is doing, provably doing?
+你明白它究竟是在做什么吗？
 
 586
 00:26:29,250 --> 00:26:31,040
-That's a big problem with classes,
+类有一个很大的问题是
 
 587
 00:26:31,040 --> 00:26:32,890
-that anybody who has a pointer to a class
+任何一个拥有那个类的指针的人
 
 588
 00:26:32,890 --> 00:26:34,250
-can just go mutate it.
+都能修改它
 
 589
 00:26:34,250 --> 00:26:36,151
-It's like that's so Wild West,
+这会相当的混乱
 
 590
 00:26:36,151 --> 00:26:38,660
-it's really hard to
-understand what's going on.
+很难理解发生了什么
 
 591
 00:26:38,660 --> 00:26:40,810
-So having this mutability be explicit,
+所以能明确可变性
 
 592
 00:26:40,810 --> 00:26:42,160
-it's really nice feature
+对于结构体和函数式编程来说
 
 593
 00:26:42,160 --> 00:26:44,820
-in functional programming and structs.
+是个很好的特性
 
 594
 00:26:44,820 --> 00:26:47,600
-Now, structs are your
-go-to data structure.
+现在你们需要优先考虑使用结构体
 
 595
 00:26:47,600 --> 00:26:50,912
-You're pretty much gonna use
-struct's as your first try.
+你们应该首先尝试使用结构体
 
 596
 00:26:50,912 --> 00:26:52,889
-You're only gonna resort using a class
+只有在特定的情况下
 
 597
 00:26:52,889 --> 00:26:55,600
-in certain specific circumstances.
+你们才会使用一个类
 
 598
 00:26:55,600 --> 00:26:58,860
-And we're gonna see one of
-those circumstances today,
+一会儿我们就看到其中的一种情况
 
 599
 00:26:58,860 --> 00:27:01,190
-which is your ViewModel.
+那就是视图模型
 
 600
 00:27:01,190 --> 00:27:05,040
-The ViewModel in an
-MVVM is always a class.
+MVVM 中的视图模型始终是一个类
 
 601
 00:27:05,040 --> 00:27:07,450
