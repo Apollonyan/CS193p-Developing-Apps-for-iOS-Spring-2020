@@ -4536,7 +4536,7 @@ start using this Model,
 
 1023
 00:45:55,750 --> 00:45:59,340
-we're gonna save MemoryGame,
+we're gonna say MemoryGame,
 angle brackets string
 
 1024
