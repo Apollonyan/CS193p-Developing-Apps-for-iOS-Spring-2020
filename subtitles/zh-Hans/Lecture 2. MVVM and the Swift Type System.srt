@@ -3437,236 +3437,223 @@ end of our slides for today.
 
 816
 00:36:25,580 --> 00:36:27,660
-So this is what we talked about
+以上就是我们所讨论的
 
 817
 00:36:27,660 --> 00:36:31,140
-and so now, we're gonna
-go back to the demo
+现在我们回到示例程序中
 
 818
 00:36:31,140 --> 00:36:34,890
-and we're gonna try and
-talk about everything
+接下来我们会在项目中试着讨论
 
 819
 00:36:34,890 --> 00:36:37,990
-that I covered in the slides in the demo.
+幻灯片中介绍到的所有内容
 
 820
 00:36:37,990 --> 00:36:40,490
-Remember that you're gonna
-have to reproduce this demo
+需要记住的是
+你们要在第一次作业中
 
 821
 00:36:40,490 --> 00:36:43,700
-for your first homework
-assignment, which is out there,
+重写这个示例程序
+务必登录 Piazza
 
 822
 00:36:43,700 --> 00:36:45,410
-kind of came out with these lectures
+因为作业的相关内容
 
 823
 00:36:45,410 --> 00:36:48,283
-so make sure you check Piazza for that.
+已经随讲义一起发布在 Piazza
 
 824
 00:36:49,820 --> 00:36:53,160
-Let's take our Memorize
-app here to the next level
+现在让我们用 MVVM 架构
+把这个记忆游戏 App
 
 825
 00:36:53,160 --> 00:36:58,160
-by using this MVVM architecture
-to give it some brains,
+进行改造升级
+让这些卡片更聪明一些
 
 826
 00:36:58,510 --> 00:37:02,003
-some logic and some data being the cards.
+让这些卡片成为逻辑和数据
 
 827
 00:37:02,003 --> 00:37:03,510
-How are we gonna do this?
+我们该从何下手呢？
 
 828
 00:37:03,510 --> 00:37:05,350
-Well, we've been working so far,
+到目前为止
 
 829
 00:37:05,350 --> 00:37:08,690
-all this code that you see
-here on the screen on the View.
+屏幕上看到的这些代码
+都是在构建一个视图
 
 830
 00:37:08,690 --> 00:37:13,580
-So in MVVM, we've been working
-on the first V, the View
+对应到 MVVM 中
+就是其中的第一个字母“V”
 
 831
 00:37:13,580 --> 00:37:16,510
-and the next piece we're gonna
-work on is the Model, okay?
+视图之后，我们接下来要学习的是模型
 
 832
 00:37:16,510 --> 00:37:19,260
-And again, the Model is UI independent,
+需要再说一次的是，模型独立于 UI
 
 833
 00:37:19,260 --> 00:37:21,260
-it's not gonna know
-anything about how the game
+它不会知道这个记忆游戏
 
 834
 00:37:21,260 --> 00:37:23,130
-is going to be displayed.
+是如何显示的
 
 835
 00:37:23,130 --> 00:37:26,820
-Anytime we're gonna add a
-new Swift file to Xcode,
+每当我们要向 Xcode 中
+添加新的 Swift 文件时
 
 836
 00:37:26,820 --> 00:37:30,763
-that we do that with the
-File menu under New, File.
+我们都可以通过菜单 File
+选中 New 下的 File 选项来新建
 
 837
 00:37:31,770 --> 00:37:34,470
-There's a lot of different
-kinds of files you can create
+这里有很多种可以创建的文件类型
 
 838
 00:37:34,470 --> 00:37:37,350
-but really, comes down
-to these two right here.
+但实际上，可以归结为这两种
 
 839
 00:37:37,350 --> 00:37:40,890
-This creates a new SwiftUI
-View for you, right?
+选择这项会创建一个
+新的 SwiftUI 视图，是吧？
 
 840
 00:37:40,890 --> 00:37:43,720
-Something that's gonna say
-struct whatever colon View
+它会生成 struct xxx: View
 
 841
 00:37:43,720 --> 00:37:47,960
-with var body, all that and
-this one creates a non-UI,
+和 var body 所有这些的代码
+这个则会创建一个我们
 
 842
 00:37:47,960 --> 00:37:50,480
-just blank Swift file,
-which is what we want
+现在所需的，不是 UI 类型的
+Swift 空文件
 
 843
 00:37:50,480 --> 00:37:54,620
-because our Model is not a UI struct.
+因为我们的模型并不是 UI 结构体
 
 844
 00:37:54,620 --> 00:37:56,360
-So let's double click on this.
+所以我们双击它
 
 845
 00:37:56,360 --> 00:37:58,500
-Now, it's asking you
-where you wanna store it
+现在，它在问你想把它存储在哪里
 
 846
 00:37:58,500 --> 00:38:00,000
-and what you wanna call it.
+以及你想怎么命名它
 
 847
 00:38:00,000 --> 00:38:02,600
-Well, this is gonna be the
-heart of our memory game
+这个文件将成为我们这个
+记忆游戏的核心文件
 
 848
 00:38:02,600 --> 00:38:05,440
-so I'm actually gonna
-call this file MemoryGame
+所以我要给这个文件直接
+命名为 MemoryGame
 
 849
 00:38:05,440 --> 00:38:08,230
-because the struct that I'm
-gonna create inside of it,
+因为我要在这个文件里
+创建的最主要的结构体
 
 850
 00:38:08,230 --> 00:38:11,210
-the main struct, is a MemoryGame struct
+就是这个用来实现记忆游戏的
 
 851
 00:38:11,210 --> 00:38:12,910
-that plays the MemoryGame.
+MemoryGame 结构体
 
 852
 00:38:12,910 --> 00:38:15,190
-So, what the other thing
-down here, it's asking
+下面还有另一个选项
 
 853
 00:38:15,190 --> 00:38:16,850
-is where do you wanna put it?
+就是问你要把这个文件存放在哪里？
 
 854
 00:38:16,850 --> 00:38:20,810
-This yellow is the same
-as this yellow over here
+这个黄色的和这里的黄色的是一样的
 
 855
 00:38:20,810 --> 00:38:25,120
-and similarly, this blue is
-the same as this blue up here.
+这个蓝色的和这里的蓝色的是一样的
 
 856
 00:38:25,120 --> 00:38:28,690
-We don't really ever wanna put
-things up here in the blue.
+我们通常不会
+把文件存放在这个蓝色的里面
 
 857
 00:38:28,690 --> 00:38:30,650
-We wanna put them in these folders,
+我们会把它们放在这些文件夹中
 
 858
 00:38:30,650 --> 00:38:32,590
-okay, these yellow folders.
+这些黄色文件夹
 
 859
 00:38:32,590 --> 00:38:34,840
-Also, no matter which
-group you choose here,
+另外，无论你在这里选择了哪个组
 
 860
 00:38:34,840 --> 00:38:36,570
-you wanna make sure it's in the same place
+都应该确保这个文件
 
 861
 00:38:36,570 --> 00:38:39,440
-in a filesystem as things
-like your content View.
+和诸如 ContentView 之类的文件
+在文件系统中的位置相同
 
 862
 00:38:39,440 --> 00:38:41,230
-You see the content View there,
+你在此处看到了内容视图
 
 863
 00:38:41,230 --> 00:38:45,370
-we wanna make sure that's
-what's selected in here.
+我们要确保这里就是我们所选择的位置
 
 864
 00:38:45,370 --> 00:38:47,280
-So let's create this.
+我们来创建这个文件
 
 865
 00:38:47,280 --> 00:38:48,251
-Here it is, right?
+它就在那儿，对吧？
 
 866
 00:38:48,251 --> 00:38:49,084
-MemoryGame.
+MemoryGame
 
 867
 00:38:49,084 --> 00:38:50,900
