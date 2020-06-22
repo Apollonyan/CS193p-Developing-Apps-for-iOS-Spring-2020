@@ -2926,514 +2926,482 @@ the actual type that Element is.
 
 701
 00:31:22,690 --> 00:31:24,790
-So this is an Array of Ints.
+这就是 Int 类型的 Array
 
 702
 00:31:24,790 --> 00:31:26,970
-Now, it's sort of almost like someone did
+这就像是有人在 Array 的代码里
 
 703
 00:31:26,970 --> 00:31:29,820
-a search and replace
-in all of Array's code
+使用了查找替换功能
 
 704
 00:31:29,820 --> 00:31:32,620
-where they searched and
-replaced Element with Int.
+将所有的 Element 换成了 Int
 
 705
 00:31:32,620 --> 00:31:36,460
-So the function append now
-takes an Int as an argument.
+这样一来
+append 函数就会将 Int 类型作为参数
 
 706
 00:31:36,460 --> 00:31:39,990
-That's why I can say a.append(5)
-and that works perfectly
+这就是为什么我写下了 a.append(5)
+并且毫无问题
 
 707
 00:31:39,990 --> 00:31:41,440
-'cause five is an Int
+因为 5 是一个 Int
 
 708
 00:31:41,440 --> 00:31:44,403
-and append now takes
-an Int as an argument.
+append 函数已将 Int 类型作为参数
 
 709
 00:31:45,290 --> 00:31:47,320
-So, it's the using of Array
+所以说
+Array 中的 Element 类型
 
 710
 00:31:47,320 --> 00:31:49,760
-when Element's actual
-type gets determined,
+在 Array 被使用时确立
 
 711
 00:31:49,760 --> 00:31:52,090
-when the code in Array is being written,
+而实现 Array 的代码中
 
 712
 00:31:52,090 --> 00:31:53,160
-it's all a don't care.
+类型是剥离的
 
 713
 00:31:53,160 --> 00:31:56,870
-It just uses the type Element,
-which is a don't care.
+它直接用 Element 这个
+并非实际特定类型的类型
 
 714
 00:31:56,870 --> 00:31:59,140
-Notice that when you use
-a don't care like this,
+注意当你使用这样的类型时
 
 715
 00:31:59,140 --> 00:32:01,620
-you have to let the world know about it
+你需要让其他代码也明确这一点
 
 716
 00:32:01,620 --> 00:32:03,000
-because they're gonna have to tell you
+因为你需要依赖它们
 
 717
 00:32:03,000 --> 00:32:05,080
-what it actually is when they use it
+来确定这里的具体类型
 
 718
 00:32:05,080 --> 00:32:07,700
-and that's what the angle
-bracket Element there
+这就是这里的尖括号
 
 719
 00:32:07,700 --> 00:32:09,580
-at the top is all about.
+存在的意义
 
 720
 00:32:09,580 --> 00:32:12,096
-And it's perfectly legal to
-have multiple don't cares.
+多个不定类型的存在也是合法的
+
 
 721
 00:32:12,096 --> 00:32:15,748
-Struct Array, angle bracket
-Element, comma, Foo, comma,
+struct Array<Element, Foo, ...
 
 722
 00:32:15,748 --> 00:32:18,890
-so you may have as many
-don't care as you want
+你可以想使用几个不定类型就使用几个
 
 723
 00:32:18,890 --> 00:32:21,650
-and then the person who's
-using it has to specify
+只是使用时注意要确定
 
 724
 00:32:21,650 --> 00:32:23,433
-what all those types are.
+它们的类型就好
 
 725
 00:32:24,940 --> 00:32:27,690
-Okay, I call these don't care types,
+OK，我把它们称作不定类型
 
 726
 00:32:27,690 --> 00:32:29,310
-elements that don't care type.
+元素没有确立的数据类型
 
 727
 00:32:29,310 --> 00:32:31,843
-The real name for these is type parameter.
+它们的真实名称应当是类型参数
 
 728
 00:32:33,750 --> 00:32:36,710
-And the last type I wanna
-talk about is functions.
+最后一种我会讲的类型是函数
 
 729
 00:32:36,710 --> 00:32:39,120
-So, functions are people too.
+函数也是类型
 
 730
 00:32:39,120 --> 00:32:42,450
-Functions can serve as a type
+函数可以作为一种类型
 
 731
 00:32:42,450 --> 00:32:47,020
-and the syntax for it is really
-simple and straightforward.
+并且其运用的语法简单直白
 
 732
 00:32:47,020 --> 00:32:51,070
-Here's some example of some
-functions that are types.
+这里有一些将函数用作类型的例子
 
 733
 00:32:51,070 --> 00:32:54,940
-This in yellow, the stuff you
-see in yellow, that is a type.
+屏幕上黄色字体标出的就是一个类型
 
 734
 00:32:54,940 --> 00:32:59,940
-Just imagine the yellow part
-is Int or String, right?
+你可以联想到 Int 或者 String 类型
 
 735
 00:33:00,000 --> 00:33:02,040
-Or Array of Int, okay?
+或者是 Int 组成的数组类型
 
 736
 00:33:02,040 --> 00:33:04,070
-It's exactly, it's just as much a type
+和那些类型一样
 
 737
 00:33:04,070 --> 00:33:05,320
-as any of those things.
+这里也是一种类型
 
 738
 00:33:05,320 --> 00:33:09,320
-So this type is a function
-that takes two Ints
+所以这个类型指的就是
+一个接受两个 Int 参数
 
 739
 00:33:09,320 --> 00:33:11,030
-and returns a Bool.
+且返回值为 Bool 类型的函数
 
 740
 00:33:11,030 --> 00:33:12,240
-That's what that type is.
+就是这样的一种类型
 
 741
 00:33:12,240 --> 00:33:15,390
-So you could have the parameter
-to a function of this type.
+所以说
+你可以将这个作为函数参数的类型
 
 742
 00:33:15,390 --> 00:33:18,290
-This one is a function that takes a Double
+这是一个接受 Double 参数
 
 743
 00:33:18,290 --> 00:33:20,230
-and returns nothing.
+且没有返回值的函数类型
 
 744
 00:33:20,230 --> 00:33:23,350
-This one is a function that takes nothing
+这是一个没有参数
 
 745
 00:33:23,350 --> 00:33:25,350
-and returns an Array of Strings.
+但返回由 String 组成的 Array 的函数类型
 
 746
 00:33:25,350 --> 00:33:28,290
-This one is a function
-that takes no arguments
+这是一个没有参数
 
 747
 00:33:28,290 --> 00:33:30,400
-and returns nothing.
+且没有返回值的函数类型
 
 748
 00:33:30,400 --> 00:33:31,460
-These are all just types,
+它们都是类型
 
 749
 00:33:31,460 --> 00:33:34,010
-each of these yellow things, just a type.
+每个黄色字体标出的内容都只是类型
 
 750
 00:33:34,010 --> 00:33:37,300
-Nothing kind of special
-about them, really.
+没有什么特别的
 
 751
 00:33:37,300 --> 00:33:40,160
-That means I can declare a
-variable of one of these types.
+这意味着我可以声明一个这种类型的变量
 
 752
 00:33:40,160 --> 00:33:42,250
-So like let's say I have a variable foo,
+比如我可以创建一个变量命名为 foo
 
 753
 00:33:42,250 --> 00:33:45,400
-its type could be a
-function that takes a Double
+它的类型可以是一个接受 Double 参数
 
 754
 00:33:45,400 --> 00:33:47,010
-and returns nothing.
+且没有返回值的函数类型
 
 755
 00:33:47,010 --> 00:33:48,420
-Or I could have a function.
+或者我也可以创建一个函数
 
 756
 00:33:48,420 --> 00:33:52,310
-Do something with an
-argument what, what to do
+名为 doSomething
+它有一个名为 what 的参数
 
 757
 00:33:52,310 --> 00:33:55,510
-and it's type is a function
-that takes no arguments
+参数的类型是一个没有参数
+且返回值为 Bool 类型的函数
 
 758
 00:33:55,510 --> 00:33:58,920
-and returns a Bool, presumably,
-in the body of do something
+想必是会在 doSomething 中
 
 759
 00:33:58,920 --> 00:34:01,580
-it wants to do that what.
+执行 what 的内容
 
 760
 00:34:01,580 --> 00:34:05,130
-So let's see how we use
-something that's of type function
+我们再来看看如何使用函数类型
 
 761
 00:34:05,130 --> 00:34:07,830
-so I'm gonna have here
-a var called operation
+这里有一个名为 operation 的变量
 
 762
 00:34:07,830 --> 00:34:10,730
-of type function that takes a
-Double and returns a Double.
+它的类型是一个接受 Double 参数
+并返回 Double 的函数
 
 763
 00:34:11,710 --> 00:34:15,180
-And I'm going to create a function
+我会创建一个函数
 
 764
 00:34:15,180 --> 00:34:16,780
-that takes a Double and returns a Double.
+使它接受 Double 参数
+且返回值也是 Double 类型
 
 765
 00:34:16,780 --> 00:34:20,630
-So I have this function
-square, takes a operand Double
+这个名为 square 的函数
+有一个名为 operand 的 Double 类型参数
 
 766
 00:34:20,630 --> 00:34:22,750
-and returns a Double, it squares it,
+求得 operand 的平方
 
 767
 00:34:22,750 --> 00:34:24,980
-operand times operand.
+然后将其以 Double 类型返回
 
 768
 00:34:24,980 --> 00:34:27,400
-So now, since that's what it is I can say
+这样一来
 
 769
 00:34:27,400 --> 00:34:29,670
-operation equals square, right?
+我们可以将 square 赋值给 operation
 
 770
 00:34:29,670 --> 00:34:32,397
-Operation of type function
-that takes a Double
+operation 是一个接受 Double 参数
+并返回 Double 的函数类型
 
 771
 00:34:32,397 --> 00:34:34,250
-and returns a Double equals square.
+所以它可以被赋值为 square
 
 772
 00:34:34,250 --> 00:34:36,790
-Square is a function that takes
-a Double, returns a Double.
+square 是一个接受 Double 参数
+且返回值也是 Double 类型的函数
 
 773
 00:34:36,790 --> 00:34:39,210
-It's perfectly legal and I can then,
+这样的代码合情合理
 
 774
 00:34:39,210 --> 00:34:42,100
-now that I have operation,
-I can execute it by saying
+现在我们就可以通过
 
 775
 00:34:42,100 --> 00:34:46,260
-let result1, let's say
-equal operation of four.
+let result1 = operation(4)
+来执行这个函数
 
 776
 00:34:46,260 --> 00:34:50,900
-So result1 would be 16 'cause
-that's what square does.
+这样一来 result1 就会等于 16
+也就是 4 的平方
 
 777
 00:34:50,900 --> 00:34:52,980
-Notice that when I
-called operation though,
+注意这里当我调用 operation 时
 
 778
 00:34:52,980 --> 00:34:56,030
-I did not say operation operand:
+我没有写出 operation(operand:
 
 779
 00:34:56,030 --> 00:34:58,870
-The little var thing,
-that gets dropped, okay?
+这里的实参标签被忽略掉了
 
 780
 00:34:58,870 --> 00:35:01,190
-That's one thing happens
-when you pass something
+这是通过函数类型调用函数情况下的
 
 781
 00:35:01,190 --> 00:35:06,190
-through a function type is
-it loses its little labels.
+常规用法
+忽略实参标签
 
 782
 00:35:06,640 --> 00:35:08,070
-But I could also come along and say
+不过我也可以在这里写
 
 783
 00:35:08,070 --> 00:35:09,660
-operation equals square root
+operation = sqrt
 
 784
 00:35:09,660 --> 00:35:13,190
-so sqrt is a built-in function in Swift
+sqrt 是一个 Swift 内置函数
 
 785
 00:35:13,190 --> 00:35:15,390
-and it square roots a thing,
+它可以求出一个数的平方根
 
 786
 00:35:15,390 --> 00:35:17,240
-but it's just a function
-that takes a Double
+它是接受一个 Double 参数
 
 787
 00:35:17,240 --> 00:35:18,480
-and returns a Double.
+并且返回值也是 Double 类型的函数
 
 788
 00:35:18,480 --> 00:35:20,430
-So I can say operation equals square root.
+所以这里我可以
+把 sqrt 赋值给 operation
 
 789
 00:35:20,430 --> 00:35:23,563
-And now, if I say let
-result2 equal operation of 4,
+现在如果我写出
+let result2 = operation(4)
 
 790
 00:35:23,563 --> 00:35:24,873
-result2 is gonna be two
+result2 的值就会是 2
 
 791
 00:35:24,873 --> 00:35:27,450
-because I changed the value of operation.
+因为我已经改变了 operation 的值
 
 792
 00:35:27,450 --> 00:35:29,140
-That used to be a function square
+它曾是 square 函数
 
 793
 00:35:29,140 --> 00:35:32,110
-and I changed it to be
-a function square root.
+然后我把它赋值为了 sqrt 函数
 
 794
 00:35:32,110 --> 00:35:32,970
-It's simple as that.
+就是这么简单
 
 795
 00:35:32,970 --> 00:35:36,200
-I mean, seems almost too simple to be true
+简单到难以置信
 
 796
 00:35:36,200 --> 00:35:38,280
-but it is what it is.
+但事实如此
 
 797
 00:35:38,280 --> 00:35:40,900
-And in the demo that I'm gonna do
+而在接下来的
 
 798
 00:35:40,900 --> 00:35:42,970
-right in a few seconds here,
+示例程序中
 
 799
 00:35:42,970 --> 00:35:44,658
-we're going to create
-our own little function
+我会创建我们自己的函数
 
 800
 00:35:44,658 --> 00:35:47,270
-that takes a function as an argument.
+并将函数作为参数
 
 801
 00:35:47,270 --> 00:35:49,340
-You're gonna hear the phrase closures
+你将会听到闭包（Closure）之类的词汇
 
 802
 00:35:49,340 --> 00:35:51,410
-and I'm gonna talk a
-lot more about closures
+而我将会在下周或下下周
 
 803
 00:35:51,410 --> 00:35:53,313
-probably next week or the week after.
+更详尽地谈到闭包
 
 804
 00:35:54,200 --> 00:35:57,430
-A closure is essentially
-inlining a function,
+闭包其实就是在代码中直接插入一个函数
 
 805
 00:35:57,430 --> 00:36:00,487
-taking a function that you're
-passing to another function
+把作为参数函数的代码直接插入
 
 806
 00:36:00,487 --> 00:36:03,250
-as a parameter and you're in lining it
+作为另一个函数的参数
 
 807
 00:36:03,250 --> 00:36:06,440
-instead of having it be
-separately declared somewhere.
+而非在另一处声明
 
 808
 00:36:06,440 --> 00:36:08,450
-It's a little more than just inlining it
+它比单纯地直接插入更胜一筹
 
 809
 00:36:08,450 --> 00:36:09,960
-because it's doing some nice things
+因为它有一些独到之处
 
 810
 00:36:09,960 --> 00:36:12,115
-to capture local variables and things.
+比如捕获本地变量
 
 811
 00:36:12,115 --> 00:36:14,240
-So, that's what I'm gonna
-talk about next week
+我会在下周谈到这些
 
 812
 00:36:14,240 --> 00:36:16,100
-but I am gonna show you what the syntax
+但我现在就会用示例程序给你看看
 
 813
 00:36:16,100 --> 00:36:19,783
-of inlining functions
-looks like in the demo
+直接插入函数的语法
 
 814
 00:36:19,783 --> 00:36:20,913
-that we're gonna do.
+接下来就会是这个内容
 
 815
 00:36:21,810 --> 00:36:25,580
-And in fact, that is the
-end of our slides for today.
+我们今天的幻灯片到此为止
 
 816
 00:36:25,580 --> 00:36:27,660
