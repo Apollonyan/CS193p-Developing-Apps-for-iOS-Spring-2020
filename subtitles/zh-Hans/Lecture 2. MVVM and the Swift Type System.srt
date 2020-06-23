@@ -4717,123 +4717,155 @@ something more descriptive of what it is.
 
 1089
 00:49:11,400 --> 00:49:13,190
+这是个记忆游戏所以你可以叫它 game
 It's a MemoryGame so you'd
 probably call it game
 
 1090
 00:49:13,190 --> 00:49:15,077
+或者 memoryGame 或其他类似的名字
 or memoryGame or something.
 
 1091
 00:49:15,077 --> 00:49:16,360
+但这里我叫它 model
 But I'm gonna call it model
 
 1092
 00:49:16,360 --> 00:49:17,490
+这样一来在之后的代码中
 so that all the rest of the code,
 
 1093
 00:49:17,490 --> 00:49:20,870
+可以时刻提醒你它在访问模型
 you'll be able to see, oh,
 he's accessing the Model there.
 
 1094
 00:49:20,870 --> 00:49:23,460
+那么我们的模型的类型是什么呢？
 Now, what's the type of our Model?
 
 1095
 00:49:23,460 --> 00:49:26,010
+它是我们刚刚写好的
 Well, that's this thing
 we just built over here,
 
 1096
 00:49:26,010 --> 00:49:29,630
+MemoryGame 结构体
+这个泛型结构体
 this struct MemoryGame, this
 generic MemoryGame thing
 
 1097
 00:49:29,630 --> 00:49:32,070
+有一个不在意类型的 CardContent
 that has this CardContent don't care,
 
 1098
 00:49:32,070 --> 00:49:34,960
+作为表情游戏中卡片的内容
 which is the contents of
 the Card and our emoji game,
 
 1099
 00:49:34,960 --> 00:49:38,160
+显然，卡片的内容应该是字符串，对吧？
 of course, the contents of the
 Cards are Strings, all right?
 
 1100
 00:49:38,160 --> 00:49:39,500
+表情就是字符串
 Emojis are Strings.
 
 1101
 00:49:39,500 --> 00:49:42,280
+所以这个类型就是 MemoryGame
 So this type is just MemoryGame
 
 1102
 00:49:42,280 --> 00:49:46,970
+CardContent 是一个 String
 where the CardContent is a String, okay?
 
 1103
 00:49:46,970 --> 00:49:49,470
+很简单吧
 Simple as that.
 
 1104
 00:49:49,470 --> 00:49:54,350
+现在我来介绍一下
+为什么 EmojiMemoryGame 是一个类
 Now, let's talk more about
 why EmojiMemoryGame is a class
 
 1105
 00:49:54,350 --> 00:49:57,350
+可能我需要在视图模型和模型之间
 and maybe I can even draw an analogy
 
 1106
 00:49:57,350 --> 00:50:00,470
+做一个类比
 between the ViewModel and the Model
 
 1107
 00:50:00,470 --> 00:50:03,710
+这会帮助我们理解它们是如何交互的
 that will help understand
 how these things interact.
 
 1108
 00:50:03,710 --> 00:50:08,410
+对于一个类来说，它最大的好处
 Now, a class, probably the
 biggest advantage of a class
 
 1109
 00:50:08,410 --> 00:50:13,350
+就是它便于分享
+因为类保存在堆中
 is that it's easy to share
 because a class lives in the heap
 
 1110
 00:50:13,350 --> 00:50:14,560
+并且有指向自己的指针
 and it has pointers to it.
 
 1111
 00:50:14,560 --> 00:50:17,970
+你们之前做面向对象编程
+的时候就是这么干的
 This is what you're used to in
 object-oriented programming.
 
 1112
 00:50:17,970 --> 00:50:20,210
+因为它保存在堆中，还有指针
 Well, since it lives in the
 heap, you can have pointers,
 
 1113
 00:50:20,210 --> 00:50:23,430
+所以所有的视图都可以指向同一个实例
 all of our Views could have pointers to it
 
 1114
 00:50:23,430 --> 00:50:26,240
+当我们开始构建复杂的用户界面的时候
 and when we start building
 complicated user interfaces,
 
 1115
 00:50:26,240 --> 00:50:28,850
+我们会有很多视图
+并且其中有不少视图
 we're gonna have lots of
 Views and many of those Views
 
