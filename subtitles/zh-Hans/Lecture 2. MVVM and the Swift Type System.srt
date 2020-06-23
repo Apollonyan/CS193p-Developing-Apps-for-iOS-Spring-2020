@@ -4293,181 +4293,176 @@ into strings as well.
 
 967
 00:43:20,150 --> 00:43:22,460
-So this is a super powerful mechanism.
+所以这是个非常强大的机制
 
 968
 00:43:22,460 --> 00:43:25,050
-this backslash, open
-parentheses, close parentheses.
+反斜杠 \，开括号 (，闭括号 )
 
 969
 00:43:25,050 --> 00:43:27,547
-I encourage you to use it,
-it's great for debugging.
+我鼓励你们使用 print 方法
+它非常适合用来调试
 
 970
 00:43:27,547 --> 00:43:31,170
-You can print things
-out when things happen.
+当东西发生改变时
+你可以将它打印出来
 
 971
 00:43:31,170 --> 00:43:32,440
-It's awesome.
+这非常的棒
 
 972
 00:43:32,440 --> 00:43:34,520
-Now, this is a pretty simple function.
+现在，这是非常简单的函数
 
 973
 00:43:34,520 --> 00:43:38,010
-We're gonna learn over the
-quarter various pieces of syntax
+我们将在一刻钟左右的时间学习
+各种各样的语法
 
 974
 00:43:38,010 --> 00:43:38,843
-for doing functions.
+来实现函数
 
 975
 00:43:38,843 --> 00:43:41,280
-For example, if this returned a value,
+例如，这个函数返回了一个值
 
 976
 00:43:41,280 --> 00:43:42,790
-it would look like this, okay?
+它看起来应该是这样，对吗？
 
 977
 00:43:42,790 --> 00:43:44,540
-A little arrow this basically saying
+一个箭头说明
 
 978
 00:43:44,540 --> 00:43:46,850
-coming out of this function is a string
+从这个函数里返回的是一个字符串类型的值
 
 979
 00:43:46,850 --> 00:43:50,200
-but ours does not and if it
-had other arguments here,
+但我们的函数并不是，
+如果这里有其他的参数
 
 980
 00:43:50,200 --> 00:43:51,610
-might be other argument,
+可能是 other 参数
 
 981
 00:43:51,610 --> 00:43:53,070
-might be an Int or something like that.
+是一个 Int 类型或者其他类型
 
 982
 00:43:53,070 --> 00:43:56,573
-It can have as many arguments as it wants.
+这里可以有任意多个参数
 
 983
 00:43:58,670 --> 00:44:02,090
-So, basically, this is our
-entire MemoryGame right here.
+因此本质上来说，
+我们的整个 MemoryGame 已经在这里了
 
 984
 00:44:02,090 --> 00:44:04,500
-Just ask cards, you can choose them.
+只有卡片，你可以选择他们
 
 985
 00:44:04,500 --> 00:44:07,460
-But we're gonna have to
-really obviously decide
+但是很显然我们应该决定
 
 986
 00:44:07,460 --> 00:44:10,970
-what a Card looks like,
-what's important about a Card
+一张卡片的外观
+一张卡片有什么重要的内容
 
 987
 00:44:10,970 --> 00:44:15,400
-and one thing we know a Card has
+关于卡片有一件事我们是知道的
 
 988
 00:44:15,400 --> 00:44:17,653
-is whether it's face-up
-or not so I'm gonna say
+就是卡片是否是面朝上的或者朝下的
+因此我会写
 
 989
 00:44:17,653 --> 00:44:19,236
-var isFaceUp: Bool.
+var isFaceUp: Bool
 
 990
 00:44:20,290 --> 00:44:21,770
-I think, also, I'm gonna need to know
+我想，我还需要知道
 
 991
 00:44:21,770 --> 00:44:24,123
-whether a Card is matched.
+一张卡片是否被匹配了
 
 992
 00:44:25,060 --> 00:44:27,570
-Okay, so it's gonna
-have that Bool as well.
+因此 isMatched 变量也拥有 Bool 类型
 
 993
 00:44:27,570 --> 00:44:31,000
-And what else is there on a Card?
+一张卡片上还有什么呢？
 
 994
 00:44:31,000 --> 00:44:34,830
-Well, I guess there's the
-contents of the Card, okay?
+我猜还有卡片上的内容，对吗？
 
 995
 00:44:34,830 --> 00:44:36,810
-So, what's on the Card.
+所以，应该还有卡片上的内容
 
 996
 00:44:36,810 --> 00:44:38,500
-Now, this is a var.
+这是一个变量
 
 997
 00:44:38,500 --> 00:44:42,220
-I'll call it content and the question is
+我会将它命名为 content 问题是
 
 998
 00:44:42,220 --> 00:44:45,720
-what type is this var going to be?
+这个变量的类型是什么？
 
 999
 00:44:45,720 --> 00:44:48,370
-Now, I could imagine building a card game
+我可以想象构建一个有图片的
 
 1000
 00:44:48,370 --> 00:44:50,360
-with images on there.
+卡片游戏
 
 1001
 00:44:50,360 --> 00:44:53,160
-Obviously, we can build
-a card game with emoji,
+很显然，我们也可以构建一个
+有emoji的卡片游戏
 
 1002
 00:44:53,160 --> 00:44:54,490
-that's what ours is.
+就是我们的卡片游戏
 
 1003
 00:44:54,490 --> 00:44:57,600
-You could build a car game
-that just has words on it.
+你可以构建一个有文字在上面的
+卡片游戏
 
 1004
 00:44:57,600 --> 00:45:00,040
-Maybe it's a card game with numbers.
+也许这是一个有数字的卡片游戏
 
 1005
 00:45:00,040 --> 00:45:04,310
-So is this an Int or is it a String
+所以这是一个 Int 类型还是 String 类型
 
 1006
 00:45:04,310 --> 00:45:07,305
-or is it an image of some sort?
+还是某种图片？
 
 1007
 00:45:07,305 --> 00:45:12,305
-It's almost like we
-don't really care, okay?
+似乎我们并不在乎到底是什么类型，对吧？
 
 1008
 00:45:12,480 --> 00:45:13,820

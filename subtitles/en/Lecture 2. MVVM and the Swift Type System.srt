@@ -4366,7 +4366,7 @@ entire MemoryGame right here.
 
 984
 00:44:02,090 --> 00:44:04,500
-Just ask cards, you can choose them.
+Just has cards, you can choose them.
 
 985
 00:44:04,500 --> 00:44:07,460
@@ -4448,7 +4448,7 @@ that's what ours is.
 
 1003
 00:44:54,490 --> 00:44:57,600
-You could build a car game
+You could build a card game
 that just has words on it.
 
 1004
