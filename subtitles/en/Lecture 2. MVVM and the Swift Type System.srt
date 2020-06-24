@@ -3949,7 +3949,7 @@ to have Models that are classes
 
 889
 00:39:44,000 --> 00:39:46,250
-but you don't get structs as our go-to
+but, you know, structs are our go-to
 
 890
 00:39:46,250 --> 00:39:47,800
