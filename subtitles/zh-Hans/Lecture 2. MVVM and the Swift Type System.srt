@@ -4762,7 +4762,7 @@ generic MemoryGame thing
 
 1097
 00:49:29,630 --> 00:49:32,070
-有一个不在意类型的 CardContent
+有一个不确定类型 CardContent
 that has this CardContent don't care,
 
 1098
@@ -4871,543 +4871,680 @@ Views and many of those Views
 
 1116
 00:50:28,850 --> 00:50:31,530
+会使用这个入口
 are gonna wanna look
 through this portal, okay?
 
 1117
 00:50:31,530 --> 00:50:33,817
+一个通向模型的入口
 Which is what a few Model
 is, a portal on to the Model.
 
 1118
 00:50:33,817 --> 00:50:35,950
+你可以通过它来
 You're gonna wanna look through here
 
 1119
 00:50:35,950 --> 00:50:37,147
+访问模型
 and see the Model, okay?
 
 1120
 00:50:37,147 --> 00:50:38,560
+并且视图可以分享这个入口
 And they're gonna wanna share it.
 
 1121
 00:50:38,560 --> 00:50:42,490
+所以在这里使用类是很合适的
 So it's a really great use of class
 
 1122
 00:50:42,490 --> 00:50:44,140
+因为它便于和其他视图分享
 to have all these Views sharing,
 
 1123
 00:50:44,140 --> 00:50:45,950
+它们都有一个指针
 they'll each have a pointer to,
 
 1124
 00:50:45,950 --> 00:50:49,030
+指向同一个模型的入口
 this one, portal onto the Model.
 
 1125
 00:50:49,030 --> 00:50:53,020
+但是正如很多其他事情一样
+类最大的优点
 But as with many things,
 the class' biggest strength
 
 1126
 00:50:53,020 --> 00:50:56,130
+同时也是它最大的弱点
 is also its greatest weakness, okay?
 
 1127
 00:50:56,130 --> 00:50:58,140
+当有很多不同的人
 The problem with lots of different people
 
 1128
 00:50:58,140 --> 00:51:02,260
+都指向同一个视图模型的时候
+问题就出现了
 pointing to the same ViewModel here
 
 1129
 00:51:02,260 --> 00:51:05,460
+因为只要任何一个人把它搞砸了
 is that if any one of
 them kind of messes it up,
 
 1130
 00:51:05,460 --> 00:51:07,880
+它就会毁掉所有人的派对
 it ruins the party for everybody.
 
 1131
 00:51:07,880 --> 00:51:10,490
+特别是在这种情况下
 And especially in this circumstance.
 
 1132
 00:51:10,490 --> 00:51:12,100
+这是我的一个类比
 Here's my analogy.
 
 1133
 00:51:12,100 --> 00:51:15,680
+想象这里有一个房子
 Imagine that there's a house, okay?
 
 1134
 00:51:15,680 --> 00:51:19,120
+我们所有的视图都住在房子里面
 And inside this house are all
 our Views, they lived there.
 
 1135
 00:51:19,120 --> 00:51:22,920
+然后这个视图模型 EmojiMemoryGame
 And this ViewModel right
 here, EmojiMemoryGame
 
 1136
 00:51:22,920 --> 00:51:26,170
+是房子的前门
 is the front door because essentially,
 
 1137
 00:51:26,170 --> 00:51:28,773
+因为视图模型是
 ViewModels are doorways, they're portals
 
 1138
 00:51:28,773 --> 00:51:30,860
+视图访问模型的入口
 for the Views to exit the Model.
 
 1139
 00:51:30,860 --> 00:51:33,530
+然后模型是外部世界
 And so the Model is the
 outside world, okay?
 
 1140
 00:51:33,530 --> 00:51:35,700
+所有房子之外的地方都是模型
 Everything outside the
 house, that's the Model.
 
 1141
 00:51:35,700 --> 00:51:37,350
+我们所有住在房子里视图
 So all of our Views will live in the house
 
 1142
 00:51:37,350 --> 00:51:39,140
+都需要通过入口往外看
 wanna look through the doorway
 
 1143
 00:51:39,140 --> 00:51:40,110
+并且它们共用同一个入口
 and they're all sharing it, right?
 
 1144
 00:51:40,110 --> 00:51:40,943
+它们都住在房子里
 They all live in the house,
 
 1145
 00:51:40,943 --> 00:51:41,973
+都通过同一个入口向外看
 they're all looking
 through the same doorway.
 
 1146
 00:51:41,973 --> 00:51:43,950
+都有指向同一个入口的指针
 They all have pointers
 to that same doorway.
 
 1147
 00:51:43,950 --> 00:51:45,910
+你可以这么想
+它们都挤在一起
 If you want think about it,
 they're huddled around it
 
 1148
 00:51:45,910 --> 00:51:47,750
+一起向外看，这是一件好事
 looking out and that's a good thing
 
 1149
 00:51:47,750 --> 00:51:50,420
+因为它们用同一个方式通过同一个入口
 because they're all
 seeing the outside world
 
 1150
 00:51:50,420 --> 00:51:53,100
+观测外部世界
 in exactly the same way
 through this same doorway,
 
 1151
 00:51:53,100 --> 00:51:55,810
+这样的好处是
+我们的 UI 永远都会自我保持一致
 so our UI is always gonna
 be nice and self consistent.
 
 1152
 00:51:55,810 --> 00:51:58,320
+它们看到的都是一样的东西
 They're all seeing the same thing.
 
 1153
 00:51:58,320 --> 00:52:01,520
+但是这样做有一个大问题
 Now, there's a big problem
 with our front door right now
 
 1154
 00:52:01,520 --> 00:52:03,530
+那就是它是房门大开的
 is that it's wide open, okay?
 
 1155
 00:52:03,530 --> 00:52:04,860
+入口是开着的
 Our doorway is open.
 
 1156
 00:52:04,860 --> 00:52:07,390
+它有一个 model 变量
 It has this var right here, model,
 
 1157
 00:52:07,390 --> 00:52:10,220
+通过它我们的视图可以
 which any of our Views could look at
 
 1158
 00:52:10,220 --> 00:52:14,220
+找到一张卡片
 and they could go, for
 example, find a Card in there
 
 1159
 00:52:14,220 --> 00:52:17,580
+然后把卡片设定成已被选中
 and they could set it to be isMatched
 
 1160
 00:52:17,580 --> 00:52:20,640
+这真的会搞砸我们的游戏
 and that could really
 mess up our game, okay?
 
 1161
 00:52:20,640 --> 00:52:22,810
+那么为什么这会搞砸我们的游戏呢？
 And why would that mess up our game?
 
 1162
 00:52:22,810 --> 00:52:24,980
+在游戏中我们可能会持续关注分数
 Well, maybe our game
 keeps track of the score
 
 1163
 00:52:24,980 --> 00:52:26,760
+当卡片配对时
 and when Cards are matched,
 
 1164
 00:52:26,760 --> 00:52:28,220
+它会给你加分或其他奖励
 it gives you points or something
 
 1165
 00:52:28,220 --> 00:52:29,727
+如果你仅仅是找到这张卡片
 and if you just went into the Cards
 
 1166
 00:52:29,727 --> 00:52:31,440
+然后把它设定成“已经配对”
 and just set isMatched,
 
 1167
 00:52:31,440 --> 00:52:34,060
+这会导致出现在你的分数
+没有发生改变的情况下
 now, the Card will be marked match
 
 1168
 00:52:34,060 --> 00:52:36,480
+而卡片被标记成已配对的情况
 but you never got any
 score change, et cetera,
 
 1169
 00:52:36,480 --> 00:52:39,770
+所以本质上来说，一个异常的坏视图
 so essentially, that one bad rogue View
 
 1170
 00:52:39,770 --> 00:52:43,250
+会毁掉整个游戏
+因为所有其他视图
 has ruined the whole game
 for all the other Views
 
 1171
 00:52:43,250 --> 00:52:44,730
+都在观测同一个模型
 who are all looking at the same thing.
 
 1172
 00:52:44,730 --> 00:52:48,610
+所以你看，模型的入口
 So you can see that this
 open doorway to the Model
 
 1173
 00:52:48,610 --> 00:52:50,837
+也就是视图模型，是个类
 makes the fact that our
 ViewModel is a class
 
 1174
 00:52:50,837 --> 00:52:54,420
+它的共享特性是一件危险的事情
 and this share thing kinda dangerous.
 
 1175
 00:52:54,420 --> 00:52:56,180
+但是对于这件事
 But there are some things we can do
 
 1176
 00:52:56,180 --> 00:53:00,370
+我们并非没有办法
 to mitigate the kind of worrisome effect
 
 1177
 00:53:00,370 --> 00:53:03,530
+在保持共享性这种优势的基础上
 of all sharing this same class
 
 1178
 00:53:03,530 --> 00:53:05,500
+来减轻这种令人担忧的风险
 but still have the advantage
 of them all sharing.
 
 1179
 00:53:05,500 --> 00:53:08,270
+其中一种方法是把门关上
 And one is we can close the door, okay?
 
 1180
 00:53:08,270 --> 00:53:12,730
+如果我们给这个变量
+加上 private 关键字
 So this var, if we mark it
 with the keyword private,
 
 1181
 00:53:12,730 --> 00:53:15,930
+这就意味着 model 这个变量
 that means that this model, this var
 
 1182
 00:53:15,930 --> 00:53:19,810
+现在只能被 EmojiMemoryGame 访问
 can only be accessed now by
 the EmojiMemoryGame, okay?
 
 1183
 00:53:19,810 --> 00:53:22,700
+它是类的私有变量
 It is private to this class.
 
 1184
 00:53:22,700 --> 00:53:26,500
+这种方法解决了异常视图
 Now, this solves that
 problem of the rogue View
 
 1185
 00:53:26,500 --> 00:53:29,390
+可以直接设定卡片配对属性的问题
 going off and setting isMatched in a Card
 
 1186
 00:53:29,390 --> 00:53:31,390
+但是它有点用力过猛了
 but it kinda solves it too well
 
 1187
 00:53:31,390 --> 00:53:34,560
+因为现在没有任何一个视图
+能够看到门的外面了
 because now, none of the Views
 can look out the door, okay?
 
 1188
 00:53:34,560 --> 00:53:36,570
+任何视图都不能再访问模型了
 None of the Views can
 see the Model anymore.
 
 1189
 00:53:36,570 --> 00:53:40,010
+门关上了，所以视图无法
 The store is closed
 and the outside world's
 
 1190
 00:53:40,010 --> 00:53:42,460
+看到外面的世界了
 inaccessible to the Views, all right?
 
 1191
 00:53:42,460 --> 00:53:46,540
+所以显然这是个问题
 So, that is definitely a problem there.
 
 1192
 00:53:46,540 --> 00:53:50,180
+那么我们怎么才能折中一下呢？
 So, how can we find a middle ground there?
 
 1193
 00:53:50,180 --> 00:53:51,630
+有一种方法是
 Well, one way we can do that
 
 1194
 00:53:51,630 --> 00:53:53,670
+用一种不同的 private
 is by using a little
 different private here
 
 1195
 00:53:53,670 --> 00:53:56,120
+叫做 private(set)
 called private set.
 
 1196
 00:53:56,120 --> 00:53:58,010
+如果我们写 private(set)
 So if we say private set,
 
 1197
 00:53:58,010 --> 00:54:00,900
+它本质上类似于把门关上了
 that essentially like the door is closed
 
 1198
 00:54:00,900 --> 00:54:03,980
+但是这是一扇玻璃门
 but it's a glass door, okay?
 
 1199
 00:54:03,980 --> 00:54:07,180
+private(set) 意思是只有
+EmojiMemoryGame
 So private set means only EmojiMemoryGame
 
 1200
 00:54:07,180 --> 00:54:10,610
+可以修改模型，但是其他人
 can modify the Model but everyone else
 
 1201
 00:54:10,610 --> 00:54:12,300
+依然能访问模型
 can still see the Model.
 
 1202
 00:54:12,300 --> 00:54:14,720
+所以这是个玻璃门
 So this is a glass door.
 
 1203
 00:54:14,720 --> 00:54:17,810
+这扇玻璃门可以很好地阻止
 Now, the glass door
 works great to make sure
 
 1204
 00:54:17,810 --> 00:54:19,690
+异常视图跑到模型中
 that the rouge View doesn't go in there
 
 1205
 00:54:19,690 --> 00:54:21,850
+改变卡片的配对状态
 and change a Card to be isMatched
 
 1206
 00:54:21,850 --> 00:54:23,440
+但分数并没有被改变这种情况的发生
 and doesn't get scored and all that.
 
 1207
 00:54:23,440 --> 00:54:25,850
+它修正了这个问题
 It fixes that problem but now,
 
 1208
 00:54:25,850 --> 00:54:27,600
+但是现在依然没有人能选择卡片
 nobody can choose any Cards either
 
 1209
 00:54:27,600 --> 00:54:29,040
+因为我们不能穿过
 because we can't get through,
 
 1210
 00:54:29,040 --> 00:54:33,400
+视图不能穿过玻璃门来选择卡片
 the Views can't get through the
 glass door to choose a Card,
 
 1211
 00:54:33,400 --> 00:54:34,880
+例如视图的主要工作之一
 for example, that's one of the main things
 
 1212
 00:54:34,880 --> 00:54:37,470
+就是检测用户手指轻拍
 that these Views probably
 wanna do is tap on a Card,
 
 1213
 00:54:37,470 --> 00:54:38,687
+来选择卡片
 you wanna choose it.
 
 1214
 00:54:38,687 --> 00:54:41,580
+这里我们就需要引入意图了
 And so that's where these Intents come in.
 
 1215
 00:54:41,580 --> 00:54:45,018
+记住，当我们谈到视图模型时
 Remember, we talked about the ViewModels,
 
 1216
 00:54:45,018 --> 00:54:48,460
+它的工作之一是解释用户意图
 one of its jobs is to
 interpret user intent
 
 1217
 00:54:48,460 --> 00:54:49,580
+也就是刚刚我提到的事情
 and this is what just happened.
 
 1218
 00:54:49,580 --> 00:54:51,560
+我这里写一点注释
 I'm gonna actually put
 a little comment here.
 
 1219
 00:54:51,560 --> 00:54:55,497
+MARK: - Intent
+或者 Intents
 Mark Intent, okay, or Intents.
 
 1220
 00:54:55,497 --> 00:54:56,920
+还是写 Intent(s) 吧
 Let's say Intents,
 
 1221
 00:54:56,920 --> 00:55:00,390
+这里我准备提供一些函数来
 and here, I'm just gonna provide functions
 
 1222
 00:55:00,390 --> 00:55:04,400
+允许视图访问外部世界
 that allow these Views to
 access the outside world.
 
 1223
 00:55:04,400 --> 00:55:07,810
+比方说，你可以想想这是个高科技门
 So, in our analogy, you can
 imagine there's a high-tech door
 
 1224
 00:55:07,810 --> 00:55:10,800
+它有一个可视门铃对讲系统之类的东西
 with like a video doorbell
 intercom system or something
 
 1225
 00:55:10,800 --> 00:55:13,530
+视图会按下对讲机按钮
 and these Views are going
 to press the intercom button
 
 1226
 00:55:13,530 --> 00:55:14,817
+来与外部世界沟通
 and talk to the outside world
 
 1227
 00:55:14,817 --> 00:55:17,347
+它会说“请给选择这张卡片好嘛？”
 and say, please choose this Card, okay?
 
 1228
 00:55:17,347 --> 00:55:20,480
+然后视图模型，也就是这道门
 And then the ViewModel which is the door,
 
 1229
 00:55:20,480 --> 00:55:23,730
+它可以直接和模型沟通
 it can obviously talk
 to the Model directly
 
 1230
 00:55:23,730 --> 00:55:26,180
+告诉模型要做什么
+这件事才会真正发生
 and tell it to do things, it's
 going to make that happen.
 
 1231
 00:55:26,180 --> 00:55:29,190
+所以用户意图有点像
 So these user Intents are kind of things
 
 1232
 00:55:29,190 --> 00:55:31,890
+视图与对讲机通话这件事
 that the Views would say
 into the intercom, okay?
 
 1233
 00:55:31,890 --> 00:55:34,800
+视图希望游戏发生的事情
 Things that they want
 to happen in the game.
 
 1234
 00:55:34,800 --> 00:55:37,680
+显然我们需要做的一件事是
+写一个函数
 So, the obvious one here
 is to have a function
 
 1235
 00:55:37,680 --> 00:55:40,240
+叫做 choose(card: )
 called choose card, okay?
 
 1236
 00:55:40,240 --> 00:55:42,730
+这跟模型中那个函数一样
 Just like we have in the Model.
 
 1237
 00:55:42,730 --> 00:55:45,690
+这是一个意图
+用户可能想选择一个卡片
 And this is an Intent
 that the user might have
 
 1238
 00:55:45,690 --> 00:55:48,890
+这里的 Card
 to choose a Card and this Card right here,
 
 1239
 00:55:48,890 --> 00:55:50,820
+我们必须写上它的全名
 we have to make sure it
 give it its full name.
 
