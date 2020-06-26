@@ -5612,206 +5612,191 @@ or something like that.
 
 1286
 00:58:06,600 --> 00:58:09,960
-But if we have a choice
-between adding some complexity
+但如果我们在增加一些复杂度之间做出选择
 
 1287
 00:58:09,960 --> 00:58:13,360
-to the ViewModel here to massage the data
+在视图模型里处理数据
 
 1288
 00:58:13,360 --> 00:58:15,340
-so that the View is simpler,
+会让视图更简洁，
 
 1289
 00:58:15,340 --> 00:58:17,260
-we're always gonna make the
-trade-off in that direction.
+我们总是朝着这个方向做出权衡。
 
 1290
 00:58:17,260 --> 00:58:19,770
-We want our Views to be
-as simple as possible
+我们希望我们的视图尽可能的简单
 
 1291
 00:58:19,770 --> 00:58:22,050
-so it's really part of the ViewModel's job
+因此以视图易于使用的方式
 
 1292
 00:58:22,050 --> 00:58:25,330
-to present the Model to the Views
+将模型呈现给视图
 
 1293
 00:58:25,330 --> 00:58:29,380
-in a way that's easily
-consumable by the Views.
+确实是视图模型工作的一部分。
 
 1294
 00:58:29,380 --> 00:58:31,750
-Of course, this is a one-liner
-that returns something
+当然了，这是个一行的 return 语句
 
 1295
 00:58:31,750 --> 00:58:33,803
-so we don't need return right there.
+所以这里也就不需要 return 了
 
 1296
 00:58:35,170 --> 00:58:36,003
-So, that's nice.
+所以，没有任何问题
 
 1297
 00:58:36,003 --> 00:58:38,750
-So in this case where we
-have a fully private door,
+在这种情况下，
+我们就拥有了一个完全私有的“门”，
 
 1298
 00:58:38,750 --> 00:58:43,470
-fully closed door, we
-have this nice feature
+完全关闭的“门”，
+还有可以让他们在这里使用“对讲机”
 
 1299
 00:58:43,470 --> 00:58:45,877
-where we're letting them
-on the intercom here
+这个好用的功能
 
 1300
 00:58:45,877 --> 00:58:50,710
-and so I might call this one mark access
+所以我可以把这个标记命名为
 
 1301
 00:58:51,610 --> 00:58:53,510
-to the Model, okay?
+获取模型
 
 1302
 00:58:53,510 --> 00:58:55,410
-So these be functions and vars
+这些是可以访问模型变量的
 
 1303
 00:58:55,410 --> 00:58:57,310
-give the access to the var Models
+函数和变量
 
 1304
 00:58:57,310 --> 00:58:58,840
-and then this is the Intents.
+而这个则是Intents（意图）
 
 1305
 00:58:58,840 --> 00:59:01,630
-By the way, this // MARK,
-the reason I'm doing that
+顺便说一下这个 // MARK，
+我之所以这么写
 
 1306
 00:59:01,630 --> 00:59:03,730
-is if you look up here
-where it's telling you
+是因为当你看这里的时候，
 
 1307
 00:59:03,730 --> 00:59:05,234
-what's showing in here,
+它会告诉你是什么出现在这里，
 
 1308
 00:59:05,234 --> 00:59:09,030
-it's actually showing you what
-the exact thing that's shown
+它显示的实际上就是那些确切的代码
 
 1309
 00:59:09,030 --> 00:59:11,470
-and those little marks, // MARKs
+和那些小标记，
 
 1310
 00:59:11,470 --> 00:59:13,694
-provide these nice little kind of headers
+而 // MARKs 就恰恰可以提供这些
 
 1311
 00:59:13,694 --> 00:59:17,810
-for the lists of functions and vars.
+用于函数和变量所组成的列表的
+漂亮标题。
 
 1312
 00:59:18,700 --> 00:59:23,700
-I kinda prefer this little
-more closed non-glass door
+我更倾向于
 
 1313
 00:59:24,220 --> 00:59:27,250
-kind of approach to things
+使用这种“非玻璃门”的更封闭的方式，
 
 1314
 00:59:27,250 --> 00:59:29,760
-but occasionally, it makes
-sense to do that private set
+但有时候，
 
 1315
 00:59:29,760 --> 00:59:32,200
-and let people have a glass
-door and see the Model
+设置成私有更有意义的一点在于
 
 1316
 00:59:32,200 --> 00:59:34,840
-but you're always gonna
-wanna have this thing
+让人们能通过“玻璃门”查看模型的同时，
 
 1317
 00:59:34,840 --> 00:59:36,500
-where the Intents are called out.
+又可以保证这个意图总是可以被调用。
 
 1318
 00:59:36,500 --> 00:59:38,460
-This is almost like documentation.
+这其实就像说明书一样
 
 1319
 00:59:38,460 --> 00:59:40,760
-It's letting all the Views know,
+它让所有的视图都知道
 
 1320
 00:59:40,760 --> 00:59:42,290
-people who are writing View code,
+也让所有编写视图的代码的人知道，
 
 1321
 00:59:42,290 --> 00:59:45,273
-here's the things you can
-do to change the Model.
+可以执行这些操作来修改模型。
 
 1322
 00:59:46,500 --> 00:59:50,090
-Okay, so, what's this
-error we have right here?
+这里的错误是什么？
 
 1323
 00:59:50,090 --> 00:59:54,120
-Class EmojiMemoryGame has no initializers.
+EmojiMemoryGame 类没有构造器
 
 1324
 00:59:54,120 --> 00:59:55,270
-Hm, what does that mean?
+这是什么意思？
 
 1325
 00:59:55,270 --> 00:59:57,165
-We have already learned about initializers
+我们已经学过构造器了，
 
 1326
 00:59:57,165 --> 00:59:58,520
-so what is that?
+还记得是什么吗？
 
 1327
 00:59:58,520 --> 01:00:01,760
-Well, this is essentially in a class,
+这本质上是在一个类里面，
 
 1328
 01:00:01,760 --> 01:00:04,700
-the same kind of complaint
-that you have a var
+这个报错和你没有给一个变量初始化时无异，
 
 1329
 01:00:04,700 --> 01:00:06,640
-that's not initialized and indeed,
+实际上，
 
 1330
 01:00:06,640 --> 01:00:09,530
-this var, this model
-var, while it has a type,
+这个变量，也就是这个模型变量
 
 1331
 01:00:09,530 --> 01:00:11,420
-it has no initial value, right?
+虽然确定了类型，但是没有初始值。
 
 1332
 01:00:11,420 --> 01:00:14,422
