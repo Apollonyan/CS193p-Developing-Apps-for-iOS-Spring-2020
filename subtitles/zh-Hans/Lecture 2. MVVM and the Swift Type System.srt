@@ -5620,11 +5620,11 @@ or something like that.
 
 1288
 00:58:13,360 --> 00:58:15,340
-会让视图更简洁，
+会让视图更简洁
 
 1289
 00:58:15,340 --> 00:58:17,260
-我们总是朝着这个方向做出权衡。
+我们总是朝着这个方向做出权衡
 
 1290
 00:58:17,260 --> 00:58:19,770
@@ -5640,11 +5640,11 @@ or something like that.
 
 1293
 00:58:25,330 --> 00:58:29,380
-确实是视图模型工作的一部分。
+确实是视图模型工作的一部分
 
 1294
 00:58:29,380 --> 00:58:31,750
-当然了，这是个一行的 return 语句
+当然了，这是个只有一行的 return 语句
 
 1295
 00:58:31,750 --> 00:58:33,803
@@ -5656,12 +5656,12 @@ or something like that.
 
 1297
 00:58:36,003 --> 00:58:38,750
-在这种情况下，
-我们就拥有了一个完全私有的“门”，
+在这种情况下
+我们就拥有了一个完全私有的“门”
 
 1298
 00:58:38,750 --> 00:58:43,470
-完全关闭的“门”，
+完全关闭的“门”
 还有可以让他们在这里使用“对讲机”
 
 1299
@@ -5686,20 +5686,20 @@ or something like that.
 
 1304
 00:58:57,310 --> 00:58:58,840
-而这个则是Intents（意图）
+而这个则是 Intents（意图）
 
 1305
 00:58:58,840 --> 00:59:01,630
-顺便说一下这个 // MARK，
+顺便说一下这个 // MARK
 我之所以这么写
 
 1306
 00:59:01,630 --> 00:59:03,730
-是因为当你看这里的时候，
+是因为当你看这里的时候
 
 1307
 00:59:03,730 --> 00:59:05,234
-它会告诉你是什么出现在这里，
+它会告诉你是什么出现在这里
 
 1308
 00:59:05,234 --> 00:59:09,030
@@ -5707,16 +5707,16 @@ or something like that.
 
 1309
 00:59:09,030 --> 00:59:11,470
-和那些小标记，
+和那些小标记
 
 1310
 00:59:11,470 --> 00:59:13,694
-而 // MARKs 就恰恰可以提供这些
+而 // MARK 们就恰恰可以提供
 
 1311
 00:59:13,694 --> 00:59:17,810
-用于函数和变量所组成的列表的
-漂亮标题。
+这些用于函数和变量所组成的列表的
+漂亮标题
 
 1312
 00:59:18,700 --> 00:59:23,700
@@ -5724,11 +5724,11 @@ or something like that.
 
 1313
 00:59:24,220 --> 00:59:27,250
-使用这种“非玻璃门”的更封闭的方式，
+使用这种“非玻璃门”的更封闭的方式
 
 1314
 00:59:27,250 --> 00:59:29,760
-但有时候，
+但有时候
 
 1315
 00:59:29,760 --> 00:59:32,200
@@ -5736,11 +5736,11 @@ or something like that.
 
 1316
 00:59:32,200 --> 00:59:34,840
-让人们能通过“玻璃门”查看模型的同时，
+让人们能通过“玻璃门”查看模型的同时
 
 1317
 00:59:34,840 --> 00:59:36,500
-又可以保证这个意图总是可以被调用。
+又可以保证这个意图总是可以被调用
 
 1318
 00:59:36,500 --> 00:59:38,460
@@ -5752,11 +5752,11 @@ or something like that.
 
 1320
 00:59:40,760 --> 00:59:42,290
-也让所有编写视图的代码的人知道，
+也让所有编写视图的代码的人知道
 
 1321
 00:59:42,290 --> 00:59:45,273
-可以执行这些操作来修改模型。
+可以执行这些操作来修改模型
 
 1322
 00:59:46,500 --> 00:59:50,090
@@ -5764,7 +5764,7 @@ or something like that.
 
 1323
 00:59:50,090 --> 00:59:54,120
-EmojiMemoryGame 类没有构造器
+EmojiMemoryGame 这个类没有构造器
 
 1324
 00:59:54,120 --> 00:59:55,270
@@ -5772,7 +5772,7 @@ EmojiMemoryGame 类没有构造器
 
 1325
 00:59:55,270 --> 00:59:57,165
-我们已经学过构造器了，
+我们已经学过构造器了
 
 1326
 00:59:57,165 --> 00:59:58,520
@@ -5780,15 +5780,15 @@ EmojiMemoryGame 类没有构造器
 
 1327
 00:59:58,520 --> 01:00:01,760
-这本质上是在一个类里面，
+这本质上是在一个类里面
 
 1328
 01:00:01,760 --> 01:00:04,700
-这个报错和你没有给一个变量初始化时无异，
+这个报错和你没有给一个变量初始化时无异
 
 1329
 01:00:04,700 --> 01:00:06,640
-实际上，
+实际上
 
 1330
 01:00:06,640 --> 01:00:09,530
@@ -5796,255 +5796,233 @@ EmojiMemoryGame 类没有构造器
 
 1331
 01:00:09,530 --> 01:00:11,420
-虽然确定了类型，但是没有初始值。
+虽然确定了类型，但是没有初始值
 
 1332
 01:00:11,420 --> 01:00:14,422
-Needs to be set equal to something here
+需要设置为等于此处的值
 
 1333
 01:00:14,422 --> 01:00:17,930
-to satisfy this requirement in Swift
+以满足 Swift 中
 
 1334
 01:00:17,930 --> 01:00:21,580
-that all variables are initialized.
+初始化所有变量的要求
 
 1335
 01:00:21,580 --> 01:00:24,050
-So, how are we gonna initialize this?
+那么我们该如何初始化呢？
 
 1336
 01:00:24,050 --> 01:00:25,490
-We essentially need to do this thing
+我们需要做的
 
 1337
 01:00:25,490 --> 01:00:29,050
-where we do MemoryGame&lt;String&gt;,
+就是输入 MemoryGame<String>
 
 1338
 01:00:29,050 --> 01:00:31,430
-the type and then in parentheses,
+类型写在括号里
 
 1339
 01:00:31,430 --> 01:00:35,810
-we are going to give it
-its arguments or whatever.
+我们会再给它提供一些参数什么的
 
 1340
 01:00:35,810 --> 01:00:38,110
-It actually has a little one here,
+这里有一个小写的 cards,
 
 1341
 01:00:38,110 --> 01:00:41,970
-we could double click the
-Cards, it wants the Cards.
+我们可以双击卡片这一行
+因为此处正好需要卡片参数
 
 1342
 01:00:41,970 --> 01:00:43,130
-Why does it want the Cards?
+它为什么需要这些卡片呢？
 
 1343
 01:00:43,130 --> 01:00:46,030
-Well, if you look at our
-MemoryGame struct over here,
+可以在 MemoryGame 这个结构体里看到
 
 1344
 01:00:46,030 --> 01:00:48,980
-it has an uninitialized var as well.
+它也有一个未初始化的变量
 
 1345
 01:00:48,980 --> 01:00:51,030
-So what's going on over here?
+那这是怎么回事呢？
 
 1346
 01:00:51,030 --> 01:00:53,420
-It's saying oh, if you
-wanna create one of these,
+也就是说
 
 1347
 01:00:53,420 --> 01:00:56,173
-you're gonna have to give me this,
+如果你想创建这个模型
 
 1348
 01:00:57,314 --> 01:00:58,430
-a value for this Card.
+那就必须给这个卡片参数赋值
 
 1349
 01:00:58,430 --> 01:01:00,274
-It's exactly the same
-thing we had over here
+这和我们在这里遇到的情况是一样的
 
 1350
 01:01:00,274 --> 01:01:01,730
-when we had CardView isFaceUp
+当我们用到 CardView 的
+isFaceUp 时
 
 1351
 01:01:02,780 --> 01:01:06,700
-was required to satisfy this
-thing not being initialized.
+也是需要满足未初始化的这个要求的
 
 1352
 01:01:06,700 --> 01:01:10,153
-So anytime you have these vars
-and they're not initialized,
+所以只要你在这里
+声明了这些没有初始化的变量
 
 1353
 01:01:10,153 --> 01:01:13,610
-then it's up to whoever
-creates them to initialize them
+那么这些变量就需要在创建的时候初始化
+这也就是模型创建这里
 
 1354
 01:01:13,610 --> 01:01:15,260
-and that's what's going on here.
+为什么需要这么写的原因
 
 1355
 01:01:15,260 --> 01:01:19,920
-But that's actually kind of
-bogus here, in this case,
+但实际上现在这么写是有问题的
 
 1356
 01:01:19,920 --> 01:01:22,160
-because this EmojiMemoryGame,
+因为 EmojiMemoryGame 这个类
 
 1357
 01:01:22,160 --> 01:01:25,390
-it doesn't really wanna
-be off creating Cards,
+它并没有真正想去创建卡片
 
 1358
 01:01:25,390 --> 01:01:29,390
-doing things like oh, setting
-them is face up and is matched
+更没有想要去做
+诸如设置正反面或者配对这类的操作
 
 1359
 01:01:29,390 --> 01:01:32,590
-and all that because it's
-really up to the MemoryGame
+因为这完全应该
 
 1360
 01:01:32,590 --> 01:01:35,820
-to decide which Cards are
-face up, which are face down.
+由 MemoryGame 来决定哪张卡片是正面
+哪张卡片是反面
 
 1361
 01:01:35,820 --> 01:01:38,700
-So, really, it's the MemoryGame itself
+因此，实际上是 MemoryGame 本身
 
 1362
 01:01:38,700 --> 01:01:41,540
-that wants to initialize
-these Cards right here.
+想要在这里初始化这些卡片
 
 1363
 01:01:41,540 --> 01:01:43,097
-So it's almost like it wants to say
+这就好比在这里输入一个等号
 
 1364
 01:01:43,097 --> 01:01:45,160
-equals something over here.
+然后在后面输入相关的内容
 
 1365
 01:01:45,160 --> 01:01:47,430
-But it's a little bit of a problem
+但是这样的话还是会有点问题
 
 1366
 01:01:47,430 --> 01:01:48,980
-because it doesn't really know,
+因为它实际上有一些问题需要明确
 
 1367
 01:01:48,980 --> 01:01:52,730
-for example, how many Cards
-are in this game, okay?
+例如这个游戏中具体有多少张卡片？
 
 1368
 01:01:52,730 --> 01:01:56,030
-So where is the number of
-Cards gonna be communicated
+从在视图模型中创建的模型
 
 1369
 01:01:56,030 --> 01:01:59,615
-from our ViewModel that's
-trying to create its Model
+把卡片的具体数量
 
 1370
 01:01:59,615 --> 01:02:03,350
-over to the MemoryGame, okay?
+传给 MemoryGame 结构体，可以吧？
 
 1371
 01:02:03,350 --> 01:02:06,120
-And the place we really
-like to do that is here.
+我们具体要操作的地方就是这里
 
 1372
 01:02:06,120 --> 01:02:08,450
-Instead of having creating a MemoryGame
+与其通过给 MemoryGame 模型
 
 1373
 01:02:08,450 --> 01:02:11,420
-by giving it the Cards,
-be nice if we just create
+初始化卡片数组
 
 1374
 01:02:11,420 --> 01:02:14,510
-the MemoryGame by saying
-create a MemoryGame
+不如我们通过输入创建多少对卡片的方式
 
 1375
 01:02:14,510 --> 01:02:17,990
-with this number of pairs of cards,
+来创建 MemoryGame 模型
 
 1376
 01:02:17,990 --> 01:02:22,383
-two pairs or five, six
-pairs whatever of Cards.
+两对、五对、六对甚至任意对数量的卡片
 
 1377
 01:02:23,880 --> 01:02:26,930
-And then this MemoryGame
-would say, oh, okay,
+然后这个 MemoryGame 模型会说
 
 1378
 01:02:26,930 --> 01:02:31,930
-I will go and create this
-many Cards, pairs of Cards
+没问题，我会创建这么多成对的卡片
 
 1379
 01:02:32,470 --> 01:02:35,110
-and I'll set them all up
-properly and do all that.
+而且还会把它们的参数都设定好
 
 1380
 01:02:35,110 --> 01:02:38,460
-So, the bottom line here
-is that we wanna create
+这里最重要的是
 
 1381
 01:02:38,460 --> 01:02:42,810
-this MemoryGame&lt;String&gt; thing
+我们没有直接用卡片来当参数
 
 1382
 01:02:42,810 --> 01:02:47,150
-with some random other
-argument, not the Cards
+而是用了其他类型的任意参数
 
 1383
 01:02:47,150 --> 01:02:49,550
-but some other piece of information.
+来创建 MemoryGame<String>里的卡片
 
 1384
 01:02:49,550 --> 01:02:51,780
-And this is very common to wanna do
+这是一种很常用的形式
 
 1385
 01:02:51,780 --> 01:02:55,840
-and the way we do this
-is with an init, okay?
+而且方式之一就是使用 init
 
 1386
 01:02:55,840 --> 01:02:59,880
-So we go over to here we're
-gonna add another new function.
+我们转到这里，在这里添加一个新的函数
 
 1387
 01:02:59,880 --> 01:03:02,570
