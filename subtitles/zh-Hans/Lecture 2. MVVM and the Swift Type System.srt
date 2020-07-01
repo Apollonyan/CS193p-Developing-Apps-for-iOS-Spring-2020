@@ -5266,213 +5266,200 @@ give it its full name.
 
 1240
 00:55:50,820 --> 00:55:55,740
-It's a MemoryGame&lt;String&gt;.Card,
+MemoryGame<String>.Card
 
 1241
 00:55:55,740 --> 00:55:57,217
-that's it's full type
+是它的类型全称
 
 1242
 00:55:57,217 --> 00:55:59,350
-and all the parts of its type.
+也是它类型的所有部分
 
 1243
 00:55:59,350 --> 00:56:01,350
-And this is gonna be
-really easy to implement,
+然后 choose 方法将很容易被实现
 
 1244
 00:56:01,350 --> 00:56:05,060
-we're just gonna ask the
-Model to choose that Card.
+我们将让模型要去
+选择这个 Card
 
 1245
 00:56:05,060 --> 00:56:07,760
-Okay, luckily, our Model happens to have
+幸运的是我们的模型刚好有
 
 1246
 00:56:07,760 --> 00:56:09,810
-exactly the function that we want.
+我们想要的 choose 函数
 
 1247
 00:56:09,810 --> 00:56:11,840
-But keep in mind, our Model,
+但是需要记得，我们的模型
 
 1248
 00:56:11,840 --> 00:56:13,667
-again, it might be a SQL
-database or something
+它可能是 SQL 数据库或者
+其他事物
 
 1249
 00:56:13,667 --> 00:56:16,740
-and we have to issue a bunch
-of SQL commands in here
+然后我们应该在这里执行
+一些 SQL 命令
 
 1250
 00:56:16,740 --> 00:56:20,960
-to make this kind of
-the Intent by the user
+使得用户的这类意图
 
 1251
 00:56:20,960 --> 00:56:22,580
-come to fruition.
+能够被完成
 
 1252
 00:56:22,580 --> 00:56:26,390
-Of course, it's a very simple
-first app, demonstration app,
+当然，这是个简单的
+刚开始的示例应用
 
 1253
 00:56:26,390 --> 00:56:28,870
-so luckily, we can easily express
+所以很幸运，我们可以
+容易地表达
 
 1254
 00:56:28,870 --> 00:56:33,870
-this user's Intent in the
-Card right there, okay?
+用户的意图
 
 1255
 00:56:33,980 --> 00:56:36,450
-So, this would work.
+这样就做好了
 
 1256
 00:56:36,450 --> 00:56:38,470
-It is nice, we can we have private set
+很好的是，我们有 private(set)
 
 1257
 00:56:38,470 --> 00:56:42,020
-so we can see the Cards, we
-can look at the Model's Cards
+因此我们能看到卡片
+我们能查看模型的卡片
 
 1258
 00:56:42,020 --> 00:56:45,220
-and we can express our
-intent to change the world.
+并且我们能表达我们的意图
+去改变这个世界
 
 1259
 00:56:45,220 --> 00:56:48,080
-So we got this door, it's
-glass, we can see through it,
+因此我们有了这扇门
+它是玻璃的，我们能通过它向外看
 
 1260
 00:56:48,080 --> 00:56:50,570
-it's protecting us from the outside world
+它正在保护我们不受
+外界影响
 
 1261
 00:56:50,570 --> 00:56:53,500
-but we might even wanna
-be more restrictive.
+但是我们可能想限制更多
 
 1262
 00:56:53,500 --> 00:56:56,610
-For example, we might really
-want that door to be closed
+比如，我们真想关闭那扇门
 
 1263
 00:56:56,610 --> 00:56:59,335
-and instead of looking
-through the glass door,
+不是通过玻璃门来向外看
 
 1264
 00:56:59,335 --> 00:57:03,380
-you're going to use the
-video doorbell's video, okay?
+而是使用视频门铃
 
 1265
 00:57:03,380 --> 00:57:04,870
-You know how video doorbell works,
+你知道视频门铃如何工作吧
 
 1266
 00:57:04,870 --> 00:57:07,420
-people come to the door
-and you can see them there
+人们来到门前，你能从
 
 1267
 00:57:07,420 --> 00:57:08,900
-on a little video screen.
+小块视频屏幕中看到他们
 
 1268
 00:57:08,900 --> 00:57:12,080
-So, the analogy here of
-a little video screen
+因此这一小块视频屏幕比喻的是
 
 1269
 00:57:12,080 --> 00:57:14,900
-is that we can provide vars and funcs
+我们提供的变量和函数
 
 1270
 00:57:14,900 --> 00:57:19,860
-that let people look at this
-Model in constricted ways.
+以便人们通过限制的方式查看模型
 
 1271
 00:57:19,860 --> 00:57:22,324
-Now, we obviously want
-people to be able to see
+现在我们想人们能看到
 
 1272
 00:57:22,324 --> 00:57:23,790
-the Cards in the Model,
+在模型中的卡片
 
 1273
 00:57:23,790 --> 00:57:27,000
-so maybe I'll create
-my own var cards, okay?
+因此或许我将创建自己的
+卡片变量，是吧？
 
 1274
 00:57:27,000 --> 00:57:31,923
-Which is also an array of
-MemoryGame&lt;String&gt;.Card, okay?
+它也是 MemoryGame<String>.Card
+的数组
 
 1275
 00:57:37,870 --> 00:57:41,730
-And it's just going to
-return our Model's Cards.
+并且它将仅返回模型的卡片
 
 1276
 00:57:41,730 --> 00:57:43,270
-Again, same exact thing here.
+这里同样地
 
 1277
 00:57:43,270 --> 00:57:46,070
-We have very simple
-Model, so it's easy to do
+这个模型很简单，所以
+很容易拿到卡片
 
 1278
 00:57:46,070 --> 00:57:49,897
-but the ViewModel might be
-doing some interpretation here,
+但是视图模型可能在这里
+做一些解释
 
 1279
 00:57:49,897 --> 00:57:53,170
-either to try and massage the Model's data
+可能是将模型中的数据转换为
 
 1280
 00:57:53,170 --> 00:57:57,670
-into some form that is
-more consumable by the View
+更容易被视图使用的数据
 
 1281
 00:57:57,670 --> 00:57:59,600
-or it might actually be
-having to do some work,
+也可能是必须做某些工作
 
 1282
 00:57:59,600 --> 00:58:01,870
-like maybe this data, this Model
+比如这些数据，这个模型是
 
 1283
 00:58:01,870 --> 00:58:03,230
-is coming from over the network
+来自于网络的
 
 1284
 00:58:03,230 --> 00:58:05,140
-and it has to be doing
-some network requests
+然后它必须发出网络请求
 
 1285
 00:58:05,140 --> 00:58:06,600
-or something like that.
+或类似的事情
 
 1286
 00:58:06,600 --> 00:58:09,960
