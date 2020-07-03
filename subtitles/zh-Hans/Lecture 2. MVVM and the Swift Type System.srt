@@ -4237,363 +4237,360 @@ var isFaceUp: Bool
 
 1008
 00:45:12,480 --> 00:45:13,820
-So, if we're a MemoryGame,
+由于我们是在做一个记忆游戏
 
 1009
 00:45:13,820 --> 00:45:15,940
-you can put anything
-you want on the Cards.
+你可以在卡片上
+放任何你想放的内容
 
 1010
 00:45:15,940 --> 00:45:18,900
-We're doing UI independent game playing
+我们在做独立于 UI 的游戏
 
 1011
 00:45:18,900 --> 00:45:22,540
-so we don't really care
-what's on the Cards.
+所以我们不关心
+卡片上是什么
 
 1012
 00:45:22,540 --> 00:45:25,770
-So this is a don't care, okay?
+所以我们不关心（具体类型）是什么
 
 1013
 00:45:25,770 --> 00:45:26,790
-This is a don't care.
+理解吗？
 
 1014
 00:45:26,790 --> 00:45:29,760
-So I'm gonna call this CardContent.
+我称之为 CardContent
 
 1015
 00:45:29,760 --> 00:45:32,750
-That's a type I just made
-up, my don't care type
+这是我刚编造的一个类型
 
 1016
 00:45:32,750 --> 00:45:35,050
-and of course, if I do a don't care type,
+当然，如果我定义一个
+不确定的类型
 
 1017
 00:45:35,050 --> 00:45:38,830
-I'm required up here to say CardContent
+我需要在这里写上 CardContent
 
 1018
 00:45:40,100 --> 00:45:43,520
-to declare to the world
-that I'm a generic type
+来声明这是一个泛型
 
 1019
 00:45:43,520 --> 00:45:46,220
-and I have this don't care that you,
+由于这里有一个不确定类型
 
 1020
 00:45:46,220 --> 00:45:48,650
-if you wanna use MemoryGame,
+所以如果你想使用 MemoryGame
 
 1021
 00:45:48,650 --> 00:45:51,470
-you're going to have to
-tell me what this is.
+那么你需要告诉我
+具体是什么类型
 
 1022
 00:45:51,470 --> 00:45:55,750
-Now, in our game, once we
-start using this Model,
+现在，一旦我们要在
+在游戏中使用这个模型
 
 1023
 00:45:55,750 --> 00:45:59,340
-we're gonna save MemoryGame,
-angle brackets string
+我们会写上 MemoryGame
+尖括号里是 String
 
 1024
 00:45:59,340 --> 00:46:02,010
-because an emoji is just
-a character in the string
+因为表情就是放在
+字符串中的字符
 
 1025
 00:46:02,010 --> 00:46:04,250
-so we're gonna say angle brackets string
+所以我们用 <String>
 
 1026
 00:46:04,250 --> 00:46:07,210
-and that's gonna define what
-kind of MemoryGame this is.
+将会定义 MemoryGame 的类型
 
 1027
 00:46:07,210 --> 00:46:09,850
-But this is a really
-awesome simple example
+这是一个很棒的
+关于这类不关心具体类型业务的
 
 1028
 00:46:09,850 --> 00:46:11,680
-of this don't care business
+的简单例子
 
 1029
 00:46:11,680 --> 00:46:15,040
-'cause really, this
-MemoryGame does not care
+因为 MemoryGame
+的确不关心
 
 1030
 00:46:15,040 --> 00:46:16,503
-what's on these Cards.
+卡片上是什么
 
 1031
 00:46:18,300 --> 00:46:20,690
-All right, now that we have our Model here
+好了，现在我们有了模型
 
 1032
 00:46:20,690 --> 00:46:22,490
-and we have our View right here,
+以及这里的视图
 
 1033
 00:46:22,490 --> 00:46:27,300
-let's do the third piece of
-MVVM which is the ViewModel.
+接下来我们处理 MVVM 架构的
+第三个部分，即视图模型
 
 1034
 00:46:27,300 --> 00:46:30,370
-So the ViewModel is going to be the glue
+视图模型就像胶水一样
 
 1035
 00:46:30,370 --> 00:46:34,400
-that glues this totally
-UI independent thing
+把这里所有独立于 UI 的内容
 
 1036
 00:46:34,400 --> 00:46:37,053
-to this totally UI dependent thing.
+和这里所有 UI 相关内容粘合起来
 
 1037
 00:46:38,120 --> 00:46:40,210
-So, let's do that by File, New again,
+再次通过 File 选择 New
 
 1038
 00:46:40,210 --> 00:46:43,584
-we're gonna create a new
-thing here, so a new file.
+我们创建一个新文件
 
 1039
 00:46:43,584 --> 00:46:46,560
-Okay, it's not a SwiftUI
-View, it is a UI thing
+这不是一个 SwiftUI View
+它与 UI 有关
 
 1040
 00:46:46,560 --> 00:46:49,350
-but it's not an actual
-View, it's the ViewModel.
+但又不是视图
+它是视图模型
 
 1041
 00:46:49,350 --> 00:46:51,170
-So we're gonna Swift File.
+所以我们选择 Swift File
 
 1042
 00:46:51,170 --> 00:46:54,380
-I'm gonna call my ViewModel here,
+在这里为视图模型命名
 
 1043
 00:46:54,380 --> 00:46:56,333
-I'm gonna call it EmojiMemoryGame
+我将它命名为 EmojiMemoryGame
 
 1044
 00:46:57,395 --> 00:46:58,228
-because it's a specific kind of MemoryGame
+因为这是一个
+使用表情来绘制卡片
 
 1045
 00:47:01,020 --> 00:47:04,820
-that happen to use emoji
-as the thing it draws.
+的具体类型的 MemoryGame
 
 1046
 00:47:04,820 --> 00:47:08,040
-And I'm gonna make sure that
-it's in the right folder,
+要确保 EmojiMemoryGame 文件
+放在正确的目录中
 
 1047
 00:47:08,040 --> 00:47:09,828
-it's in the same place as
-all the rest of the stuff.
+跟其他文件放在同样的地方
 
 1048
 00:47:09,828 --> 00:47:11,380
-Okay, great.
+太棒了
 
 1049
 00:47:11,380 --> 00:47:13,660
-Here it is, EmojiMemoryGame.
+EmojiMemoryGame 创建好了
 
 1050
 00:47:13,660 --> 00:47:16,100
-It's importing foundation but here,
+它导入了 Foundation
 
 1051
 00:47:16,100 --> 00:47:19,600
-I could actually import SwiftUI if I want.
+如果我想的话
+也可以导入 SwiftUI
 
 1052
 00:47:19,600 --> 00:47:23,030
-I'm not actually gonna do UI in here,
+我不会在这里处理 UI 事务
 
 1053
 00:47:23,030 --> 00:47:26,988
-I'm going to be doing all
-my UI over here in my View.
+所有 UI 都在 ContentView 中
 
 1054
 00:47:26,988 --> 00:47:31,860
-But the ViewModel is
-essentially a UI thing
+但是视图模型实质上
+也是一个 UI
 
 1055
 00:47:31,860 --> 00:47:32,693
-because it knows how this
-is gonna be drawn on screen.
+因为它知道 UI 是怎样
+被绘制到屏幕上的
 
 1056
 00:47:32,693 --> 00:47:35,343
-That's in fact some of its purpose in life
+实际上，视图模型的一部分作用
 
 1057
 00:47:39,090 --> 00:47:42,170
-is to take this UI
-independent Model MemoryGame
+就是获取这些独立于 UI 的模型
+例如 MemoryGame
 
 1058
 00:47:42,170 --> 00:47:45,750
-and translate it to have
-it displayed in some way.
+翻译后以某种形式显示出来
 
 1059
 00:47:45,750 --> 00:47:49,870
-In this case, as a EmojiMemoryGame.
+在这个例子中
+视图模型是 EmojiMemoryGame
 
 1060
 00:47:49,870 --> 00:47:52,600
-Before we dive into our ViewModel here,
+在我们进入
+这里的视图模型之前
 
 1061
 00:47:52,600 --> 00:47:55,140
-let's hide this preView which you can do,
+让我们先通过这里的选项
 
 1062
 00:47:55,140 --> 00:47:56,340
-by the way, right here.
+隐藏这个预览视图
 
 1063
 00:47:56,340 --> 00:47:58,440
-You can see Show Editor Only.
+可以看到 Show Editor Only
 
 1064
 00:47:58,440 --> 00:47:59,450
-Well, hide that.
+好，隐藏了预览视图
 
 1065
 00:47:59,450 --> 00:48:02,610
-You can always bring it back with Canvas.
+你总是可以通过选择 Canvas
+再把预览视图显示出来
 
 1066
 00:48:02,610 --> 00:48:04,073
-Okay, and then hide it again.
+好了，点击 Show Editor Only
+再次隐藏预览视图
 
 1067
 00:48:05,180 --> 00:48:07,860
-So, let's build our ViewModel here.
+开始构建这里的 ViewModel
 
 1068
 00:48:07,860 --> 00:48:10,030
-Now, one interesting
-thing right off the bat
+现在，有一件有趣的事
 
 1069
 00:48:10,030 --> 00:48:14,020
-is that I'm gonna make
-our ViewModel be a class.
+就是我会将 ViewModel
+定义为一个类
 
 1070
 00:48:14,020 --> 00:48:15,720
-I'm gonna call it EmojiMemoryGame.
+命名为 EmojiMemoryGame
 
 1071
 00:48:17,740 --> 00:48:20,180
-By the way it's a class, object-oriented,
+顺便提一下
+它是一个面向对象的类
 
 1072
 00:48:20,180 --> 00:48:21,860
-it could have a superclass here,
+它可以有超类
 
 1073
 00:48:21,860 --> 00:48:24,300
-which we would specify something like this
+像这样指定超类
 
 1074
 00:48:24,300 --> 00:48:28,380
-but our emoji game does not
-have a superclass, okay?
+但是我们的表情记忆游戏
+没有超类
 
 1075
 00:48:28,380 --> 00:48:31,790
-And I'm gonna explain in a
-moment here why this is a class
+稍后我会解释
+为什么这里是一个类
 
 1076
 00:48:31,790 --> 00:48:33,460
-instead of a struct.
+而不是结构体
 
 1077
 00:48:33,460 --> 00:48:37,150
-But let's think about what
-a ViewModel is, right?
+让我们先想一下
+视图模型是什么？
 
 1078
 00:48:37,150 --> 00:48:40,860
-We know that it's essentially
-a portal between the Views
+我们知道视图模型实质上是一个
 
 1079
 00:48:40,860 --> 00:48:42,360
-and our Model, right?
+视图与模型之间的入口
 
 1080
 00:48:42,360 --> 00:48:46,670
-It's the door wait for the
-Views to get to the Model.
+视图模型是等待视图
+获取模型之“门”
 
 1081
 00:48:46,670 --> 00:48:50,020
-So for sure, what our ViewModel needs here
+所以，视图模型需要的
 
 1082
 00:48:50,020 --> 00:48:53,560
-is some sort of var that it
-can access the Model through.
+是某种类型的变量
+以此来访问模型
 
 1083
 00:48:53,560 --> 00:48:57,020
-Now, I'm actually calling
-this var model, right?
+现在，我称这个变量
+为模型
 
 1084
 00:48:57,020 --> 00:49:01,020
-Which you probably
-wouldn't call any var model
+你可能不会把任何变量
+称为模型
 
 1085
 00:49:01,020 --> 00:49:03,090
-because that's a concept
+因为“模型”是一个概念
 
 1086
 00:49:03,090 --> 00:49:05,830
-but I'm calling it here just
-for instructor purposes.
+但是这里我称之为模型
+只是为了讲解的目的
 
 1087
 00:49:05,830 --> 00:49:09,250
-You'd really probably call
-this var something like game,
+你可能会将这个变量命名为
+例如 game
 
 1088
 00:49:09,250 --> 00:49:11,400
-something more descriptive of what it is.
+更能描述它是什么的名称
 
 1089
 00:49:11,400 --> 00:49:13,190
