@@ -5817,437 +5817,404 @@ isFaceUp 时
 
 1387
 01:02:59,880 --> 01:03:02,570
-You don't have to say func init, okay?
+你不需要输入 func init，对吧？
 
 1388
 01:03:02,570 --> 01:03:04,240
-You can just say init
+你只需输入 init 即可
 
 1389
 01:03:04,240 --> 01:03:07,240
-because inits are, by
-definition, functions
+因为 init 的定义本就是函数
 
 1390
 01:03:07,240 --> 01:03:09,930
-and you just give it
-whatever argument wants.
+然后传入想要的参数就行
 
 1391
 01:03:09,930 --> 01:03:13,260
-So we want numberOfPairsOfCards
+我们需要参数 numberOfPairsOfCards
 
 1392
 01:03:13,260 --> 01:03:15,367
-and the type, that's an Int, right?
+它的类型是 Int，是吧？
 
 1393
 01:03:15,367 --> 01:03:16,473
-And it doesn't have a return value
+且无需返回值
 
 1394
 01:03:16,473 --> 01:03:20,690
-because it's just going to
-initialize all of our variables,
+因为构造器（init 函数）
+是用来初始化所有变量的
 
 1395
 01:03:20,690 --> 01:03:23,430
-that's what an init does
-and what's really cool
+令人赞叹的是
 
 1396
 01:03:23,430 --> 01:03:25,800
-is you can have multiple of these inits,
+你可以创建多个构造器
 
 1397
 01:03:25,800 --> 01:03:27,980
-each with different arguments.
+每个构造器传入不同的参数
 
 1398
 01:03:27,980 --> 01:03:31,870
-So, if there were other
-ways we could think of
+如果还有其他创建 MemoryGame 的方式
 
 1399
 01:03:31,870 --> 01:03:36,870
-to create a MemoryGame, we
-could have other inits, okay?
+我们就可以创建不同的构造器
 
 1400
 01:03:37,210 --> 01:03:38,960
-And we've seen this before too.
+这在之前的课程里遇到过
 
 1401
 01:03:38,960 --> 01:03:41,670
-So we go back here, we look
-at RoundedRectangle, right?
+回顾一下 RoundedRectangle
 
 1402
 01:03:41,670 --> 01:03:44,000
-When we create a RoundedRectangle
+当我们创建一个 RoundedRectangle
 
 1403
 01:03:44,000 --> 01:03:45,140
-and we did open parentheses,
+输入左括号
 
 1404
 01:03:45,140 --> 01:03:47,600
-look, there were four different ways
+就能看到这里有四种不同的方式
 
 1405
 01:03:47,600 --> 01:03:49,490
-to create a RoundedRectangle.
+创建 RoundedRectangle
 
 1406
 01:03:49,490 --> 01:03:52,390
-Its radius or the corner
-size or some style
+一种是通过半径，一种是通过圆角尺寸
 
 1407
 01:03:52,390 --> 01:03:54,110
-or something going on here.
+另外还有通过某种样式
 
 1408
 01:03:54,110 --> 01:03:56,750
-So these would be four different inits
+所以这四种不同的构造器
 
 1409
 01:03:56,750 --> 01:03:58,160
-with different arguments,
+参数各不相同
 
 1410
 01:03:58,160 --> 01:04:02,810
-all of them would be used to
-create a RoundedRectangle.
+它们都能用来创建 RoundedRectangle
 
 1411
 01:04:02,810 --> 01:04:05,150
-Okay, so that's exactly the
-same thing going on here.
+这恰好跟我们的场景相同
 
 1412
 01:04:05,150 --> 01:04:07,930
-In our case we only have this one init.
+在我们的示例中只有一个构造器
 
 1413
 01:04:09,220 --> 01:04:11,150
-Now, what is our init need to do here?
+在构造器中需要做些什么呢？
 
 1414
 01:04:11,150 --> 01:04:14,010
-Well, it needs to
-initialize all of our vars
+要用它初始化所有的变量
 
 1415
 01:04:14,010 --> 01:04:17,389
-because we are not allowed
-to have a MemoryGame
+因为使用 MemoryGame 实例时
 
 1416
 01:04:17,389 --> 01:04:21,580
-without all of its vars initialized.
+它的变量都需要初始化
 
 1417
 01:04:21,580 --> 01:04:23,100
-So let's dive right in and do that.
+我们现在就来实现它
 
 1418
 01:04:23,100 --> 01:04:25,710
-I'm gonna start by creating my Cards
+首先创建一个空数组
 
 1419
 01:04:25,710 --> 01:04:27,810
-as an empty Array of Cards, right?
+存放卡片
 
 1420
 01:04:27,810 --> 01:04:29,450
-My cards are in Array of Cards.
+卡片存在 Array<Card> 中
 
 1421
 01:04:29,450 --> 01:04:34,040
-I'm gonna make cards to
-equal to an Array&lt;Card&gt;
+输入 cards = Array&lt;Card&gt;
 
 1422
 01:04:34,040 --> 01:04:35,940
-with open parentheses, close parentheses.
+后接左括号和右括号
 
 1423
 01:04:35,940 --> 01:04:39,350
-In other words, I'm calling
-its init if it has one
+也就是说，如果它有无参数的构造器
+就调用这个构造器
 
 1424
 01:04:39,350 --> 01:04:42,540
-with no arguments and when
-you do that in an Array,
+如果作用在 Array 上
 
 1425
 01:04:42,540 --> 01:04:43,980
-it creates an empty Array.
+就创建了一个空数组
 
 1426
 01:04:43,980 --> 01:04:47,770
-So this is cards is now an
-empty Array of Cards, okay?
+现在卡片是一个
+以 Card 为元素类型的空数组
 
 1427
 01:04:47,770 --> 01:04:51,480
-Which satisfies this
-requirement of initializing it.
+这满足了初始化的需求
 
 1428
 01:04:51,480 --> 01:04:52,790
-But, of course, we need to do more,
+当然这还不够
 
 1429
 01:04:52,790 --> 01:04:56,620
-we need to create this
-many pairs of Cards, okay?
+我们需要创建这样的多对卡片不是吗？
 
 1430
 01:04:56,620 --> 01:04:58,820
-Add that those to this Array.
+再把它们存入数组中
 
 1431
 01:04:58,820 --> 01:05:01,330
-So to do that, we're
-gonna need a for loop.
+为了实现它，我们需要一个 for 循环
 
 1432
 01:05:01,330 --> 01:05:05,143
-So this is the first time you're
-seeing a for loop in Swift.
+这是你在 Swift 中
+第一次碰到 for 循环
 
 1433
 01:05:05,143 --> 01:05:08,520
-It's for and the iteration variable
+输入 for 和一个迭代变量
 
 1434
 01:05:08,520 --> 01:05:10,270
-which is gonna be the pairIndex, right?
+可以是 pairIndex
 
 1435
 01:05:10,270 --> 01:05:13,520
-The index of the pair as I'm
-gonna do this for each pair.
+用每对卡片的序号
+在 for 循环中遍历这些卡片
 
 1436
 01:05:13,520 --> 01:05:14,725
-And then you say in.
+然后输入 in
 
 1437
 01:05:14,725 --> 01:05:17,190
-So for in is a for loop.
+所以 for in 是 for 循环的书写格式
 
 1438
 01:05:17,190 --> 01:05:18,970
-It's the only kind of for loop in Swift
+它是 Swift 中唯一的 for 循环方式
 
 1439
 01:05:18,970 --> 01:05:22,590
-and this is an iteratable thing, okay?
+接下来输入一个可迭代的内容
 
 1440
 01:05:22,590 --> 01:05:23,580
-We saw this before.
+我们之前学过的
 
 1441
 01:05:23,580 --> 01:05:25,650
-This is anything that can be iterated,
+它可以是任意可迭代的内容
 
 1442
 01:05:25,650 --> 01:05:27,570
-often, it's an Array, okay?
+通常是一个数组，对吧？
 
 1443
 01:05:27,570 --> 01:05:30,530
-In this case, I'm gonna do
-the same iteratable thing
+在这个示例中我仍然用一个区间
 
 1444
 01:05:30,530 --> 01:05:34,070
-we did over here, which is a range, okay?
+像之前这里一样
 
 1445
 01:05:34,070 --> 01:05:36,360
-So a range is an iteratable thing,
+所以区间是可迭代的
 
 1446
 01:05:36,360 --> 01:05:39,150
-an Array is also an iteratable thing
+数组也是可迭代的
 
 1447
 01:05:39,150 --> 01:05:42,220
-but here I want a range
-that goes from zero up to
+但是这里我要用一个区间
 
 1448
 01:05:42,220 --> 01:05:45,870
-but not including the
-number of pairs of cards.
+从 0 到卡片对的个数，不包括这个数
 
 1449
 01:05:45,870 --> 01:05:47,710
-So this is how you do a for loop,
+这就是 for 循环的实现方式
 
 1450
 01:05:47,710 --> 01:05:51,410
-it's going to do it for zero, one, two,
+从 0 开始，到 1，再到 2
 
 1451
 01:05:51,410 --> 01:05:54,130
-up until and not including
-the number of pairs of cards.
+一直到卡片对的个数，不包括这个数
 
 1452
 01:05:54,130 --> 01:05:56,360
-So if this is two pairs of cards,
+所以如果要两对卡片
 
 1453
 01:05:56,360 --> 01:05:58,720
-then it's gonna be zero, one,
+就从 0 开始遍历，到 1
 
 1454
 01:05:58,720 --> 01:06:01,410
-and then two is not less than two.
+2 不小于 2
 
 1455
 01:06:01,410 --> 01:06:03,570
-So, it will stop, okay?
+所以停止遍历
 
 1456
 01:06:03,570 --> 01:06:06,040
-So, inside here, I need to add two Cards.
+每次遍历添加两个卡片
 
 1457
 01:06:06,040 --> 01:06:09,820
-I'm gonna have to say to
-my Cards Array, append.
+对存放卡片的数组调用 append 函数
 
 1458
 01:06:09,820 --> 01:06:13,390
-So append is a function in Array
+append 是 Array 的一个函数
 
 1459
 01:06:13,390 --> 01:06:16,229
-and it lets you add a Card to it.
+可以实现向数组中添加卡片
 
 1460
 01:06:16,229 --> 01:06:20,160
-So I'm gonna have to append
-a Card here of some kind,
+这里我给数组添加一个卡片
 
 1461
 01:06:21,334 --> 01:06:23,350
-which we'll have to figure out how to do
+之后再细究其实现方式
 
 1462
 01:06:23,350 --> 01:06:25,930
-and then I'm gonna append
-another Card, okay?
+然后再添加一个卡片
 
 1463
 01:06:25,930 --> 01:06:27,880
-one, so just a pair of Cards.
+凑成一对卡片
 
 1464
 01:06:27,880 --> 01:06:29,900
-so I'm gonna do both pairs.
+这样就完成了一对卡片的添加
 
 1465
 01:06:29,900 --> 01:06:32,040
-Now, of course, I can't create a Card,
+这样创建卡片当然不行
 
 1466
 01:06:32,040 --> 01:06:33,600
-one of these little Card things
+只输入左括号和右括号
 
 1467
 01:06:33,600 --> 01:06:35,213
-with just open parentheses,
-close parentheses,
+是不合法的
 
 1468
 01:06:35,213 --> 01:06:38,260
-that's not legal, it's got these things
+它需要这些变量
 
 1469
 01:06:38,260 --> 01:06:41,180
-but if I do the open
-parenthesis, oh, there,
+如果我只输入左括号
 
 1470
 01:06:41,180 --> 01:06:45,090
-I get this nice bright
-little initializer here
+就能看到使用构造器的提示
 
 1471
 01:06:45,090 --> 01:06:46,950
-that it builds that lets me initialize
+使用这个逐一成员构造器
 
 1472
 01:06:46,950 --> 01:06:49,140
-every single argument, okay?
+可以初始化每个参数
 
 1473
 01:06:49,140 --> 01:06:52,399
-So I can do that for both of these things.
+这样就能初始化这对卡片中的参数
 
 1474
 01:06:52,399 --> 01:06:55,710
-So you get this, if it's a
-struct, this is a struct,
+这是一个结构体
 
 1475
 01:06:55,710 --> 01:06:59,260
-you get this kind of initializer for free.
+所以你能自动获得这个逐一成员构造器
 
 1476
 01:06:59,260 --> 01:07:01,520
-One that initializes every variable.
+可以用它初始化每个变量
 
 1477
 01:07:01,520 --> 01:07:05,024
-By the way, for a class, it
-gets a free initializer as well
+对了，类也有自动获得的构造器
 
 1478
 01:07:05,024 --> 01:07:08,380
-but it initializes none
-of the variables, okay?
+但不能用它初始化变量
 
 1479
 01:07:08,380 --> 01:07:11,235
-So in a class, you either
-have to initialize them all
+所以在类里要想初始化变量
 
 1480
 01:07:11,235 --> 01:07:13,938
-with equals here, right?
+要么使用等号进行声明
 
 1481
 01:07:13,938 --> 01:07:18,340
-Or you have to create your
-own init that initializes it,
+要么自定义构造器来初始化变量
 
 1482
 01:07:18,340 --> 01:07:20,410
-like we're doing here, okay?
+就像我们这里定义的构造器
 
 1483
 01:07:20,410 --> 01:07:23,480
-But for struct we don't
-need an init on this
+但是结构体就不需要自定义构造器了
 
 1484
 01:07:23,480 --> 01:07:26,510
-because we get this free
-one since it's a struct,
+因为结构体有自动获得的
 
 1485
 01:07:26,510 --> 01:07:27,880
-we get this this free one.
+逐一成员构造器
 
 1486
 01:07:27,880 --> 01:07:30,680
