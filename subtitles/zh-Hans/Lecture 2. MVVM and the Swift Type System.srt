@@ -3755,298 +3755,277 @@ RoundedRectangle 或者
 
 900
 00:40:11,290 --> 00:40:15,410
-So I'm gonna have to have
-some var, which is the cards,
+所以，我要用变量 cards 来表示卡片
 
 901
 00:40:15,410 --> 00:40:17,240
-and of course, all of ours need a type
+当然我们需要一个类型
 
 902
 00:40:17,240 --> 00:40:20,200
-so we do types with colon something
+所以，我们打上冒号
 
 903
 00:40:20,200 --> 00:40:23,820
-and I think my cards
-are gonna be an Array.
+我们的卡片应该是一个 Array
 
 904
 00:40:23,820 --> 00:40:26,300
-And Array is a generic type,
+Array 是一种泛型
 
 905
 00:40:26,300 --> 00:40:29,440
-which means it has this don't care type,
+这意味着，它有一个不确定类型
 
 906
 00:40:29,440 --> 00:40:31,410
-which in the case of an Array
+在用 Array 的情况下
 
 907
 00:40:31,410 --> 00:40:35,330
-is the type of the thing that
-is contained in the Array.
+这个类型是 Array 中包含元素的类型
 
 908
 00:40:35,330 --> 00:40:38,960
-So, I'm gonna need some
-type, some real type
+因此，在 Array 里，我们需要明确
 
 909
 00:40:38,960 --> 00:40:40,010
-that is in this Array.
+某种实实在在的类型
 
 910
 00:40:40,010 --> 00:40:43,750
-So it's gonna make one up, I'm
-gonna call it Card right here
+所以在这里，我们需要编写类型 Card
 
 911
 00:40:43,750 --> 00:40:46,100
-and I'm just gonna go
-down and say struct Card
+然后，我们来继续写 Card 结构体
 
 912
 00:40:46,100 --> 00:40:49,060
-is some struct of some
-sort and this struct
+是某个结构体，而这个结构体
 
 913
 00:40:49,060 --> 00:40:52,230
-is gonna have to represent a single card.
+将用来表示一张单独的卡片
 
 914
 00:40:52,230 --> 00:40:56,860
-Notice that I put this struct
-Card inside of this struct.
+请注意，我把 Card 这个结构体
+放在了这个结构体里
 
 915
 00:40:56,860 --> 00:40:58,750
-So the full name of this one
+因此，这个结构体的全称
 
 916
 00:40:58,750 --> 00:41:01,990
-is actually MemoryGame.Card.
+实际上是 MemoryGame.Card
 
 917
 00:41:01,990 --> 00:41:05,960
-Nesting structs inside
-structs, it's mostly a naming,
+在结构体里面嵌套结构体
 
 918
 00:41:05,960 --> 00:41:08,250
-a name spacing thing so that we know
+通过命名空间让我们知道
 
 919
 00:41:08,250 --> 00:41:09,810
-that this is not a playing card
+它不是纸牌
 
 920
 00:41:09,810 --> 00:41:11,420
-or some other kind of random card,
+或某种其他卡片
 
 921
 00:41:11,420 --> 00:41:14,243
-it is a MemoryGames card
-that's why we put it in here
+这是 MemoryGame 的卡片
+所以我们把它放在这里
 
 922
 00:41:14,243 --> 00:41:16,210
-and has some other slight benefits
+（这样做）有一些细微的好处
 
 923
 00:41:16,210 --> 00:41:19,370
-that you'll see along the way.
+等会你就会看到
 
 924
 00:41:19,370 --> 00:41:21,410
-Now, what else does a MemoryGame need
+那么，MemoryGame 还需要什么呢
 
 925
 00:41:21,410 --> 00:41:23,410
-beside a bunch of cards?
+除了一堆卡片
 
 926
 00:41:23,410 --> 00:41:25,270
-It needs a way to choose a Card.
+它还应该有一个选择卡片的方法
 
 927
 00:41:25,270 --> 00:41:27,930
-So you're gonna see here
-your first definition
+所以，在这里你将定义你的第一个
 
 928
 00:41:27,930 --> 00:41:31,650
-of a Swift function and you
-do it with the keyword func,
+Swift 函数
+你可以用关键字 func 来做到这一点
 
 929
 00:41:31,650 --> 00:41:34,420
-of course, and next is
-the name of the function,
+接下来，是函数的名字
 
 930
 00:41:34,420 --> 00:41:38,650
-I'm gonna call it choose
-and then any arguments,
+我们称之为 choose，然后给定参数
 
 931
 00:41:38,650 --> 00:41:41,500
-in this case, you're gonna choose a Card,
+在这里，你会选择一张卡片
 
 932
 00:41:41,500 --> 00:41:45,270
-so I'm gonna put this
-argument here for card.
+所以我会写一个 Card 参数
 
 933
 00:41:45,270 --> 00:41:47,800
-Now, notice, as promised,
+注意好了，正如我们前面说到的
 
 934
 00:41:47,800 --> 00:41:52,350
-almost all arguments to
-all functions have a label
+几乎所有函数的实参都有标签
 
 935
 00:41:52,350 --> 00:41:56,040
-and this makes it so that when
-callers are calling choose,
+这就确保了当调用者调用 choose 时
 
 936
 00:41:56,040 --> 00:41:57,810
-it's clear that they're calling choose
+可以清晰地知道它们调用 choose
 
 937
 00:41:57,810 --> 00:42:01,823
-with a card that that is
-the argument right there.
+需要传入这里的 card 参数
 
 938
 00:42:03,130 --> 00:42:07,510
-Now, inside here, we are going
-to have to actually fork off
+我们之后不得不打岔去这里面
 
 939
 00:42:07,510 --> 00:42:10,505
-and do all the logic for
-our game matching cards.
+写好卡片配对游戏的逻辑
 
 940
 00:42:10,505 --> 00:42:13,000
-For now, I'm actually just going to do,
+但现在，我实际上只会
 
 941
 00:42:13,000 --> 00:42:14,940
-use a print of statements.
+用一条 print 语句
 
 942
 00:42:14,940 --> 00:42:17,640
-So, print is a great function in Swift
+print 是 Swift 里面一个非常好的函数
 
 943
 00:42:17,640 --> 00:42:20,260
-and it prints a string.
+它能打印一个字符串
 
 944
 00:42:20,260 --> 00:42:22,870
-So here I'm printing an empty string.
+所以在这儿我打印的是一个空字符串
 
 945
 00:42:22,870 --> 00:42:26,780
-But I can say something like card chosen
+但我也可以打印 card chosen:
+（被选中的卡片是）
 
 946
 00:42:26,780 --> 00:42:31,780
-and then I wanna put this
-Card, somehow, in this print
+然后，我想用某种方法
+把这个卡片放在这儿
 
 947
 00:42:31,870 --> 00:42:34,240
-right here and in other languages,
+在其他语言里面
 
 948
 00:42:34,240 --> 00:42:38,370
-you might do %s and then
-put the card out here
+你可能会用 %s，然后把 card 放在这里
 
 949
 00:42:38,370 --> 00:42:39,910
-but in Swift, you don't do that.
+但是在 Swift 里，不需要那样做
 
 950
 00:42:39,910 --> 00:42:42,020
-When you wanna embed something in a string
+当你想要在字符串中嵌入一些
 
 951
 00:42:42,020 --> 00:42:43,320
-that's of a different type,
+其他类型的东西的时候
 
 952
 00:42:43,320 --> 00:42:45,030
-you actually do backslash,
+你可以写反斜杠
 
 953
 00:42:45,030 --> 00:42:47,150
-open parentheses, close parentheses
+左括号，右括号
 
 954
 00:42:47,150 --> 00:42:49,200
-and then you can put it in here.
+然后就可以放在这儿了
 
 955
 00:42:49,200 --> 00:42:51,150
-And as long as this can be turned
+只要它可以
 
 956
 00:42:51,150 --> 00:42:54,730
-to do a string of some
-sort, then this will work
+转成字符串，这就是可行的
 
 957
 00:42:54,730 --> 00:42:56,660
-and Swift is amazingly good
+Swift 就是如此，好用到爆炸
 
 958
 00:42:56,660 --> 00:43:00,860
-at turning almost anything into a string.
+它几乎可以把任何（类型）转换成 String
 
 959
 00:43:00,860 --> 00:43:03,400
-Now, this struct right here
-it doesn't have any vars
+现在，这个结构体
+没有任何的成员变量
 
 960
 00:43:03,400 --> 00:43:06,270
-right in here so it probably
-not gonna print my job there,
+所以，它可能不会打印出什么来
 
 961
 00:43:06,270 --> 00:43:09,580
-might just say empty struct
-Card or something like that
+可能只会打印一个空的 Card 结构体
 
 962
 00:43:09,580 --> 00:43:11,990
-but we're going to obviously add vars
+但是，我们肯定会添加变量
 
 963
 00:43:11,990 --> 00:43:13,880
-and then when we say card chosen,
+然后当我们打印选中的卡片时
 
 964
 00:43:13,880 --> 00:43:17,390
-it's gonna print out what
-the values of those vars are
+就会打印出其中变量的值
 
 965
 00:43:17,390 --> 00:43:19,230
-as long as all those vars can be converted
+只要其中的变量也可以
 
 966
 00:43:19,230 --> 00:43:20,150
-into strings as well.
+被转换成字符串就行
 
 967
 00:43:20,150 --> 00:43:22,460
