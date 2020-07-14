@@ -1,0 +1,6024 @@
+1
+00:00:00,000 --> 00:00:02,417
+(soft music)
+
+2
+00:00:04,477 --> 00:00:06,323
+- [Woman] Stanford University.
+
+3
+00:00:07,710 --> 00:00:10,909
+- [Instructor] Welcome everyone
+to the very last lecture,
+
+4
+00:00:10,909 --> 00:00:14,797
+lecture number 14 of Stanford CS193p
+
+5
+00:00:14,797 --> 00:00:18,053
+during Spring quarter of 2020.
+
+6
+00:00:18,939 --> 00:00:21,054
+For all of you it's all final project
+
+7
+00:00:21,054 --> 00:00:22,471
+all the rest of the way.
+
+8
+00:00:22,471 --> 00:00:27,085
+However, I do want to talk about
+one last feature in SwiftUI
+
+9
+00:00:27,085 --> 00:00:29,786
+which is the integration with UIKit.
+
+10
+00:00:29,786 --> 00:00:32,390
+Remember that UIKit is the old way
+
+11
+00:00:32,390 --> 00:00:35,234
+of developing applications for iOS.
+
+12
+00:00:35,234 --> 00:00:38,610
+And when SwiftUI came
+out a few months ago,
+
+13
+00:00:38,610 --> 00:00:41,450
+it does pretty much
+everything that UIKit does
+
+14
+00:00:41,450 --> 00:00:43,860
+but there's a few UIKit features in there
+
+15
+00:00:43,860 --> 00:00:44,960
+that aren't in SwiftUI,
+
+16
+00:00:44,960 --> 00:00:47,161
+and you'd like to be able to use them,
+
+17
+00:00:47,161 --> 00:00:49,976
+and so this API makes it
+really easy to do that.
+
+18
+00:00:49,976 --> 00:00:53,656
+Also you might be an existing
+developer of an iOS app
+
+19
+00:00:53,656 --> 00:00:55,755
+and you've got a bunch of UIKit code,
+
+20
+00:00:55,755 --> 00:00:56,960
+of course you wanna use that
+
+21
+00:00:56,960 --> 00:00:59,200
+as you transition over to SwiftUI,
+
+22
+00:00:59,200 --> 00:01:02,712
+and this lets you do that as well.
+
+23
+00:01:02,712 --> 00:01:04,853
+Now for me to talk about this feature,
+
+24
+00:01:04,853 --> 00:01:07,757
+I have to explain a little
+bit about how UIKit works.
+
+25
+00:01:07,757 --> 00:01:10,539
+I'm not gonna teach you any UIKit itself,
+
+26
+00:01:10,539 --> 00:01:12,584
+but conceptually it's important
+
+27
+00:01:12,584 --> 00:01:15,230
+to understand some basics about it.
+
+28
+00:01:15,230 --> 00:01:18,663
+One thing is there's no MVVM in UIKit,
+
+29
+00:01:18,663 --> 00:01:22,880
+instead it's something called
+MVC, Model-View-Controller.
+
+30
+00:01:22,880 --> 00:01:25,233
+And in the Model-View-Controller
+architecture,
+
+31
+00:01:25,233 --> 00:01:27,446
+Views are kind of grouped together
+
+32
+00:01:27,446 --> 00:01:31,166
+and controlled by something
+called a Controller.
+
+33
+00:01:31,166 --> 00:01:34,784
+This Controller is sort of the granularity
+
+34
+00:01:34,784 --> 00:01:37,171
+at which you present Views on screen.
+
+35
+00:01:37,171 --> 00:01:40,739
+And by presenting I
+mean like SwiftUI sheet
+
+36
+00:01:40,739 --> 00:01:43,864
+or popover or the destination
+of a NavigationLink.
+
+37
+00:01:43,864 --> 00:01:46,166
+Those are presenting Views on screen.
+
+38
+00:01:46,166 --> 00:01:48,521
+Well, in SwiftUI there's no difference.
+
+39
+00:01:48,521 --> 00:01:51,820
+We don't have any Controllers,
+so Views are just Views,
+
+40
+00:01:51,820 --> 00:01:53,610
+and we present them whenever we want.
+
+41
+00:01:53,610 --> 00:01:54,951
+It's quite nice.
+
+42
+00:01:54,951 --> 00:01:57,357
+But in UIKit, it's different
+
+43
+00:01:57,357 --> 00:01:59,268
+when you're putting Views on screen.
+
+44
+00:01:59,268 --> 00:02:01,917
+You have to essentially
+present a Controller,
+
+45
+00:02:01,917 --> 00:02:05,114
+and the Controller controls Views.
+
+46
+00:02:05,114 --> 00:02:06,498
+Now because of this,
+
+47
+00:02:06,498 --> 00:02:08,343
+because you've got this Controller thing,
+
+48
+00:02:08,343 --> 00:02:11,895
+the integration between SwiftUI and UIKit
+
+49
+00:02:11,895 --> 00:02:14,285
+really needs two integration points.
+
+50
+00:02:14,285 --> 00:02:16,534
+Now these two integration
+points are very similar,
+
+51
+00:02:16,534 --> 00:02:19,296
+but one is a UIViewRepresentable,
+
+52
+00:02:19,296 --> 00:02:23,419
+that's a SwiftUI View that
+represents a UIKit View,
+
+53
+00:02:23,419 --> 00:02:27,752
+and then there's also
+UIViewControllerRepresentable,
+
+54
+00:02:27,752 --> 00:02:31,046
+a SwiftUI View that represents
+one of these Controllers
+
+55
+00:02:31,046 --> 00:02:34,835
+and all the Views that
+that Controller controls.
+
+56
+00:02:34,835 --> 00:02:36,677
+We can see these things look the same
+
+57
+00:02:36,677 --> 00:02:38,880
+but it's just necessary to have both
+
+58
+00:02:38,880 --> 00:02:42,600
+because of UIKit's underlying
+dichotomy between their Views
+
+59
+00:02:42,600 --> 00:02:44,731
+like Buttons and
+TextFields, those are Views,
+
+60
+00:02:44,731 --> 00:02:46,277
+and their ViewControllers
+
+61
+00:02:46,277 --> 00:02:49,074
+which are these groupings of Views.
+
+62
+00:02:49,074 --> 00:02:50,538
+And the main work that's involved
+
+63
+00:02:50,538 --> 00:02:53,576
+in implementing either of
+these two Representables
+
+64
+00:02:53,576 --> 00:02:56,400
+is dealing with setting of the vars
+
+65
+00:02:56,400 --> 00:02:58,973
+to configure the View
+or the ViewController.
+
+66
+00:02:58,973 --> 00:03:01,070
+And especially with the ViewControllers,
+
+67
+00:03:01,070 --> 00:03:03,431
+they often want to call you back
+
+68
+00:03:03,431 --> 00:03:05,906
+and say this happened in my ViewController
+
+69
+00:03:05,906 --> 00:03:08,936
+and what should I do about
+it and things like that.
+
+70
+00:03:08,936 --> 00:03:12,398
+I say here, quote, "callback
+functions" on the slide,
+
+71
+00:03:12,398 --> 00:03:15,559
+but it's not really
+callback functions per se.
+
+72
+00:03:15,559 --> 00:03:17,823
+And I'm gonna dive into
+that a little bit more now
+
+73
+00:03:17,823 --> 00:03:18,994
+so you can understand
+
+74
+00:03:18,994 --> 00:03:23,056
+how this mechanism of a View is on screen
+
+75
+00:03:23,056 --> 00:03:25,233
+or a ViewController is one
+thing and things are happening,
+
+76
+00:03:25,233 --> 00:03:29,133
+how do we interact with
+it, works in UIKit.
+
+77
+00:03:29,986 --> 00:03:33,147
+The main concept there
+that you need to understand
+
+78
+00:03:33,147 --> 00:03:35,451
+is something called delegation.
+
+79
+00:03:35,451 --> 00:03:37,919
+Remember UIKit is object-oriented?
+
+80
+00:03:37,919 --> 00:03:40,600
+Not functional programming,
+it's object-oriented.
+
+81
+00:03:40,600 --> 00:03:41,433
+So it's very different.
+
+82
+00:03:41,433 --> 00:03:43,486
+It's not declarative, it's not reactive,
+
+83
+00:03:43,486 --> 00:03:44,845
+none of those things.
+
+84
+00:03:44,845 --> 00:03:49,264
+And it uses heavily a
+concept called delegation.
+
+85
+00:03:49,264 --> 00:03:52,214
+We briefly mentioned this when
+we talked about FileManager.
+
+86
+00:03:52,214 --> 00:03:53,926
+FileManager has a delegate.
+
+87
+00:03:53,926 --> 00:03:56,981
+But these objects, these
+Controllers and their Views,
+
+88
+00:03:56,981 --> 00:04:00,945
+have a delegate that
+they literally delegate
+
+89
+00:04:00,945 --> 00:04:02,549
+functionality to.
+
+90
+00:04:02,549 --> 00:04:05,042
+Some of the functionalities
+of Views and ViewController,
+
+91
+00:04:05,042 --> 00:04:08,871
+they offer to allow some
+other object to control that.
+
+92
+00:04:08,871 --> 00:04:11,634
+Now they do this by having
+a var in themselves.
+
+93
+00:04:11,634 --> 00:04:13,150
+The Views or ViewControllers
+
+94
+00:04:13,150 --> 00:04:15,321
+have a var in themselves
+called a delegate.
+
+95
+00:04:15,321 --> 00:04:19,780
+And this delegate var its
+type is some protocol.
+
+96
+00:04:19,780 --> 00:04:22,270
+Now we know protocols well of course
+
+97
+00:04:22,270 --> 00:04:24,020
+as functional programmers.
+
+98
+00:04:24,020 --> 00:04:24,913
+In object-oriented programming,
+
+99
+00:04:24,913 --> 00:04:26,910
+protocols are used not as much,
+
+100
+00:04:26,910 --> 00:04:28,680
+and the protocols are slightly different
+
+101
+00:04:28,680 --> 00:04:31,522
+in that the methods and
+vars in the protocol,
+
+102
+00:04:31,522 --> 00:04:33,717
+some of them can be optional.
+
+103
+00:04:33,717 --> 00:04:35,786
+Not optional like the enum Optional,
+
+104
+00:04:35,786 --> 00:04:39,100
+but optional like you don't
+have to implement them.
+
+105
+00:04:39,100 --> 00:04:40,838
+You're gonna see when
+we do our demos today,
+
+106
+00:04:40,838 --> 00:04:44,286
+we're going to do a couple of
+different delegate protocols
+
+107
+00:04:44,286 --> 00:04:45,560
+and we're only gonna implement
+
+108
+00:04:45,560 --> 00:04:47,584
+one or two methods in each one
+
+109
+00:04:47,584 --> 00:04:51,526
+even though there might be
+10 or 15 methods available.
+
+110
+00:04:51,526 --> 00:04:53,864
+You might not need to use all of them.
+
+111
+00:04:53,864 --> 00:04:56,356
+This delegate var has this object
+
+112
+00:04:56,356 --> 00:04:58,233
+which can be pretty much anything
+
+113
+00:04:58,233 --> 00:05:00,750
+as long as it implements this protocol.
+
+114
+00:05:00,750 --> 00:05:02,700
+And this protocol has a
+lot of things in there
+
+115
+00:05:02,700 --> 00:05:06,071
+like I will do this and should I do this
+
+116
+00:05:06,071 --> 00:05:07,546
+and I just did do this.
+
+117
+00:05:07,546 --> 00:05:09,871
+Those kinds of notifications are happening
+
+118
+00:05:09,871 --> 00:05:12,809
+between the View or
+ViewController and this delegate.
+
+119
+00:05:12,809 --> 00:05:16,478
+So when we do our integration
+between SwiftUI and UIKit,
+
+120
+00:05:16,478 --> 00:05:19,721
+we have to somehow provide this delegate
+
+121
+00:05:19,721 --> 00:05:22,434
+so that this View or
+ViewController can function
+
+122
+00:05:22,434 --> 00:05:24,312
+'cause a lot of times
+they need that delegate
+
+123
+00:05:24,312 --> 00:05:27,930
+to do anything of any substance.
+
+124
+00:05:27,930 --> 00:05:30,251
+So I decided in the two
+demos that I'm doing today,
+
+125
+00:05:30,251 --> 00:05:32,521
+I'm gonna do one ViewRepresentable demo
+
+126
+00:05:32,521 --> 00:05:34,552
+and one ViewControllerRepresentable.
+
+127
+00:05:34,552 --> 00:05:36,720
+Both of them are gonna have a delegate
+
+128
+00:05:36,720 --> 00:05:39,163
+so you can see how that integrates.
+
+129
+00:05:40,672 --> 00:05:45,058
+So let's talk about these
+Representables, these two
+
+130
+00:05:45,058 --> 00:05:48,525
+SwiftUI Views, UIViewRepresentable and
+
+131
+00:05:48,525 --> 00:05:49,685
+UIViewControllerRepresentable,
+they're super similar
+
+132
+00:05:49,685 --> 00:05:53,013
+and they both have these
+five main components.
+
+133
+00:05:53,013 --> 00:05:56,260
+The first one is just
+a function that makes,
+
+134
+00:05:56,260 --> 00:05:59,727
+creates the underlying
+View or ViewController,
+
+135
+00:05:59,727 --> 00:06:02,980
+the so-called makeUIView
+or makeUIViewController.
+
+136
+00:06:02,980 --> 00:06:04,303
+And you go pass this context
+
+137
+00:06:04,303 --> 00:06:05,536
+which I'll talk about in a minute,
+
+138
+00:06:05,536 --> 00:06:08,346
+and you just return the
+View or the ViewController
+
+139
+00:06:08,346 --> 00:06:13,346
+that is Representable,
+is basically representing
+
+140
+00:06:13,410 --> 00:06:14,243
+with some SwiftUI Views.
+
+141
+00:06:14,243 --> 00:06:16,169
+So that's obvious we need that.
+
+142
+00:06:16,169 --> 00:06:21,084
+Another obvious thing we need
+is something to get this UIKit
+
+143
+00:06:21,084 --> 00:06:26,084
+to participate in the reactive
+nature of SwiftUI, right?
+
+144
+00:06:26,595 --> 00:06:30,358
+When a Binding changes or
+ObservableObject changes
+
+145
+00:06:30,358 --> 00:06:32,905
+or some internal state
+changes, something like that,
+
+146
+00:06:32,905 --> 00:06:36,524
+we do some Intent, changes our Model,
+
+147
+00:06:36,524 --> 00:06:39,918
+it ripples back to us
+and we redraw in the UI,
+
+148
+00:06:39,918 --> 00:06:41,522
+we are redrawing our Views,
+
+149
+00:06:41,522 --> 00:06:44,861
+updating them all the time in SwiftUI.
+
+150
+00:06:44,861 --> 00:06:47,096
+This doesn't really exist in UIKit.
+
+151
+00:06:47,096 --> 00:06:49,475
+So in your Representable
+you have to implement
+
+152
+00:06:49,475 --> 00:06:53,234
+a function called updateUIView
+or updateUIViewController,
+
+153
+00:06:53,234 --> 00:06:54,067
+and it will pass the ViewController
+
+154
+00:06:55,023 --> 00:06:56,890
+that you created with makeUIView
+
+155
+00:06:56,890 --> 00:06:59,030
+back to you along again with this context
+
+156
+00:06:59,030 --> 00:07:00,180
+which I'll talk about in a second,
+
+157
+00:07:00,180 --> 00:07:03,269
+and you now update that UIView.
+
+158
+00:07:03,269 --> 00:07:07,506
+So this is getting called
+whenever your SwiftUI View
+
+159
+00:07:07,506 --> 00:07:11,640
+is part of an update pass,
+right, it's being updated,
+
+160
+00:07:11,640 --> 00:07:14,517
+and so you have to able
+to update the View.
+
+161
+00:07:14,517 --> 00:07:15,740
+You might set vars,
+
+162
+00:07:15,740 --> 00:07:19,281
+you might pass values, whatever, in there,
+
+163
+00:07:19,281 --> 00:07:20,413
+you can have Binding.
+
+164
+00:07:20,413 --> 00:07:21,650
+I mean UIViewRepresentable
+
+165
+00:07:21,650 --> 00:07:23,438
+and UIViewControllerRepresentable,
+
+166
+00:07:23,438 --> 00:07:24,955
+they are SwiftUI Views,
+
+167
+00:07:24,955 --> 00:07:26,573
+of course they can have @Bindings
+
+168
+00:07:26,573 --> 00:07:29,220
+and maybe you're getting some
+values out of these things
+
+169
+00:07:29,220 --> 00:07:31,731
+that are bound back to
+your other SwiftUI Views
+
+170
+00:07:31,731 --> 00:07:34,080
+and you're setting it in your UIKit View.
+
+171
+00:07:34,080 --> 00:07:36,587
+So that's what's happening here.
+
+172
+00:07:36,587 --> 00:07:39,830
+Now this third thing is a
+function called makeCoordinator
+
+173
+00:07:39,830 --> 00:07:43,361
+that's gonna return what's
+called a Coordinator.
+
+174
+00:07:43,361 --> 00:07:45,090
+Now that Coordinator is a don't care.
+
+175
+00:07:45,090 --> 00:07:47,127
+It can be anything you want, right?
+
+176
+00:07:47,127 --> 00:07:49,337
+It has no requirements on it.
+
+177
+00:07:49,337 --> 00:07:52,262
+I'm not even sure it has any
+constrains and gains on it.
+
+178
+00:07:52,262 --> 00:07:55,454
+The main thing about this
+Coordinator though is
+
+179
+00:07:55,454 --> 00:07:57,178
+it's something that's gonna be passed
+
+180
+00:07:57,178 --> 00:08:00,676
+back to you via that context above.
+
+181
+00:08:00,676 --> 00:08:02,963
+Alright, so this Coordinator is the thing
+
+182
+00:08:02,963 --> 00:08:05,334
+that's gonna serve as the delegate
+
+183
+00:08:05,334 --> 00:08:09,139
+of our UIView or
+UIViewController if it needs one.
+
+184
+00:08:09,139 --> 00:08:12,486
+And it's really nothing
+more than a collection
+
+185
+00:08:12,486 --> 00:08:16,013
+of the functionality that
+you would need in a delegate
+
+186
+00:08:16,013 --> 00:08:20,060
+to make your View or ViewController work.
+
+187
+00:08:20,060 --> 00:08:21,850
+Really the whole UIView
+
+188
+00:08:21,850 --> 00:08:23,693
+and UIViewControllerRepresentable system
+
+189
+00:08:23,693 --> 00:08:25,468
+doesn't even care what this thing is.
+
+190
+00:08:25,468 --> 00:08:27,620
+It just wants to give you an opportunity
+
+191
+00:08:27,620 --> 00:08:31,123
+to have some object that
+is being the delegate.
+
+192
+00:08:32,004 --> 00:08:34,854
+Now this context I keep
+talking about up here,
+
+193
+00:08:34,854 --> 00:08:37,243
+this pass to the makeUIView
+and updateUIView,
+
+194
+00:08:38,609 --> 00:08:40,196
+it has three things in it.
+
+195
+00:08:40,196 --> 00:08:42,430
+One is the Coordinator you created,
+
+196
+00:08:42,430 --> 00:08:43,977
+the thing that's gonna be the delegate
+
+197
+00:08:43,977 --> 00:08:45,360
+for your View or ViewController.
+
+198
+00:08:45,360 --> 00:08:48,345
+It also includes your
+SwiftUI's environment
+
+199
+00:08:48,345 --> 00:08:51,177
+like are you in dark
+mode, all those things.
+
+200
+00:08:51,177 --> 00:08:53,534
+And it contains a transaction.
+
+201
+00:08:53,534 --> 00:08:55,104
+So this is an animation transaction.
+
+202
+00:08:55,104 --> 00:08:56,780
+I told you earlier in the quarter
+
+203
+00:08:56,780 --> 00:08:59,272
+we're not really gonna
+talk about transactions,
+
+204
+00:08:59,272 --> 00:09:01,115
+but it's essentially encapsulating
+
+205
+00:09:01,115 --> 00:09:04,751
+what sort of animation
+environment is going on
+
+206
+00:09:04,751 --> 00:09:08,778
+while the makeUIView or
+updateUIView is happening.
+
+207
+00:09:08,778 --> 00:09:10,410
+So what this context is.
+
+208
+00:09:10,410 --> 00:09:11,524
+Mostly out of the context,
+
+209
+00:09:11,524 --> 00:09:13,867
+you're gonna be grabbing environment stuff
+
+210
+00:09:13,867 --> 00:09:15,335
+or you're gonna get your Coordinator
+
+211
+00:09:15,335 --> 00:09:17,670
+so you can talk to the delegate
+
+212
+00:09:17,670 --> 00:09:19,977
+basically of your View and ViewController.
+
+213
+00:09:19,977 --> 00:09:21,200
+I don't wanna make it sound like
+
+214
+00:09:21,200 --> 00:09:22,473
+your Coordinator can only be the delegate,
+
+215
+00:09:22,473 --> 00:09:25,740
+but that's the primary,
+probably the primary thing
+
+216
+00:09:25,740 --> 00:09:28,055
+you'll use the Coordinator for.
+
+217
+00:09:28,055 --> 00:09:30,480
+And then finally there
+is a tear down phase
+
+218
+00:09:30,480 --> 00:09:33,041
+when your SwiftUI View is going away.
+
+219
+00:09:33,041 --> 00:09:34,503
+Of course you wanna be able to clean up
+
+220
+00:09:34,503 --> 00:09:37,954
+your ViewController or your
+View it just passed back to you
+
+221
+00:09:37,954 --> 00:09:40,690
+along with your coordinator,
+your delegate or whatever
+
+222
+00:09:40,690 --> 00:09:43,220
+so you could clean that
+up as well if you have to.
+
+223
+00:09:43,220 --> 00:09:45,517
+You can do whatever is necessary there.
+
+224
+00:09:45,517 --> 00:09:46,592
+That's it.
+
+225
+00:09:46,592 --> 00:09:48,128
+Pretty much that's how you make it,
+
+226
+00:09:48,128 --> 00:09:50,859
+you update when the passes happen through,
+
+227
+00:09:50,859 --> 00:09:52,036
+you've got a little Coordinator,
+
+228
+00:09:52,036 --> 00:09:53,572
+you can have your delegate,
+
+229
+00:09:53,572 --> 00:09:56,903
+and then you can dismantle
+it when things are all done.
+
+230
+00:09:58,539 --> 00:10:01,090
+So the demos I'm gonna
+do today, the two demos,
+
+231
+00:10:01,090 --> 00:10:02,719
+one, we're gonna go back to Enroute,
+
+232
+00:10:02,719 --> 00:10:04,478
+and in the FilterFlights,
+
+233
+00:10:04,478 --> 00:10:07,990
+we choose the destination
+airport right now from a Picker,
+
+234
+00:10:07,990 --> 00:10:09,720
+and we're gonna make it so we can choose
+
+235
+00:10:09,720 --> 00:10:11,708
+that destination airport from a map,
+
+236
+00:10:11,708 --> 00:10:15,450
+an actual map, or an
+Apple Maps-like thing.
+
+237
+00:10:15,450 --> 00:10:19,574
+Right in our UI we can
+pick the airport that way.
+
+238
+00:10:19,574 --> 00:10:24,097
+And that's going to be
+essentially a UIViewRepresentable
+
+239
+00:10:24,097 --> 00:10:25,874
+because the map, it's just gonna be
+
+240
+00:10:25,874 --> 00:10:28,916
+a UIKit map called an MKMapView.
+
+241
+00:10:28,916 --> 00:10:30,751
+It's actually not even in UIKit.
+
+242
+00:10:30,751 --> 00:10:32,287
+It's in something called MapKit
+
+243
+00:10:32,287 --> 00:10:37,069
+which is really part of
+the whole UIKit ecosystem.
+
+244
+00:10:37,069 --> 00:10:39,117
+And then the second feature we're gonna do
+
+245
+00:10:39,117 --> 00:10:40,626
+is we're gonna go into EmojiArt
+
+246
+00:10:40,626 --> 00:10:42,879
+and make it so that the background image
+
+247
+00:10:42,879 --> 00:10:45,930
+instead of being dragged
+in or copy and paste,
+
+248
+00:10:45,930 --> 00:10:47,799
+we're gonna add another
+way to do it which is
+
+249
+00:10:47,799 --> 00:10:49,386
+you can take a picture with your camera
+
+250
+00:10:49,386 --> 00:10:51,912
+or just get a photo out
+of your photo library
+
+251
+00:10:51,912 --> 00:10:53,840
+and use that as the background.
+
+252
+00:10:53,840 --> 00:10:58,602
+Now this is going to use a
+UIViewControllerRepresentable
+
+253
+00:10:58,602 --> 00:11:01,040
+because getting a picture from the camera
+
+254
+00:11:01,040 --> 00:11:03,722
+involves putting up one
+of these MVC things,
+
+255
+00:11:03,722 --> 00:11:06,401
+these Controllers that
+controls all the Views
+
+256
+00:11:06,401 --> 00:11:09,268
+that are in the UI that gets
+a picture from the camera
+
+257
+00:11:09,268 --> 00:11:11,500
+and same thing with the photo library.
+
+258
+00:11:11,500 --> 00:11:14,685
+So this is a little slightly
+different kind of integration,
+
+259
+00:11:14,685 --> 00:11:17,467
+this ViewController integration.
+
+260
+00:11:17,467 --> 00:11:20,520
+Now I'm just gonna give a caveat
+before we start this demo.
+
+261
+00:11:20,520 --> 00:11:22,785
+I'll probably mention it
+again in the demo itself.
+
+262
+00:11:22,785 --> 00:11:25,173
+This is not an awesomely implemented
+
+263
+00:11:25,173 --> 00:11:26,743
+feature for us in EmojiArt
+
+264
+00:11:26,743 --> 00:11:28,006
+because we take the picture
+
+265
+00:11:28,006 --> 00:11:30,047
+from the camera or the photo library
+
+266
+00:11:30,047 --> 00:11:32,928
+and we just drop it into our filesystem
+
+267
+00:11:32,928 --> 00:11:35,468
+and store it as a URL in our EmojiArt
+
+268
+00:11:35,468 --> 00:11:37,739
+like we've been doing so far.
+
+269
+00:11:37,739 --> 00:11:39,467
+That's actually not
+really appropriate here.
+
+270
+00:11:39,467 --> 00:11:41,770
+You would probably wanna
+put the image itself,
+
+271
+00:11:41,770 --> 00:11:44,792
+the actual JPEG or whatever image data
+
+272
+00:11:44,792 --> 00:11:47,382
+into your EmojiArt Model, right?
+
+273
+00:11:47,382 --> 00:11:49,420
+Store it there so that if you took
+
+274
+00:11:49,420 --> 00:11:50,473
+that EmojiArt document someday
+
+275
+00:11:50,473 --> 00:11:51,890
+and you moved it to another device,
+
+276
+00:11:51,890 --> 00:11:53,001
+it would actually work,
+
+277
+00:11:53,001 --> 00:11:54,861
+whereas really the solution we have
+
+278
+00:11:54,861 --> 00:11:56,316
+where we just drop it in the filesystem
+
+279
+00:11:56,316 --> 00:11:58,700
+and grab a URL to it,
+
+280
+00:11:58,700 --> 00:11:59,901
+it's obviously pointing to something
+
+281
+00:11:59,901 --> 00:12:04,412
+that's in the sandbox of
+this app, that's kinda bogus.
+
+282
+00:12:04,412 --> 00:12:06,910
+But we're not worried about that,
+
+283
+00:12:06,910 --> 00:12:08,502
+we're not worried about the background.
+
+284
+00:12:08,502 --> 00:12:11,443
+We're worried about how
+do we put the UIKit UI,
+
+285
+00:12:12,660 --> 00:12:16,640
+the Controller that gets
+images from the camera
+
+286
+00:12:16,640 --> 00:12:17,473
+or the photo library,
+
+287
+00:12:17,473 --> 00:12:19,780
+how do we get that to work in our SwiftUI
+
+288
+00:12:19,780 --> 00:12:21,563
+so we can get the image out of it.
+
+289
+00:12:22,648 --> 00:12:23,674
+So that's it.
+
+290
+00:12:23,674 --> 00:12:25,927
+So let's dive right in.
+
+291
+00:12:25,927 --> 00:12:30,063
+Enjoy the very last demo of the year.
+
+292
+00:12:31,478 --> 00:12:34,173
+The first of the two demos
+here is going to be showing
+
+293
+00:12:34,173 --> 00:12:38,953
+how to integrate a UIKit
+View into a SwiftUI View.
+
+294
+00:12:38,953 --> 00:12:42,230
+And the UIKit View we're
+gonna do is MapView.
+
+295
+00:12:42,230 --> 00:12:46,504
+Actually it's in its own
+little framework called MapKit,
+
+296
+00:12:46,504 --> 00:12:49,970
+but it is a UIKit-style View.
+
+297
+00:12:49,970 --> 00:12:53,408
+And what I essentially wanna
+do is here in my FilterFlights
+
+298
+00:12:53,408 --> 00:12:55,253
+where we're choosing our destination,
+
+299
+00:12:55,253 --> 00:12:57,542
+origin, and our airline, et cetera,
+
+300
+00:12:57,542 --> 00:12:58,687
+for the destination,
+
+301
+00:12:58,687 --> 00:12:59,579
+I'm still gonna allow you
+
+302
+00:12:59,579 --> 00:13:01,318
+to pick your destination via Picker,
+
+303
+00:13:01,318 --> 00:13:05,701
+but I also want you to be
+able to pick it via a MapView
+
+304
+00:13:05,701 --> 00:13:09,570
+that we create by using the UIKit MapView.
+
+305
+00:13:10,466 --> 00:13:13,579
+Let's put this in its own Section here.
+
+306
+00:13:13,579 --> 00:13:16,483
+And we'll put the other
+things in their own Section.
+
+307
+00:13:16,483 --> 00:13:19,180
+I could imagine that quite easily
+
+308
+00:13:19,180 --> 00:13:22,303
+wanting to use this map
+also for the origin later.
+
+309
+00:13:22,303 --> 00:13:23,940
+We're gonna focus on just doing it
+
+310
+00:13:23,940 --> 00:13:25,723
+for the destination for this demo.
+
+311
+00:13:26,723 --> 00:13:30,338
+So what is this MapView thing right here?
+
+312
+00:13:30,338 --> 00:13:32,151
+It's going to be one of these
+
+313
+00:13:32,151 --> 00:13:34,489
+UIViewRepresentables we talked about.
+
+314
+00:13:34,489 --> 00:13:35,930
+Let's go create that.
+
+315
+00:13:35,930 --> 00:13:37,463
+File, New, File.
+
+316
+00:13:38,542 --> 00:13:40,296
+It is a SwiftUI View
+
+317
+00:13:40,296 --> 00:13:43,208
+but since it's going to
+be a UIViewRepresentable,
+
+318
+00:13:43,208 --> 00:13:44,727
+it's not going to have var body,
+
+319
+00:13:44,727 --> 00:13:49,158
+that's gonna be implemented
+by UIViewRepresentable for us.
+
+320
+00:13:49,158 --> 00:13:49,991
+Let's go here.
+
+321
+00:13:49,991 --> 00:13:51,650
+I'm gonna call this my MapView.
+
+322
+00:13:54,229 --> 00:13:56,304
+And when we're doing our MapView,
+
+323
+00:13:56,304 --> 00:14:00,847
+we're going to have to import
+more than just SwiftUI,
+
+324
+00:14:00,847 --> 00:14:03,799
+we're gonna have to also import UIKit
+
+325
+00:14:03,799 --> 00:14:06,447
+and also import MapKit.
+
+326
+00:14:07,667 --> 00:14:10,573
+A lot of imports to do right there.
+
+327
+00:14:11,541 --> 00:14:14,562
+This struct called MapView,
+
+328
+00:14:14,562 --> 00:14:18,361
+it is a View but it's
+even more than a View,
+
+329
+00:14:18,361 --> 00:14:19,713
+it's a UIViewRepresentable.
+
+330
+00:14:20,989 --> 00:14:23,976
+This is a different protocol right here
+
+331
+00:14:23,976 --> 00:14:25,734
+that inherits from the View protocol,
+
+332
+00:14:25,734 --> 00:14:27,605
+but it has a bunch of other stuff in it
+
+333
+00:14:27,605 --> 00:14:31,562
+that allows us to do this
+integration with UIKit obviously.
+
+334
+00:14:31,562 --> 00:14:34,088
+And we see that we do not conform
+
+335
+00:14:34,088 --> 00:14:36,290
+to the protocol UIViewRepresentable
+
+336
+00:14:36,290 --> 00:14:37,947
+'cause we have to put those functions
+
+337
+00:14:37,947 --> 00:14:40,960
+that I was showing you in the slides
+
+338
+00:14:40,960 --> 00:14:45,960
+like func makeUIView
+given a certain context
+
+339
+00:14:47,319 --> 00:14:51,338
+that returns the UIKit
+View that we want to do.
+
+340
+00:14:51,338 --> 00:14:52,393
+And what are we doing here?
+
+341
+00:14:52,393 --> 00:14:54,203
+We're doing MKMapView.
+
+342
+00:14:55,144 --> 00:14:59,036
+This is the UIKit View
+we're trying to build.
+
+343
+00:14:59,036 --> 00:15:01,162
+In fact I'm gonna build it here.
+
+344
+00:15:01,162 --> 00:15:03,863
+Okay, that View equals MKMapView.
+
+345
+00:15:05,508 --> 00:15:07,508
+And then I'm gonna return the mkMapView.
+
+346
+00:15:09,407 --> 00:15:11,834
+I'll be doing a little more
+to create it here in a second.
+
+347
+00:15:11,834 --> 00:15:15,647
+And we also have that func updateUIView
+
+348
+00:15:15,647 --> 00:15:18,663
+which gives us the UIView back,
+
+349
+00:15:18,663 --> 00:15:23,663
+this MKMapView and also that context.
+
+350
+00:15:24,030 --> 00:15:26,970
+And inside here we can
+do whatever we need to do
+
+351
+00:15:26,970 --> 00:15:28,824
+to keep this MapView up to date
+
+352
+00:15:28,824 --> 00:15:30,960
+as our SwiftUI goes through
+
+353
+00:15:30,960 --> 00:15:35,073
+its normal reactive redrawing mechanisms.
+
+354
+00:15:35,073 --> 00:15:38,842
+And then we have this func makeCoordinator
+
+355
+00:15:38,842 --> 00:15:41,873
+which returns something
+that is a don't care
+
+356
+00:15:41,873 --> 00:15:45,167
+which I'm gonna call Coordinator,
+this type right here.
+
+357
+00:15:45,167 --> 00:15:47,301
+I'm gonna make that a little nested class
+
+358
+00:15:47,301 --> 00:15:51,089
+inside my struct here called Coordinator.
+
+359
+00:15:51,089 --> 00:15:54,415
+And it's going to be
+my MapView's delegate.
+
+360
+00:15:54,415 --> 00:15:56,750
+This MapView has one of those things
+
+361
+00:15:56,750 --> 00:15:57,958
+we were talking about, a delegate.
+
+362
+00:15:57,958 --> 00:16:01,660
+So to be a delegate, it
+has to also be an NSObject,
+
+363
+00:16:01,660 --> 00:16:06,660
+and it has to implement the
+MKMapViewDelegate protocol.
+
+364
+00:16:07,631 --> 00:16:12,350
+All the delegates in
+UIKit always are classes
+
+365
+00:16:12,350 --> 00:16:15,276
+that inherit from this
+base class NSObject.
+
+366
+00:16:15,276 --> 00:16:17,514
+So I'm gonna do the same thing here
+
+367
+00:16:17,514 --> 00:16:19,775
+in our SwiftUI compatibility
+
+368
+00:16:19,775 --> 00:16:22,890
+as it's done in normal UIKit,
+
+369
+00:16:22,890 --> 00:16:25,544
+make a delegate that
+inherits from NSObject
+
+370
+00:16:25,544 --> 00:16:26,755
+and implements these methods.
+
+371
+00:16:26,755 --> 00:16:30,299
+Now it turns out none of the
+methods in here are required,
+
+372
+00:16:30,299 --> 00:16:32,730
+but we're actually going to need
+
+373
+00:16:32,730 --> 00:16:34,139
+a couple of them to make this work,
+
+374
+00:16:34,139 --> 00:16:36,530
+but that's why I'm not
+getting any complaints here
+
+375
+00:16:36,530 --> 00:16:38,927
+that this protocol is not
+implemented or something like that
+
+376
+00:16:38,927 --> 00:16:41,505
+because it has 10 or 12 methods
+
+377
+00:16:41,505 --> 00:16:43,654
+all of which are not required.
+
+378
+00:16:43,654 --> 00:16:45,490
+So how are we gonna make our Coordinator?
+
+379
+00:16:45,490 --> 00:16:46,813
+I'm just gonna literally say
+
+380
+00:16:46,813 --> 00:16:48,501
+make me one of these Coordinators
+
+381
+00:16:48,501 --> 00:16:50,830
+that I just defined down here.
+
+382
+00:16:50,830 --> 00:16:51,663
+This is just a class.
+
+383
+00:16:51,663 --> 00:16:55,030
+I'm just making a class
+and I'm returning it here.
+
+384
+00:16:55,030 --> 00:16:59,229
+You don't have to say return
+but that's what I'm doing.
+
+385
+00:16:59,229 --> 00:17:01,652
+This is the basic structure
+
+386
+00:17:01,652 --> 00:17:05,523
+of a UIViewRepresentable right here.
+
+387
+00:17:05,523 --> 00:17:08,616
+The only thing is we wanna
+hook up our Coordinator
+
+388
+00:17:08,616 --> 00:17:11,346
+which is this delegate to our MapView.
+
+389
+00:17:11,346 --> 00:17:14,231
+We're gonna do that right
+here by saying mkMapView,
+
+390
+00:17:14,231 --> 00:17:17,387
+your delegate is our Coordinator.
+
+391
+00:17:17,387 --> 00:17:19,883
+And we get the Coordinator
+out of our context.
+
+392
+00:17:19,883 --> 00:17:22,060
+This is not where we
+create the Coordinator.
+
+393
+00:17:22,060 --> 00:17:24,520
+It gets created down here inside this.
+
+394
+00:17:24,520 --> 00:17:29,043
+So if we wanted, we just
+say context.coordinator.
+
+395
+00:17:31,482 --> 00:17:32,660
+Let's go back to our FilterFlights.
+
+396
+00:17:32,660 --> 00:17:37,101
+And if we build actually, this succeeds.
+
+397
+00:17:37,101 --> 00:17:40,720
+It's able to build because we
+made a thing called MapView.
+
+398
+00:17:40,720 --> 00:17:45,557
+This is a normal SwiftUI View
+called MapView right here.
+
+399
+00:17:45,557 --> 00:17:46,853
+And if we run,
+
+400
+00:17:48,294 --> 00:17:50,602
+go to our Filter,
+
+401
+00:17:50,602 --> 00:17:51,489
+there it is,
+
+402
+00:17:51,489 --> 00:17:53,100
+there's our map right there.
+
+403
+00:17:53,100 --> 00:17:54,680
+You can't see much.
+
+404
+00:17:54,680 --> 00:17:55,681
+It's still too small.
+
+405
+00:17:55,681 --> 00:17:58,378
+So why don't we make this a lot bigger?
+
+406
+00:17:58,378 --> 00:18:01,720
+Maybe have it be, I mean at least
+
+407
+00:18:01,720 --> 00:18:04,095
+maybe three or 400 points high.
+
+408
+00:18:04,095 --> 00:18:06,058
+The width is fine but you wanna make sure
+
+409
+00:18:06,058 --> 00:18:08,001
+that it's at least three
+or 400 points high.
+
+410
+00:18:08,001 --> 00:18:10,937
+So I'm gonna go down here and
+say .frame(minHeight: 400).
+
+411
+00:18:13,930 --> 00:18:16,373
+Let's see what that looks like.
+
+412
+00:18:17,665 --> 00:18:18,746
+Go to Filter.
+
+413
+00:18:18,746 --> 00:18:19,851
+Whoa!
+
+414
+00:18:19,851 --> 00:18:22,260
+That looks a lot better
+when you can see it.
+
+415
+00:18:22,260 --> 00:18:23,565
+And there is our map.
+
+416
+00:18:23,565 --> 00:18:25,835
+Now of course none of these airports
+
+417
+00:18:25,835 --> 00:18:28,365
+that we have here are
+showing up on the map,
+
+418
+00:18:28,365 --> 00:18:30,697
+no kind of markers or anything for it.
+
+419
+00:18:30,697 --> 00:18:34,677
+That's because we don't do
+anything to put them on there.
+
+420
+00:18:34,677 --> 00:18:37,333
+So let's learn a little bit about MapKit.
+
+421
+00:18:37,333 --> 00:18:41,003
+How does one put little markings on here
+
+422
+00:18:41,003 --> 00:18:42,590
+to represent these airports?
+
+423
+00:18:42,590 --> 00:18:45,287
+Well, MapKit is actually pretty flexible
+
+424
+00:18:45,287 --> 00:18:47,020
+and it uses protocols.
+
+425
+00:18:47,020 --> 00:18:49,433
+It has a protocol called MKAnnotation.
+
+426
+00:18:50,320 --> 00:18:54,014
+And any object that
+implements MKAnnotation
+
+427
+00:18:54,014 --> 00:18:55,616
+can be put on a map.
+
+428
+00:18:55,616 --> 00:18:58,731
+So all you need to do to
+put an object on the map
+
+429
+00:18:58,731 --> 00:19:01,990
+is implement MKAnnotation for that object.
+
+430
+00:19:01,990 --> 00:19:05,506
+So what kind of objects do we
+want on our map right here?
+
+431
+00:19:05,506 --> 00:19:08,015
+Well, we want Airports.
+
+432
+00:19:08,015 --> 00:19:09,261
+So here's our Airport.
+
+433
+00:19:09,261 --> 00:19:11,852
+This is our Core Data object
+that does the Airport.
+
+434
+00:19:11,852 --> 00:19:15,916
+I'm just going to add an extension to it
+
+435
+00:19:15,916 --> 00:19:19,931
+that implements this
+MKAnnotation protocol.
+
+436
+00:19:19,931 --> 00:19:22,178
+And we need to import MapKit here
+
+437
+00:19:22,178 --> 00:19:26,070
+because MKAnnotation is inside MapKit.
+
+438
+00:19:26,070 --> 00:19:30,451
+Now what is required of
+this MKAnnotation protocol?
+
+439
+00:19:30,451 --> 00:19:33,070
+Let's go ahead and even
+use our "Fix it" here.
+
+440
+00:19:33,070 --> 00:19:35,313
+We can see the type
+Airport does not confirm.
+
+441
+00:19:35,313 --> 00:19:37,396
+But we can add protocol stubs
+
+442
+00:19:37,396 --> 00:19:40,779
+that will add the required
+methods here, "Fix".
+
+443
+00:19:40,779 --> 00:19:41,830
+There it is.
+
+444
+00:19:41,830 --> 00:19:42,708
+Just this one var.
+
+445
+00:19:42,708 --> 00:19:44,562
+If you implement just this one var,
+
+446
+00:19:44,562 --> 00:19:48,101
+then you too can be an MKAnnotation.
+
+447
+00:19:48,101 --> 00:19:50,777
+And what is this var coordinate?
+
+448
+00:19:50,777 --> 00:19:51,900
+What's its type?
+
+449
+00:19:51,900 --> 00:19:52,754
+What's it returning?
+
+450
+00:19:52,754 --> 00:19:55,240
+It's a CLLocationCoordinate2D.
+
+451
+00:19:55,240 --> 00:19:58,056
+This is latitude and longitude.
+
+452
+00:19:58,056 --> 00:20:03,056
+And luckily, Airports, we look
+at our data model over here.
+
+453
+00:20:03,360 --> 00:20:05,827
+Let's do the version here.
+
+454
+00:20:05,827 --> 00:20:08,200
+You can see we have a
+latitude and longitude
+
+455
+00:20:08,200 --> 00:20:09,970
+that we got from FlightAware.
+
+456
+00:20:09,970 --> 00:20:13,750
+So we are absolutely ready
+over here to be one of these.
+
+457
+00:20:13,750 --> 00:20:17,060
+I'm just going to return,
+creating a CLLocationCoordinate2D
+
+458
+00:20:19,536 --> 00:20:22,676
+from a latitude which is our latitude,
+
+459
+00:20:22,676 --> 00:20:25,047
+this is just a var in the database,
+
+460
+00:20:25,047 --> 00:20:28,477
+and longitude, this is our other var.
+
+461
+00:20:28,477 --> 00:20:29,433
+That's it.
+
+462
+00:20:29,433 --> 00:20:33,055
+Look, it compiles and allows
+us to be an MKAnnotation.
+
+463
+00:20:33,055 --> 00:20:34,455
+Now MKAnnotation,
+
+464
+00:20:34,455 --> 00:20:39,455
+again it's Objective-C
+version of a protocol.
+
+465
+00:20:39,571 --> 00:20:41,323
+This is the only required var
+
+466
+00:20:41,323 --> 00:20:44,081
+but it has a couple other vars
+that I'm gonna throw in here.
+
+467
+00:20:44,081 --> 00:20:47,034
+And one of these vars is called title.
+
+468
+00:20:47,034 --> 00:20:49,030
+It's an Optional String.
+
+469
+00:20:49,030 --> 00:20:50,106
+And it's something that
+
+470
+00:20:50,106 --> 00:20:51,861
+if you click on something in the map,
+
+471
+00:20:51,861 --> 00:20:53,740
+it'll show you this title.
+
+472
+00:20:53,740 --> 00:20:55,891
+So I'm gonna have this be
+the name of the Airport.
+
+473
+00:20:55,891 --> 00:20:59,646
+If that's not set, we'll
+use the KSFO or whatever.
+
+474
+00:20:59,646 --> 00:21:02,012
+And then it also has
+another one called subtitle
+
+475
+00:21:02,012 --> 00:21:03,729
+which it'll also show in the call-out
+
+476
+00:21:03,729 --> 00:21:05,709
+that comes if you click on something.
+
+477
+00:21:05,709 --> 00:21:06,853
+And then we'll put the location
+
+478
+00:21:06,853 --> 00:21:09,913
+like San Jose, California
+or whatever in there.
+
+479
+00:21:10,920 --> 00:21:13,380
+So Airports are now MKAnnotations,
+
+480
+00:21:13,380 --> 00:21:17,870
+and that means that they can
+be put anywhere on this map.
+
+481
+00:21:17,870 --> 00:21:20,533
+If we drop Airport on this map,
+
+482
+00:21:20,533 --> 00:21:23,317
+it's gonna have some sort of
+little representation of it.
+
+483
+00:21:23,317 --> 00:21:26,763
+I'm gonna show you how to
+do that in a second as well.
+
+484
+00:21:28,351 --> 00:21:31,505
+We need to have our MapView right here
+
+485
+00:21:31,505 --> 00:21:34,478
+have some sort of var
+that you can pass into it.
+
+486
+00:21:34,478 --> 00:21:39,168
+I'm gonna make it a let even
+which is the annotations.
+
+487
+00:21:39,168 --> 00:21:42,500
+It's just an Array of
+those MKAnnotation things.
+
+488
+00:21:42,500 --> 00:21:43,644
+So this could be Airport,
+
+489
+00:21:43,644 --> 00:21:46,352
+anything else that
+implements MKAnnotation.
+
+490
+00:21:46,352 --> 00:21:48,178
+And when we make our View,
+
+491
+00:21:48,178 --> 00:21:50,482
+in addition to setting the delegate here,
+
+492
+00:21:50,482 --> 00:21:55,423
+I'm gonna add these
+annotations to the map.
+
+493
+00:21:57,425 --> 00:21:58,390
+That's it.
+
+494
+00:21:58,390 --> 00:22:01,200
+That's all we have to do
+to make them be on the map.
+
+495
+00:22:01,200 --> 00:22:03,077
+Now the only problem is the map,
+
+496
+00:22:03,077 --> 00:22:04,982
+it has no idea how to draw them.
+
+497
+00:22:04,982 --> 00:22:07,559
+It doesn't know are you
+drawing some sort of pin
+
+498
+00:22:07,559 --> 00:22:10,369
+or some sort of a marker or a custom View
+
+499
+00:22:10,369 --> 00:22:12,414
+or what are you doing to draw it?
+
+500
+00:22:12,414 --> 00:22:15,430
+And how these annotations
+get drawn on a map
+
+501
+00:22:15,430 --> 00:22:17,428
+is actually controlled by this delegate.
+
+502
+00:22:17,428 --> 00:22:19,542
+So we're gonna see our first ever
+
+503
+00:22:19,542 --> 00:22:21,150
+delegate method from UIKit.
+
+504
+00:22:21,150 --> 00:22:23,930
+And the one we want here is called
+
+505
+00:22:23,930 --> 00:22:26,145
+mapView ViewFor annotation.
+
+506
+00:22:26,145 --> 00:22:27,003
+Let's see if we can find it.
+
+507
+00:22:27,003 --> 00:22:28,106
+Look at all of these.
+
+508
+00:22:28,106 --> 00:22:31,170
+These are all MapView
+delegate functions right here,
+
+509
+00:22:31,170 --> 00:22:33,259
+didSelect something, didDeselect,
+
+510
+00:22:33,259 --> 00:22:35,875
+the region we're showing
+in the map change.
+
+511
+00:22:35,875 --> 00:22:39,679
+I'm looking for the one
+which is ViewFor annotation.
+
+512
+00:22:39,679 --> 00:22:41,079
+It's right here.
+
+513
+00:22:41,079 --> 00:22:42,622
+And this is just returning
+
+514
+00:22:42,622 --> 00:22:44,424
+something called an MKAnnotationView
+
+515
+00:22:44,424 --> 00:22:48,264
+which is a UIKit View
+that shows annotations.
+
+516
+00:22:48,264 --> 00:22:51,057
+And all it's doing is
+getting the right one
+
+517
+00:22:51,057 --> 00:22:52,627
+for a given annotation,
+
+518
+00:22:52,627 --> 00:22:54,189
+in our case these are Airports,
+
+519
+00:22:54,189 --> 00:22:56,870
+so just creating a View for the Airports.
+
+520
+00:22:56,870 --> 00:22:59,942
+Now we're not here to learn MapKit
+
+521
+00:22:59,942 --> 00:23:01,570
+so I'm just going to show you
+
+522
+00:23:01,570 --> 00:23:04,912
+how one does this to
+create this little View.
+
+523
+00:23:04,912 --> 00:23:06,570
+And I'm gonna use a pin.
+
+524
+00:23:06,570 --> 00:23:07,961
+I can also do markers
+
+525
+00:23:07,961 --> 00:23:10,436
+which are kind of a new look of the map.
+
+526
+00:23:10,436 --> 00:23:15,317
+You ask the mapView to dequeue
+a ReusableAnnotationView
+
+527
+00:23:15,317 --> 00:23:17,141
+with the identifier,
+
+528
+00:23:17,141 --> 00:23:18,950
+and we can use any
+identifier we want here,
+
+529
+00:23:18,950 --> 00:23:21,513
+I'm gonna just call mine
+"MapViewAnnotation".
+
+530
+00:23:22,922 --> 00:23:25,754
+And if that comes back
+nil, I can't reuse one.
+
+531
+00:23:25,754 --> 00:23:29,203
+This is reusing one of
+those pins or whatever.
+
+532
+00:23:29,203 --> 00:23:31,773
+Now I'm gonna create my
+own, MKPinAnnotationView.
+
+533
+00:23:33,450 --> 00:23:34,700
+That's the one that looks like a pin.
+
+534
+00:23:34,700 --> 00:23:38,370
+And it takes the annotation
+like our airport or whatever
+
+535
+00:23:38,370 --> 00:23:41,550
+and it also wants that
+reuseIdentifier again,
+
+536
+00:23:41,550 --> 00:23:42,533
+the same thing here.
+
+537
+00:23:42,533 --> 00:23:44,182
+I should probably create
+a constant for that
+
+538
+00:23:44,182 --> 00:23:46,759
+but I'll just quickly type it in here.
+
+539
+00:23:46,759 --> 00:23:50,708
+And that is creating a
+little PinAnnotationView.
+
+540
+00:23:50,708 --> 00:23:53,180
+The newer one is called
+a MarkerAnnotationView.
+
+541
+00:23:53,180 --> 00:23:55,022
+We could use that but
+I'm gonna use the pin.
+
+542
+00:23:55,022 --> 00:23:56,918
+I kinda like the call-outs on the pin.
+
+543
+00:23:56,918 --> 00:23:58,980
+And speaking of which I'm also gonna call
+
+544
+00:23:58,980 --> 00:24:01,758
+something on that View
+called canShowCallout,
+
+545
+00:24:01,758 --> 00:24:03,440
+set that to be true.
+
+546
+00:24:03,440 --> 00:24:05,240
+I'm gonna return this View.
+
+547
+00:24:05,240 --> 00:24:08,734
+And this is how the
+MapView knows what View
+
+548
+00:24:08,734 --> 00:24:12,833
+am I supposed to use to
+draw a certain annotation.
+
+549
+00:24:14,377 --> 00:24:16,578
+Now the last thing we
+need to do of course is
+
+550
+00:24:16,578 --> 00:24:18,148
+when we create our MapView,
+
+551
+00:24:18,148 --> 00:24:21,967
+we need to pass the
+annotations we want in,
+
+552
+00:24:21,967 --> 00:24:26,200
+and this has to be an
+Array of MKAnnotations.
+
+553
+00:24:26,200 --> 00:24:28,226
+Well, Airports are MKAnnotations,
+
+554
+00:24:28,226 --> 00:24:31,326
+so this could be an
+Array of Airports, right?
+
+555
+00:24:31,326 --> 00:24:35,523
+So let's do our airports.sorted.
+
+556
+00:24:35,523 --> 00:24:39,515
+airport is this thing
+we're fetching all of.
+
+557
+00:24:39,515 --> 00:24:41,100
+Right here we got a FetchedResults.
+
+558
+00:24:41,100 --> 00:24:44,509
+And I'm just taking these
+FetchedResults and sorting them
+
+559
+00:24:44,509 --> 00:24:46,492
+so that we'd get our annotations sorted.
+
+560
+00:24:46,492 --> 00:24:47,714
+It really doesn't matter.
+
+561
+00:24:47,714 --> 00:24:50,240
+I could also say Array(airports).
+
+562
+00:24:50,240 --> 00:24:52,866
+I'm doing this because
+this takes an Array,
+
+563
+00:24:52,866 --> 00:24:55,230
+and airport is a FetchedResult,
+
+564
+00:24:55,230 --> 00:24:58,347
+so again which is a collection
+but not quite an Array.
+
+565
+00:24:58,347 --> 00:25:01,350
+So just sorting them
+turns them into an Array.
+
+566
+00:25:01,350 --> 00:25:05,434
+I could just say Array(airports) as well.
+
+567
+00:25:05,434 --> 00:25:08,653
+So let's see if this is working.
+
+568
+00:25:08,653 --> 00:25:11,984
+Hopefully now when we
+go to our filter, wow!
+
+569
+00:25:11,984 --> 00:25:15,343
+I see all these airports
+right here now appear here.
+
+570
+00:25:15,343 --> 00:25:17,095
+You can see them overseas.
+
+571
+00:25:17,095 --> 00:25:18,340
+And they're really cool,
+
+572
+00:25:18,340 --> 00:25:20,443
+these pins if you tap on them,
+
+573
+00:25:20,443 --> 00:25:23,646
+it shows you that title
+and subtile that we set.
+
+574
+00:25:23,646 --> 00:25:25,590
+Title and subtitle.
+
+575
+00:25:25,590 --> 00:25:27,434
+Title and subtitle.
+
+576
+00:25:27,434 --> 00:25:31,150
+Big advancement already right there.
+
+577
+00:25:31,150 --> 00:25:35,540
+The only thing here is when
+I go and choose Boston,
+
+578
+00:25:35,540 --> 00:25:38,471
+I want this to kinda zoom in on Boston.
+
+579
+00:25:38,471 --> 00:25:43,044
+And also if I were to click
+on Houston, Texas here,
+
+580
+00:25:43,044 --> 00:25:45,294
+I want this to change to Houston.
+
+581
+00:25:45,294 --> 00:25:47,267
+So we have a little bit of work to do
+
+582
+00:25:47,267 --> 00:25:49,723
+to hook up this selection up here
+
+583
+00:25:49,723 --> 00:25:52,586
+to whatever is selected and zoomed in on
+
+584
+00:25:52,586 --> 00:25:54,737
+in our map right here.
+
+585
+00:25:54,737 --> 00:25:56,528
+So let's start doing the zoom in.
+
+586
+00:25:56,528 --> 00:25:59,498
+How am I gonna zoom in on
+whatever is selected here?
+
+587
+00:25:59,498 --> 00:26:02,655
+That's pretty straightforward
+to do actually.
+
+588
+00:26:02,655 --> 00:26:07,655
+Remember that every time our
+SwiftUI update passes happen,
+
+589
+00:26:07,741 --> 00:26:09,885
+we get a chance to update this View.
+
+590
+00:26:09,885 --> 00:26:13,484
+So I'm gonna put a little
+var here called my selection
+
+591
+00:26:13,484 --> 00:26:14,810
+which is gonna be an MKAnnotation.
+
+592
+00:26:14,810 --> 00:26:16,516
+I'll make it Optional
+
+593
+00:26:16,516 --> 00:26:19,172
+'cause you don't have to select
+an annotation if you want.
+
+594
+00:26:19,172 --> 00:26:21,838
+But if you do, then when I'm updating,
+
+595
+00:26:21,838 --> 00:26:26,838
+every time I draw, I'm gonna
+zoom in to show this selection.
+
+596
+00:26:27,112 --> 00:26:31,660
+Say here if I can let
+annotation equal the selection,
+
+597
+00:26:31,660 --> 00:26:33,727
+so you have chosen one,
+
+598
+00:26:33,727 --> 00:26:35,245
+then I'm gonna do this thing
+
+599
+00:26:35,245 --> 00:26:39,386
+in the MapView called setRegion.
+
+600
+00:26:39,386 --> 00:26:41,923
+And setRegion takes an MKCoordinateRegion.
+
+601
+00:26:44,332 --> 00:26:46,784
+An MKCoordinateRegion takes a center
+
+602
+00:26:46,784 --> 00:26:50,504
+which is gonna be that
+annotation's coordinates, right?
+
+603
+00:26:50,504 --> 00:26:52,880
+That's this thing we
+implemented right here
+
+604
+00:26:52,880 --> 00:26:55,453
+for airport to CLLocationCoordinate2D.
+
+605
+00:26:55,453 --> 00:26:58,594
+That's saying where is this annotation?
+
+606
+00:26:58,594 --> 00:27:01,134
+That is the selection right there.
+
+607
+00:27:01,134 --> 00:27:03,645
+And it also takes a span,
+
+608
+00:27:03,645 --> 00:27:06,240
+and this span is an
+object we're gonna create.
+
+609
+00:27:06,240 --> 00:27:09,585
+This is how much to zoom in essentially.
+
+610
+00:27:09,585 --> 00:27:13,647
+And we can also say that yes,
+we want it animated as well.
+
+611
+00:27:13,647 --> 00:27:15,439
+So what is this span?
+
+612
+00:27:15,439 --> 00:27:17,630
+When I zoom in on something,
+
+613
+00:27:17,630 --> 00:27:20,780
+I want it to be kind of a town-sized View.
+
+614
+00:27:20,780 --> 00:27:23,990
+So I'm gonna call this span town.
+
+615
+00:27:23,990 --> 00:27:26,306
+It's gonna be the span
+that's approximately a town.
+
+616
+00:27:26,306 --> 00:27:29,514
+So what is a span that's
+approximately a town?
+
+617
+00:27:29,514 --> 00:27:31,060
+Well, it's an MKCoordinateSpan
+
+618
+00:27:32,727 --> 00:27:35,500
+which just specifies the latitudeDelta,
+
+619
+00:27:35,500 --> 00:27:37,278
+we're gonna do .1 degrees,
+
+620
+00:27:37,278 --> 00:27:39,507
+and the longitude, .1.
+
+621
+00:27:39,507 --> 00:27:41,966
+So .1 degrees of latitude and longitude
+
+622
+00:27:41,966 --> 00:27:44,317
+is about the size of a town.
+
+623
+00:27:44,317 --> 00:27:46,199
+It's a little smaller than a city
+
+624
+00:27:46,199 --> 00:27:48,656
+but it's bigger than like
+a little neighborhood.
+
+625
+00:27:48,656 --> 00:27:50,800
+This is kind of a good size to zoom in on
+
+626
+00:27:50,800 --> 00:27:54,828
+if you're zooming in on some annotation.
+
+627
+00:27:54,828 --> 00:27:56,910
+And this is gonna happen every time
+
+628
+00:27:56,910 --> 00:28:00,665
+that this MapView gets
+updated in the SwiftUI,
+
+629
+00:28:00,665 --> 00:28:03,438
+reactive UI updating passes.
+
+630
+00:28:03,438 --> 00:28:07,122
+We're going to re-zoom
+to show our selection.
+
+631
+00:28:07,122 --> 00:28:09,137
+So let's go over here
+and set our selection.
+
+632
+00:28:09,137 --> 00:28:10,826
+Here's where we'll create our MapView.
+
+633
+00:28:10,826 --> 00:28:13,240
+We'll add this extra
+argument, the selection.
+
+634
+00:28:13,240 --> 00:28:14,738
+And what is the selection?
+
+635
+00:28:14,738 --> 00:28:18,169
+Well, it's just our
+draft's destination, right?
+
+636
+00:28:18,169 --> 00:28:20,371
+This draft is our FlightSearch.
+
+637
+00:28:20,371 --> 00:28:22,918
+This is what we're kind of filtering for.
+
+638
+00:28:22,918 --> 00:28:26,173
+And the destination is the
+destination Airport inside draft.
+
+639
+00:28:26,173 --> 00:28:27,006
+It's the exact same thing
+
+640
+00:28:27,006 --> 00:28:30,120
+we're showing as our
+Pickers thing right here.
+
+641
+00:28:30,120 --> 00:28:31,823
+Let's see.
+
+642
+00:28:34,790 --> 00:28:35,821
+Hit Filter.
+
+643
+00:28:35,821 --> 00:28:37,186
+Hopefully, yeah!
+
+644
+00:28:37,186 --> 00:28:38,176
+San Francisco.
+
+645
+00:28:38,176 --> 00:28:40,410
+This is San Francisco International.
+
+646
+00:28:40,410 --> 00:28:41,260
+Let's pick something else.
+
+647
+00:28:41,260 --> 00:28:42,401
+How about Boston?
+
+648
+00:28:42,401 --> 00:28:44,957
+Oop, zoom in over, there's Boston.
+
+649
+00:28:44,957 --> 00:28:47,197
+Maybe pick Bob Hope, Burbank.
+
+650
+00:28:47,197 --> 00:28:49,177
+Back to Bob Hope, there it is.
+
+651
+00:28:49,177 --> 00:28:51,679
+Now we can still zoom back out right here
+
+652
+00:28:51,679 --> 00:28:53,625
+and pick other airports.
+
+653
+00:28:53,625 --> 00:28:55,690
+The problem is though when we pick them,
+
+654
+00:28:55,690 --> 00:28:57,643
+it's not updating here.
+
+655
+00:28:57,643 --> 00:28:59,001
+When I'm picking this, it's nice.
+
+656
+00:28:59,001 --> 00:29:00,844
+It's telling me it's
+San Diego International.
+
+657
+00:29:00,844 --> 00:29:02,175
+But when I pick it here,
+
+658
+00:29:02,175 --> 00:29:06,688
+I mean choose this, go to that place.
+
+659
+00:29:06,688 --> 00:29:09,730
+Now how do we make this go both ways?
+
+660
+00:29:09,730 --> 00:29:13,365
+This is working well
+when we choose Boston.
+
+661
+00:29:13,365 --> 00:29:16,162
+It goes into here and sets the map.
+
+662
+00:29:16,162 --> 00:29:18,246
+But how do we make it work the other way
+
+663
+00:29:18,246 --> 00:29:22,421
+when we click over here
+on Newark or whatever,
+
+664
+00:29:22,421 --> 00:29:24,002
+Connecticut Airport,
+
+665
+00:29:24,002 --> 00:29:27,494
+it makes that be our destination?
+
+666
+00:29:27,494 --> 00:29:30,871
+Well, how do we do that in
+Views in general, right?
+
+667
+00:29:30,871 --> 00:29:33,127
+If we have a View and
+we can interact with it
+
+668
+00:29:33,127 --> 00:29:35,319
+and it wants to communicate information
+
+669
+00:29:35,319 --> 00:29:37,094
+back out to some other View,
+
+670
+00:29:37,094 --> 00:29:38,242
+what do we do?
+
+671
+00:29:38,242 --> 00:29:40,630
+We use a Binding.
+
+672
+00:29:40,630 --> 00:29:44,232
+And this MapView, even though
+it's UIViewRepresentable,
+
+673
+00:29:44,232 --> 00:29:48,140
+it's a View and so we could
+have this be a Binding.
+
+674
+00:29:48,140 --> 00:29:50,913
+This is now a Binding to selection.
+
+675
+00:29:52,052 --> 00:29:54,840
+Now we will down here go ahead
+
+676
+00:29:54,840 --> 00:29:57,512
+and have our selection
+be updated and all that.
+
+677
+00:29:57,512 --> 00:30:00,162
+But we have a little bit of
+problem first which is that
+
+678
+00:30:00,162 --> 00:30:04,333
+here we are passing our
+selection as an Airport.
+
+679
+00:30:04,333 --> 00:30:08,532
+So this is not a Binding
+to an MKAnnotation, right?
+
+680
+00:30:08,532 --> 00:30:11,353
+That's what this says,
+Binding to MKAnnotation.
+
+681
+00:30:11,353 --> 00:30:14,178
+This is an Airport.
+
+682
+00:30:14,178 --> 00:30:16,155
+So how do we do that?
+
+683
+00:30:16,155 --> 00:30:19,531
+Can we just do dollar sign right there?
+
+684
+00:30:19,531 --> 00:30:23,677
+No, we can't because draft is @State.
+
+685
+00:30:23,677 --> 00:30:27,357
+If draft were an ObservedObject,
+we could do this.
+
+686
+00:30:27,357 --> 00:30:29,519
+This would work if this
+were an ObservedObject.
+
+687
+00:30:29,519 --> 00:30:32,027
+But draft is not, draft is State.
+
+688
+00:30:32,027 --> 00:30:35,150
+And the Binding, the
+dollar sign of a State
+
+689
+00:30:35,150 --> 00:30:37,055
+binds to the entire struct.
+
+690
+00:30:37,055 --> 00:30:40,834
+You can't bind it to
+variables inside the struct.
+
+691
+00:30:40,834 --> 00:30:44,833
+So how the heck are we
+going to pass a Binding
+
+692
+00:30:44,833 --> 00:30:48,634
+to this Airport inside of this State?
+
+693
+00:30:48,634 --> 00:30:52,600
+Well, let's create a var
+that's called destination.
+
+694
+00:30:52,600 --> 00:30:56,673
+And it's gonna be a type
+Binding to MKAnnotation.
+
+695
+00:30:58,665 --> 00:31:01,102
+Now as soon as I start
+using MKAnnotation here,
+
+696
+00:31:01,102 --> 00:31:03,790
+better go up here and say import MapKit
+
+697
+00:31:03,790 --> 00:31:08,790
+or the compiler is not gonna
+know what the heck we're doing.
+
+698
+00:31:08,888 --> 00:31:09,920
+So this is the destination Binding.
+
+699
+00:31:09,920 --> 00:31:13,867
+And how can we use this
+Binding right here?
+
+700
+00:31:13,867 --> 00:31:17,056
+Just say pass the destination there.
+
+701
+00:31:17,056 --> 00:31:21,583
+And this when I compile
+is gonna work down here.
+
+702
+00:31:21,583 --> 00:31:25,546
+See, we no longer are
+gonna have this thing
+
+703
+00:31:25,546 --> 00:31:27,904
+where it can't infer
+or any errors down here
+
+704
+00:31:27,904 --> 00:31:31,362
+because I am passing a
+Binding to an MKAnnotation
+
+705
+00:31:31,362 --> 00:31:34,093
+which is exactly what this thing wants,
+
+706
+00:31:34,093 --> 00:31:36,192
+a Binding to an MKAnnotation.
+
+707
+00:31:36,192 --> 00:31:37,472
+All we need to do though
+
+708
+00:31:37,472 --> 00:31:40,009
+is figure out and implement this var.
+
+709
+00:31:40,009 --> 00:31:45,009
+How do we return a Binding
+to an MKAnnotation here?
+
+710
+00:31:45,470 --> 00:31:48,491
+We need to somehow make an MKAnnotation
+
+711
+00:31:48,491 --> 00:31:51,414
+that hooks up to this draft's destination.
+
+712
+00:31:51,414 --> 00:31:52,960
+How are we gonna do that?
+
+713
+00:31:52,960 --> 00:31:56,246
+Well, we're just going to use
+one of Binding's constructors.
+
+714
+00:31:56,246 --> 00:31:57,573
+You can see it's got a few here.
+
+715
+00:31:57,573 --> 00:31:59,115
+I'm gonna use this one.
+
+716
+00:31:59,115 --> 00:32:02,904
+This is almost kind of a
+primitive sort of Binding
+
+717
+00:32:02,904 --> 00:32:05,185
+and it just lets you specify a closure
+
+718
+00:32:05,185 --> 00:32:06,977
+to get the value of the Binding
+
+719
+00:32:06,977 --> 00:32:10,216
+and a closure to set
+the value of the Binding
+
+720
+00:32:10,216 --> 00:32:12,131
+which is really getting at the heart
+
+721
+00:32:12,131 --> 00:32:13,681
+of how Bindings work, right?
+
+722
+00:32:13,681 --> 00:32:15,612
+Bindings are just getting and setting
+
+723
+00:32:15,612 --> 00:32:17,702
+some other values somewhere else.
+
+724
+00:32:17,702 --> 00:32:20,059
+So it makes total sense that
+there's a version of Binding
+
+725
+00:32:20,059 --> 00:32:23,675
+which is just closure to
+get and a closure to set.
+
+726
+00:32:23,675 --> 00:32:27,175
+Now all we need to do is
+implement these to get and set
+
+727
+00:32:27,175 --> 00:32:30,756
+the value of the destination
+in our draft State.
+
+728
+00:32:30,756 --> 00:32:32,439
+Could not be simpler, so let's
+
+729
+00:32:32,439 --> 00:32:33,680
+Go do this.
+
+730
+00:32:33,680 --> 00:32:35,159
+It's just a little easier to see
+
+731
+00:32:35,159 --> 00:32:37,700
+what's going on before we do this.
+
+732
+00:32:37,700 --> 00:32:39,703
+Let's do the get first.
+
+733
+00:32:39,703 --> 00:32:42,843
+The get is saying this
+is takes no arguments
+
+734
+00:32:42,843 --> 00:32:45,246
+and returns an MKAnnotation.
+
+735
+00:32:45,246 --> 00:32:47,946
+Of course because this is a
+Binding to an MKAnnotation
+
+736
+00:32:48,980 --> 00:32:50,530
+so we won't be able to get it there.
+
+737
+00:32:50,530 --> 00:32:51,448
+So let's do that.
+
+738
+00:32:51,448 --> 00:32:52,724
+Quite simple here.
+
+739
+00:32:52,724 --> 00:32:56,820
+We're just going to return
+our draft's destination.
+
+740
+00:32:56,820 --> 00:32:58,680
+Now this is an Airport,
+
+741
+00:32:58,680 --> 00:33:01,871
+an Airport is definitely an MKAnnotation,
+
+742
+00:33:01,871 --> 00:33:04,313
+so this is perfectly legal.
+
+743
+00:33:04,313 --> 00:33:05,800
+I'm also gonna put self in here.
+
+744
+00:33:05,800 --> 00:33:09,325
+You can return this value.
+
+745
+00:33:09,325 --> 00:33:11,052
+That's super simple.
+
+746
+00:33:11,052 --> 00:33:12,486
+What about the set side?
+
+747
+00:33:12,486 --> 00:33:15,575
+The set is a closure that
+takes an MKAnnotation,
+
+748
+00:33:15,575 --> 00:33:17,110
+an optional MKAnnotation.
+
+749
+00:33:17,110 --> 00:33:18,439
+It doesn't return anything.
+
+750
+00:33:18,439 --> 00:33:20,695
+It just sets the value.
+
+751
+00:33:20,695 --> 00:33:23,596
+Let's have that annotation that it takes
+
+752
+00:33:23,596 --> 00:33:25,781
+be this argument right here.
+
+753
+00:33:25,781 --> 00:33:27,754
+We'd like to say something like
+
+754
+00:33:27,754 --> 00:33:32,277
+self.draft.destination
+equals that annotation.
+
+755
+00:33:32,277 --> 00:33:33,390
+Woo-hoo, we're done!
+
+756
+00:33:33,390 --> 00:33:35,885
+We'll just do kinda the opposite of this.
+
+757
+00:33:35,885 --> 00:33:37,937
+But this is not gonna work.
+
+758
+00:33:37,937 --> 00:33:38,855
+And the reason this doesn't work
+
+759
+00:33:38,855 --> 00:33:42,576
+is that the type of this is MKAnnotation,
+
+760
+00:33:42,576 --> 00:33:43,887
+Optional MKAnnotation.
+
+761
+00:33:43,887 --> 00:33:45,850
+That's its type.
+
+762
+00:33:45,850 --> 00:33:48,786
+So here we're trying to make an Airport
+
+763
+00:33:48,786 --> 00:33:51,069
+equal to an MKAnnotation.
+
+764
+00:33:51,069 --> 00:33:52,609
+That's not gonna work
+
+765
+00:33:52,609 --> 00:33:55,510
+because an Airport is an MKAnnotation
+
+766
+00:33:55,510 --> 00:33:58,735
+but not all MKAnnotations are Airports.
+
+767
+00:33:58,735 --> 00:34:01,652
+So you can't just make
+this assignment right here.
+
+768
+00:34:01,652 --> 00:34:04,180
+This is where we have to do the as,
+
+769
+00:34:04,180 --> 00:34:06,209
+the type casting that you read about
+
+770
+00:34:06,209 --> 00:34:08,844
+and we've talked about
+briefly a couple of times
+
+771
+00:34:08,844 --> 00:34:10,534
+maybe in the context of talking about
+
+772
+00:34:10,534 --> 00:34:13,827
+the old Objective-C Any type.
+
+773
+00:34:13,827 --> 00:34:17,841
+So I need to capture, I'm gonna
+say if I can let an Airport
+
+774
+00:34:17,841 --> 00:34:22,253
+equal this annotation as an Airport,
+
+775
+00:34:22,253 --> 00:34:26,588
+and that is conditionally trying
+to see if this MKAnnotation
+
+776
+00:34:26,588 --> 00:34:29,507
+is in fact an Airport
+and not something else
+
+777
+00:34:29,507 --> 00:34:31,845
+that we implement MKAnnotation on.
+
+778
+00:34:31,845 --> 00:34:32,901
+And if that's true,
+
+779
+00:34:32,901 --> 00:34:36,283
+then I can set my destination
+to be this airport.
+
+780
+00:34:39,678 --> 00:34:42,686
+So in this way, we are
+just creating a Binding
+
+781
+00:34:42,686 --> 00:34:47,227
+that binds to and from
+our draft's destination.
+
+782
+00:34:47,227 --> 00:34:48,455
+And we pass that Binding
+
+783
+00:34:48,455 --> 00:34:52,256
+right off to our MapView right here.
+
+784
+00:34:52,256 --> 00:34:54,684
+So far our MapView is not doing anything
+
+785
+00:34:54,684 --> 00:34:55,827
+to set the selection.
+
+786
+00:34:55,827 --> 00:34:57,466
+It's still just looking at the selection.
+
+787
+00:34:57,466 --> 00:34:59,224
+But let's make sure we
+haven't broken anything.
+
+788
+00:34:59,224 --> 00:35:01,540
+We shouldn't 'cause we're still Binding
+
+789
+00:35:01,540 --> 00:35:02,449
+to our draft destination.
+
+790
+00:35:02,449 --> 00:35:03,692
+So when we go over here,
+
+791
+00:35:03,692 --> 00:35:05,573
+see, it's still San Francisco.
+
+792
+00:35:05,573 --> 00:35:07,343
+If we change this to Boston,
+
+793
+00:35:07,343 --> 00:35:11,700
+the whole SwiftUI View updating happens
+
+794
+00:35:11,700 --> 00:35:12,941
+and we get to see Boston,
+
+795
+00:35:12,941 --> 00:35:13,951
+so that's working.
+
+796
+00:35:13,951 --> 00:35:16,308
+But we haven't done anything yet
+
+797
+00:35:16,308 --> 00:35:18,120
+on the other side of the Binding
+
+798
+00:35:18,120 --> 00:35:20,199
+so that when we pick an airport here,
+
+799
+00:35:20,199 --> 00:35:22,810
+it set the selection.
+
+800
+00:35:22,810 --> 00:35:25,877
+So we need to have our
+MapView set the selection.
+
+801
+00:35:25,877 --> 00:35:29,810
+How do we know when a
+pin has been touched on?
+
+802
+00:35:29,810 --> 00:35:33,096
+In MapView we do that with the delegate.
+
+803
+00:35:33,096 --> 00:35:35,161
+So there's another delegate method here,
+
+804
+00:35:35,161 --> 00:35:38,336
+mapView didSelect, where is that?
+
+805
+00:35:38,336 --> 00:35:40,979
+There it is, mapView didSelect.
+
+806
+00:35:40,979 --> 00:35:42,824
+This delegate method is called
+
+807
+00:35:42,824 --> 00:35:46,937
+whenever one of these
+pin Views is touched on.
+
+808
+00:35:46,937 --> 00:35:48,985
+And this is the pin View that
+was touched on right here,
+
+809
+00:35:48,985 --> 00:35:53,621
+MKAnnotationView, in this our
+case it's a pin annotation.
+
+810
+00:35:53,621 --> 00:35:56,198
+So we can get the annotation
+that was clicked on
+
+811
+00:35:56,198 --> 00:35:58,973
+by just asking the annotation View
+
+812
+00:35:58,973 --> 00:36:01,243
+what annotation do you have?
+
+813
+00:36:01,243 --> 00:36:04,637
+It's asking this pin thing
+what's your annotation?
+
+814
+00:36:04,637 --> 00:36:06,226
+Now we have the annotation,
+
+815
+00:36:06,226 --> 00:36:08,989
+we kinda wanna do
+something along the lines
+
+816
+00:36:08,989 --> 00:36:13,989
+of self.selection equals that annotation
+
+817
+00:36:14,719 --> 00:36:19,342
+except that self.selection is
+not here in our Coordinator.
+
+818
+00:36:19,342 --> 00:36:22,706
+It's up here in our UIViewRepresentable.
+
+819
+00:36:22,706 --> 00:36:25,464
+This is nested class but
+it can't see the vars
+
+820
+00:36:25,464 --> 00:36:27,657
+of this outer class right here.
+
+821
+00:36:27,657 --> 00:36:31,773
+So we have to bind this
+selection from here
+
+822
+00:36:31,773 --> 00:36:34,799
+out to this Binding out here.
+
+823
+00:36:34,799 --> 00:36:38,326
+So let's just create
+another Binding right here,
+
+824
+00:36:38,326 --> 00:36:40,913
+var selection, it's an MKAnnotation.
+
+825
+00:36:42,610 --> 00:36:44,453
+And then when we create our Coordinator,
+
+826
+00:36:44,453 --> 00:36:48,754
+let's pass the selection, $selection
+
+827
+00:36:48,754 --> 00:36:52,537
+which is the dollar sign
+version of our Binding,
+
+828
+00:36:52,537 --> 00:36:55,768
+and we know that dollar of a
+Binding is the Binding itself
+
+829
+00:36:55,768 --> 00:36:59,619
+or a Binding to the same thing
+that the Binding binds to.
+
+830
+00:36:59,619 --> 00:37:00,980
+But this doesn't quite work
+
+831
+00:37:00,980 --> 00:37:03,561
+because this is a class, not a struct,
+
+832
+00:37:03,561 --> 00:37:06,313
+so we don't get this free constructor.
+
+833
+00:37:06,313 --> 00:37:09,074
+We have to create our own init selection
+
+834
+00:37:09,074 --> 00:37:13,677
+that takes a Binding to
+an MKAnnotation Optional.
+
+835
+00:37:15,986 --> 00:37:20,212
+And then again we can't say
+self.selection equals selection.
+
+836
+00:37:20,212 --> 00:37:22,052
+This is an @Binding,
+
+837
+00:37:22,052 --> 00:37:24,479
+so we have to say _selection.
+
+838
+00:37:24,479 --> 00:37:27,670
+The actual struct is the
+thing that's passing here.
+
+839
+00:37:27,670 --> 00:37:30,196
+So now our selection binds both ways.
+
+840
+00:37:30,196 --> 00:37:33,639
+When the delegate notices
+this one's been clicked on,
+
+841
+00:37:33,639 --> 00:37:36,129
+it sets it in the selection Binding here
+
+842
+00:37:36,129 --> 00:37:38,602
+which binds to this selection right here
+
+843
+00:37:38,602 --> 00:37:42,413
+which binds back out to
+this Binding out here,
+
+844
+00:37:42,413 --> 00:37:45,610
+and that's going to set
+our draft destination.
+
+845
+00:37:45,610 --> 00:37:48,027
+Let's see that in action.
+
+846
+00:37:50,080 --> 00:37:51,807
+Go to our filter.
+
+847
+00:37:51,807 --> 00:37:53,172
+Binding correctly this way,
+
+848
+00:37:53,172 --> 00:37:54,832
+we got San Francisco right here.
+
+849
+00:37:54,832 --> 00:37:57,067
+Let's go find a different airport.
+
+850
+00:37:57,067 --> 00:37:59,194
+How about Oakland right there?
+
+851
+00:37:59,194 --> 00:38:00,287
+Woo!
+
+852
+00:38:00,287 --> 00:38:01,250
+Look at that!
+
+853
+00:38:01,250 --> 00:38:04,058
+It zoomed in on it and
+it picked it up here.
+
+854
+00:38:04,058 --> 00:38:05,680
+It can pick the other way.
+
+855
+00:38:05,680 --> 00:38:07,881
+Let's go Boston.
+
+856
+00:38:07,881 --> 00:38:09,271
+Here's Boston.
+
+857
+00:38:09,271 --> 00:38:11,199
+Zoom out again.
+
+858
+00:38:11,199 --> 00:38:12,906
+Over here to Newark.
+
+859
+00:38:12,906 --> 00:38:14,288
+Woo, it did it again.
+
+860
+00:38:14,288 --> 00:38:15,415
+And if we click Done,
+
+861
+00:38:15,415 --> 00:38:18,200
+it has picked this Newark.
+
+862
+00:38:18,200 --> 00:38:19,759
+We get to see Newark Airport.
+
+863
+00:38:19,759 --> 00:38:20,921
+So that is it.
+
+864
+00:38:20,921 --> 00:38:22,284
+It's all I wanted to show you
+
+865
+00:38:22,284 --> 00:38:25,631
+on this ViewRepresentable side.
+
+866
+00:38:25,631 --> 00:38:26,587
+The next demo we're gonna do
+
+867
+00:38:26,587 --> 00:38:28,686
+is ViewControllerRepresentable.
+
+868
+00:38:28,686 --> 00:38:32,131
+But this one really shows
+you kind of all the things
+
+869
+00:38:32,131 --> 00:38:34,967
+you need to know about
+Binding into a UIKit View
+
+870
+00:38:34,967 --> 00:38:38,431
+including, if you have to,
+building your own custom Binding
+
+871
+00:38:38,431 --> 00:38:40,981
+with get and set to be
+able to bind in there.
+
+872
+00:38:40,981 --> 00:38:43,176
+But all other times you won't
+even need a custom Binding.
+
+873
+00:38:43,176 --> 00:38:45,665
+You'll have an ObservedObject
+you can bind to
+
+874
+00:38:45,665 --> 00:38:48,740
+or you can bind directly
+to a State or whatever
+
+875
+00:38:48,740 --> 00:38:52,204
+that you can then pass
+into what's going on here.
+
+876
+00:38:52,204 --> 00:38:55,072
+And you might well have to pass
+it to the delegate and back
+
+877
+00:38:55,072 --> 00:38:57,649
+like we have here 'cause the
+delegate is usually the one
+
+878
+00:38:57,649 --> 00:39:01,619
+handling most of the activity
+going on in the UIKit View.
+
+879
+00:39:01,619 --> 00:39:03,838
+Alright, so that is it for Enroute
+
+880
+00:39:03,838 --> 00:39:05,510
+and the ViewRepresentable.
+
+881
+00:39:05,510 --> 00:39:10,510
+Let's move over to our other
+demo which is an EmojiArt demo.
+
+882
+00:39:12,655 --> 00:39:15,038
+So in this demo we're going to be wrapping
+
+883
+00:39:15,038 --> 00:39:16,283
+a whole bunch of Views,
+
+884
+00:39:16,283 --> 00:39:19,337
+a Controller that's
+controlling all bunch of Views
+
+885
+00:39:19,337 --> 00:39:22,101
+that we're gonna present using a sheet,
+
+886
+00:39:22,101 --> 00:39:24,271
+and this sheet that we're gonna present
+
+887
+00:39:24,271 --> 00:39:25,618
+lets you take a picture from the camera
+
+888
+00:39:25,618 --> 00:39:27,011
+or the photo library.
+
+889
+00:39:27,011 --> 00:39:28,835
+We'll start with the photo library here
+
+890
+00:39:28,835 --> 00:39:31,600
+and use that as the background
+image of our EmojiArt,
+
+891
+00:39:31,600 --> 00:39:33,445
+and then we'll move on to the camera
+
+892
+00:39:33,445 --> 00:39:34,759
+'cause there's a couple
+of things to think about
+
+893
+00:39:34,759 --> 00:39:36,460
+with the camera that
+are a little different.
+
+894
+00:39:36,460 --> 00:39:38,514
+So where are we gonna put the UI
+
+895
+00:39:38,514 --> 00:39:42,388
+that lets us take a picture
+and put it as our background
+
+896
+00:39:42,388 --> 00:39:45,662
+and then drop it right up
+in the navigationBarItems?
+
+897
+00:39:45,662 --> 00:39:47,447
+We already have one right there
+
+898
+00:39:47,447 --> 00:39:49,768
+for our pasteboard button on the right.
+
+899
+00:39:49,768 --> 00:39:53,045
+So let's put on the other
+side, the leading side,
+
+900
+00:39:53,045 --> 00:39:56,437
+some buttons or something that
+lets us choose this stuff.
+
+901
+00:39:56,437 --> 00:39:59,397
+We'll call this my pickImage.
+
+902
+00:40:00,394 --> 00:40:04,661
+And my pickImage is just going
+to be a little var down here,
+
+903
+00:40:04,661 --> 00:40:07,740
+pickImage, some View.
+
+904
+00:40:07,740 --> 00:40:11,513
+We could even make this private of course
+
+905
+00:40:11,513 --> 00:40:12,346
+and just pickImage.
+
+906
+00:40:12,346 --> 00:40:16,165
+And let's us make it be
+an Image, systemName.
+
+907
+00:40:16,165 --> 00:40:18,214
+How about the image "photo"?
+
+908
+00:40:18,214 --> 00:40:22,786
+That's a good system image I
+think for picking a photo here.
+
+909
+00:40:22,786 --> 00:40:24,423
+And I'm gonna make this larger.
+
+910
+00:40:24,423 --> 00:40:25,382
+I'm not really sure
+
+911
+00:40:25,382 --> 00:40:27,685
+whether we should be
+making that larger there
+
+912
+00:40:27,685 --> 00:40:28,754
+but it's good for demos,
+
+913
+00:40:28,754 --> 00:40:30,710
+easy to see what's going on up there.
+
+914
+00:40:30,710 --> 00:40:33,663
+And I'm also gonna set the
+color to be the .accentColor,
+
+915
+00:40:33,663 --> 00:40:35,216
+the same thing a Button would use.
+
+916
+00:40:35,216 --> 00:40:37,194
+And in fact I could use a Button here,
+
+917
+00:40:37,194 --> 00:40:41,275
+but just for variety,
+let's do an onTapGesture.
+
+918
+00:40:41,275 --> 00:40:44,125
+This Image is going to appear in our UI.
+
+919
+00:40:44,125 --> 00:40:45,543
+Let's take a look at it.
+
+920
+00:40:49,552 --> 00:40:50,730
+There it is right there.
+
+921
+00:40:50,730 --> 00:40:52,453
+And when I click on this,
+
+922
+00:40:52,453 --> 00:40:56,515
+I want it to bring up this UIKit UI
+
+923
+00:40:56,515 --> 00:40:59,826
+that lets us choose from the
+photo library in this case.
+
+924
+00:40:59,826 --> 00:41:02,895
+And later we'll add another
+button for the camera.
+
+925
+00:41:02,895 --> 00:41:06,409
+So how do I make a sheet appear?
+
+926
+00:41:06,409 --> 00:41:08,408
+We know exactly how to do that, right?
+
+927
+00:41:08,408 --> 00:41:12,077
+We just set some sort of boolean variable.
+
+928
+00:41:12,077 --> 00:41:14,189
+I'm gonna call my boolean variable
+
+929
+00:41:14,189 --> 00:41:17,724
+showImagePicker = true.
+
+930
+00:41:17,724 --> 00:41:21,406
+I need a little private @State for that.
+
+931
+00:41:21,406 --> 00:41:23,620
+We'll start out as false of course.
+
+932
+00:41:23,620 --> 00:41:27,693
+And then we're just going
+to .sheet isPresented,
+
+933
+00:41:28,600 --> 00:41:32,232
+put a Binding to that showImagePicker,
+
+934
+00:41:32,232 --> 00:41:35,213
+and then we're going to have to provide
+
+935
+00:41:35,213 --> 00:41:38,726
+whatever sheet it is that we present.
+
+936
+00:41:38,726 --> 00:41:42,688
+In this case it's gonna be ImagePicker.
+
+937
+00:41:42,688 --> 00:41:46,115
+This is gonna be a
+UIViewControllerRepresentable
+
+938
+00:41:46,115 --> 00:41:49,495
+that puts up the photo picker.
+
+939
+00:41:49,495 --> 00:41:52,433
+Let's go ahead and do this, File, New.
+
+940
+00:41:52,433 --> 00:41:54,225
+Again it is a SwiftUI View,
+
+941
+00:41:54,225 --> 00:41:55,983
+but since it's a Representable,
+
+942
+00:41:55,983 --> 00:41:58,070
+we don't need the var body and all that.
+
+943
+00:41:58,070 --> 00:42:00,383
+We'll call it my ImagePicker.
+
+944
+00:42:03,540 --> 00:42:04,373
+And here it is.
+
+945
+00:42:04,373 --> 00:42:06,172
+As usual we're doing the integration,
+
+946
+00:42:06,172 --> 00:42:08,423
+we need both SwiftUI and UIKit.
+
+947
+00:42:10,432 --> 00:42:13,180
+And this is just a
+struct called ImagePicker
+
+948
+00:42:13,180 --> 00:42:15,230
+which is a UIViewControllerRepresentable.
+
+949
+00:42:19,921 --> 00:42:22,601
+And it has exactly the same functions
+
+950
+00:42:22,601 --> 00:42:23,590
+as we had in the other ones,
+
+951
+00:42:23,590 --> 00:42:25,041
+so let's just type them right in
+
+952
+00:42:25,041 --> 00:42:26,656
+since we already know how to do this.
+
+953
+00:42:26,656 --> 00:42:31,656
+There's the makeUIViewController
+that has the context.
+
+954
+00:42:31,840 --> 00:42:33,688
+Now the kind of ViewController
+
+955
+00:42:33,688 --> 00:42:35,462
+that we're going to make here
+
+956
+00:42:35,462 --> 00:42:37,293
+is called a UIImagePickerController.
+
+957
+00:42:39,473 --> 00:42:40,650
+This is just a MVC, a Controller in UIKit
+
+958
+00:42:43,885 --> 00:42:45,952
+that we can use to choose a photo
+
+959
+00:42:45,952 --> 00:42:48,632
+from our photo library or our camera.
+
+960
+00:42:48,632 --> 00:42:51,567
+Let's let picker equal
+one of these things.
+
+961
+00:42:51,567 --> 00:42:53,133
+I'm gonna create one.
+
+962
+00:42:54,114 --> 00:42:55,693
+And return it.
+
+963
+00:42:56,577 --> 00:42:58,432
+And we're gonna have to configure it
+
+964
+00:42:58,432 --> 00:43:00,190
+a little bit inside here.
+
+965
+00:43:00,190 --> 00:43:02,136
+So we'll leave space for that.
+
+966
+00:43:02,136 --> 00:43:05,850
+Then of course we have our
+updateUIViewController.
+
+967
+00:43:05,850 --> 00:43:07,825
+This takes an ImagePickerController.
+
+968
+00:43:07,825 --> 00:43:09,210
+Here's where we would update things.
+
+969
+00:43:09,210 --> 00:43:11,958
+I don't actually think we
+have any updating to do
+
+970
+00:43:11,958 --> 00:43:14,362
+because we just present
+this ViewController
+
+971
+00:43:14,362 --> 00:43:16,526
+and we're gonna have a delegate for it
+
+972
+00:43:16,526 --> 00:43:19,256
+but otherwise it's gonna do its thing.
+
+973
+00:43:19,256 --> 00:43:22,047
+We of course need makeCoordinator.
+
+974
+00:43:23,362 --> 00:43:25,033
+And we'll do the exact same thing,
+
+975
+00:43:25,033 --> 00:43:27,905
+we'll call it Coordinator,
+
+976
+00:43:27,905 --> 00:43:32,905
+and we'll have it be a
+nested class Coordinator.
+
+977
+00:43:33,350 --> 00:43:35,447
+It has be an NSObject
+because it's gonna be
+
+978
+00:43:35,447 --> 00:43:39,713
+the UIImagePickerController's delegate.
+
+979
+00:43:39,713 --> 00:43:41,507
+And just for good measure,
+
+980
+00:43:41,507 --> 00:43:42,957
+and I'm not gonna explain why
+
+981
+00:43:42,957 --> 00:43:44,784
+because we're not really that much
+
+982
+00:43:44,784 --> 00:43:46,763
+learning about UIImagePickerController
+
+983
+00:43:46,763 --> 00:43:49,443
+although we are gonna
+learn a lot by doing this,
+
+984
+00:43:49,443 --> 00:43:52,395
+it also has to implement
+another protocol here
+
+985
+00:43:52,395 --> 00:43:54,295
+called UINavigationControllerDelegate.
+
+986
+00:43:56,986 --> 00:44:00,894
+This is just a protocol
+that this ImagePicker
+
+987
+00:44:00,894 --> 00:44:03,001
+requires its delegate to implement.
+
+988
+00:44:03,001 --> 00:44:04,964
+We're not gonna use any methods from it
+
+989
+00:44:04,964 --> 00:44:07,216
+but we still have to put it on there.
+
+990
+00:44:07,216 --> 00:44:08,974
+There are a couple methods in here,
+
+991
+00:44:08,974 --> 00:44:10,766
+and we really need them both.
+
+992
+00:44:10,766 --> 00:44:14,965
+One is the imagePickerController didCancel
+
+993
+00:44:14,965 --> 00:44:17,098
+and the other is the imagePickerController
+
+994
+00:44:17,098 --> 00:44:20,627
+didFinishPickingMedia.
+
+995
+00:44:20,627 --> 00:44:22,763
+So let's put them both in here.
+
+996
+00:44:24,164 --> 00:44:26,588
+This cancel one right here is called
+
+997
+00:44:26,588 --> 00:44:29,263
+when the person cancels
+of course the Controller.
+
+998
+00:44:29,263 --> 00:44:32,057
+Remember we're putting up an
+entire sheet worth of UI here
+
+999
+00:44:32,057 --> 00:44:33,977
+and it's gonna have a
+"Cancel" button on it.
+
+1000
+00:44:33,977 --> 00:44:36,844
+And then this is the one where
+we actually pick an image
+
+1001
+00:44:36,844 --> 00:44:39,694
+either from the camera or
+from the photo library.
+
+1002
+00:44:39,694 --> 00:44:40,872
+So here's where the action
+
+1003
+00:44:40,872 --> 00:44:42,743
+is really happening in our delegate,
+
+1004
+00:44:42,743 --> 00:44:45,269
+and this is our PickerControllerDelegate,
+
+1005
+00:44:45,269 --> 00:44:48,470
+so let's set our picker's delegate
+
+1006
+00:44:48,470 --> 00:44:52,202
+to be our context.coordinator, right?
+
+1007
+00:44:52,202 --> 00:44:55,626
+We're setting this instance of
+this that we're gonna create.
+
+1008
+00:44:55,626 --> 00:44:57,589
+And we'll create that here, Coordinator.
+
+1009
+00:44:57,589 --> 00:45:01,156
+It doesn't take any
+arguments as yet anyway.
+
+1010
+00:45:01,156 --> 00:45:02,640
+Now we got it all set up.
+
+1011
+00:45:02,640 --> 00:45:04,955
+This is just exactly like
+we set up the MapView.
+
+1012
+00:45:04,955 --> 00:45:06,969
+We got the delegate and all that.
+
+1013
+00:45:06,969 --> 00:45:09,715
+But one other thing we wanna
+do in configuration here,
+
+1014
+00:45:09,715 --> 00:45:13,104
+to start is I'm gonna set
+the picker's source type
+
+1015
+00:45:13,104 --> 00:45:14,946
+to be photo library.
+
+1016
+00:45:14,946 --> 00:45:17,588
+So the picker is going
+to try and pick an image
+
+1017
+00:45:17,588 --> 00:45:19,467
+from the photo library to start.
+
+1018
+00:45:19,467 --> 00:45:21,121
+Eventually again we'll do the camera
+
+1019
+00:45:21,121 --> 00:45:24,350
+but for now just the photo library.
+
+1020
+00:45:24,350 --> 00:45:26,831
+Alright, we go back to
+our DocumentView up here.
+
+1021
+00:45:26,831 --> 00:45:29,254
+We've got our ImagePicker.
+
+1022
+00:45:29,254 --> 00:45:31,520
+It should compile now.
+
+1023
+00:45:31,520 --> 00:45:36,026
+Let's run, to our "House".
+
+1024
+00:45:36,026 --> 00:45:38,749
+Now when we tap on this, an onTapGesture,
+
+1025
+00:45:38,749 --> 00:45:40,248
+hopefully it will put up
+
+1026
+00:45:40,248 --> 00:45:43,623
+our nice photo library user interface.
+
+1027
+00:45:44,824 --> 00:45:46,136
+And there it is.
+
+1028
+00:45:46,136 --> 00:45:47,179
+Woo-hoo!
+
+1029
+00:45:47,179 --> 00:45:48,674
+Okay, there's our photos.
+
+1030
+00:45:48,674 --> 00:45:53,157
+Now if I pick one like this
+thing here, nothing happens,
+
+1031
+00:45:53,157 --> 00:45:55,520
+but if I hit "Cancel", nothing happens.
+
+1032
+00:45:55,520 --> 00:46:00,060
+That's because back here
+in our pickImage over here,
+
+1033
+00:46:00,060 --> 00:46:02,604
+we put this sheet up, the ImagePicker up,
+
+1034
+00:46:02,604 --> 00:46:06,018
+but we don't do anything when
+it gets canceled or picked,
+
+1035
+00:46:06,018 --> 00:46:09,585
+so of course this thing
+never gets put away,
+
+1036
+00:46:09,585 --> 00:46:11,783
+this showImagePicker
+never gets set to false,
+
+1037
+00:46:11,783 --> 00:46:14,422
+and clearly we're not grabbing the image.
+
+1038
+00:46:14,422 --> 00:46:16,167
+But we've got this thing presenting,
+
+1039
+00:46:16,167 --> 00:46:18,842
+so now let's just do
+the little bit of work
+
+1040
+00:46:18,842 --> 00:46:21,127
+to get this Image out of here.
+
+1041
+00:46:21,127 --> 00:46:24,069
+Now how am I gonna get
+that Image out of here?
+
+1042
+00:46:24,069 --> 00:46:26,922
+One way to do it will be the
+same way we did the MapView,
+
+1043
+00:46:26,922 --> 00:46:30,952
+put an @Binding here and bind to the Image
+
+1044
+00:46:30,952 --> 00:46:33,036
+and then the Image will be chosen
+
+1045
+00:46:33,036 --> 00:46:36,296
+and we would have to pass it
+down here to the delegate,
+
+1046
+00:46:36,296 --> 00:46:38,088
+and it could set the Binding here
+
+1047
+00:46:38,088 --> 00:46:39,549
+and it would transport back.
+
+1048
+00:46:39,549 --> 00:46:41,017
+That is one way to do it.
+
+1049
+00:46:41,017 --> 00:46:43,799
+Just to show you there are
+other ways to do things,
+
+1050
+00:46:43,799 --> 00:46:46,137
+I'm gonna do this a little differently.
+
+1051
+00:46:46,137 --> 00:46:51,137
+I'm going to add a var
+here to my Representable
+
+1052
+00:46:51,954 --> 00:46:53,893
+which is called handlePickedImage,
+
+1053
+00:46:56,475 --> 00:47:00,874
+and it's going to be closure,
+UIImage, return void.
+
+1054
+00:47:00,874 --> 00:47:05,416
+And I'm going to call this
+closure when you pick your Image.
+
+1055
+00:47:05,416 --> 00:47:08,410
+Now I'm gonna give you nil if you canceled
+
+1056
+00:47:08,410 --> 00:47:10,243
+or for some reason I
+couldn't get the Image.
+
+1057
+00:47:10,243 --> 00:47:14,189
+And I'm gonna give you an Image
+if you actually picked it.
+
+1058
+00:47:14,189 --> 00:47:16,510
+Now we know that this handlePickedImage
+
+1059
+00:47:16,510 --> 00:47:18,383
+is actually happening down here.
+
+1060
+00:47:18,383 --> 00:47:20,469
+So we have to do the same
+thing we did with our map,
+
+1061
+00:47:20,469 --> 00:47:22,309
+and this is very common to have to do,
+
+1062
+00:47:22,309 --> 00:47:24,811
+we're gonna have to do the same function
+
+1063
+00:47:24,811 --> 00:47:27,456
+down here in our Coordinator,
+
+1064
+00:47:27,456 --> 00:47:32,456
+var handlePickedImage UIImage, and Void,
+
+1065
+00:47:34,964 --> 00:47:37,337
+and pass that to our Coordinator,
+
+1066
+00:47:37,337 --> 00:47:42,299
+handlePickedImage, call
+in handlePickedImage.
+
+1067
+00:47:42,299 --> 00:47:43,941
+And again this is a class
+
+1068
+00:47:43,941 --> 00:47:46,137
+so we don't get this free
+constructor right here,
+
+1069
+00:47:46,137 --> 00:47:50,284
+so we have to say init handlePickedImage
+
+1070
+00:47:50,284 --> 00:47:55,284
+with this UIImage that returns a Void,
+
+1071
+00:47:55,557 --> 00:48:00,472
+self.handlePickedImage
+equals handlePickedImage.
+
+1072
+00:48:00,472 --> 00:48:03,227
+I'm really getting used to
+typing handlePickedImage.
+
+1073
+00:48:03,227 --> 00:48:06,303
+Of course we are grabbing on
+to this and holding on to it
+
+1074
+00:48:06,303 --> 00:48:09,972
+so this is going to
+have to be an @escaping.
+
+1075
+00:48:09,972 --> 00:48:12,893
+We know that anytime we have
+a function that we pass in,
+
+1076
+00:48:12,893 --> 00:48:14,990
+when we hold on to it, we
+have to let people know
+
+1077
+00:48:14,990 --> 00:48:16,260
+that that's what we're doing
+
+1078
+00:48:16,260 --> 00:48:18,010
+that we're grabbing on to it there.
+
+1079
+00:48:18,881 --> 00:48:21,403
+Now that we have this
+handlePickedImage here,
+
+1080
+00:48:21,403 --> 00:48:23,232
+let's just, when we cancel,
+
+1081
+00:48:23,232 --> 00:48:26,902
+call our handlePickedImage(nil)
+
+1082
+00:48:26,902 --> 00:48:28,131
+so we know that you canceled.
+
+1083
+00:48:28,131 --> 00:48:32,415
+And here I'm gonna do my
+handlePickedImage with the image.
+
+1084
+00:48:32,415 --> 00:48:34,241
+Now how do I get the image?
+
+1085
+00:48:34,241 --> 00:48:36,897
+When imagePickerControllerDelegate
+gets called,
+
+1086
+00:48:36,897 --> 00:48:39,747
+this didFinishPickingMediaWithInfo,
+
+1087
+00:48:39,747 --> 00:48:41,386
+we get this Dictionary,
+
+1088
+00:48:41,386 --> 00:48:45,004
+and this Dictionary has info
+like how big the image was
+
+1089
+00:48:45,004 --> 00:48:47,222
+and what the actual image was.
+
+1090
+00:48:47,222 --> 00:48:49,179
+And this Dictionary has a bunch of keys.
+
+1091
+00:48:49,179 --> 00:48:52,814
+One of the info's keys is .originalImage,
+
+1092
+00:48:52,814 --> 00:48:55,732
+and that gives us the
+original image as a UIImage.
+
+1093
+00:48:55,732 --> 00:48:58,838
+Of course this Dictionary
+has Any's as the values.
+
+1094
+00:48:58,838 --> 00:49:01,942
+This is an old Objective-C API here.
+
+1095
+00:49:01,942 --> 00:49:06,096
+So we need to say as? UIImage
+and see if we can cast it.
+
+1096
+00:49:06,096 --> 00:49:07,608
+And we're doing as?.
+
+1097
+00:49:07,608 --> 00:49:10,199
+This will return nil if for some reason
+
+1098
+00:49:10,199 --> 00:49:12,182
+this is not a UIImage,
+
+1099
+00:49:12,182 --> 00:49:14,845
+and that's okay 'cause the
+handlePickedImage will have nil
+
+1100
+00:49:14,845 --> 00:49:16,870
+and that'll be just like canceling,
+
+1101
+00:49:16,870 --> 00:49:18,988
+no different from canceling.
+
+1102
+00:49:18,988 --> 00:49:21,123
+Now one thing I'm gonna
+do while we're here,
+
+1103
+00:49:21,123 --> 00:49:23,252
+I don't think we did this all quarter,
+
+1104
+00:49:23,252 --> 00:49:25,441
+which is typealiasing.
+
+1105
+00:49:25,441 --> 00:49:29,633
+I had to type this type
+all bunch of times in here.
+
+1106
+00:49:29,633 --> 00:49:32,125
+And when you have kind of a complex type
+
+1107
+00:49:32,125 --> 00:49:35,870
+like that's not a String
+or some name of a struct,
+
+1108
+00:49:35,870 --> 00:49:38,636
+a lot of times we'll create a typealias.
+
+1109
+00:49:38,636 --> 00:49:43,397
+For example I might call this
+thing my PickedImageHandler
+
+1110
+00:49:43,397 --> 00:49:47,832
+and it equals UIImage returning Void.
+
+1111
+00:49:47,832 --> 00:49:51,094
+And then everywhere where I use this,
+
+1112
+00:49:51,094 --> 00:49:53,583
+I'm going to put this instead.
+
+1113
+00:49:53,583 --> 00:49:56,380
+So here, and here, and here.
+
+1114
+00:49:56,380 --> 00:49:57,543
+I couldn't put that.
+
+1115
+00:49:57,543 --> 00:49:59,223
+It's kind of good for my API.
+
+1116
+00:49:59,223 --> 00:50:02,714
+It's a little more descriptive
+of what this function was,
+
+1117
+00:50:02,714 --> 00:50:04,166
+and it also cleans up things,
+
+1118
+00:50:04,166 --> 00:50:06,214
+and I don't have to worry about
+typing this over and over,
+
+1119
+00:50:06,214 --> 00:50:07,818
+and I might make a mistake
+
+1120
+00:50:07,818 --> 00:50:09,770
+when I'm doing it typing it over and over,
+
+1121
+00:50:09,770 --> 00:50:11,606
+so like I might forget my question mark
+
+1122
+00:50:11,606 --> 00:50:12,596
+or something like that,
+
+1123
+00:50:12,596 --> 00:50:14,796
+this prevents that as well.
+
+1124
+00:50:14,796 --> 00:50:17,187
+It's quite common to make typealiases
+
+1125
+00:50:17,187 --> 00:50:18,553
+for functions arguments
+
+1126
+00:50:18,553 --> 00:50:21,833
+especially if they're pass
+around a lot of places.
+
+1127
+00:50:22,922 --> 00:50:25,925
+All we have to do now is
+set this handlePickedImage
+
+1128
+00:50:25,925 --> 00:50:28,042
+when we do our ImagePicker over here.
+
+1129
+00:50:28,042 --> 00:50:29,360
+So here's our ImagePicker.
+
+1130
+00:50:29,360 --> 00:50:30,589
+Let's do it.
+
+1131
+00:50:30,589 --> 00:50:34,018
+The image given back to us here.
+
+1132
+00:50:34,018 --> 00:50:36,254
+Now we know that we have to check to see
+
+1133
+00:50:36,254 --> 00:50:38,097
+if the image does not equal nil,
+
+1134
+00:50:38,097 --> 00:50:39,354
+and if it does not equal nil,
+
+1135
+00:50:39,354 --> 00:50:42,033
+then we've got to actually
+use it as our background.
+
+1136
+00:50:42,033 --> 00:50:43,311
+And in any case though
+
+1137
+00:50:43,311 --> 00:50:45,888
+we're going to set our
+showImagePicker to false.
+
+1138
+00:50:45,888 --> 00:50:50,291
+We want to dismiss this
+sheet that we presented.
+
+1139
+00:50:50,291 --> 00:50:52,732
+Now what are we gonna do
+if the image is not nil?
+
+1140
+00:50:52,732 --> 00:50:55,650
+This is where we're gonna
+do that kind of bogus thing
+
+1141
+00:50:55,650 --> 00:50:57,186
+that I was talking about there
+
+1142
+00:50:57,186 --> 00:51:00,415
+where we're gonna throw this
+thing into the file system,
+
+1143
+00:51:00,415 --> 00:51:03,580
+this image into the file
+system and grab a URL to it
+
+1144
+00:51:03,580 --> 00:51:05,093
+and set that as our background URL.
+
+1145
+00:51:05,093 --> 00:51:08,402
+Again that would tie this whole thing,
+
+1146
+00:51:08,402 --> 00:51:11,306
+this document that we're
+creating to this device
+
+1147
+00:51:11,306 --> 00:51:13,831
+'cause we're pointing
+into its own sandbox.
+
+1148
+00:51:13,831 --> 00:51:17,228
+Also by the way I had to go
+back in my EmojiArt's extension
+
+1149
+00:51:17,228 --> 00:51:19,771
+and play a little bit with this image URL.
+
+1150
+00:51:19,771 --> 00:51:21,665
+I had to actually check for file URLs
+
+1151
+00:51:21,665 --> 00:51:25,407
+because one thing to
+note is that as you're,
+
+1152
+00:51:25,407 --> 00:51:27,557
+especially doing your development
+
+1153
+00:51:27,557 --> 00:51:29,418
+and running new versions of your app,
+
+1154
+00:51:29,418 --> 00:51:31,412
+the Application Support directory
+
+1155
+00:51:31,412 --> 00:51:34,619
+which is where I decided to
+put this thing, this image,
+
+1156
+00:51:34,619 --> 00:51:38,457
+it changes the URL, it
+changes from launch to launch.
+
+1157
+00:51:38,457 --> 00:51:40,419
+So here I just have a thing where
+
+1158
+00:51:40,419 --> 00:51:43,679
+whenever I see a file URL
+as our background image,
+
+1159
+00:51:43,679 --> 00:51:47,092
+I'm going in re-looking it
+up in Application Support
+
+1160
+00:51:47,092 --> 00:51:48,349
+to get the new version.
+
+1161
+00:51:48,349 --> 00:51:49,981
+So that's a little bit annoying.
+
+1162
+00:51:49,981 --> 00:51:52,131
+I think I also had to
+go over in our Document
+
+1163
+00:51:52,131 --> 00:51:54,176
+and make sure that whenever I fetch
+
+1164
+00:51:54,176 --> 00:51:55,450
+the background image data,
+
+1165
+00:51:55,450 --> 00:51:57,498
+I call that imageURL again.
+
+1166
+00:51:57,498 --> 00:51:59,853
+I was originally only
+calling when we set it,
+
+1167
+00:51:59,853 --> 00:52:01,355
+but now I'm calling it every time
+
+1168
+00:52:01,355 --> 00:52:04,321
+to make sure this file
+URL gets properly set.
+
+1169
+00:52:04,321 --> 00:52:07,465
+So that's just a lot of
+kind of fratzing around
+
+1170
+00:52:07,465 --> 00:52:09,919
+to make this demo go really smooth
+
+1171
+00:52:09,919 --> 00:52:12,858
+because I can now type this
+one line of code right here
+
+1172
+00:52:12,858 --> 00:52:17,685
+which is self.document.backgroundURL
+
+1173
+00:52:17,685 --> 00:52:22,603
+equals that image storeInFilesystem,
+
+1174
+00:52:22,603 --> 00:52:24,480
+and store in the file system,
+
+1175
+00:52:24,480 --> 00:52:27,537
+just this little extension
+down here that I wrote.
+
+1176
+00:52:27,537 --> 00:52:30,174
+And you know how to do all this
+now after the last lecture,
+
+1177
+00:52:30,174 --> 00:52:33,093
+getting the directory,
+appendingPathComponent.
+
+1178
+00:52:33,093 --> 00:52:37,016
+I use this jpegData function
+on UIImage to get the data
+
+1179
+00:52:37,016 --> 00:52:41,017
+and then I write to that URL,
+put it into the filesystem,
+
+1180
+00:52:41,017 --> 00:52:44,578
+and I return the URL that I wrote it to.
+
+1181
+00:52:44,578 --> 00:52:47,514
+Really simple, makes this
+a one-liner right here.
+
+1182
+00:52:47,514 --> 00:52:49,528
+One other thing I'm gonna do here
+
+1183
+00:52:49,528 --> 00:52:52,446
+which we haven't talked about this either,
+
+1184
+00:52:52,446 --> 00:52:56,013
+I'm little worried that this closure
+
+1185
+00:52:56,013 --> 00:52:58,521
+might be called at an inopportune time.
+
+1186
+00:52:58,521 --> 00:53:00,552
+For example, I'm not really allowed
+
+1187
+00:53:00,552 --> 00:53:04,325
+to modify myself as a View
+
+1188
+00:53:04,325 --> 00:53:08,240
+while I'm in the middle
+of processing events.
+
+1189
+00:53:08,240 --> 00:53:10,955
+You kinda have to wait for
+everything to settle back down.
+
+1190
+00:53:10,955 --> 00:53:13,600
+So to be safe, this closure right here,
+
+1191
+00:53:13,600 --> 00:53:15,665
+I'm not gonna do this backgroundURL
+
+1192
+00:53:15,665 --> 00:53:17,918
+which I know is gonna update my UI.
+
+1193
+00:53:17,918 --> 00:53:22,918
+I'm going to do it in a
+DispatchQueue.main.async.
+
+1194
+00:53:23,842 --> 00:53:25,139
+Now why would I be doing this?
+
+1195
+00:53:25,139 --> 00:53:28,210
+There's no issue here
+with multi-threading.
+
+1196
+00:53:28,210 --> 00:53:30,345
+None of this is happening
+on a background thread.
+
+1197
+00:53:30,345 --> 00:53:33,261
+This has nothing to do
+actually with multi-threading.
+
+1198
+00:53:33,261 --> 00:53:37,274
+It's just that if I ask my main
+queue to go do this closure,
+
+1199
+00:53:37,274 --> 00:53:38,656
+it's gonna put it on its list,
+
+1200
+00:53:38,656 --> 00:53:41,130
+and even though I'm running
+in the main queue right here,
+
+1201
+00:53:41,130 --> 00:53:43,070
+it's gonna finish doing all
+the things it's doing here,
+
+1202
+00:53:43,070 --> 00:53:44,504
+maybe updating my Views,
+
+1203
+00:53:44,504 --> 00:53:45,477
+and when it's done,
+
+1204
+00:53:45,477 --> 00:53:48,549
+it's gonna go to its queue
+and grab the next one
+
+1205
+00:53:48,549 --> 00:53:51,051
+which hopefully will
+be mine and execute it.
+
+1206
+00:53:51,051 --> 00:53:53,560
+So it's essentially just saying do this
+
+1207
+00:53:53,560 --> 00:53:55,331
+after everything settles down.
+
+1208
+00:53:55,331 --> 00:53:58,345
+And if you start getting
+warnings when you run,
+
+1209
+00:53:58,345 --> 00:54:00,393
+that say, oh, you can't update,
+
+1210
+00:54:00,393 --> 00:54:02,810
+you're not allowed to modify the View
+
+1211
+00:54:02,810 --> 00:54:03,643
+while it's in the middle
+
+1212
+00:54:03,643 --> 00:54:06,217
+of constructing its body or whatever,
+
+1213
+00:54:06,217 --> 00:54:09,184
+then you might think of
+delaying something like this.
+
+1214
+00:54:09,184 --> 00:54:12,771
+And we might have wanted to
+do that in Enroute as well.
+
+1215
+00:54:12,771 --> 00:54:17,771
+Okay, in Enroute when you
+click the Airports in the map,
+
+1216
+00:54:18,458 --> 00:54:21,616
+maybe that selection of the Airports
+
+1217
+00:54:21,616 --> 00:54:24,841
+should have been done this
+way too just to be safe.
+
+1218
+00:54:24,841 --> 00:54:26,234
+I didn't see it have any problems
+
+1219
+00:54:26,234 --> 00:54:29,546
+but anytime you're having
+callbacks right here
+
+1220
+00:54:29,546 --> 00:54:31,765
+that are happening especially from UIKit
+
+1221
+00:54:31,765 --> 00:54:35,801
+'cause UIKit's in a little
+different world than SwiftUI,
+
+1222
+00:54:35,801 --> 00:54:38,655
+that's sometimes a little
+safety buffer you can put in it.
+
+1223
+00:54:38,655 --> 00:54:39,741
+Not gonna hurt anything.
+
+1224
+00:54:39,741 --> 00:54:42,677
+We're just essentially doing
+a user Intent here, right?
+
+1225
+00:54:42,677 --> 00:54:46,681
+This is an Intent, an Intent
+to change the background URL.
+
+1226
+00:54:46,681 --> 00:54:50,111
+Perfectly fine to delay
+that a short moment
+
+1227
+00:54:50,111 --> 00:54:52,227
+as we wait for the dispatch
+queue to settle down
+
+1228
+00:54:52,227 --> 00:54:53,470
+and come back around.
+
+1229
+00:54:53,470 --> 00:54:55,623
+Let's see if this works.
+
+1230
+00:54:58,133 --> 00:54:58,966
+Right, here's our "House".
+
+1231
+00:54:58,966 --> 00:55:01,526
+Let's see if we can change
+the background from the house
+
+1232
+00:55:01,526 --> 00:55:04,217
+to be something from our photo library.
+
+1233
+00:55:04,217 --> 00:55:06,423
+Let's click on the photo library.
+
+1234
+00:55:07,425 --> 00:55:08,893
+Here it is.
+
+1235
+00:55:08,893 --> 00:55:12,370
+Let's go pick this nice little green.
+
+1236
+00:55:12,370 --> 00:55:14,607
+Woo-hoo it works!
+
+1237
+00:55:14,607 --> 00:55:16,430
+And we can zoom in and out and everything.
+
+1238
+00:55:16,430 --> 00:55:18,937
+And we could even make sure
+
+1239
+00:55:18,937 --> 00:55:21,040
+that it's really saving things here.
+
+1240
+00:55:21,040 --> 00:55:26,040
+Let's go back, run again, "House".
+
+1241
+00:55:26,480 --> 00:55:28,328
+Woo-hoo, it's still in there!
+
+1242
+00:55:28,328 --> 00:55:29,658
+I'm zoomed in.
+
+1243
+00:55:29,658 --> 00:55:30,833
+Alright.
+
+1244
+00:55:30,833 --> 00:55:31,800
+So this is great.
+
+1245
+00:55:31,800 --> 00:55:34,236
+This is working for the photo library.
+
+1246
+00:55:34,236 --> 00:55:36,590
+Very simple, very powerful.
+
+1247
+00:55:36,590 --> 00:55:38,608
+It looks really nice in our code.
+
+1248
+00:55:38,608 --> 00:55:41,954
+Here our SwiftUI code is all SwiftUI-ish.
+
+1249
+00:55:41,954 --> 00:55:45,146
+There's really not a
+lot of weird stuff here.
+
+1250
+00:55:45,146 --> 00:55:47,764
+And even the ImagePicker,
+pretty straightforward.
+
+1251
+00:55:47,764 --> 00:55:49,901
+This is pretty much a
+minimal amount of code
+
+1252
+00:55:49,901 --> 00:55:53,280
+to get a UIImagePicker working.
+
+1253
+00:55:53,280 --> 00:55:54,953
+Now what about the camera?
+
+1254
+00:55:54,953 --> 00:55:58,690
+Making this UIImagePickerController
+pick for the camera
+
+1255
+00:55:58,690 --> 00:55:59,646
+is really simple.
+
+1256
+00:55:59,646 --> 00:56:00,941
+It's actually just changing
+
+1257
+00:56:00,941 --> 00:56:05,002
+this photo library right
+here to be .camera.
+
+1258
+00:56:05,002 --> 00:56:08,094
+However, I really wanna use all this code
+
+1259
+00:56:08,094 --> 00:56:10,528
+for both the photo library and the camera.
+
+1260
+00:56:10,528 --> 00:56:12,986
+So let's make this be a var here.
+
+1261
+00:56:12,986 --> 00:56:14,539
+So we'll say sourceType.
+
+1262
+00:56:14,539 --> 00:56:17,206
+We'll make this into a var here.
+
+1263
+00:56:18,959 --> 00:56:20,768
+And this type of this enum
+
+1264
+00:56:20,768 --> 00:56:23,413
+is UIImagePickerController.SourceType.
+
+1265
+00:56:26,784 --> 00:56:29,244
+That's the type of this enum essentially.
+
+1266
+00:56:29,244 --> 00:56:30,746
+And we just instantly made it
+
+1267
+00:56:30,746 --> 00:56:32,403
+so that this ImagePicker can either pick
+
+1268
+00:56:32,403 --> 00:56:35,400
+from the camera or from the photo library.
+
+1269
+00:56:35,400 --> 00:56:38,063
+And back here of course
+now we have an error.
+
+1270
+00:56:38,063 --> 00:56:40,350
+We need to provide the sourceType.
+
+1271
+00:56:40,350 --> 00:56:45,350
+Let's create a little
+imagePickerSourceType @State.
+
+1272
+00:56:52,100 --> 00:56:53,107
+And we'll set it equal to
+
+1273
+00:56:53,107 --> 00:56:58,107
+UIImagePickerController.SourceType.photoLibrary.
+
+1274
+00:56:58,415 --> 00:57:00,207
+It doesn't matter what we choose here
+
+1275
+00:57:00,207 --> 00:57:03,326
+because what we're gonna do is
+we're gonna have this photo,
+
+1276
+00:57:03,326 --> 00:57:07,085
+one, set this self.imagePickerSourceType
+
+1277
+00:57:07,085 --> 00:57:09,337
+equal to the photoLibrary,
+
+1278
+00:57:09,337 --> 00:57:11,787
+and then we're gonna
+have a whole other button
+
+1279
+00:57:11,787 --> 00:57:15,227
+right next to it, camera,
+
+1280
+00:57:15,227 --> 00:57:19,351
+and it's gonna have its
+SourceType be the camera.
+
+1281
+00:57:19,351 --> 00:57:21,426
+I'll put these two things in an HStack
+
+1282
+00:57:21,426 --> 00:57:22,962
+so they'll be sitting side by side
+
+1283
+00:57:22,962 --> 00:57:26,053
+in that upper left corner, up there.
+
+1284
+00:57:26,938 --> 00:57:29,465
+And that's all we should
+have to do, right?
+
+1285
+00:57:29,465 --> 00:57:30,723
+Let's take a look.
+
+1286
+00:57:34,305 --> 00:57:35,476
+Alright, here's our "House".
+
+1287
+00:57:35,476 --> 00:57:36,374
+We got them there.
+
+1288
+00:57:36,374 --> 00:57:38,353
+So let's see is there a photo library,
+
+1289
+00:57:38,353 --> 00:57:39,186
+it still seems to be working.
+
+1290
+00:57:39,186 --> 00:57:41,887
+We can choose different images.
+
+1291
+00:57:41,887 --> 00:57:42,808
+Works great.
+
+1292
+00:57:42,808 --> 00:57:45,242
+How about the camera?
+
+1293
+00:57:45,242 --> 00:57:47,010
+Whoa!
+
+1294
+00:57:47,010 --> 00:57:47,898
+Our app crashed.
+
+1295
+00:57:47,898 --> 00:57:49,330
+What is going on here?
+
+1296
+00:57:49,330 --> 00:57:50,840
+Let's look in the console.
+
+1297
+00:57:50,840 --> 00:57:52,676
+Of course every time you have crashes,
+
+1298
+00:57:52,676 --> 00:57:55,500
+you wanna go look in the
+console see what happened.
+
+1299
+00:57:55,500 --> 00:57:59,205
+And sure enough here it is,
+"Source type 1 not available."
+
+1300
+00:57:59,205 --> 00:58:01,227
+Oh yeah.
+
+1301
+00:58:01,227 --> 00:58:03,837
+And the simulator doesn't have a camera
+
+1302
+00:58:03,837 --> 00:58:05,891
+and so it crashes our app.
+
+1303
+00:58:05,891 --> 00:58:08,710
+So the camera UIImagePickerController,
+
+1304
+00:58:08,710 --> 00:58:10,140
+if you look at this documentation,
+
+1305
+00:58:10,140 --> 00:58:12,205
+it's very, very clear about the fact
+
+1306
+00:58:12,205 --> 00:58:15,667
+that you should not ask
+for this SourceType camera
+
+1307
+00:58:15,667 --> 00:58:18,671
+unless you've checked first to
+make sure there is a camera.
+
+1308
+00:58:18,671 --> 00:58:19,913
+So we'll just do that here.
+
+1309
+00:58:19,913 --> 00:58:24,580
+If
+UIImagePickerController.isSourceTypeAvailable?
+
+1310
+00:58:26,459 --> 00:58:29,751
+And we're talking about the camera here.
+
+1311
+00:58:29,751 --> 00:58:32,723
+Then we'll put this camera here.
+
+1312
+00:58:36,375 --> 00:58:38,743
+Now when we run on our simulator,
+
+1313
+00:58:40,248 --> 00:58:41,607
+we now have a camera.
+
+1314
+00:58:41,607 --> 00:58:44,076
+Woo, it worked great!
+
+1315
+00:58:44,076 --> 00:58:47,227
+Okay, but we wanna see the
+camera in action, don't we?
+
+1316
+00:58:47,227 --> 00:58:49,582
+So let's try running it on a device.
+
+1317
+00:58:49,582 --> 00:58:53,934
+I have a device attached
+here, a Gold iPad.
+
+1318
+00:58:53,934 --> 00:58:56,323
+Let's run it on that and see what happens.
+
+1319
+00:58:57,798 --> 00:58:59,718
+Alright, we got a couple
+of documents here.
+
+1320
+00:58:59,718 --> 00:59:02,345
+Let's go to our "Barn" document
+
+1321
+00:59:02,345 --> 00:59:03,609
+and let's bring up the camera.
+
+1322
+00:59:03,609 --> 00:59:05,252
+See the little camera picture there?
+
+1323
+00:59:05,252 --> 00:59:06,683
+Bring that up.
+
+1324
+00:59:07,539 --> 00:59:09,655
+Oh no, it crashed again!
+
+1325
+00:59:09,655 --> 00:59:10,488
+What?
+
+1326
+00:59:10,488 --> 00:59:12,325
+Look back here, oh no!
+
+1327
+00:59:12,325 --> 00:59:13,223
+And what does this say?
+
+1328
+00:59:13,223 --> 00:59:18,138
+It says "this app's Info.plist
+must contain NSCameraUsage
+
+1329
+00:59:18,138 --> 00:59:20,692
+"with a key with a String
+value to explain to the user
+
+1330
+00:59:20,692 --> 00:59:22,290
+"how the app uses this data."
+
+1331
+00:59:22,290 --> 00:59:23,297
+That's right.
+
+1332
+00:59:23,297 --> 00:59:25,040
+We can't just go willy-nilly,
+
+1333
+00:59:25,040 --> 00:59:27,589
+choosing people's cameras and microphones
+
+1334
+00:59:27,589 --> 00:59:29,085
+and other things on their device.
+
+1335
+00:59:29,085 --> 00:59:31,536
+We need to ask for permission.
+
+1336
+00:59:31,536 --> 00:59:33,290
+And part of asking permission
+
+1337
+00:59:33,290 --> 00:59:36,977
+is explaining why you
+want to use this thing.
+
+1338
+00:59:36,977 --> 00:59:40,422
+So it's saying here go to
+the Info.plist and add this.
+
+1339
+00:59:40,422 --> 00:59:43,152
+Let's do exactly that, Info.plist.
+
+1340
+00:59:43,152 --> 00:59:45,330
+The way we add an entry to the Info.plist
+
+1341
+00:59:45,330 --> 00:59:50,040
+is we right-click and say
+"Add Row", here it is,
+
+1342
+00:59:50,040 --> 00:59:51,093
+then we just scroll down.
+
+1343
+00:59:51,093 --> 00:59:52,177
+This is a privacy thing
+
+1344
+00:59:52,177 --> 00:59:54,840
+so it's gonna be down
+under privacy somewhere.
+
+1345
+00:59:54,840 --> 00:59:57,315
+Here it is, privacy, yep, the camera.
+
+1346
+00:59:57,315 --> 00:59:58,880
+See there, privacy, camera.
+
+1347
+00:59:58,880 --> 01:00:00,076
+A lot of privacy things here.
+
+1348
+01:00:00,076 --> 01:00:01,764
+Camera is the one we want.
+
+1349
+01:00:01,764 --> 01:00:05,244
+And we're just gonna explain
+why we want the camera,
+
+1350
+01:00:05,244 --> 01:00:07,039
+why we want to use the camera,
+
+1351
+01:00:07,039 --> 01:00:12,039
+and we're gonna say "EmojiArt lets you set
+
+1352
+01:00:12,570 --> 01:00:17,570
+"the background of your
+documents using the camera."
+
+1353
+01:00:17,996 --> 01:00:20,768
+It's our explanation as to why
+
+1354
+01:00:20,768 --> 01:00:24,580
+EmojiArt wants their camera right there.
+
+1355
+01:00:24,580 --> 01:00:26,313
+Let's try it again now.
+
+1356
+01:00:30,160 --> 01:00:33,718
+We'll go to "Barn" again, hit the camera.
+
+1357
+01:00:33,718 --> 01:00:35,960
+Now notice it's asking us
+
+1358
+01:00:35,960 --> 01:00:39,225
+do you want to allow the
+user to use the camera?
+
+1359
+01:00:39,225 --> 01:00:42,444
+And it's got our little
+explanation in there.
+
+1360
+01:00:42,444 --> 01:00:43,500
+It's great.
+
+1361
+01:00:43,500 --> 01:00:45,207
+So we'll say Allow.
+
+1362
+01:00:45,207 --> 01:00:48,320
+And then let's go take a picture here.
+
+1363
+01:00:48,320 --> 01:00:49,153
+Maybe that now.
+
+1364
+01:00:51,709 --> 01:00:54,467
+We'll say yeah, we wanna use this photo.
+
+1365
+01:00:54,467 --> 01:00:55,818
+Woo!
+
+1366
+01:00:55,818 --> 01:00:58,091
+It's our background image.
+
+1367
+01:00:58,091 --> 01:01:00,049
+So the camera was really
+just as easy to do
+
+1368
+01:01:00,049 --> 01:01:01,346
+as the photo library.
+
+1369
+01:01:01,346 --> 01:01:02,641
+We just had to make sure the camera
+
+1370
+01:01:02,641 --> 01:01:04,280
+is actually available on our device
+
+1371
+01:01:04,280 --> 01:01:07,160
+and then provide that
+little info to the user
+
+1372
+01:01:07,160 --> 01:01:08,593
+about why we wanna use it.
+
+1373
+01:01:09,506 --> 01:01:14,506
+So that is it for our
+UIViewControllerRepresentable demo.
+
+1374
+01:01:14,651 --> 01:01:16,570
+Now you know how to put both Views
+
+1375
+01:01:16,570 --> 01:01:19,220
+and ViewControllers into your app.
+
+1376
+01:01:19,220 --> 01:01:21,710
+And that's all I have
+for you this quarter.
+
+1377
+01:01:21,710 --> 01:01:24,827
+So now it's your turn to go
+show us all that you've learned
+
+1378
+01:01:24,827 --> 01:01:26,798
+with your awesome final projects.
+
+1379
+01:01:26,798 --> 01:01:29,615
+And I look forward to
+helping you down the stretch
+
+1380
+01:01:29,615 --> 01:01:31,680
+with any questions you have about that.
+
+1381
+01:01:31,680 --> 01:01:34,688
+And thanks for listening
+to all these lectures.
+
+1382
+01:01:34,688 --> 01:01:38,255
+And good luck with your final project.
+
+1383
+01:01:38,255 --> 01:01:41,730
+- [Woman] For more, please
+visit us at standford.edu.
