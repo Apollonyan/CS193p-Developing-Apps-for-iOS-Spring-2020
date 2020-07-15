@@ -2903,8 +2903,7 @@ things, that's what an Array is
 
 673
 00:30:08,760 --> 00:30:12,020
-现在我们来聊聊
-在数组里使用泛型
+数组是如何应用泛型的
 
 674
 00:30:12,020 --> 00:30:13,510
@@ -2916,7 +2915,7 @@ things, that's what an Array is
 
 676
 00:30:15,760 --> 00:30:19,460
-Struct Array<Element>
+struct Array<Element>
 
 677
 00:30:19,460 --> 00:30:23,350
