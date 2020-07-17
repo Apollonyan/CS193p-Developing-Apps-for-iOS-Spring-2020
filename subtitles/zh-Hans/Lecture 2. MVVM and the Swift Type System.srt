@@ -6188,217 +6188,271 @@ append 是 Array 的一个方法
 1486
 01:07:27,880 --> 01:07:30,680
 So I'm creating a Card here so, of course,
+那么我在这里创建一个 Card
 
 1487
 01:07:30,680 --> 01:07:32,240
 I learn to start face down.
+将 isFaceUp 初始化为 false
 
 1488
 01:07:32,240 --> 01:07:34,410
 This is the beginning
 of the game, presumably,
+这是游戏开始时的状态
 
 1489
 01:07:34,410 --> 01:07:36,302
 and of course, it's not yet matched
+当然卡片也未曾匹配
 
 1490
 01:07:36,302 --> 01:07:38,290
 and we oh, we got content.
+我们还有 content 参数
 
 1491
 01:07:38,290 --> 01:07:40,116
 Hmm, well, that's gonna be interesting
+这相当有趣
 
 1492
 01:07:40,116 --> 01:07:43,470
 but we know both Cards
 wanna be like this, okay?
+我们知道这两张卡片要传入相同的参数
 
 1493
 01:07:43,470 --> 01:07:45,570
 So we're getting closer here, right?
+现在离完成 Card 的创建不远了
 
 1494
 01:07:45,570 --> 01:07:47,800
 So we're appending our Card on there
+我们在这里添加 Card
 
 1495
 01:07:47,800 --> 01:07:51,302
 but what about this CardContent, okay?
+但是这个 CardContent 参数怎么办
 
 1496
 01:07:51,302 --> 01:07:53,260
 That's definitely a problem.
+这确实是个问题
 
 1497
 01:07:53,260 --> 01:07:55,110
 It's kind of like I wanna do something
+也许我可以用
 
 1498
 01:07:55,110 --> 01:07:59,300
 like var content equals something here,
+var content = ...
 
 1499
 01:07:59,300 --> 01:08:01,310
 the content of this pair,
+声明一个变量
 
 1500
 01:08:01,310 --> 01:08:02,800
 that's on this pair of Cards
+用来存储这对卡片的内容
 
 1501
 01:08:02,800 --> 01:08:04,810
 and then put that in here, right?
+然后作为参数传给 Card
 
 1502
 01:08:04,810 --> 01:08:07,120
 Same content it's gonna be on both Cards
+这两张卡片的 content 参数相同
 
 1503
 01:08:07,120 --> 01:08:09,743
 because this is a pair of Cards.
+因为它们是一对卡片
 
 1504
 01:08:09,743 --> 01:08:14,330
 But it's like I don't really
 know how to create the content
+但是我并不清楚
+该如何创建这个 content
 
 1505
 01:08:14,330 --> 01:08:17,300
 because this content
 is of type CardContent
+因为它的类型是 CardContent
 
 1506
 01:08:17,300 --> 01:08:19,570
 which for me, is a don't care.
+这对我来说是无需关心的
 
 1507
 01:08:19,570 --> 01:08:20,940
 Like I don't even know what that is,
+也就是说我甚至都不知道它是什么
 
 1508
 01:08:20,940 --> 01:08:23,160
 it could be an Image,
 Int, String, I don't know
+它可以是 Image、Int、String
+我也不清楚是哪个类型
 
 1509
 01:08:23,160 --> 01:08:25,094
 so how could I possibly know
+所以我怎么可能知道
 
 1510
 01:08:25,094 --> 01:08:26,853
 how to create one of these things?
+这种类型的参数该怎么创建呢
 
 1511
 01:08:26,853 --> 01:08:30,240
 There's just no way to do it.
+毫无头绪
 
 1512
 01:08:30,240 --> 01:08:34,420
 So, who does know how to create
 the content on this Card?
+那么到底谁知道卡片的 content
+该怎么创建呢
 
 1513
 01:08:34,420 --> 01:08:37,130
 Well, this guy sure does, okay?
+这个类肯定知道
 
 1514
 01:08:37,130 --> 01:08:38,960
 This is an EmojiMemoryGame.
+它是一个 EmojiMemoryGame
 
 1515
 01:08:38,960 --> 01:08:40,920
 He knows he's creating a MemoryGame
+它知道在创建 MemoryGame 时
 
 1516
 01:08:40,920 --> 01:08:44,430
 with CardContent String,
 presumably this guy
+CardContent 的类型为 String
 
 1517
 01:08:44,430 --> 01:08:46,790
 would know how to create the contents
+想必它也知道每对卡片的内容
 
 1518
 01:08:46,790 --> 01:08:49,260
 of each pair of Cards, right?
+该如何创建吧
 
 1519
 01:08:49,260 --> 01:08:52,700
 So somehow, we have to give
 this guy an opportunity
+所以无论如何都要给它个机会
 
 1520
 01:08:52,700 --> 01:08:57,400
 to do this little creation
 of the content here.
+让它完成创建 content 的工作
 
 1521
 01:08:57,400 --> 01:09:01,560
 We're gonna do that with a function, okay?
+我们用一个函数来实现
 
 1522
 01:09:01,560 --> 01:09:03,697
 And I'm just gonna add
 another argument to my init,
+给构造器添加一个参数
 
 1523
 01:09:03,697 --> 01:09:07,150
 I'm gonna call it my cardContentFactory,
+cardContentFactory
 
 1524
 01:09:07,150 --> 01:09:09,710
 that's the name of the argument
+是参数的名称
 
 1525
 01:09:09,710 --> 01:09:12,363
 and the type of this
 argument is a function.
+这个参数的类型是一个函数
 
 1526
 01:09:12,363 --> 01:09:14,460
 A function that takes an Int
+这个函数有一个 Int 型的参数
 
 1527
 01:09:14,460 --> 01:09:17,830
 and returns the CardContent type.
+返回值为 CardContent 类型
 
 1528
 01:09:17,830 --> 01:09:20,610
 Again, this is a don't care,
 I don't care what it is
+再次声明，我不关心它是什么类型
 
 1529
 01:09:20,610 --> 01:09:23,500
 but I'm gonna give you an
 Int, which is this pairIndex
+但是我要传入一个整数
+就是卡片的对数
 
 1530
 01:09:23,500 --> 01:09:25,000
 so I'm actually gonna let you even know
+事实上我要让你知道
 
 1531
 01:09:25,000 --> 01:09:27,283
 which pair I'm making.
+我在创建哪对卡片
 
 1532
 01:09:27,283 --> 01:09:30,220
 And you just have to
 give me a CardContent.
+你只需给我一个 CardContent
 
 1533
 01:09:30,220 --> 01:09:32,232
 That's an Image, give me
 an Image, that's a string,
+如果是图片就给我一张图片
 
 1534
 01:09:32,232 --> 01:09:33,380
 give me a string, I don't care,
+如果是字符串就给我一个字符串
 
 1535
 01:09:33,380 --> 01:09:35,330
 this is my don't care for me.
+我不关心
 
 1536
 01:09:35,330 --> 01:09:37,527
