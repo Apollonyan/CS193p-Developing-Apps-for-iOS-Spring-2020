@@ -7005,7 +7005,7 @@ because this reads very much like English.
 
 1582
 01:11:36,100 --> 01:11:38,100
-That content equal the results
+let content equal the results
 
 1583
 01:11:38,100 --> 01:11:42,420
