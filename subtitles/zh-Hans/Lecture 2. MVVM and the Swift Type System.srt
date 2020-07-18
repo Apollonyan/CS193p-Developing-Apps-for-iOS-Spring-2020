@@ -6739,229 +6739,290 @@ you always wanna use let here.
 01:11:51,780 --> 01:11:53,740
 Now, another thing to note
 here is kind of interesting
+另一个需要留意的地方很有意思
 
 1588
 01:11:53,740 --> 01:11:57,060
 is we didn't put a type on this thing.
+我们并没有指出 content 的类型
 
 1589
 01:11:57,060 --> 01:12:00,580
 We didn't say type CardContent even though
+即使它的类型是 CardContent
 
 1590
 01:12:00,580 --> 01:12:01,980
 that is what type this is.
+我们也没有明确地写出来
 
 1591
 01:12:01,980 --> 01:12:03,740
 This is of type CardContent
+它的类型是 CardContent
 
 1592
 01:12:03,740 --> 01:12:07,050
 because that's what
 contentCardFactory returns
+因为这是 contentCardFactory
+返回值的类型
 
 1593
 01:12:07,050 --> 01:12:08,457
 but we didn't have to do this.
+但我们无需指出
 
 1594
 01:12:08,457 --> 01:12:11,730
 And this is part of Swift just
 figuring things out for you,
+Swift 会尽力帮你
 
 1595
 01:12:11,730 --> 01:12:13,700
 inferring the types whenever it can
+推断其类型
 
 1596
 01:12:13,700 --> 01:12:16,250
 and we're really gonna
 see that on the other side
+我们稍后会在调用构造器的地方
 
 1597
 01:12:16,250 --> 01:12:19,923
 of calling this init in just
 a moment right here, okay?
+看到它的类型
 
 1598
 01:12:21,100 --> 01:12:23,660
 All right, so let's go back to that side
+现在我们回到
 
 1599
 01:12:23,660 --> 01:12:25,530
 and see where we create our MemoryGame.
+创建 MemoryGame 的地方
 
 1600
 01:12:25,530 --> 01:12:27,430
 And put this on a separate line
+回车换到下一行
 
 1601
 01:12:27,430 --> 01:12:28,580
 so we get a little more room.
+可以腾出一些空间
 
 1602
 01:12:28,580 --> 01:12:31,140
 So now, we've added a second argument here
+我们在 numberOfPairsOfCards 之后
 
 1603
 01:12:31,140 --> 01:12:33,990
 to number of pairs of cards
 it's this cardContentFactory,
+添加第二个参数 cardContentFactory
 
 1604
 01:12:35,630 --> 01:12:40,340
 and this value that goes
 here has to be a function
+这个参数值是一个函数
 
 1605
 01:12:40,340 --> 01:12:42,980
 that takes an Int, which is the pairIndex,
+函数的参数是 Int 类型的 pairIndex
 
 1606
 01:12:42,980 --> 01:12:47,520
 and returns a CardContent which
 we know to be String here.
+返回值是 String 类型的 CardContent
 
 1607
 01:12:47,520 --> 01:12:48,728
 So it has to return a String.
+所以它要返回一个 String 类型的值
 
 1608
 01:12:48,728 --> 01:12:50,280
 So let's create such a function.
+让我们创建这样一个函数
 
 1609
 01:12:50,280 --> 01:12:54,604
 Watch this, func, I'm gonna
 call it createCardContent.
+输入 func 创建一个名为
+createCardContent 的函数
 
 1610
 01:12:54,604 --> 01:12:58,600
 We know that it has to take an
 Int which is that pairIndex,
+我们知道函数的参数
+是 Int 类型的 pairIndex
 
 1611
 01:12:58,600 --> 01:13:02,060
 going Int, and we know it
 has to return CardContent,
+输入参数的类型 Int
+我们也知道其返回值
 
 1612
 01:13:02,060 --> 01:13:04,840
 which would want to be a String.
+是 String 类型的 CardContent
 
 1613
 01:13:04,840 --> 01:13:07,860
 Okay, because this is a
 MemoryGame of String, all right?
+因为这里是 MemoryGame<String>
 
 1614
 01:13:07,860 --> 01:13:11,525
 Now, I'm gonna return,
 let's just return for now
+现在我输入 return
 
 1615
 01:13:11,525 --> 01:13:14,780
 some emoji, how about that?
+让我们返回某个表情如何？
 
 1616
 01:13:14,780 --> 01:13:16,980
 Put the same emoji on every single Card,
+在每张卡片上放置相同的表情
 
 1617
 01:13:16,980 --> 01:13:19,200
 maybe a smiley face right there.
+或许是一个笑脸
 
 1618
 01:13:19,200 --> 01:13:23,090
 So here we are returning
 a string right there.
+这里我们返回了一个字符串
 
 1619
 01:13:23,090 --> 01:13:28,090
 And we can now use this
 and say createCardContent.
+现在我们输入 createCardContent
+来使用这个函数
 
 1620
 01:13:28,970 --> 01:13:32,330
 So this is an argument
 that takes a function
+给这个参数传入一个函数
 
 1621
 01:13:32,330 --> 01:13:35,350
 that takes an Int and returns a String.
+函数的参数是 Int 类型
+返回值是 String 类型
 
 1622
 01:13:35,350 --> 01:13:38,110
 This certainly qualifies
 and so this is legal.
+这当然是合规的
 
 1623
 01:13:38,110 --> 01:13:39,859
 Look, no errors, no warnings.
+你看，没有报错，没有警告
 
 1624
 01:13:39,859 --> 01:13:43,068
 This is all perfectly
 legal way to do this.
+完全是合法的方式
 
 1625
 01:13:43,068 --> 01:13:45,950
 However, we would never do it this way
+然而我们从不用这种方式
 
 1626
 01:13:45,950 --> 01:13:48,450
 because we don't want to
 have to go be creating
+因为不想用额外的几行代码
 
 1627
 01:13:48,450 --> 01:13:51,050
 these extra little functions to do that.
+创建一个函数来实现
 
 1628
 01:13:51,050 --> 01:13:54,160
 Instead, we would inline this right here
+取而代之的是
 
 1629
 01:13:54,160 --> 01:13:56,360
 inline with this code.
+我们把代码直接插入这里
 
 1630
 01:13:56,360 --> 01:13:59,450
 So watch carefully now I'm
 gonna go through the process
+仔细看哦
+现在我要逐步地
 
 1631
 01:13:59,450 --> 01:14:02,100
 of how we take this function right here
+把这个函数
 
 1632
 01:14:02,100 --> 01:14:04,640
 and inline it right here, okay?
+直接插入到这里
 
 1633
 01:14:04,640 --> 01:14:08,460
 This inlining of functions
 in Swift is called a closure
+这种直接插入的函数
+在 Swift 中叫做闭包
 
 1634
 01:14:08,460 --> 01:14:11,120
 and it's called a closure
 because it actually captures
+被称作闭包是因为
 
 1635
 01:14:11,120 --> 01:14:14,340
 the information from the
 surroundings that it needs to work.
+它实际上会从上下文中
+捕获其运行所需的信息
 
 1636
 01:14:14,340 --> 01:14:16,300
 We'll talk about that later but basically,
+这个我们稍后会讲
 
 1637
 01:14:16,300 --> 01:14:19,640
 you can think of it for
 now as an inline function.
+但是从根本上说
+你现在可以把它当做一个内联函数
 
 1638
 01:14:19,640 --> 01:14:23,140
