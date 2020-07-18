@@ -6235,7 +6235,7 @@ So we're appending our Card on there
 1495
 01:07:47,800 --> 01:07:51,302
 but what about this CardContent, okay?
-但是这个 CardContent 参数怎么办
+但这个 CardContent 类型的参数怎么办
 
 1496
 01:07:51,302 --> 01:07:53,260
@@ -6245,7 +6245,7 @@ That's definitely a problem.
 1497
 01:07:53,260 --> 01:07:55,110
 It's kind of like I wanna do something
-也许我可以用
+也许我可以在这里用
 
 1498
 01:07:55,110 --> 01:07:59,300
@@ -6298,14 +6298,14 @@ which for me, is a don't care.
 1507
 01:08:19,570 --> 01:08:20,940
 Like I don't even know what that is,
-也就是说我甚至都不知道它是什么
+我甚至都不知道它是什么
 
 1508
 01:08:20,940 --> 01:08:23,160
 it could be an Image,
 Int, String, I don't know
 它可以是 Image、Int、String
-我也不清楚是哪个类型
+我也不清楚
 
 1509
 01:08:23,160 --> 01:08:25,094
@@ -6315,11 +6315,12 @@ so how could I possibly know
 1510
 01:08:25,094 --> 01:08:26,853
 how to create one of these things?
-这种类型的参数该怎么创建呢
+如何创建
 
 1511
 01:08:26,853 --> 01:08:30,240
 There's just no way to do it.
+这种类型的参数呢？
 毫无头绪
 
 1512
@@ -6353,7 +6354,7 @@ CardContent 的类型为 String
 1517
 01:08:44,430 --> 01:08:46,790
 would know how to create the contents
-想必它也知道每对卡片的内容
+想必它也知道每对卡片的 content
 
 1518
 01:08:46,790 --> 01:08:49,260
@@ -6425,7 +6426,7 @@ Int, which is this pairIndex
 1530
 01:09:23,500 --> 01:09:25,000
 so I'm actually gonna let you even know
-事实上我要让你知道
+说实在的，我要让你知道
 
 1531
 01:09:25,000 --> 01:09:27,283
@@ -6443,11 +6444,12 @@ give me a CardContent.
 That's an Image, give me
 an Image, that's a string,
 如果是图片就给我一张图片
+如果是字符串
 
 1534
 01:09:32,232 --> 01:09:33,380
 give me a string, I don't care,
-如果是字符串就给我一个字符串
+就给我一个字符串
 
 1535
 01:09:33,380 --> 01:09:35,330
@@ -6457,12 +6459,12 @@ this is my don't care for me.
 1536
 01:09:35,330 --> 01:09:37,527
 So here, I can use this CardContent
-这样我就可以调用这个函数
+这样我可以通过调用这个函数
 
 1537
 01:09:37,527 --> 01:09:40,480
 by calling this function right here,
-得到卡片的内容
+得到卡片的内容拿来使用了
 
 1538
 01:09:40,480 --> 01:09:45,480
@@ -6490,12 +6492,12 @@ and this is going to call this function.
 This type, function type,
 this could be a String
 这个参数可以是 String 类型
-也可以是其他类似的类型
 
 1543
 01:09:58,620 --> 01:10:01,470
 or something like that but
 it's not, it's a function.
+也可以是其他类似的类型
 但它是一个函数
 
 1544
@@ -6528,7 +6530,7 @@ in a functional programming language,
 1549
 01:10:12,730 --> 01:10:14,550
 being able to pass functions around,
-也可以传递函数
+是可以传递函数的
 
 1550
 01:10:14,550 --> 01:10:16,380
@@ -6634,7 +6636,7 @@ mutated 的意思是 changed
 1568
 01:11:00,990 --> 01:11:02,050
 It's never mutated.
-就是说 content 变量的内容不会改变
+content 永不改变
 
 1569
 01:11:02,050 --> 01:11:04,600
@@ -6645,12 +6647,12 @@ Consider changing to a let constant.
 01:11:04,600 --> 01:11:07,530
 So it's basically saying
 don't call this a var
-说白了就是不要用 var 声明一个
+说白了就是不要用 var
 
 1571
 01:11:07,530 --> 01:11:09,543
 if it's not variable, okay?
-不会发生改变的值
+声明一个不会发生改变的值
 
 1572
 01:11:10,540 --> 01:11:13,660
@@ -6694,7 +6696,7 @@ Fix.
 1579
 01:11:30,330 --> 01:11:31,210
 Okay, so it makes a let.
-好了，替换成功
+替换成功
 
 1580
 01:11:31,210 --> 01:11:33,440
@@ -6728,7 +6730,7 @@ Every time you have any kind of variable
 01:11:45,360 --> 01:11:48,400
 that doesn't actually vary, in
 other words, it's a constant,
-换句话说，这个值是一个常量
+也就是说这个值是一个常量
 
 1586
 01:11:48,400 --> 01:11:50,863
@@ -6958,7 +6960,7 @@ However, we would never do it this way
 01:13:45,950 --> 01:13:48,450
 because we don't want to
 have to go be creating
-因为不想用额外的几行代码
+因为我不想用额外的几行代码
 
 1627
 01:13:48,450 --> 01:13:51,050
@@ -6973,7 +6975,7 @@ Instead, we would inline this right here
 1629
 01:13:54,160 --> 01:13:56,360
 inline with this code.
-我们把代码直接插入这里
+我们把代码直接插入到这里
 
 1630
 01:13:56,360 --> 01:13:59,450
