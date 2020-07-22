@@ -6187,669 +6187,634 @@ append 是 Array 的一个方法
 
 1486
 01:07:27,880 --> 01:07:30,680
-So I'm creating a Card here so, of course,
+那么我在这里创建一个 Card
 
 1487
 01:07:30,680 --> 01:07:32,240
-I learn to start face down.
+先让卡面朝下
 
 1488
 01:07:32,240 --> 01:07:34,410
-This is the beginning
-of the game, presumably,
+这是游戏开始时的状态
 
 1489
 01:07:34,410 --> 01:07:36,302
-and of course, it's not yet matched
+当然卡片也未曾匹配
 
 1490
 01:07:36,302 --> 01:07:38,290
-and we oh, we got content.
+我们还有 content 参数
 
 1491
 01:07:38,290 --> 01:07:40,116
-Hmm, well, that's gonna be interesting
+这相当有趣
 
 1492
 01:07:40,116 --> 01:07:43,470
-but we know both Cards
-wanna be like this, okay?
+我们知道这两张卡片要传入相同的参数
 
 1493
 01:07:43,470 --> 01:07:45,570
-So we're getting closer here, right?
+现在离完成 Card 的创建不远了
 
 1494
 01:07:45,570 --> 01:07:47,800
-So we're appending our Card on there
+我们在这里添加 Card
 
 1495
 01:07:47,800 --> 01:07:51,302
-but what about this CardContent, okay?
+但这个 CardContent 类型的参数怎么办
 
 1496
 01:07:51,302 --> 01:07:53,260
-That's definitely a problem.
+这确实是个问题
 
 1497
 01:07:53,260 --> 01:07:55,110
-It's kind of like I wanna do something
+也许我可以在这里用
 
 1498
 01:07:55,110 --> 01:07:59,300
-like var content equals something here,
+var content = ...
 
 1499
 01:07:59,300 --> 01:08:01,310
-the content of this pair,
+声明一个变量
 
 1500
 01:08:01,310 --> 01:08:02,800
-that's on this pair of Cards
+用来存储这对卡片的内容
 
 1501
 01:08:02,800 --> 01:08:04,810
-and then put that in here, right?
+然后作为参数传给 Card
 
 1502
 01:08:04,810 --> 01:08:07,120
-Same content it's gonna be on both Cards
+这两张卡片的 content 参数相同
 
 1503
 01:08:07,120 --> 01:08:09,743
-because this is a pair of Cards.
+因为它们是一对卡片
 
 1504
 01:08:09,743 --> 01:08:14,330
-But it's like I don't really
-know how to create the content
+但是我并不清楚
+该如何创建这个 content
 
 1505
 01:08:14,330 --> 01:08:17,300
-because this content
-is of type CardContent
+因为它的类型是 CardContent
 
 1506
 01:08:17,300 --> 01:08:19,570
-which for me, is a don't care.
+这对我来说是无需关心的
 
 1507
 01:08:19,570 --> 01:08:20,940
-Like I don't even know what that is,
+我甚至都不知道它是什么
 
 1508
 01:08:20,940 --> 01:08:23,160
-it could be an Image,
-Int, String, I don't know
+它可以是 Image、Int、String
+我也不清楚
 
 1509
 01:08:23,160 --> 01:08:25,094
-so how could I possibly know
+所以我怎么可能知道
 
 1510
 01:08:25,094 --> 01:08:26,853
-how to create one of these things?
+如何创建
 
 1511
 01:08:26,853 --> 01:08:30,240
-There's just no way to do it.
+这种类型的参数呢？
+毫无头绪
 
 1512
 01:08:30,240 --> 01:08:34,420
-So, who does know how to create
-the content on this Card?
+那么到底谁知道卡片的 content
+该怎么创建呢？
 
 1513
 01:08:34,420 --> 01:08:37,130
-Well, this guy sure does, okay?
+这个类肯定知道
 
 1514
 01:08:37,130 --> 01:08:38,960
-This is an EmojiMemoryGame.
+它是一个 EmojiMemoryGame
 
 1515
 01:08:38,960 --> 01:08:40,920
-He knows he's creating a MemoryGame
+它知道在创建 MemoryGame 时
 
 1516
 01:08:40,920 --> 01:08:44,430
-with CardContent String,
-presumably this guy
+CardContent 的类型为 String
 
 1517
 01:08:44,430 --> 01:08:46,790
-would know how to create the contents
+想必它也知道每对卡片的 content
 
 1518
 01:08:46,790 --> 01:08:49,260
-of each pair of Cards, right?
+该如何创建吧
 
 1519
 01:08:49,260 --> 01:08:52,700
-So somehow, we have to give
-this guy an opportunity
+所以需要给它个机会
 
 1520
 01:08:52,700 --> 01:08:57,400
-to do this little creation
-of the content here.
+让它完成创建 content 的工作
 
 1521
 01:08:57,400 --> 01:09:01,560
-We're gonna do that with a function, okay?
+我们用一个函数来实现
 
 1522
 01:09:01,560 --> 01:09:03,697
-And I'm just gonna add
-another argument to my init,
+给构造器添加一个参数
 
 1523
 01:09:03,697 --> 01:09:07,150
-I'm gonna call it my cardContentFactory,
+cardContentFactory
 
 1524
 01:09:07,150 --> 01:09:09,710
-that's the name of the argument
+是参数的名称
 
 1525
 01:09:09,710 --> 01:09:12,363
-and the type of this
-argument is a function.
+这个参数的类型是一个函数
 
 1526
 01:09:12,363 --> 01:09:14,460
-A function that takes an Int
+这个函数有一个 Int 型的参数
 
 1527
 01:09:14,460 --> 01:09:17,830
-and returns the CardContent type.
+返回值为 CardContent 类型
 
 1528
 01:09:17,830 --> 01:09:20,610
-Again, this is a don't care,
-I don't care what it is
+再次声明，我不关心它是什么类型
 
 1529
 01:09:20,610 --> 01:09:23,500
-but I'm gonna give you an
-Int, which is this pairIndex
+但是我要传入一个整数
+就是第几对卡片
 
 1530
 01:09:23,500 --> 01:09:25,000
-so I'm actually gonna let you even know
+也就是我要让你知道
 
 1531
 01:09:25,000 --> 01:09:27,283
-which pair I'm making.
+我在创建哪对卡片
 
 1532
 01:09:27,283 --> 01:09:30,220
-And you just have to
-give me a CardContent.
+你只需给我一个 CardContent
 
 1533
 01:09:30,220 --> 01:09:32,232
-That's an Image, give me
-an Image, that's a string,
+如果是图片就给我一张图片
+如果是字符串
 
 1534
 01:09:32,232 --> 01:09:33,380
-give me a string, I don't care,
+就给我一个字符串
 
 1535
 01:09:33,380 --> 01:09:35,330
-this is my don't care for me.
+我不关心
 
 1536
 01:09:35,330 --> 01:09:37,527
-So here, I can use this CardContent
+这样我可以通过调用这个函数
 
 1537
 01:09:37,527 --> 01:09:40,480
-by calling this function right here,
+得到卡片的内容拿来使用了
 
 1538
 01:09:40,480 --> 01:09:45,480
-cardContentFactory and I'll
-call it with the argument
+输入 cardContentFactory
 
 1539
 01:09:46,750 --> 01:09:49,340
-the pairIndex.
+pairIndex 作为函数的参数
 
 1540
 01:09:49,340 --> 01:09:51,840
-Let's get our capitalization right
+修正大小写
 
 1541
 01:09:51,840 --> 01:09:54,860
-and this is going to call this function.
+这样我们就调用了这个函数
 
 1542
 01:09:54,860 --> 01:09:58,620
-This type, function type,
-this could be a String
+这个参数可以是 String 类型
 
 1543
 01:09:58,620 --> 01:10:01,470
-or something like that but
-it's not, it's a function.
+也可以是其他类似的类型
+但它是一个函数
 
 1544
 01:10:01,470 --> 01:10:04,600
-So functions are first
-class types in Swift.
+在 Swift 中函数是第一等类型
 
 1545
 01:10:04,600 --> 01:10:07,240
-They're not even
-particularly special, okay?
+它们没什么特别的
 
 1546
 01:10:07,240 --> 01:10:09,220
-You can pass functions around.
+你可以传递函数
 
 1547
 01:10:09,220 --> 01:10:10,480
-Again, as you can imagine,
+如你所想
 
 1548
 01:10:10,480 --> 01:10:12,730
-in a functional programming language,
+在函数式编程语言中
 
 1549
 01:10:12,730 --> 01:10:14,550
-being able to pass functions around,
+是可以传递函数的
 
 1550
 01:10:14,550 --> 01:10:16,380
-it's kind of fundamental, okay?
+这相当基础
 
 1551
 01:10:16,380 --> 01:10:19,240
-It's kind of the basic
-part of the whole thing.
+它是函数式编程的基本功能
 
 1552
 01:10:19,240 --> 01:10:21,267
-So you don't wanna be afraid of this.
+所以你无需担心
 
 1553
 01:10:21,267 --> 01:10:24,960
-In other languages, passing
-functions around can be torture.
+在其他编程语言中传递函数是很痛苦的
 
 1554
 01:10:24,960 --> 01:10:27,874
-Your passing pointers to them
-and all kinds of crazy things.
+你需要使用指针之类烦人的东西
 
 1555
 01:10:27,874 --> 01:10:31,470
-Here, just literally just explain
+而这里你只需阐明
 
 1556
 01:10:31,470 --> 01:10:33,830
-the types of the arguments
-and the return and boom,
+参数和返回值的类型
 
 1557
 01:10:33,830 --> 01:10:35,840
-you can pass a function around.
+就能传递函数
 
 1558
 01:10:35,840 --> 01:10:38,280
-Now, this has got a yellow warning here.
+这里出现一个黄色的警告
 
 1559
 01:10:38,280 --> 01:10:40,210
-By the way, we know red warnings
+对了，我们知道红色的警告
 
 1560
 01:10:40,210 --> 01:10:42,942
-are like ah, something won't
-compile, it's terrible.
+意味着编译无法通过
+这很糟糕
 
 1561
 01:10:42,942 --> 01:10:46,770
-Yellow warnings will compile
-but you always wanna fix these
+黄色的警告是可以编译通过的
+但你还是要把它修正的
 
 1562
 01:10:46,770 --> 01:10:50,290
-because they're often gonna
-lead to future problems
+因为它往往会带来潜在的问题
 
 1563
 01:10:50,290 --> 01:10:52,500
-if not an immediate problem.
+即使不是当下的问题
 
 1564
 01:10:52,500 --> 01:10:53,563
-So what's this one's saying?
+那么这个警告的内容是什么呢？
 
 1565
 01:10:53,563 --> 01:10:55,720
-It's saying the variable content,
+这个 content 变量
 
 1566
 01:10:55,720 --> 01:10:59,230
-that's this variable right
-here, was never mutated.
+这里的这个变量
+没有被改变过
 
 1567
 01:10:59,230 --> 01:11:00,990
-Mutated, that means changed, right?
+mutated 的意思是 changed
 
 1568
 01:11:00,990 --> 01:11:02,050
-It's never mutated.
+content 永不改变
 
 1569
 01:11:02,050 --> 01:11:04,600
-Consider changing to a let constant.
+可以考虑使用 let 将其声明为常量
 
 1570
 01:11:04,600 --> 01:11:07,530
-So it's basically saying
-don't call this a var
+说白了就是不要用 var
 
 1571
 01:11:07,530 --> 01:11:09,543
-if it's not variable, okay?
+声明一个不会发生改变的值
 
 1572
 01:11:10,540 --> 01:11:13,660
-If it doesn't vary, it shouldn't be a var,
+不会发生改变的值就不应该是变量
 
 1573
 01:11:13,660 --> 01:11:17,070
-instead, in Swift, we use the keyword let
+在 Swift 中
+我们使用关键字 let 替换 var
 
 1574
 01:11:17,070 --> 01:11:19,850
-and we could just type
-it here, let to fix it
+我们可以在这里输入 let 来消除警告
 
 1575
 01:11:19,850 --> 01:11:22,930
-or we could also use
-this warning right here,
+也可以使用这个警告的提示
 
 1576
 01:11:22,930 --> 01:11:25,320
-click on it and do the fix.
+选中警告并点击 Fix 按钮
 
 1577
 01:11:25,320 --> 01:11:29,310
-So the fix is gonna replace
-var with let right here, watch.
+即可用 let 替换 var
 
 1578
 01:11:29,310 --> 01:11:30,330
-Fix.
+点击 Fix 按钮
 
 1579
 01:11:30,330 --> 01:11:31,210
-Okay, so it makes a let.
+替换成功
 
 1580
 01:11:31,210 --> 01:11:33,440
-And let is a really nice word here
+let 用在这里特别合适
 
 1581
 01:11:33,440 --> 01:11:36,100
-because this reads very much like English.
+因为代码读起来非常像英语
 
 1582
 01:11:36,100 --> 01:11:38,100
-That content equal the results
+让 content 等于
 
 1583
 01:11:38,100 --> 01:11:42,420
-of calling the cardContentFactory
-for this pairIndex, okay?
+以 pairIndex 为参数
+调用 cardContentFactory 的返回值
 
 1584
 01:11:42,420 --> 01:11:45,360
-Every time you have any kind of variable
+每当你需要一个
 
 1585
 01:11:45,360 --> 01:11:48,400
-that doesn't actually vary, in
-other words, it's a constant,
+不会变的变量
+也就是常量
 
 1586
 01:11:48,400 --> 01:11:50,863
-you always wanna use let here.
+你都应该使用 let 进行声明
 
 1587
 01:11:51,780 --> 01:11:53,740
-Now, another thing to note
-here is kind of interesting
+另一个需要留意的地方很有意思
 
 1588
 01:11:53,740 --> 01:11:57,060
-is we didn't put a type on this thing.
+我们并没有指出 content 的类型
 
 1589
 01:11:57,060 --> 01:12:00,580
-We didn't say type CardContent even though
+即使它的类型是 CardContent
 
 1590
 01:12:00,580 --> 01:12:01,980
-that is what type this is.
+我们也没有明确地写出来
 
 1591
 01:12:01,980 --> 01:12:03,740
-This is of type CardContent
+它的类型是 CardContent
 
 1592
 01:12:03,740 --> 01:12:07,050
-because that's what
-contentCardFactory returns
+因为这是 contentCardFactory
+返回值的类型
 
 1593
 01:12:07,050 --> 01:12:08,457
-but we didn't have to do this.
+但我们无需指出
 
 1594
 01:12:08,457 --> 01:12:11,730
-And this is part of Swift just
-figuring things out for you,
+Swift 会尽力帮你
 
 1595
 01:12:11,730 --> 01:12:13,700
-inferring the types whenever it can
+推断其类型
 
 1596
 01:12:13,700 --> 01:12:16,250
-and we're really gonna
-see that on the other side
+我们稍后会在调用构造器的地方
 
 1597
 01:12:16,250 --> 01:12:19,923
-of calling this init in just
-a moment right here, okay?
+看到 Swift 帮你推断类型
 
 1598
 01:12:21,100 --> 01:12:23,660
-All right, so let's go back to that side
+现在我们回到
 
 1599
 01:12:23,660 --> 01:12:25,530
-and see where we create our MemoryGame.
+创建 MemoryGame 的地方
 
 1600
 01:12:25,530 --> 01:12:27,430
-And put this on a separate line
+回车换到下一行
 
 1601
 01:12:27,430 --> 01:12:28,580
-so we get a little more room.
+可以腾出一些空间
 
 1602
 01:12:28,580 --> 01:12:31,140
-So now, we've added a second argument here
+我们在 numberOfPairsOfCards 之后
 
 1603
 01:12:31,140 --> 01:12:33,990
-to number of pairs of cards
-it's this cardContentFactory,
+添加第二个参数 cardContentFactory
 
 1604
 01:12:35,630 --> 01:12:40,340
-and this value that goes
-here has to be a function
+这个参数值是一个函数
 
 1605
 01:12:40,340 --> 01:12:42,980
-that takes an Int, which is the pairIndex,
+函数的参数是 Int 类型的 pairIndex
 
 1606
 01:12:42,980 --> 01:12:47,520
-and returns a CardContent which
-we know to be String here.
+返回值是 String 类型的 CardContent
 
 1607
 01:12:47,520 --> 01:12:48,728
-So it has to return a String.
+所以它要返回一个 String 类型的值
 
 1608
 01:12:48,728 --> 01:12:50,280
-So let's create such a function.
+让我们创建这样一个函数
 
 1609
 01:12:50,280 --> 01:12:54,604
-Watch this, func, I'm gonna
-call it createCardContent.
+输入 func 创建一个名为
+createCardContent 的函数
 
 1610
 01:12:54,604 --> 01:12:58,600
-We know that it has to take an
-Int which is that pairIndex,
+我们知道函数的参数
+是 Int 类型的 pairIndex
 
 1611
 01:12:58,600 --> 01:13:02,060
-going Int, and we know it
-has to return CardContent,
+输入参数的类型 Int
+我们也知道其返回值
 
 1612
 01:13:02,060 --> 01:13:04,840
-which would want to be a String.
+是 String 类型的 CardContent
 
 1613
 01:13:04,840 --> 01:13:07,860
-Okay, because this is a
-MemoryGame of String, all right?
+因为这里是 MemoryGame<String>
 
 1614
 01:13:07,860 --> 01:13:11,525
-Now, I'm gonna return,
-let's just return for now
+现在我输入 return
 
 1615
 01:13:11,525 --> 01:13:14,780
-some emoji, how about that?
+让我们返回某个表情如何？
 
 1616
 01:13:14,780 --> 01:13:16,980
-Put the same emoji on every single Card,
+在每张卡片上放置相同的表情
 
 1617
 01:13:16,980 --> 01:13:19,200
-maybe a smiley face right there.
+或许是一个笑脸
 
 1618
 01:13:19,200 --> 01:13:23,090
-So here we are returning
-a string right there.
+这里我们返回了一个字符串
 
 1619
 01:13:23,090 --> 01:13:28,090
-And we can now use this
-and say createCardContent.
+现在我们输入 createCardContent
+来使用这个函数
 
 1620
 01:13:28,970 --> 01:13:32,330
-So this is an argument
-that takes a function
+给这个参数传入一个函数
 
 1621
 01:13:32,330 --> 01:13:35,350
-that takes an Int and returns a String.
+函数的参数是 Int 类型
+返回值是 String 类型
 
 1622
 01:13:35,350 --> 01:13:38,110
-This certainly qualifies
-and so this is legal.
+这当然是合规的
 
 1623
 01:13:38,110 --> 01:13:39,859
-Look, no errors, no warnings.
+你看，没有报错，没有警告
 
 1624
 01:13:39,859 --> 01:13:43,068
-This is all perfectly
-legal way to do this.
+完全是合法的方式
 
 1625
 01:13:43,068 --> 01:13:45,950
-However, we would never do it this way
+然而我们从不用这种方式
 
 1626
 01:13:45,950 --> 01:13:48,450
-because we don't want to
-have to go be creating
+因为我不想用额外的几行代码
 
 1627
 01:13:48,450 --> 01:13:51,050
-these extra little functions to do that.
+创建一个函数来实现
 
 1628
 01:13:51,050 --> 01:13:54,160
-Instead, we would inline this right here
+取而代之的是
 
 1629
 01:13:54,160 --> 01:13:56,360
-inline with this code.
+我们把代码直接插入到这里
 
 1630
 01:13:56,360 --> 01:13:59,450
-So watch carefully now I'm
-gonna go through the process
+仔细看哦
+现在我要逐步地
 
 1631
 01:13:59,450 --> 01:14:02,100
-of how we take this function right here
+把这个函数
 
 1632
 01:14:02,100 --> 01:14:04,640
-and inline it right here, okay?
+直接插入到这里
 
 1633
 01:14:04,640 --> 01:14:08,460
-This inlining of functions
-in Swift is called a closure
+这种直接插入的函数
+在 Swift 中叫做闭包
 
 1634
 01:14:08,460 --> 01:14:11,120
-and it's called a closure
-because it actually captures
+被称作闭包是因为
 
 1635
 01:14:11,120 --> 01:14:14,340
-the information from the
-surroundings that it needs to work.
+它实际上会从上下文中
+捕获其运行所需的信息
 
 1636
 01:14:14,340 --> 01:14:16,300
-We'll talk about that later but basically,
+这个我们稍后会讲
 
 1637
 01:14:16,300 --> 01:14:19,640
-you can think of it for
-now as an inline function.
+但你现在基本可以
+把它当做一个内联的函数
 
 1638
 01:14:19,640 --> 01:14:23,140
