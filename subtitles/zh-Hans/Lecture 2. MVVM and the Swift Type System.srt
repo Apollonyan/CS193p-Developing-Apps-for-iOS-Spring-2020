@@ -7113,226 +7113,279 @@ like index in over here
 01:16:51,340 --> 01:16:53,543
 'cause this, it turns out
 is a function as well,
+因为这也是一个函数
 
 1690
 01:16:53,543 --> 01:16:54,450
 kind of a special function
+有点特殊的函数
 
 1691
 01:16:54,450 --> 01:16:56,720
 because you can list the Views there
+因为你可以在函数内部罗列视图
 
 1692
 01:16:56,720 --> 01:17:00,760
 but it's the same syntax
 that's going on here.
+但是它们拥有相同的语法
 
 1693
 01:17:00,760 --> 01:17:02,490
 But we're not done yet because, of course,
+但我们还没有完成
 
 1694
 01:17:02,490 --> 01:17:04,920
 we know this is now a one line function
+因为我们知道这是一个单行的函数
 
 1695
 01:17:04,920 --> 01:17:07,760
 that returns this string.
+返回值是这个字符串
 
 1696
 01:17:07,760 --> 01:17:10,617
 So we don't need return right there.
+所以不需要 return 关键字
 
 1697
 01:17:10,617 --> 01:17:14,720
 And we could even clean up
 some of this space here,
+我们还可以腾出一些空间
 
 1698
 01:17:14,720 --> 01:17:17,860
 remove some of the space like that
+像这样移到同一行
 
 1699
 01:17:17,860 --> 01:17:22,050
 and even more, we know that if
 you have a curly brace thing,
+我们知道如果大括号囊括的内容
 
 1700
 01:17:22,050 --> 01:17:24,720
 that is the last argument, right?
+是最后一个参数
 
 1701
 01:17:24,720 --> 01:17:27,526
 The last argument that
 this init has two arguments
+就像这里的构造器有两个参数
 
 1702
 01:17:27,526 --> 01:17:30,180
 and this is the last one.
+这是最后一个参数
 
 1703
 01:17:30,180 --> 01:17:33,360
 We can do the same thing we
 did with the last argument
+我们可以像 ForEach 里最后一个参数
 
 1704
 01:17:33,360 --> 01:17:35,810
 for ForEach, the last argument to HStack,
+HStack 的最后一个参数
 
 1705
 01:17:35,810 --> 01:17:39,460
 the last argument to ZStack,
 do the exact same thing here
+ZStack 最后的参数那样
 
 1706
 01:17:39,460 --> 01:17:42,183
 which is to get rid of the keyword, okay?
+移除参数名
 
 1707
 01:17:43,390 --> 01:17:48,390
 And put the curly brace thing
 outside, floating outside
+将大括号囊括的内容单独拿出来
 
 1708
 01:17:48,600 --> 01:17:53,117
 so we end up with this very
 streamlined function here
+最终我们获得这样一个高效的函数
 
 1709
 01:17:54,530 --> 01:17:55,580
 and even more than that,
+不仅如此
 
 1710
 01:17:55,580 --> 01:17:58,888
 notice that since we're just
 always returning a smiley face,
+因为我们总是只返回一个笑脸
 
 1711
 01:17:58,888 --> 01:18:00,970
 you don't really even
 need this pairIndex here
+你甚至都不需要这个 pairIndex
 
 1712
 01:18:00,970 --> 01:18:02,290
 but you can't delete it,
+但你不能删除它
 
 1713
 01:18:02,290 --> 01:18:05,000
 you have to mark it with an underbar
+而是需要使用下划线进行标记
 
 1714
 01:18:05,000 --> 01:18:06,780
 just to say yeah, I know this is supposed
+就是说我知道这里应该有一个参数
 
 1715
 01:18:06,780 --> 01:18:08,610
 to take an argument but I don't need it
+但我用不上它
 
 1716
 01:18:08,610 --> 01:18:10,850
 so I'm just gonna use under
 var and then in Swift,
+所以我只需使用下划线
 
 1717
 01:18:10,850 --> 01:18:14,790
 you're gonna see we use
 underbar anytime we mean,
+你会看到在 Swift 中
+当我们不关心一个值是什么的时候
 
 1718
 01:18:14,790 --> 01:18:15,900
 it doesn't matter what this is,
+就会使用下划线
 
 1719
 01:18:15,900 --> 01:18:19,200
 I'm not gonna use this
 things, kind of unused things
+我用不上 pairIndex 这个值
 
 1720
 01:18:19,200 --> 01:18:22,480
 so we're not using that
 pairIndex and so it does this.
+所以我们用下划线将其替换
 
 1721
 01:18:22,480 --> 01:18:27,480
 So, it's really nice simple syntax here.
+这真是简洁的语法
 
 1722
 01:18:27,600 --> 01:18:28,840
 And you're gonna wanna get used to this
+你一定想要习惯这种语法
 
 1723
 01:18:28,840 --> 01:18:31,280
 because we're gonna be doing
 this calling functions.
+因为我们在调用函数的时候会用到
 
 1724
 01:18:31,280 --> 01:18:32,890
 You've already seen in the View,
+你在 ContentView 中就见过
 
 1725
 01:18:32,890 --> 01:18:35,940
 we do these things all over
 the rest, these curly braces,
+我们在其余的地方都是这样做的
 
 1726
 01:18:35,940 --> 01:18:38,429
 they're everywhere and this
 is functional programming
+这些大括号随处可见
+这就是函数式编程
 
 1727
 01:18:38,429 --> 01:18:41,580
 so we're gonna be passing a
 lot of functions as arguments
+所以我们会将很多函数作为参数
 
 1728
 01:18:41,580 --> 01:18:43,360
 to other functions.
+传递给其他函数
 
 1729
 01:18:43,360 --> 01:18:46,020
 What if we wanna do something
+如果我们实际上
 
 1730
 01:18:46,020 --> 01:18:48,300
 where we're actually
 returning a different emoji
+想要为每一对卡片
 
 1731
 01:18:48,300 --> 01:18:49,650
 for each pair of cards, okay?
+返回一个不同的表情呢？
 
 1732
 01:18:49,650 --> 01:18:51,450
 We don't wanna have every pair of Cards
+我们不想让每一对卡片
 
 1733
 01:18:51,450 --> 01:18:52,283
 have the smiley face,
+都使用笑脸
 
 1734
 01:18:52,283 --> 01:18:53,567
 that would make the game very easy
+那会让游戏变得太容易
 
 1735
 01:18:53,567 --> 01:18:55,010
 but we don't wanna do that.
+但是我们不想那么做
 
 1736
 01:18:55,010 --> 01:18:57,500
 So how would we do a more
 complicated thing there?
+那我们该如何实现一个复杂点的游戏呢？
 
 1737
 01:18:57,500 --> 01:18:59,350
 Well, to do that, first of all,
+要做到这一点
 
 1738
 01:18:59,350 --> 01:19:01,330
 I'm gonna, instead of doing this,
+首先我准备
 
 1739
 01:19:01,330 --> 01:19:03,330
 setting this right in line here,
+替换掉这里这个内联的函数
 
 1740
 01:19:03,330 --> 01:19:05,637
