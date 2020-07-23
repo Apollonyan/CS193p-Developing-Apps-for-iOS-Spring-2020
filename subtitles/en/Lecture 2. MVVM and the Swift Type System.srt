@@ -7606,7 +7606,7 @@ to take an argument but I don't need it
 1716
 01:18:08,610 --> 01:18:10,850
 so I'm just gonna use under
-var and then in Swift,
+bar and then in Swift,
 
 1717
 01:18:10,850 --> 01:18:14,790
