@@ -6819,233 +6819,295 @@ createCardContent 的函数
 1638
 01:14:19,640 --> 01:14:23,140
 So we're going to select this function,
+我们选中这个函数体
 
 1639
 01:14:23,140 --> 01:14:25,270
 everything about it except for its name.
+除了它的函数名
 
 1640
 01:14:25,270 --> 01:14:27,930
 When we inline, it
 doesn't need a name, okay?
+内联的函数不需要函数名
 
 1641
 01:14:27,930 --> 01:14:31,720
 No need for a name because just
 sitting right there inline.
+不需要函数名是因为
+只需将函数体内联地插入到这里即可
 
 1642
 01:14:31,720 --> 01:14:34,240
 So I'm gonna select
 everything except the name
+所以除了函数名以外
+全选函数体
 
 1643
 01:14:34,240 --> 01:14:37,360
 and I'm going to cut
 then I'm gonna go here
+剪切
+然后来到这里
 
 1644
 01:14:37,360 --> 01:14:39,930
 and paste it here
 instead of the name here.
+粘贴到这里并替换掉函数名
 
 1645
 01:14:39,930 --> 01:14:41,170
 So, paste.
+粘贴
 
 1646
 01:14:41,170 --> 01:14:43,690
 Now, this almost works as is
+现在基本算是完成了
 
 1647
 01:14:43,690 --> 01:14:47,100
 but there's one thing I always
 have to do when I do this
+但仍有一件事需要做
 
 1648
 01:14:47,100 --> 01:14:50,610
 is to take this curly brace right here,
+就是选中这个大括号
 
 1649
 01:14:50,610 --> 01:14:54,130
 cut it, replace it with the word in
+剪切，使用单词 in 将其替换
 
 1650
 01:14:54,130 --> 01:14:59,040
 and then paste the curly
 brace over here at the start.
+并将这个大括号粘贴到内联开始的位置
 
 1651
 01:14:59,040 --> 01:15:02,020
 And essentially, the curly
 braces have to surround
+本质上讲，大括号需要囊括
 
 1652
 01:15:02,020 --> 01:15:04,420
 the entire inline function.
+整个内联的函数
 
 1653
 01:15:04,420 --> 01:15:07,620
 So, that's why we move the
 curly brace out in front
+这就是我们为什么要把它移动到
 
 1654
 01:15:07,620 --> 01:15:10,620
 of its arguments and return type there
+参数和返回类型的前面
 
 1655
 01:15:10,620 --> 01:15:14,350
 and use this in to separate it.
+并使用 in 将参数和返回类型
+与函数内容分离开
 
 1656
 01:15:14,350 --> 01:15:16,270
 Okay, now, we don't need this func up here
+现在我们不需要这个函数了
 
 1657
 01:15:16,270 --> 01:15:18,060
 and you can see again, no errors,
+像之前一样，没有报错
 
 1658
 01:15:18,060 --> 01:15:21,860
 this was perfectly legal
 way to inline this function.
+这样内联地插入函数是完全合法的
 
 1659
 01:15:21,860 --> 01:15:24,950
 By the way, you probably
 recognize this in,
+对了，你可能已经意识到了
 
 1660
 01:15:24,950 --> 01:15:28,650
 we used to somewhere else
 over here in our View
+我们之前在 ContentView 中
+也用到了 in 这个关键字
 
 1661
 01:15:28,650 --> 01:15:32,410
 with for each, it used in and
 had a little argument here.
+在 ForEach 中用到了 in
+而且还有参数
 
 1662
 01:15:32,410 --> 01:15:35,070
 So, this is gonna start
 making a lot more sense to you
+这可以让你更容易理解
 
 1663
 01:15:35,070 --> 01:15:37,880
 once we finish up with this.
+要完成这里的内联函数需要做些什么
 
 1664
 01:15:37,880 --> 01:15:39,700
 And what do I mean by
 finish off with this?
+我这里说的“要完成”是什么意思呢？
 
 1665
 01:15:39,700 --> 01:15:40,759
 Isn't this just finished?
+这不是刚完成吗？
 
 1666
 01:15:40,759 --> 01:15:45,100
 Well, not quite because just
 like when we were over here,
+不完全哦
+就像这里一样
 
 1667
 01:15:45,100 --> 01:15:49,420
 Swift was able to infer that
 this was type CardContent
+Swift 可以推断出这个类型是
+CardContent
 
 1668
 01:15:49,420 --> 01:15:54,170
 so we didn't have to say
 colon CardContent here, right?
+所以我们无需在这里写出
+: CardContent
 
 1669
 01:15:54,170 --> 01:15:59,080
 So that kind of inferring that
 we call that type inference
+所以语言中的类型推断
 
 1670
 01:15:59,080 --> 01:16:00,960
 is really nice in a language
+是非常棒的特性
 
 1671
 01:16:00,960 --> 01:16:03,710
 where everything has to be strongly typed,
+强类型语言中的任何内容都需要类型
 
 1672
 01:16:03,710 --> 01:16:06,000
 every single var has to have a type, okay?
+每个变量都要有类型
 
 1673
 01:16:06,000 --> 01:16:10,960
 That's somewhat of a
 burden but type inference
+这多少是个负担
 
 1674
 01:16:10,960 --> 01:16:13,770
 helps make it so that
 it's not such a burden.
+但是类型推断让负担不复存在
 
 1675
 01:16:13,770 --> 01:16:17,910
 And what kind of types
 can Swift infer in here?
+Swift 可以推断哪些类型呢？
 
 1676
 01:16:17,910 --> 01:16:19,530
 Well, a whole lot of them.
+非常多
 
 1677
 01:16:19,530 --> 01:16:22,370
 It knows the type of this var,
+它知道这个变量的类型
 
 1678
 01:16:22,370 --> 01:16:25,000
 which is a function that takes an Int
+是一个参数为 Int 类型
 
 1679
 01:16:25,000 --> 01:16:27,740
 and returns a CardContent.
+返回值为 CardContent 类型的函数
 
 1680
 01:16:27,740 --> 01:16:30,670
 So that means that we don't
 need to say this is an Int
+这意味着我们不需要明确写出
+这是 Int 类型
 
 1681
 01:16:30,670 --> 01:16:34,350
 and we don't need to say
 this returns to String, okay?
+这个返回的是 String 类型
 
 1682
 01:16:34,350 --> 01:16:35,600
 Swift can infer that.
+Swift 都能推断出来
 
 1683
 01:16:35,600 --> 01:16:39,010
 Again, look, no errors, no
 warnings, it's perfectly legal.
+仍然是没有报错，没有警告
+完全合法
 
 1684
 01:16:39,010 --> 01:16:40,320
 You don't even really need
+你甚至都不需要
 
 1685
 01:16:40,320 --> 01:16:43,182
 these parentheses right here, okay?
+这里的这对小括号
 
 1686
 01:16:43,182 --> 01:16:45,760
 'Cause they're not really
 doing anything at that point
+因为它们没有任何用处
 
 1687
 01:16:45,760 --> 01:16:47,657
 and here, this pairIndex in,
+这里的 pairIndex in
 
 1688
 01:16:47,657 --> 01:16:51,340
 again, like an awful lot
 like index in over here
+非常像这里的 index in
 
 1689
 01:16:51,340 --> 01:16:53,543
