@@ -7390,219 +7390,273 @@ setting this right in line here,
 1740
 01:19:03,330 --> 01:19:05,637
 I'm gonna try and create a function here,
+我打算在这儿创建一个函数
 
 1741
 01:19:05,637 --> 01:19:09,370
 I'm gonna call this createMemoryGame
+名为 createMemoryGame
 
 1742
 01:19:11,140 --> 01:19:14,640
 and then I'm gonna put this into a func
+然后我把它写在 func 后面
 
 1743
 01:19:14,640 --> 01:19:17,310
 called createMemoryGame.
+叫 createMemoryGame
 
 1744
 01:19:17,310 --> 01:19:21,783
 It's gonna return in
 MemoryGame of string, okay?
+返回值类型为 MemoryGame<String>
 
 1745
 01:19:23,210 --> 01:19:28,210
 And this and it's going to
 essentially return this.
+重要的是将这行代码作为返回值
 
 1746
 01:19:28,990 --> 01:19:31,800
 And here, we're gonna do
 something more complicated
+我们要在这里实现更复杂的逻辑
 
 1747
 01:19:31,800 --> 01:19:33,690
 than just that.
+而不是只用笑脸
 
 1748
 01:19:33,690 --> 01:19:37,640
 Remember, this is the pairIndex in.
+要记得这里是 pairIndex in
 
 1749
 01:19:37,640 --> 01:19:40,570
 And so, how am I gonna implement this?
+接下来该如何实现呢？
 
 1750
 01:19:40,570 --> 01:19:44,263
 I'm going to create a little emojis Array.
+我要创建一个表情数组
 
 1751
 01:19:45,290 --> 01:19:47,580
 This is gonna be an Array of String,
+元素类型为 String 的数组
 
 1752
 01:19:47,580 --> 01:19:49,380
 an Array of emojis, actually.
+实际上就是表情数组
 
 1753
 01:19:49,380 --> 01:19:52,320
 I'm gonna set it equal
 to a constant Array.
+将其定义为常量数组
 
 1754
 01:19:52,320 --> 01:19:55,360
 So this is what this the
 syntax is for a constant Array.
+常量数组的语法如下
 
 1755
 01:19:55,360 --> 01:19:57,380
 So you just do open square bracket
+先输入一个左中括号
 
 1756
 01:19:57,380 --> 01:19:59,617
 and then the things you want in the Array
+然后输入你想要添加的元素
 
 1757
 01:19:59,617 --> 01:20:01,560
 and then close square bracket.
+之后输入一个右中括号
 
 1758
 01:20:01,560 --> 01:20:03,750
 So these things for me are gonna be emoji
+我要添加的元素是表情
 
 1759
 01:20:03,750 --> 01:20:04,583
 so I'm gonna go over here,
+所以我到菜单栏这里选择表情
 
 1760
 01:20:04,583 --> 01:20:08,117
 let's go back to our Halloween theme here
+让我们回到万圣节主题
 
 1761
 01:20:08,117 --> 01:20:11,850
 and get Mr. Ghost, there's a ghost
+搜索框输入 ghost，选择幽灵
 
 1762
 01:20:11,850 --> 01:20:14,800
 and then in this one, we'll
 put some other Halloween thing.
+这个也选择其他万圣节相关的表情
 
 1763
 01:20:14,800 --> 01:20:17,070
 How about pumpkin?
+南瓜怎么样？
 
 1764
 01:20:17,070 --> 01:20:19,690
 Maybe a pump, no, I'll go pumpkin.
+也许女鞋也可以？不，我选择南瓜
 
 1765
 01:20:19,690 --> 01:20:20,748
 Okay, there's a pumpkin.
+好了，这是一个南瓜
 
 1766
 01:20:20,748 --> 01:20:22,023
 And we have this.
+我们选好表情了
 
 1767
 01:20:22,023 --> 01:20:25,153
 So this creates an Array of
 String because these are Strings
+这里创建了元素类型为 String 的数组
+因为这些表情就是 String 类型
 
 1768
 01:20:25,153 --> 01:20:27,830
 and in here, return this MemoryGame,
+而这里返回的这个 MemoryGame
 
 1769
 01:20:27,830 --> 01:20:32,613
 so my little Card factory is
 just going to return emojis
+它的 cardContentFactory 参数
 
 1770
 01:20:34,000 --> 01:20:36,440
 sub pairIndex.
+返回 emojis[pairIndex]
 
 1771
 01:20:36,440 --> 01:20:38,930
 So this is how you access an Array.
+这是访问数组的方式
 
 1772
 01:20:38,930 --> 01:20:41,860
 You just put square brackets
 around whatever the index is
+你只需在 index 两边输入中括号
 
 1773
 01:20:41,860 --> 01:20:44,130
 and so this pairIndex, it's gonna be zero
+pairIndex 从 0 开始
 
 1774
 01:20:44,130 --> 01:20:47,040
 then it's gonna be one and
 so we're gonna get index zero
+然后到 1
+下标 0 可以访问到幽灵
 
 1775
 01:20:47,040 --> 01:20:48,710
 then we're gonna get index one.
+下标 1 可以访问到南瓜
 
 1776
 01:20:48,710 --> 01:20:51,291
 So the first pair of cards
 will be a pair of ghosts,
+所以第一对卡片是一对幽灵
 
 1777
 01:20:51,291 --> 01:20:54,413
 second pair of cards are
 gonna be a pair of pumpkins.
+第二对卡片是一对南瓜
 
 1778
 01:20:55,380 --> 01:20:57,240
 So, this code, no errors
+好了，代码没有报错
 
 1779
 01:20:57,240 --> 01:20:59,042
 but oh, we have an error up here.
+不对，这里有一个报错
 
 1780
 01:20:59,042 --> 01:21:00,030
 What does this say?
+错误是什么呢？
 
 1781
 01:21:00,030 --> 01:21:03,770
 Cannot use instance
 member createMemoryGame
+不能在属性构造器内
 
 1782
 01:21:03,770 --> 01:21:05,920
 within a property initializer.
+使用实例成员 createMemoryGame
 
 1783
 01:21:05,920 --> 01:21:10,920
 Property initializers run
 before self is available.
+属性构造器是在
+自身类型实例可用之前运行的
 
 1784
 01:21:11,561 --> 01:21:13,790
 Okay, so what does that mean?
+那这意味着什么呢？
 
 1785
 01:21:13,790 --> 01:21:18,790
 Well, here, I've told you
 that we cannot, in Swift have,
+这个我之前讲过，在 Swift 中
 
 1786
 01:21:19,395 --> 01:21:22,587
 any variable that's not
 initialize to something,
+变量在初始化之前不能使用
 
 1787
 01:21:22,587 --> 01:21:25,616
 what's even more restrictive than that,
+更严格的是
 
 1788
 01:21:25,616 --> 01:21:30,616
 we cannot use any functions
 on our class or struct
+在类或结构体中
+任何未初始化的函数
 
 1789
 01:21:30,820 --> 01:21:33,804
 until all of these are initialized.
+都不能使用
 
 1790
 01:21:33,804 --> 01:21:35,940
