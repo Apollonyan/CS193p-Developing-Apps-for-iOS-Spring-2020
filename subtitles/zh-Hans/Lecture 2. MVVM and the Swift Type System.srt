@@ -7932,222 +7932,278 @@ and find things, okay?
 1900
 01:26:17,710 --> 01:26:19,740
 All right, so back to here.
+好了，让我们回到这里
 
 1901
 01:26:19,740 --> 01:26:21,270
 So we did this a nice static function.
+我们实现了这个静态函数
 
 1902
 01:26:21,270 --> 01:26:23,420
 Again, no errors, no warnings.
+再一次的，没有报错，没有警告
 
 1903
 01:26:23,420 --> 01:26:25,530
 We're using this as kind
 of a utility function
+我们将它作为创建 MemoryGame 的
 
 1904
 01:26:25,530 --> 01:26:28,150
 to create our MemoryGame.
+工具函数
 
 1905
 01:26:28,150 --> 01:26:30,830
 Now, that we have a ViewModel, okay?
+现在，我们有一个视图模型
 
 1906
 01:26:30,830 --> 01:26:33,310
 That's looking at our Model, all right?
+它关注着模型
 
 1907
 01:26:33,310 --> 01:26:36,180
 Our Model, we don't
 actually have our Model
+而我们的模型
+当你点击卡片时
 
 1908
 01:26:36,180 --> 01:26:37,610
 play the game when you choose
+它其实还不能选中卡片
 
 1909
 01:26:37,610 --> 01:26:40,410
 but hopefully, at least, say card chosen.
+但乐观的是
+它至少可以输出 card chosen
 
 1910
 01:26:40,410 --> 01:26:44,700
 Let's go back to our View and
 use our ViewModel, all right?
+让我们回到视图，来使用视图模型
 
 1911
 01:26:44,700 --> 01:26:49,700
 Remember that our View always
 wants to use the ViewModel
+记住，视图总是通过使用视图模型
 
 1912
 01:26:50,190 --> 01:26:51,800
 to access what's in the Model.
+来访问模型中的数据
 
 1913
 01:26:51,800 --> 01:26:53,610
 Also don't forget that the View
+也不要忘记
 
 1914
 01:26:53,610 --> 01:26:56,400
 is its primary thing in the world
+视图最重要的工作
 
 1915
 01:26:56,400 --> 01:26:58,890
 is to reflect the current
 state of the Model, okay?
+就是反映模型当前的状态
 
 1916
 01:26:58,890 --> 01:27:02,890
 So, whatever's in the Model,
 it wants to always show.
+所以无论模型中有什么
+总是要展示出来
 
 1917
 01:27:02,890 --> 01:27:06,120
 So let's start down
 here with our CardView.
+让我们从下方的 CardView 开始
 
 1918
 01:27:06,120 --> 01:27:09,240
 Currently, our CardView
 has this one var isFaceUp
+CardView 目前有一个变量 isFaceUp
 
 1919
 01:27:09,240 --> 01:27:11,930
 but really, it should
 be getting that isFaceUp
+但事实上，它应该从 Card 中
 
 1920
 01:27:11,930 --> 01:27:14,600
 from the Card that it's viewing.
+获取 isFaceUp 的值
 
 1921
 01:27:14,600 --> 01:27:18,900
 So I'm gonna change this var
 from isFaceUp to be a Card,
+所以我把这里的 isFaceUp 改为
 
 1922
 01:27:18,900 --> 01:27:23,900
 which is a MemoryGame&lt;String&gt;.Card.
+card: MemoryGame<String>.Card
 
 1923
 01:27:24,170 --> 01:27:27,070
 By the way, you notice we've
 been typing this out a lot.
+顺便提一下
+这个内容我们输入过很多遍了
 
 1924
 01:27:27,070 --> 01:27:28,290
 This is a lot to type.
+这过于冗长
 
 1925
 01:27:28,290 --> 01:27:30,620
 Of course, Swift has a way to make it so
+当然了，在 Swift 中有办法可以
 
 1926
 01:27:30,620 --> 01:27:31,800
 we don't have to take that so much
+化繁为简
 
 1927
 01:27:31,800 --> 01:27:34,250
 and we'll talk about that next week.
+下周我们会涉及到
 
 1928
 01:27:34,250 --> 01:27:36,470
 And then here, instead of saying isFaceUp,
+这里用 card.isFaceUp 替换掉
 
 1929
 01:27:36,470 --> 01:27:39,130
 I'm gonna say card.isFaceUp.
+isFaceUp
 
 1930
 01:27:39,130 --> 01:27:41,560
 And instead of always showing a ghost,
+也不再总是展示一个幽灵
 
 1931
 01:27:41,560 --> 01:27:44,490
 I'm gonna get the Card's content.
+用 card.content 替换
 
 1932
 01:27:44,490 --> 01:27:46,560
 Now, this is pretty cool right here.
+这里非常酷
 
 1933
 01:27:46,560 --> 01:27:51,560
 Content in our MemoryGame,
 this is a type CardContent,
+在 MemoryGame 中
+内容是 CardContent 类型
 
 1934
 01:27:52,110 --> 01:27:54,260
 don't care, don't even know what it is
+我们不关心，也不知道它是什么
 
 1935
 01:27:54,260 --> 01:27:56,473
 but of course, in a EmojiMemoryGame,
+但是在 EmojiMemoryGame 中
 
 1936
 01:27:57,330 --> 01:27:59,340
 we make it be a String.
+它是一个字符串
 
 1937
 01:27:59,340 --> 01:28:02,860
 And so, that's why over
 here in our content View,
+这也就是为什么在 ContentView 中
 
 1938
 01:28:02,860 --> 01:28:04,830
 this is a MemoryGame of Strings card
+卡片的类型是 MemoryGame<String>.card
 
 1939
 01:28:04,830 --> 01:28:07,310
 so the card's content is a type String
+所以卡片的 content 类型为 String
 
 1940
 01:28:07,310 --> 01:28:08,423
 and that's what a Text wanted,
+这恰好是 Text 需要的
 
 1941
 01:28:08,423 --> 01:28:11,550
 it wants a text String all right?
+它需要一个文本字符串不是吗？
 
 1942
 01:28:11,550 --> 01:28:13,700
 So up here, our CardView,
+我们来到上方的 CardView
 
 1943
 01:28:13,700 --> 01:28:15,860
 it's not going to take
 in isFaceUp anymore,
+它不再需要传入一个 isFaceUp 参数
 
 1944
 01:28:15,860 --> 01:28:18,220
 it wants to take some sort of Card.
+它需要一个 card
 
 1945
 01:28:18,220 --> 01:28:19,950
 So we're gonna have to find some way
+我们得想办法给它提供
 
 1946
 01:28:19,950 --> 01:28:22,130
 to provide it with a Card.
+一个 card
 
 1947
 01:28:22,130 --> 01:28:24,840
 Now, how are we going to
 provide that thing with a Card?
+我们该如何提供呢？
 
 1948
 01:28:24,840 --> 01:28:28,440
 Well, we're gonna get those
 Cards through our ViewModel.
+我们可以通过视图模型获取 card
 
 1949
 01:28:28,440 --> 01:28:31,340
 So, we need some sort of var here,
+在这里创建一个变量
 
 1950
 01:28:31,340 --> 01:28:33,110
 which I'm gonna call viewModel
+起名为 viewModel
 
 1951
 01:28:33,110 --> 01:28:36,770
