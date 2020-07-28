@@ -8208,83 +8208,106 @@ which I'm gonna call viewModel
 1951
 01:28:33,110 --> 01:28:36,770
 Again, you would not call a var viewModel
+你不会给变量起名为 viewModel
 
 1952
 01:28:36,770 --> 01:28:41,120
 just like you wouldn't call a var model
+就像不会给变量起名为 model 一样
 
 1953
 01:28:41,120 --> 01:28:43,440
 but I just wanted, in
 this code, for you to see
+这么做只是为了让你知道
 
 1954
 01:28:43,440 --> 01:28:45,510
 when I'm accessing the
 Model, same thing here,
+我什么时候访问这个 model
 
 1955
 01:28:45,510 --> 01:28:48,710
 I want you to see when I'm
 accessing the ViewModel.
+同样的，这里也是想让你知道
+我什么时候访问这个 viewModel
 
 1956
 01:28:48,710 --> 01:28:50,590
 So what type is the viewModel?
+那 viewModel 的类型是什么呢？
 
 1957
 01:28:50,590 --> 01:28:53,940
 It's an EmojiMemoryGame, okay?
+是 EmojiMemoryGame
 
 1958
 01:28:53,940 --> 01:28:57,620
 This is our ViewModel type, right?
+这是我们视图模型的类型
 
 1959
 01:28:57,620 --> 01:29:00,470
 Class EmojiMemoryGame right there.
+视图模型的声明为
+class EmojiMemoryGame
 
 1960
 01:29:00,470 --> 01:29:03,090
 So, since this is a class,
 this is a pointer to it.
+因为这个 viewModel 是一个类
+所以这里是对其实例的引用
 
 1961
 01:29:03,090 --> 01:29:05,497
 if I had other Views that were
 accessed in the ViewModel,
+如果还有其他视图要访问视图模型
 
 1962
 01:29:05,497 --> 01:29:07,010
 they'd have pointers to it
+也需要引用这个实例
 
 1963
 01:29:07,010 --> 01:29:11,700
 so there would only be one
 EmojiMemoryGame somewhere.
+所以在内存中只有一个
+EmojiMemoryGame 类型的实例
 
 1964
 01:29:11,700 --> 01:29:15,208
 So where are we going to
 create this EmojiMemoryGame?
+那么在哪里创建这个
+EmojiMemoryGame 呢
 
 1965
 01:29:15,208 --> 01:29:17,038
 Well we're gonna create it
+我们要在这个 ContentView
 
 1966
 01:29:17,038 --> 01:29:21,390
 in wherever this content
 View is being created.
+创建的地方创建它
 
 1967
 01:29:21,390 --> 01:29:23,430
 We're gonna do the same
 thing we were doing before
+就像之前做的那样
 
 1968
 01:29:23,430 --> 01:29:24,283
 with the Card's isFaceUp,
+
 
 1969
 01:29:24,283 --> 01:29:26,640
@@ -8294,69 +8317,88 @@ thing we're doing here.
 1970
 01:29:26,640 --> 01:29:28,890
 And so where is this created?
+那么 ContentView 在哪里创建呢？
 
 1971
 01:29:28,890 --> 01:29:31,180
 So, this is a time to dive in a little bit
+是时候看看这个
 
 1972
 01:29:31,180 --> 01:29:32,280
 to this boilerplate.
+模板文件了
 
 1973
 01:29:32,280 --> 01:29:34,690
 Remember, I told you there
 was this AppDelegate,
+你还记得吧，我之前讲过这里的
+AppDelegate、SceneDelegate
 
 1974
 01:29:34,690 --> 01:29:36,370
 SceneDelegate boiler plate.
+是模板文件
 
 1975
 01:29:36,370 --> 01:29:39,240
 Well, if we click on the SceneDelegate,
+如果我们点击 SceneDelegate 这个文件
 
 1976
 01:29:39,240 --> 01:29:40,840
 we'll see there's some junk in here
+将会看到大量的代码
 
 1977
 01:29:40,840 --> 01:29:42,520
 which we're gonna talk about later
+这些之后会讲
 
 1978
 01:29:42,520 --> 01:29:44,840
 but here is the very
 important line of code
+但这里有一行非常重要的代码
 
 1979
 01:29:44,840 --> 01:29:47,910
 that creates the ContentView that is used
+就是创建一个作为窗口主视图的
 
 1980
 01:29:47,910 --> 01:29:51,760
 as the Windows' main View, okay?
+ContentView 实例
 
 1981
 01:29:51,760 --> 01:29:53,900
 So this ContentView is already complaining
+这个 ContentView 已经出现报错
 
 1982
 01:29:53,900 --> 01:29:56,180
 missing argument for viewModel right?
+缺少一个 viewModel 参数
 
 1983
 01:29:56,180 --> 01:29:59,480
 It knows that over here,
 we've got this viewModel
+它知道我们在 ContentView 中
+声明了这个 viewModel 变量
 
 1984
 01:29:59,480 --> 01:30:01,960
 It doesn't set equal to anything
+但没有给 viewModel 赋初始值
 
 1985
 01:30:01,960 --> 01:30:04,450
 so we've got to do that when we create it.
+所以要在创建 ContentView 时
+给它赋值
 
 1986
 01:30:04,450 --> 01:30:08,900
