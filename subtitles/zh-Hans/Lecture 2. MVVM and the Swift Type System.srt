@@ -8404,288 +8404,365 @@ so we've got to do that when we create it.
 01:30:04,450 --> 01:30:08,900
 So I need to say viewModel
 is something here.
+我需要在这里输入 viewModel:
+并给它赋值
 
 1987
 01:30:08,900 --> 01:30:12,410
 So I'm going to have this
 be a var called the game
+所以我把一个 game 变量赋给它
 
 1988
 01:30:12,410 --> 01:30:16,507
 and I'm gonna say let game
 equal EmojiMemoryGame,
+然后声明 game
 
 1989
 01:30:17,910 --> 01:30:19,750
 open parentheses, close parentheses,
+let game = EmojiMemoryGame()
 
 1990
 01:30:19,750 --> 01:30:23,170
 I get a free init because
 this is a class, right?
+因为 EmojiMemoryGame 是一个类
+所以有自动获得的构造器
 
 1991
 01:30:23,170 --> 01:30:25,750
 A free init that initializes nothing
+这个自动获得的构造器
+不会初始化任何成员变量
 
 1992
 01:30:25,750 --> 01:30:29,500
 but luckily, I initialize my only var here
+所幸的是我自己初始化了唯一的变量
 
 1993
 01:30:29,500 --> 01:30:31,420
 using this, right?
+使用这个
 
 1994
 01:30:31,420 --> 01:30:32,903
 So this is gonna work.
+所以可以使用自动获得的构造器
 
 1995
 01:30:33,830 --> 01:30:36,747
 So here we go, we got this
 game for passing the ViewModel.
+我们使用 game 变量传递视图模型
 
 1996
 01:30:36,747 --> 01:30:39,450
 And by the way, if we go back here
+对了，如果我们回到这里
 
 1997
 01:30:39,450 --> 01:30:40,830
 and look at our ContentView,
+ContentView 文件中
 
 1998
 01:30:40,830 --> 01:30:42,960
 it's still gonna be complaining down here.
+在文件下方仍然有报错
 
 1999
 01:30:42,960 --> 01:30:46,260
 This is that glue that
 glues this to the gray area.
+是这个关联到预览窗口的代码报错
 
 2000
 01:30:46,260 --> 01:30:47,670
 It's creating a ContentView
+这里创建了一个 ContentView
 
 2001
 01:30:47,670 --> 01:30:52,240
 to show in this canvas over here.
+在 Canvas 上展示
 
 2002
 01:30:52,240 --> 01:30:56,376
 Okay, so, this ContentView
 also needs a ViewModel here.
+所以这个 ContentView 也需要
+一个视图模型
 
 2003
 01:30:56,376 --> 01:31:00,870
 For this, I'll just create
 an EmojiMemoryGame on the fly
+为此，我在这里快速地
+创建一个 EmojiMemoryGame
 
 2004
 01:31:00,870 --> 01:31:04,280
 because this is essentially
 for testing or whatever
+因为这里的重点是测试
 
 2005
 01:31:04,280 --> 01:31:06,270
 so it can create this thing on the fly,
+所以可以快速地创建
 
 2006
 01:31:06,270 --> 01:31:09,260
 doesn't need to put it in
 a variable and all that.
+不需要额外的变量
 
 2007
 01:31:09,260 --> 01:31:11,290
 Okay, so, we're getting close.
+好了，搞定了
 
 2008
 01:31:11,290 --> 01:31:13,320
 Now, we have our ViewModel right here.
+现在我们的视图模型在这里
 
 2009
 01:31:13,320 --> 01:31:16,710
 How do we use the
 ViewModel to get the Cards
+该怎么做才能通过视图模型
+拿到我们要展示的
 
 2010
 01:31:16,710 --> 01:31:17,850
 that we're gonna show?
+卡片呢
 
 2011
 01:31:17,850 --> 01:31:21,060
 Well, right now, we just
 throw it show four Cards,
+目前我们只展示了四张卡片
 
 2012
 01:31:21,060 --> 01:31:22,890
 zero, one, two, or three.
+0，1，2，3
 
 2013
 01:31:22,890 --> 01:31:24,920
 We're using a range right here.
+我们在这里使用了一个区间
 
 2014
 01:31:24,920 --> 01:31:27,480
 Gonna click this again.
+关掉预览窗口
 
 2015
 01:31:27,480 --> 01:31:28,880
 We're using this range
+我们用了这个区间
 
 2016
 01:31:28,880 --> 01:31:31,920
 and I told you this could
 be any iteratable thing.
+我告诉过你这里可以是任何
+可迭代的内容
 
 2017
 01:31:31,920 --> 01:31:33,690
 So how about if we just make this
+那么我们现在用视图模型的 cards
 
 2018
 01:31:33,690 --> 01:31:36,940
 be our ViewModel's Cards, okay?
+如何呢
 
 2019
 01:31:36,940 --> 01:31:40,640
 This is an Array of
 MemoryGame&lt;String&gt;.Cards
+这组卡片是一个元素类型为
+MemoryGame<String> 的数组
 
 2020
 01:31:40,640 --> 01:31:43,120
 and so, this should just work, right?
+数组是可以迭代的，对吧？
 
 2021
 01:31:43,120 --> 01:31:45,990
 But it doesn't work, okay?
+但这样会报错
 
 2022
 01:31:45,990 --> 01:31:48,400
 In fact, I typed an Array thing here
+事实上，我这里输入了一个数组
 
 2023
 01:31:48,400 --> 01:31:50,520
 and it says cannot convert from value
+错误是无法将数组元素转为
 
 2024
 01:31:50,520 --> 01:31:53,340
 to expected argument range of Int.
+期望的整型区间
 
 2025
 01:31:53,340 --> 01:31:57,290
 It still thinks I want
 range of Int in here.
+它仍然认为我想要一个整型区间
 
 2026
 01:31:57,290 --> 01:32:01,240
 That's because kinda mislead you a little
+这是因为我给了你一些误导
 
 2027
 01:32:01,240 --> 01:32:04,007
 when I said this could
 be any iteratable thing.
+我之前说这里可以是任何可迭代的内容
 
 2028
 01:32:04,007 --> 01:32:07,200
 It actually is any iteratable thing
+事实上
 
 2029
 01:32:07,200 --> 01:32:09,280
 where the things that's iterating over
+它可以是遵循 Identifiable 的
 
 2030
 01:32:09,280 --> 01:32:12,940
 are what is called Identifiable, okay?
+任何可迭代的内容
 
 2031
 01:32:12,940 --> 01:32:15,440
 These things have to be Identifiable.
+它们需要遵循 Identifiable
 
 2032
 01:32:15,440 --> 01:32:18,960
 If they're not a range of Int,
 they have to be Identifiable.
+如果不是整型区间，就需要遵循
 
 2033
 01:32:18,960 --> 01:32:20,790
 So, why?
+为什么呢？
 
 2034
 01:32:20,790 --> 01:32:23,020
 Why do these have to be Identifiable?
+为什么要遵循 Identifiable 呢？
 
 2035
 01:32:23,020 --> 01:32:27,060
 Well, for example, let's say
 you're want to do animation
+比如你要展示动画
 
 2036
 01:32:27,060 --> 01:32:30,670
 and let's say these Cards
 are moving around, okay?
+让这些卡片到处移动
 
 2037
 01:32:30,670 --> 01:32:33,410
 Moving into a different
 order or something like that.
+移到不同的次序或其他的位置
 
 2038
 01:32:33,410 --> 01:32:36,470
 This for each needs to be able to identify
+这个 ForEach 需要能够识别出每张卡片
 
 2039
 01:32:36,470 --> 01:32:40,520
 which Card is which so
 that the View it creates
+哪张卡片是哪张
+这样创建卡片时
 
 2040
 01:32:40,520 --> 01:32:43,750
 for each Card, which is
 what this is, this CardView,
 
+
 2041
 01:32:43,750 --> 01:32:47,520
 it can keep that View in
 sync with these Cards.
+这样就可以保证视图与卡片同步
 
 2042
 01:32:47,520 --> 01:32:50,850
 So these things have to be
 identifiable and right now,
+所以需要可识别这个可迭代的内容
 
 2043
 01:32:50,850 --> 01:32:53,261
 if you look at this, this
 is an Array of Card, right?
+如果你观察这个 viewModel.cards
+它是一个卡片数组
 
 2044
 01:32:53,261 --> 01:32:58,261
 ViewModel.cards is this
 Array of MemoryGame Cards.
+它的类型是
+Array<MemoryGame>.Card
 
 2045
 01:32:59,100 --> 01:33:02,380
 If we look at MemoryGame Cards,
 they are not identifiable,
+如果我们观察 MemoryGame 的变量 cards
+它们不可识别
 
 2046
 01:33:02,380 --> 01:33:04,420
 there's no way to identify them.
+没有办法识别它们
 
 2047
 01:33:04,420 --> 01:33:07,150
 In fact, right now, they're all the same.
+事实上，现在它们是完全一样的卡片
 
 2048
 01:33:07,150 --> 01:33:08,433
 Two Cards that match would be the same
+可以的匹配两张卡片是完全一样的
 
 2049
 01:33:08,433 --> 01:33:10,210
 because they have the same content,
+因为它们有相同的内容
 
 2050
 01:33:10,210 --> 01:33:11,911
 they might be the same isFaceUp.
+卡片朝向也相同
 
 2051
 01:33:11,911 --> 01:33:14,410
