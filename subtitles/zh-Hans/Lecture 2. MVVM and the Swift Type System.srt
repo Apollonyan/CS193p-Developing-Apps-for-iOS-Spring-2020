@@ -8198,7 +8198,7 @@ Cards through our ViewModel.
 1949
 01:28:28,440 --> 01:28:31,340
 So, we need some sort of var here,
-在这里创建一个变量
+我们在这里创建一个变量
 
 1950
 01:28:31,340 --> 01:28:33,110
@@ -8393,7 +8393,7 @@ we've got this viewModel
 1984
 01:29:59,480 --> 01:30:01,960
 It doesn't set equal to anything
-但没有给 viewModel 赋初始值
+但没有给它赋初始值
 
 1985
 01:30:01,960 --> 01:30:04,450
@@ -8494,7 +8494,7 @@ to show in this canvas over here.
 Okay, so, this ContentView
 also needs a ViewModel here.
 所以这个 ContentView
-也需要一个视图模型
+也需要一个 viewModel
 
 2003
 01:30:56,376 --> 01:31:00,870
