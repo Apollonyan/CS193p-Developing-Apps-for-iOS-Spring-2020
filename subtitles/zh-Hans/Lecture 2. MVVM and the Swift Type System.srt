@@ -7948,12 +7948,12 @@ Again, no errors, no warnings.
 01:26:23,420 --> 01:26:25,530
 We're using this as kind
 of a utility function
-我们将它作为创建 MemoryGame 的
+我们用这个工具函数
 
 1904
 01:26:25,530 --> 01:26:28,150
 to create our MemoryGame.
-工具函数
+创建 MemoryGame
 
 1905
 01:26:28,150 --> 01:26:30,830
@@ -7975,7 +7975,7 @@ actually have our Model
 1908
 01:26:36,180 --> 01:26:37,610
 play the game when you choose
-它其实还不能选中卡片
+它其实还不能让卡片翻转
 
 1909
 01:26:37,610 --> 01:26:40,410
@@ -8021,7 +8021,7 @@ state of the Model, okay?
 So, whatever's in the Model,
 it wants to always show.
 所以无论模型中有什么
-总是要展示出来
+视图都会将其展示出来
 
 1917
 01:27:02,890 --> 01:27:06,120
@@ -8102,7 +8102,7 @@ And instead of always showing a ghost,
 1931
 01:27:41,560 --> 01:27:44,490
 I'm gonna get the Card's content.
-用 card.content 替换
+我用 card.content 替换
 
 1932
 01:27:44,490 --> 01:27:46,560
@@ -8135,7 +8135,7 @@ we make it be a String.
 01:27:59,340 --> 01:28:02,860
 And so, that's why over
 here in our content View,
-这也就是为什么在 ContentView 中
+这就是为什么在 ContentView 中
 
 1938
 01:28:02,860 --> 01:28:04,830
@@ -8259,7 +8259,7 @@ class EmojiMemoryGame
 01:29:00,470 --> 01:29:03,090
 So, since this is a class,
 this is a pointer to it.
-因为这个 viewModel 是一个类
+因为这是一个类
 所以这里是对其实例的引用
 
 1961
@@ -8307,17 +8307,18 @@ thing we were doing before
 1968
 01:29:23,430 --> 01:29:24,283
 with the Card's isFaceUp,
-
+在创建 Card 时
 
 1969
 01:29:24,283 --> 01:29:26,640
 it's actually the same
 thing we're doing here.
+初始化 isFaceUp 属性
 
 1970
 01:29:26,640 --> 01:29:28,890
 And so where is this created?
-那么 ContentView 在哪里创建呢？
+那 ContentView 在哪里创建呢？
 
 1971
 01:29:28,890 --> 01:29:31,180
@@ -8333,7 +8334,7 @@ to this boilerplate.
 01:29:32,280 --> 01:29:34,690
 Remember, I told you there
 was this AppDelegate,
-你还记得吧，我之前讲过这里的
+还记得吧，我之前讲过这里的
 AppDelegate、SceneDelegate
 
 1974
@@ -8365,12 +8366,12 @@ important line of code
 1979
 01:29:44,840 --> 01:29:47,910
 that creates the ContentView that is used
-就是创建一个作为窗口主视图的
+就是创建一个 ContentView 实例
 
 1980
 01:29:47,910 --> 01:29:51,760
 as the Windows' main View, okay?
-ContentView 实例
+作为窗口主视图
 
 1981
 01:29:51,760 --> 01:29:53,900
@@ -8397,8 +8398,7 @@ It doesn't set equal to anything
 1985
 01:30:01,960 --> 01:30:04,450
 so we've got to do that when we create it.
-所以要在创建 ContentView 时
-给它赋值
+所以要在创建 ContentView 时给它赋值
 
 1986
 01:30:04,450 --> 01:30:08,900
@@ -8417,7 +8417,7 @@ be a var called the game
 01:30:12,410 --> 01:30:16,507
 and I'm gonna say let game
 equal EmojiMemoryGame,
-然后声明 game
+然后声明 game：
 
 1989
 01:30:17,910 --> 01:30:19,750
@@ -8434,7 +8434,7 @@ this is a class, right?
 1991
 01:30:23,170 --> 01:30:25,750
 A free init that initializes nothing
-这个自动获得的构造器
+自动获得的构造器
 不会初始化任何成员变量
 
 1992
@@ -8450,7 +8450,7 @@ using this, right?
 1994
 01:30:31,420 --> 01:30:32,903
 So this is gonna work.
-所以可以使用自动获得的构造器
+所以这样行得通
 
 1995
 01:30:33,830 --> 01:30:36,747
@@ -8461,12 +8461,12 @@ game for passing the ViewModel.
 1996
 01:30:36,747 --> 01:30:39,450
 And by the way, if we go back here
-对了，如果我们回到这里
+对了，如果我们回到
 
 1997
 01:30:39,450 --> 01:30:40,830
 and look at our ContentView,
-ContentView 文件中
+ContentView 文件
 
 1998
 01:30:40,830 --> 01:30:42,960
@@ -8493,8 +8493,8 @@ to show in this canvas over here.
 01:30:52,240 --> 01:30:56,376
 Okay, so, this ContentView
 also needs a ViewModel here.
-所以这个 ContentView 也需要
-一个视图模型
+所以这个 ContentView
+也需要一个视图模型
 
 2003
 01:30:56,376 --> 01:31:00,870
@@ -8507,7 +8507,7 @@ an EmojiMemoryGame on the fly
 01:31:00,870 --> 01:31:04,280
 because this is essentially
 for testing or whatever
-因为这里的重点是测试
+因为这里的重点是测试之类的事
 
 2005
 01:31:04,280 --> 01:31:06,270
@@ -8523,12 +8523,12 @@ a variable and all that.
 2007
 01:31:09,260 --> 01:31:11,290
 Okay, so, we're getting close.
-好了，搞定了
+好了，快完成了
 
 2008
 01:31:11,290 --> 01:31:13,320
 Now, we have our ViewModel right here.
-现在我们的视图模型在这里
+现在我们在这里添加了视图模型
 
 2009
 01:31:13,320 --> 01:31:16,710
@@ -8566,24 +8566,24 @@ Gonna click this again.
 2015
 01:31:27,480 --> 01:31:28,880
 We're using this range
-我们用了这个区间
+我们使用这个区间
 
 2016
 01:31:28,880 --> 01:31:31,920
 and I told you this could
 be any iteratable thing.
-我告诉过你这里可以是任何
-可迭代的内容
+我告诉过你这里可以是
+任何可迭代的内容
 
 2017
 01:31:31,920 --> 01:31:33,690
 So how about if we just make this
-那么我们现在用视图模型的 cards
+那么我们现在使用
 
 2018
 01:31:33,690 --> 01:31:36,940
 be our ViewModel's Cards, okay?
-如何呢
+viewModel.cards 如何呢
 
 2019
 01:31:36,940 --> 01:31:40,640
@@ -8637,28 +8637,29 @@ be any iteratable thing.
 2028
 01:32:04,007 --> 01:32:07,200
 It actually is any iteratable thing
-事实上
+实际应该是任何可迭代的内容
 
 2029
 01:32:07,200 --> 01:32:09,280
 where the things that's iterating over
-它可以是遵循 Identifiable 的
+它循环访问的元素
 
 2030
 01:32:09,280 --> 01:32:12,940
 are what is called Identifiable, okay?
-任何可迭代的内容
+是可识别的
 
 2031
 01:32:12,940 --> 01:32:15,440
 These things have to be Identifiable.
-它们需要遵循 Identifiable
+它们得能被识别才行
 
 2032
 01:32:15,440 --> 01:32:18,960
 If they're not a range of Int,
 they have to be Identifiable.
-如果不是整型区间，就需要遵循
+如果不是整型区间
+它们就得能被识别
 
 2033
 01:32:18,960 --> 01:32:20,790
@@ -8668,13 +8669,13 @@ So, why?
 2034
 01:32:20,790 --> 01:32:23,020
 Why do these have to be Identifiable?
-为什么要遵循 Identifiable 呢？
+为什么需要被识别呢？
 
 2035
 01:32:23,020 --> 01:32:27,060
 Well, for example, let's say
 you're want to do animation
-比如你要展示动画
+举个例子，比如你想要展示动画
 
 2036
 01:32:27,060 --> 01:32:30,670
@@ -8698,25 +8699,25 @@ This for each needs to be able to identify
 which Card is which so
 that the View it creates
 哪张卡片是哪张
-这样创建卡片时
+这样创建卡片的
 
 2040
 01:32:40,520 --> 01:32:43,750
 for each Card, which is
 what this is, this CardView,
-
+这个 CardView
 
 2041
 01:32:43,750 --> 01:32:47,520
 it can keep that View in
 sync with these Cards.
-这样就可以保证视图与卡片同步
+就可以保证视图与卡片同步
 
 2042
 01:32:47,520 --> 01:32:50,850
 So these things have to be
 identifiable and right now,
-所以需要可识别这个可迭代的内容
+所以它们需要被识别
 
 2043
 01:32:50,850 --> 01:32:53,261
@@ -8730,7 +8731,7 @@ is an Array of Card, right?
 ViewModel.cards is this
 Array of MemoryGame Cards.
 它的类型是
-Array<MemoryGame>.Card
+Array<MemoryGame<String>.Card>
 
 2045
 01:32:59,100 --> 01:33:02,380
@@ -8752,11 +8753,12 @@ In fact, right now, they're all the same.
 2048
 01:33:07,150 --> 01:33:08,433
 Two Cards that match would be the same
-可以的匹配两张卡片是完全一样的
+可以的匹配两张卡片
 
 2049
 01:33:08,433 --> 01:33:10,210
 because they have the same content,
+是完全一样的
 因为它们有相同的内容
 
 2050
