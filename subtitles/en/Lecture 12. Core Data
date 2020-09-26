@@ -1,0 +1,8998 @@
+1
+00:00:00,377 --> 00:00:03,127
+(dramatic music)
+
+2
+00:00:04,930 --> 00:00:06,843
+- [Animaker Voice] Stanford university.
+
+3
+00:00:08,790 --> 00:00:09,870
+- [Lecturer] All right, here we are,
+
+4
+00:00:09,870 --> 00:00:14,870
+lecture 12, Stanford
+CS193p Spring of 2020.
+
+5
+00:00:15,120 --> 00:00:18,200
+Today's topic is Core Data,
+
+6
+00:00:18,200 --> 00:00:22,720
+which is an object-oriented database.
+
+7
+00:00:22,720 --> 00:00:24,470
+And we've been doing a lot of
+
+8
+00:00:24,470 --> 00:00:27,070
+functional programming this quarter.
+
+9
+00:00:27,070 --> 00:00:28,730
+Pretty much all the stuff we've been doing
+
+10
+00:00:28,730 --> 00:00:30,350
+has been functional programming.
+
+11
+00:00:30,350 --> 00:00:32,420
+We're gonna switch over now
+to doing a little bit of
+
+12
+00:00:32,420 --> 00:00:34,700
+object-oriented programming.
+
+13
+00:00:34,700 --> 00:00:37,630
+Probably won't even notice
+the difference here.
+
+14
+00:00:37,630 --> 00:00:40,417
+Although Core Data is based
+on object-oriented programming
+
+15
+00:00:40,417 --> 00:00:43,050
+and Swift supports both object-oriented
+
+16
+00:00:43,050 --> 00:00:44,800
+and functional programming equally.
+
+17
+00:00:45,890 --> 00:00:47,500
+And we're essentially
+gonna use this Core Data
+
+18
+00:00:47,500 --> 00:00:50,490
+infrastructure to store
+and retrieve objects
+
+19
+00:00:50,490 --> 00:00:53,323
+or classes in a database.
+
+20
+00:00:54,410 --> 00:00:57,830
+Now, there's a very mature
+technology out there,
+
+21
+00:00:57,830 --> 00:01:02,270
+it's been around for a long
+time to store large data sets,
+
+22
+00:01:02,270 --> 00:01:04,890
+it's called SQL.
+
+23
+00:01:04,890 --> 00:01:09,170
+But programming in SQL is very
+different than the kind of
+
+24
+00:01:09,170 --> 00:01:10,560
+programming we're doing in Swift,
+
+25
+00:01:10,560 --> 00:01:14,570
+SQL is a language and
+it has its own syntax
+
+26
+00:01:14,570 --> 00:01:16,340
+and it's quite quite different.
+
+27
+00:01:16,340 --> 00:01:19,220
+And it would be a bummer for
+us if all of this learning
+
+28
+00:01:19,220 --> 00:01:21,230
+we've done about how to program in Swift,
+
+29
+00:01:21,230 --> 00:01:23,670
+couldn't be applied to storing data.
+
+30
+00:01:23,670 --> 00:01:26,190
+So we're gonna get the
+best of both worlds here
+
+31
+00:01:26,190 --> 00:01:30,760
+because Core Data actually
+does its storage in SQL,
+
+32
+00:01:30,760 --> 00:01:33,220
+but we are going to interact with our data
+
+33
+00:01:33,220 --> 00:01:35,260
+entirely in an object-oriented way.
+
+34
+00:01:35,260 --> 00:01:38,750
+We're not even gonna need to
+know a single SQL statement
+
+35
+00:01:38,750 --> 00:01:40,710
+to make this happen.
+
+36
+00:01:40,710 --> 00:01:44,780
+Now, the heart of making this
+work in Core Data is this map.
+
+37
+00:01:44,780 --> 00:01:49,050
+And it is a map between the
+objects and the vars on those
+
+38
+00:01:49,050 --> 00:01:53,960
+objects, and the tables and
+rows of a relational database.
+
+39
+00:01:53,960 --> 00:01:56,340
+Now, if you don't know what
+relational databases are
+
+40
+00:01:56,340 --> 00:01:57,770
+and all that, you really
+don't need to know
+
+41
+00:01:57,770 --> 00:02:01,210
+because you're gonna be focusing
+on the objects and vars,
+
+42
+00:02:01,210 --> 00:02:04,894
+not on the tables and rows
+in a relational database,
+
+43
+00:02:04,894 --> 00:02:08,120
+and Xcode has a built
+in editor for this map,
+
+44
+00:02:08,120 --> 00:02:09,810
+which is really great.
+
+45
+00:02:09,810 --> 00:02:13,300
+And this editor doesn't just
+let us specify the objects in
+
+46
+00:02:13,300 --> 00:02:16,810
+vars, it lets us graphically
+create the relationships
+
+47
+00:02:16,810 --> 00:02:19,990
+between objects, because that's
+really the important part,
+
+48
+00:02:19,990 --> 00:02:21,740
+not just to have objects
+with vars on them,
+
+49
+00:02:21,740 --> 00:02:23,010
+but you have objects that have
+
+50
+00:02:23,010 --> 00:02:25,432
+relationships to other objects.
+
+51
+00:02:25,432 --> 00:02:27,490
+And we'll see that some examples of that,
+
+52
+00:02:27,490 --> 00:02:30,290
+in a minute and in big time,
+we'll see that in the demo.
+
+53
+00:02:31,370 --> 00:02:33,460
+So then what, you create this map,
+
+54
+00:02:33,460 --> 00:02:34,450
+what can you do then?
+
+55
+00:02:34,450 --> 00:02:39,160
+Well, Xcode behind the scenes
+is gonna generate the classes,
+
+56
+00:02:39,160 --> 00:02:40,920
+right, the code for the classes,
+
+57
+00:02:40,920 --> 00:02:42,520
+that represent those objects and vars
+
+58
+00:02:42,520 --> 00:02:44,960
+you created in the map.
+
+59
+00:02:44,960 --> 00:02:49,960
+And we get to use extensions
+just like we do with any other
+
+60
+00:02:50,000 --> 00:02:50,870
+kind of data structure.
+
+61
+00:02:50,870 --> 00:02:53,500
+We get to use extensions
+to add our own methods
+
+62
+00:02:53,500 --> 00:02:55,960
+and our own computed
+vars to those classes,
+
+63
+00:02:55,960 --> 00:03:00,630
+because, the storage vars
+are stored in the database.
+
+64
+00:03:00,630 --> 00:03:03,810
+Then these objects that
+have been created for us
+
+65
+00:03:03,810 --> 00:03:07,000
+and that we've extended,
+service the source of data
+
+66
+00:03:07,000 --> 00:03:09,090
+for the elements in our UI.
+
+67
+00:03:09,090 --> 00:03:11,510
+So all of our SwiftUI,
+that's doing everything,
+
+68
+00:03:11,510 --> 00:03:13,750
+it's obviously putting data on screen,
+
+69
+00:03:13,750 --> 00:03:17,283
+right now we store them in
+ViewModels where we have
+
+70
+00:03:17,283 --> 00:03:19,370
+Arrays and dictionaries
+and all that stuff.
+
+71
+00:03:19,370 --> 00:03:22,160
+Well, now this data is
+going to be coming from
+
+72
+00:03:22,160 --> 00:03:25,120
+this database and we're just
+gonna be accessing these
+
+73
+00:03:25,120 --> 00:03:27,100
+objects to put it on screen.
+
+74
+00:03:27,100 --> 00:03:30,593
+Perfectly naturally, like
+we would normally do.
+
+75
+00:03:32,020 --> 00:03:34,110
+So what are the features of Core Data?
+
+76
+00:03:34,110 --> 00:03:37,270
+Of course, it has features
+for creating objects.
+
+77
+00:03:37,270 --> 00:03:39,550
+You have to be able to create
+objects in the database,
+
+78
+00:03:39,550 --> 00:03:43,100
+and it very naturally
+lets you change the values
+
+79
+00:03:43,100 --> 00:03:45,850
+of the vars on these objects,
+so you just change them.
+
+80
+00:03:45,850 --> 00:03:47,950
+They're just vars and you
+set them equal to something,
+
+81
+00:03:47,950 --> 00:03:50,130
+boom, you just change
+data in the database.
+
+82
+00:03:50,130 --> 00:03:53,440
+And it even has beautiful
+infrastructure for establishing
+
+83
+00:03:53,440 --> 00:03:55,740
+these relationships between objects.
+
+84
+00:03:55,740 --> 00:03:57,969
+It's just a matter of
+setting a var basically
+
+85
+00:03:57,969 --> 00:04:02,190
+to create a relationship
+between one object and other and
+
+86
+00:04:02,190 --> 00:04:03,990
+by relationship I mean things like
+
+87
+00:04:03,990 --> 00:04:06,170
+a flight has an origin airport.
+
+88
+00:04:06,170 --> 00:04:08,230
+So flight objects and airport objects,
+
+89
+00:04:08,230 --> 00:04:09,533
+they have a relationship.
+
+90
+00:04:10,460 --> 00:04:14,080
+And there's of course a
+way to save these objects
+
+91
+00:04:14,080 --> 00:04:16,620
+and really important
+that you can fetch the
+
+92
+00:04:16,620 --> 00:04:20,390
+objects from the database
+based on certain criteria.
+
+93
+00:04:20,390 --> 00:04:22,370
+You wanna say, I want all the flights that
+
+94
+00:04:22,370 --> 00:04:25,720
+match this certain criteria,
+arrived at this certain time
+
+95
+00:04:25,720 --> 00:04:27,760
+or whatever that might be.
+
+96
+00:04:27,760 --> 00:04:31,320
+It has a great simple API for doing
+
+97
+00:04:31,320 --> 00:04:32,853
+the fetching of the objects.
+
+98
+00:04:34,040 --> 00:04:37,510
+Now it has a whole lot of other
+database features on top of
+
+99
+00:04:37,510 --> 00:04:40,252
+it, optimistic locking
+and all this things.
+
+100
+00:04:40,252 --> 00:04:41,870
+We are not going to talk about this.
+
+101
+00:04:41,870 --> 00:04:42,990
+This is an intro course,
+
+102
+00:04:42,990 --> 00:04:45,510
+so we're just introducing the
+concept of Core Data here,
+
+103
+00:04:45,510 --> 00:04:48,120
+but there is a lot of stuff in there
+
+104
+00:04:48,120 --> 00:04:50,223
+to take this to pretty high levels.
+
+105
+00:04:51,800 --> 00:04:54,830
+Now let's talk about the
+integration of SwiftUI,
+
+106
+00:04:54,830 --> 00:04:57,600
+with this Core Data database.
+
+107
+00:04:57,600 --> 00:05:00,320
+The objects that we create in the database
+
+108
+00:05:00,320 --> 00:05:02,100
+are ObservableObjects.
+
+109
+00:05:02,100 --> 00:05:05,760
+They're essentially
+little mini ViewModels,
+
+110
+00:05:05,760 --> 00:05:10,230
+and there is also a very
+powerful property wrapper
+
+111
+00:05:10,230 --> 00:05:12,323
+in SwiftUI called @FetchRequest,
+
+112
+00:05:13,360 --> 00:05:16,760
+which fetches these objects for us.
+
+113
+00:05:16,760 --> 00:05:20,020
+So this FetchRequest is more
+than just a one-time fetch.
+
+114
+00:05:20,020 --> 00:05:22,560
+It's kind of a standing query,
+
+115
+00:05:22,560 --> 00:05:26,970
+that's just constantly trying
+to match whatever the criteria
+
+116
+00:05:26,970 --> 00:05:28,140
+you're talking about are,
+
+117
+00:05:28,140 --> 00:05:30,330
+and returning whatever's in the database.
+
+118
+00:05:30,330 --> 00:05:32,050
+So as things get added to the database,
+
+119
+00:05:32,050 --> 00:05:35,120
+if they match the criteria
+of that FetchRequest,
+
+120
+00:05:35,120 --> 00:05:37,470
+then it's going to update your UI.
+
+121
+00:05:37,470 --> 00:05:39,660
+That way our UI is always in sync
+
+122
+00:05:39,660 --> 00:05:42,663
+with the database
+really, really fantastic.
+
+123
+00:05:44,570 --> 00:05:47,870
+So how do you get Core Data
+into app into your app?
+
+124
+00:05:47,870 --> 00:05:49,030
+How do you set it up?
+
+125
+00:05:49,030 --> 00:05:51,750
+Well, the real way to set this up
+
+126
+00:05:51,750 --> 00:05:53,560
+is when you create a new project,
+
+127
+00:05:53,560 --> 00:05:55,430
+there's that button that you saw
+
+128
+00:05:55,430 --> 00:05:57,667
+called Core Data, use Core Data.
+
+129
+00:05:57,667 --> 00:05:59,340
+And you're gonna click that,
+
+130
+00:05:59,340 --> 00:06:02,100
+and it's going to do a
+little bit to set you up.
+
+131
+00:06:02,100 --> 00:06:04,710
+Now, if you've already got
+an app and you've decided,
+
+132
+00:06:04,710 --> 00:06:06,600
+oh, I wanna add Core Data to it,
+
+133
+00:06:06,600 --> 00:06:08,620
+I recommend going back
+and creating a new project
+
+134
+00:06:08,620 --> 00:06:10,870
+and clicking this button
+and then moving all your
+
+135
+00:06:10,870 --> 00:06:13,390
+source code over because this
+button does such a really
+
+136
+00:06:13,390 --> 00:06:15,750
+nice job of setting things up.
+
+137
+00:06:15,750 --> 00:06:18,150
+So what does this button do?
+
+138
+00:06:18,150 --> 00:06:20,550
+Well, it creates a blank map for you.
+
+139
+00:06:20,550 --> 00:06:22,670
+This map that I told you
+has a built in editor,
+
+140
+00:06:22,670 --> 00:06:23,740
+you got a blank, one of those,
+
+141
+00:06:23,740 --> 00:06:26,370
+so you can start adding
+your objects and your vars.
+
+142
+00:06:26,370 --> 00:06:29,890
+It adds a little bit of
+code to your AppDelegate,
+
+143
+00:06:29,890 --> 00:06:31,100
+which I'll show you in the demo.
+
+144
+00:06:31,100 --> 00:06:32,510
+You haven't seen it yet.
+
+145
+00:06:32,510 --> 00:06:35,190
+It's really nothing, much
+of interest in there to us,
+
+146
+00:06:35,190 --> 00:06:36,960
+but it does add this little bit of code
+
+147
+00:06:36,960 --> 00:06:40,413
+that creates the database
+store, the actual SQL database,
+
+148
+00:06:40,413 --> 00:06:42,987
+that the stuff is gonna be stored in.
+
+149
+00:06:42,987 --> 00:06:45,260
+And so you don't ever need
+to go look at that code,
+
+150
+00:06:45,260 --> 00:06:47,160
+even, it just all happens automatically.
+
+151
+00:06:47,160 --> 00:06:48,250
+I just wanted to let you know that
+
+152
+00:06:48,250 --> 00:06:50,550
+it does do something in there.
+
+153
+00:06:50,550 --> 00:06:53,170
+Now it does add a couple of lines of code
+
+154
+00:06:53,170 --> 00:06:55,920
+to your SceneDelegate,
+right where you create
+
+155
+00:06:55,920 --> 00:06:57,983
+the content View there.
+
+156
+00:06:58,830 --> 00:07:02,980
+One of the lines of code goes
+and reaches into that store,
+
+157
+00:07:02,980 --> 00:07:06,527
+the SQL store code that was
+in AppDelegate and it grabs
+
+158
+00:07:06,527 --> 00:07:10,860
+something called an
+NSManagedObjectContext.
+
+159
+00:07:10,860 --> 00:07:14,170
+And this context is
+crucial to using Core Data.
+
+160
+00:07:14,170 --> 00:07:17,870
+It is the window through which we see
+
+161
+00:07:17,870 --> 00:07:20,600
+that all the objects in our database,
+
+162
+00:07:20,600 --> 00:07:22,660
+and you're gonna see that we
+need to contact whenever we
+
+163
+00:07:22,660 --> 00:07:26,500
+create objects, we do
+fetches, any of that stuff.
+
+164
+00:07:26,500 --> 00:07:29,470
+So this two lines have
+SceneDelegate code order,
+
+165
+00:07:29,470 --> 00:07:31,810
+go grab that context out of the store.
+
+166
+00:07:31,810 --> 00:07:32,920
+And then the second one,
+
+167
+00:07:32,920 --> 00:07:37,920
+interestingly is to pass that
+context into your SwiftUI
+
+168
+00:07:38,750 --> 00:07:40,487
+Views via the Environment.
+
+169
+00:07:40,487 --> 00:07:42,830
+And we already saw
+Environment, for example,
+
+170
+00:07:42,830 --> 00:07:44,220
+with the edit mode.
+
+171
+00:07:44,220 --> 00:07:45,810
+And this is using Environment again,
+
+172
+00:07:45,810 --> 00:07:48,970
+so that all your SwiftUI Views
+will have this context so
+
+173
+00:07:48,970 --> 00:07:51,480
+they can see the database and get objects
+
+174
+00:07:51,480 --> 00:07:53,620
+out of it and all that.
+
+175
+00:07:53,620 --> 00:07:56,250
+So that's added to your SceneDelegate.
+
+176
+00:07:56,250 --> 00:07:58,330
+And that's pretty much
+all the set up you need,
+
+177
+00:07:58,330 --> 00:08:00,810
+because now you can create
+objects, fetch them,
+
+178
+00:08:00,810 --> 00:08:03,330
+whatever you have the window
+into the database you need,
+
+179
+00:08:03,330 --> 00:08:05,030
+you've created your map,
+
+180
+00:08:05,030 --> 00:08:07,730
+whatever the objects in vars you want,
+
+181
+00:08:07,730 --> 00:08:08,880
+and you're on your way.
+
+182
+00:08:10,000 --> 00:08:11,550
+So let's take a look at that map.
+
+183
+00:08:11,550 --> 00:08:14,370
+I'm gonna, since the demo is gonna create
+
+184
+00:08:14,370 --> 00:08:17,340
+detailed map with airports
+and airlines and flights
+
+185
+00:08:17,340 --> 00:08:20,190
+in our on route, there's no
+reason to go over it here,
+
+186
+00:08:20,190 --> 00:08:22,350
+but just to give you
+an image in your mind,
+
+187
+00:08:22,350 --> 00:08:24,670
+what it looks like, you know,
+here's an example on the left,
+
+188
+00:08:24,670 --> 00:08:28,020
+we have a, looks like that is a Flight
+
+189
+00:08:28,020 --> 00:08:31,740
+and it's got some attributes
+like when it arrived
+
+190
+00:08:31,740 --> 00:08:33,170
+and or it's going to arrive,
+
+191
+00:08:33,170 --> 00:08:36,170
+and it's ident, and even
+some relationships to other
+
+192
+00:08:36,170 --> 00:08:38,280
+objects like, the destination airport,
+
+193
+00:08:38,280 --> 00:08:39,577
+the origin airport airline.
+
+194
+00:08:39,577 --> 00:08:40,470
+And then on the right,
+
+195
+00:08:40,470 --> 00:08:43,330
+you can see this graphical map
+of the relationships between
+
+196
+00:08:43,330 --> 00:08:45,480
+Airports, Flights, and Airlines.
+
+197
+00:08:45,480 --> 00:08:47,970
+For example, if you see Flight,
+
+198
+00:08:47,970 --> 00:08:50,760
+it's got this relationship to Airport,
+
+199
+00:08:50,760 --> 00:08:53,360
+which is the origin and
+another relationship,
+
+200
+00:08:53,360 --> 00:08:56,160
+the destination, and
+notice that the Airport has
+
+201
+00:08:56,160 --> 00:08:59,430
+relationships back along the same line,
+
+202
+00:08:59,430 --> 00:09:01,047
+which is the Flights from this Airport,
+
+203
+00:09:01,047 --> 00:09:03,290
+and the Flights to this Airport.
+
+204
+00:09:03,290 --> 00:09:07,830
+Now, those origin and destination
+relationships in Flight,
+
+205
+00:09:07,830 --> 00:09:10,040
+those are just Airport objects.
+
+206
+00:09:10,040 --> 00:09:13,590
+That's the type of those vars,
+all those little black words
+
+207
+00:09:13,590 --> 00:09:16,120
+you see there, code name,
+short name, aircraft,
+
+208
+00:09:16,120 --> 00:09:19,210
+those are all just gonna be
+vars inside my Flight object,
+
+209
+00:09:19,210 --> 00:09:21,040
+my Airline object, my Airport object,
+
+210
+00:09:21,040 --> 00:09:24,160
+Airport object, and destination,
+origin are just vars
+
+211
+00:09:24,160 --> 00:09:26,610
+and their type is gonna be Airport.
+
+212
+00:09:26,610 --> 00:09:28,800
+Now the flightsFrom and the flightsTo,
+
+213
+00:09:28,800 --> 00:09:30,895
+they're a little interesting because
+
+214
+00:09:30,895 --> 00:09:32,430
+there's multiple Flights
+to and from an Airport.
+
+215
+00:09:32,430 --> 00:09:35,280
+So those are actually
+gonna be Sets of Flights.
+
+216
+00:09:35,280 --> 00:09:37,740
+That's the type of that var, it's a Set,
+
+217
+00:09:37,740 --> 00:09:39,498
+kind of an old Objective-C-style Set.
+
+218
+00:09:39,498 --> 00:09:41,610
+And we'll talk about that in the demo,
+
+219
+00:09:41,610 --> 00:09:43,160
+but that's what's going on there.
+
+220
+00:09:43,160 --> 00:09:45,520
+So all of these things that
+we see on the screen are just
+
+221
+00:09:45,520 --> 00:09:48,950
+turning into objects, Airline,
+Flight, and Airport objects,
+
+222
+00:09:48,950 --> 00:09:51,640
+with vars, aircraft,
+arrival, departure file,
+
+223
+00:09:51,640 --> 00:09:54,480
+those are all just vars
+on each of these things.
+
+224
+00:09:54,480 --> 00:09:55,850
+That's what this map is doing.
+
+225
+00:09:55,850 --> 00:09:58,350
+And that's really all there
+is to it with the map.
+
+226
+00:09:59,740 --> 00:10:02,640
+So once you have this map and
+now you have the window that
+
+227
+00:10:02,640 --> 00:10:04,640
+was passed into your Environment
+that we talked about from
+
+228
+00:10:04,640 --> 00:10:07,150
+your SceneDelegate, what can you do?
+
+229
+00:10:07,150 --> 00:10:09,660
+Well, you can get that window,
+
+230
+00:10:09,660 --> 00:10:12,590
+that managedObjectContext
+via your Environment,
+
+231
+00:10:12,590 --> 00:10:15,617
+it's \.managedObjectContext.
+
+232
+00:10:15,617 --> 00:10:17,170
+And now you have this context var,
+
+233
+00:10:17,170 --> 00:10:19,810
+and you can use it to do
+things like create an object.
+
+234
+00:10:19,810 --> 00:10:21,960
+You just do that by saying Flight,
+
+235
+00:10:21,960 --> 00:10:24,430
+with the argument context so that knows
+
+236
+00:10:24,430 --> 00:10:25,660
+the window into the database
+
+237
+00:10:25,660 --> 00:10:27,210
+and it'll create you a Flight.
+
+238
+00:10:27,210 --> 00:10:30,870
+Now you have a Flight this
+green flight var here,
+
+239
+00:10:30,870 --> 00:10:33,430
+and you can just start
+setting the vars on it.
+
+240
+00:10:33,430 --> 00:10:36,350
+Like the aircraft, set it to "B737",
+
+241
+00:10:36,350 --> 00:10:38,500
+Boeing 737 aircraft.
+
+242
+00:10:38,500 --> 00:10:41,170
+And here's another thing
+I'm creating an Airport
+
+243
+00:10:41,170 --> 00:10:45,150
+called KSJC, and I'm
+just setting it's ICAO,
+
+244
+00:10:45,150 --> 00:10:49,980
+which is its unique identifier
+for an airport to "KSJC".
+
+245
+00:10:49,980 --> 00:10:52,670
+And I can even do pretty
+powerful var setting
+
+246
+00:10:52,670 --> 00:10:57,670
+like if I set the
+Flight's .origin to ksjc,
+
+247
+00:10:57,680 --> 00:11:00,570
+'cause kscj is an Airport,
+and the origin is a var
+
+248
+00:11:00,570 --> 00:11:04,060
+that's of type Airport, then
+that sets that relationship.
+
+249
+00:11:04,060 --> 00:11:07,280
+And that will also affect
+the opposite relationship of
+
+250
+00:11:07,280 --> 00:11:10,690
+ksjc's flightsFrom, will automatically get
+
+251
+00:11:10,690 --> 00:11:12,460
+flight added to it.
+
+252
+00:11:12,460 --> 00:11:14,330
+So you don't even have to
+worry about the balancing,
+
+253
+00:11:14,330 --> 00:11:18,620
+the two sides, one's a Set of
+Flights and one is the origin.
+
+254
+00:11:18,620 --> 00:11:20,200
+It automatically keeps both sides.
+
+255
+00:11:20,200 --> 00:11:21,900
+And if I had added it
+to the Set of Flights,
+
+256
+00:11:21,900 --> 00:11:24,410
+then it would set it as the
+origin on the other side.
+
+257
+00:11:24,410 --> 00:11:27,040
+So it's pretty cool system in that way.
+
+258
+00:11:27,040 --> 00:11:28,690
+So it's just objects and vars.
+
+259
+00:11:28,690 --> 00:11:30,360
+So you just that's looks all like
+
+260
+00:11:30,360 --> 00:11:31,660
+objects and vars to us here.
+
+261
+00:11:31,660 --> 00:11:34,510
+We don't know anything else
+about SQL or tables and rows,
+
+262
+00:11:34,510 --> 00:11:35,610
+just objects and vars.
+
+263
+00:11:37,090 --> 00:11:41,240
+Saving it, really easy, context.save(),
+
+264
+00:11:41,240 --> 00:11:45,590
+this throws, however, now
+why would trying to save it
+
+265
+00:11:45,590 --> 00:11:47,597
+throw? Well, your disc
+before could be full,
+
+266
+00:11:47,597 --> 00:11:49,390
+for one thing, it's extremely unlikely,
+
+267
+00:11:49,390 --> 00:11:52,610
+but your iOS device doesn't
+have unlimited storage,
+
+268
+00:11:52,610 --> 00:11:55,890
+but there could be possibly
+other errors, but you know,
+
+269
+00:11:55,890 --> 00:11:59,330
+generally this is not going
+to fail, but it can throw.
+
+270
+00:11:59,330 --> 00:12:02,383
+So that's why we have to put
+the try on there when we save.
+
+271
+00:12:03,760 --> 00:12:05,070
+Now, what about fetching objects?
+
+272
+00:12:05,070 --> 00:12:06,170
+Getting them out of the database?
+
+273
+00:12:06,170 --> 00:12:08,660
+Well, we do that with this
+very important objects
+
+274
+00:12:08,660 --> 00:12:11,190
+in Core Data called an NSFetchRequest.
+
+275
+00:12:11,190 --> 00:12:12,023
+All right.
+
+276
+00:12:12,023 --> 00:12:13,190
+And it has a don't care there,
+
+277
+00:12:13,190 --> 00:12:16,510
+which is the kind of thing
+that you want to fetch.
+
+278
+00:12:16,510 --> 00:12:19,530
+And you create one just by
+specifying the name of the thing
+
+279
+00:12:19,530 --> 00:12:23,520
+in your map, that is that
+thing you're trying to fetch.
+
+280
+00:12:23,520 --> 00:12:27,260
+So Flight in this case is
+what I called in my map,
+
+281
+00:12:27,260 --> 00:12:28,770
+the objects that are Flight.
+
+282
+00:12:28,770 --> 00:12:30,970
+So this is gonna create
+a FetchRequest that goes
+
+283
+00:12:30,970 --> 00:12:32,760
+and fetches Flights.
+
+284
+00:12:32,760 --> 00:12:33,900
+That's what this request is.
+
+285
+00:12:33,900 --> 00:12:37,870
+Now how does it know which
+Flight to go and get?
+
+286
+00:12:37,870 --> 00:12:41,040
+Well, this request has a
+var in it called predicate,
+
+287
+00:12:41,040 --> 00:12:44,100
+and you assign it an NSPredicate.
+
+288
+00:12:44,100 --> 00:12:46,519
+You're definitely gonna wanna
+look in the documentation
+
+289
+00:12:46,519 --> 00:12:50,200
+of NSPredicate and see all
+the incredible wide range
+
+290
+00:12:50,200 --> 00:12:53,601
+of things it can do to specify
+which Flights you want.
+
+291
+00:12:53,601 --> 00:12:56,377
+So for example, I've
+created a predicate here,
+
+292
+00:12:56,377 --> 00:12:59,120
+predicate kinda has a
+little bit of a printf
+
+293
+00:12:59,120 --> 00:13:00,560
+kind of feel to it.
+
+294
+00:13:00,560 --> 00:13:02,430
+This has been around a very long time,
+
+295
+00:13:02,430 --> 00:13:04,343
+well before Swift ever existed.
+
+296
+00:13:05,290 --> 00:13:06,740
+So it's a little printf-y.
+
+297
+00:13:06,740 --> 00:13:09,890
+And so my predicate here
+is that I want arrival is
+
+298
+00:13:09,890 --> 00:13:13,810
+before something, and the
+origin equals something.
+
+299
+00:13:13,810 --> 00:13:15,680
+And then I provide the somethings.
+
+300
+00:13:15,680 --> 00:13:19,017
+The first something is
+the current date and time.
+
+301
+00:13:19,017 --> 00:13:21,290
+And the second one is ksjc.
+
+302
+00:13:21,290 --> 00:13:22,570
+So this predicate means,
+
+303
+00:13:22,570 --> 00:13:25,840
+show me all the things that
+have arrived before now.
+
+304
+00:13:25,840 --> 00:13:29,640
+So they're already arrived,
+and their origin was San Jose.
+
+305
+00:13:29,640 --> 00:13:31,220
+They came from San Jose.
+
+306
+00:13:31,220 --> 00:13:33,460
+So that's the predicate I'm doing here.
+
+307
+00:13:33,460 --> 00:13:35,010
+So it's a little bit, you know,
+
+308
+00:13:35,870 --> 00:13:39,050
+texty kind of oriented predicates there,
+
+309
+00:13:39,050 --> 00:13:41,500
+but you have to definitely
+have to go look in the
+
+310
+00:13:41,500 --> 00:13:44,150
+documentation for
+NSPredicate to understand
+
+311
+00:13:44,150 --> 00:13:46,330
+all the things that it can do.
+
+312
+00:13:46,330 --> 00:13:47,960
+So that's specifying which of the flights
+
+313
+00:13:47,960 --> 00:13:48,910
+I want in a database.
+
+314
+00:13:48,910 --> 00:13:51,837
+Now there's one other piece of
+requests that you need here,
+
+315
+00:13:51,837 --> 00:13:54,070
+which is something called
+the sortDescriptors.
+
+316
+00:13:54,070 --> 00:13:56,620
+And that's because when we
+make this request into the
+
+317
+00:13:56,620 --> 00:13:59,320
+database, it's gonna
+come back as an Array.
+
+318
+00:13:59,320 --> 00:14:01,240
+And that Array has to be sorted.
+
+319
+00:14:01,240 --> 00:14:04,280
+And we specify the
+sortDescriptors so the sorting can
+
+320
+00:14:04,280 --> 00:14:06,550
+happen on the database side,
+
+321
+00:14:06,550 --> 00:14:09,320
+SQL database is super
+good at sorting things.
+
+322
+00:14:09,320 --> 00:14:12,150
+And so we're gonna let it
+do the sorting if possible.
+
+323
+00:14:12,150 --> 00:14:14,370
+And we do that with this
+sortDescriptors var,
+
+324
+00:14:14,370 --> 00:14:17,459
+it's just an Array of
+these NSSortDescriptors,
+
+325
+00:14:17,459 --> 00:14:21,240
+and a SortDescriptor
+simply say, what var, ident
+
+326
+00:14:21,240 --> 00:14:23,850
+in this case, that's
+the Flight identifier,
+
+327
+00:14:23,850 --> 00:14:24,950
+that you wanna sort by,
+
+328
+00:14:24,950 --> 00:14:27,420
+and whether you want it
+ascending or descending, right,
+
+329
+00:14:27,420 --> 00:14:29,720
+alphabetical order A to Z or Z to A.
+
+330
+00:14:29,720 --> 00:14:33,100
+How do we then ask our context,
+
+331
+00:14:33,100 --> 00:14:36,110
+our database, go fetch
+these things for us?
+
+332
+00:14:36,110 --> 00:14:39,870
+We do that with the fetch function.
+
+333
+00:14:39,870 --> 00:14:43,780
+So we say context.fetch this
+request and it going to go
+
+334
+00:14:43,780 --> 00:14:48,130
+out to the database and go
+find all the flights and match
+
+335
+00:14:48,130 --> 00:14:51,030
+this arrival and origin
+predicate that we have,
+
+336
+00:14:51,030 --> 00:14:52,580
+and return them to us.
+
+337
+00:14:52,580 --> 00:14:56,770
+Now, this fetch also can throw,
+just like save can throw,
+
+338
+00:14:56,770 --> 00:15:00,577
+so can fetch, and so we'd need to try it.
+
+339
+00:15:00,577 --> 00:15:02,770
+And a lot of times we'll do
+a line of code like this,
+
+340
+00:15:02,770 --> 00:15:05,010
+let flights = try?
+
+341
+00:15:05,010 --> 00:15:07,300
+and then the context.fetch.
+
+342
+00:15:07,300 --> 00:15:08,470
+If we do this,
+
+343
+00:15:08,470 --> 00:15:11,330
+then that flights var
+is either gonna be nil,
+
+344
+00:15:11,330 --> 00:15:16,330
+if the fetch failed, empty
+Array, if it did not fail,
+
+345
+00:15:17,120 --> 00:15:20,010
+but no flights matched our predicate.
+
+346
+00:15:20,010 --> 00:15:22,640
+Otherwise it's just an
+Array of flight objects,
+
+347
+00:15:22,640 --> 00:15:24,090
+the ones that matched.
+
+348
+00:15:24,090 --> 00:15:26,500
+So again, very object-oriented.
+
+349
+00:15:26,500 --> 00:15:28,360
+I'm just getting these Flight objects
+
+350
+00:15:28,360 --> 00:15:29,713
+that match my predicate.
+
+351
+00:15:30,620 --> 00:15:32,180
+I just threw all of this on one slide,
+
+352
+00:15:32,180 --> 00:15:34,807
+just so you get a feel
+for all of the code.
+
+353
+00:15:34,807 --> 00:15:37,750
+And so you have kind of a
+quick reference guide to it,
+
+354
+00:15:37,750 --> 00:15:40,560
+but we are of course,
+going to do a big demo,
+
+355
+00:15:40,560 --> 00:15:42,163
+shows all this stuff happening.
+
+356
+00:15:43,070 --> 00:15:45,230
+Now what about the integration
+with all this stuff
+
+357
+00:15:45,230 --> 00:15:46,320
+and SwiftUI?
+
+358
+00:15:46,320 --> 00:15:48,250
+Well, there's two major
+points of integration
+
+359
+00:15:48,250 --> 00:15:49,110
+we talked about.
+
+360
+00:15:49,110 --> 00:15:52,260
+One is this ObservedObject.
+
+361
+00:15:52,260 --> 00:15:55,880
+When you have a flight, as
+a var in one of your SwiftUI
+
+362
+00:15:55,880 --> 00:15:58,880
+Views, it's going to
+be an @ObservedObject.
+
+363
+00:15:58,880 --> 00:16:03,019
+You can then use it to do
+like Text(flight.ident) here,
+
+364
+00:16:03,019 --> 00:16:04,723
+and just show the ident and
+apply whatever you wanna do,
+
+365
+00:16:04,723 --> 00:16:06,670
+it's just an object.
+
+366
+00:16:06,670 --> 00:16:09,880
+The ObservedObjects, by the
+way, as far as I can tell,
+
+367
+00:16:09,880 --> 00:16:11,840
+do not seem to fire automatically
+
+368
+00:16:11,840 --> 00:16:13,890
+when things change in the database.
+
+369
+00:16:13,890 --> 00:16:15,260
+So if you want them to change,
+
+370
+00:16:15,260 --> 00:16:18,250
+you need to explicitly
+call objectWillChange.
+
+371
+00:16:18,250 --> 00:16:21,900
+But these do make these Flights
+and Airports and Airlines
+
+372
+00:16:21,900 --> 00:16:24,450
+feel like little mini ViewModels.
+
+373
+00:16:24,450 --> 00:16:26,030
+And that's really what they are.
+
+374
+00:16:26,030 --> 00:16:28,743
+They're little ViewModels,
+on a little flight,
+
+375
+00:16:29,810 --> 00:16:32,150
+but a lot of times what we
+wanna show in our UI is more
+
+376
+00:16:32,150 --> 00:16:34,210
+than just one Flight or one Airline.
+
+377
+00:16:34,210 --> 00:16:36,240
+We wanna show all the
+Flights, for example,
+
+378
+00:16:36,240 --> 00:16:38,787
+that match a certain
+FetchRequest or Predicate.
+
+379
+00:16:38,787 --> 00:16:42,400
+And so there's another
+really important feature
+
+380
+00:16:42,400 --> 00:16:46,800
+in SwiftUI, called the
+FetchRequest property wrapper.
+
+381
+00:16:46,800 --> 00:16:50,760
+Now this property wrapper, you
+create it with the arguments,
+
+382
+00:16:50,760 --> 00:16:53,150
+either the same arguments
+that go to a FetchRequest,
+
+383
+00:16:53,150 --> 00:16:54,250
+which is the entity,
+
+384
+00:16:54,250 --> 00:16:56,610
+remember that entity
+name thing was Flight,
+
+385
+00:16:56,610 --> 00:16:58,710
+and the sortDescriptors and the Predicate.
+
+386
+00:16:58,710 --> 00:17:00,460
+So you can create a FetchRequest that way,
+
+387
+00:17:00,460 --> 00:17:02,270
+or you can actually create a FetchRequest
+
+388
+00:17:02,270 --> 00:17:04,570
+just by giving it a
+FetchRequest you created,
+
+389
+00:17:04,570 --> 00:17:08,350
+either way you're specifying
+what things you want to fetch.
+
+390
+00:17:08,350 --> 00:17:10,250
+And this is a property wrapper, right?
+
+391
+00:17:10,250 --> 00:17:12,585
+So it's wrapping some var.
+
+392
+00:17:12,585 --> 00:17:16,050
+And the type of the var
+that wraps, is called a
+
+393
+00:17:16,050 --> 00:17:19,140
+FetchedResults, also has a don't care,
+
+394
+00:17:19,140 --> 00:17:21,300
+and that don't care of
+course is what kind of thing
+
+395
+00:17:21,300 --> 00:17:22,440
+it's supposed to fetch.
+
+396
+00:17:22,440 --> 00:17:24,784
+So that better match
+whatever your FetchRequest
+
+397
+00:17:24,784 --> 00:17:28,140
+says that it's trying to fetch.
+
+398
+00:17:28,140 --> 00:17:32,000
+Now this FetchedResults
+var, it's a Collection.
+
+399
+00:17:32,000 --> 00:17:34,940
+So you can pass it to ForEach
+as you'll see in a second.
+
+400
+00:17:34,940 --> 00:17:37,050
+But so it's not an Array,
+
+401
+00:17:37,050 --> 00:17:39,420
+but if you wanted to turn
+this thing into an Array
+
+402
+00:17:39,420 --> 00:17:42,450
+really easy, you could pass
+it to an Array as Array's
+
+403
+00:17:42,450 --> 00:17:44,610
+initializer 'cause an
+Array knows how to take any
+
+404
+00:17:44,610 --> 00:17:46,870
+Collection and turn it into an Array.
+
+405
+00:17:46,870 --> 00:17:49,370
+You could also send it
+messages like sorted,
+
+406
+00:17:49,370 --> 00:17:51,640
+sorted can be sent to any Collection,
+
+407
+00:17:51,640 --> 00:17:53,010
+and it returns an Array.
+
+408
+00:17:53,010 --> 00:17:57,140
+And that Collection is full of
+those kinds of objects which
+
+409
+00:17:57,140 --> 00:18:00,450
+you're fetching, Flight
+objects or Airport objects.
+
+410
+00:18:00,450 --> 00:18:05,100
+Now what's cool about this
+var that you're creating here,
+
+411
+00:18:05,100 --> 00:18:08,640
+Flights or Airports is that
+it's continuously trying to
+
+412
+00:18:08,640 --> 00:18:11,450
+fetch that FetchRequest.
+
+413
+00:18:11,450 --> 00:18:12,283
+All right,
+
+414
+00:18:12,283 --> 00:18:14,620
+this is not a one-time fetch,
+where it's gonna fetch out
+
+415
+00:18:14,620 --> 00:18:15,600
+and give you the results.
+
+416
+00:18:15,600 --> 00:18:18,250
+It's continuously doing this fetch.
+
+417
+00:18:18,250 --> 00:18:19,680
+It's like a standing query.
+
+418
+00:18:19,680 --> 00:18:23,550
+And so every time a new Airport
+or a new Flight is added
+
+419
+00:18:23,550 --> 00:18:26,420
+there, or even if an existing
+Airport or Flight changes
+
+420
+00:18:26,420 --> 00:18:29,940
+one of its vars, so that now
+it matches your predicate,
+
+421
+00:18:29,940 --> 00:18:32,170
+it's going to update.
+
+422
+00:18:32,170 --> 00:18:33,460
+And when it updates,
+
+423
+00:18:33,460 --> 00:18:37,710
+your SwiftUI is gonna get
+invalidated and redrawn.
+
+424
+00:18:37,710 --> 00:18:40,620
+And so your UI is always
+going to be showing
+
+425
+00:18:40,620 --> 00:18:42,060
+what's in the database.
+
+426
+00:18:42,060 --> 00:18:45,520
+You don't ever have to
+tell it to go fetch.
+
+427
+00:18:45,520 --> 00:18:48,760
+And this is all part of the
+declarative nature of SwiftUI.
+
+428
+00:18:48,760 --> 00:18:50,650
+You don't say to do things,
+
+429
+00:18:50,650 --> 00:18:52,950
+in SwiftUI you just declare
+the things are a certain
+
+430
+00:18:52,950 --> 00:18:55,160
+way, and they always are that way.
+
+431
+00:18:55,160 --> 00:18:56,820
+And of course, with Core Data,
+
+432
+00:18:56,820 --> 00:18:58,750
+we always want them to look like whatever
+
+433
+00:18:58,750 --> 00:19:00,110
+is in the database.
+
+434
+00:19:00,110 --> 00:19:03,310
+So we tend to use @FetchRequests,
+
+435
+00:19:03,310 --> 00:19:07,380
+sometimes even when we're just
+fetching one object, right?
+
+436
+00:19:07,380 --> 00:19:10,570
+We might be having the
+predicate, just be like ident,
+
+437
+00:19:10,570 --> 00:19:12,860
+equal something for a
+Flight, that's ever only
+
+438
+00:19:12,860 --> 00:19:14,100
+gonna match one Flight.
+
+439
+00:19:14,100 --> 00:19:16,150
+But the great thing is
+if that Flight changes,
+
+440
+00:19:16,150 --> 00:19:18,230
+this is going to be updated.
+
+441
+00:19:18,230 --> 00:19:21,150
+That's why the fact that the
+ObservedObjects up there,
+
+442
+00:19:21,150 --> 00:19:23,813
+we were talking about don't
+seem to kind of do their
+
+443
+00:19:23,813 --> 00:19:26,150
+objectWillChange when something changes.
+
+444
+00:19:26,150 --> 00:19:27,580
+That really is not a big problem,
+
+445
+00:19:27,580 --> 00:19:29,970
+because we would just maybe
+have a FetchRequest that
+
+446
+00:19:29,970 --> 00:19:31,010
+fetches that one thing.
+
+447
+00:19:31,010 --> 00:19:34,210
+And that will change, because
+FetchRequest is always
+
+448
+00:19:34,210 --> 00:19:35,950
+tracking what's happening in the database.
+
+449
+00:19:35,950 --> 00:19:38,540
+It's really a fantastic property wrapper.
+
+450
+00:19:38,540 --> 00:19:42,330
+This API that you're seeing
+right here is a really elegant,
+
+451
+00:19:42,330 --> 00:19:46,060
+simple one thing to make it
+so that your UI is always
+
+452
+00:19:46,060 --> 00:19:47,670
+matching up against Core Data.
+
+453
+00:19:47,670 --> 00:19:49,170
+So that's really, really cool.
+
+454
+00:19:50,500 --> 00:19:53,520
+By the way I show the
+FetchRequest up there.
+
+455
+00:19:53,520 --> 00:19:55,220
+I'm creating it.
+
+456
+00:19:55,220 --> 00:19:58,410
+When I declare the vars with
+the FetchRequest I want,
+
+457
+00:19:58,410 --> 00:20:00,690
+but of course you could just
+declare it and I'll show you
+
+458
+00:20:00,690 --> 00:20:02,810
+this in the demo and then use your init
+
+459
+00:20:02,810 --> 00:20:05,410
+and set the _flights, right, _flights
+
+460
+00:20:05,410 --> 00:20:08,410
+is the actual struct,
+the FetchRequest struct
+
+461
+00:20:08,410 --> 00:20:10,330
+to be something you create then.
+
+462
+00:20:10,330 --> 00:20:13,000
+So if you're passing the
+predicate in, for example,
+
+463
+00:20:13,000 --> 00:20:15,810
+that you wanna use, you
+can pass it into your init,
+
+464
+00:20:15,810 --> 00:20:18,610
+and then your init can just
+initialize that FetchRequest
+
+465
+00:20:18,610 --> 00:20:21,630
+thing, just like we've
+initialized, Bindings this way,
+
+466
+00:20:21,630 --> 00:20:24,130
+State with its wrapped value,
+
+467
+00:20:24,130 --> 00:20:25,877
+you can do the same thing here.
+
+468
+00:20:25,877 --> 00:20:27,830
+And we'll see that in the demo.
+
+469
+00:20:27,830 --> 00:20:31,850
+And speaking of which, lets
+dive right into the demo and
+
+470
+00:20:31,850 --> 00:20:34,300
+show you what it looks
+like to do all this stuff.
+
+471
+00:20:35,480 --> 00:20:38,890
+Our goal in this demo is
+to convert our Enroute,
+
+472
+00:20:38,890 --> 00:20:42,290
+to use our Core Data database
+and store all the information
+
+473
+00:20:42,290 --> 00:20:45,190
+that comes down from
+FlightAware into a database,
+
+474
+00:20:45,190 --> 00:20:48,800
+and then build our whole UI by
+just looking in the database.
+
+475
+00:20:48,800 --> 00:20:50,930
+Right now, we actually fetch this stuff.
+
+476
+00:20:50,930 --> 00:20:52,630
+And as it comes back in FlightAware,
+
+477
+00:20:52,630 --> 00:20:54,240
+we're showing it in our UI directly,
+
+478
+00:20:54,240 --> 00:20:56,630
+here we're gonna fetch
+it all from FlightAware,
+
+479
+00:20:56,630 --> 00:20:58,800
+put in a database, and then have our UI,
+
+480
+00:20:58,800 --> 00:21:00,810
+totally just looking at the database.
+
+481
+00:21:00,810 --> 00:21:04,560
+And this is a common kind of
+paradigm for developing an
+
+482
+00:21:04,560 --> 00:21:08,010
+application that fetches data,
+instead of having to try and
+
+483
+00:21:08,010 --> 00:21:10,730
+to keep track with it
+and get it all the latest
+
+484
+00:21:10,730 --> 00:21:11,900
+information all the time,
+
+485
+00:21:11,900 --> 00:21:12,977
+you just throw it in the database.
+
+486
+00:21:12,977 --> 00:21:15,280
+And so you're always
+looking at the database
+
+487
+00:21:15,280 --> 00:21:18,080
+and makes your code a lot
+simpler on the UI side.
+
+488
+00:21:18,080 --> 00:21:19,830
+That's exactly what we're gonna do.
+
+489
+00:21:20,690 --> 00:21:22,850
+Now, if you wanna use
+Core Data in your app,
+
+490
+00:21:22,850 --> 00:21:27,830
+the best way to do it, is
+when you say "New Project"
+
+491
+00:21:27,830 --> 00:21:31,950
+over here, click this
+button, use Core Data.
+
+492
+00:21:31,950 --> 00:21:33,450
+If you click this button, use Core Data,
+
+493
+00:21:33,450 --> 00:21:36,770
+you're gonna get the small
+amount of very important code
+
+494
+00:21:36,770 --> 00:21:40,640
+that hooks you up to a database,
+this additional button,
+
+495
+00:21:40,640 --> 00:21:43,130
+by the way you use CloudKit,
+that's pretty cool.
+
+496
+00:21:43,130 --> 00:21:45,060
+That will make it so that
+everything you put in your
+
+497
+00:21:45,060 --> 00:21:48,360
+database gets mirrored up to iCloud.
+
+498
+00:21:48,360 --> 00:21:51,670
+And that way the user will
+see it in all their devices
+
+499
+00:21:51,670 --> 00:21:52,503
+in Core Data.
+
+500
+00:21:52,503 --> 00:21:53,520
+Pretty amazing.
+
+501
+00:21:53,520 --> 00:21:55,270
+We're not gonna do that part of it.
+
+502
+00:21:55,270 --> 00:21:56,710
+This demo is already long enough,
+
+503
+00:21:56,710 --> 00:21:58,700
+so we'll just focus on the Core Data part,
+
+504
+00:21:58,700 --> 00:22:00,740
+but it's really not that complicated.
+
+505
+00:22:00,740 --> 00:22:01,610
+If you're interested in that,
+
+506
+00:22:01,610 --> 00:22:03,693
+you can certainly look up how to do that.
+
+507
+00:22:04,620 --> 00:22:06,100
+Now, if you've already started your app,
+
+508
+00:22:06,100 --> 00:22:08,650
+like we have with Enroute
+and you wanna add,
+
+509
+00:22:08,650 --> 00:22:10,510
+Core Data functionality to it,
+
+510
+00:22:10,510 --> 00:22:12,560
+I actually recommend doing what I did,
+
+511
+00:22:12,560 --> 00:22:15,800
+which went right back and
+created a new project anyway,
+
+512
+00:22:15,800 --> 00:22:18,280
+and then just copied
+and pasted all my code,
+
+513
+00:22:18,280 --> 00:22:21,150
+dragged my files back
+into the new project,
+
+514
+00:22:21,150 --> 00:22:23,480
+because this little switch,
+it does a really good job,
+
+515
+00:22:23,480 --> 00:22:24,803
+by just setting things up.
+
+516
+00:22:25,700 --> 00:22:26,910
+And so let's look at that setup.
+
+517
+00:22:26,910 --> 00:22:30,050
+Let's see what it is
+this little switch did.
+
+518
+00:22:30,050 --> 00:22:33,660
+And really added two
+important pieces of code.
+
+519
+00:22:33,660 --> 00:22:36,300
+One is right here in this
+thing called AppDelegate,
+
+520
+00:22:36,300 --> 00:22:39,330
+which we haven't even
+looked at AppDelegate yet,
+
+521
+00:22:39,330 --> 00:22:41,640
+but we're gonna look at it right now,
+
+522
+00:22:41,640 --> 00:22:44,080
+and here you can see it's added
+this thing called Core Data
+
+523
+00:22:44,080 --> 00:22:47,350
+stack with this persistent
+container right here.
+
+524
+00:22:47,350 --> 00:22:51,270
+That's the thing that holds
+your Core Data database.
+
+525
+00:22:51,270 --> 00:22:54,260
+And so we are going to use this,
+
+526
+00:22:54,260 --> 00:22:56,590
+to access the database.
+
+527
+00:22:56,590 --> 00:22:59,810
+In our SceneDelegate
+where we create our little
+
+528
+00:22:59,810 --> 00:23:03,082
+FlightsEnrouteView, notice
+it's added a couple of lines of
+
+529
+00:23:03,082 --> 00:23:06,500
+code here, this context,
+which looks in that persistent
+
+530
+00:23:06,500 --> 00:23:08,760
+container, we were just talking about it,
+
+531
+00:23:08,760 --> 00:23:11,390
+get something called a context.
+
+532
+00:23:11,390 --> 00:23:15,500
+In this context is then
+passed via the Environment
+
+533
+00:23:15,500 --> 00:23:17,050
+to all of our Views.
+
+534
+00:23:17,050 --> 00:23:20,760
+Now we want to be very sure
+that when we put up a new
+
+535
+00:23:20,760 --> 00:23:23,990
+Environment of Views, like when
+we use a sheet or a popover
+
+536
+00:23:23,990 --> 00:23:27,550
+or something like that, that
+we pass this along to it.
+
+537
+00:23:27,550 --> 00:23:29,720
+Now remember an Environment
+when you give it to a View,
+
+538
+00:23:29,720 --> 00:23:32,803
+all the Views that are in it's
+body, actually in it's body,
+
+539
+00:23:32,803 --> 00:23:34,830
+get the same Environment.
+
+540
+00:23:34,830 --> 00:23:36,170
+So you don't have to pass them there.
+
+541
+00:23:36,170 --> 00:23:37,940
+But if you do a sheet or popover now,
+
+542
+00:23:37,940 --> 00:23:41,400
+you're kind of going
+off to a new base body.
+
+543
+00:23:41,400 --> 00:23:43,520
+And so you do need to pass,
+and you're gonna see that,
+
+544
+00:23:43,520 --> 00:23:45,520
+'cause of course, we do
+do a sheet in this app,
+
+545
+00:23:45,520 --> 00:23:47,743
+we have that filter flights.
+
+546
+00:23:49,020 --> 00:23:52,540
+So this context is our
+window onto the database.
+
+547
+00:23:52,540 --> 00:23:55,830
+Where is the database herself
+or what is the database?
+
+548
+00:23:55,830 --> 00:23:59,340
+And the database is something
+we designed using this little
+
+549
+00:23:59,340 --> 00:24:00,470
+folder right down here,
+
+550
+00:24:00,470 --> 00:24:03,620
+which is also provided
+by that use Core Data.
+
+551
+00:24:03,620 --> 00:24:04,600
+Here it is.
+
+552
+00:24:04,600 --> 00:24:07,080
+This is all of the objects
+
+553
+00:24:07,080 --> 00:24:08,810
+that we're going to
+create in our database.
+
+554
+00:24:08,810 --> 00:24:12,810
+Now, remember this is an
+object-oriented programming layer
+
+555
+00:24:12,810 --> 00:24:16,270
+on top of, in this case, a SQL database.
+
+556
+00:24:16,270 --> 00:24:17,877
+A normal relational database.
+
+557
+00:24:17,877 --> 00:24:19,730
+And so it's doing all the mapping for us.
+
+558
+00:24:19,730 --> 00:24:22,070
+We don't have no idea that
+that's a SQL database and we
+
+559
+00:24:22,070 --> 00:24:25,060
+don't wanna know, we're just
+gonna create our objects.
+
+560
+00:24:25,060 --> 00:24:26,920
+And that's what this tool right here,
+
+561
+00:24:26,920 --> 00:24:30,730
+this tool that's editing
+this .xcdatamodeld file
+
+562
+00:24:30,730 --> 00:24:33,680
+is letting us do, define
+what objects we want in the
+
+563
+00:24:33,680 --> 00:24:37,640
+database, what vars are on those objects.
+
+564
+00:24:37,640 --> 00:24:39,730
+So let's dive right in
+and create our objects.
+
+565
+00:24:39,730 --> 00:24:41,070
+This is Enroute.
+
+566
+00:24:41,070 --> 00:24:42,490
+What objects do we have?
+
+567
+00:24:42,490 --> 00:24:44,180
+Well, we have the flights.
+
+568
+00:24:44,180 --> 00:24:45,360
+That's the main object,
+
+569
+00:24:45,360 --> 00:24:47,110
+all these flights that we're showing,
+
+570
+00:24:47,110 --> 00:24:50,020
+but we also have some kind
+of helper objects like the
+
+571
+00:24:50,020 --> 00:24:52,570
+airline and airport objects.
+
+572
+00:24:52,570 --> 00:24:56,680
+So let's create Flight, Airline
+and Airport objects here.
+
+573
+00:24:56,680 --> 00:25:00,417
+This entities is the list
+of objects that we want.
+
+574
+00:25:00,417 --> 00:25:03,250
+And we add them down here
+where it says, add entity.
+
+575
+00:25:03,250 --> 00:25:05,050
+So boom, there it is.
+
+576
+00:25:05,050 --> 00:25:08,550
+Let's call our first entity, Airport.
+
+577
+00:25:08,550 --> 00:25:10,840
+Let's add another entity,
+
+578
+00:25:10,840 --> 00:25:15,480
+call this one, Airline,
+and our third entity,
+
+579
+00:25:15,480 --> 00:25:17,223
+which is a Flight.
+
+580
+00:25:19,090 --> 00:25:20,670
+So we've created the object right here,
+
+581
+00:25:20,670 --> 00:25:22,210
+but they have no vars.
+
+582
+00:25:22,210 --> 00:25:24,680
+This on the right, over
+here is showing the vars,
+
+583
+00:25:24,680 --> 00:25:27,270
+especially this part of
+the top of your attributes,
+
+584
+00:25:27,270 --> 00:25:30,610
+and none of our objects
+have any vars yet of course.
+
+585
+00:25:30,610 --> 00:25:33,320
+Let's start with the
+simplest one, Airline.
+
+586
+00:25:33,320 --> 00:25:35,040
+It only has three vars.
+
+587
+00:25:35,040 --> 00:25:39,617
+It has a code, and this
+code is of type String.
+
+588
+00:25:41,050 --> 00:25:42,490
+So this is how we add a var,
+
+589
+00:25:42,490 --> 00:25:44,110
+we just press the plus,
+
+590
+00:25:44,110 --> 00:25:47,640
+give it the vars a name,
+and then it's type.
+
+591
+00:25:47,640 --> 00:25:51,170
+It also has a name.
+
+592
+00:25:51,170 --> 00:25:55,303
+The name is also a String, and
+that's the full name of the
+
+593
+00:25:55,303 --> 00:25:59,030
+airline like "United
+Airlines Incorporated",
+
+594
+00:25:59,030 --> 00:26:00,310
+something like that.
+
+595
+00:26:00,310 --> 00:26:03,930
+But it also has a short name
+in the FlightAware information
+
+596
+00:26:03,930 --> 00:26:08,210
+that comes back and that's
+like, "United" just short, short
+
+597
+00:26:08,210 --> 00:26:11,687
+and sweet, not quite a nickname,
+but shortened name of it.
+
+598
+00:26:11,687 --> 00:26:12,520
+And that's it.
+
+599
+00:26:12,520 --> 00:26:14,820
+That's all that comes
+back from FlightAware
+
+600
+00:26:14,820 --> 00:26:17,800
+for Airline that we're
+interested right here.
+
+601
+00:26:17,800 --> 00:26:18,730
+What about Airport?
+
+602
+00:26:18,730 --> 00:26:22,530
+So Airport had a very important
+thing called the ICAO,
+
+603
+00:26:22,530 --> 00:26:27,530
+that is a String, that's
+like KSFO or KDFW, KSJC
+
+604
+00:26:29,190 --> 00:26:31,700
+for San Jose, that's it's unique code.
+
+605
+00:26:31,700 --> 00:26:33,970
+You notice they all start
+with K as airports in the
+
+606
+00:26:33,970 --> 00:26:36,150
+United States start with K.
+
+607
+00:26:36,150 --> 00:26:40,410
+So that is very important
+one for us to have obviously,
+
+608
+00:26:40,410 --> 00:26:42,170
+but they will also get
+kind of cool things,
+
+609
+00:26:42,170 --> 00:26:44,300
+like we get the latitude and longitude.
+
+610
+00:26:44,300 --> 00:26:46,170
+Those are Doubles.
+
+611
+00:26:46,170 --> 00:26:49,630
+Those come across from
+FlightAware as numbers,
+
+612
+00:26:49,630 --> 00:26:51,170
+and so we're gonna store them here
+
+613
+00:26:51,170 --> 00:26:53,513
+in our database as Doubles.
+
+614
+00:26:54,410 --> 00:26:57,280
+Got some other stuff like
+the location of the Airport.
+
+615
+00:26:57,280 --> 00:27:00,750
+So for San Jose, that's
+San Jose, California
+
+616
+00:27:00,750 --> 00:27:02,150
+is the location of it.
+
+617
+00:27:02,150 --> 00:27:05,910
+And we also have the
+time zone that it's in.
+
+618
+00:27:05,910 --> 00:27:10,010
+When we fly around up there
+in the skies, all the pilots,
+
+619
+00:27:10,010 --> 00:27:13,930
+everything is going on in GMT,
+right, Greenwich meantime.
+
+620
+00:27:13,930 --> 00:27:17,400
+So it's nice to know, the time
+zone of the actual airport
+
+621
+00:27:17,400 --> 00:27:19,890
+we're going to so we can
+convert to local time.
+
+622
+00:27:19,890 --> 00:27:22,490
+And then all the airports have a name.
+
+623
+00:27:22,490 --> 00:27:25,210
+Like I think San Francisco
+International Airport
+
+624
+00:27:25,210 --> 00:27:27,083
+is its full name of SFO.
+
+625
+00:27:28,220 --> 00:27:29,053
+That's Airports.
+
+626
+00:27:29,053 --> 00:27:30,290
+What about the Flight?
+
+627
+00:27:30,290 --> 00:27:34,170
+Flights have something called
+in FlightAware an ident.
+
+628
+00:27:34,170 --> 00:27:38,520
+This is like UA475 United
+airlines, flight 475.
+
+629
+00:27:38,520 --> 00:27:40,120
+That its unique identifier.
+
+630
+00:27:40,120 --> 00:27:41,470
+We definitely wanna be able to uniquely
+
+631
+00:27:41,470 --> 00:27:43,423
+identify our flights.
+
+632
+00:27:44,410 --> 00:27:47,640
+Our Flights also have aircraft.
+
+633
+00:27:47,640 --> 00:27:52,640
+So this is like, a String
+"737" or something like that.
+
+634
+00:27:52,990 --> 00:27:56,990
+Of course we have the arrival
+time and departure times.
+
+635
+00:27:56,990 --> 00:28:01,923
+Those are Dates, go Date
+here, arrival and departure.
+
+636
+00:28:03,400 --> 00:28:06,100
+And it turns out that Flights
+also have another Date,
+
+637
+00:28:06,100 --> 00:28:09,990
+which is their filed departure,
+because some flights are
+
+638
+00:28:09,990 --> 00:28:11,870
+still on the ground, they haven't left yet
+
+639
+00:28:11,870 --> 00:28:14,270
+either delay or they're
+not scheduled to leave yet,
+
+640
+00:28:14,270 --> 00:28:17,700
+but they've filed, the pilot
+has filed for a certain time
+
+641
+00:28:17,700 --> 00:28:19,810
+that they want you to depart.
+
+642
+00:28:19,810 --> 00:28:20,950
+So that's it.
+
+643
+00:28:20,950 --> 00:28:24,560
+These are our objects and their vars,
+
+644
+00:28:24,560 --> 00:28:27,200
+but there's one more piece
+to our object-oriented puzzle
+
+645
+00:28:27,200 --> 00:28:30,880
+here, which is the
+relationships between objects.
+
+646
+00:28:30,880 --> 00:28:35,150
+For example, a Flight has an
+origin and destination Airport.
+
+647
+00:28:35,150 --> 00:28:36,490
+It has a relationship there,
+
+648
+00:28:36,490 --> 00:28:38,940
+that a Flight also has an Airline.
+
+649
+00:28:38,940 --> 00:28:42,070
+So we can add these relationships
+in this section here,
+
+650
+00:28:42,070 --> 00:28:45,620
+relationship, but we usually
+don't do it that way.
+
+651
+00:28:45,620 --> 00:28:48,530
+Instead we go over here, down
+to this editor style in the
+
+652
+00:28:48,530 --> 00:28:51,640
+corner, and we switch from
+this kind of table-oriented
+
+653
+00:28:51,640 --> 00:28:55,010
+one we're at, to this graphical version.
+
+654
+00:28:55,010 --> 00:28:57,177
+And this is giving us the same
+information as we just had,
+
+655
+00:28:57,177 --> 00:29:01,450
+depending on a little graphical
+version and these individual
+
+656
+00:29:01,450 --> 00:29:03,080
+vars, if we click on them,
+
+657
+00:29:03,080 --> 00:29:05,810
+we can see the types and
+all that by going over here
+
+658
+00:29:05,810 --> 00:29:08,350
+and bring up this third pane inspector,
+
+659
+00:29:08,350 --> 00:29:10,520
+which we really have not looked at,
+
+660
+00:29:10,520 --> 00:29:12,710
+all quarter long because
+SwiftUI doesn't really use it
+
+661
+00:29:12,710 --> 00:29:15,380
+that much, but really valuable here.
+
+662
+00:29:15,380 --> 00:29:19,230
+It's the fourth tab
+over in this inspector,
+
+663
+00:29:19,230 --> 00:29:22,330
+and showing this location is
+the var and here's this type
+
+664
+00:29:22,330 --> 00:29:24,640
+notice it says, "Optional" right here.
+
+665
+00:29:24,640 --> 00:29:29,080
+This does not mean optional
+like Swift Optionals.
+
+666
+00:29:29,080 --> 00:29:31,300
+This means it's optional in the database.
+
+667
+00:29:31,300 --> 00:29:33,980
+So this unfortunate, this
+has the exact thing name,
+
+668
+00:29:33,980 --> 00:29:36,110
+but it really has nothing to do with that.
+
+669
+00:29:36,110 --> 00:29:39,697
+All of these vars and
+Swift, will be Optionals.
+
+670
+00:29:40,644 --> 00:29:44,210
+And that's really a design
+decision there that's made
+
+671
+00:29:44,210 --> 00:29:47,310
+because your database might be
+corrupted and you might think
+
+672
+00:29:47,310 --> 00:29:50,600
+that all of these things
+have values, but they don't.
+
+673
+00:29:50,600 --> 00:29:54,120
+They're the object was started
+to be created and it failed,
+
+674
+00:29:54,120 --> 00:29:56,030
+and so now these vars aren't set.
+
+675
+00:29:56,030 --> 00:29:58,250
+So that's why these are optional.
+
+676
+00:29:58,250 --> 00:30:01,290
+And I'm gonna show you a
+little bit of a design strategy
+
+677
+00:30:01,290 --> 00:30:04,300
+or whatever in my code, to
+kind of identify the ones that
+
+678
+00:30:04,300 --> 00:30:07,584
+really should never be optional,
+and cover them a little bit
+
+679
+00:30:07,584 --> 00:30:10,890
+with some syntactic sugar, or
+really I'm just gonna use a
+
+680
+00:30:10,890 --> 00:30:14,070
+computed var to make them not be optional.
+
+681
+00:30:14,070 --> 00:30:15,150
+You'll see how we do that.
+
+682
+00:30:15,150 --> 00:30:17,610
+But by default, all of these
+are optional and it has nothing
+
+683
+00:30:17,610 --> 00:30:19,700
+to do with this switch right here.
+
+684
+00:30:19,700 --> 00:30:20,740
+So we can set other things,
+
+685
+00:30:20,740 --> 00:30:22,500
+default value and things like that.
+
+686
+00:30:22,500 --> 00:30:25,400
+But mostly what we're doing
+here in this graphical
+
+687
+00:30:25,400 --> 00:30:30,310
+arrangement is to create
+connections between these objects.
+
+688
+00:30:30,310 --> 00:30:32,440
+For example, let's talk about our Flight.
+
+689
+00:30:32,440 --> 00:30:36,560
+It wants its destination
+airport, and its origin airport.
+
+690
+00:30:36,560 --> 00:30:37,393
+So how do we do that?
+
+691
+00:30:37,393 --> 00:30:39,050
+Well, we do that with the control key.
+
+692
+00:30:39,050 --> 00:30:42,010
+So I'm holding down control,
+you can see the plus appears.
+
+693
+00:30:42,010 --> 00:30:45,030
+I'm gonna drag from my Flight,
+
+694
+00:30:45,030 --> 00:30:48,540
+over to my Airport here and let go.
+
+695
+00:30:48,540 --> 00:30:52,040
+And it creates a little
+relationship here, a little line.
+
+696
+00:30:52,040 --> 00:30:55,340
+Now this is just gonna
+be a var on each side,
+
+697
+00:30:55,340 --> 00:30:56,270
+on the Flight side,
+
+698
+00:30:56,270 --> 00:30:58,790
+it's currently calling
+this var newRelationship.
+
+699
+00:30:58,790 --> 00:31:00,880
+I'm just double clicking
+on it right there,
+
+700
+00:31:00,880 --> 00:31:04,340
+but I actually want this to
+be my destination Airport.
+
+701
+00:31:04,340 --> 00:31:07,180
+I'm calling this var destination.
+
+702
+00:31:07,180 --> 00:31:10,640
+Now, what type is this
+var going to be in my code
+
+703
+00:31:10,640 --> 00:31:13,810
+when Xcode creates all the
+code that makes this object
+
+704
+00:31:13,810 --> 00:31:17,280
+stuff work, this is just
+gonna be a var that is a type
+
+705
+00:31:17,280 --> 00:31:19,980
+Airport, because the Airport is an object,
+
+706
+00:31:19,980 --> 00:31:21,700
+we're doing object-oriented
+programming here.
+
+707
+00:31:21,700 --> 00:31:24,730
+Each of these is a kind of
+new object that Xcode is gonna
+
+708
+00:31:24,730 --> 00:31:25,770
+create the code for us.
+
+709
+00:31:25,770 --> 00:31:27,510
+It's really kind of cool.
+
+710
+00:31:27,510 --> 00:31:28,990
+Now what about on this side Airport?
+
+711
+00:31:28,990 --> 00:31:31,830
+Well, this relationship
+here is really like
+
+712
+00:31:31,830 --> 00:31:34,922
+the Flights to this Airport.
+
+713
+00:31:34,922 --> 00:31:37,470
+And this is Flights, plural,
+
+714
+00:31:37,470 --> 00:31:41,400
+because if I have 20 Flights
+all going to the same Airport,
+
+715
+00:31:41,400 --> 00:31:44,330
+well then this is kind of gotta be
+
+716
+00:31:44,330 --> 00:31:45,690
+multiple Flights or something.
+
+717
+00:31:45,690 --> 00:31:46,620
+How does that work?
+
+718
+00:31:46,620 --> 00:31:48,550
+Because this can't be a Flight.
+
+719
+00:31:48,550 --> 00:31:51,040
+This has gotta be like a bunch of Flights.
+
+720
+00:31:51,040 --> 00:31:54,400
+And indeed the way we do
+that is we can inspect this
+
+721
+00:31:54,400 --> 00:31:58,080
+particular relationship and
+say that instead of a "To One"
+
+722
+00:31:58,080 --> 00:32:01,750
+relationship, where there's
+one Flight per Airport here,
+
+723
+00:32:01,750 --> 00:32:05,860
+it is a "To Many" relationship
+and you can see that the
+
+724
+00:32:05,860 --> 00:32:08,150
+arrow became double arrow.
+
+725
+00:32:08,150 --> 00:32:11,550
+Now this is no longer just one Flight.
+
+726
+00:32:11,550 --> 00:32:13,730
+It is multiple Flights, which makes sense.
+
+727
+00:32:13,730 --> 00:32:18,393
+An Airport has multiple
+Flights that are heading to it.
+
+728
+00:32:19,560 --> 00:32:22,080
+And what is gonna be the type of this var,
+
+729
+00:32:22,080 --> 00:32:23,740
+this var flightsTo?
+
+730
+00:32:23,740 --> 00:32:27,860
+Its type is gonna be a Set of Flights.
+
+731
+00:32:27,860 --> 00:32:30,870
+Unfortunately, it's not
+a Swift Set of Flights.
+
+732
+00:32:30,870 --> 00:32:34,120
+It's the old Objective-C Set of Flights.
+
+733
+00:32:34,120 --> 00:32:36,520
+So you're gonna see us having
+to do another little bit of
+
+734
+00:32:36,520 --> 00:32:41,132
+cleaning up, syntactic sugar,
+computed var to make this into
+
+735
+00:32:41,132 --> 00:32:44,800
+be what we want, which we
+really want it to be a Swift Set
+
+736
+00:32:44,800 --> 00:32:48,000
+of Flights, not an
+Objective-C set of Flights.
+
+737
+00:32:48,000 --> 00:32:50,400
+And this is one of the few
+places where Objective-C leaks
+
+738
+00:32:50,400 --> 00:32:54,550
+through in Core Data
+unfortunately, but easily fixed.
+
+739
+00:32:54,550 --> 00:32:58,320
+Now I'm gonna do another control
+drag from Flight up here,
+
+740
+00:32:58,320 --> 00:33:00,120
+for the origin Airport.
+
+741
+00:33:00,120 --> 00:33:03,870
+So that new relationship
+down here is origin, origin
+
+742
+00:33:05,020 --> 00:33:07,810
+and up here, this is the
+relationship on this side
+
+743
+00:33:07,810 --> 00:33:11,840
+is flightsFrom, and this flightsFrom,
+
+744
+00:33:11,840 --> 00:33:14,190
+is also a "To Many" relationship.
+
+745
+00:33:14,190 --> 00:33:17,130
+So both of these are
+"To Many" relationships.
+
+746
+00:33:17,130 --> 00:33:18,240
+And Airline, same thing as
+
+747
+00:33:18,240 --> 00:33:21,150
+Flight, of course, every
+Flight is operated by an
+
+748
+00:33:21,150 --> 00:33:23,174
+Firline, so we'll have
+the relationship here,
+
+749
+00:33:23,174 --> 00:33:25,410
+called airline on this side.
+
+750
+00:33:25,410 --> 00:33:27,560
+And similar here, this is flights.
+
+751
+00:33:27,560 --> 00:33:32,020
+These are all of the Flights
+being operated by this Airline.
+
+752
+00:33:32,020 --> 00:33:34,423
+So that is a "To Many" relationship.
+
+753
+00:33:35,450 --> 00:33:38,190
+Now all of this work we're
+doing here to connect these up
+
+754
+00:33:38,190 --> 00:33:40,750
+and create these little relationship vars,
+
+755
+00:33:40,750 --> 00:33:43,830
+we can see it back in the
+normal editor style right here.
+
+756
+00:33:43,830 --> 00:33:44,900
+So here's Airline.
+
+757
+00:33:44,900 --> 00:33:48,550
+It has flights, Airport
+has flightsFrom and to,
+
+758
+00:33:48,550 --> 00:33:51,743
+Flight has destination,
+origin, and airline.
+
+759
+00:33:53,120 --> 00:33:54,120
+So that's it.
+
+760
+00:33:54,120 --> 00:33:58,920
+That is how we build
+our object model here.
+
+761
+00:33:58,920 --> 00:34:02,870
+All the code that's required
+to make these objects exist and
+
+762
+00:34:02,870 --> 00:34:07,507
+have all these vars exist, is
+totally done for us by Xcode.
+
+763
+00:34:07,507 --> 00:34:09,330
+And we just hit build here.
+
+764
+00:34:09,330 --> 00:34:11,820
+It goes through and creates all the code
+
+765
+00:34:11,820 --> 00:34:13,950
+that's necessary to make that work.
+
+766
+00:34:13,950 --> 00:34:17,190
+The only code we're going
+to add is in extensions.
+
+767
+00:34:17,190 --> 00:34:20,490
+So we're gonna add some
+code in extensions here.
+
+768
+00:34:20,490 --> 00:34:21,970
+This is object-oriented programming,
+
+769
+00:34:21,970 --> 00:34:24,830
+of course we want our objects
+to do more than just have
+
+770
+00:34:24,830 --> 00:34:28,430
+these vars, we want it to
+have some behavior as well.
+
+771
+00:34:28,430 --> 00:34:31,313
+We'll be adding that
+behavior using extensions.
+
+772
+00:34:32,310 --> 00:34:33,510
+Let's go back now.
+
+773
+00:34:33,510 --> 00:34:35,620
+Now that we have our
+whole object model here,
+
+774
+00:34:35,620 --> 00:34:37,510
+we have all the objects we wanna create,
+
+775
+00:34:37,510 --> 00:34:40,260
+lets go use them in our UI.
+
+776
+00:34:40,260 --> 00:34:43,500
+So here's our UI code that
+we've built from last time,
+
+777
+00:34:43,500 --> 00:34:46,860
+it's still based on this
+FlightFetcher mechanism,
+
+778
+00:34:46,860 --> 00:34:49,270
+and we're gonna completely
+replace the FlightFetcher.
+
+779
+00:34:49,270 --> 00:34:52,560
+I'm gonna eventually comment
+FlightFetcher out completely.
+
+780
+00:34:52,560 --> 00:34:55,790
+And instead we're gonna use
+an object-oriented approach
+
+781
+00:34:55,790 --> 00:34:56,853
+to building our UI.
+
+782
+00:34:58,060 --> 00:35:00,580
+By the way, before we get started,
+
+783
+00:35:00,580 --> 00:35:02,070
+take a look at the top of this file,
+
+784
+00:35:02,070 --> 00:35:04,100
+you see import Core Data.
+
+785
+00:35:04,100 --> 00:35:06,490
+You wanna make sure you're
+importing Core Data in any
+
+786
+00:35:06,490 --> 00:35:08,990
+files that you're gonna be
+doing this Core Data stuff in,
+
+787
+00:35:08,990 --> 00:35:11,200
+otherwise symbols like
+NSManagedObjectContext are
+
+788
+00:35:12,690 --> 00:35:15,153
+not going to be defined.
+
+789
+00:35:16,050 --> 00:35:18,900
+Now I'm gonna start with
+this very important struct
+
+790
+00:35:18,900 --> 00:35:20,270
+right here, FlightSearch,
+
+791
+00:35:20,270 --> 00:35:24,260
+which currently is looking
+up airports by their codes
+
+792
+00:35:24,260 --> 00:35:26,530
+and airlines by their codes.
+
+793
+00:35:26,530 --> 00:35:28,750
+And I'm gonna switch this
+to be object-oriented.
+
+794
+00:35:28,750 --> 00:35:31,740
+My destination is not gonna
+be a String like "KPAO",
+
+795
+00:35:31,740 --> 00:35:34,120
+it's going to be an Airport.
+
+796
+00:35:34,120 --> 00:35:34,980
+And same thing here.
+
+797
+00:35:34,980 --> 00:35:38,210
+My origin is going to
+be an Optional Airport,
+
+798
+00:35:38,210 --> 00:35:41,500
+and my airline is going to be an Airline.
+
+799
+00:35:41,500 --> 00:35:46,100
+So this is going to totally
+transform all of our code
+
+800
+00:35:46,100 --> 00:35:48,193
+to be object-oriented.
+
+801
+00:35:49,190 --> 00:35:54,190
+By the way, sometimes when
+you build your object model,
+
+802
+00:35:54,515 --> 00:35:57,860
+the rest of your code, won't
+get the message about it.
+
+803
+00:35:57,860 --> 00:36:00,510
+Like we still have
+undeclared Airport again,
+
+804
+00:36:00,510 --> 00:36:03,510
+as Xcode can be building that
+for us behind the scenes.
+
+805
+00:36:03,510 --> 00:36:05,160
+I usually will just try and build here,
+
+806
+00:36:05,160 --> 00:36:06,913
+sometimes that'll fix it.
+
+807
+00:36:08,480 --> 00:36:09,313
+Yeah that didn't quite get it.
+
+808
+00:36:09,313 --> 00:36:13,060
+Another one to do is go
+back to your Model over here
+
+809
+00:36:13,060 --> 00:36:16,800
+and just do a build,
+sometimes that'll get it going
+
+810
+00:36:16,800 --> 00:36:18,350
+see if that fixed it over here.
+
+811
+00:36:20,199 --> 00:36:22,080
+And it looked like it did.
+
+812
+00:36:22,080 --> 00:36:23,740
+So lemme see what kind of errors we got.
+
+813
+00:36:23,740 --> 00:36:25,660
+So we still have bunch of errors obviously
+
+814
+00:36:25,660 --> 00:36:29,180
+we have our whole code is based
+on this thing being Strings.
+
+815
+00:36:29,180 --> 00:36:31,040
+And these are no longer Strings.
+
+816
+00:36:31,040 --> 00:36:34,270
+So let's just work our way
+through the problems that we
+
+817
+00:36:34,270 --> 00:36:36,880
+introduced by changing
+this to be object-oriented,
+
+818
+00:36:36,880 --> 00:36:37,940
+and fix them one by one.
+
+819
+00:36:37,940 --> 00:36:40,330
+And along the way, we're
+gonna learn a lot about how to
+
+820
+00:36:40,330 --> 00:36:42,390
+create these objects in the database,
+
+821
+00:36:42,390 --> 00:36:45,860
+how to go look them up and
+find them in the database.
+
+822
+00:36:45,860 --> 00:36:49,030
+That's all gonna be part and
+parcel of using Core Data
+
+823
+00:36:49,030 --> 00:36:51,420
+to make this stuff object-oriented.
+
+824
+00:36:51,420 --> 00:36:52,640
+So let's start with the very first one.
+
+825
+00:36:52,640 --> 00:36:55,701
+It says here, cannot convert
+value type String to expected
+
+826
+00:36:55,701 --> 00:36:57,840
+type argument Airport.
+
+827
+00:36:57,840 --> 00:37:01,320
+Okay, we already see one case
+here where it's using a String
+
+828
+00:37:01,320 --> 00:37:03,060
+for an airport instead
+of the Airport object.
+
+829
+00:37:03,060 --> 00:37:06,363
+So let's click on this, takes
+us to our SceneDelegate,
+
+830
+00:37:07,380 --> 00:37:09,670
+and sure enough, right here,
+we're trying to create a
+
+831
+00:37:09,670 --> 00:37:13,600
+FlightSearch with a String,
+which again, destination applied
+
+832
+00:37:13,600 --> 00:37:16,560
+search used to be a String,
+we just changed it to Airport.
+
+833
+00:37:16,560 --> 00:37:18,870
+So let's create a little local variable
+
+834
+00:37:18,870 --> 00:37:20,003
+to be our Airport here.
+
+835
+00:37:20,003 --> 00:37:24,000
+And I'm gonna say, let
+airport equal something.
+
+836
+00:37:24,000 --> 00:37:28,270
+And this airport has to be
+some sort of Airport object.
+
+837
+00:37:28,270 --> 00:37:33,210
+Now it is possible to create
+an object directly using this
+
+838
+00:37:33,210 --> 00:37:35,300
+thing called the context, right?
+
+839
+00:37:35,300 --> 00:37:39,590
+The context we talked about is
+this window into the database
+
+840
+00:37:39,590 --> 00:37:42,350
+that we get from that little use Core Data
+
+841
+00:37:42,350 --> 00:37:43,183
+button right here.
+
+842
+00:37:43,183 --> 00:37:44,840
+And this context is super important.
+
+843
+00:37:44,840 --> 00:37:48,170
+Everything we do is going
+through that window of it,
+
+844
+00:37:48,170 --> 00:37:49,030
+to the database.
+
+845
+00:37:49,030 --> 00:37:51,750
+That's how we do
+everything in the database,
+
+846
+00:37:51,750 --> 00:37:55,690
+but we're not gonna do that
+here because it might well be
+
+847
+00:37:55,690 --> 00:37:57,860
+that this Airport that
+I'm trying to create here,
+
+848
+00:37:57,860 --> 00:37:59,870
+which I'm essentially
+trying to create the Airport
+
+849
+00:37:59,870 --> 00:38:04,870
+KSFO right, this Airport might
+already be in the database.
+
+850
+00:38:05,600 --> 00:38:07,570
+So I kind of need a little function here,
+
+851
+00:38:07,570 --> 00:38:12,480
+which I'm gonna call withICAO,
+which takes this String
+
+852
+00:38:12,480 --> 00:38:15,910
+and looks it up in the database,
+and if it finds an Airport
+
+853
+00:38:15,910 --> 00:38:17,950
+object, it gives it to me.
+
+854
+00:38:17,950 --> 00:38:20,350
+And if it doesn't, it makes one,
+
+855
+00:38:20,350 --> 00:38:22,050
+and not only makes one,
+but goes and fetches it
+
+856
+00:38:22,050 --> 00:38:23,830
+from FlightAware too.
+
+857
+00:38:23,830 --> 00:38:25,640
+So that's what this little
+function is gonna do.
+
+858
+00:38:25,640 --> 00:38:28,970
+Now, how do we add a function
+to our Airport object
+
+859
+00:38:28,970 --> 00:38:30,470
+that Xcode created for us?
+
+860
+00:38:30,470 --> 00:38:33,040
+We're gonna do it with an extension.
+
+861
+00:38:33,040 --> 00:38:35,450
+And we're just gonna extend this class,
+
+862
+00:38:35,450 --> 00:38:38,160
+this object-oriented class
+Airport, to have this static
+
+863
+00:38:38,160 --> 00:38:41,590
+function, which lets us
+look an airport up by name.
+
+864
+00:38:41,590 --> 00:38:42,990
+So let's go do that.
+
+865
+00:38:42,990 --> 00:38:45,520
+I actually created that file here,
+
+866
+00:38:45,520 --> 00:38:48,390
+Airport and blank file for now.
+
+867
+00:38:48,390 --> 00:38:52,319
+And I'm gonna say extension of Airport,
+
+868
+00:38:52,319 --> 00:38:55,730
+and here I'm gonna do this
+static ofunc withICAO.
+
+869
+00:38:57,021 --> 00:38:59,060
+And it's gonna take that
+little special code that I was
+
+870
+00:38:59,060 --> 00:39:02,960
+telling you about, and it's
+gonna return an Airport.
+
+871
+00:39:02,960 --> 00:39:07,960
+And this is going to just look
+up that ICAO in Core Data.
+
+872
+00:39:08,630 --> 00:39:11,893
+And if it finds it, return it,
+
+873
+00:39:12,920 --> 00:39:17,050
+if not, then we're going to create one
+
+874
+00:39:17,050 --> 00:39:20,330
+and fetch from FlightAware.
+
+875
+00:39:20,330 --> 00:39:23,680
+So that's what this
+function is going to do.
+
+876
+00:39:23,680 --> 00:39:26,420
+So let's start with this, look up,
+
+877
+00:39:26,420 --> 00:39:27,440
+still complaining about that,
+
+878
+00:39:27,440 --> 00:39:29,430
+we won't worry about that for now.
+
+879
+00:39:29,430 --> 00:39:33,090
+We want to look up this code in Core Data.
+
+880
+00:39:33,090 --> 00:39:35,430
+So how do we look things up in Core Data
+
+881
+00:39:35,430 --> 00:39:37,510
+to see if there's something there?
+
+882
+00:39:37,510 --> 00:39:39,630
+We did this with a very
+important object called
+
+883
+00:39:39,630 --> 00:39:41,333
+a FetchRequest, NSFetchRequest.
+
+884
+00:39:42,580 --> 00:39:47,120
+In fact, so I'm gonna let
+request equal an NSFetchRequest
+
+885
+00:39:47,120 --> 00:39:50,680
+now, NSFetchRequest is
+generic, it has a don't care,
+
+886
+00:39:50,680 --> 00:39:54,523
+which is the kind of object
+you're trying to fetch.
+
+887
+00:39:55,940 --> 00:40:00,210
+Then you specify the
+entity name as a String.
+
+888
+00:40:00,210 --> 00:40:03,787
+And this String is just whatever you put
+
+889
+00:40:03,787 --> 00:40:07,260
+here as the name of your entity.
+
+890
+00:40:07,260 --> 00:40:09,213
+So "Airline", "Airport" or "Flight".
+
+891
+00:40:10,460 --> 00:40:12,520
+So this is how you create a FetchRequest.
+
+892
+00:40:12,520 --> 00:40:16,130
+Now a FetchRequest is
+essentially a guide that
+
+893
+00:40:16,130 --> 00:40:19,210
+we're going to use to have the database,
+
+894
+00:40:19,210 --> 00:40:22,730
+know which Airport we want
+or which Airports, might be
+
+895
+00:40:22,730 --> 00:40:24,240
+looking for multiple Airports.
+
+896
+00:40:24,240 --> 00:40:26,240
+We might be looking for
+Airports by time zone,
+
+897
+00:40:26,240 --> 00:40:27,877
+so we can get multiple Airports here,
+
+898
+00:40:27,877 --> 00:40:30,230
+and this request is gonna let us specify
+
+899
+00:40:30,230 --> 00:40:32,570
+which ones we want.
+
+900
+00:40:32,570 --> 00:40:36,220
+So the request has two
+really important parts to it.
+
+901
+00:40:36,220 --> 00:40:39,490
+One is called its predicate,
+
+902
+00:40:39,490 --> 00:40:42,500
+and its predicate is the,
+which ones do you want?
+
+903
+00:40:42,500 --> 00:40:46,000
+And you create that with an
+object called an NSPredicate.
+
+904
+00:40:46,000 --> 00:40:50,160
+And it kinda has a printf
+sort of feel to it,
+
+905
+00:40:50,160 --> 00:40:52,860
+where you give it a format
+for what you wanna search
+
+906
+00:40:52,860 --> 00:40:54,720
+and then any arguments that fit in there.
+
+907
+00:40:54,720 --> 00:40:56,770
+So it's again pre-Swift.
+
+908
+00:40:56,770 --> 00:41:01,040
+So it doesn't feel super
+Swift-y because it's printf-y,
+
+909
+00:41:01,040 --> 00:41:03,550
+but you'll get used to it really easily.
+
+910
+00:41:03,550 --> 00:41:04,610
+And for example, in our case,
+
+911
+00:41:04,610 --> 00:41:09,250
+we want the ICAO to equal something.
+
+912
+00:41:09,250 --> 00:41:10,930
+And what is that something?
+
+913
+00:41:10,930 --> 00:41:14,150
+The ICAO that is passed
+to us up here, right?
+
+914
+00:41:14,150 --> 00:41:17,750
+This argument ICAO, I
+want my predicate to be,
+
+915
+00:41:17,750 --> 00:41:22,750
+go look up this var, in the
+database, with this value.
+
+916
+00:41:22,830 --> 00:41:26,700
+Then you can do things like,
+and another one of them or
+
+917
+00:41:26,700 --> 00:41:29,150
+or something else equals something else.
+
+918
+00:41:29,150 --> 00:41:31,990
+And there's even more powerful
+things where you can do
+
+919
+00:41:31,990 --> 00:41:35,900
+pattern matching and begins
+with, and all kinds of things.
+
+920
+00:41:35,900 --> 00:41:38,940
+This predicate object, obviously,
+if you're gonna do this
+
+921
+00:41:38,940 --> 00:41:41,060
+Core Data you're gonna
+need to go look that up
+
+922
+00:41:41,060 --> 00:41:43,160
+in the documentation and
+understand all the powerful
+
+923
+00:41:43,160 --> 00:41:46,090
+things you can do to go
+figure out which objects
+
+924
+00:41:46,090 --> 00:41:47,563
+you want from the database.
+
+925
+00:41:48,820 --> 00:41:51,360
+The other thing that we want to know here
+
+926
+00:41:51,360 --> 00:41:54,400
+is the sortDescriptors.
+
+927
+00:41:54,400 --> 00:41:58,360
+Now, the sortDescriptors
+are an Array of these things
+
+928
+00:41:58,360 --> 00:41:59,560
+called NSSortDescriptor,
+
+929
+00:42:01,460 --> 00:42:03,130
+and a SortDescriptor has two things.
+
+930
+00:42:03,130 --> 00:42:06,550
+One is the name of the
+var you wanna sort by,
+
+931
+00:42:06,550 --> 00:42:08,070
+then actually, if I'm
+looking for Airports,
+
+932
+00:42:08,070 --> 00:42:10,080
+I'm gonna sort them by location,
+
+933
+00:42:10,080 --> 00:42:11,910
+by the city that they're in.
+
+934
+00:42:11,910 --> 00:42:13,840
+And then the second thing
+is whether you want them
+
+935
+00:42:13,840 --> 00:42:16,350
+ascending in order or descending.
+
+936
+00:42:16,350 --> 00:42:18,790
+And I do want this ascending.
+
+937
+00:42:18,790 --> 00:42:20,490
+Now, why is this important to have this
+
+938
+00:42:20,490 --> 00:42:22,300
+sortDescriptors here?
+
+939
+00:42:22,300 --> 00:42:24,640
+That's because when we look
+up objects in the database,
+
+940
+00:42:24,640 --> 00:42:28,180
+they're gonna come back
+as an Array, not as a Set,
+
+941
+00:42:28,180 --> 00:42:29,750
+but as an Array.
+
+942
+00:42:29,750 --> 00:42:31,850
+And it's an Array because they're ordered,
+
+943
+00:42:31,850 --> 00:42:33,780
+they're put in this order.
+
+944
+00:42:33,780 --> 00:42:35,120
+And why do we do that?
+
+945
+00:42:35,120 --> 00:42:38,100
+Why don't we just get a
+Set instead of an Array?
+
+946
+00:42:38,100 --> 00:42:41,660
+Well, because sorting like
+this can happen on the database
+
+947
+00:42:41,660 --> 00:42:45,040
+side very, very efficiently
+and notice it's an Array of
+
+948
+00:42:45,040 --> 00:42:47,680
+SortDescriptor, so if you had
+people in here and you had
+
+949
+00:42:47,680 --> 00:42:50,360
+first name and last name, you
+could have a SortDescriptor
+
+950
+00:42:50,360 --> 00:42:52,473
+to sort by last name, and
+then another SortDescriptor
+
+951
+00:42:52,473 --> 00:42:54,910
+to sub sort by first name.
+
+952
+00:42:54,910 --> 00:42:57,563
+That's why this is an
+Array of SortDescriptors.
+
+953
+00:42:58,650 --> 00:43:00,760
+So that's all we need to do
+to create this FetchRequest.
+
+954
+00:43:00,760 --> 00:43:04,210
+This is describing what we
+want out of the database.
+
+955
+00:43:04,210 --> 00:43:06,800
+So how do we get it out of the database?
+
+956
+00:43:06,800 --> 00:43:08,230
+We use this little function,
+
+957
+00:43:08,230 --> 00:43:13,230
+let airports = context.fetch(request).
+
+958
+00:43:14,910 --> 00:43:19,409
+Now this context is one of these
+things from back over here,
+
+959
+00:43:19,409 --> 00:43:23,310
+this context that we're
+passing in our Environment,
+
+960
+00:43:23,310 --> 00:43:26,250
+this context here, that is
+the window on the database.
+
+961
+00:43:26,250 --> 00:43:28,230
+If we wanna fetch something
+out of the database,
+
+962
+00:43:28,230 --> 00:43:29,900
+we need that context.
+
+963
+00:43:29,900 --> 00:43:33,797
+So we're gonna have to pass
+that along in with ICAO.
+
+964
+00:43:33,797 --> 00:43:37,020
+I'm gonna say here, context, context,
+
+965
+00:43:37,020 --> 00:43:39,790
+and then in withICAO, I'm
+gonna have to have another
+
+966
+00:43:39,790 --> 00:43:41,737
+argument here, context.
+
+967
+00:43:41,737 --> 00:43:45,260
+And this context is of type
+NSManagedObjectContext.
+
+968
+00:43:47,704 --> 00:43:51,290
+This fetch method though has
+one other interesting thing is
+
+969
+00:43:51,290 --> 00:43:54,920
+that you have to try it
+because it could fail,
+
+970
+00:43:54,920 --> 00:43:58,040
+no connection to the database
+or something like that,
+
+971
+00:43:58,040 --> 00:44:00,010
+so it's possible it can fail.
+
+972
+00:44:00,010 --> 00:44:03,842
+Now, if you remember, if
+we do try, we could do,
+
+973
+00:44:03,842 --> 00:44:05,460
+do and catch and try it in there,
+
+974
+00:44:05,460 --> 00:44:08,330
+and catch the error and see
+what the error is and do things.
+
+975
+00:44:08,330 --> 00:44:11,500
+Here, if I try to do
+this fetch and it fails,
+
+976
+00:44:11,500 --> 00:44:14,180
+I'm just gonna let this
+whole thing return nil,
+
+977
+00:44:14,180 --> 00:44:16,930
+that's what try? hopefully
+you remember that
+
+978
+00:44:16,930 --> 00:44:19,230
+from your reading about error handling.
+
+979
+00:44:19,230 --> 00:44:20,930
+That's what it does.
+
+980
+00:44:20,930 --> 00:44:22,210
+So this would be nil.
+
+981
+00:44:22,210 --> 00:44:24,090
+Now, if this doesn't fail,
+
+982
+00:44:24,090 --> 00:44:27,350
+but there is no Airport matching this,
+
+983
+00:44:27,350 --> 00:44:30,480
+then this is not gonna return nil or fail.
+
+984
+00:44:30,480 --> 00:44:33,100
+It's gonna return empty Array.
+
+985
+00:44:33,100 --> 00:44:36,470
+So calling fetch and
+getting back an empty Array,
+
+986
+00:44:36,470 --> 00:44:38,820
+means I couldn't find it.
+
+987
+00:44:38,820 --> 00:44:40,010
+That's different from nil,
+
+988
+00:44:40,010 --> 00:44:43,270
+which means I had an error
+trying to fetch this.
+
+989
+00:44:43,270 --> 00:44:45,500
+Now, if it does find it,
+
+990
+00:44:45,500 --> 00:44:48,720
+then this is going to return
+an Array with all the Airport
+
+991
+00:44:48,720 --> 00:44:51,690
+objects in it, that match.
+
+992
+00:44:51,690 --> 00:44:54,100
+And this is a FetchRequest for Airports,
+
+993
+00:44:54,100 --> 00:44:56,650
+so this is gonna return
+an Array of Airports.
+
+994
+00:44:56,650 --> 00:44:59,300
+Hopefully this never return
+more than one Airport
+
+995
+00:44:59,300 --> 00:45:03,890
+because ICAO it's like, KSFO,
+there should only be one
+
+996
+00:45:03,890 --> 00:45:04,840
+in the entire database.
+
+997
+00:45:04,840 --> 00:45:07,460
+That's why we're doing this
+thing of looking it up first,
+
+998
+00:45:07,460 --> 00:45:08,803
+before we go create it.
+
+999
+00:45:10,140 --> 00:45:13,220
+So what I'm gonna do here is
+kind of ignore the errors.
+
+1000
+00:45:13,220 --> 00:45:14,800
+If this comes back nil,
+
+1001
+00:45:14,800 --> 00:45:18,890
+then I'm gonna optional
+default it to the empty Array.
+
+1002
+00:45:18,890 --> 00:45:20,880
+If I were shipping this as a real app,
+
+1003
+00:45:20,880 --> 00:45:23,100
+probably would catch this
+error here and trying to figure
+
+1004
+00:45:23,100 --> 00:45:26,530
+out what am I going to do because
+I fetched this Airport and
+
+1005
+00:45:26,530 --> 00:45:29,870
+it failed, probably if
+this fetch fails though,
+
+1006
+00:45:29,870 --> 00:45:32,219
+all your Core Data stuff's
+gonna start failing so
+
+1007
+00:45:32,219 --> 00:45:35,250
+you know, that would
+be a top level failure
+
+1008
+00:45:35,250 --> 00:45:36,900
+that you'd have to handle anyway.
+
+1009
+00:45:38,010 --> 00:45:39,910
+So now this is going to be an Array.
+
+1010
+00:45:39,910 --> 00:45:41,430
+It's either gonna be an empty Array,
+
+1011
+00:45:41,430 --> 00:45:43,680
+if there was a failure or
+if we couldn't find this,
+
+1012
+00:45:43,680 --> 00:45:46,120
+or it's gonna be an Array
+of hopefully just one thing,
+
+1013
+00:45:46,120 --> 00:45:48,380
+which is the Airport object
+that we've put in there
+
+1014
+00:45:48,380 --> 00:45:50,630
+in the past for this thing.
+
+1015
+00:45:50,630 --> 00:45:51,930
+So let's check those cases.
+
+1016
+00:45:51,930 --> 00:45:55,970
+First I'm gonna say, if I can let airport
+
+1017
+00:45:55,970 --> 00:46:00,970
+equal airports.first, first
+element of the airport,
+
+1018
+00:46:03,020 --> 00:46:04,780
+then I found one.
+
+1019
+00:46:04,780 --> 00:46:08,970
+And so I'm just gonna
+return it easy enough.
+
+1020
+00:46:08,970 --> 00:46:10,945
+This is the first part of this lookup
+
+1021
+00:46:10,945 --> 00:46:12,177
+It did this.
+
+1022
+00:46:12,177 --> 00:46:16,270
+And so now if it found, return it,
+
+1023
+00:46:16,270 --> 00:46:18,810
+otherwise we're in this case down here,
+
+1024
+00:46:18,810 --> 00:46:20,830
+where we couldn't find it,
+
+1025
+00:46:20,830 --> 00:46:23,720
+and now we need to create
+one of these things
+
+1026
+00:46:23,720 --> 00:46:26,560
+and then fetch it from FlightAware.
+
+1027
+00:46:26,560 --> 00:46:29,280
+How do we do this?
+
+1028
+00:46:29,280 --> 00:46:33,920
+I'm going to create the airport
+first with just this ICAO,
+
+1029
+00:46:33,920 --> 00:46:36,140
+I already have that information,
+I don't have to fetch
+
+1030
+00:46:36,140 --> 00:46:38,670
+that from FlightAware it
+was passed into me here.
+
+1031
+00:46:38,670 --> 00:46:39,943
+So let's create the airport.
+
+1032
+00:46:39,943 --> 00:46:43,830
+You can say, let airport = Airport.
+
+1033
+00:46:43,830 --> 00:46:46,370
+And of course we have to pass
+that context because we have
+
+1034
+00:46:46,370 --> 00:46:50,390
+to really tell the system
+which database to create this
+
+1035
+00:46:50,390 --> 00:46:53,437
+Airport in, but this creates an Airport,
+
+1036
+00:46:53,437 --> 00:46:57,920
+and then I'm gonna set
+the Airport's icao var.
+
+1037
+00:46:57,920 --> 00:47:01,670
+This, our airport here has an icao var,
+
+1038
+00:47:01,670 --> 00:47:03,900
+how do I set this var?
+
+1039
+00:47:03,900 --> 00:47:08,720
+Amazingly I just say, .icao = icao.
+
+1040
+00:47:08,720 --> 00:47:13,720
+And again, Xcode has built
+all the code behind this
+
+1041
+00:47:13,760 --> 00:47:16,373
+that makes this an
+object that has this var,
+
+1042
+00:47:17,290 --> 00:47:19,760
+that doesn't seem to
+still be recognizing that
+
+1043
+00:47:21,150 --> 00:47:22,453
+we can get it to do that.
+
+1044
+00:47:23,870 --> 00:47:26,883
+So now we've got that to compile here.
+
+1045
+00:47:28,070 --> 00:47:30,880
+So now we've created an Airport
+and it doesn't have any of
+
+1046
+00:47:30,880 --> 00:47:34,030
+these other vars that we
+want in here, like latitude,
+
+1047
+00:47:34,030 --> 00:47:35,260
+longitude, and all that,
+
+1048
+00:47:35,260 --> 00:47:37,400
+that information all
+comes from FlightAware.
+
+1049
+00:47:37,400 --> 00:47:39,730
+So there's no way for me to say,
+
+1050
+00:47:39,730 --> 00:47:41,670
+airport.longitude = something right here.
+
+1051
+00:47:41,670 --> 00:47:43,830
+So it's just going to be nil.
+
+1052
+00:47:43,830 --> 00:47:45,520
+Those values are gonna
+be nil and the database.
+
+1053
+00:47:45,520 --> 00:47:48,400
+Again, that's part of why
+these vars are all Optionals,
+
+1054
+00:47:48,400 --> 00:47:50,060
+even the ICAO is an Optional,
+
+1055
+00:47:50,060 --> 00:47:52,630
+even though we're always
+gonna be setting it here,
+
+1056
+00:47:52,630 --> 00:47:55,943
+it's an Optional because might
+not be set in the database.
+
+1057
+00:47:57,040 --> 00:47:59,680
+So how do we fetch stuff from FlightAware?
+
+1058
+00:47:59,680 --> 00:48:02,050
+In this FlightAware code
+that I have over here,
+
+1059
+00:48:02,050 --> 00:48:05,360
+one of the things we have
+is an AirportInfo right here
+
+1060
+00:48:05,360 --> 00:48:08,660
+in the AirportInfo,
+there's this struct called
+
+1061
+00:48:08,660 --> 00:48:10,627
+an AirportInfoRequest.
+
+1062
+00:48:10,627 --> 00:48:15,460
+And it has function fetch,
+you give it the ICAO you want,
+
+1063
+00:48:15,460 --> 00:48:18,290
+and it will call you back later
+once the information comes
+
+1064
+00:48:18,290 --> 00:48:20,250
+back with, from FlightAware,
+
+1065
+00:48:20,250 --> 00:48:22,870
+and give you an AirportInfo object.
+
+1066
+00:48:22,870 --> 00:48:27,520
+So an AirportInfo object looks like this,
+
+1067
+00:48:27,520 --> 00:48:30,290
+got the ICAO, longitude,
+latitude all these things that
+
+1068
+00:48:30,290 --> 00:48:32,320
+we want to put in the database.
+
+1069
+00:48:32,320 --> 00:48:34,360
+I'm going to call a function here.
+
+1070
+00:48:34,360 --> 00:48:39,360
+self.update(from:
+airportInfo, context: context)
+
+1071
+00:48:43,990 --> 00:48:47,670
+and this little static function
+that we're going to do,
+
+1072
+00:48:47,670 --> 00:48:52,670
+static func update(from: airportInfo).
+
+1073
+00:48:54,740 --> 00:48:57,080
+I'll just call it info here.
+
+1074
+00:48:57,080 --> 00:48:59,980
+This is an AirportInfo
+object from FlightAware.
+
+1075
+00:48:59,980 --> 00:49:01,670
+And then we need the context, of course,
+
+1076
+00:49:01,670 --> 00:49:05,370
+because we're going to be doing
+something in the database.
+
+1077
+00:49:05,370 --> 00:49:07,150
+Anytime we're doing
+something in the database,
+
+1078
+00:49:07,150 --> 00:49:10,000
+we need the context to
+know which database.
+
+1079
+00:49:10,000 --> 00:49:13,070
+So in this update right here,
+by the way, once we do this,
+
+1080
+00:49:13,070 --> 00:49:15,650
+I'm gonna return this Airport right away.
+
+1081
+00:49:15,650 --> 00:49:17,790
+Now, when I first return this Airport,
+
+1082
+00:49:17,790 --> 00:49:19,860
+it's only gonna have the ICAO in it.
+
+1083
+00:49:19,860 --> 00:49:20,900
+It's not gonna have all this.
+
+1084
+00:49:20,900 --> 00:49:23,430
+This is asynchronous,
+it's happening later.
+
+1085
+00:49:23,430 --> 00:49:26,570
+So when someone says, give
+me the Airport with an ICAO
+
+1086
+00:49:26,570 --> 00:49:27,810
+and I've never seen it before,
+
+1087
+00:49:27,810 --> 00:49:30,380
+I'm gonna give them
+back a mostly empty one
+
+1088
+00:49:30,380 --> 00:49:31,813
+that just has ICAO.
+
+1089
+00:49:32,750 --> 00:49:34,370
+So I shouldn't,
+
+1090
+00:49:34,370 --> 00:49:37,180
+I'm gonna have to make my
+Airport be pretty tolerant.
+
+1091
+00:49:37,180 --> 00:49:39,360
+All my codes are going to be
+tolerant of all those other
+
+1092
+00:49:39,360 --> 00:49:42,150
+fields being nil, which is
+fine they're just gonna have to
+
+1093
+00:49:42,150 --> 00:49:43,573
+check to see if they're nil.
+
+1094
+00:49:44,700 --> 00:49:47,620
+But this one we can pretty
+much always count on not being
+
+1095
+00:49:47,620 --> 00:49:49,050
+nil, and we're gonna talk
+about how we're gonna deal
+
+1096
+00:49:49,050 --> 00:49:50,443
+with that in a second.
+
+1097
+00:49:52,080 --> 00:49:54,420
+So update, how do we do
+this update right here?
+
+1098
+00:49:54,420 --> 00:49:56,923
+So this is happening something
+time later, it comes back.
+
+1099
+00:49:56,923 --> 00:50:01,923
+Let me see if I can let the
+ICAO equal this info's ICAO.
+
+1100
+00:50:03,420 --> 00:50:05,490
+So this is the info coming
+back from FlightAware,
+
+1101
+00:50:05,490 --> 00:50:08,270
+I'm gonna see if I can
+get the ICAO out of there,
+
+1102
+00:50:08,270 --> 00:50:10,340
+which I should be able to do.
+
+1103
+00:50:10,340 --> 00:50:14,060
+Then I'm going to look this airport up
+
+1104
+00:50:14,060 --> 00:50:18,917
+by calling my own withICAO
+function in this context,
+
+1105
+00:50:21,850 --> 00:50:24,570
+'cause this is happening
+sometime later, right?
+
+1106
+00:50:24,570 --> 00:50:25,557
+This closure happened sometime later,
+
+1107
+00:50:25,557 --> 00:50:28,580
+so now I'm gonna go back
+and call this again,
+
+1108
+00:50:28,580 --> 00:50:31,530
+to get this Airport that
+I created earlier actually
+
+1109
+00:50:31,530 --> 00:50:34,530
+the one that just has the
+ICAO and I'm gonna go back
+
+1110
+00:50:34,530 --> 00:50:37,160
+and get it 'cause this
+is all happening later.
+
+1111
+00:50:37,160 --> 00:50:39,690
+And then I'm just going
+to set all the fields.
+
+1112
+00:50:39,690 --> 00:50:44,690
+The latitude =
+info.latitude, and longitude,
+
+1113
+00:50:49,010 --> 00:50:51,310
+longitude, you gotta
+type all these fields in.
+
+1114
+00:50:53,600 --> 00:50:58,150
+Next step I wanna take here
+is to save this information
+
+1115
+00:50:58,150 --> 00:50:59,913
+into the database.
+
+1116
+00:51:00,800 --> 00:51:05,193
+Now that can be done by asking
+the context to do a save.
+
+1117
+00:51:06,310 --> 00:51:09,390
+But you can see here that
+the context save throws,
+
+1118
+00:51:09,390 --> 00:51:11,210
+see where it says throws right there.
+
+1119
+00:51:11,210 --> 00:51:12,470
+Anytime you see throws,
+
+1120
+00:51:12,470 --> 00:51:17,110
+that means that this is a
+function you have to try.
+
+1121
+00:51:17,110 --> 00:51:18,690
+And I'm happy to try this.
+
+1122
+00:51:18,690 --> 00:51:20,623
+And if it fails, just do nothing.
+
+1123
+00:51:21,800 --> 00:51:25,890
+Now this is not all the
+vars on my Airport though.
+
+1124
+00:51:25,890 --> 00:51:27,870
+If I go back and look at my Airport,
+
+1125
+00:51:27,870 --> 00:51:31,100
+I've got all these vars,
+but, what about these?
+
+1126
+00:51:31,100 --> 00:51:32,583
+flightsFrom a flightsTo?
+
+1127
+00:51:33,620 --> 00:51:37,550
+Well flightsFrom and flightsTo,
+can be set from either side,
+
+1128
+00:51:37,550 --> 00:51:41,090
+you can either set it by having
+a Flight set its destination
+
+1129
+00:51:41,090 --> 00:51:45,050
+to an Airport, and that's going
+to cause the flightsTo Set,
+
+1130
+00:51:45,050 --> 00:51:47,402
+to get an Airport added
+to it automatically.
+
+1131
+00:51:47,402 --> 00:51:48,450
+You don't have to do anything.
+
+1132
+00:51:48,450 --> 00:51:49,283
+And vice versa.
+
+1133
+00:51:49,283 --> 00:51:52,430
+If you add something to this
+flightsTo, on this side,
+
+1134
+00:51:52,430 --> 00:51:56,350
+it's going to cause that Flight
+to point back the other way.
+
+1135
+00:51:56,350 --> 00:51:57,183
+So that's pretty cool.
+
+1136
+00:51:57,183 --> 00:51:58,913
+That's automatically managed for us.
+
+1137
+00:52:00,910 --> 00:52:03,720
+Now what about one other
+thing we wanna do here.
+
+1138
+00:52:03,720 --> 00:52:05,670
+So we've created this thing.
+
+1139
+00:52:05,670 --> 00:52:06,960
+We saved it.
+
+1140
+00:52:06,960 --> 00:52:11,960
+Remember that these Airports
+are ObservableObjects.
+
+1141
+00:52:12,160 --> 00:52:14,040
+They're a little mini ViewModels.
+
+1142
+00:52:14,040 --> 00:52:16,180
+So I'm doing a wholesale
+update right here.
+
+1143
+00:52:16,180 --> 00:52:20,250
+I'm going to actually tell
+this Airport to fire off its
+
+1144
+00:52:20,250 --> 00:52:22,363
+objectWillChange.send().
+
+1145
+00:52:24,210 --> 00:52:26,690
+That's gonna cause any Views
+that are looking at this
+
+1146
+00:52:26,690 --> 00:52:30,260
+Airport right now to redraw
+themselves and hopefully pick up
+
+1147
+00:52:30,260 --> 00:52:32,710
+this new information if
+they depend on any of it.
+
+1148
+00:52:33,623 --> 00:52:34,730
+Hopefully we can do another thing too.
+
+1149
+00:52:34,730 --> 00:52:39,100
+I'm gonna have the Airport's flightsTo,
+
+1150
+00:52:39,100 --> 00:52:44,100
+I'm gonna have each of
+them forEach do their
+
+1151
+00:52:44,266 --> 00:52:47,340
+objectWillChange.send().
+
+1152
+00:52:47,340 --> 00:52:49,540
+Lemme do the same thing
+for my flightsFrom.
+
+1153
+00:52:55,070 --> 00:52:59,550
+Now, this doesn't work because
+of what I was saying before
+
+1154
+00:52:59,550 --> 00:53:03,110
+that these flightsTo and
+flightFrom our NSSets,
+
+1155
+00:53:03,110 --> 00:53:06,030
+you see that, the value of type NSSet.
+
+1156
+00:53:06,030 --> 00:53:10,750
+So you can't tell an NSSet
+Optional here to do this.
+
+1157
+00:53:10,750 --> 00:53:12,570
+And even if I make it non-Optional,
+
+1158
+00:53:12,570 --> 00:53:14,460
+that's not gonna fix the problem either,
+
+1159
+00:53:14,460 --> 00:53:18,490
+because it's not only an
+NSSet, it's an NSSet of Any.
+
+1160
+00:53:18,490 --> 00:53:21,120
+So it doesn't even know
+that these flightsTo,
+
+1161
+00:53:21,120 --> 00:53:24,440
+are actually Flights, Flight objects.
+
+1162
+00:53:24,440 --> 00:53:29,440
+So this solution here requires
+a little bit of what I call
+
+1163
+00:53:29,635 --> 00:53:33,130
+syntactic sugar not added by the compiler,
+
+1164
+00:53:33,130 --> 00:53:34,570
+but something we're gonna add.
+
+1165
+00:53:34,570 --> 00:53:37,700
+I'm going to make
+flightsTo and flightsFrom,
+
+1166
+00:53:37,700 --> 00:53:41,810
+be little computed var, flightsTo,
+
+1167
+00:53:41,810 --> 00:53:46,453
+I'm gonna have a Set of Flights
+and I'm gonna have a get and
+
+1168
+00:53:47,550 --> 00:53:52,003
+a set and the same thing with flightsFrom.
+
+1169
+00:53:57,160 --> 00:54:01,090
+Now, how am I gonna do
+this flightsFrom and To
+
+1170
+00:54:01,090 --> 00:54:04,970
+as computed vars because
+I already have flightsTo
+
+1171
+00:54:04,970 --> 00:54:08,315
+and flightsFrom vars from over here,
+
+1172
+00:54:08,315 --> 00:54:10,870
+and my airport already has
+these var, these are vars.
+
+1173
+00:54:10,870 --> 00:54:13,720
+So I'm gonna rename these vars over here,
+
+1174
+00:54:13,720 --> 00:54:15,673
+to put a little underbar after them.
+
+1175
+00:54:16,584 --> 00:54:18,220
+And this is just something kind of,
+
+1176
+00:54:18,220 --> 00:54:22,560
+I like to do when I have things
+that are set right here and
+
+1177
+00:54:22,560 --> 00:54:24,400
+I'm gonna do it for other things later,
+
+1178
+00:54:24,400 --> 00:54:26,760
+where the thing in the
+database is almost exactly
+
+1179
+00:54:26,760 --> 00:54:28,050
+what I want, but not quite.
+
+1180
+00:54:28,050 --> 00:54:33,050
+So this is a set of these
+Any from kind of Objective-C
+
+1181
+00:54:33,310 --> 00:54:35,280
+version of this thing.
+
+1182
+00:54:35,280 --> 00:54:40,280
+And I'm gonna have my
+flightsTo get by returning the
+
+1183
+00:54:40,420 --> 00:54:45,420
+flightsTo_ as a Set of Flight.
+
+1184
+00:54:49,230 --> 00:54:54,230
+And oh, by the way, if that is not set,
+
+1185
+00:54:54,230 --> 00:54:56,971
+I'm gonna return an empty Set of Flight.
+
+1186
+00:54:56,971 --> 00:54:58,880
+So here, I've kind of
+done two things at once.
+
+1187
+00:54:58,880 --> 00:55:03,110
+I've converted flightsTo, to be,
+
+1188
+00:55:03,110 --> 00:55:05,820
+not be an NSSet and
+instead be a Set of Flight,
+
+1189
+00:55:05,820 --> 00:55:08,380
+and I've also checked to see
+a flightsTo might be nil,
+
+1190
+00:55:08,380 --> 00:55:12,133
+and if it is returned
+an empty Set instead.
+
+1191
+00:55:13,250 --> 00:55:15,370
+So setting it is easy as well.
+
+1192
+00:55:15,370 --> 00:55:20,370
+flightsTo_ = newValue as NSSet.
+
+1193
+00:55:22,660 --> 00:55:26,920
+So the Objective-C versions
+of Set and the Swift version
+
+1194
+00:55:26,920 --> 00:55:30,380
+Sets can be as-ed, this is
+typecasting, and hopefully you
+
+1195
+00:55:30,380 --> 00:55:32,410
+remember from reading again,
+
+1196
+00:55:32,410 --> 00:55:35,660
+they can be as-ed directly as each other,
+
+1197
+00:55:35,660 --> 00:55:37,150
+which is really a cool feature,
+
+1198
+00:55:37,150 --> 00:55:41,363
+very big compatibility
+feature to have that work.
+
+1199
+00:55:42,530 --> 00:55:46,270
+So my flightsFrom is pretty
+much exactly the same thing.
+
+1200
+00:55:46,270 --> 00:55:48,733
+We're doing flightsFrom here,
+
+1201
+00:55:49,983 --> 00:55:51,100
+and flightsFrom.
+
+1202
+00:55:54,180 --> 00:55:55,400
+That's it, everybody hopefully understand,
+
+1203
+00:55:55,400 --> 00:55:59,300
+I'm just trying to make my
+code here look really clean
+
+1204
+00:55:59,300 --> 00:56:03,220
+and sweet by making it be Set
+of Flight instead of being
+
+1205
+00:56:03,220 --> 00:56:06,663
+this NSSet of Any and
+possibly nil as well.
+
+1206
+00:56:09,470 --> 00:56:14,470
+So that's all I think I need
+to do here to create an Airport
+
+1207
+00:56:14,580 --> 00:56:16,220
+or find one that's existing.
+
+1208
+00:56:16,220 --> 00:56:20,557
+So if I go back over to
+my SceneDelegate here,
+
+1209
+00:56:21,460 --> 00:56:24,020
+oh, look at that, all
+that code just compiles
+
+1210
+00:56:24,020 --> 00:56:25,350
+perfectly fine here.
+
+1211
+00:56:25,350 --> 00:56:29,000
+Now this thing that I
+did with Airport here,
+
+1212
+00:56:29,000 --> 00:56:32,730
+with flightsTo, again, not only
+switching from Set to NSSet
+
+1213
+00:56:32,730 --> 00:56:35,480
+but also checking to see if it's nil.
+
+1214
+00:56:35,480 --> 00:56:38,650
+So this flightsTo at worst
+is ever an empty Set,
+
+1215
+00:56:38,650 --> 00:56:39,810
+not nil.
+
+1216
+00:56:39,810 --> 00:56:42,760
+I like to do that with
+all my other vars too,
+
+1217
+00:56:42,760 --> 00:56:44,710
+that can't really be nil.
+
+1218
+00:56:44,710 --> 00:56:47,007
+For example, let's go
+look in Airport here,
+
+1219
+00:56:47,007 --> 00:56:51,680
+and see which of these can
+never, or should never be nil.
+
+1220
+00:56:51,680 --> 00:56:53,790
+Well, actually, any of these can be nil,
+
+1221
+00:56:53,790 --> 00:56:56,590
+and they're all gonna be nil
+while I'm doing my fetch,
+
+1222
+00:56:56,590 --> 00:57:00,950
+except for not this one, icao
+never really should be nil.
+
+1223
+00:57:00,950 --> 00:57:04,130
+So I'm gonna put an underbar after it.
+
+1224
+00:57:04,130 --> 00:57:05,620
+And then in my extension over here,
+
+1225
+00:57:05,620 --> 00:57:08,180
+and I actually have
+this commented out here
+
+1226
+00:57:08,180 --> 00:57:10,370
+so that we can speed this along.
+
+1227
+00:57:10,370 --> 00:57:14,240
+I'm going to create a similar sort of var,
+
+1228
+00:57:14,240 --> 00:57:16,850
+this one's not doing the Set NSSet thing,
+
+1229
+00:57:16,850 --> 00:57:21,320
+but it's just making this
+thing be not Optional anymore.
+
+1230
+00:57:21,320 --> 00:57:24,150
+So it's taking the underbar
+version, make it not Optional.
+
+1231
+00:57:24,150 --> 00:57:27,181
+Now I have a to do here you
+see that when my app ships,
+
+1232
+00:57:27,181 --> 00:57:29,820
+maybe I wanna do something else here,
+
+1233
+00:57:29,820 --> 00:57:30,870
+when this thing is nil
+
+1234
+00:57:30,870 --> 00:57:32,490
+because it's really an error condition.
+
+1235
+00:57:32,490 --> 00:57:35,640
+This should never happen because
+when I create an Airport,
+
+1236
+00:57:35,640 --> 00:57:37,940
+the very first thing
+I do on the next line,
+
+1237
+00:57:37,940 --> 00:57:41,420
+is set this icao this
+can really never happen
+
+1238
+00:57:41,420 --> 00:57:42,480
+that this is nil.
+
+1239
+00:57:42,480 --> 00:57:45,650
+If this did, it's some
+error condition going on.
+
+1240
+00:57:45,650 --> 00:57:49,160
+So I could possibly try and
+handle this error condition
+
+1241
+00:57:49,160 --> 00:57:52,500
+better than just crashing
+because we know that exclamation
+
+1242
+00:57:52,500 --> 00:57:54,640
+point is just gonna crash.
+
+1243
+00:57:54,640 --> 00:57:57,350
+But certainly for this demo,
+and while I'm in development,
+
+1244
+00:57:57,350 --> 00:57:59,730
+maybe I want this to crash
+while I'm in development.
+
+1245
+00:57:59,730 --> 00:58:02,650
+I wanna see the cases under
+which I can get this kind of
+
+1246
+00:58:02,650 --> 00:58:05,560
+corrupted database to happen,
+
+1247
+00:58:05,560 --> 00:58:08,037
+if ever, may never happen
+that this can happen.
+
+1248
+00:58:09,278 --> 00:58:10,780
+I've also added some
+other things down here,
+
+1249
+00:58:10,780 --> 00:58:12,180
+a friendly name for the Airport,
+
+1250
+00:58:12,180 --> 00:58:15,350
+just by looking at it's name
+and location carrying that.
+
+1251
+00:58:15,350 --> 00:58:18,090
+I've also made Airports
+Identifiable and Comparable,
+
+1252
+00:58:18,090 --> 00:58:21,250
+it's usually a nice thing to
+do with your objects from Core
+
+1253
+00:58:21,250 --> 00:58:23,330
+Data so you can put them in dictionaries
+
+1254
+00:58:23,330 --> 00:58:25,033
+and Sets and things like that.
+
+1255
+00:58:26,510 --> 00:58:29,080
+So we've done a lot of great
+stuff here with Airport,
+
+1256
+00:58:29,080 --> 00:58:30,700
+and we've learned a
+lot about the Core Data
+
+1257
+00:58:30,700 --> 00:58:31,710
+just from doing Airport.
+
+1258
+00:58:31,710 --> 00:58:35,990
+We know how to fetch them, we
+know how to create new ones,
+
+1259
+00:58:35,990 --> 00:58:39,800
+we know how to do this little
+thing where we make our sets
+
+1260
+00:58:39,800 --> 00:58:44,340
+look a little nicer, we know
+how to kind of cover our
+
+1261
+00:58:44,340 --> 00:58:45,710
+can be Optional ones.
+
+1262
+00:58:45,710 --> 00:58:48,370
+And in fact, let's do this
+little can-be-Optional cover
+
+1263
+00:58:48,370 --> 00:58:49,860
+for our other things as well.
+
+1264
+00:58:49,860 --> 00:58:51,563
+We have Airline over here.
+
+1265
+00:58:54,810 --> 00:58:57,130
+So I've done the same thing
+here, now for Airline,
+
+1266
+00:58:57,130 --> 00:59:00,764
+I want code, name, shortname,
+and then of course,
+
+1267
+00:59:00,764 --> 00:59:03,580
+we're gonna do the flights Set magic here.
+
+1268
+00:59:03,580 --> 00:59:05,760
+So code, name, short name,
+flights, that's pretty much all
+
+1269
+00:59:05,760 --> 00:59:08,963
+the things down here in Airline,
+
+1270
+00:59:10,761 --> 00:59:12,663
+to make that an underbar, name,
+
+1271
+00:59:15,040 --> 00:59:19,990
+underbar and shortname,
+underbar and flights also here,
+
+1272
+00:59:19,990 --> 00:59:23,350
+it's underbar, and how about Flight?
+
+1273
+00:59:23,350 --> 00:59:25,050
+So I do the same thing for Flights,
+
+1274
+00:59:25,050 --> 00:59:27,000
+which we haven't even looked at Flight.
+
+1275
+00:59:28,300 --> 00:59:29,133
+All right.
+
+1276
+00:59:29,133 --> 00:59:30,860
+So Flight, I made the arrival,
+
+1277
+00:59:30,860 --> 00:59:34,370
+the destination, origin, airport,
+the airline and the ident,
+
+1278
+00:59:34,370 --> 00:59:36,840
+all of these things, can't be nil, and
+
+1279
+00:59:36,840 --> 00:59:38,990
+then I added this nice
+little number thing.
+
+1280
+00:59:40,010 --> 00:59:43,370
+Let's go over here to
+our data Model for Flight
+
+1281
+00:59:43,370 --> 00:59:46,480
+and aircraft is fine, arrival,
+
+1282
+00:59:46,480 --> 00:59:49,030
+make that arrival time can't be nil.
+
+1283
+00:59:49,030 --> 00:59:52,000
+departure time can be
+nil, filed could be nil,
+
+1284
+00:59:52,000 --> 00:59:54,220
+ident cannot be nil.
+
+1285
+00:59:54,220 --> 00:59:57,640
+And then all these relationships
+we're going to just protect
+
+1286
+00:59:57,640 --> 00:59:58,797
+them against being nil.
+
+1287
+01:00:02,090 --> 01:00:03,320
+So that's all we've done there.
+
+1288
+01:00:03,320 --> 01:00:04,810
+This just makes our code nicer.
+
+1289
+01:00:04,810 --> 01:00:08,510
+We don't have to be constantly
+checking to see if the ident
+
+1290
+01:00:08,510 --> 01:00:10,720
+is not nil because a Flight's ident
+
+1291
+01:00:10,720 --> 01:00:12,650
+really can never copy nil.
+
+1292
+01:00:12,650 --> 01:00:14,160
+If the Flight didn't have an ident,
+
+1293
+01:00:14,160 --> 01:00:15,723
+it doesn't even exist really.
+
+1294
+01:00:15,723 --> 01:00:18,350
+And same thing arrival time,
+Flights have to have at least
+
+1295
+01:00:18,350 --> 01:00:20,320
+an estimated arrival time.
+
+1296
+01:00:20,320 --> 01:00:22,050
+Now, one thing to be careful of
+
+1297
+01:00:22,050 --> 01:00:26,500
+when you go through and do
+this kind of getting rid of the
+
+1298
+01:00:26,500 --> 01:00:30,270
+Optional mess of things,
+is that your fetches,
+
+1299
+01:00:30,270 --> 01:00:31,970
+like this fetch right here,
+
+1300
+01:00:31,970 --> 01:00:35,120
+it still has to use the underbar version,
+
+1301
+01:00:35,120 --> 01:00:39,160
+it can't not use an
+underbar version for that.
+
+1302
+01:00:39,160 --> 01:00:41,690
+Anything you make not have the underbar,
+
+1303
+01:00:41,690 --> 01:00:44,860
+this request right here, this predicate,
+
+1304
+01:00:44,860 --> 01:00:48,300
+it's doing fetching on
+fields in the database,
+
+1305
+01:00:48,300 --> 01:00:50,920
+not vars in your code down here.
+
+1306
+01:00:50,920 --> 01:00:52,420
+It's actually fetching in the database.
+
+1307
+01:00:52,420 --> 01:00:54,460
+So this has to be a field in the database.
+
+1308
+01:00:54,460 --> 01:00:56,140
+Same thing with SortDescriptors.
+
+1309
+01:00:56,140 --> 01:00:59,420
+Now the location, if we
+look back here at Airport,
+
+1310
+01:00:59,420 --> 01:01:02,400
+this location, we didn't underbar that.
+
+1311
+01:01:02,400 --> 01:01:04,000
+So we don't want the underbar there,
+
+1312
+01:01:04,000 --> 01:01:07,050
+means we don't want the
+underbar here either.
+
+1313
+01:01:07,050 --> 01:01:11,530
+So we fixed all of that problem
+that we originally had here
+
+1314
+01:01:11,530 --> 01:01:14,400
+in SceneDelegate, where we
+were trying to create a Flight
+
+1315
+01:01:14,400 --> 01:01:18,170
+search with KSFO instead, we
+just made ourselves an Airport
+
+1316
+01:01:18,170 --> 01:01:21,242
+object and pass that in
+so that our FlightSearch
+
+1317
+01:01:21,242 --> 01:01:24,663
+was now taking a destination
+that was an Airport.
+
+1318
+01:01:25,890 --> 01:01:29,600
+Let's continue to chase after
+our bugs over here that we
+
+1319
+01:01:29,600 --> 01:01:33,030
+introduced by making this
+all be object-oriented.
+
+1320
+01:01:33,030 --> 01:01:35,770
+This one says, binary
+operator == between String and
+
+1321
+01:01:35,770 --> 01:01:37,001
+Airport of course.
+
+1322
+01:01:37,001 --> 01:01:38,295
+Another one of these is where's that,
+
+1323
+01:01:38,295 --> 01:01:40,280
+that's in FlightFetcher,
+so I'm clicking on that,
+
+1324
+01:01:40,280 --> 01:01:41,860
+so this is part of the
+private implementation
+
+1325
+01:01:41,860 --> 01:01:43,350
+of FlightFetcher.
+
+1326
+01:01:43,350 --> 01:01:46,660
+Yeah, of course, FlightFetcher
+is all non-object-oriented
+
+1327
+01:01:46,660 --> 01:01:49,110
+based on Strings and fetching Strings.
+
+1328
+01:01:49,110 --> 01:01:51,360
+So FlightFetcher itself is just gonna be
+
+1329
+01:01:51,360 --> 01:01:53,820
+completely useless.
+
+1330
+01:01:53,820 --> 01:01:56,570
+So let's go back to our
+FlightEnrouteView and go
+
+1331
+01:01:56,570 --> 01:01:58,250
+look for FlightFetcher.
+
+1332
+01:01:58,250 --> 01:02:00,650
+Here's where we use it in our Flight list.
+
+1333
+01:02:00,650 --> 01:02:03,310
+Fetch Flights, obviously
+for our Flight list,
+
+1334
+01:02:03,310 --> 01:02:04,320
+this whole thing is useless.
+
+1335
+01:02:04,320 --> 01:02:07,120
+I'm just gonna delete all
+this FlightFetcher code
+
+1336
+01:02:07,120 --> 01:02:09,333
+because we can't use any of it anymore.
+
+1337
+01:02:10,450 --> 01:02:12,800
+So how do we do the equivalent though?
+
+1338
+01:02:12,800 --> 01:02:16,960
+In Core Data, we want
+to go fetch all of those
+
+1339
+01:02:16,960 --> 01:02:19,323
+Flights and ForEach through them.
+
+1340
+01:02:20,190 --> 01:02:23,027
+Well, it's pretty cool
+integration here between Core Data
+
+1341
+01:02:23,027 --> 01:02:26,220
+and SwiftUI, I'm actually
+gonna create a var
+
+1342
+01:02:26,220 --> 01:02:28,433
+for those Flights right here.
+
+1343
+01:02:29,730 --> 01:02:34,200
+And I'm gonna do that var
+using a property wrapper
+
+1344
+01:02:34,200 --> 01:02:36,537
+called @FetchRequest.
+
+1345
+01:02:37,520 --> 01:02:38,690
+And it takes some arguments
+
+1346
+01:02:38,690 --> 01:02:40,610
+which we'll talk about in a second.
+
+1347
+01:02:40,610 --> 01:02:44,740
+And this return value of
+something that is using this
+
+1348
+01:02:44,740 --> 01:02:48,520
+property wrapper is
+called a FetchedResults,
+
+1349
+01:02:48,520 --> 01:02:49,800
+many times it don't care,
+
+1350
+01:02:49,800 --> 01:02:53,990
+which is the kind of thing
+it's fetching, which is Flight.
+
+1351
+01:02:53,990 --> 01:02:56,470
+So this Flight, remember
+that's our Flight that we're
+
+1352
+01:02:56,470 --> 01:02:59,220
+creating here from our database.
+
+1353
+01:02:59,220 --> 01:03:02,840
+And we're gonna issue
+some sort of FetchRequest
+
+1354
+01:03:02,840 --> 01:03:04,010
+to get some flights.
+
+1355
+01:03:04,010 --> 01:03:07,340
+And this var is going to
+be this FetchedResults.
+
+1356
+01:03:07,340 --> 01:03:10,200
+Now, what is a FetchedResults of Flight?
+
+1357
+01:03:10,200 --> 01:03:12,570
+It's not quite an Array of Flights,
+
+1358
+01:03:12,570 --> 01:03:14,260
+although it is a Collection.
+
+1359
+01:03:14,260 --> 01:03:15,827
+So it'll work to put it right here,
+
+1360
+01:03:15,827 --> 01:03:17,870
+and for each it's worth just mine,
+
+1361
+01:03:17,870 --> 01:03:20,530
+because this is essentially a Collection.
+
+1362
+01:03:20,530 --> 01:03:22,520
+And that's what ForEach is looking for,
+
+1363
+01:03:22,520 --> 01:03:25,750
+a Collection of Identifiable
+objects basically.
+
+1364
+01:03:25,750 --> 01:03:30,590
+This is essentially the result
+of this FetchRequest as a
+
+1365
+01:03:30,590 --> 01:03:33,430
+bunch of Flights, which
+is exactly what we want.
+
+1366
+01:03:33,430 --> 01:03:36,260
+Now, how do we specify
+this FetchRequest here?
+
+1367
+01:03:36,260 --> 01:03:38,940
+We essentially have to give it
+the exact same information we
+
+1368
+01:03:38,940 --> 01:03:42,430
+did over here in Airport, each
+one of these FetchRequests.
+
+1369
+01:03:42,430 --> 01:03:45,710
+So we have to give it a predicate,
+what this entity name is,
+
+1370
+01:03:45,710 --> 01:03:48,720
+what the SortDescriptors,
+and you can do that,
+
+1371
+01:03:48,720 --> 01:03:50,190
+there is something I think it's called,
+
+1372
+01:03:50,190 --> 01:03:53,727
+yeah, here it is entity you
+would say something like
+
+1373
+01:03:53,727 --> 01:03:56,850
+Flight.entity() and then
+there are SortDescriptors,
+
+1374
+01:03:56,850 --> 01:03:58,110
+you would put those.
+
+1375
+01:03:58,110 --> 01:04:01,070
+And then there's also
+another one predicate,
+
+1376
+01:04:01,070 --> 01:04:02,120
+and you put those,
+
+1377
+01:04:02,120 --> 01:04:05,120
+but we're not gonna do that
+because we really can't.
+
+1378
+01:04:05,120 --> 01:04:09,050
+The problem is, what are
+we trying to fetch here?
+
+1379
+01:04:09,050 --> 01:04:13,240
+We're trying to fetch things
+that match this flight search.
+
+1380
+01:04:13,240 --> 01:04:16,390
+So unfortunately this flight
+search is passed to us,
+
+1381
+01:04:16,390 --> 01:04:20,706
+we can't use it in here to initialize this
+
+1382
+01:04:20,706 --> 01:04:23,220
+property, wrappers struct.
+
+1383
+01:04:23,220 --> 01:04:25,530
+So we're gonna have to do it in here.
+
+1384
+01:04:25,530 --> 01:04:29,527
+And we know exactly how to
+initialize property wrapper
+
+1385
+01:04:29,527 --> 01:04:32,630
+structs, we use the
+underbar version of it.
+
+1386
+01:04:32,630 --> 01:04:34,103
+So _flights,
+
+1387
+01:04:34,103 --> 01:04:36,220
+there's the under bar
+version of this Flight,
+
+1388
+01:04:36,220 --> 01:04:40,040
+that's this struct, I'm
+gonna set that equal to
+
+1389
+01:04:40,040 --> 01:04:43,760
+a FetchRequest that's one of
+these structs that I'm gonna
+
+1390
+01:04:43,760 --> 01:04:46,803
+create with a FetchRequest.
+
+1391
+01:04:48,910 --> 01:04:51,010
+So this is one of the
+constructors for creating a
+
+1392
+01:04:51,010 --> 01:04:53,180
+FetchRequest, I told you,
+there was the other one here,
+
+1393
+01:04:53,180 --> 01:04:55,300
+that took the entity and all that.
+
+1394
+01:04:55,300 --> 01:04:59,650
+But one of the choices
+here also is FetchRequest.
+
+1395
+01:04:59,650 --> 01:05:01,890
+So I'm just going to
+give it a FetchRequest,
+
+1396
+01:05:01,890 --> 01:05:04,950
+and this FetchRequest I'm
+gonna do exactly the same thing
+
+1397
+01:05:04,950 --> 01:05:07,630
+I did over here when we
+did the Airport look up,
+
+1398
+01:05:07,630 --> 01:05:11,443
+lemme get this document and
+copy and paste it, so similar.
+
+1399
+01:05:13,130 --> 01:05:15,350
+And here this time, we're
+not looking up Airports,
+
+1400
+01:05:15,350 --> 01:05:17,163
+we're looking up Flights.
+
+1401
+01:05:20,870 --> 01:05:23,850
+So here we're not looking
+up the ICAO, of course,
+
+1402
+01:05:23,850 --> 01:05:27,470
+we're looking at the destination
+airport of this thing,
+
+1403
+01:05:27,470 --> 01:05:29,270
+which we underbar-ed because
+it doesn't make sense to have a
+
+1404
+01:05:29,270 --> 01:05:30,480
+Flight without a destination.
+
+1405
+01:05:30,480 --> 01:05:33,650
+So that's why we made it
+so that it would never be
+
+1406
+01:05:33,650 --> 01:05:34,483
+Optional there.
+
+1407
+01:05:34,483 --> 01:05:36,030
+And what is the destination?
+
+1408
+01:05:36,030 --> 01:05:38,600
+It's the FlightSearch
+that we're being passed,
+
+1409
+01:05:38,600 --> 01:05:40,830
+its destination, this FlightSearch,
+
+1410
+01:05:40,830 --> 01:05:42,840
+it's a FlightSearch
+object, we changed that,
+
+1411
+01:05:42,840 --> 01:05:45,000
+so its destination's an Airport.
+
+1412
+01:05:45,000 --> 01:05:48,250
+So now we are doing a fetch
+here where we're looking for
+
+1413
+01:05:48,250 --> 01:05:51,840
+destination equals that Airport.
+
+1414
+01:05:51,840 --> 01:05:55,320
+Now we have other SortDescriptor obviously
+
+1415
+01:05:55,320 --> 01:05:57,690
+let's sort by, I think our arrival time
+
+1416
+01:05:58,530 --> 01:06:01,600
+is probably the best thing
+to sort our Flights by.
+
+1417
+01:06:01,600 --> 01:06:04,500
+Now we have other predicate
+things we wanna search for
+
+1418
+01:06:04,500 --> 01:06:07,480
+in here besides the destination,
+like origin Airline,
+
+1419
+01:06:07,480 --> 01:06:10,012
+inTheAir but we'll do that a little bit
+
+1420
+01:06:10,012 --> 01:06:11,470
+when we get our FilterFlights working.
+
+1421
+01:06:11,470 --> 01:06:13,950
+So for now we're just going
+to look for all the Flights
+
+1422
+01:06:13,950 --> 01:06:16,110
+to this destination.
+
+1423
+01:06:16,110 --> 01:06:19,530
+Now you see that I've typed
+the three lines of code here,
+
+1424
+01:06:19,530 --> 01:06:21,900
+I typed the same three
+lines of code over here.
+
+1425
+01:06:21,900 --> 01:06:23,850
+They're very, very similar.
+
+1426
+01:06:23,850 --> 01:06:26,240
+You really kind of use them all the time,
+
+1427
+01:06:26,240 --> 01:06:28,330
+'cause you're searching
+for objects all the time.
+
+1428
+01:06:28,330 --> 01:06:33,230
+I like to make little
+functions in my extensions
+
+1429
+01:06:33,230 --> 01:06:36,960
+to these that do these
+three lines of code for me.
+
+1430
+01:06:36,960 --> 01:06:38,640
+So instead of doing these
+three lines to code,
+
+1431
+01:06:38,640 --> 01:06:43,640
+I'm gonna use some code that
+I put down here to do this.
+
+1432
+01:06:44,570 --> 01:06:46,910
+And it just makes a
+FetchRequest with a predicate
+
+1433
+01:06:46,910 --> 01:06:49,490
+and it automatically picks
+the right SortDescriptor.
+
+1434
+01:06:49,490 --> 01:06:52,330
+It does this little
+entityName thing to create the
+
+1435
+01:06:52,330 --> 01:06:53,360
+FetchRequest in the first place.
+
+1436
+01:06:53,360 --> 01:06:56,357
+And then it just plops the
+predicate that you want in there.
+
+1437
+01:06:56,357 --> 01:06:59,280
+And that changes this three
+lines of code up here to a
+
+1438
+01:06:59,280 --> 01:07:03,430
+single line of code, let
+request equal a fetchRequest
+
+1439
+01:07:04,630 --> 01:07:07,110
+where the predicate is NSPredicate,
+
+1440
+01:07:07,110 --> 01:07:12,110
+and our predicate here was "icao_ = %@"
+
+1441
+01:07:12,120 --> 01:07:14,780
+of this ICAO.
+
+1442
+01:07:14,780 --> 01:07:16,790
+So now I don't have to
+do the SortDescriptors
+
+1443
+01:07:16,790 --> 01:07:17,830
+and all that stuff.
+
+1444
+01:07:17,830 --> 01:07:20,350
+It just makes this code simpler.
+
+1445
+01:07:20,350 --> 01:07:22,400
+And let me do the same thing for Flights.
+
+1446
+01:07:25,230 --> 01:07:28,400
+There is FetchRequest for
+Flight, sorts by arrival.
+
+1447
+01:07:28,400 --> 01:07:30,520
+It's got the right entity, name here,
+
+1448
+01:07:30,520 --> 01:07:32,557
+I'm gonna do the same thing for Airline.
+
+1449
+01:07:32,557 --> 01:07:36,340
+And I pretty much will do this
+for all of my objects that
+
+1450
+01:07:36,340 --> 01:07:39,410
+come out of Core Data to
+have these easy one-liners to
+
+1451
+01:07:39,410 --> 01:07:41,870
+create a FetchRequest for them,
+
+1452
+01:07:41,870 --> 01:07:44,540
+especially when you're
+almost always wanting them
+
+1453
+01:07:44,540 --> 01:07:46,330
+sorted by the same thing,
+
+1454
+01:07:46,330 --> 01:07:48,830
+and Airline almost always
+gonna be wanna be sorted by
+
+1455
+01:07:48,830 --> 01:07:49,840
+it's name, and Airport
+
+1456
+01:07:49,840 --> 01:07:51,930
+almost always gonna
+wanna be sorted by it's
+
+1457
+01:07:51,930 --> 01:07:53,800
+location down here.
+
+1458
+01:07:53,800 --> 01:07:56,330
+Flight almost always gonna be wanna be
+
+1459
+01:07:56,330 --> 01:07:57,920
+sorted by arrival time.
+
+1460
+01:07:57,920 --> 01:08:00,170
+Now, if you wanted to specify
+different SortDescriptors,
+
+1461
+01:08:00,170 --> 01:08:02,440
+of course you could get the
+FetchRequest in here and then
+
+1462
+01:08:02,440 --> 01:08:05,900
+change the SortDescriptors,
+it's just returning a var here,
+
+1463
+01:08:05,900 --> 01:08:07,073
+a FetchRequest var.
+
+1464
+01:08:08,630 --> 01:08:11,550
+So that makes our code
+back here even simpler.
+
+1465
+01:08:11,550 --> 01:08:15,280
+We can actually just take this
+predicate right here and say,
+
+1466
+01:08:15,280 --> 01:08:20,280
+let request equal a Flight.fetchRequest,
+
+1467
+01:08:21,380 --> 01:08:23,310
+where this is the predicate,
+
+1468
+01:08:25,180 --> 01:08:27,713
+so that, makes this a one-liner here.
+
+1469
+01:08:29,770 --> 01:08:34,630
+So now this flights var
+is going to always be
+
+1470
+01:08:34,630 --> 01:08:35,820
+the result of this fetch.
+
+1471
+01:08:35,820 --> 01:08:38,480
+This is the amazing thing about this
+
+1472
+01:08:38,480 --> 01:08:40,260
+property wrapper right here.
+
+1473
+01:08:40,260 --> 01:08:43,510
+It's more than just letting
+you specify the FetchRequest.
+
+1474
+01:08:43,510 --> 01:08:46,210
+It makes it so that this var
+
+1475
+01:08:46,210 --> 01:08:48,950
+always contains the result of this fetch.
+
+1476
+01:08:48,950 --> 01:08:51,530
+Even if objects are being
+added or removing from the
+
+1477
+01:08:51,530 --> 01:08:56,300
+database that would match this,
+it always is changing this.
+
+1478
+01:08:56,300 --> 01:08:58,140
+This is just constantly being updated,
+
+1479
+01:08:58,140 --> 01:09:02,190
+this fetch results to
+reflect the latest version.
+
+1480
+01:09:02,190 --> 01:09:06,190
+And it's really one of the
+really best integrations
+
+1481
+01:09:06,190 --> 01:09:10,060
+between SwiftUI and Core Data,
+is that this ability to make
+
+1482
+01:09:10,060 --> 01:09:12,810
+these fetch results vars that are just
+
+1483
+01:09:12,810 --> 01:09:13,650
+always kept up to date.
+
+1484
+01:09:13,650 --> 01:09:14,823
+So for each down here,
+
+1485
+01:09:14,823 --> 01:09:19,016
+it's just always going to be
+updating every time new Flights
+
+1486
+01:09:19,016 --> 01:09:20,060
+come in from FlightAware or whatever,
+
+1487
+01:09:20,060 --> 01:09:21,760
+it just automatically updates.
+
+1488
+01:09:22,710 --> 01:09:24,660
+So let's keep going here.
+
+1489
+01:09:24,660 --> 01:09:25,493
+What's the next error,
+
+1490
+01:09:25,493 --> 01:09:27,220
+we can just see it right here actually.
+
+1491
+01:09:27,220 --> 01:09:29,140
+FlightListEntry flight of flight,
+
+1492
+01:09:29,140 --> 01:09:32,190
+cannot convert FetchedResults
+of Flight Elements.
+
+1493
+01:09:32,190 --> 01:09:34,832
+So the Element of a
+FetchedResult of Flight,
+
+1494
+01:09:34,832 --> 01:09:38,310
+which will be AKA, a Flight,
+to expect an argument,
+
+1495
+01:09:38,310 --> 01:09:41,550
+FAFlight, of course,
+because a FlightListEntry,
+
+1496
+01:09:41,550 --> 01:09:45,100
+this thing down here, it
+expects to get an FAFlight.
+
+1497
+01:09:45,100 --> 01:09:47,600
+'Cause this is the old world here,
+
+1498
+01:09:47,600 --> 01:09:49,150
+the pre-Core Data world.
+
+1499
+01:09:49,150 --> 01:09:50,140
+So let's fix this.
+
+1500
+01:09:50,140 --> 01:09:52,070
+This flight does not
+want to be an FAFlight,
+
+1501
+01:09:52,070 --> 01:09:53,760
+it wants to be a Flight.
+
+1502
+01:09:53,760 --> 01:09:55,540
+And one huge advantage of that is
+
+1503
+01:09:55,540 --> 01:09:57,627
+that flight is an ObservableObject.
+
+1504
+01:09:57,627 --> 01:10:01,330
+So I'm gonna say @ObservedObject Flight.
+
+1505
+01:10:01,330 --> 01:10:03,800
+So if anything changes about
+this Flight in the database,
+
+1506
+01:10:03,800 --> 01:10:05,280
+this View is gonna redraw.
+
+1507
+01:10:05,280 --> 01:10:08,280
+This is one of the huge
+advantages of making this object-
+
+1508
+01:10:08,280 --> 01:10:10,440
+oriented, instead of
+having this be a String,
+
+1509
+01:10:10,440 --> 01:10:12,490
+this is a String, there's no way to know,
+
+1510
+01:10:12,490 --> 01:10:14,410
+oh, that Flight got updated.
+
+1511
+01:10:14,410 --> 01:10:17,720
+And in FlightListEntry we
+also have these other objects
+
+1512
+01:10:17,720 --> 01:10:20,970
+which are getting all the
+Airports and all the Airlines.
+
+1513
+01:10:20,970 --> 01:10:24,690
+We don't really need
+those anymore because it,
+
+1514
+01:10:24,690 --> 01:10:28,980
+when we get Airlines and Airports
+nowadays, they're objects
+
+1515
+01:10:28,980 --> 01:10:31,480
+and we can get all the info
+we want about them from those
+
+1516
+01:10:31,480 --> 01:10:34,730
+objects, so we don't need to
+have these allAirlines flight
+
+1517
+01:10:34,730 --> 01:10:38,850
+code, friendly name business,
+instead, I can just go here
+
+1518
+01:10:38,850 --> 01:10:43,293
+and say, flight.airline.friendlyName.
+
+1519
+01:10:45,000 --> 01:10:46,150
+And similarly down here,
+
+1520
+01:10:46,150 --> 01:10:49,000
+we don't need this allAirport
+to look up the flight by its
+
+1521
+01:10:49,000 --> 01:10:50,990
+origin whatever, we can just say,
+
+1522
+01:10:50,990 --> 01:10:53,993
+flight.origin.friendlyName.
+
+1523
+01:10:54,890 --> 01:10:58,250
+So this is all much more
+object-oriented and it makes the
+
+1524
+01:10:58,250 --> 01:11:01,590
+code a lot cleaner, like
+
+1525
+01:11:01,590 --> 01:11:04,500
+friendlyName, flight.number
+and friendlyName
+
+1526
+01:11:04,500 --> 01:11:08,560
+down here in the "from" field,
+less of looking up things in
+
+1527
+01:11:08,560 --> 01:11:11,363
+random lists of info
+structs and all that stuff.
+
+1528
+01:11:13,230 --> 01:11:15,470
+We still have all these
+things in FlightFetcher, okay,
+
+1529
+01:11:15,470 --> 01:11:16,760
+poor FlightFetcher.
+
+1530
+01:11:16,760 --> 01:11:19,730
+Let's go over to FlightFetcher
+here from the last
+
+1531
+01:11:19,730 --> 01:11:22,580
+lecture and just comment
+this whole thing out
+
+1532
+01:11:22,580 --> 01:11:27,110
+because we really don't
+need FlightFetcher anymore.
+
+1533
+01:11:27,110 --> 01:11:30,510
+Because we're using now just our database.
+
+1534
+01:11:30,510 --> 01:11:35,360
+There we go, and oh, no more errors.
+
+1535
+01:11:35,360 --> 01:11:38,930
+We fixed everything, changed
+our world to be entire object-
+
+1536
+01:11:38,930 --> 01:11:43,930
+oriented and pretty straightforward
+to fix all the things.
+
+1537
+01:11:44,320 --> 01:11:48,570
+And in fact, some of this
+code much more readable
+
+1538
+01:11:48,570 --> 01:11:49,960
+and understandable.
+
+1539
+01:11:49,960 --> 01:11:51,203
+Let's see if it works.
+
+1540
+01:11:54,580 --> 01:11:57,570
+And there it is, and it does not work.
+
+1541
+01:11:57,570 --> 01:11:58,403
+Why?
+
+1542
+01:11:58,403 --> 01:12:00,400
+It's just no information,
+
+1543
+01:12:00,400 --> 01:12:02,340
+but this is actually working perfectly.
+
+1544
+01:12:02,340 --> 01:12:05,370
+It's just that there's
+no data in our database.
+
+1545
+01:12:05,370 --> 01:12:07,440
+So we are looking at an empty database.
+
+1546
+01:12:07,440 --> 01:12:10,200
+Here's all the Flights
+in our empty database.
+
+1547
+01:12:10,200 --> 01:12:14,350
+So we clearly need some code
+to load up this database
+
+1548
+01:12:14,350 --> 01:12:17,733
+with the Flights to the
+destination airport.
+
+1549
+01:12:18,580 --> 01:12:21,950
+So let's do that, over
+here, there's new data,
+
+1550
+01:12:21,950 --> 01:12:24,450
+here's where we create this SFO.
+
+1551
+01:12:24,450 --> 01:12:27,280
+Lets create a little
+Airport function here called
+
+1552
+01:12:27,280 --> 01:12:30,310
+fetchIncomingFlights.
+
+1553
+01:12:30,310 --> 01:12:32,710
+This is just gonna go off to FlightAware,
+
+1554
+01:12:32,710 --> 01:12:35,240
+fetch all the flights they're
+coming to this airport
+
+1555
+01:12:35,240 --> 01:12:37,470
+right now, and put them in the database.
+
+1556
+01:12:37,470 --> 01:12:39,820
+And then everything will
+just work from there
+
+1557
+01:12:39,820 --> 01:12:41,680
+because the rest of our
+code is just looking in the
+
+1558
+01:12:41,680 --> 01:12:45,160
+database, just waiting
+for something to happen.
+
+1559
+01:12:45,160 --> 01:12:48,640
+This fetch right here, is
+just sitting there waiting for
+
+1560
+01:12:48,640 --> 01:12:50,740
+this to start giving some results.
+
+1561
+01:12:50,740 --> 01:12:54,570
+And it's just gonna redraw
+and automatically do it.
+
+1562
+01:12:54,570 --> 01:12:56,120
+So let's go to Airport here,
+
+1563
+01:12:56,120 --> 01:12:58,460
+and do this fetchIncomingFlights.
+
+1564
+01:12:58,460 --> 01:13:00,890
+Now the fetchIncomingFlights,
+I also commented it out,
+
+1565
+01:13:00,890 --> 01:13:03,970
+it's mostly again this FlightAware stuff,
+
+1566
+01:13:03,970 --> 01:13:06,720
+but I do wanna focus on
+this line right here.
+
+1567
+01:13:06,720 --> 01:13:10,490
+This context = managedObjectContext.
+
+1568
+01:13:10,490 --> 01:13:12,790
+You notice that when we
+created this function
+
+1569
+01:13:12,790 --> 01:13:14,600
+fetchIncomingFlights,
+
+1570
+01:13:14,600 --> 01:13:17,880
+we didn't pass the context,
+the database context
+
+1571
+01:13:17,880 --> 01:13:19,020
+as an argument.
+
+1572
+01:13:19,020 --> 01:13:21,960
+So you might wonder how are
+we gonna create Flights,
+
+1573
+01:13:21,960 --> 01:13:23,310
+we're fetching incoming flights,
+
+1574
+01:13:23,310 --> 01:13:24,570
+how are we gonna create
+them in the database
+
+1575
+01:13:24,570 --> 01:13:26,500
+if we don't have a context?
+
+1576
+01:13:26,500 --> 01:13:29,880
+Well, this method
+fetchIncomingFlights is an instance
+
+1577
+01:13:29,880 --> 01:13:33,520
+method on an Airport, and it
+turns out that all objects
+
+1578
+01:13:33,520 --> 01:13:36,170
+that come out of Core
+Data, Airports, Airlines,
+
+1579
+01:13:36,170 --> 01:13:37,530
+Flights, any of them,
+
+1580
+01:13:37,530 --> 01:13:40,080
+they know the context they came out of.
+
+1581
+01:13:40,080 --> 01:13:42,350
+And we're just gonna
+use that same context,
+
+1582
+01:13:42,350 --> 01:13:44,180
+to put our Flights in.
+
+1583
+01:13:44,180 --> 01:13:46,840
+So this line of code, if let
+context = managedObjectContext,
+
+1584
+01:13:46,840 --> 01:13:51,640
+is just accessing a var in the Airport,
+
+1585
+01:13:51,640 --> 01:13:54,150
+which is, what is the
+managedObjectContext,
+
+1586
+01:13:54,150 --> 01:13:55,870
+you came out of.
+
+1587
+01:13:55,870 --> 01:13:59,330
+And this is really important
+to know because otherwise
+
+1588
+01:13:59,330 --> 01:14:02,190
+you're gonna be end up
+passing context around all the
+
+1589
+01:14:02,190 --> 01:14:05,500
+time unnecessarily, when
+you have an instance
+
+1590
+01:14:05,500 --> 01:14:08,170
+from the database in your hand,
+
+1591
+01:14:08,170 --> 01:14:11,040
+you can always get the context
+from the database and add
+
+1592
+01:14:11,040 --> 01:14:14,373
+more objects or fetch
+other objects using that.
+
+1593
+01:14:15,560 --> 01:14:19,160
+Here's the asynchronous closure
+that's executed when the
+
+1594
+01:14:19,160 --> 01:14:20,670
+information comes back from FlightAware.
+
+1595
+01:14:20,670 --> 01:14:23,600
+So this is very similar
+to what we had up here,
+
+1596
+01:14:23,600 --> 01:14:27,470
+when this AirportInfoRequest
+fetched an airport,
+
+1597
+01:14:27,470 --> 01:14:29,740
+and here's where it came
+back with the result.
+
+1598
+01:14:29,740 --> 01:14:32,090
+We have the exact same
+thing going down here,
+
+1599
+01:14:32,090 --> 01:14:33,340
+where we have the result.
+
+1600
+01:14:34,360 --> 01:14:36,120
+So what am I gonna do when the information
+
+1601
+01:14:36,120 --> 01:14:37,500
+comes back from FlightAware?
+
+1602
+01:14:37,500 --> 01:14:39,627
+Well, this is an Array of FAFlight,
+
+1603
+01:14:39,627 --> 01:14:42,040
+you all remember FAFlight
+over here as all the
+
+1604
+01:14:42,040 --> 01:14:44,430
+information that comes
+back from FlightAware.
+
+1605
+01:14:44,430 --> 01:14:47,740
+So I'm going to go through
+all those FAFlights
+
+1606
+01:14:47,740 --> 01:14:50,740
+with a for loop, for
+faflight in those results.
+
+1607
+01:14:50,740 --> 01:14:54,080
+Now I'm gonna call a function in Flight
+
+1608
+01:14:54,080 --> 01:14:56,100
+that updates from an FAFlight.
+
+1609
+01:14:56,100 --> 01:14:59,530
+Again, just like I have
+update from up here,
+
+1610
+01:14:59,530 --> 01:15:02,900
+that updates from AirportInfo in Airport,
+
+1611
+01:15:02,900 --> 01:15:07,110
+I'm gonna put this method
+almost exactly the same method,
+
+1612
+01:15:07,110 --> 01:15:11,010
+but with all flight-oriented
+stuff here into Flight.
+
+1613
+01:15:11,010 --> 01:15:12,060
+So let's go over and do that.
+
+1614
+01:15:12,060 --> 01:15:17,060
+Here's Flight, and you can
+see it's doing the same thing,
+
+1615
+01:15:17,324 --> 01:15:21,800
+FetchRequest, looking things
+up by ident all these things.
+
+1616
+01:15:21,800 --> 01:15:26,800
+This again, could be, let
+request = fetchRequest,
+
+1617
+01:15:29,440 --> 01:15:32,810
+with this predicate, so we can make that
+
+1618
+01:15:32,810 --> 01:15:34,620
+a one liner right there.
+
+1619
+01:15:34,620 --> 01:15:36,870
+And so we're searching for
+this Flight by whatever it's
+
+1620
+01:15:36,870 --> 01:15:39,580
+ident is in the FAFlight.
+
+1621
+01:15:39,580 --> 01:15:42,077
+That's what the search predicate is.
+
+1622
+01:15:42,077 --> 01:15:44,190
+And we're doing exact same
+thing we did in Airport,
+
+1623
+01:15:44,190 --> 01:15:46,090
+looking to see if we found a result,
+
+1624
+01:15:46,090 --> 01:15:47,880
+if we find it, in this case though,
+
+1625
+01:15:47,880 --> 01:15:49,550
+Flights are a little
+different because they get
+
+1626
+01:15:49,550 --> 01:15:50,860
+updated over time.
+
+1627
+01:15:50,860 --> 01:15:53,630
+So if we find it or not,
+we're going to update it with
+
+1628
+01:15:53,630 --> 01:15:55,823
+whatever information came back.
+
+1629
+01:15:56,810 --> 01:15:59,990
+And this is all just stuff we saw before.
+
+1630
+01:15:59,990 --> 01:16:02,280
+A couple of interesting
+things going on in here
+
+1631
+01:16:02,280 --> 01:16:05,710
+is here I'm setting
+some relationship vars.
+
+1632
+01:16:05,710 --> 01:16:08,360
+So here's my origin and
+destination airport.
+
+1633
+01:16:08,360 --> 01:16:09,193
+Look what I'm doing,
+
+1634
+01:16:09,193 --> 01:16:13,330
+I'm creating an Airport
+with that origin var
+
+1635
+01:16:13,330 --> 01:16:15,730
+'cause an FAFlight origin is a String.
+
+1636
+01:16:15,730 --> 01:16:20,338
+So I'm looking that ICAO
+up in our current context,
+
+1637
+01:16:20,338 --> 01:16:23,360
+the context that we've
+passed into us here,
+
+1638
+01:16:23,360 --> 01:16:24,420
+and creating an Airport.
+
+1639
+01:16:24,420 --> 01:16:26,470
+Same thing here for the
+destination Airport.
+
+1640
+01:16:26,470 --> 01:16:30,150
+And after the same thing for
+airline, because in FAFlight,
+
+1641
+01:16:30,150 --> 01:16:31,520
+airlineCode is a String.
+
+1642
+01:16:31,520 --> 01:16:33,050
+So I need to create an Airline.
+
+1643
+01:16:33,050 --> 01:16:36,610
+So in Airline we need a
+little thing that looks it up,
+
+1644
+01:16:36,610 --> 01:16:38,690
+and finds it, return to
+it, if not, it creates it
+
+1645
+01:16:38,690 --> 01:16:39,740
+just like we had an Airport.
+
+1646
+01:16:39,740 --> 01:16:41,363
+So let's go do that in Airline,
+
+1647
+01:16:43,450 --> 01:16:47,143
+and this with code, looks
+very similar to the Airport.
+
+1648
+01:16:47,143 --> 01:16:49,530
+It's just that these are
+all different down here.
+
+1649
+01:16:49,530 --> 01:16:51,870
+We're still doing the
+objectWillChange though here.
+
+1650
+01:16:51,870 --> 01:16:53,390
+And same thing with the Flights.
+
+1651
+01:16:53,390 --> 01:16:56,160
+So if this airline
+information comes available
+
+1652
+01:16:56,160 --> 01:16:59,110
+from FlightAware, we're
+going to do objectWillChange
+
+1653
+01:16:59,110 --> 01:17:00,233
+on all those things.
+
+1654
+01:17:01,540 --> 01:17:03,890
+One of the things I
+wanted to show you is the,
+
+1655
+01:17:03,890 --> 01:17:05,360
+when I'm loading up these Flights,
+
+1656
+01:17:05,360 --> 01:17:07,890
+I'm going to show you what it
+looks like to try and catch
+
+1657
+01:17:07,890 --> 01:17:10,200
+the error from context save.
+
+1658
+01:17:10,200 --> 01:17:12,420
+Just because we haven't
+really been doing this,
+
+1659
+01:17:12,420 --> 01:17:14,620
+we've been doing try? everywhere,
+
+1660
+01:17:14,620 --> 01:17:18,330
+but if you just put a do catch
+around the thing you wanna
+
+1661
+01:17:18,330 --> 01:17:21,360
+try, this throws an error and
+this will catch that error.
+
+1662
+01:17:21,360 --> 01:17:24,170
+And then you can do things
+like print out that error's
+
+1663
+01:17:24,170 --> 01:17:26,270
+localizedDescription or
+something right here,
+
+1664
+01:17:26,270 --> 01:17:29,500
+and here we can handle the
+error where we try to save the
+
+1665
+01:17:29,500 --> 01:17:31,430
+context and we couldn't.
+
+1666
+01:17:31,430 --> 01:17:34,810
+If your context save fails
+something pretty bad going on,
+
+1667
+01:17:34,810 --> 01:17:37,580
+maybe your disk is full or, you know,
+
+1668
+01:17:37,580 --> 01:17:40,754
+something pretty heinous
+is happening here.
+
+1669
+01:17:40,754 --> 01:17:43,960
+So there's not usually much
+you can do to handle failure to
+
+1670
+01:17:43,960 --> 01:17:47,079
+say, maybe try to save again
+in a few seconds or something,
+
+1671
+01:17:47,079 --> 01:17:49,943
+but it's a tough one to recover from.
+
+1672
+01:17:51,270 --> 01:17:53,180
+So that's all that's happening
+here in fetch incoming
+
+1673
+01:17:53,180 --> 01:17:57,010
+flights, we are just loading
+up the database with things
+
+1674
+01:17:57,010 --> 01:17:59,220
+that are coming in from FlightAware.
+
+1675
+01:17:59,220 --> 01:18:00,920
+That's all we're doing repeatedly.
+
+1676
+01:18:02,730 --> 01:18:04,033
+See if that works.
+
+1677
+01:18:06,510 --> 01:18:10,620
+Well, look at that, loading
+it up in the database.
+
+1678
+01:18:10,620 --> 01:18:13,760
+And wow, now our data is
+showing a lot of Flights
+
+1679
+01:18:13,760 --> 01:18:14,760
+and they're still coming in.
+
+1680
+01:18:14,760 --> 01:18:16,750
+It's loading more and more flights.
+
+1681
+01:18:16,750 --> 01:18:19,950
+And what we're looking at
+here though, is the database.
+
+1682
+01:18:19,950 --> 01:18:21,820
+This is purely looking at the database.
+
+1683
+01:18:21,820 --> 01:18:23,410
+All this flight fetching that's happening,
+
+1684
+01:18:23,410 --> 01:18:28,410
+happening asynchronously to
+what's going on here in the UI.
+
+1685
+01:18:28,730 --> 01:18:31,060
+Now glancing at my code there on the left,
+
+1686
+01:18:31,060 --> 01:18:33,140
+I can actually see, we forgot something,
+
+1687
+01:18:33,140 --> 01:18:36,990
+which is we don't have our
+Flight do its objectWillChange,
+
+1688
+01:18:36,990 --> 01:18:39,350
+even though we're possibly
+doing a big update
+
+1689
+01:18:39,350 --> 01:18:40,560
+to a Flight there.
+
+1690
+01:18:40,560 --> 01:18:43,270
+And then also I see a
+problem here at the top
+
+1691
+01:18:43,270 --> 01:18:45,789
+where it's not saying flights to KSFO,
+
+1692
+01:18:45,789 --> 01:18:49,340
+it's saying flights to
+airport 0X, whatever.
+
+1693
+01:18:49,340 --> 01:18:52,890
+And that's happening because
+we're printing out an Airport
+
+1694
+01:18:52,890 --> 01:18:57,040
+object there, instead of
+printing out it's ICAO code.
+
+1695
+01:18:57,040 --> 01:18:59,390
+So let's fix both of those problems,
+
+1696
+01:18:59,390 --> 01:19:01,170
+starting with right here,
+
+1697
+01:19:01,170 --> 01:19:05,340
+we forgot to say that we want our Flight
+
+1698
+01:19:05,340 --> 01:19:10,000
+that we just created, to have
+its objectWillChange.send()
+
+1699
+01:19:10,000 --> 01:19:12,960
+sent because we just changed
+a lot of fields and we wanna
+
+1700
+01:19:12,960 --> 01:19:17,600
+make sure that our UI will
+update with whatever that is.
+
+1701
+01:19:17,600 --> 01:19:21,073
+And then we can fix that title
+problem with the Airport,
+
+1702
+01:19:22,070 --> 01:19:26,600
+which we're doing over here,
+by saying backslash open
+
+1703
+01:19:26,600 --> 01:19:29,640
+parentheses, closed
+parentheses, with the object.
+
+1704
+01:19:29,640 --> 01:19:31,260
+We don't really want the object here.
+
+1705
+01:19:31,260 --> 01:19:34,213
+We want this destination's ICAO.
+
+1706
+01:19:36,950 --> 01:19:37,783
+So let's do that.
+
+1707
+01:19:37,783 --> 01:19:38,883
+Fix that problem.
+
+1708
+01:19:43,260 --> 01:19:44,093
+There it is.
+
+1709
+01:19:44,093 --> 01:19:44,926
+There's it's ICAO.
+
+1710
+01:19:46,940 --> 01:19:47,773
+All right.
+
+1711
+01:19:47,773 --> 01:19:50,360
+The last piece we have to do
+is fix our filter right here
+
+1712
+01:19:50,360 --> 01:19:52,120
+because our filter, lemme show you
+
+1713
+01:19:52,120 --> 01:19:53,310
+what they'll do right now.
+
+1714
+01:19:53,310 --> 01:19:55,680
+It's not gonna work because this filter
+
+1715
+01:19:55,680 --> 01:19:57,550
+is built to work with Strings.
+
+1716
+01:19:57,550 --> 01:20:00,060
+It's supposed to be
+picking Strings over here,
+
+1717
+01:20:00,060 --> 01:20:01,350
+this FilterFFlights.
+
+1718
+01:20:01,350 --> 01:20:05,000
+And you know, we changed all
+of our Flights to be objects.
+
+1719
+01:20:05,000 --> 01:20:07,020
+So this needs the object-oriented
+
+1720
+01:20:07,020 --> 01:20:09,070
+treatment as well over here.
+
+1721
+01:20:09,070 --> 01:20:11,880
+Now, when we're letting people
+choose Airports and Airlines,
+
+1722
+01:20:11,880 --> 01:20:14,740
+we actually do need all the
+Airports and all the Airlines
+
+1723
+01:20:14,740 --> 01:20:15,790
+that are available,
+
+1724
+01:20:15,790 --> 01:20:20,253
+but we're not gonna do it
+again with these old ViewModel
+
+1725
+01:20:20,253 --> 01:20:23,160
+airports all and airlines all instead,
+
+1726
+01:20:23,160 --> 01:20:24,727
+we're gonna do FetchRequests here,
+
+1727
+01:20:24,727 --> 01:20:26,850
+and these are gonna be
+FetchRequests for Airports and
+
+1728
+01:20:26,850 --> 01:20:29,400
+Airlines, I'm gonna do a FetchRequest,
+
+1729
+01:20:29,400 --> 01:20:34,340
+and I'm gonna have the
+FetchRequest here be hardwired in
+
+1730
+01:20:34,340 --> 01:20:39,340
+here, it's gonna be airport.fetchRequest,
+
+1731
+01:20:39,550 --> 01:20:44,550
+where the predicate is essentially all,
+
+1732
+01:20:45,750 --> 01:20:47,960
+I need all my Airports.
+
+1733
+01:20:47,960 --> 01:20:51,510
+I'm gonna use this FetchRequest
+to get a little var
+
+1734
+01:20:51,510 --> 01:20:55,610
+airports here, which is
+gonna be all of my Airports.
+
+1735
+01:20:55,610 --> 01:20:59,640
+This is the same FetchedResults
+thing that I was doing over
+
+1736
+01:20:59,640 --> 01:21:02,300
+here, but over here, I was doing
+the FetchedResults based on
+
+1737
+01:21:02,300 --> 01:21:05,401
+looking up the destination
+Airport, in this case,
+
+1738
+01:21:05,401 --> 01:21:08,310
+I want all of my Airports.
+
+1739
+01:21:08,310 --> 01:21:10,270
+So what kind of predicate means all,
+
+1740
+01:21:10,270 --> 01:21:11,510
+well, there's a great predicate for that
+
+1741
+01:21:11,510 --> 01:21:13,473
+called TRUEPREDICATE.
+
+1742
+01:21:13,473 --> 01:21:15,420
+That just basically means this evaluates
+
+1743
+01:21:15,420 --> 01:21:17,300
+to true at all times.
+
+1744
+01:21:17,300 --> 01:21:18,910
+That's so common to use.
+
+1745
+01:21:18,910 --> 01:21:21,000
+I actually created a little extension,
+
+1746
+01:21:21,000 --> 01:21:25,140
+called, to NSPredicate,
+called, all which does that,
+
+1747
+01:21:25,140 --> 01:21:27,742
+and none which does the false.
+
+1748
+01:21:27,742 --> 01:21:30,200
+Seems like I'm always doing a predicate,
+
+1749
+01:21:30,200 --> 01:21:32,080
+TRUEPREDICATE somewhere in my app.
+
+1750
+01:21:32,080 --> 01:21:33,840
+So I'm gonna change that to all.
+
+1751
+01:21:33,840 --> 01:21:36,270
+That's it, that's going
+to fetch all the Airports.
+
+1752
+01:21:36,270 --> 01:21:39,600
+This airports var will
+always be all the Airports,
+
+1753
+01:21:39,600 --> 01:21:42,930
+even if airports are added,
+this automatically updates so
+
+1754
+01:21:42,930 --> 01:21:46,770
+that this FetchedResults thing
+that we're doing ForEach-ing
+
+1755
+01:21:46,770 --> 01:21:49,260
+inside of our Pickers down here,
+
+1756
+01:21:49,260 --> 01:21:50,710
+will always be updated.
+
+1757
+01:21:50,710 --> 01:21:54,960
+And same thing we'll do for our Airline.
+
+1758
+01:21:54,960 --> 01:21:57,130
+Now we have all our Airports
+and all our Airlines,
+
+1759
+01:21:57,130 --> 01:22:00,460
+and we're gonna use that down
+here, inside of our Pickers,
+
+1760
+01:22:00,460 --> 01:22:05,140
+because our Pickers are
+currently picking these codes,
+
+1761
+01:22:05,140 --> 01:22:08,130
+but we want them to
+actually pick the objects.
+
+1762
+01:22:08,130 --> 01:22:12,030
+We want them to pick
+Airport and Airline objects.
+
+1763
+01:22:12,030 --> 01:22:14,560
+So instead of being
+all airport codes here,
+
+1764
+01:22:14,560 --> 01:22:17,453
+this is just going to be our Airports,
+
+1765
+01:22:18,410 --> 01:22:20,560
+and I'm gonna sort them, sorted.
+
+1766
+01:22:20,560 --> 01:22:23,110
+Our Airports if you remember,
+when I showed you Airport
+
+1767
+01:22:23,110 --> 01:22:26,370
+over here, I made it so
+that it implemented this
+
+1768
+01:22:28,180 --> 01:22:29,853
+Comparable protocol.
+
+1769
+01:22:30,760 --> 01:22:34,600
+So this Comparable protocol is
+a little less than function.
+
+1770
+01:22:34,600 --> 01:22:36,370
+And if you implement Comparable,
+
+1771
+01:22:36,370 --> 01:22:40,110
+then you can have Collections
+like Airports or Arrays of
+
+1772
+01:22:40,110 --> 01:22:43,630
+things, sort themselves by saying sorted.
+
+1773
+01:22:43,630 --> 01:22:45,230
+Now this is object-oriented.
+
+1774
+01:22:45,230 --> 01:22:47,620
+So we don't wanna be, need to
+be looking this up like this.
+
+1775
+01:22:47,620 --> 01:22:52,250
+We can just say, instead, here
+our Airport's friendlyName
+
+1776
+01:22:52,250 --> 01:22:55,490
+to get the Airport, and
+this never returns nil,
+
+1777
+01:22:55,490 --> 01:22:58,540
+so we don't need to
+optionally default that.
+
+1778
+01:22:58,540 --> 01:23:02,300
+Good, so this code actually
+cleaned up quite nicely.
+
+1779
+01:23:02,300 --> 01:23:04,000
+And what about our origin?
+
+1780
+01:23:04,000 --> 01:23:05,890
+Similar, except for that, of course,
+
+1781
+01:23:05,890 --> 01:23:07,720
+this is no longer a String.
+
+1782
+01:23:07,720 --> 01:23:11,950
+So we don't want the Optional
+nil for Optional String.
+
+1783
+01:23:11,950 --> 01:23:15,650
+We want Airport Optional,
+
+1784
+01:23:15,650 --> 01:23:17,870
+right there so that's
+been nil for Airport.
+
+1785
+01:23:17,870 --> 01:23:19,500
+And again, not allAirports.codes,
+
+1786
+01:23:19,500 --> 01:23:21,753
+we want Airports.sorted().
+
+1787
+01:23:23,270 --> 01:23:26,110
+And again, the Airport is already
+
+1788
+01:23:27,410 --> 01:23:30,660
+got its own friendlyName in an
+object-oriented kind of way.
+
+1789
+01:23:30,660 --> 01:23:33,840
+Still want the ?? Any, because,
+
+1790
+01:23:33,840 --> 01:23:37,830
+this airport is allowed to
+be nil and it's not Optional
+
+1791
+01:23:37,830 --> 01:23:39,703
+String, it's Optional Airport.
+
+1792
+01:23:42,560 --> 01:23:45,670
+So now this is picking Optional Airports,
+
+1793
+01:23:45,670 --> 01:23:47,720
+just like this is picking Airport.
+
+1794
+01:23:47,720 --> 01:23:50,230
+And this is Airline down here.
+
+1795
+01:23:50,230 --> 01:23:52,730
+This is probably more similar to this,
+
+1796
+01:23:52,730 --> 01:23:54,230
+than it is to this other one.
+
+1797
+01:23:54,230 --> 01:23:56,770
+So if I copy and paste right here,
+
+1798
+01:23:56,770 --> 01:23:59,190
+change this to be our Airline.
+
+1799
+01:23:59,190 --> 01:24:03,040
+And I'm gonna search and
+replace this airport,
+
+1800
+01:24:03,040 --> 01:24:04,333
+with our airline
+
+1801
+01:24:06,043 --> 01:24:09,180
+We've converted these now to use objects
+
+1802
+01:24:09,180 --> 01:24:11,830
+instead of their Strings.
+
+1803
+01:24:11,830 --> 01:24:14,390
+Otherwise this code can stay the same.
+
+1804
+01:24:14,390 --> 01:24:16,420
+One last thing that I wanna do is,
+
+1805
+01:24:16,420 --> 01:24:18,480
+when the done button is pressed,
+
+1806
+01:24:18,480 --> 01:24:20,550
+if you've changed your destination,
+
+1807
+01:24:20,550 --> 01:24:24,010
+I wanna do this, fetchIncomingFlights.
+
+1808
+01:24:24,010 --> 01:24:27,280
+If you change from looking at SFO,
+
+1809
+01:24:27,280 --> 01:24:29,580
+to looking at Dallas Fort worth,
+
+1810
+01:24:29,580 --> 01:24:32,950
+I want to fetch those incoming flights.
+
+1811
+01:24:32,950 --> 01:24:34,110
+So I only wanna do it though,
+
+1812
+01:24:34,110 --> 01:24:36,800
+when you actually change your destination.
+
+1813
+01:24:36,800 --> 01:24:41,800
+So I'm gonna say, if my draft's
+destination does not equal
+
+1814
+01:24:42,890 --> 01:24:47,890
+my flightSearch
+destination, then self.draft
+
+1815
+01:24:49,750 --> 01:24:53,263
+destination fetchIncomingFlights.
+
+1816
+01:24:55,558 --> 01:24:56,540
+Lets take a look.
+
+1817
+01:24:56,540 --> 01:24:57,593
+See if this works.
+
+1818
+01:25:00,367 --> 01:25:01,342
+All right, here we go.
+
+1819
+01:25:01,342 --> 01:25:02,192
+Let's try filter.
+
+1820
+01:25:03,130 --> 01:25:06,960
+Oh no, it crashed, it
+crashes, we hate crashes.
+
+1821
+01:25:06,960 --> 01:25:08,410
+What is going on?
+
+1822
+01:25:08,410 --> 01:25:10,713
+Let's look at our console down here.
+
+1823
+01:25:11,810 --> 01:25:15,110
+This is a very, very important error
+
+1824
+01:25:15,110 --> 01:25:16,550
+when you're working with Core Data,
+
+1825
+01:25:16,550 --> 01:25:19,530
+to understand what this is.
+
+1826
+01:25:19,530 --> 01:25:23,200
+It says, context in your
+Environment, is not connected to
+
+1827
+01:25:23,200 --> 01:25:25,640
+the persistent store coordinator.
+
+1828
+01:25:25,640 --> 01:25:29,390
+If you remember back over
+here in SceneDelegate,
+
+1829
+01:25:29,390 --> 01:25:33,570
+we created this thing context
+out of our persistent store,
+
+1830
+01:25:33,570 --> 01:25:35,000
+this persistent container.
+
+1831
+01:25:35,000 --> 01:25:37,220
+This is our View into the database,
+
+1832
+01:25:37,220 --> 01:25:40,710
+and we had to pass it
+in to our Enroute View,
+
+1833
+01:25:40,710 --> 01:25:42,490
+via this environment.
+
+1834
+01:25:42,490 --> 01:25:47,280
+But we then, from our honorary View,
+
+1835
+01:25:47,280 --> 01:25:51,500
+put up a sheet with
+FilterFlights and sheets
+
+1836
+01:25:51,500 --> 01:25:53,070
+get their own environments.
+
+1837
+01:25:53,070 --> 01:25:55,900
+So we have to do the same thing here,
+
+1838
+01:25:55,900 --> 01:26:00,440
+and pass into this
+environment, this context.
+
+1839
+01:26:00,440 --> 01:26:03,500
+Now the only problem
+here is, what is context?
+
+1840
+01:26:03,500 --> 01:26:06,480
+It says unresolved
+identifier, where is context?
+
+1841
+01:26:06,480 --> 01:26:09,360
+Well, we're gonna have
+to get our context here,
+
+1842
+01:26:09,360 --> 01:26:10,760
+so that we can pass it here.
+
+1843
+01:26:13,775 --> 01:26:17,430
+We're gonna get that here,
+from our environment,
+
+1844
+01:26:17,430 --> 01:26:22,430
+a managedObjectContext, which
+is a var we'll call context.
+
+1845
+01:26:24,670 --> 01:26:26,687
+So here, I'm grabbing
+this context out of here.
+
+1846
+01:26:26,687 --> 01:26:30,330
+I'm out of my Environment,
+and I'm passing it along
+
+1847
+01:26:30,330 --> 01:26:32,230
+to this sheet's Environment.
+
+1848
+01:26:32,230 --> 01:26:34,330
+So this guy has Environment.
+
+1849
+01:26:34,330 --> 01:26:37,460
+So this is a common
+error to get down here.
+
+1850
+01:26:37,460 --> 01:26:41,220
+And so, really make sure
+that you burn in your brain,
+
+1851
+01:26:41,220 --> 01:26:42,380
+what this means.
+
+1852
+01:26:42,380 --> 01:26:46,410
+It just means you needed to
+pass into a sheet or something.
+
+1853
+01:26:46,410 --> 01:26:49,140
+Anything that puts up this
+modal popover whatever,
+
+1854
+01:26:49,140 --> 01:26:51,077
+pass this context in there.
+
+1855
+01:26:51,077 --> 01:26:55,520
+And the reason for that is,
+things like FetchRequest
+
+1856
+01:26:55,520 --> 01:26:57,200
+depend on that context.
+
+1857
+01:26:57,200 --> 01:26:59,117
+How else are they gonna know
+where to get these Airports
+
+1858
+01:26:59,117 --> 01:27:00,420
+and Airlines from?
+
+1859
+01:27:00,420 --> 01:27:03,313
+They need the context to
+be in their Environment.
+
+1860
+01:27:06,700 --> 01:27:07,533
+Oh yes.
+
+1861
+01:27:07,533 --> 01:27:09,280
+So, we gotta put a self dot over there,
+
+1862
+01:27:09,280 --> 01:27:10,937
+now we can do it.
+
+1863
+01:27:13,549 --> 01:27:15,450
+Okay, here we go, let's try it filter.
+
+1864
+01:27:15,450 --> 01:27:18,490
+Oh, that looks better,
+destination San Francisco.
+
+1865
+01:27:18,490 --> 01:27:21,542
+Wow, there's are all over the Denver.
+
+1866
+01:27:21,542 --> 01:27:24,201
+Now that didn't fetch, that's good.
+
+1867
+01:27:24,201 --> 01:27:26,170
+I haven't said done here,
+
+1868
+01:27:26,170 --> 01:27:28,096
+so it didn't go off and do a fetch there.
+
+1869
+01:27:28,096 --> 01:27:31,880
+Origin yeah, looking good, airline yeah,
+
+1870
+01:27:31,880 --> 01:27:34,056
+I'm gonna say United.
+
+1871
+01:27:34,056 --> 01:27:34,889
+What about that?
+
+1872
+01:27:34,889 --> 01:27:36,090
+Oh, airline not working.
+
+1873
+01:27:36,090 --> 01:27:38,420
+See that airline, not working.
+
+1874
+01:27:38,420 --> 01:27:40,700
+So let's go back and take
+a look at airline tell you,
+
+1875
+01:27:40,700 --> 01:27:43,800
+what we did wrong there
+probably a copy and paste error
+
+1876
+01:27:43,800 --> 01:27:45,053
+that we made down there.
+
+1877
+01:27:45,890 --> 01:27:48,283
+So that's in FilterFlights.
+
+1878
+01:27:49,320 --> 01:27:52,550
+So airlines see, oh,
+look at this draft.origin
+
+1879
+01:27:52,550 --> 01:27:57,263
+for the Airline, no,
+this is draft.airline.
+
+1880
+01:27:58,290 --> 01:27:59,123
+Try that.
+
+1881
+01:28:02,200 --> 01:28:04,040
+Alright, so that's it for, that's good.
+
+1882
+01:28:04,040 --> 01:28:07,050
+Now airline, oh, looking
+much better already,
+
+1883
+01:28:07,050 --> 01:28:11,570
+United, lets go to Boston,
+and I'm gonna hit done,
+
+1884
+01:28:11,570 --> 01:28:14,370
+and hopefully then it
+will do another fetch.
+
+1885
+01:28:14,370 --> 01:28:16,190
+Whoop, there it is Boston.
+
+1886
+01:28:16,190 --> 01:28:18,630
+And again, we're looking
+in the database here,
+
+1887
+01:28:18,630 --> 01:28:20,560
+and if we go back to San Francisco,
+
+1888
+01:28:20,560 --> 01:28:22,830
+you'll notice something interesting here.
+
+1889
+01:28:22,830 --> 01:28:24,070
+Pay close attention.
+
+1890
+01:28:24,070 --> 01:28:25,720
+Well, a lot of airports in there.
+
+1891
+01:28:26,820 --> 01:28:28,810
+I think it's just go, here it is.
+
+1892
+01:28:28,810 --> 01:28:31,500
+Watch when I hit done here,
+
+1893
+01:28:31,500 --> 01:28:33,750
+whoop, how quickly SFO load it up,
+
+1894
+01:28:33,750 --> 01:28:37,326
+because it's showing me
+stuff that's in the database,
+
+1895
+01:28:37,326 --> 01:28:39,380
+and it's continuing to update them,
+
+1896
+01:28:39,380 --> 01:28:42,810
+but we're getting this instant
+response from the database,
+
+1897
+01:28:42,810 --> 01:28:45,350
+which is another great kind
+of side effect of moving this
+
+1898
+01:28:45,350 --> 01:28:46,623
+stuff in the database.
+
+1899
+01:28:48,680 --> 01:28:53,120
+Now it's not quite right
+yet, because I changed this
+
+1900
+01:28:53,120 --> 01:28:56,320
+if you remember, to have
+United as my airline,
+
+1901
+01:28:56,320 --> 01:29:00,600
+but this is giving me other
+airlines besides United, right?
+
+1902
+01:29:00,600 --> 01:29:04,150
+Well that's because back
+here in our FlightEnroute,
+
+1903
+01:29:04,150 --> 01:29:06,270
+when we were looking up our Flights,
+
+1904
+01:29:06,270 --> 01:29:09,543
+our predicate here is
+just the destination only.
+
+1905
+01:29:10,570 --> 01:29:15,013
+This is not looking at the
+airline and things like that.
+
+1906
+01:29:15,013 --> 01:29:16,720
+It's the destination only.
+
+1907
+01:29:16,720 --> 01:29:21,560
+So we need this predicate right
+here, to be some predicate,
+
+1908
+01:29:21,560 --> 01:29:26,560
+say that predicate equal, date
+is based on this FlightSearch
+
+1909
+01:29:27,040 --> 01:29:30,350
+and all the things, not
+just the destination.
+
+1910
+01:29:30,350 --> 01:29:34,080
+So I put a little extension
+down here to FlightSearch
+
+1911
+01:29:34,080 --> 01:29:35,143
+to do that.
+
+1912
+01:29:36,260 --> 01:29:38,170
+And let's just move it all the way
+
+1913
+01:29:38,170 --> 01:29:40,910
+up to the top of the file here.
+
+1914
+01:29:40,910 --> 01:29:44,210
+And this FlightSearch extension
+that I added is to add a
+
+1915
+01:29:44,210 --> 01:29:45,880
+var called predicate.
+
+1916
+01:29:45,880 --> 01:29:48,150
+That just is our implied search, right?
+
+1917
+01:29:48,150 --> 01:29:49,740
+So it's just looking at all these things,
+
+1918
+01:29:49,740 --> 01:29:53,340
+and building up an NSPredicate object,
+
+1919
+01:29:53,340 --> 01:29:56,960
+using more and more stuff in its format,
+
+1920
+01:29:56,960 --> 01:29:58,890
+you see its format is destination.
+
+1921
+01:29:58,890 --> 01:30:01,893
+Then if there's an
+origin, I add, and origin.
+
+1922
+01:30:03,090 --> 01:30:06,130
+If there's an airline, I add, and airline.
+
+1923
+01:30:06,130 --> 01:30:08,470
+And along the way, I have this args,
+
+1924
+01:30:08,470 --> 01:30:10,543
+which is an Array of NSManagedObject.
+
+1925
+01:30:11,890 --> 01:30:14,470
+Now, what is NSManagedObject?
+
+1926
+01:30:14,470 --> 01:30:19,470
+This is the superclass of
+Flight, Airport and Airline.
+
+1927
+01:30:19,550 --> 01:30:22,910
+So if I wanna create an Array
+that could have Flights in it,
+
+1928
+01:30:22,910 --> 01:30:25,460
+or Airports or Airlines,
+
+1929
+01:30:25,460 --> 01:30:28,980
+then I can make an Array
+of NSManagedObject,
+
+1930
+01:30:28,980 --> 01:30:31,850
+since those all inherit
+from there, this works.
+
+1931
+01:30:31,850 --> 01:30:34,100
+So this is the args, so
+it's getting the destination
+
+1932
+01:30:34,100 --> 01:30:36,450
+in there to start, and
+then if there is an origin
+
+1933
+01:30:36,450 --> 01:30:38,957
+it puts that in there, if there's
+an Airline it puts that in
+
+1934
+01:30:38,957 --> 01:30:41,600
+there, and then we're just
+saying NSPredicate format,
+
+1935
+01:30:41,600 --> 01:30:44,710
+this String we built up,
+and the argument Array,
+
+1936
+01:30:44,710 --> 01:30:47,969
+is these args that I build up.
+
+1937
+01:30:47,969 --> 01:30:51,310
+This is how you kind of, can
+kind of build a programmatic
+
+1938
+01:30:51,310 --> 01:30:53,820
+predicate that's based on decision-making,
+
+1939
+01:30:53,820 --> 01:30:55,473
+like what's in this struct.
+
+1940
+01:30:56,660 --> 01:30:58,830
+So I'm just gonna use this
+predicate var down here,
+
+1941
+01:30:58,830 --> 01:31:02,510
+and say, flightSearch.predicate.
+
+1942
+01:31:02,510 --> 01:31:04,780
+Give me a predicate for this FlightSearch.
+
+1943
+01:31:04,780 --> 01:31:06,663
+And I'm gonna use that to search.
+
+1944
+01:31:07,800 --> 01:31:09,473
+We don't need that, not anymore.
+
+1945
+01:31:11,490 --> 01:31:13,030
+It's simpler, in fact, this is so simple,
+
+1946
+01:31:13,030 --> 01:31:15,713
+we could just put this
+right in here like that.
+
+1947
+01:31:18,828 --> 01:31:19,853
+See if that works.
+
+1948
+01:31:22,820 --> 01:31:26,200
+Notice SFO instantly showing
+us data in the database,
+
+1949
+01:31:26,200 --> 01:31:29,390
+the data that's valid anyway, to show us,
+
+1950
+01:31:29,390 --> 01:31:32,550
+and let's go airport here,
+and go down to United,
+
+1951
+01:31:32,550 --> 01:31:33,880
+that's a hub for San Francisco.
+
+1952
+01:31:33,880 --> 01:31:35,490
+So there should be flights and churn up.
+
+1953
+01:31:35,490 --> 01:31:39,660
+There it is, that's working
+and we could go origin.
+
+1954
+01:31:39,660 --> 01:31:41,370
+What was in the origins there?
+
+1955
+01:31:41,370 --> 01:31:43,390
+Boston, we can find Boston.
+
+1956
+01:31:43,390 --> 01:31:46,810
+We know that Boston is there,
+Logan airport in Boston.
+
+1957
+01:31:46,810 --> 01:31:50,260
+So now we're gonna look
+both Boston and United,
+
+1958
+01:31:50,260 --> 01:31:51,460
+found that, that's good.
+
+1959
+01:31:53,540 --> 01:31:56,030
+And, we should go back to
+saying, show us any plane
+
+1960
+01:31:56,030 --> 01:31:58,280
+coming from Boston, on this one flight,
+
+1961
+01:31:58,280 --> 01:32:01,800
+lemme go back here and
+say, shows any airlines,
+
+1962
+01:32:01,800 --> 01:32:03,593
+any place, here they are.
+
+1963
+01:32:05,770 --> 01:32:06,900
+Alright.
+
+1964
+01:32:06,900 --> 01:32:09,620
+So that's a lot of code in that demo.
+
+1965
+01:32:09,620 --> 01:32:11,460
+Lot to show you there,
+
+1966
+01:32:11,460 --> 01:32:16,340
+but hopefully you've gotten a
+good feel for how we build our
+
+1967
+01:32:16,340 --> 01:32:18,920
+UI out of data in the database,
+
+1968
+01:32:18,920 --> 01:32:23,705
+especially the way we do
+these FetchRequests that are
+
+1969
+01:32:23,705 --> 01:32:26,850
+recurring results, they're
+just constantly kept up to date
+
+1970
+01:32:26,850 --> 01:32:28,700
+as we change things.
+
+1971
+01:32:28,700 --> 01:32:31,760
+And that makes it to
+the rest of your code.
+
+1972
+01:32:31,760 --> 01:32:34,720
+Doesn't have to have many
+if thens, and things change,
+
+1973
+01:32:34,720 --> 01:32:36,090
+and this, that, and the other thing,
+
+1974
+01:32:36,090 --> 01:32:37,050
+it just finds them.
+
+1975
+01:32:37,050 --> 01:32:38,500
+And notice that in Core Data, we're
+
+1976
+01:32:38,500 --> 01:32:42,130
+mostly using these FetchedResults
+to have things change.
+
+1977
+01:32:42,130 --> 01:32:45,890
+Even though we can also use
+ObservedObjects on individual
+
+1978
+01:32:45,890 --> 01:32:48,370
+Flights, Airlines, right, and
+we're using it here if this
+
+1979
+01:32:48,370 --> 01:32:51,040
+Flight did change, since we did the
+
+1980
+01:32:51,040 --> 01:32:53,290
+objectWillChange.send() on there.
+
+1981
+01:32:53,290 --> 01:32:54,123
+It would update,
+
+1982
+01:32:54,123 --> 01:32:58,980
+but that's more rare even than
+doing these FetchedResults,
+
+1983
+01:32:58,980 --> 01:33:01,760
+really FetchedResults and
+having this dynamically always
+
+1984
+01:33:01,760 --> 01:33:02,810
+show you what's in the database,
+
+1985
+01:33:02,810 --> 01:33:05,590
+that's really the heart of the SwiftUI
+
+1986
+01:33:05,590 --> 01:33:07,493
+to Core Data integration.
+
+1987
+01:33:09,100 --> 01:33:09,933
+All right.
+
+1988
+01:33:09,933 --> 01:33:11,640
+I will really love to see some of you
+
+1989
+01:33:11,640 --> 01:33:13,690
+do this in your final project.
+
+1990
+01:33:13,690 --> 01:33:15,840
+There's certainly a lot of
+need in a lot of different
+
+1991
+01:33:15,840 --> 01:33:18,990
+project ideas, for permanent
+storage resistant storage.
+
+1992
+01:33:18,990 --> 01:33:23,460
+And this is a lot more powerful
+than doing UserDefaults.
+
+1993
+01:33:23,460 --> 01:33:26,303
+So I'm hoping that you
+guys will tackle this.
+
+1994
+01:33:27,260 --> 01:33:30,513
+- [Animaker Voice] For more,
+please visit us @stanford.edu.

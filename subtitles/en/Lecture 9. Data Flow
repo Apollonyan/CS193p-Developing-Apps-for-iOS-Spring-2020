@@ -1,0 +1,7040 @@
+1
+00:00:00,182 --> 00:00:02,932
+(ethereal music)
+
+2
+00:00:04,920 --> 00:00:06,520
+- [Narrator] Stanford University
+
+3
+00:00:08,720 --> 00:00:10,820
+- [Instructor] We are back, lecture nine,
+
+4
+00:00:10,820 --> 00:00:15,820
+Stanford CS193p, Spring of 2020.
+
+5
+00:00:16,320 --> 00:00:19,580
+Today we are going to talk
+about a super important topic,
+
+6
+00:00:19,580 --> 00:00:21,110
+property wrappers.
+
+7
+00:00:21,110 --> 00:00:24,816
+We're finally gonna understand
+what things like @State
+
+8
+00:00:24,816 --> 00:00:29,220
+and @Published are really
+doing under the covers.
+
+9
+00:00:29,220 --> 00:00:30,620
+Then we're gonna talk about Publishers
+
+10
+00:00:30,620 --> 00:00:33,060
+because, when we start
+talking about @Published
+
+11
+00:00:33,060 --> 00:00:35,740
+it's gonna rapidly lead
+to this other topic,
+
+12
+00:00:35,740 --> 00:00:38,270
+also another very important topic,
+
+13
+00:00:38,270 --> 00:00:40,530
+however, I only have a little bit of time
+
+14
+00:00:40,530 --> 00:00:41,900
+to talk about it today,
+
+15
+00:00:41,900 --> 00:00:44,640
+we will talk about it much
+more later in the quarter,
+
+16
+00:00:44,640 --> 00:00:47,410
+just gonna get the overview today.
+
+17
+00:00:47,410 --> 00:00:49,870
+Then we'll dive into a
+demo where I'll show you
+
+18
+00:00:49,870 --> 00:00:51,670
+a lot of stuff about Publishers
+
+19
+00:00:51,670 --> 00:00:54,390
+and also talk about @Binding
+
+20
+00:00:54,390 --> 00:00:56,970
+which is a new property wrapper
+you're gonna learn about
+
+21
+00:00:56,970 --> 00:00:58,003
+in these slides.
+
+22
+00:00:59,070 --> 00:01:01,110
+So let's talk about property wrappers.
+
+23
+00:01:01,110 --> 00:01:03,679
+These are there @Somethings
+that you're seeing,
+
+24
+00:01:03,679 --> 00:01:06,200
+@State, @Publisher.
+
+25
+00:01:06,200 --> 00:01:09,180
+Turns out this thing is actually a struct
+
+26
+00:01:09,180 --> 00:01:11,580
+and that's struct has code in it
+
+27
+00:01:11,580 --> 00:01:14,150
+that applies some kind
+of template behavior
+
+28
+00:01:14,150 --> 00:01:17,630
+to all the vars that they wrap.
+
+29
+00:01:17,630 --> 00:01:19,080
+We already know about
+some of these behaviors,
+
+30
+00:01:19,080 --> 00:01:22,310
+like @State, it makes
+a var live in the heap,
+
+31
+00:01:22,310 --> 00:01:24,040
+right, makes it writable in a View
+
+32
+00:01:24,040 --> 00:01:26,870
+that would otherwise be unwritable.
+
+33
+00:01:26,870 --> 00:01:30,580
+We know that @Published
+publishes the changes of a var
+
+34
+00:01:30,580 --> 00:01:32,980
+causing Views to redraw
+and things like that.
+
+35
+00:01:32,980 --> 00:01:36,170
+Same thing with @ObservedObject,
+watching our ViewModel
+
+36
+00:01:36,170 --> 00:01:39,510
+when it changes it makes our View redraw.
+
+37
+00:01:39,510 --> 00:01:42,090
+Property wrapper is a
+feature in the Swift language
+
+38
+00:01:42,090 --> 00:01:45,890
+that adds some syntactic
+sugar to make these structs
+
+39
+00:01:45,890 --> 00:01:48,490
+really easy to use in your code.
+
+40
+00:01:48,490 --> 00:01:51,210
+So let's talk about that syntactic sugar
+
+41
+00:01:51,210 --> 00:01:53,429
+and to do that we're
+gonna use this example,
+
+42
+00:01:53,429 --> 00:01:57,280
+@Published var emoji, of type EmojiArt
+
+43
+00:01:57,280 --> 00:02:01,433
+equals EmojiArt(), we have
+this in our EmojiArt demo.
+
+44
+00:02:02,410 --> 00:02:04,410
+What's really happening here?
+
+45
+00:02:04,410 --> 00:02:06,200
+Well, as I said, this line of code
+
+46
+00:02:06,200 --> 00:02:11,120
+is really creating a struct
+and what type is that struct?
+
+47
+00:02:11,120 --> 00:02:14,220
+It's of type Published.
+
+48
+00:02:14,220 --> 00:02:17,600
+That is the type of this struct.
+
+49
+00:02:17,600 --> 00:02:21,030
+And inside this struct there
+is a very important var
+
+50
+00:02:21,030 --> 00:02:22,717
+called its wrappedValue.
+
+51
+00:02:23,650 --> 00:02:26,640
+Now the type of this wrappedValue var
+
+52
+00:02:26,640 --> 00:02:29,380
+for most property wrappers
+
+53
+00:02:29,380 --> 00:02:32,350
+is the type of the var it's
+wrapping, that emojiArt thing,
+
+54
+00:02:32,350 --> 00:02:34,040
+so that's of type EmojiArt.
+
+55
+00:02:34,040 --> 00:02:36,540
+That's awesome, it's got the
+little wrappedValue in there
+
+56
+00:02:36,540 --> 00:02:39,020
+which is an EmojiArt.
+
+57
+00:02:39,020 --> 00:02:42,070
+Swift, when you do this @Published,
+
+58
+00:02:42,070 --> 00:02:44,140
+it builds one of these structs
+
+59
+00:02:44,140 --> 00:02:46,990
+and makes a couple of
+vars available to you.
+
+60
+00:02:46,990 --> 00:02:49,850
+The first one is _emojiArt.
+
+61
+00:02:49,850 --> 00:02:53,090
+Now we have not seen this
+one but it's in there.
+
+62
+00:02:53,090 --> 00:02:58,090
+_emojiArt is of type Published,
+it's basically of the type
+
+63
+00:02:58,370 --> 00:03:01,790
+of this struct that
+we're talking about here.
+
+64
+00:03:01,790 --> 00:03:06,070
+And it gets initialized by
+creating a Published struct
+
+65
+00:03:06,070 --> 00:03:09,540
+and setting that wrappedValue
+to whatever you initialized
+
+66
+00:03:09,540 --> 00:03:11,360
+the var that you're wrapping.
+
+67
+00:03:11,360 --> 00:03:12,650
+All right, emojiArt, up there,
+
+68
+00:03:12,650 --> 00:03:15,370
+we initialize it to an empty EmojiArt,
+
+69
+00:03:15,370 --> 00:03:18,150
+so our Published struct gets initialized
+
+70
+00:03:18,150 --> 00:03:20,350
+with that wrappedValue there.
+
+71
+00:03:20,350 --> 00:03:22,170
+That makes a lot of sense.
+
+72
+00:03:22,170 --> 00:03:24,340
+Now we don't actually access this purple
+
+73
+00:03:24,340 --> 00:03:28,027
+_emojiArt very often, however it's there
+
+74
+00:03:28,027 --> 00:03:30,960
+and we do access this next var
+
+75
+00:03:30,960 --> 00:03:33,020
+which looks just like
+the thing we're wrapping,
+
+76
+00:03:33,020 --> 00:03:36,130
+it's flashing up there, var emojiArt,
+
+77
+00:03:36,130 --> 00:03:40,200
+but that turns out to
+be a computed property.
+
+78
+00:03:40,200 --> 00:03:44,020
+And conceptually it's
+getting the wrappedValue
+
+79
+00:03:44,020 --> 00:03:46,370
+out of the _emojiArt and it's setting
+
+80
+00:03:46,370 --> 00:03:49,690
+by setting the _emojiArt's wrappedValue.
+
+81
+00:03:49,690 --> 00:03:52,450
+So that's really what's
+going on here, conceptually.
+
+82
+00:03:52,450 --> 00:03:53,900
+Now there's more to it than that.
+
+83
+00:03:53,900 --> 00:03:55,940
+Of course this Published is just a struct
+
+84
+00:03:55,940 --> 00:03:58,020
+and we can do a lot of different
+things with wrappedValue
+
+85
+00:03:58,020 --> 00:04:01,570
+but this is basically what's going on.
+
+86
+00:04:01,570 --> 00:04:03,140
+But wait, there's more.
+
+87
+00:04:03,140 --> 00:04:05,870
+There's yet another var in that struct
+
+88
+00:04:05,870 --> 00:04:07,927
+called the projectedValue.
+
+89
+00:04:09,660 --> 00:04:11,650
+You access this projectedValue
+
+90
+00:04:11,650 --> 00:04:14,693
+with yet another syntactic
+sugar var, $emojiArt.
+
+91
+00:04:15,600 --> 00:04:18,060
+So we have _emojiArt, that's the struct,
+
+92
+00:04:18,060 --> 00:04:20,500
+we have nothing in front of it emojiArt,
+
+93
+00:04:20,500 --> 00:04:24,470
+that's getting the wrappedValue
+via computed property,
+
+94
+00:04:24,470 --> 00:04:26,210
+then you have $emojiArt
+
+95
+00:04:26,210 --> 00:04:28,283
+which is accessing this projectedValue.
+
+96
+00:04:29,340 --> 00:04:31,760
+Well what is this projectedValue?
+
+97
+00:04:31,760 --> 00:04:34,200
+Well that's totally up
+to the property wrapper.
+
+98
+00:04:34,200 --> 00:04:37,510
+So each property wrapper has
+a different projectedValue
+
+99
+00:04:37,510 --> 00:04:39,500
+that is totally its decision.
+
+100
+00:04:39,500 --> 00:04:42,490
+For example, @Published, that struct,
+
+101
+00:04:42,490 --> 00:04:45,960
+it chooses to have its
+projectedValue be a Publisher
+
+102
+00:04:45,960 --> 00:04:49,593
+that publishes the
+wrappedValue and never fails.
+
+103
+00:04:50,450 --> 00:04:54,330
+That's what this type
+Publisher&lt;EmojiArt, Never&gt; means,
+
+104
+00:04:54,330 --> 00:04:58,970
+it means a Publisher that is
+periodically emitting a value
+
+105
+00:04:58,970 --> 00:05:01,740
+which is an emojiArt and never fails.
+
+106
+00:05:01,740 --> 00:05:04,220
+Now, of course, the value that
+it is periodically emitting
+
+107
+00:05:04,220 --> 00:05:07,350
+is any time that wrappedValue,
+that emojiArt, changes
+
+108
+00:05:07,350 --> 00:05:09,380
+it publishes that change.
+
+109
+00:05:09,380 --> 00:05:10,960
+And we're gonna talk
+about Publishers later
+
+110
+00:05:10,960 --> 00:05:12,510
+and this'll make more sense to you,
+
+111
+00:05:12,510 --> 00:05:14,810
+but that is the projectedValue
+
+112
+00:05:14,810 --> 00:05:18,350
+of an @Published property wrapper.
+
+113
+00:05:18,350 --> 00:05:20,400
+And each one is gonna
+have a different type
+
+114
+00:05:20,400 --> 00:05:21,900
+so we're gonna have to go through
+
+115
+00:05:21,900 --> 00:05:25,403
+and talk about each of those
+on a case by case basis.
+
+116
+00:05:26,280 --> 00:05:27,910
+But first let's talk about why we do
+
+117
+00:05:27,910 --> 00:05:29,430
+this property wrapper thing.
+
+118
+00:05:29,430 --> 00:05:30,773
+What's the point of it?
+
+119
+00:05:30,773 --> 00:05:33,990
+Well the main point is
+that the wrapper struct,
+
+120
+00:05:33,990 --> 00:05:36,360
+like Published, can do something
+
+121
+00:05:36,360 --> 00:05:39,283
+when the wrappedValue is got or set.
+
+122
+00:05:40,170 --> 00:05:41,900
+It can get involved.
+
+123
+00:05:41,900 --> 00:05:44,520
+For example, @Published, what does it do
+
+124
+00:05:44,520 --> 00:05:46,340
+when its wrappedValue is set?
+
+125
+00:05:46,340 --> 00:05:48,300
+Well, it publishes it,
+
+126
+00:05:48,300 --> 00:05:51,060
+through it's little $emojiArt Publisher.
+
+127
+00:05:51,060 --> 00:05:55,730
+Not only that, but @Published
+causes objectWillChange.send
+
+128
+00:05:55,730 --> 00:05:58,960
+to happen in the ObservableObject it's in.
+
+129
+00:05:58,960 --> 00:06:02,160
+So, it's getting involved
+in the setting and getting
+
+130
+00:06:02,160 --> 00:06:05,743
+of that var and that's what
+property wrappers really do.
+
+131
+00:06:06,950 --> 00:06:09,870
+So let's look at the
+actions that are taken
+
+132
+00:06:09,870 --> 00:06:13,190
+and the projectedValue of
+each of the property wrappers
+
+133
+00:06:13,190 --> 00:06:14,023
+that we know.
+
+134
+00:06:15,927 --> 00:06:19,920
+@State, we've seen that one
+multiple times in our View.
+
+135
+00:06:19,920 --> 00:06:24,750
+The wrappedValue of an
+@State is anything, really,
+
+136
+00:06:24,750 --> 00:06:27,840
+any var, probably gonna be a value type.
+
+137
+00:06:27,840 --> 00:06:30,940
+What it does, it stores the wrappedValue
+
+138
+00:06:30,940 --> 00:06:32,520
+in the heap.
+
+139
+00:06:32,520 --> 00:06:34,060
+And that's so that it can be changeable
+
+140
+00:06:34,060 --> 00:06:35,550
+'cause normally our Views are read only,
+
+141
+00:06:35,550 --> 00:06:36,990
+we can't change 'em, but
+if it lives in the heap
+
+142
+00:06:36,990 --> 00:06:38,710
+we can change it over there.
+
+143
+00:06:38,710 --> 00:06:40,370
+It also invalidates the View
+
+144
+00:06:40,370 --> 00:06:43,090
+whenever that wrappedValue changes.
+
+145
+00:06:43,090 --> 00:06:46,570
+Now what is its projectedValue,
+its dollar sign?
+
+146
+00:06:46,570 --> 00:06:50,430
+It's not a Publisher,
+it's called a Binding.
+
+147
+00:06:50,430 --> 00:06:53,340
+We're gonna talk all about
+Bindings in a couple slides here
+
+148
+00:06:53,340 --> 00:06:55,340
+but a Binding is essentially a way
+
+149
+00:06:55,340 --> 00:06:58,830
+to connect one var to another.
+
+150
+00:06:58,830 --> 00:07:02,470
+So taking the $ value of a State
+
+151
+00:07:02,470 --> 00:07:04,840
+let's you have an object that you can use
+
+152
+00:07:04,840 --> 00:07:08,350
+to bind to that value in the heap.
+
+153
+00:07:08,350 --> 00:07:10,833
+So we'll see what that
+Binding means in a second.
+
+154
+00:07:11,920 --> 00:07:14,470
+Next one is ObservedObject.
+
+155
+00:07:14,470 --> 00:07:16,920
+What's the wrappedValue
+of on ObservedObject?
+
+156
+00:07:16,920 --> 00:07:20,490
+It's anything that implements
+the ObservableObject protocol,
+
+157
+00:07:20,490 --> 00:07:22,550
+ViewModels, basically.
+
+158
+00:07:22,550 --> 00:07:25,800
+What does @ObservedObject struct do?
+
+159
+00:07:25,800 --> 00:07:27,610
+Well, it invalidates the View
+
+160
+00:07:27,610 --> 00:07:29,850
+whenever the wrappedValue or the ViewModel
+
+161
+00:07:29,850 --> 00:07:32,220
+does objectWillChange.send.
+
+162
+00:07:32,220 --> 00:07:34,200
+Whenever that happens,
+it redraws the View.
+
+163
+00:07:34,200 --> 00:07:36,420
+That's what ObservedObject does.
+
+164
+00:07:36,420 --> 00:07:39,450
+Now what's its projectedValue,
+its dollar sign thing?
+
+165
+00:07:39,450 --> 00:07:42,880
+It's also a Binding, a Binding
+to the vars of the ViewModel
+
+166
+00:07:44,170 --> 00:07:45,760
+which is really cool.
+
+167
+00:07:45,760 --> 00:07:48,800
+So you can bind a variable in your View
+
+168
+00:07:48,800 --> 00:07:51,350
+to a variable in the ViewModel
+
+169
+00:07:51,350 --> 00:07:54,233
+so that if either changes,
+the other one gets updated.
+
+170
+00:07:55,170 --> 00:07:57,040
+And what about Binding itself?
+
+171
+00:07:57,040 --> 00:07:59,480
+So we haven't seen this one, @Binding,
+
+172
+00:07:59,480 --> 00:08:00,803
+it's a property wrapper.
+
+173
+00:08:01,720 --> 00:08:05,070
+The wrappedValue of @Binding is a value
+
+174
+00:08:05,070 --> 00:08:07,920
+that's bound to some other
+thing somewhere else.
+
+175
+00:08:07,920 --> 00:08:11,340
+Like it's bound to the
+vars of a ViewModel,
+
+176
+00:08:11,340 --> 00:08:15,000
+it's bound to an @State
+in some other View.
+
+177
+00:08:15,000 --> 00:08:18,675
+An @Binding struct gets the
+value and sets the value
+
+178
+00:08:18,675 --> 00:08:20,230
+of the wrappedValue by getting and setting
+
+179
+00:08:20,230 --> 00:08:22,250
+the value of this other thing.
+
+180
+00:08:22,250 --> 00:08:23,883
+It also invalidates the View.
+
+181
+00:08:24,870 --> 00:08:28,720
+So what is the
+projectedValue of a Binding?
+
+182
+00:08:28,720 --> 00:08:33,010
+It's self, it's essentially
+the Binding itself.
+
+183
+00:08:33,010 --> 00:08:36,540
+If you get the $ of a
+var that's a Binding,
+
+184
+00:08:36,540 --> 00:08:39,200
+you're gonna be getting
+that Binding itself back.
+
+185
+00:08:39,200 --> 00:08:41,690
+Or you can think of it
+as it's a Binding to
+
+186
+00:08:41,690 --> 00:08:43,890
+the value that the Binding is bound to,
+
+187
+00:08:43,890 --> 00:08:45,583
+but it's essentially self.
+
+188
+00:08:46,710 --> 00:08:49,410
+Let's talk about these Bindings
+more 'cause this is all new.
+
+189
+00:08:49,410 --> 00:08:50,720
+Where do we use Bindings?
+
+190
+00:08:50,720 --> 00:08:52,730
+We use 'em all over the place.
+
+191
+00:08:52,730 --> 00:08:54,150
+And I'm not even gonna
+go through this list,
+
+192
+00:08:54,150 --> 00:08:56,490
+it's so exhaustive, there's so many things
+
+193
+00:08:56,490 --> 00:08:59,100
+we use for Bindings.
+
+194
+00:08:59,100 --> 00:09:01,900
+But I'm gonna talk about
+why we have Bindings,
+
+195
+00:09:01,900 --> 00:09:04,730
+why we use them to do all these things.
+
+196
+00:09:04,730 --> 00:09:08,530
+Bindings are about one of
+the most important things
+
+197
+00:09:08,530 --> 00:09:12,200
+in the MVVM reactive UI
+structure of SwiftUI,
+
+198
+00:09:12,200 --> 00:09:15,677
+it's about having a single
+source of the truth for data.
+
+199
+00:09:15,677 --> 00:09:18,500
+And that is so important.
+
+200
+00:09:18,500 --> 00:09:21,830
+If we have data in our Model,
+it wants to live in our Model,
+
+201
+00:09:21,830 --> 00:09:25,560
+we do not want it duplicated
+in our Views, right?
+
+202
+00:09:25,560 --> 00:09:29,080
+If we have information
+in one View, in an @State
+
+203
+00:09:29,080 --> 00:09:31,627
+and we have information in
+another View in its @State,
+
+204
+00:09:31,627 --> 00:09:34,100
+and if that's the same information,
+
+205
+00:09:34,100 --> 00:09:35,720
+they should be bound to each other
+
+206
+00:09:35,720 --> 00:09:39,170
+instead of one of them trying
+to duplicate the other one
+
+207
+00:09:39,170 --> 00:09:41,150
+and, which one is the truth?
+
+208
+00:09:41,150 --> 00:09:42,340
+Can't tell.
+
+209
+00:09:42,340 --> 00:09:44,890
+So Bindings are about creating variables
+
+210
+00:09:44,890 --> 00:09:46,690
+that connect things together
+
+211
+00:09:46,690 --> 00:09:49,870
+so that only one place
+has the actual truth.
+
+212
+00:09:49,870 --> 00:09:52,570
+And whether we're talking
+about truth in the Model
+
+213
+00:09:52,570 --> 00:09:55,467
+or whether we're just talking
+about truth in our Views
+
+214
+00:09:55,467 --> 00:09:58,080
+'cause we might have
+temporary state in our Views,
+
+215
+00:09:58,080 --> 00:10:00,280
+we know we have that with @State,
+
+216
+00:10:00,280 --> 00:10:03,133
+we only want one source
+of truth for that as well.
+
+217
+00:10:05,500 --> 00:10:08,250
+So, let's show you what I mean
+
+218
+00:10:08,250 --> 00:10:11,640
+when I say the source
+of truth between Views.
+
+219
+00:10:11,640 --> 00:10:14,865
+So here I have a View MyView
+
+220
+00:10:14,865 --> 00:10:17,090
+and it's got some @States, some String,
+
+221
+00:10:17,090 --> 00:10:19,870
+myString it's called,
+initialized to "Hello".
+
+222
+00:10:19,870 --> 00:10:20,960
+And then I have another View,
+
+223
+00:10:20,960 --> 00:10:23,840
+totally different View down at
+the bottom there, OtherView,
+
+224
+00:10:23,840 --> 00:10:26,400
+and it has a var sharedText,
+
+225
+00:10:26,400 --> 00:10:29,590
+its body just shows that
+sharedText to be a Text,
+
+226
+00:10:29,590 --> 00:10:33,300
+but that var is wrapped with @Binding.
+
+227
+00:10:33,300 --> 00:10:37,400
+So up above in MyView, it's
+using an OtherView in its body
+
+228
+00:10:37,400 --> 00:10:39,080
+and of course when it
+creates that OtherView
+
+229
+00:10:39,080 --> 00:10:42,010
+it has to initialize all
+the uninitialized variables
+
+230
+00:10:42,010 --> 00:10:45,750
+in OtherView and the first
+one is that var sharedText.
+
+231
+00:10:45,750 --> 00:10:47,970
+And what's the type of that sharedText?
+
+232
+00:10:47,970 --> 00:10:50,920
+It's a Binding to a String.
+
+233
+00:10:50,920 --> 00:10:54,210
+So how am I gonna pass
+a Binding to a String?
+
+234
+00:10:54,210 --> 00:10:57,610
+I'm gonna use the $ of an @State.
+
+235
+00:10:57,610 --> 00:11:00,760
+I told you the $ of an
+@State gives you a Binding
+
+236
+00:11:00,760 --> 00:11:02,260
+to that state's value.
+
+237
+00:11:02,260 --> 00:11:04,880
+So if I say $myString, I've got a Binding,
+
+238
+00:11:04,880 --> 00:11:09,321
+Capital B Binding, to
+that String, myString.
+
+239
+00:11:09,321 --> 00:11:13,250
+Now, OtherView has that
+String, MyView has that String,
+
+240
+00:11:13,250 --> 00:11:16,360
+but the source of truth
+is MyView's version
+
+241
+00:11:16,360 --> 00:11:17,920
+and either of them can change it.
+
+242
+00:11:17,920 --> 00:11:20,370
+OtherView could change sharedText
+
+243
+00:11:20,370 --> 00:11:23,180
+and that would change myString in MyView,
+
+244
+00:11:23,180 --> 00:11:25,460
+and, of course, MyView
+could change MyString
+
+245
+00:11:25,460 --> 00:11:27,990
+and it would show up inside OtherView.
+
+246
+00:11:27,990 --> 00:11:29,680
+So there's not a, you don't make a copy
+
+247
+00:11:29,680 --> 00:11:33,290
+when you create OtherView,
+you actually bind it to it.
+
+248
+00:11:33,290 --> 00:11:35,400
+And we're gonna see
+this in the demo today.
+
+249
+00:11:35,400 --> 00:11:39,810
+This is fundamental to
+understanding how data flow works
+
+250
+00:11:39,810 --> 00:11:42,650
+in Swift is to understand we
+want single source of truth
+
+251
+00:11:42,650 --> 00:11:44,823
+and we bind to get that.
+
+252
+00:11:45,920 --> 00:11:47,210
+You can also bind to other things.
+
+253
+00:11:47,210 --> 00:11:50,300
+You can bind to a constant
+value by doing Binding.constant
+
+254
+00:11:50,300 --> 00:11:51,810
+and providing a value.
+
+255
+00:11:51,810 --> 00:11:55,690
+You can even compute the
+value of the Binding,
+
+256
+00:11:55,690 --> 00:11:57,420
+in other words, execute a closure
+
+257
+00:11:57,420 --> 00:11:59,037
+when you try to get the value of a Binding
+
+258
+00:11:59,037 --> 00:12:01,500
+and then execute another
+closure when you try to set it.
+
+259
+00:12:01,500 --> 00:12:04,400
+This feels a lot like computed properties.
+
+260
+00:12:04,400 --> 00:12:06,550
+That's kind of an advanced
+topic, you won't have to do that
+
+261
+00:12:06,550 --> 00:12:09,080
+in this class ever, but I
+just want you to understand
+
+262
+00:12:09,080 --> 00:12:11,870
+how Binding is working,
+it's just hooking up
+
+263
+00:12:11,870 --> 00:12:15,060
+to some data and that data
+could also be closures,
+
+264
+00:12:15,060 --> 00:12:18,850
+just like a computed
+var's data is closures.
+
+265
+00:12:18,850 --> 00:12:21,100
+Let's talk about another property wrapper.
+
+266
+00:12:21,100 --> 00:12:23,470
+We know @State, we know @ObservedObject,
+
+267
+00:12:23,470 --> 00:12:25,360
+and now we know @Binding.
+
+268
+00:12:25,360 --> 00:12:27,950
+Here's another one, @EnvironmentObject.
+
+269
+00:12:29,179 --> 00:12:34,050
+@EnvironmentObject is almost
+identical to @ObservedObject
+
+270
+00:12:34,960 --> 00:12:38,740
+but you pass the ViewModel to the View
+
+271
+00:12:38,740 --> 00:12:40,470
+in a little different way.
+
+272
+00:12:40,470 --> 00:12:43,520
+We know that, when we have a
+View and it has a ViewModel,
+
+273
+00:12:43,520 --> 00:12:46,063
+we have a var which is an @ObservedObject,
+
+274
+00:12:47,110 --> 00:12:50,880
+and we usually initialize
+it by passing it to the View
+
+275
+00:12:50,880 --> 00:12:52,530
+when we create the View.
+
+276
+00:12:52,530 --> 00:12:54,960
+We've done this with
+the EmojiArt document,
+
+277
+00:12:54,960 --> 00:12:56,020
+we did it back in Memorize,
+
+278
+00:12:56,020 --> 00:12:59,300
+we actually called the thing
+viewModel, kinda silly,
+
+279
+00:12:59,300 --> 00:13:01,260
+but that's how we were doing it.
+
+280
+00:13:01,260 --> 00:13:04,710
+So @EnvironmentObject
+is doing the same thing,
+
+281
+00:13:04,710 --> 00:13:07,490
+it's holding your ViewModel in your View
+
+282
+00:13:07,490 --> 00:13:10,440
+but you pass it by calling this
+function .environmentObject
+
+283
+00:13:11,810 --> 00:13:15,200
+with the ViewModel as the
+argument, on the View.
+
+284
+00:13:15,200 --> 00:13:17,800
+So you're essentially
+setting your ViewModel
+
+285
+00:13:17,800 --> 00:13:21,383
+with a ViewModifier if you
+wanna think of it that way.
+
+286
+00:13:22,510 --> 00:13:23,850
+Now what's the difference
+between these two?
+
+287
+00:13:23,850 --> 00:13:25,460
+Why do they have these two different ways
+
+288
+00:13:25,460 --> 00:13:27,690
+that kinda do the exact same thing?
+
+289
+00:13:27,690 --> 00:13:30,780
+Well, EnvironmentObjects
+have this really cool feature
+
+290
+00:13:30,780 --> 00:13:34,250
+which is that all of
+the Views in your body,
+
+291
+00:13:34,250 --> 00:13:36,700
+if you have an EnvironmentObject on you,
+
+292
+00:13:36,700 --> 00:13:38,970
+they all get that EnvironmentObject too
+
+293
+00:13:38,970 --> 00:13:41,850
+without your having to
+say .environmentObject.
+
+294
+00:13:41,850 --> 00:13:45,132
+It's similar to, like if
+we have .foregroundColor
+
+295
+00:13:45,132 --> 00:13:47,010
+on a ZStack, that's kind of like
+
+296
+00:13:47,010 --> 00:13:48,330
+we're calling .foregroundColor
+
+297
+00:13:48,330 --> 00:13:50,794
+on every single thing inside the ZStack.
+
+298
+00:13:50,794 --> 00:13:51,720
+That's not in fact what's happening
+
+299
+00:13:51,720 --> 00:13:53,450
+but it kinda feels like that.
+
+300
+00:13:53,450 --> 00:13:54,720
+Same thing here.
+
+301
+00:13:54,720 --> 00:13:56,740
+If you have an EnvironmentObject in a View
+
+302
+00:13:56,740 --> 00:13:58,380
+then it's like all the Views in this body
+
+303
+00:13:58,380 --> 00:14:01,070
+have .environmentObject on there.
+
+304
+00:14:01,070 --> 00:14:04,930
+There's a significant
+exception, which is modal Views
+
+305
+00:14:04,930 --> 00:14:08,300
+and we're gonna talk about
+modal Views a little later,
+
+306
+00:14:08,300 --> 00:14:10,970
+I don't know if next lecture
+or maybe the one after,
+
+307
+00:14:10,970 --> 00:14:13,580
+but those kind of Views, popovers, alerts,
+
+308
+00:14:13,580 --> 00:14:15,720
+things like that, they
+do not automatically
+
+309
+00:14:15,720 --> 00:14:17,873
+get the EnvironmentObject passed to them.
+
+310
+00:14:18,950 --> 00:14:22,339
+Another slight limitation
+on EnvironmentObject
+
+311
+00:14:22,339 --> 00:14:25,710
+is that you can only have
+one EnvironmentObject wrapper
+
+312
+00:14:25,710 --> 00:14:30,710
+per type of ViewModel in each View.
+
+313
+00:14:31,010 --> 00:14:34,110
+Not a huge restriction
+but you couldn't have
+
+314
+00:14:34,110 --> 00:14:36,220
+two @EnvironmentObjects in the same View
+
+315
+00:14:36,220 --> 00:14:40,550
+that were both Memorize ViewModels.
+
+316
+00:14:40,550 --> 00:14:42,220
+We could have one that's
+Memorize's ViewModel,
+
+317
+00:14:42,220 --> 00:14:43,750
+one that's EmojiArt ViewModel
+
+318
+00:14:43,750 --> 00:14:45,420
+but they couldn't both be the same.
+
+319
+00:14:45,420 --> 00:14:47,790
+So minor restriction there.
+
+320
+00:14:47,790 --> 00:14:50,620
+So let's give the EnvironmentObject
+the same treatment
+
+321
+00:14:50,620 --> 00:14:51,660
+we gave the other ones.
+
+322
+00:14:51,660 --> 00:14:53,110
+What's its wrappedValue?
+
+323
+00:14:53,110 --> 00:14:57,260
+Same as ObservedObject, which
+is, it's any ObservableObject,
+
+324
+00:14:57,260 --> 00:14:59,850
+but it's obtained with .environmentObject
+
+325
+00:14:59,850 --> 00:15:02,320
+instead of being passed as a var.
+
+326
+00:15:02,320 --> 00:15:05,320
+What does it do, this
+EnvironmentObject struct?
+
+327
+00:15:05,320 --> 00:15:08,110
+It invalidates the View
+when the wrappedValue
+
+328
+00:15:08,110 --> 00:15:09,600
+does objectWillChange.send,
+
+329
+00:15:09,600 --> 00:15:11,910
+exactly the same as ObservedObject.
+
+330
+00:15:11,910 --> 00:15:13,660
+And what's its projectedValue?
+
+331
+00:15:13,660 --> 00:15:15,370
+Again, the same as ObservedObject,
+
+332
+00:15:15,370 --> 00:15:18,880
+you can get at the vars of
+your ViewModel with the $.
+
+333
+00:15:20,710 --> 00:15:24,370
+One more property wrapper
+called @Environment.
+
+334
+00:15:24,370 --> 00:15:27,389
+This has nothing to do
+with EnvironmentObject.
+
+335
+00:15:27,389 --> 00:15:28,620
+This is a totally different thing.
+
+336
+00:15:28,620 --> 00:15:29,910
+Clear your mind.
+
+337
+00:15:29,910 --> 00:15:32,920
+They have the same first word
+but they're different things.
+
+338
+00:15:32,920 --> 00:15:36,310
+So get ready for something
+totally different, ready?
+
+339
+00:15:36,310 --> 00:15:39,410
+First I have to explain to
+you that property wrappers
+
+340
+00:15:39,410 --> 00:15:42,377
+can have more variables
+even than the wrappedValue
+
+341
+00:15:42,377 --> 00:15:43,820
+and projectedValue.
+
+342
+00:15:43,820 --> 00:15:46,580
+Now, if you have more properties,
+you might need to set them
+
+343
+00:15:46,580 --> 00:15:50,442
+just like we have unset
+vars in other structs
+
+344
+00:15:50,442 --> 00:15:51,290
+we might have the same thing.
+
+345
+00:15:51,290 --> 00:15:53,490
+So how do you pass that in?
+
+346
+00:15:53,490 --> 00:15:56,410
+Well, when you create
+your property wrapper
+
+347
+00:15:56,410 --> 00:16:01,410
+like @Environment, in
+parentheses you put the vars.
+
+348
+00:16:01,920 --> 00:16:04,740
+Now, just like in any other struct,
+
+349
+00:16:04,740 --> 00:16:07,060
+you can get rid of the
+label on the argument
+
+350
+00:16:07,060 --> 00:16:10,140
+that is quite possible
+and Environment does this.
+
+351
+00:16:10,140 --> 00:16:11,900
+So Environment takes this one argument,
+
+352
+00:16:11,900 --> 00:16:14,730
+now, the argument there
+that you're gonna give it
+
+353
+00:16:14,730 --> 00:16:17,350
+which it's gonna set one
+of its internal vars with
+
+354
+00:16:17,350 --> 00:16:22,350
+is a key path into an
+EnvironmentValues struct.
+
+355
+00:16:23,020 --> 00:16:26,030
+So you're just gonna
+look EnvironmentValues up
+
+356
+00:16:26,030 --> 00:16:30,810
+in the documentation and you're
+gonna see the long long list
+
+357
+00:16:30,810 --> 00:16:33,670
+of the things you can find
+out about your Environment.
+
+358
+00:16:33,670 --> 00:16:36,660
+For example, here I'm using
+the key path .colorScheme
+
+359
+00:16:38,031 --> 00:16:39,170
+and so EnvironmentValues.colorScheme
+
+360
+00:16:40,780 --> 00:16:43,870
+is the current light mode or dark mode
+
+361
+00:16:43,870 --> 00:16:47,393
+of the environment you're
+running in essentially.
+
+362
+00:16:48,550 --> 00:16:51,729
+Now, note that the color scheme up there,
+
+363
+00:16:51,729 --> 00:16:54,400
+@Environment colorScheme,
+it says var colorScheme,
+
+364
+00:16:54,400 --> 00:16:56,040
+it doesn't say the type.
+
+365
+00:16:56,040 --> 00:16:58,180
+There's no colon anything up there.
+
+366
+00:16:58,180 --> 00:17:00,610
+And it is perfectly allowed
+for a property wrapper
+
+367
+00:17:00,610 --> 00:17:04,490
+to have the wrappedValue's
+type be set internally.
+
+368
+00:17:04,490 --> 00:17:06,170
+And that's what Environment does
+
+369
+00:17:06,170 --> 00:17:09,220
+and it sets the type of the var there,
+
+370
+00:17:09,220 --> 00:17:13,480
+colorScheme in that case,
+to whatever is the type
+
+371
+00:17:13,480 --> 00:17:16,240
+of the key path that you're passing to it.
+
+372
+00:17:16,240 --> 00:17:19,180
+So for example, colorScheme
+in environmentValues
+
+373
+00:17:19,180 --> 00:17:22,940
+is of type ColorScheme,
+capital C, capital S,
+
+374
+00:17:22,940 --> 00:17:25,637
+which is an enum and that
+enum just has two values,
+
+375
+00:17:25,637 --> 00:17:27,570
+.dark and .light.
+
+376
+00:17:27,570 --> 00:17:29,310
+That just tells you
+whether you're in dark mode
+
+377
+00:17:29,310 --> 00:17:30,719
+or light mode right now.
+
+378
+00:17:30,719 --> 00:17:32,130
+So that's really great 'cause
+when you're drawing your View
+
+379
+00:17:32,130 --> 00:17:34,540
+you can know what mode you're in.
+
+380
+00:17:34,540 --> 00:17:36,500
+Then there are dozens of other things.
+
+381
+00:17:36,500 --> 00:17:39,030
+It's all about the
+EnvironmentValues struct.
+
+382
+00:17:39,030 --> 00:17:42,020
+Go take a look at there and
+you, yes you can even have
+
+383
+00:17:42,020 --> 00:17:44,550
+your own ones, we're not
+gonna talk about how to do it,
+
+384
+00:17:44,550 --> 00:17:46,770
+it is possible, using extensions,
+
+385
+00:17:46,770 --> 00:17:50,600
+to add environment values
+to EnvironmentValues.
+
+386
+00:17:50,600 --> 00:17:51,960
+Again the same treatment,
+
+387
+00:17:51,960 --> 00:17:54,330
+what is the wrappedValue of Environment?
+
+388
+00:17:54,330 --> 00:17:58,300
+It is the value of some
+var in EnvironmentValues.
+
+389
+00:17:58,300 --> 00:18:01,050
+And what does environment
+do, that struct do
+
+390
+00:18:01,050 --> 00:18:02,250
+when you get and set?
+
+391
+00:18:02,250 --> 00:18:05,200
+It sets and gets that
+value in EnvironmentValues.
+
+392
+00:18:05,200 --> 00:18:07,300
+And what is its projectedValue?
+
+393
+00:18:07,300 --> 00:18:08,560
+None.
+
+394
+00:18:08,560 --> 00:18:12,750
+Property wrappers are allowed
+to have no projectedValue
+
+395
+00:18:12,750 --> 00:18:15,583
+and @Environment indeed
+has no projectedValue.
+
+396
+00:18:19,040 --> 00:18:20,650
+Publisher.
+
+397
+00:18:20,650 --> 00:18:24,290
+So, again, Publisher, very deep
+topic, a lot to talk about.
+
+398
+00:18:24,290 --> 00:18:25,970
+We are not going to take all the time
+
+399
+00:18:25,970 --> 00:18:26,820
+we would talk about today.
+
+400
+00:18:26,820 --> 00:18:28,430
+I'm just gonna give you
+the light treatment,
+
+401
+00:18:28,430 --> 00:18:30,720
+the overview so you get an idea
+
+402
+00:18:30,720 --> 00:18:32,713
+of generally what this is all about.
+
+403
+00:18:34,010 --> 00:18:36,580
+So Publisher is
+conceptually really simple.
+
+404
+00:18:36,580 --> 00:18:40,250
+Its declaration will
+look something like this.
+
+405
+00:18:40,250 --> 00:18:43,360
+Publisher with two don't
+cares, the blue Output,
+
+406
+00:18:43,360 --> 00:18:45,140
+the red Failure there.
+
+407
+00:18:45,140 --> 00:18:47,480
+And the output is just some type
+
+408
+00:18:47,480 --> 00:18:50,330
+that this Publisher periodically emits.
+
+409
+00:18:50,330 --> 00:18:53,680
+It publishes it out into the world.
+
+410
+00:18:53,680 --> 00:18:57,650
+And the failure is the type
+of struct or information
+
+411
+00:18:57,650 --> 00:19:01,420
+that it gives if it should fail to publish
+
+412
+00:19:01,420 --> 00:19:02,640
+for whatever reason.
+
+413
+00:19:02,640 --> 00:19:04,400
+Maybe it's publishing
+something from over the network
+
+414
+00:19:04,400 --> 00:19:05,900
+and the network connection goes dead
+
+415
+00:19:05,900 --> 00:19:09,510
+and it has to fail and tell
+you what happened, for example.
+
+416
+00:19:09,510 --> 00:19:12,730
+A common failure is the failure Never,
+
+417
+00:19:12,730 --> 00:19:14,680
+you see the green Never right there.
+
+418
+00:19:14,680 --> 00:19:17,580
+And that failure means, I don't ever fail,
+
+419
+00:19:17,580 --> 00:19:20,810
+I publish my values,
+la-la-la, I'm publishing them
+
+420
+00:19:20,810 --> 00:19:23,020
+and I never fail, nothing can go wrong
+
+421
+00:19:23,020 --> 00:19:24,790
+that would cause me to fail.
+
+422
+00:19:24,790 --> 00:19:27,660
+And that's quite a common failure mode.
+
+423
+00:19:27,660 --> 00:19:28,493
+What can we do with a Publisher?
+
+424
+00:19:28,493 --> 00:19:30,440
+We've got a Publisher
+and we know it publishes
+
+425
+00:19:30,440 --> 00:19:32,540
+a certain type of thing
+and that it might fail
+
+426
+00:19:32,540 --> 00:19:35,530
+with a certain kind of failure,
+what can we do with it?
+
+427
+00:19:35,530 --> 00:19:38,270
+Well the number one thing
+we do with Publishers,
+
+428
+00:19:38,270 --> 00:19:39,730
+is we listen to them.
+
+429
+00:19:39,730 --> 00:19:41,027
+We listen to the values
+that are publishing
+
+430
+00:19:41,027 --> 00:19:42,930
+and we do something with the values.
+
+431
+00:19:42,930 --> 00:19:46,083
+That's why Publishers exist,
+so we can listen to them.
+
+432
+00:19:47,270 --> 00:19:50,240
+But we also often are
+transforming the values
+
+433
+00:19:50,240 --> 00:19:52,660
+that are coming out of
+a Publisher on the fly,
+
+434
+00:19:52,660 --> 00:19:55,550
+taking actions, converting
+it to publish something
+
+435
+00:19:55,550 --> 00:19:58,520
+slightly different than
+it would usually publish,
+
+436
+00:19:58,520 --> 00:20:00,450
+to kinda massage it into something
+
+437
+00:20:00,450 --> 00:20:03,590
+that periodically gives
+us what we really want.
+
+438
+00:20:03,590 --> 00:20:07,130
+So a lot of the API Publisher
+is about transforming it
+
+439
+00:20:07,130 --> 00:20:09,060
+and we can also shuttle its values
+
+440
+00:20:09,060 --> 00:20:12,583
+kind of off into other places
+as well as they're coming out.
+
+441
+00:20:14,170 --> 00:20:15,640
+There's a lot more, but again,
+
+442
+00:20:15,640 --> 00:20:17,310
+I'm not gonna be talking about anything
+
+443
+00:20:17,310 --> 00:20:18,783
+but the basics today.
+
+444
+00:20:20,180 --> 00:20:22,080
+So let's talk about
+listening to a Publisher,
+
+445
+00:20:22,080 --> 00:20:23,370
+we call that subscribing.
+
+446
+00:20:23,370 --> 00:20:26,190
+There's a whole protocol
+called Subscriber.
+
+447
+00:20:26,190 --> 00:20:28,150
+And I'm only gonna talk about two ways
+
+448
+00:20:28,150 --> 00:20:29,480
+to subscribe to a Publisher,
+
+449
+00:20:29,480 --> 00:20:33,060
+two of the most common
+ways out there to do it.
+
+450
+00:20:33,060 --> 00:20:36,080
+One is to execute a closure
+
+451
+00:20:36,080 --> 00:20:38,720
+whenever the Publisher publishes its data
+
+452
+00:20:38,720 --> 00:20:40,890
+or when it finishes,
+either 'cause it failed
+
+453
+00:20:40,890 --> 00:20:42,750
+or it just completed normally.
+
+454
+00:20:42,750 --> 00:20:45,230
+And the name of this function is .sink,
+
+455
+00:20:45,230 --> 00:20:48,650
+this is a function on
+a Publisher, say .sink,
+
+456
+00:20:48,650 --> 00:20:49,715
+and it has two arguments,
+
+457
+00:20:49,715 --> 00:20:51,758
+receiveCompletion, which takes a closure,
+
+458
+00:20:51,758 --> 00:20:54,168
+and receiveValue which takes a closure.
+
+459
+00:20:54,168 --> 00:20:58,566
+The receiveCompletion closure
+is given the completion enum.
+
+460
+00:20:58,566 --> 00:21:00,710
+The completion enum
+basically has two states,
+
+461
+00:21:00,710 --> 00:21:02,010
+it succeeded or it failed
+
+462
+00:21:02,010 --> 00:21:03,940
+and if it failed it's
+got the associated value
+
+463
+00:21:03,940 --> 00:21:07,070
+of whatever the failure information is.
+
+464
+00:21:07,070 --> 00:21:09,230
+And then receiveValue, it's just a closure
+
+465
+00:21:09,230 --> 00:21:11,840
+that takes whatever just last got emitted.
+
+466
+00:21:11,840 --> 00:21:14,093
+So as the Publisher emits its value,
+
+467
+00:21:14,093 --> 00:21:15,750
+it's constantly emitting them,
+
+468
+00:21:15,750 --> 00:21:19,400
+this receiveValue closure
+is constantly being called
+
+469
+00:21:19,400 --> 00:21:20,990
+until it fails or completes
+
+470
+00:21:20,990 --> 00:21:23,100
+and then the other one gets called.
+
+471
+00:21:23,100 --> 00:21:24,810
+Now one thing to note here is that
+
+472
+00:21:24,810 --> 00:21:28,810
+if the Publisher's failure
+is Never, so it never fails,
+
+473
+00:21:28,810 --> 00:21:30,010
+then you can call sink
+
+474
+00:21:30,010 --> 00:21:32,250
+without specifying that receiveCompletion,
+
+475
+00:21:32,250 --> 00:21:34,980
+because it's never going to
+call your receiveCompletion
+
+476
+00:21:34,980 --> 00:21:37,270
+'cause it never completes, never fails,
+
+477
+00:21:37,270 --> 00:21:39,143
+so you can just skip that.
+
+478
+00:21:40,270 --> 00:21:42,453
+And that's a common thing to do, again.
+
+479
+00:21:44,360 --> 00:21:47,330
+Notice that sink here returns something
+
+480
+00:21:47,330 --> 00:21:48,750
+and I've made it in purple
+
+481
+00:21:48,750 --> 00:21:51,360
+because it's actually quite important.
+
+482
+00:21:51,360 --> 00:21:52,920
+This thing that it returns,
+
+483
+00:21:52,920 --> 00:21:55,680
+implements this Cancellable protocol,
+
+484
+00:21:55,680 --> 00:21:58,200
+which is a very simple protocol,
+
+485
+00:21:58,200 --> 00:22:00,540
+but very often it gets type erased
+
+486
+00:22:00,540 --> 00:22:03,100
+and sink does this where
+it type erases the return
+
+487
+00:22:03,100 --> 00:22:04,750
+to be AnyCancellable.
+
+488
+00:22:04,750 --> 00:22:06,560
+This is just like we do
+with transitions, right
+
+489
+00:22:06,560 --> 00:22:09,350
+where we have AnyTransition to
+make it easier to deal with,
+
+490
+00:22:09,350 --> 00:22:10,183
+same thing here.
+
+491
+00:22:10,183 --> 00:22:13,000
+So sink returns an AnyCancellable.
+
+492
+00:22:13,000 --> 00:22:15,770
+What is the purpose of this
+purple thing that we get back
+
+493
+00:22:15,770 --> 00:22:18,720
+from the sink function?
+
+494
+00:22:18,720 --> 00:22:19,780
+Well, two purposes.
+
+495
+00:22:19,780 --> 00:22:22,230
+Number one, you can send .cancel to it,
+
+496
+00:22:22,230 --> 00:22:25,310
+that's what's in the
+Cancellable protocol, .cancel,
+
+497
+00:22:25,310 --> 00:22:27,870
+and if you call a cancel
+function on this purple thing
+
+498
+00:22:27,870 --> 00:22:29,830
+then it'll stop sinking,
+
+499
+00:22:29,830 --> 00:22:32,400
+that sink will stop executing
+the closures in there,
+
+500
+00:22:32,400 --> 00:22:33,630
+so it then goes away,
+
+501
+00:22:33,630 --> 00:22:36,400
+stops subscribing to that
+Publisher essentially.
+
+502
+00:22:36,400 --> 00:22:37,360
+So that's valuable.
+
+503
+00:22:37,360 --> 00:22:39,300
+A little surprised that we
+don't do that that often
+
+504
+00:22:39,300 --> 00:22:41,220
+but it's still valuable.
+
+505
+00:22:41,220 --> 00:22:46,220
+But B is the big deal, in
+that it keeps .sink alive.
+
+506
+00:22:46,500 --> 00:22:50,880
+So as long as that var cancellable exists
+
+507
+00:22:50,880 --> 00:22:52,683
+then sink keeps sinking.
+
+508
+00:22:53,800 --> 00:22:57,430
+So cancellable would never
+be a local variable here.
+
+509
+00:22:57,430 --> 00:22:58,740
+If you made that a local variable
+
+510
+00:22:58,740 --> 00:23:01,040
+then as soon as the method finishes,
+
+511
+00:23:01,040 --> 00:23:02,710
+the function that you're in finishes,
+
+512
+00:23:02,710 --> 00:23:05,050
+the sink would stop sinking.
+
+513
+00:23:05,050 --> 00:23:08,280
+This cancellable almost always
+is going to be a property
+
+514
+00:23:08,280 --> 00:23:11,290
+an instance variable
+on a struct or a class
+
+515
+00:23:11,290 --> 00:23:13,700
+and that's gonna make this sink last
+
+516
+00:23:13,700 --> 00:23:16,980
+as long as that struct or class lasts
+
+517
+00:23:16,980 --> 00:23:19,180
+'cause as soon as that
+struct or class goes away,
+
+518
+00:23:19,180 --> 00:23:21,830
+not used any more, then
+its vars, of course,
+
+519
+00:23:21,830 --> 00:23:22,910
+go away with it
+
+520
+00:23:22,910 --> 00:23:25,027
+and when its var is one
+of these cancellables
+
+521
+00:23:25,027 --> 00:23:26,180
+and it goes away,
+
+522
+00:23:26,180 --> 00:23:28,330
+the sink will stop
+listening to the Publisher
+
+523
+00:23:28,330 --> 00:23:30,980
+which is kind of exactly what you want.
+
+524
+00:23:30,980 --> 00:23:34,190
+So the return value of
+sink is used to cancel
+
+525
+00:23:34,190 --> 00:23:37,840
+but even more importantly in
+a way, it's used to decide
+
+526
+00:23:37,840 --> 00:23:41,260
+how long the sink keeps
+listening to the Publisher.
+
+527
+00:23:41,260 --> 00:23:43,940
+And as long as that var exists somewhere,
+
+528
+00:23:43,940 --> 00:23:45,390
+it's going to keep listening.
+
+529
+00:23:46,930 --> 00:23:49,730
+We talked about sink as one
+way to listen to a Publisher.
+
+530
+00:23:49,730 --> 00:23:52,970
+Another way is for a View
+to listen to a Publisher.
+
+531
+00:23:52,970 --> 00:23:54,520
+This is super simple.
+
+532
+00:23:54,520 --> 00:23:58,780
+There is a ViewModifier
+on View called .onReceive,
+
+533
+00:23:58,780 --> 00:24:02,090
+you give it the Publisher and a closure
+
+534
+00:24:02,090 --> 00:24:03,380
+and that argument to closure
+
+535
+00:24:03,380 --> 00:24:05,610
+is the thing the Publisher emits,
+
+536
+00:24:05,610 --> 00:24:07,110
+and this closure will be called
+
+537
+00:24:07,110 --> 00:24:09,020
+every time that Publisher publishes
+
+538
+00:24:09,020 --> 00:24:12,860
+and your View will get
+invalidated causing it to redraw.
+
+539
+00:24:12,860 --> 00:24:15,420
+This is an awesome little function.
+
+540
+00:24:15,420 --> 00:24:18,610
+Great way to hook your View
+up to some source of data
+
+541
+00:24:18,610 --> 00:24:20,560
+and every time that data gets published
+
+542
+00:24:20,560 --> 00:24:22,408
+whoo, your View does something.
+
+543
+00:24:22,408 --> 00:24:24,030
+You know, you put any
+code you want in there
+
+544
+00:24:24,030 --> 00:24:27,000
+in the do whatever you want part of that
+
+545
+00:24:27,000 --> 00:24:28,780
+and then you also get redrawn.
+
+546
+00:24:28,780 --> 00:24:31,543
+It's just a fantastic little feature.
+
+547
+00:24:33,010 --> 00:24:34,220
+Where do Publishers come from?
+
+548
+00:24:34,220 --> 00:24:35,900
+How do I get a hold of a Publisher?
+
+549
+00:24:35,900 --> 00:24:38,030
+They sound great but where do I get one?
+
+550
+00:24:38,030 --> 00:24:40,140
+Well there's a lot of places to get one.
+
+551
+00:24:40,140 --> 00:24:42,500
+I'll talk about a few of
+the most common ones here.
+
+552
+00:24:42,500 --> 00:24:47,500
+One is to $, projectedValue,
+of an @Published.
+
+553
+00:24:48,660 --> 00:24:50,700
+Okay, you have ViewModel that's publishing
+
+554
+00:24:50,700 --> 00:24:54,610
+a bunch of its vars and you can use the $
+
+555
+00:24:54,610 --> 00:24:57,860
+to get a Publisher and find
+out when things are changing.
+
+556
+00:24:57,860 --> 00:24:58,693
+And we're gonna do this the demo,
+
+557
+00:24:58,693 --> 00:25:01,630
+this is a very, probably
+the most common source
+
+558
+00:25:01,630 --> 00:25:04,640
+in your Views of getting a Publisher.
+
+559
+00:25:04,640 --> 00:25:06,760
+But some other objects have this as well.
+
+560
+00:25:06,760 --> 00:25:10,550
+URLSession has one, we talked
+briefly about what that is,
+
+561
+00:25:10,550 --> 00:25:13,070
+that's for getting data off the network.
+
+562
+00:25:13,070 --> 00:25:15,110
+Essentially as a Publisher,
+you give it a URL
+
+563
+00:25:15,110 --> 00:25:17,800
+and it publishes the data
+that it goes and fetches
+
+564
+00:25:17,800 --> 00:25:20,170
+when it's ready, that's pretty cool.
+
+565
+00:25:20,170 --> 00:25:21,780
+Timer is another one.
+
+566
+00:25:21,780 --> 00:25:25,290
+Timer, its Publisher will
+publish the current date and time
+
+567
+00:25:25,290 --> 00:25:27,270
+every how ever often you say.
+
+568
+00:25:27,270 --> 00:25:29,530
+So you can have it publish
+the current date and time
+
+569
+00:25:29,530 --> 00:25:32,800
+as a Date object, that's its publish type,
+
+570
+00:25:32,800 --> 00:25:35,670
+every tenth of a second,
+every hundredth of a second,
+
+571
+00:25:35,670 --> 00:25:37,610
+every hour, whatever you want
+
+572
+00:25:37,610 --> 00:25:40,630
+and it'll just publish periodically.
+
+573
+00:25:40,630 --> 00:25:42,760
+There's also another thing
+called NotificationCenter.
+
+574
+00:25:42,760 --> 00:25:45,410
+It tells you about things
+going on in the system,
+
+575
+00:25:45,410 --> 00:25:47,440
+when things happen in the system
+
+576
+00:25:47,440 --> 00:25:48,880
+and you can set up a Publisher there
+
+577
+00:25:48,880 --> 00:25:51,700
+and it will publish these
+things called notifications
+
+578
+00:25:51,700 --> 00:25:53,330
+and you can find out what's going on.
+
+579
+00:25:53,330 --> 00:25:56,083
+So that's another pretty
+cool Publisher out there.
+
+580
+00:25:58,010 --> 00:25:59,240
+So there's a lot more stuff we can do.
+
+581
+00:25:59,240 --> 00:26:01,100
+Like I said, my goal today,
+
+582
+00:26:01,100 --> 00:26:02,440
+in both these slides and the demo,
+
+583
+00:26:02,440 --> 00:26:04,870
+is just to give you a flavor
+for what a Publisher is.
+
+584
+00:26:04,870 --> 00:26:07,610
+I'm not gonna exhaustively
+talk about the dozens
+
+585
+00:26:07,610 --> 00:26:09,850
+and dozens of methods
+that are in Publisher,
+
+586
+00:26:09,850 --> 00:26:13,120
+I certainly recommend you
+go look up the documentation
+
+587
+00:26:13,120 --> 00:26:14,860
+for Publisher and just
+take a look in there,
+
+588
+00:26:14,860 --> 00:26:16,330
+just so you get a feel of what's in there
+
+589
+00:26:16,330 --> 00:26:18,430
+'cause there's a lot of stuff in there.
+
+590
+00:26:18,430 --> 00:26:20,960
+And hopefully the demo
+that I'm just about to do,
+
+591
+00:26:20,960 --> 00:26:22,890
+which is gonna do some
+stuff with Publisher,
+
+592
+00:26:22,890 --> 00:26:24,310
+will give you a more concrete feel
+
+593
+00:26:24,310 --> 00:26:27,040
+of how we use these
+little data Publishers.
+
+594
+00:26:27,040 --> 00:26:31,930
+And by the way, Publisher
+also is in the same service
+
+595
+00:26:31,930 --> 00:26:33,930
+of the single source of truth.
+
+596
+00:26:33,930 --> 00:26:36,230
+The Publisher wants to
+be publishing the data
+
+597
+00:26:36,230 --> 00:26:38,700
+that is coming from the
+actual source of the data
+
+598
+00:26:38,700 --> 00:26:40,500
+and then the consumers
+are just consuming it
+
+599
+00:26:40,500 --> 00:26:42,530
+on the fly as it gets published.
+
+600
+00:26:42,530 --> 00:26:45,023
+So it's really part of
+that effort as well.
+
+601
+00:26:47,070 --> 00:26:48,840
+So let's dive into that demo.
+
+602
+00:26:48,840 --> 00:26:51,390
+And you can read here what I'm gonna do
+
+603
+00:26:51,390 --> 00:26:54,373
+but it's mostly about
+Publishers and Bindings.
+
+604
+00:26:55,240 --> 00:26:57,840
+But we're gonna start
+by fixing a little bit
+
+605
+00:26:57,840 --> 00:27:00,540
+of a sloppiness in our UI.
+
+606
+00:27:00,540 --> 00:27:03,630
+I'm gonna run the app here EmojiArt
+
+607
+00:27:03,630 --> 00:27:06,600
+and I want you to watch
+closely when it first launches
+
+608
+00:27:06,600 --> 00:27:08,370
+that it'll start with a white background
+
+609
+00:27:08,370 --> 00:27:11,290
+because it has to load
+its background image
+
+610
+00:27:11,290 --> 00:27:14,530
+but while it's doing that, it's
+still showing all the emoji
+
+611
+00:27:14,530 --> 00:27:16,610
+that go on that document.
+
+612
+00:27:16,610 --> 00:27:18,220
+And I think that looks pretty bad.
+
+613
+00:27:18,220 --> 00:27:19,580
+So let's take a look at that.
+
+614
+00:27:19,580 --> 00:27:20,760
+See, there we go.
+
+615
+00:27:20,760 --> 00:27:22,770
+And then it appears.
+
+616
+00:27:22,770 --> 00:27:24,771
+So really we don't want it to do this.
+
+617
+00:27:24,771 --> 00:27:26,690
+And this happen every
+time we add a new image.
+
+618
+00:27:26,690 --> 00:27:28,150
+If I change the image to this,
+
+619
+00:27:28,150 --> 00:27:31,930
+we get this momentary white
+background with the emoji.
+
+620
+00:27:31,930 --> 00:27:34,370
+So I really only wanna show these emoji
+
+621
+00:27:34,370 --> 00:27:37,123
+when this is loaded.
+
+622
+00:27:38,100 --> 00:27:42,833
+So, how am I going to
+detect that situation?
+
+623
+00:27:43,730 --> 00:27:44,620
+It quite simple.
+
+624
+00:27:44,620 --> 00:27:46,720
+Just gonna go to my View over here.
+
+625
+00:27:46,720 --> 00:27:50,240
+This is the ForEach where
+I show all of my emoji.
+
+626
+00:27:50,240 --> 00:27:53,523
+I'm just gonna say, if I'm not loading,
+
+627
+00:27:55,360 --> 00:27:57,513
+then go ahead and show my emoji.
+
+628
+00:28:00,660 --> 00:28:05,090
+So how do I know that I'm
+loading my background image?
+
+629
+00:28:05,090 --> 00:28:08,080
+Pretty straight forward
+to detect, actually.
+
+630
+00:28:08,080 --> 00:28:12,510
+Var isLoading is a Bool and
+I'm just going to return
+
+631
+00:28:12,510 --> 00:28:17,510
+whether my document has
+a backgroundURL set on it
+
+632
+00:28:21,070 --> 00:28:25,747
+and if my document does
+not have a backgroundImage.
+
+633
+00:28:27,130 --> 00:28:30,740
+This tells me that I'm
+loading, right, I have a URL
+
+634
+00:28:30,740 --> 00:28:33,190
+for a background, so I don't
+have a blank background
+
+635
+00:28:33,190 --> 00:28:37,320
+and I don't have my image
+yet, so I must be loading it.
+
+636
+00:28:37,320 --> 00:28:41,520
+Now, we didn't actually make
+backgroundURL be gettable.
+
+637
+00:28:41,520 --> 00:28:44,700
+If you remember in our
+ViewModel here, backgroundURL,
+
+638
+00:28:44,700 --> 00:28:47,930
+we have a set but this
+is not a gettable var,
+
+639
+00:28:47,930 --> 00:28:48,870
+so let's fix that.
+
+640
+00:28:48,870 --> 00:28:52,119
+Let's make this just
+a normal computed var,
+
+641
+00:28:52,119 --> 00:28:53,903
+backgroundURL, type URL.
+
+642
+00:28:55,337 --> 00:28:57,560
+And this is just the setter,
+
+643
+00:28:57,560 --> 00:28:59,490
+so we'll put a set in there.
+
+644
+00:28:59,490 --> 00:29:01,540
+Of course we're setting from the newValue
+
+645
+00:29:03,970 --> 00:29:06,700
+and then our getter is also simple,
+
+646
+00:29:06,700 --> 00:29:09,913
+that's just the emojiArt's backgroundURL.
+
+647
+00:29:12,890 --> 00:29:16,510
+Now that our View is able
+to look at the backgroundURL
+
+648
+00:29:16,510 --> 00:29:20,070
+and obviously it can already
+look at backgroundImage,
+
+649
+00:29:20,070 --> 00:29:23,113
+it can easily detect whether
+we're in the middle of loading.
+
+650
+00:29:24,480 --> 00:29:26,030
+We still have one more thing to do
+
+651
+00:29:26,030 --> 00:29:28,920
+which is that, since we
+changed backgroundURL
+
+652
+00:29:28,920 --> 00:29:31,710
+to a computed property, yeah, here we go,
+
+653
+00:29:31,710 --> 00:29:34,130
+this is where we set the backgroundURL,
+
+654
+00:29:34,130 --> 00:29:38,963
+now we have to say,
+backgroundURL equals that url.
+
+655
+00:29:40,320 --> 00:29:43,140
+I think that's all that we have to do.
+
+656
+00:29:43,140 --> 00:29:44,290
+Let's go ahead and run.
+
+657
+00:29:47,394 --> 00:29:49,660
+Ah ho, it was white before it loaded
+
+658
+00:29:49,660 --> 00:29:52,310
+and let's go pick our very large document,
+
+659
+00:29:52,310 --> 00:29:54,010
+this one takes a little while to load,
+
+660
+00:29:54,010 --> 00:29:58,560
+here we go, boom, woo, nice, nice.
+
+661
+00:29:58,560 --> 00:30:00,350
+But what would be even nicer
+
+662
+00:30:00,350 --> 00:30:02,960
+is if we gave a little bit
+of feedback to the user,
+
+663
+00:30:02,960 --> 00:30:06,800
+Hey I'm loading that URL,
+just give me a second.
+
+664
+00:30:06,800 --> 00:30:08,190
+And we can easily do that,
+
+665
+00:30:08,190 --> 00:30:12,170
+just by putting some sort of
+image or animating graphic
+
+666
+00:30:12,170 --> 00:30:16,020
+or something up while we're
+in that loading stage.
+
+667
+00:30:16,020 --> 00:30:18,860
+So just here, where we do
+if not loading is this,
+
+668
+00:30:18,860 --> 00:30:22,990
+we could just as easily
+also have, if loading,
+
+669
+00:30:22,990 --> 00:30:26,500
+then do something, like
+put up some kind of image,
+
+670
+00:30:26,500 --> 00:30:29,530
+or we'll put our emoji, in the other case.
+
+671
+00:30:29,530 --> 00:30:31,330
+So, what kind of image
+do you wanna use here?
+
+672
+00:30:31,330 --> 00:30:34,120
+Let's go ahead and do
+this systemName stuff
+
+673
+00:30:34,120 --> 00:30:37,170
+that I talked about in the slides.
+
+674
+00:30:37,170 --> 00:30:39,040
+And this allows us to specify the name
+
+675
+00:30:39,040 --> 00:30:40,420
+of one of the system images
+
+676
+00:30:40,420 --> 00:30:41,950
+and we're gonna go look those up.
+
+677
+00:30:41,950 --> 00:30:45,060
+I'm also gonna make the
+imageScale be large here,
+
+678
+00:30:45,060 --> 00:30:48,100
+can make this image kinda
+as large as it can be.
+
+679
+00:30:48,100 --> 00:30:50,340
+These images are not huge images.
+
+680
+00:30:50,340 --> 00:30:54,480
+They're mostly intended
+to be embedded near text
+
+681
+00:30:54,480 --> 00:30:56,890
+so they try to be about
+the same size as text,
+
+682
+00:30:56,890 --> 00:31:00,160
+so this is mostly just trying
+to match up with large text,
+
+683
+00:31:00,160 --> 00:31:02,300
+but we don't really
+need a huge image here.
+
+684
+00:31:02,300 --> 00:31:03,420
+And if we wanted something huge,
+
+685
+00:31:03,420 --> 00:31:05,030
+we could just create our own shape
+
+686
+00:31:05,030 --> 00:31:08,490
+and maybe cool animated
+thing that shows loading,
+
+687
+00:31:08,490 --> 00:31:10,050
+but we're just gonna do
+something simple here
+
+688
+00:31:10,050 --> 00:31:12,820
+which is this system image.
+
+689
+00:31:12,820 --> 00:31:14,610
+Now how do we find these system images?
+
+690
+00:31:14,610 --> 00:31:19,610
+You'll remember, we go to
+developer.apple.com/design
+
+691
+00:31:19,820 --> 00:31:23,200
+and we download this app called SF Symbols
+
+692
+00:31:23,200 --> 00:31:26,810
+and it has tons and
+tons and tons of symbols
+
+693
+00:31:26,810 --> 00:31:27,810
+that we could use.
+
+694
+00:31:27,810 --> 00:31:30,100
+And they're even put
+into groups over here.
+
+695
+00:31:30,100 --> 00:31:33,100
+We're trying to do a timer, I
+see one called time down here,
+
+696
+00:31:33,100 --> 00:31:34,364
+let's look at that.
+
+697
+00:31:34,364 --> 00:31:37,720
+Hmmm, this is an interesting
+one, maybe timer right there
+
+698
+00:31:37,720 --> 00:31:40,700
+would be a good one and
+this is its exact name
+
+699
+00:31:40,700 --> 00:31:44,083
+so we can just go back in
+here and put that name, timer,
+
+700
+00:31:45,350 --> 00:31:46,630
+and run.
+
+701
+00:31:46,630 --> 00:31:50,690
+Let's see if we get a
+little timer, oh, we got it,
+
+702
+00:31:50,690 --> 00:31:52,500
+it was there for a little bit.
+
+703
+00:31:52,500 --> 00:31:55,860
+Let's go load another image up here.
+
+704
+00:31:55,860 --> 00:31:57,930
+Yeah, it puts a little timer there.
+
+705
+00:31:57,930 --> 00:31:59,717
+Now, that little static timer though,
+
+706
+00:31:59,717 --> 00:32:01,960
+that's not very pretty.
+
+707
+00:32:01,960 --> 00:32:03,840
+It's kinda boring.
+
+708
+00:32:03,840 --> 00:32:05,360
+It'd be nice, maybe, if we had something
+
+709
+00:32:05,360 --> 00:32:07,460
+that's animated there.
+
+710
+00:32:07,460 --> 00:32:10,626
+Wouldn't it be cool if we
+could just say something like
+
+711
+00:32:10,626 --> 00:32:14,960
+.spinning, that would just
+have a View modification
+
+712
+00:32:14,960 --> 00:32:18,370
+to make whatever this View is be spinning.
+
+713
+00:32:18,370 --> 00:32:21,050
+Well, unfortunately,
+there is no such thing.
+
+714
+00:32:21,050 --> 00:32:22,860
+It would be nice to have
+one but there isn't,
+
+715
+00:32:22,860 --> 00:32:25,500
+so we're just gonna make one ourselves.
+
+716
+00:32:25,500 --> 00:32:29,100
+Go here new file, this is
+gonna be a ViewModifier, right,
+
+717
+00:32:29,100 --> 00:32:30,750
+that spinning is a ViewModifier,
+
+718
+00:32:30,750 --> 00:32:32,260
+I'm gonna call it Spinning,
+
+719
+00:32:32,260 --> 00:32:34,943
+that's gonna be the name
+of the modifier itself,
+
+720
+00:32:36,200 --> 00:32:40,290
+and it's, of course,
+UI, and it's a struct,
+
+721
+00:32:40,290 --> 00:32:44,610
+Spinning, which is a ViewModifier.
+
+722
+00:32:44,610 --> 00:32:49,610
+And ViewModifiers have func
+body which takes some content
+
+723
+00:32:50,220 --> 00:32:54,510
+of some don't care type
+that returns some View
+
+724
+00:32:54,510 --> 00:32:56,640
+and we then just modify this
+
+725
+00:32:56,640 --> 00:33:01,245
+with whatever things we wanna
+do to make it the way we want.
+
+726
+00:33:01,245 --> 00:33:02,800
+We clearly want some rotation effect
+
+727
+00:33:02,800 --> 00:33:04,430
+'cause we want it to spin,
+
+728
+00:33:04,430 --> 00:33:06,560
+we saw that animation before.
+
+729
+00:33:06,560 --> 00:33:11,010
+Let's make an Angle
+here with degrees being,
+
+730
+00:33:11,010 --> 00:33:13,630
+well, when this thing
+is visible on screen,
+
+731
+00:33:13,630 --> 00:33:17,170
+let's say we'll make it go over to 360
+
+732
+00:33:17,170 --> 00:33:19,960
+otherwise zero degrees.
+
+733
+00:33:19,960 --> 00:33:22,400
+Now how do we know if it's visible?
+
+734
+00:33:22,400 --> 00:33:25,060
+Well, we're gonna have to
+have some state for that.
+
+735
+00:33:25,060 --> 00:33:27,840
+Now you know this is just a state struct,
+
+736
+00:33:27,840 --> 00:33:31,444
+it takes whatever var we
+put here, like isVisible,
+
+737
+00:33:31,444 --> 00:33:34,160
+which is just a Bool, and
+it stores it in the heap
+
+738
+00:33:34,160 --> 00:33:37,510
+and keeps it in the heap
+even if this View is rebuilt.
+
+739
+00:33:37,510 --> 00:33:39,800
+But we are gonna have to set
+that thing when we appear,
+
+740
+00:33:39,800 --> 00:33:43,610
+so onAppear, I'm gonna
+say, self.isVisible = true
+
+741
+00:33:45,240 --> 00:33:46,960
+and the other thing we need to do
+
+742
+00:33:46,960 --> 00:33:49,160
+is put some implicit animation.
+
+743
+00:33:49,160 --> 00:33:50,650
+So let's do that, animation
+
+744
+00:33:52,210 --> 00:33:56,330
+animation.linear, put a duration,
+
+745
+00:33:56,330 --> 00:33:58,900
+maybe one second to go all the way around,
+
+746
+00:33:58,900 --> 00:34:01,860
+and of course it wants to repeat forever
+
+747
+00:34:01,860 --> 00:34:04,613
+and it does not want to autoreverse.
+
+748
+00:34:06,350 --> 00:34:08,440
+I don't think we ever
+need to stop this thing
+
+749
+00:34:08,440 --> 00:34:09,470
+once it comes on screen.
+
+750
+00:34:09,470 --> 00:34:11,480
+We'll just let it spin and spin.
+
+751
+00:34:11,480 --> 00:34:13,943
+It's making it so this
+View is always spinning.
+
+752
+00:34:14,830 --> 00:34:18,860
+And let's also put our
+nice extension on View
+
+753
+00:34:18,860 --> 00:34:20,860
+so that we have this func spinning
+
+754
+00:34:20,860 --> 00:34:23,750
+that we can just put on as a ViewModifier,
+
+755
+00:34:23,750 --> 00:34:27,720
+and return some View of
+course which is our self
+
+756
+00:34:27,720 --> 00:34:30,123
+modified with Spinning.
+
+757
+00:34:31,120 --> 00:34:33,600
+Hopefully you're getting
+pretty comfortable now
+
+758
+00:34:33,600 --> 00:34:35,687
+with these ViewModifiers.
+
+759
+00:34:37,307 --> 00:34:38,140
+So watch carefully,
+
+760
+00:34:38,140 --> 00:34:39,540
+'cause it's only gonna spin
+a short amount of time.
+
+761
+00:34:39,540 --> 00:34:41,000
+Uh there, I saw it spinning.
+
+762
+00:34:41,000 --> 00:34:42,000
+I saw it spinning.
+
+763
+00:34:42,000 --> 00:34:43,800
+Let's load something else.
+
+764
+00:34:43,800 --> 00:34:47,060
+Woop, that was so fast, you
+couldn't even see it spinning.
+
+765
+00:34:47,060 --> 00:34:49,270
+How about this one, we
+know this is a big one,
+
+766
+00:34:49,270 --> 00:34:51,890
+let's try this, uh, it's pretty good.
+
+767
+00:34:51,890 --> 00:34:54,950
+And we could pick other images, maybe,
+
+768
+00:34:54,950 --> 00:34:57,130
+I actually looked around and one I thought
+
+769
+00:34:57,130 --> 00:34:59,610
+that was kinda cool, I was
+searching time-based thing
+
+770
+00:34:59,610 --> 00:35:01,670
+and I found hourglass.
+
+771
+00:35:01,670 --> 00:35:03,450
+So I think hourglass looks pretty cool,
+
+772
+00:35:03,450 --> 00:35:04,650
+let's put that in there.
+
+773
+00:35:05,950 --> 00:35:07,200
+See what that looks like.
+
+774
+00:35:10,845 --> 00:35:11,678
+Hmm, yeah.
+
+775
+00:35:11,678 --> 00:35:14,050
+Kinda like little spinning hourglass.
+
+776
+00:35:14,050 --> 00:35:16,930
+So, giving that kind of feedback
+to users is always good.
+
+777
+00:35:16,930 --> 00:35:21,020
+You never really want your
+application's reaction
+
+778
+00:35:21,020 --> 00:35:24,690
+to the user doing something to
+be that just nothing happens.
+
+779
+00:35:24,690 --> 00:35:26,830
+Because then the user's
+not sure you really heard
+
+780
+00:35:26,830 --> 00:35:29,940
+what it was asking, what the
+user was asking you to do.
+
+781
+00:35:29,940 --> 00:35:32,833
+So giving feedback back like
+that always a good idea.
+
+782
+00:35:34,030 --> 00:35:35,940
+So let's dive into this Publishers thing
+
+783
+00:35:35,940 --> 00:35:39,210
+which is our main, one of
+our two main topics today.
+
+784
+00:35:39,210 --> 00:35:41,850
+And the first thing I'm
+gonna do with Publishers
+
+785
+00:35:41,850 --> 00:35:44,470
+is go back here where
+we did this work-around
+
+786
+00:35:44,470 --> 00:35:46,270
+for property observers not really working
+
+787
+00:35:46,270 --> 00:35:47,960
+with property wrappers
+
+788
+00:35:47,960 --> 00:35:50,470
+and we made this whole business here.
+
+789
+00:35:50,470 --> 00:35:53,680
+And I'm gonna undo this,
+just get rid of this
+
+790
+00:35:53,680 --> 00:35:54,680
+whole thing
+
+791
+00:35:55,560 --> 00:36:00,000
+and I'm gonna take our
+Published and put it back
+
+792
+00:36:00,000 --> 00:36:01,547
+so we're not doing that work around
+
+793
+00:36:01,547 --> 00:36:04,510
+and we're gonna do it in
+a totally different way.
+
+794
+00:36:04,510 --> 00:36:08,180
+What we're gonna do is
+use the projectedValue
+
+795
+00:36:08,180 --> 00:36:12,007
+of our Published struct,
+remember that's the $emojiArt,
+
+796
+00:36:13,300 --> 00:36:16,580
+that is a Publisher, and in specific,
+
+797
+00:36:16,580 --> 00:36:19,350
+it's a Publisher of EmojiArts.
+
+798
+00:36:19,350 --> 00:36:21,470
+So every time this EmojiArt changes,
+
+799
+00:36:21,470 --> 00:36:24,690
+it publishes this EmojiArt again.
+
+800
+00:36:24,690 --> 00:36:26,570
+And that is very valuable for us
+
+801
+00:36:26,570 --> 00:36:28,880
+because every time this EmojiArt changes
+
+802
+00:36:28,880 --> 00:36:30,483
+we want to autosave.
+
+803
+00:36:32,920 --> 00:36:35,490
+So let's just set that up in our init.
+
+804
+00:36:36,376 --> 00:36:40,650
+I'm gonna use that $emojiArt
+which is the Publisher,
+
+805
+00:36:40,650 --> 00:36:43,840
+and I'm going to use that
+thing we talked about
+
+806
+00:36:43,840 --> 00:36:47,710
+which is being able to sink the Publisher
+
+807
+00:36:47,710 --> 00:36:48,740
+to a function.
+
+808
+00:36:48,740 --> 00:36:51,740
+Now, there's two versions
+of this sink right here.
+
+809
+00:36:51,740 --> 00:36:53,670
+This one takes two arguments,
+
+810
+00:36:53,670 --> 00:36:56,210
+receiveCompletion and receiveValue.
+
+811
+00:36:56,210 --> 00:36:59,230
+Both of them are closures.
+
+812
+00:36:59,230 --> 00:37:02,940
+The first one is passing
+you a completion enum
+
+813
+00:37:02,940 --> 00:37:05,993
+and it's saying, this
+Publisher finished publishing.
+
+814
+00:37:06,870 --> 00:37:11,870
+Now, our $ Published Publishers
+don't ever send completions
+
+815
+00:37:12,170 --> 00:37:14,070
+'cause they just are always publishing,
+
+816
+00:37:14,070 --> 00:37:15,910
+they don't really ever stop.
+
+817
+00:37:15,910 --> 00:37:20,130
+So they're completion
+failure type is Never,
+
+818
+00:37:20,130 --> 00:37:22,470
+capital N, Never, that
+is their failure type,
+
+819
+00:37:22,470 --> 00:37:25,010
+they Never fail because they can't fail
+
+820
+00:37:25,010 --> 00:37:27,230
+and also they don't complete.
+
+821
+00:37:27,230 --> 00:37:28,990
+When you have that kind of Publisher
+
+822
+00:37:28,990 --> 00:37:31,660
+that doesn't specify any kind of failure,
+
+823
+00:37:31,660 --> 00:37:33,800
+then you can use this
+simple version of sink
+
+824
+00:37:33,800 --> 00:37:35,300
+that just gives you the values.
+
+825
+00:37:35,300 --> 00:37:38,190
+And you can see that
+receiveValue right there,
+
+826
+00:37:38,190 --> 00:37:41,410
+is just a closure that takes the thing
+
+827
+00:37:41,410 --> 00:37:44,630
+that the Publisher publishes
+which is an emjoiArt
+
+828
+00:37:44,630 --> 00:37:45,940
+and returns nothing.
+
+829
+00:37:45,940 --> 00:37:49,490
+So that means a closure takes an EmojiArt
+
+830
+00:37:49,490 --> 00:37:51,387
+and we can do whatever we want in here
+
+831
+00:37:51,387 --> 00:37:53,460
+and what I want to do in here is
+
+832
+00:37:53,460 --> 00:37:57,920
+put it in to UserDefaults, autosave it.
+
+833
+00:37:57,920 --> 00:38:02,820
+Let's go ahead and print
+our EmojiArt's json.
+
+834
+00:38:06,170 --> 00:38:08,840
+Well this way we'll be
+able to see the json
+
+835
+00:38:08,840 --> 00:38:10,200
+that's going on there.
+
+836
+00:38:10,200 --> 00:38:11,500
+Notice that we have an error here
+
+837
+00:38:11,500 --> 00:38:15,220
+or a warning, anyway, result
+of call to sink is unused.
+
+838
+00:38:15,220 --> 00:38:17,890
+And that's actually very bad, okay.
+
+839
+00:38:17,890 --> 00:38:22,890
+Really you never want the
+result of sink not to be used.
+
+840
+00:38:23,410 --> 00:38:26,740
+So sink is what we call a Subscriber.
+
+841
+00:38:26,740 --> 00:38:29,880
+It's subscribing to what's going on
+
+842
+00:38:29,880 --> 00:38:33,350
+in this Publisher right here,
+right, it wants to find out,
+
+843
+00:38:33,350 --> 00:38:35,960
+listen to what the
+Publisher is publishing.
+
+844
+00:38:35,960 --> 00:38:39,070
+So Subscribers, when you
+create them, they almost always
+
+845
+00:38:39,070 --> 00:38:42,273
+are gonna give you what's
+called a Cancellable.
+
+846
+00:38:43,920 --> 00:38:45,580
+It has two functions, right?
+
+847
+00:38:45,580 --> 00:38:48,700
+You can cancel but also
+it keeps it around.
+
+848
+00:38:48,700 --> 00:38:50,560
+So if I were to do the code like this,
+
+849
+00:38:50,560 --> 00:38:52,510
+let cancellable equal this,
+
+850
+00:38:52,510 --> 00:38:54,780
+not only is cancellable never used,
+
+851
+00:38:54,780 --> 00:38:58,150
+but when init ends, this is a local var,
+
+852
+00:38:58,150 --> 00:39:01,323
+it gets thrown out and so would this sink.
+
+853
+00:39:02,250 --> 00:39:06,230
+So if we want this sink
+to live past the execution
+
+854
+00:39:06,230 --> 00:39:09,367
+of this init, we need to do private var,
+
+855
+00:39:11,132 --> 00:39:12,267
+let's call this our autosaveCancellable
+
+856
+00:39:15,620 --> 00:39:18,553
+and it's gonna be of type AnyCancellable.
+
+857
+00:39:19,420 --> 00:39:21,770
+And this AnyCancellable right here,
+
+858
+00:39:21,770 --> 00:39:25,673
+is just a type-erased version
+of the Cancellable for this
+
+859
+00:39:25,673 --> 00:39:27,940
+and the Cancellable for this
+
+860
+00:39:27,940 --> 00:39:31,350
+really encapsulates all the
+things this Subscriber is doing
+
+861
+00:39:31,350 --> 00:39:32,920
+in subscribing to this Publisher.
+
+862
+00:39:32,920 --> 00:39:34,270
+So it can be kinda complicated,
+
+863
+00:39:34,270 --> 00:39:37,157
+it's got all the output
+value of the Publisher
+
+864
+00:39:37,157 --> 00:39:39,017
+and the failure and all that is in there.
+
+865
+00:39:39,017 --> 00:39:41,250
+And we just want it to be a simple var
+
+866
+00:39:41,250 --> 00:39:44,440
+that we can store to so it
+gets type-erased for us.
+
+867
+00:39:44,440 --> 00:39:48,710
+Sink type-erases whatever
+this Cancellable stuff is
+
+868
+00:39:48,710 --> 00:39:50,500
+so that we get this AnyCancellable,
+
+869
+00:39:50,500 --> 00:39:52,793
+exactly the same as we
+did for AnyTransition.
+
+870
+00:39:54,450 --> 00:39:55,920
+Now notice we got a bad error here,
+
+871
+00:39:55,920 --> 00:39:59,580
+use of undeclared type AnyCancellable.
+
+872
+00:39:59,580 --> 00:40:01,220
+Why is this undeclared?
+
+873
+00:40:01,220 --> 00:40:03,280
+Because all of this Publisher stuff
+
+874
+00:40:03,280 --> 00:40:08,270
+comes from a different
+framework called Combine.
+
+875
+00:40:08,270 --> 00:40:09,970
+And so the Combine framework
+
+876
+00:40:09,970 --> 00:40:12,520
+has the Cancellable,
+subscribing, publishing,
+
+877
+00:40:12,520 --> 00:40:14,173
+all that stuff comes from there.
+
+878
+00:40:15,450 --> 00:40:19,250
+All we need to do to keep this sink around
+
+879
+00:40:19,250 --> 00:40:21,367
+is to assign its Cancellable to this var
+
+880
+00:40:21,367 --> 00:40:23,830
+that's in our ViewModel
+
+881
+00:40:23,830 --> 00:40:26,320
+and it'll live as long as
+the ViewModel does right now.
+
+882
+00:40:26,320 --> 00:40:28,150
+Once this ViewModel goes away, of course,
+
+883
+00:40:28,150 --> 00:40:30,760
+this var will go away with it
+and then the sink will stop.
+
+884
+00:40:30,760 --> 00:40:34,010
+Now, in our app, our
+ViewModel never goes away
+
+885
+00:40:34,010 --> 00:40:36,630
+but it's quite possible to
+have ViewModels disappearing.
+
+886
+00:40:36,630 --> 00:40:38,450
+If you have an app that
+has multiple screens
+
+887
+00:40:38,450 --> 00:40:40,417
+you might have a ViewModel
+that's in charge of one screen
+
+888
+00:40:40,417 --> 00:40:41,930
+and when that screen goes away,
+
+889
+00:40:41,930 --> 00:40:43,820
+ha, the ViewModel goes away too.
+
+890
+00:40:43,820 --> 00:40:46,200
+And that's perfect, we wouldn't
+want this to be autosaving
+
+891
+00:40:46,200 --> 00:40:48,200
+when this ViewModel's not around.
+
+892
+00:40:48,200 --> 00:40:51,180
+So this is a really nice way to link up
+
+893
+00:40:51,180 --> 00:40:55,493
+this Subscriber to whatever
+object it's helping out.
+
+894
+00:40:56,390 --> 00:40:58,528
+Let's go ahead and run
+and see if we're getting
+
+895
+00:40:58,528 --> 00:41:01,310
+this json printed out on our console.
+
+896
+00:41:01,310 --> 00:41:02,907
+Make a little room so we can see
+
+897
+00:41:02,907 --> 00:41:05,010
+and we can already see that it did like,
+
+898
+00:41:05,010 --> 00:41:07,730
+it looks like, yeah, an initial autosave
+
+899
+00:41:07,730 --> 00:41:11,400
+when we first brought this document up.
+
+900
+00:41:11,400 --> 00:41:13,330
+And let's make a change to our document,
+
+901
+00:41:13,330 --> 00:41:16,920
+I'm gonna add, let's see, a pretzel, doop,
+
+902
+00:41:16,920 --> 00:41:18,180
+and now we have two pretzels,
+
+903
+00:41:18,180 --> 00:41:19,780
+maybe we'll add another pretzel.
+
+904
+00:41:21,090 --> 00:41:23,420
+Now we have three
+pretzels, one, two, three.
+
+905
+00:41:23,420 --> 00:41:25,203
+So our autosave is working.
+
+906
+00:41:28,120 --> 00:41:31,220
+Let's do another thing
+exactly like that, actually
+
+907
+00:41:31,220 --> 00:41:33,700
+because we have another
+Published right here,
+
+908
+00:41:33,700 --> 00:41:36,003
+our backgroundImage is Published.
+
+909
+00:41:36,003 --> 00:41:38,150
+What about this cool feature?
+
+910
+00:41:38,150 --> 00:41:39,363
+Let's go back here.
+
+911
+00:41:40,310 --> 00:41:42,990
+When I add a new background,
+
+912
+00:41:42,990 --> 00:41:45,800
+let's say like this background right here,
+
+913
+00:41:45,800 --> 00:41:47,210
+lemme drag this background,
+
+914
+00:41:47,210 --> 00:41:48,670
+watch what happens.
+
+915
+00:41:48,670 --> 00:41:51,240
+Okay, it didn't quite fit the edges
+
+916
+00:41:51,240 --> 00:41:54,470
+and it's even worse if I do a bigger one
+
+917
+00:41:54,470 --> 00:41:57,233
+right here like this, this guy.
+
+918
+00:42:00,860 --> 00:42:03,550
+We really want this
+like double tap to zoom
+
+919
+00:42:03,550 --> 00:42:06,250
+to happen automatically whenever
+we set our background image
+
+920
+00:42:06,250 --> 00:42:08,090
+to something else.
+
+921
+00:42:08,090 --> 00:42:10,140
+And we'll go back and set it to this one.
+
+922
+00:42:12,000 --> 00:42:14,870
+Boop, that's terrible, we'd
+really like it to go like that.
+
+923
+00:42:14,870 --> 00:42:17,820
+So we already have this
+nice function, zoomToFit,
+
+924
+00:42:17,820 --> 00:42:19,230
+it would just be great if every time
+
+925
+00:42:19,230 --> 00:42:22,690
+our backgroundImage changed
+we called zoomToFit.
+
+926
+00:42:22,690 --> 00:42:24,510
+Well, that's quite easy to do, too
+
+927
+00:42:24,510 --> 00:42:27,210
+because we know when our
+backgroundImage gets set,
+
+928
+00:42:27,210 --> 00:42:28,960
+it's when this var gets set,
+
+929
+00:42:28,960 --> 00:42:33,220
+and this is a Published, so
+there's a $backgroundImage var
+
+930
+00:42:33,220 --> 00:42:35,997
+which is a Publisher
+that publishes this image
+
+931
+00:42:35,997 --> 00:42:38,623
+and we can use that in our View.
+
+932
+00:42:39,580 --> 00:42:41,460
+So let's go look in our View over here
+
+933
+00:42:41,460 --> 00:42:43,241
+and see how we would do that.
+
+934
+00:42:43,241 --> 00:42:45,990
+Just gonna go, let's say down here
+
+935
+00:42:45,990 --> 00:42:49,887
+and say, .onReceive, so
+onReceive is how we do that
+
+936
+00:42:49,887 --> 00:42:54,170
+and we say self.document.$backgroundImage,
+
+937
+00:42:54,170 --> 00:42:56,090
+that's the backgroundImage Publisher,
+
+938
+00:42:56,090 --> 00:42:59,320
+that's going to call a
+closure with the thing
+
+939
+00:42:59,320 --> 00:43:01,680
+that got published when this was received
+
+940
+00:43:01,680 --> 00:43:04,832
+so that's the UIImage
+that got published here
+
+941
+00:43:04,832 --> 00:43:09,730
+and I'm gonna say,
+self.zoomToFit that Image
+
+942
+00:43:09,730 --> 00:43:12,893
+in our geometry.size.
+
+943
+00:43:14,850 --> 00:43:15,683
+That's it.
+
+944
+00:43:16,635 --> 00:43:19,640
+So now every time this thing publishes
+
+945
+00:43:19,640 --> 00:43:20,820
+because a new image came in,
+
+946
+00:43:20,820 --> 00:43:23,660
+you can even see the
+very first one does it.
+
+947
+00:43:23,660 --> 00:43:25,580
+Let's go down here and make another image,
+
+948
+00:43:25,580 --> 00:43:27,283
+how about this one,
+
+949
+00:43:30,150 --> 00:43:31,250
+loading, that's nice,
+
+950
+00:43:31,250 --> 00:43:32,373
+and it zoomed to fit.
+
+951
+00:43:33,370 --> 00:43:35,940
+So those Publishers really really valuable
+
+952
+00:43:35,940 --> 00:43:39,410
+to hook up to and you'll get
+the hang of those $ things
+
+953
+00:43:39,410 --> 00:43:40,690
+and like, hmmm, that's really cool.
+
+954
+00:43:40,690 --> 00:43:43,660
+I wanna know when that
+changed, I'll do onReceive
+
+955
+00:43:43,660 --> 00:43:47,853
+or I'll go in here and hook
+up a sink to it, for example.
+
+956
+00:43:50,040 --> 00:43:52,670
+But there's more things
+we can do with Publishers
+
+957
+00:43:52,670 --> 00:43:55,597
+than just these $ things
+with the Published.
+
+958
+00:43:55,597 --> 00:43:57,950
+I'm gonna use a Publisher to do
+
+959
+00:43:57,950 --> 00:44:00,310
+this whole backgroundImage fetch.
+
+960
+00:44:00,310 --> 00:44:03,200
+When we were doing this,
+I kinda mentioned that
+
+961
+00:44:03,200 --> 00:44:06,130
+really we want to do this with
+the class called URLSession
+
+962
+00:44:06,130 --> 00:44:09,300
+because URLSession
+knows how to do timeouts
+
+963
+00:44:09,300 --> 00:44:11,920
+and all the setup and
+everything having to do with it.
+
+964
+00:44:11,920 --> 00:44:15,560
+We really were just using
+Data contentsOf, right here,
+
+965
+00:44:15,560 --> 00:44:18,600
+which is kind of a dumb, not so smart,
+
+966
+00:44:18,600 --> 00:44:21,530
+non-configurable way to fetch things.
+
+967
+00:44:21,530 --> 00:44:23,860
+So let's use URLSession here
+
+968
+00:44:23,860 --> 00:44:26,180
+to do this background fetch instead.
+
+969
+00:44:26,180 --> 00:44:29,350
+And that is going to be
+done with a Publisher.
+
+970
+00:44:29,350 --> 00:44:32,310
+So first, how do we get
+a session, a URLSession?
+
+971
+00:44:32,310 --> 00:44:34,310
+We just say, URLSession
+
+972
+00:44:34,310 --> 00:44:38,347
+and it does have some
+initializers that you can see,
+
+973
+00:44:38,347 --> 00:44:42,197
+say this configuration and you
+can configure your URLSession
+
+974
+00:44:43,200 --> 00:44:45,200
+to have whatever timeout here you want.
+
+975
+00:44:45,200 --> 00:44:48,180
+But it also has a nice one called shared.
+
+976
+00:44:48,180 --> 00:44:51,130
+That's a static var, a shared URLSession
+
+977
+00:44:51,130 --> 00:44:52,450
+that your whole app can use
+
+978
+00:44:52,450 --> 00:44:54,920
+when it just wants to do simple downloads.
+
+979
+00:44:54,920 --> 00:44:56,080
+And we'll use this one a lot
+
+980
+00:44:56,080 --> 00:44:57,610
+when we're doing straightforward download,
+
+981
+00:44:57,610 --> 00:45:00,330
+where we don't care about
+the timeout, whatever,
+
+982
+00:45:00,330 --> 00:45:02,600
+but we still want all the wonderfulness
+
+983
+00:45:02,600 --> 00:45:04,273
+that URLSession does.
+
+984
+00:45:05,400 --> 00:45:09,350
+Now, how do we ask URLSession
+to download something
+
+985
+00:45:09,350 --> 00:45:12,520
+from a URL and how does it give it to us?
+
+986
+00:45:12,520 --> 00:45:14,280
+Well, it does this with a Publisher.
+
+987
+00:45:14,280 --> 00:45:18,990
+So I'm gonna say, let
+publisher equal our session
+
+988
+00:45:18,990 --> 00:45:23,413
+it has this great function,
+dataTaskPublisher for url.
+
+989
+00:45:24,819 --> 00:45:27,130
+And this is going to give us a Publisher
+
+990
+00:45:27,130 --> 00:45:29,030
+and we all know what a Publisher is,
+
+991
+00:45:29,030 --> 00:45:32,260
+that is going to publish
+the contents of this URL
+
+992
+00:45:32,260 --> 00:45:34,337
+whatever it wants it goes
+out and fetches this,
+
+993
+00:45:34,337 --> 00:45:35,710
+and publishes it.
+
+994
+00:45:35,710 --> 00:45:38,870
+And let's take a closer look
+actually at Publisher here
+
+995
+00:45:38,870 --> 00:45:40,000
+in the documentation.
+
+996
+00:45:40,000 --> 00:45:42,050
+This Publisher that URLSession creates,
+
+997
+00:45:42,050 --> 00:45:45,573
+is called a DataTaskPublisher,
+lemme click on it,
+
+998
+00:45:46,430 --> 00:45:50,060
+go in here, and we know
+that Publishers have Output,
+
+999
+00:45:50,060 --> 00:45:53,060
+don't care, and a Failure don't care.
+
+1000
+00:45:53,060 --> 00:45:56,170
+So let's look at URLSession's
+Output don't care,
+
+1001
+00:45:56,170 --> 00:45:59,120
+what does it turn that
+Output don't care into?
+
+1002
+00:45:59,120 --> 00:46:03,400
+It makes it into a tuple
+with the Data it got back
+
+1003
+00:46:03,400 --> 00:46:06,060
+and this thing called a URLResponse
+
+1004
+00:46:06,060 --> 00:46:08,623
+which is stuff like
+the suggested file name
+
+1005
+00:46:08,623 --> 00:46:10,440
+that it found on the other side,
+
+1006
+00:46:10,440 --> 00:46:14,500
+and kinda URL-y oriented things,
+
+1007
+00:46:14,500 --> 00:46:16,360
+but this is usually what
+we're most interested in
+
+1008
+00:46:16,360 --> 00:46:18,873
+is this data that came back from that URL.
+
+1009
+00:46:19,990 --> 00:46:20,823
+Well, that's cool.
+
+1010
+00:46:20,823 --> 00:46:22,030
+And what about this Failure?
+
+1011
+00:46:22,030 --> 00:46:24,193
+What happens when one of these URLSession
+
+1012
+00:46:24,193 --> 00:46:26,030
+DataTaskPublishers fails,
+
+1013
+00:46:26,030 --> 00:46:29,410
+like network connection's
+not available or whatever?
+
+1014
+00:46:29,410 --> 00:46:32,240
+Well, it's type is URLError, remember,
+
+1015
+00:46:32,240 --> 00:46:35,130
+this is a don't care and
+we're saying what type it is
+
+1016
+00:46:35,130 --> 00:46:36,920
+for this particular Publisher.
+
+1017
+00:46:36,920 --> 00:46:39,260
+So it's URLError, let's look at URLError,
+
+1018
+00:46:39,260 --> 00:46:40,340
+here it is.
+
+1019
+00:46:40,340 --> 00:46:42,900
+And it has things you
+might suspect, again,
+
+1020
+00:46:42,900 --> 00:46:45,260
+you know, little localized
+description right here
+
+1021
+00:46:45,260 --> 00:46:48,113
+of what happens, some error
+codes, that kind of thing.
+
+1022
+00:46:48,990 --> 00:46:51,090
+So that's what most Publishers look like,
+
+1023
+00:46:51,090 --> 00:46:52,520
+they just have some output,
+
+1024
+00:46:52,520 --> 00:46:56,000
+like that tuple of Data in the response,
+
+1025
+00:46:56,000 --> 00:46:58,300
+and then also they have
+some Failure possibly.
+
+1026
+00:46:59,220 --> 00:47:01,360
+Now, again, remember that
+these Published guys,
+
+1027
+00:47:01,360 --> 00:47:04,000
+they don't have a Failure,
+their Failure is Never
+
+1028
+00:47:04,000 --> 00:47:06,400
+'cause they don't ever
+fail, they just keep on,
+
+1029
+00:47:06,400 --> 00:47:07,663
+keep on keepin' on.
+
+1030
+00:47:09,920 --> 00:47:13,100
+This Publisher is not
+publishing exactly what we want,
+
+1031
+00:47:13,100 --> 00:47:14,400
+we don't really want a tuple,
+
+1032
+00:47:14,400 --> 00:47:16,380
+what we want is an image, okay?
+
+1033
+00:47:16,380 --> 00:47:18,730
+We want, we'd be great if this Publisher
+
+1034
+00:47:18,730 --> 00:47:21,930
+would take our URL and just
+publish an image to us.
+
+1035
+00:47:21,930 --> 00:47:23,640
+Then we would be able to put our image
+
+1036
+00:47:23,640 --> 00:47:27,069
+into our backgroundImage up here,
+
+1037
+00:47:27,069 --> 00:47:29,260
+everything would work perfectly.
+
+1038
+00:47:29,260 --> 00:47:32,680
+And so, one of the main
+ways that we use Publishers
+
+1039
+00:47:32,680 --> 00:47:34,890
+is we take an existing Publisher
+
+1040
+00:47:34,890 --> 00:47:39,890
+and we kinda slowly coerce it
+into doing the things we want.
+
+1041
+00:47:39,990 --> 00:47:43,690
+And that is done by
+creating new Publishers.
+
+1042
+00:47:43,690 --> 00:47:45,130
+So I'm gonna take this Publisher
+
+1043
+00:47:45,130 --> 00:47:47,820
+and I'm gonna send it a message called map
+
+1044
+00:47:47,820 --> 00:47:51,800
+and map takes a closure that
+gives you the information
+
+1045
+00:47:51,800 --> 00:47:54,550
+in the existing Publisher
+
+1046
+00:47:54,550 --> 00:47:58,520
+which for us is the
+Data and the URLResponse
+
+1047
+00:48:00,086 --> 00:48:03,980
+and it lets you return the
+type you'd rather it be.
+
+1048
+00:48:03,980 --> 00:48:06,090
+And I'd rather this be a UIImage.
+
+1049
+00:48:07,391 --> 00:48:08,660
+And how do I make it?
+
+1050
+00:48:08,660 --> 00:48:12,730
+Take the Data that you pass me and map it.
+
+1051
+00:48:12,730 --> 00:48:15,760
+Now this Publisher is
+no longer a Publisher
+
+1052
+00:48:15,760 --> 00:48:20,010
+that returns that tuple
+and has an error, URLError.
+
+1053
+00:48:20,010 --> 00:48:22,560
+Instead it has been
+mapped to be a Publisher
+
+1054
+00:48:22,560 --> 00:48:24,720
+that publishes a UIImage
+
+1055
+00:48:24,720 --> 00:48:26,660
+and this is actually Optional UIImage
+
+1056
+00:48:26,660 --> 00:48:29,690
+'cause this is a failable initializer,
+
+1057
+00:48:29,690 --> 00:48:32,045
+so it publishes Optional UIImage
+
+1058
+00:48:32,045 --> 00:48:34,870
+and it still has the URLError Failure.
+
+1059
+00:48:34,870 --> 00:48:38,550
+So we just mapped this Publisher
+into a different Publisher.
+
+1060
+00:48:38,550 --> 00:48:41,330
+In some ways Publishers
+feel a lot like Arrays
+
+1061
+00:48:41,330 --> 00:48:44,940
+because, you know, an Array
+is like a list of values
+
+1062
+00:48:44,940 --> 00:48:47,040
+and a Publisher is kind
+of a list of values
+
+1063
+00:48:47,040 --> 00:48:48,040
+but it's over time,
+
+1064
+00:48:48,040 --> 00:48:49,640
+the Publisher's publishing over time.
+
+1065
+00:48:49,640 --> 00:48:54,420
+So a lot of the functions in
+Publisher mimic those in Array.
+
+1066
+00:48:54,420 --> 00:48:57,870
+So that's great, so it's
+publishing UIImages for us
+
+1067
+00:48:57,870 --> 00:48:59,020
+but there's a problem.
+
+1068
+00:48:59,020 --> 00:49:01,970
+URLSession does all of its work
+
+1069
+00:49:01,970 --> 00:49:04,240
+in one of those global background queues
+
+1070
+00:49:04,240 --> 00:49:06,370
+because, of course, you
+don't wanna block the UI
+
+1071
+00:49:06,370 --> 00:49:08,350
+while you're fetching these things.
+
+1072
+00:49:08,350 --> 00:49:12,410
+So we want this Publisher
+not to publish these UIImages
+
+1073
+00:49:12,410 --> 00:49:13,680
+on those background threads
+
+1074
+00:49:13,680 --> 00:49:15,690
+which is what it would do by default.
+
+1075
+00:49:15,690 --> 00:49:18,330
+So we want it to publish this stuff
+
+1076
+00:49:18,330 --> 00:49:20,200
+on the main queue.
+
+1077
+00:49:20,200 --> 00:49:21,340
+And we can do that as well.
+
+1078
+00:49:21,340 --> 00:49:26,340
+We say, .receive on DispatchQueue.main
+
+1079
+00:49:28,390 --> 00:49:30,930
+and that turns this,
+this returns a Publisher,
+
+1080
+00:49:30,930 --> 00:49:35,130
+a different Publisher, a
+Publisher that publishes UIImages
+
+1081
+00:49:35,130 --> 00:49:38,250
+from this Publisher being converted there
+
+1082
+00:49:38,250 --> 00:49:41,050
+and publishes them on the main queue.
+
+1083
+00:49:41,050 --> 00:49:43,120
+So it's just slightly modified.
+
+1084
+00:49:43,120 --> 00:49:46,540
+Does this feel a lot like
+Views and ViewModifiers?
+
+1085
+00:49:46,540 --> 00:49:49,180
+It's the same kind of design,
+totally different system here
+
+1086
+00:49:49,180 --> 00:49:51,530
+because these are not UI things at all,
+
+1087
+00:49:51,530 --> 00:49:52,960
+but it's the same kind of idea
+
+1088
+00:49:52,960 --> 00:49:55,550
+where you're taking a
+Publisher and modifying it,
+
+1089
+00:49:55,550 --> 00:49:56,383
+modifying it.
+
+1090
+00:49:56,383 --> 00:49:58,560
+Same way as a View, modify it, modify it.
+
+1091
+00:49:58,560 --> 00:49:59,633
+Exact same thing.
+
+1092
+00:50:01,330 --> 00:50:03,110
+Now the last thing we wanna do,
+
+1093
+00:50:03,110 --> 00:50:05,060
+this is pretty much in shape
+
+1094
+00:50:05,060 --> 00:50:08,430
+the kind of Publisher we want
+is publishing UIImages to it,
+
+1095
+00:50:08,430 --> 00:50:11,970
+is we would like to maybe
+use .sink or something
+
+1096
+00:50:11,970 --> 00:50:14,900
+like if I try to use .sink
+here it's gonna be interesting,
+
+1097
+00:50:14,900 --> 00:50:16,310
+notice I didn't even get
+
+1098
+00:50:16,310 --> 00:50:19,450
+the sink option that only takes the value,
+
+1099
+00:50:19,450 --> 00:50:21,720
+right, the .sink that we used up here
+
+1100
+00:50:21,720 --> 00:50:23,980
+only just takes whatever it's publishing,
+
+1101
+00:50:23,980 --> 00:50:25,050
+there's no error here
+
+1102
+00:50:25,050 --> 00:50:28,080
+because, again, these Published things,
+
+1103
+00:50:28,080 --> 00:50:29,750
+their error is Never.
+
+1104
+00:50:29,750 --> 00:50:32,830
+So it's no use handling a Never error.
+
+1105
+00:50:32,830 --> 00:50:36,530
+So we don't even get this
+option down here below.
+
+1106
+00:50:36,530 --> 00:50:41,370
+Why does this not even give
+us the option for that?
+
+1107
+00:50:41,370 --> 00:50:44,320
+Well, our Publisher, this
+publishing UIImages here,
+
+1108
+00:50:44,320 --> 00:50:47,333
+is still having the failure of URLError.
+
+1109
+00:50:48,480 --> 00:50:50,120
+I don't really want to handle errors.
+
+1110
+00:50:50,120 --> 00:50:52,810
+If I did I might well use sink right here.
+
+1111
+00:50:52,810 --> 00:50:53,920
+But I don't wanna handle errors.
+
+1112
+00:50:53,920 --> 00:50:57,240
+All I really wanna do is
+just give me that UIImage
+
+1113
+00:50:57,240 --> 00:51:00,080
+and if you get an error, I just want nil,
+
+1114
+00:51:00,080 --> 00:51:01,750
+okay, just give me nil.
+
+1115
+00:51:01,750 --> 00:51:03,330
+Well, turns out we can do that.
+
+1116
+00:51:03,330 --> 00:51:06,040
+We can modify our Publisher
+a little further here
+
+1117
+00:51:06,040 --> 00:51:10,800
+and say, replaceErrors
+with some other UIImage,
+
+1118
+00:51:10,800 --> 00:51:13,390
+I'm gonna pick the UIImage nil.
+
+1119
+00:51:13,390 --> 00:51:17,880
+So now, this Publisher publishes UIImages,
+
+1120
+00:51:17,880 --> 00:51:19,550
+Optional UIImages still,
+
+1121
+00:51:19,550 --> 00:51:22,680
+but its error type has
+been changed to Never.
+
+1122
+00:51:22,680 --> 00:51:25,480
+And now we could do sink and look,
+
+1123
+00:51:25,480 --> 00:51:27,313
+the receiveValue's available now.
+
+1124
+00:51:28,310 --> 00:51:30,220
+But I'm not even gonna use sink.
+
+1125
+00:51:30,220 --> 00:51:33,310
+So I'm gonna say let
+canceller equal something
+
+1126
+00:51:33,310 --> 00:51:35,450
+but I'm not going to have it do sink,
+
+1127
+00:51:35,450 --> 00:51:38,530
+I'm going to have it do
+a really cool Subscriber
+
+1128
+00:51:38,530 --> 00:51:40,610
+called assign.
+
+1129
+00:51:40,610 --> 00:51:43,860
+So assign lets you assign
+the output of the Publisher
+
+1130
+00:51:43,860 --> 00:51:48,860
+to some var that you specify
+using this key path syntax
+
+1131
+00:51:49,900 --> 00:51:51,370
+that we saw before
+
+1132
+00:51:54,000 --> 00:51:57,950
+on some object, in our case, our self.
+
+1133
+00:51:57,950 --> 00:52:00,170
+So this is gonna take whatever
+this Publisher publishes
+
+1134
+00:52:00,170 --> 00:52:01,357
+and assign it to this var.
+
+1135
+00:52:01,357 --> 00:52:04,534
+And this will work as long
+as this var, backgroundImage,
+
+1136
+00:52:04,534 --> 00:52:08,840
+has the same type,
+UIImage, Optional UIImage,
+
+1137
+00:52:08,840 --> 00:52:10,430
+as what the Publisher is publishing.
+
+1138
+00:52:10,430 --> 00:52:13,460
+And that is exactly what
+our Publisher publishes.
+
+1139
+00:52:13,460 --> 00:52:17,200
+Now assign only works if you
+have Never as your error.
+
+1140
+00:52:17,200 --> 00:52:19,220
+So if you have something from Publisher
+
+1141
+00:52:19,220 --> 00:52:22,290
+that has an error, you're
+gonna have to call replaceError
+
+1142
+00:52:22,290 --> 00:52:26,270
+and provide some value to
+return from this Publisher
+
+1143
+00:52:26,270 --> 00:52:27,850
+if there is an error.
+
+1144
+00:52:27,850 --> 00:52:30,790
+In our case it's easy because
+our UIImage is an Optional
+
+1145
+00:52:30,790 --> 00:52:32,520
+so we could return nil.
+
+1146
+00:52:32,520 --> 00:52:34,650
+But if you're publishing
+something that's not an Optional
+
+1147
+00:52:34,650 --> 00:52:36,530
+you're gonna have to figure
+out something reasonable
+
+1148
+00:52:36,530 --> 00:52:39,420
+to publish there if you
+wanna have your failure type
+
+1149
+00:52:39,420 --> 00:52:41,593
+be Never by calling replaceError.
+
+1150
+00:52:43,390 --> 00:52:45,680
+And this EmojiArtDocument here,
+
+1151
+00:52:45,680 --> 00:52:48,210
+we can just let Swift
+infer that from the fact
+
+1152
+00:52:48,210 --> 00:52:50,843
+that we know this key path is on self.
+
+1153
+00:52:51,970 --> 00:52:53,570
+This is just a Subscriber,
+
+1154
+00:52:53,570 --> 00:52:55,647
+that's why it has a canceller over here
+
+1155
+00:52:55,647 --> 00:52:57,730
+and of course we don't want this canceller
+
+1156
+00:52:57,730 --> 00:53:00,810
+to be a local variable
+inside this function
+
+1157
+00:53:00,810 --> 00:53:02,870
+otherwise when this function ends,
+
+1158
+00:53:02,870 --> 00:53:06,280
+this assignment, this
+Subscriber is goin' away.
+
+1159
+00:53:06,280 --> 00:53:08,150
+Exactly the same as we did up here
+
+1160
+00:53:08,150 --> 00:53:10,058
+when we had autosaveCancellable,
+
+1161
+00:53:10,058 --> 00:53:13,200
+we're gonna need to have some private var
+
+1162
+00:53:13,200 --> 00:53:16,257
+which I'm gonna call my
+fetchImageCancellable,
+
+1163
+00:53:19,620 --> 00:53:21,070
+again, AnyCancellable is type
+
+1164
+00:53:23,346 --> 00:53:26,950
+and I'm gonna use this as the variable
+
+1165
+00:53:26,950 --> 00:53:31,000
+to put that Subscriber's cancellable into
+
+1166
+00:53:31,000 --> 00:53:32,430
+and that's gonna keep it around
+
+1167
+00:53:32,430 --> 00:53:35,140
+as long as this stays around.
+
+1168
+00:53:35,140 --> 00:53:37,200
+But don't forget that
+this also has the benefit
+
+1169
+00:53:37,200 --> 00:53:39,070
+of letting me cancel this.
+
+1170
+00:53:39,070 --> 00:53:42,100
+And remember when we did
+all the fetching ourselves
+
+1171
+00:53:42,100 --> 00:53:43,400
+we had to be careful
+
+1172
+00:53:43,400 --> 00:53:45,677
+that if someone clicked
+on a background image
+
+1173
+00:53:45,677 --> 00:53:48,280
+and it was on a slow server
+and it was taking too long
+
+1174
+00:53:48,280 --> 00:53:51,500
+and they dragged in a different
+image from a fast server
+
+1175
+00:53:51,500 --> 00:53:54,080
+and that worked, and then 10 seconds later
+
+1176
+00:53:54,080 --> 00:53:57,250
+the slow server finally responded
+and it blew out the image
+
+1177
+00:53:57,250 --> 00:53:58,900
+and we fixed that by having to check,
+
+1178
+00:53:58,900 --> 00:54:00,900
+oh, is this the image that just arrived
+
+1179
+00:54:00,900 --> 00:54:02,550
+the same one we're looking for?
+
+1180
+00:54:02,550 --> 00:54:04,800
+Well with this system we
+don't have to do any of that
+
+1181
+00:54:04,800 --> 00:54:06,710
+'cause I'm just gonna say right here
+
+1182
+00:54:06,710 --> 00:54:08,340
+I'm only gonna do all this
+
+1183
+00:54:08,340 --> 00:54:11,660
+after I've taken my fetchImageCancellable
+
+1184
+00:54:11,660 --> 00:54:14,220
+and cancelled the previous one.
+
+1185
+00:54:14,220 --> 00:54:16,770
+This is also gonna keep us from
+having outstanding requests
+
+1186
+00:54:16,770 --> 00:54:18,930
+that we're not interested in anymore.
+
+1187
+00:54:18,930 --> 00:54:21,580
+Every time we fetch the
+background image data,
+
+1188
+00:54:21,580 --> 00:54:23,300
+I'm gonna cancel the previous one
+
+1189
+00:54:23,300 --> 00:54:24,270
+and go get the new one.
+
+1190
+00:54:24,270 --> 00:54:26,910
+So now I don't have to worry
+about that thing changing
+
+1191
+00:54:26,910 --> 00:54:29,510
+'cause I'm only gonna be
+ever fetching the new one.
+
+1192
+00:54:29,510 --> 00:54:32,980
+So it's a really cool
+feature of Publishers as well
+
+1193
+00:54:32,980 --> 00:54:34,330
+is that you can cancel them
+
+1194
+00:54:34,330 --> 00:54:36,133
+and they'll stop doing their work.
+
+1195
+00:54:37,642 --> 00:54:39,640
+Now the only other thing we
+would do with this code is
+
+1196
+00:54:39,640 --> 00:54:41,590
+we'd make this a one liner.
+
+1197
+00:54:41,590 --> 00:54:44,110
+So we would take this shared session
+
+1198
+00:54:44,110 --> 00:54:45,630
+and we would put it right here
+
+1199
+00:54:45,630 --> 00:54:48,290
+and we would take this whole Publisher
+
+1200
+00:54:48,290 --> 00:54:50,010
+and we would put it right here
+
+1201
+00:54:50,010 --> 00:54:53,193
+and we wouldn't have these
+two intermediate variables.
+
+1202
+00:54:54,780 --> 00:54:59,060
+Pretty sweet, pretty simple,
+pretty elegant solution
+
+1203
+00:54:59,060 --> 00:55:00,910
+to getting data.
+
+1204
+00:55:00,910 --> 00:55:03,950
+Just ask URLSession to go fetch it
+
+1205
+00:55:03,950 --> 00:55:05,610
+and it publishes the result,
+
+1206
+00:55:05,610 --> 00:55:07,190
+we massage into the format we want
+
+1207
+00:55:07,190 --> 00:55:10,333
+and then just assign it
+to one of our variables.
+
+1208
+00:55:11,360 --> 00:55:14,300
+And with the backgroundImage
+being set over here
+
+1209
+00:55:14,300 --> 00:55:16,850
+that's gonna cause this Publisher to fire
+
+1210
+00:55:16,850 --> 00:55:20,410
+which is over here gonna
+cause this onReceive to notice
+
+1211
+00:55:20,410 --> 00:55:22,390
+and causes zoomToFit.
+
+1212
+00:55:22,390 --> 00:55:25,760
+So you're starting to see
+this reactive UI thing,
+
+1213
+00:55:25,760 --> 00:55:28,210
+it starts all the way from like
+
+1214
+00:55:28,210 --> 00:55:29,540
+pulling things over the network
+
+1215
+00:55:29,540 --> 00:55:32,713
+and ripples all the way
+through in a very natural way.
+
+1216
+00:55:33,980 --> 00:55:35,530
+We'll see this thing in action.
+
+1217
+00:55:38,740 --> 00:55:40,852
+Loading, woo,
+
+1218
+00:55:40,852 --> 00:55:42,487
+it worked, okay.
+
+1219
+00:55:42,487 --> 00:55:45,263
+How about, where's our other favorite one,
+
+1220
+00:55:46,988 --> 00:55:47,938
+could we load here.
+
+1221
+00:55:49,970 --> 00:55:50,803
+Here it is.
+
+1222
+00:55:52,250 --> 00:55:53,083
+Perfect.
+
+1223
+00:55:54,840 --> 00:55:56,550
+All right, that's it for
+Publishers, you guys.
+
+1224
+00:55:56,550 --> 00:55:58,270
+We saw a lot going on
+with Publishers there
+
+1225
+00:55:58,270 --> 00:56:00,653
+but we really only just
+scratched the surface of it.
+
+1226
+00:56:00,653 --> 00:56:02,230
+There's a lot more to know
+
+1227
+00:56:02,230 --> 00:56:04,280
+and I will cover it later in the quarter.
+
+1228
+00:56:05,130 --> 00:56:07,090
+As always, you can go
+look in the documentation
+
+1229
+00:56:07,090 --> 00:56:09,730
+for Publisher and see the
+many many different functions
+
+1230
+00:56:09,730 --> 00:56:11,997
+you can call besides map and replaceError,
+
+1231
+00:56:11,997 --> 00:56:14,197
+and all these things,
+just so much in there.
+
+1232
+00:56:15,270 --> 00:56:17,900
+But now we're gonna move
+on to some UI stuff.
+
+1233
+00:56:17,900 --> 00:56:19,420
+I am going to make it so that we,
+
+1234
+00:56:19,420 --> 00:56:21,830
+instead of having just this one
+
+1235
+00:56:21,830 --> 00:56:23,993
+kinda sad little palette right here
+
+1236
+00:56:23,993 --> 00:56:25,470
+that we can have many palettes,
+
+1237
+00:56:25,470 --> 00:56:28,340
+a food palette, animals
+palette, faces palette,
+
+1238
+00:56:28,340 --> 00:56:30,510
+so we can choose through
+all kinds of emoji
+
+1239
+00:56:30,510 --> 00:56:33,100
+to build our beautiful artwork.
+
+1240
+00:56:33,100 --> 00:56:35,010
+So let's start by building
+that little thing,
+
+1241
+00:56:35,010 --> 00:56:36,000
+this little chooser,
+
+1242
+00:56:36,000 --> 00:56:37,220
+it's just gonna be it's only little View
+
+1243
+00:56:37,220 --> 00:56:38,690
+so I'm gonna go back here
+
+1244
+00:56:39,690 --> 00:56:40,523
+file new
+
+1245
+00:56:41,960 --> 00:56:43,937
+it is gonna be a SwiftUIView
+
+1246
+00:56:45,229 --> 00:56:47,173
+I'm gonna call it PaletteChooser.
+
+1247
+00:56:49,780 --> 00:56:52,480
+And we all know how to make a View now,
+
+1248
+00:56:52,480 --> 00:56:54,300
+we just replace its body.
+
+1249
+00:56:54,300 --> 00:56:59,300
+Mine's gonna have an HStack
+of something called a Stepper,
+
+1250
+00:56:59,310 --> 00:57:00,920
+which we're gonna talk about in a second,
+
+1251
+00:57:00,920 --> 00:57:05,070
+and then also just the
+Text of the palette name
+
+1252
+00:57:05,070 --> 00:57:06,460
+which we're gonna have to get
+
+1253
+00:57:06,460 --> 00:57:07,940
+as we choose different palettes,
+
+1254
+00:57:07,940 --> 00:57:10,780
+this is going to be the
+name of the palette,
+
+1255
+00:57:10,780 --> 00:57:12,390
+we want our palettes to have nice names
+
+1256
+00:57:12,390 --> 00:57:15,093
+like food, animals, faces, whatever.
+
+1257
+00:57:16,140 --> 00:57:17,300
+So what is this Stepper?
+
+1258
+00:57:17,300 --> 00:57:20,920
+The Stepper is essentially
+like a little plus minus button
+
+1259
+00:57:20,920 --> 00:57:24,540
+and it might not be the real
+perfect UI here for this
+
+1260
+00:57:24,540 --> 00:57:26,030
+but it's quite functional
+
+1261
+00:57:26,030 --> 00:57:27,820
+and it also lets me show you Stepper
+
+1262
+00:57:27,820 --> 00:57:29,110
+'cause I wanted to show it.
+
+1263
+00:57:29,110 --> 00:57:31,250
+So Stepper has a lot of
+different initializers,
+
+1264
+00:57:31,250 --> 00:57:33,110
+you should check the documentation.
+
+1265
+00:57:33,110 --> 00:57:34,800
+For example, you can take a range
+
+1266
+00:57:34,800 --> 00:57:37,580
+and then you can step through the range.
+
+1267
+00:57:37,580 --> 00:57:40,970
+It also lets you just kinda
+free form have a Stepper
+
+1268
+00:57:40,970 --> 00:57:43,970
+that just does, onIncrement
+it does one thing
+
+1269
+00:57:43,970 --> 00:57:45,690
+and then onDecrement is does another.
+
+1270
+00:57:45,690 --> 00:57:47,450
+So we're gonna use that version.
+
+1271
+00:57:47,450 --> 00:57:49,670
+So onIncrement we'll specify some closure
+
+1272
+00:57:49,670 --> 00:57:52,550
+and onDecrement we'll specify some closure
+
+1273
+00:57:52,550 --> 00:57:54,800
+and Steppers have labels.
+
+1274
+00:57:54,800 --> 00:57:58,450
+I'm gonna have my label
+here be a Text that says
+
+1275
+00:58:00,810 --> 00:58:05,110
+"Choose Palette", generally
+
+1276
+00:58:05,110 --> 00:58:10,110
+Stepper's labels tries to explain
+what the Stepper is doing.
+
+1277
+00:58:10,510 --> 00:58:13,450
+I think it's going to be
+pretty obvious in our app
+
+1278
+00:58:13,450 --> 00:58:15,230
+so it might be that we're gonna lose this,
+
+1279
+00:58:15,230 --> 00:58:18,360
+just get rid of this text,
+but we'll see how it looks,
+
+1280
+00:58:18,360 --> 00:58:20,710
+'cause I want you to see
+where the label appears
+
+1281
+00:58:20,710 --> 00:58:22,160
+on the Stepper.
+
+1282
+00:58:22,160 --> 00:58:25,100
+So before we start
+implementing the actual Stepper
+
+1283
+00:58:25,100 --> 00:58:26,260
+stepping through our palettes,
+
+1284
+00:58:26,260 --> 00:58:28,330
+let's see what our View
+looks like right here.
+
+1285
+00:58:28,330 --> 00:58:31,293
+So I'm gonna actually
+bring out our canvas.
+
+1286
+00:58:33,590 --> 00:58:35,740
+Let's see if we can
+take a look at it here.
+
+1287
+00:58:37,800 --> 00:58:39,840
+Ah, looks like we have a
+little bit of a problem here.
+
+1288
+00:58:39,840 --> 00:58:42,292
+Let's hit diagnostics.
+
+1289
+00:58:42,292 --> 00:58:45,440
+Oh, I think I recognize this problem.
+
+1290
+00:58:45,440 --> 00:58:47,000
+This is the problem that many of you had
+
+1291
+00:58:47,000 --> 00:58:48,790
+in your assignment three.
+
+1292
+00:58:48,790 --> 00:58:50,950
+And your assignment
+three write up explains
+
+1293
+00:58:50,950 --> 00:58:53,650
+how to work around this problem.
+
+1294
+00:58:53,650 --> 00:58:55,340
+What's going on here is
+that Xcode is getting
+
+1295
+00:58:55,340 --> 00:58:58,343
+a little confused because
+we have the name of a struct
+
+1296
+00:58:58,343 --> 00:59:01,060
+that is exactly the same
+as the name of our app
+
+1297
+00:59:01,060 --> 00:59:04,503
+and Xcode doesn't quite
+do the right thing here.
+
+1298
+00:59:04,503 --> 00:59:06,860
+This is probably even more of a problem
+
+1299
+00:59:06,860 --> 00:59:07,730
+for your assignment three
+
+1300
+00:59:07,730 --> 00:59:11,980
+since Swift itself has a struct named Set.
+
+1301
+00:59:11,980 --> 00:59:13,560
+So the two work arounds
+for this are either
+
+1302
+00:59:13,560 --> 00:59:18,470
+to rename the offending
+struct or to rename the app.
+
+1303
+00:59:18,470 --> 00:59:22,550
+So I'm gonna rename my app,
+that's the simple thing to do.
+
+1304
+00:59:22,550 --> 00:59:24,710
+So I'm gonna go over here to my settings,
+
+1305
+00:59:24,710 --> 00:59:27,720
+pick my app under targets
+and we'll change our name
+
+1306
+00:59:27,720 --> 00:59:31,460
+from EmojiArt to Emoji space Art,
+
+1307
+00:59:31,460 --> 00:59:34,930
+that might be a better name anyway.
+
+1308
+00:59:34,930 --> 00:59:37,623
+Let's go back and resume again.
+
+1309
+00:59:40,260 --> 00:59:43,640
+We can see our Stepper right here.
+
+1310
+00:59:43,640 --> 00:59:48,080
+And this is kind of in the
+ballpark of what we want
+
+1311
+00:59:48,080 --> 00:59:50,140
+but not exactly what we want.
+
+1312
+00:59:50,140 --> 00:59:52,920
+This is the label of it, Choose Palette,
+
+1313
+00:59:52,920 --> 00:59:55,070
+and then this is the
+plus minus, the Stepper,
+
+1314
+00:59:55,070 --> 00:59:58,520
+and this is the palette
+name, so this part I like.
+
+1315
+00:59:58,520 --> 01:00:01,920
+But HStack is using all
+the space available,
+
+1316
+01:00:01,920 --> 01:00:03,300
+the whole width right here
+
+1317
+01:00:03,300 --> 01:00:05,550
+and that's why it's so spread out.
+
+1318
+01:00:05,550 --> 01:00:08,260
+Well, we'll work on it
+and we'll see how it goes.
+
+1319
+01:00:08,260 --> 01:00:10,710
+But it's kind of in the
+ballpark of what I want
+
+1320
+01:00:10,710 --> 01:00:14,033
+so let's put this PaletteChooser
+now in our main View.
+
+1321
+01:00:15,479 --> 01:00:18,130
+We're gonna put in an
+HStack with our ScrollView,
+
+1322
+01:00:18,130 --> 01:00:20,580
+right, this is the ScrollView
+that shows the palette.
+
+1323
+01:00:20,580 --> 01:00:25,580
+So let's make an HStack with
+our PaletteChooser in there
+
+1324
+01:00:26,470 --> 01:00:30,333
+and then this ScrollView also in there.
+
+1325
+01:00:31,750 --> 01:00:32,623
+And we'll run.
+
+1326
+01:00:39,188 --> 01:00:41,550
+All right, well, we're
+making some progress.
+
+1327
+01:00:41,550 --> 01:00:44,520
+This is kinda what I want,
+this thing right here.
+
+1328
+01:00:44,520 --> 01:00:46,390
+But I definitely don't
+want this ChoosePalette,
+
+1329
+01:00:46,390 --> 01:00:49,490
+it's really not necessary,
+it's kind of obvious
+
+1330
+01:00:49,490 --> 01:00:51,740
+that this is going to be plus minus-ing
+
+1331
+01:00:51,740 --> 01:00:53,860
+whatever my palette name is here,
+
+1332
+01:00:53,860 --> 01:00:55,530
+food or animals or whatever.
+
+1333
+01:00:55,530 --> 01:00:58,283
+I'm definitely gonna
+ditch that over there.
+
+1334
+01:01:00,430 --> 01:01:02,723
+Do that by making this be an empty field.
+
+1335
+01:01:07,160 --> 01:01:08,560
+So let's see how that looks.
+
+1336
+01:01:11,600 --> 01:01:13,630
+Hmmm, still not quite right.
+
+1337
+01:01:13,630 --> 01:01:16,180
+It looks like it's giving
+me an equal amount of space
+
+1338
+01:01:16,180 --> 01:01:20,540
+to my palette View as it is
+to the actual ScrollView.
+
+1339
+01:01:20,540 --> 01:01:24,410
+I really want this to not
+get as much space as this.
+
+1340
+01:01:24,410 --> 01:01:25,880
+So we're gonna try something.
+
+1341
+01:01:25,880 --> 01:01:30,650
+Let's try doing, back in our main View,
+
+1342
+01:01:30,650 --> 01:01:33,983
+having the ScrollView get
+a very high layoutPriority.
+
+1343
+01:01:36,090 --> 01:01:37,950
+Make your layoutPriority one,
+
+1344
+01:01:37,950 --> 01:01:41,440
+the default layoutPriority zero,
+
+1345
+01:01:41,440 --> 01:01:43,390
+so hopefully this will fix our problem.
+
+1346
+01:01:46,240 --> 01:01:48,270
+Uh, oops, mmm.
+
+1347
+01:01:48,270 --> 01:01:50,010
+Well, this is interesting.
+
+1348
+01:01:50,010 --> 01:01:52,810
+It definitely gave a lot
+more space to our ScrollView
+
+1349
+01:01:52,810 --> 01:01:57,150
+but it didn't give enough space
+now to our PaletteChooser,
+
+1350
+01:01:57,150 --> 01:02:00,380
+just kinda smash it over
+here and not enough space.
+
+1351
+01:02:00,380 --> 01:02:02,710
+So this is really not the right solution,
+
+1352
+01:02:02,710 --> 01:02:04,780
+it's close but it's
+not the right solution.
+
+1353
+01:02:04,780 --> 01:02:06,700
+The real way we wanna do this
+
+1354
+01:02:06,700 --> 01:02:10,850
+is to have our PaletteChooser
+over here fix its size.
+
+1355
+01:02:10,850 --> 01:02:12,480
+So we want it to be fixedSize
+
+1356
+01:02:12,480 --> 01:02:15,320
+in the horizontal direction, true,
+
+1357
+01:02:15,320 --> 01:02:17,700
+vertically we don't care, false
+
+1358
+01:02:17,700 --> 01:02:20,860
+and fixedSize means that it's going to
+
+1359
+01:02:20,860 --> 01:02:22,860
+kind of size itself to fit
+
+1360
+01:02:22,860 --> 01:02:27,367
+and not going to use any extra
+space that's offered to it.
+
+1361
+01:02:27,367 --> 01:02:29,203
+And we'll see what this looks like.
+
+1362
+01:02:30,720 --> 01:02:32,430
+Oh, it looks much much better.
+
+1363
+01:02:32,430 --> 01:02:34,320
+And we've got, ditched the title
+
+1364
+01:02:34,320 --> 01:02:38,580
+and now it's kinda, instead
+of using all this space
+
+1365
+01:02:38,580 --> 01:02:41,727
+it's setting itself up
+in the middle right here
+
+1366
+01:02:41,727 --> 01:02:44,370
+and I have a feeling
+that's gonna look good
+
+1367
+01:02:44,370 --> 01:02:47,340
+in our UI here as well
+
+1368
+01:02:47,340 --> 01:02:49,322
+and indeed it does.
+
+1369
+01:02:49,322 --> 01:02:51,050
+And it doesn't look like
+I need quite so much
+
+1370
+01:02:51,050 --> 01:02:55,117
+horizontal padding now, this
+Stepper has, you can see,
+
+1371
+01:02:55,117 --> 01:02:57,620
+has it's own little padding around it
+
+1372
+01:02:57,620 --> 01:03:01,110
+so that horizontal padding
+that we had done over here
+
+1373
+01:03:01,110 --> 01:03:03,343
+probably completely unnecessary.
+
+1374
+01:03:06,010 --> 01:03:07,960
+All right, I'm likin' the look of this.
+
+1375
+01:03:09,686 --> 01:03:10,850
+And what I want is that when I press
+
+1376
+01:03:10,850 --> 01:03:12,520
+these plus and minus buttons,
+
+1377
+01:03:12,520 --> 01:03:15,660
+it cycles through all
+the palettes that I have,
+
+1378
+01:03:15,660 --> 01:03:20,220
+food, faces, animals,
+whatever palettes that I have
+
+1379
+01:03:20,220 --> 01:03:23,280
+or that I've created, I want
+it to cycle through them.
+
+1380
+01:03:23,280 --> 01:03:24,620
+So how am I gonna do that?
+
+1381
+01:03:24,620 --> 01:03:28,740
+Well, I don't want to waste
+too much of our time in demo
+
+1382
+01:03:28,740 --> 01:03:31,900
+how do we get an Array of palettes
+
+1383
+01:03:31,900 --> 01:03:33,980
+and step through them and all that.
+
+1384
+01:03:33,980 --> 01:03:37,910
+So I actually did that offline,
+this little code right here,
+
+1385
+01:03:37,910 --> 01:03:40,620
+which you all have from the forums
+
+1386
+01:03:40,620 --> 01:03:43,290
+was posted before this lecture,
+
+1387
+01:03:43,290 --> 01:03:45,640
+and we're not gonna go through all this,
+
+1388
+01:03:45,640 --> 01:03:48,460
+but it has some default palettes in here
+
+1389
+01:03:48,460 --> 01:03:51,790
+and it lets you add and
+remove emoji from a palette
+
+1390
+01:03:51,790 --> 01:03:55,440
+and it has these really two
+very good function for Steppers
+
+1391
+01:03:55,440 --> 01:03:58,240
+which is give me the palette
+after some other palette
+
+1392
+01:03:58,240 --> 01:04:00,940
+and give me the palette
+before some other palette.
+
+1393
+01:04:00,940 --> 01:04:03,100
+So I'm gonna use those to do my Stepper,
+
+1394
+01:04:03,100 --> 01:04:04,253
+before and after.
+
+1395
+01:04:06,260 --> 01:04:07,800
+So inside my PaletteChooser,
+
+1396
+01:04:07,800 --> 01:04:10,860
+I need some state of the
+palette that I've chosen.
+
+1397
+01:04:10,860 --> 01:04:13,760
+So I'm gonna add an @State var here.
+
+1398
+01:04:13,760 --> 01:04:17,300
+By the way, State vars should
+almost always be private.
+
+1399
+01:04:17,300 --> 01:04:18,610
+If they can be private they should.
+
+1400
+01:04:18,610 --> 01:04:20,690
+The only time it might not be private
+
+1401
+01:04:20,690 --> 01:04:22,920
+is if you're letting
+someone initialize them
+
+1402
+01:04:22,920 --> 01:04:24,850
+when they create your
+thing, but, you know,
+
+1403
+01:04:24,850 --> 01:04:27,910
+this state, in an @State,
+is private to your View,
+
+1404
+01:04:27,910 --> 01:04:30,520
+can only be really looked
+at, seen by your View.
+
+1405
+01:04:30,520 --> 01:04:32,573
+So we almost always mark those private.
+
+1406
+01:04:33,740 --> 01:04:35,513
+I'm gonna call this chosenPalette,
+
+1407
+01:04:35,513 --> 01:04:37,900
+it's gonna be the
+chosenPalette, which is a String
+
+1408
+01:04:37,900 --> 01:04:41,610
+and we'll start it out
+just being nothing here.
+
+1409
+01:04:41,610 --> 01:04:44,840
+And then I'm gonna have my
+Stepper just when I hit plus,
+
+1410
+01:04:44,840 --> 01:04:46,815
+it's gonna go to the
+palette after this one
+
+1411
+01:04:46,815 --> 01:04:49,338
+and when I hit minus, it's
+gonna go to the one before.
+
+1412
+01:04:49,338 --> 01:04:54,338
+It's easy, self.chosenPalette
+equals my document
+
+1413
+01:04:55,690 --> 01:04:58,110
+so I need my document here.
+
+1414
+01:04:58,110 --> 01:04:59,970
+Somehow I need my document
+so that I can say,
+
+1415
+01:04:59,970 --> 01:05:04,970
+palette after my current
+self.chosenPalette.
+
+1416
+01:05:08,960 --> 01:05:11,140
+So I need my document, so
+let's go and put that up here.
+
+1417
+01:05:11,140 --> 01:05:12,212
+We can do that.
+
+1418
+01:05:12,212 --> 01:05:17,212
+ObservedObject var document
+which is an EmojiArtDocument.
+
+1419
+01:05:18,270 --> 01:05:19,560
+It does mean, however,
+
+1420
+01:05:19,560 --> 01:05:22,300
+that when we create our
+paletteChooser over here,
+
+1421
+01:05:22,300 --> 01:05:23,133
+see paletteChooser,
+
+1422
+01:05:23,133 --> 01:05:25,543
+we're gonna have to
+pass the document along.
+
+1423
+01:05:28,990 --> 01:05:30,870
+Pass our document up here
+
+1424
+01:05:30,870 --> 01:05:33,790
+into our paletteChooser which
+is fine, we can do that.
+
+1425
+01:05:33,790 --> 01:05:36,230
+We'll see a different
+way to do that next time,
+
+1426
+01:05:36,230 --> 01:05:37,380
+but it'll work for now.
+
+1427
+01:05:38,320 --> 01:05:40,390
+And then, when we
+decrement, we're gonna say
+
+1428
+01:05:40,390 --> 01:05:45,390
+self.chosenPalette =
+self.document.palette before.
+
+1429
+01:05:48,127 --> 01:05:49,680
+So it lets us increment and decrement 'em.
+
+1430
+01:05:49,680 --> 01:05:51,780
+The other thing is we don't
+wanna say "Palette Name" here,
+
+1431
+01:05:51,780 --> 01:05:53,350
+we actually want the name of the palette.
+
+1432
+01:05:53,350 --> 01:05:55,897
+I have a nice little dictionary for that
+
+1433
+01:05:55,897 --> 01:05:57,380
+and say the text here is
+
+1434
+01:05:57,380 --> 01:05:59,400
+document.paletteNames chosenPalette
+
+1435
+01:06:03,270 --> 01:06:04,500
+and if I can't find it,
+
+1436
+01:06:04,500 --> 01:06:07,853
+I'm just going to have an empty name.
+
+1437
+01:06:09,290 --> 01:06:10,510
+PaletteChooser down here,
+
+1438
+01:06:10,510 --> 01:06:12,860
+let's just create an
+empty document for it,
+
+1439
+01:06:12,860 --> 01:06:16,823
+EmojiArtDocument and run.
+
+1440
+01:06:18,588 --> 01:06:19,520
+Here we go.
+
+1441
+01:06:19,520 --> 01:06:21,470
+It starts out with a palette of nothing
+
+1442
+01:06:21,470 --> 01:06:23,270
+but if I start cycling through, woo,
+
+1443
+01:06:24,210 --> 01:06:26,910
+look at that, activities,
+animals, faces, food.
+
+1444
+01:06:26,910 --> 01:06:28,133
+Now, the interesting thing is,
+
+1445
+01:06:28,133 --> 01:06:32,040
+that it's definitely cycling
+through my available palettes
+
+1446
+01:06:32,040 --> 01:06:34,080
+which you can see over here,
+
+1447
+01:06:34,080 --> 01:06:35,900
+faces, food, animals, activities,
+
+1448
+01:06:35,900 --> 01:06:40,240
+but it's not changing the
+palettes to actually be that.
+
+1449
+01:06:40,240 --> 01:06:41,560
+This palette is staying this kind
+
+1450
+01:06:41,560 --> 01:06:44,050
+of sad little palette here.
+
+1451
+01:06:44,050 --> 01:06:47,050
+Well, that makes perfect sense
+because our PaletteChooser
+
+1452
+01:06:47,050 --> 01:06:50,620
+is just choosing it inside
+local State in this View,
+
+1453
+01:06:50,620 --> 01:06:52,960
+it's not choosing it anywhere else,
+
+1454
+01:06:52,960 --> 01:06:55,710
+it's just setting this little
+chosenPalette right here.
+
+1455
+01:06:57,280 --> 01:06:59,760
+By the way, I could probably
+also fix this problem
+
+1456
+01:06:59,760 --> 01:07:02,260
+where it comes up with no palette
+
+1457
+01:07:02,260 --> 01:07:03,593
+by doing something like,
+
+1458
+01:07:06,785 --> 01:07:09,952
+onAppear, in that say my chosenPalette
+
+1459
+01:07:12,260 --> 01:07:16,033
+equals my document's default palette.
+
+1460
+01:07:16,970 --> 01:07:20,260
+And I'm doing this onAppear
+rather than trying to do this,
+
+1461
+01:07:20,260 --> 01:07:22,253
+for example, up here.
+
+1462
+01:07:23,680 --> 01:07:25,130
+Can't do it up here
+
+1463
+01:07:25,130 --> 01:07:27,710
+because here we're in the
+initialization process
+
+1464
+01:07:27,710 --> 01:07:31,280
+and this var has not been initialized yet.
+
+1465
+01:07:31,280 --> 01:07:33,824
+So, whenever you find yourself saying, oh,
+
+1466
+01:07:33,824 --> 01:07:38,770
+I want to initialize some
+state from some other var
+
+1467
+01:07:38,770 --> 01:07:41,090
+from my ObservedObject, no problem.
+
+1468
+01:07:41,090 --> 01:07:44,310
+Just hold on and set it
+to zero or something, nil,
+
+1469
+01:07:44,310 --> 01:07:47,513
+empty String, and then
+onAppear you can do it.
+
+1470
+01:07:51,020 --> 01:07:52,280
+Voila.
+
+1471
+01:07:52,280 --> 01:07:55,330
+So we fixed our problem
+where we weren't having
+
+1472
+01:07:55,330 --> 01:07:57,327
+an initial palette shown there.
+
+1473
+01:07:57,327 --> 01:08:00,930
+And our PaletteChooser,
+pretty much ready to go here.
+
+1474
+01:08:00,930 --> 01:08:04,440
+However, we're really not doing
+anything with our palettes
+
+1475
+01:08:04,440 --> 01:08:07,620
+in our main scrollable palette over here.
+
+1476
+01:08:07,620 --> 01:08:09,300
+So we need to get that thing
+
+1477
+01:08:09,300 --> 01:08:11,153
+to start showing the chosenPalette.
+
+1478
+01:08:12,520 --> 01:08:13,860
+So let's start by at least getting it
+
+1479
+01:08:13,860 --> 01:08:15,650
+to show the default palette.
+
+1480
+01:08:15,650 --> 01:08:18,690
+And we're gonna do that by
+creating some state over here
+
+1481
+01:08:18,690 --> 01:08:23,270
+in our main View, @State
+var chosenPalette,
+
+1482
+01:08:24,860 --> 01:08:27,070
+String equals nothing.
+
+1483
+01:08:27,070 --> 01:08:29,430
+I'll even do the same trick over here
+
+1484
+01:08:29,430 --> 01:08:32,410
+onAppear, I'm copying and pasting code,
+
+1485
+01:08:32,410 --> 01:08:35,340
+that's probably going to be a problem,
+
+1486
+01:08:35,340 --> 01:08:38,010
+but we'll see that that
+problem is not going to matter
+
+1487
+01:08:38,010 --> 01:08:39,620
+in just mere moments.
+
+1488
+01:08:39,620 --> 01:08:42,110
+And now instead of saying
+the EmojiArt palette,
+
+1489
+01:08:42,110 --> 01:08:45,040
+I'm gonna say my chosenPalette
+
+1490
+01:08:45,040 --> 01:08:47,703
+and use my chosenPalette instead.
+
+1491
+01:08:49,357 --> 01:08:50,707
+And that's all I need to do
+
+1492
+01:08:52,300 --> 01:08:55,420
+to start using, woohoo,
+the default palette
+
+1493
+01:08:55,420 --> 01:08:56,650
+and look, it even lines up,
+
+1494
+01:08:56,650 --> 01:08:58,090
+'cause this is using the default palette.
+
+1495
+01:08:58,090 --> 01:08:59,080
+Oh, let's go to the next one.
+
+1496
+01:08:59,080 --> 01:09:01,990
+Uh oh, food, that's not food.
+
+1497
+01:09:01,990 --> 01:09:04,200
+Oh, it's not working.
+
+1498
+01:09:04,200 --> 01:09:05,320
+So what's going on here?
+
+1499
+01:09:05,320 --> 01:09:08,340
+Why is this chosenPalette
+changing and this one's not?
+
+1500
+01:09:08,340 --> 01:09:11,760
+Well it's because this
+chosenPalette is in one State var
+
+1501
+01:09:11,760 --> 01:09:14,860
+in this View and this chosenPalette
+
+1502
+01:09:14,860 --> 01:09:16,960
+is in a different State
+var in another View.
+
+1503
+01:09:16,960 --> 01:09:18,670
+So these things have
+nothing to do with it.
+
+1504
+01:09:18,670 --> 01:09:20,960
+The only thing that's
+the same is their name.
+
+1505
+01:09:20,960 --> 01:09:22,930
+But they're totally different State.
+
+1506
+01:09:22,930 --> 01:09:27,067
+But clearly we want these
+two things to be the same.
+
+1507
+01:09:27,067 --> 01:09:29,510
+And we do this with a Binding.
+
+1508
+01:09:29,510 --> 01:09:32,040
+So instead of having its own state here
+
+1509
+01:09:32,040 --> 01:09:33,090
+in the paletteChooser,
+
+1510
+01:09:33,090 --> 01:09:35,990
+it's just going to have a Binding.
+
+1511
+01:09:35,990 --> 01:09:38,090
+And Bindings are usually not private
+
+1512
+01:09:38,090 --> 01:09:42,070
+because we're gonna be setting
+them from outside somehow
+
+1513
+01:09:42,070 --> 01:09:44,230
+and also Bindings, we
+don't initialize them
+
+1514
+01:09:44,230 --> 01:09:46,460
+because a Binding means that this var
+
+1515
+01:09:46,460 --> 01:09:48,110
+is gonna get and set its value
+
+1516
+01:09:48,110 --> 01:09:50,290
+from some other var somewhere else.
+
+1517
+01:09:50,290 --> 01:09:52,740
+So presumably that some
+other var somewhere else
+
+1518
+01:09:52,740 --> 01:09:54,940
+is the thing that's
+going to be initialized.
+
+1519
+01:09:58,360 --> 01:10:00,530
+All right, so how do we set up the Binding
+
+1520
+01:10:00,530 --> 01:10:05,160
+between this chosenPalette
+and this chosenPalette?
+
+1521
+01:10:05,160 --> 01:10:08,350
+Well, we just pass it,
+very simple, we just say,
+
+1522
+01:10:08,350 --> 01:10:13,120
+chosenPalette, because
+chosenPalette is just a var,
+
+1523
+01:10:13,120 --> 01:10:15,487
+nothing more than a var in PaletteChooser
+
+1524
+01:10:15,487 --> 01:10:17,670
+and we're creating a
+PaletteChooser over there
+
+1525
+01:10:17,670 --> 01:10:20,340
+so we can set any unset vars,
+
+1526
+01:10:20,340 --> 01:10:24,460
+we're setting this unset var
+and we can set this one as well
+
+1527
+01:10:24,460 --> 01:10:28,260
+and what we set it to,
+though, is the projectedValue
+
+1528
+01:10:28,260 --> 01:10:30,560
+of our chosenPalette.
+
+1529
+01:10:30,560 --> 01:10:34,350
+So this State, remember,
+it has a $ as well,
+
+1530
+01:10:34,350 --> 01:10:37,307
+but it's not a Publisher,
+that's the $ of @Published.
+
+1531
+01:10:38,484 --> 01:10:43,467
+The $ of an @State is a
+Binding to this chosenPalette.
+
+1532
+01:10:44,480 --> 01:10:49,030
+So that's why I can pass
+it here, $chosenPalette,
+
+1533
+01:10:49,030 --> 01:10:52,970
+matches the type of this
+var, which is a Binding,
+
+1534
+01:10:52,970 --> 01:10:53,923
+to this String.
+
+1535
+01:10:55,340 --> 01:10:58,180
+Now, because I'm Binding
+these two things together,
+
+1536
+01:10:58,180 --> 01:11:00,890
+this thing and this, I
+don't need to do onAppear
+
+1537
+01:11:00,890 --> 01:11:03,030
+in one or other of them,
+
+1538
+01:11:03,030 --> 01:11:05,830
+so let's just not do the onAppear here.
+
+1539
+01:11:05,830 --> 01:11:07,890
+The onAppear is gonna happen over here,
+
+1540
+01:11:07,890 --> 01:11:10,040
+it's gonna set that and
+that's gonna communicate
+
+1541
+01:11:10,040 --> 01:11:12,360
+through the Binding to this guy,
+
+1542
+01:11:12,360 --> 01:11:13,820
+and he's gonna see the same thing.
+
+1543
+01:11:13,820 --> 01:11:16,530
+And same, when he chooses
+increment or decrement,
+
+1544
+01:11:16,530 --> 01:11:19,110
+it's going to communicate
+back through the Binding
+
+1545
+01:11:19,110 --> 01:11:20,760
+the other way.
+
+1546
+01:11:20,760 --> 01:11:22,940
+Now before we can run, we
+have to fix our preview
+
+1547
+01:11:22,940 --> 01:11:27,750
+because our preview needs
+a chosenPalette argument
+
+1548
+01:11:27,750 --> 01:11:29,270
+because it's creating it.
+
+1549
+01:11:29,270 --> 01:11:32,030
+What does a preview pass?
+
+1550
+01:11:32,030 --> 01:11:34,140
+There are actually ways to make a preview
+
+1551
+01:11:34,140 --> 01:11:37,040
+have a live Binding but
+it's way beyond the scope
+
+1552
+01:11:37,040 --> 01:11:38,290
+of what we're doing here.
+
+1553
+01:11:38,290 --> 01:11:42,700
+So I'm gonna pass a .constant Binding
+
+1554
+01:11:42,700 --> 01:11:45,010
+and I'm gonna have that Binding
+be, doesn't really matter,
+
+1555
+01:11:45,010 --> 01:11:48,630
+can be any String, so this
+chosenPalette in my preview
+
+1556
+01:11:48,630 --> 01:11:51,750
+is gonna be bound to the
+palette nothingness there,
+
+1557
+01:11:51,750 --> 01:11:53,350
+empty String.
+
+1558
+01:11:53,350 --> 01:11:55,100
+Clicking the plus minus
+is not gonna do anything
+
+1559
+01:11:55,100 --> 01:11:56,083
+in my preview.
+
+1560
+01:11:57,890 --> 01:11:59,343
+All right, take a look.
+
+1561
+01:12:02,400 --> 01:12:03,630
+Good, they're synced up.
+
+1562
+01:12:03,630 --> 01:12:05,570
+This looks like animals, this is animals,
+
+1563
+01:12:05,570 --> 01:12:10,570
+how about plus, woo, faces,
+food, activities, animals.
+
+1564
+01:12:12,360 --> 01:12:16,700
+So this kind of Binding where
+we're Binding two Views' State
+
+1565
+01:12:16,700 --> 01:12:19,490
+really crucial in SwiftUI.
+
+1566
+01:12:19,490 --> 01:12:21,170
+I'm amazed we got all the way
+
+1567
+01:12:21,170 --> 01:12:22,950
+through four weeks of this course
+
+1568
+01:12:22,950 --> 01:12:26,020
+and we manage to avoid
+talking about Bindings,
+
+1569
+01:12:26,020 --> 01:12:27,080
+really important.
+
+1570
+01:12:27,080 --> 01:12:30,530
+And not just Binding between
+two of our own Views,
+
+1571
+01:12:30,530 --> 01:12:35,530
+okay, our EmojiArtFocument View
+and our PaletteChooser View
+
+1572
+01:12:35,580 --> 01:12:40,580
+but Binding between our
+Views and SwiftUI's Views,
+
+1573
+01:12:40,600 --> 01:12:42,570
+especially things like TextFields,
+
+1574
+01:12:42,570 --> 01:12:44,610
+that's how we get the
+text out of the TextField
+
+1575
+01:12:44,610 --> 01:12:45,620
+that someone is typing in,
+
+1576
+01:12:45,620 --> 01:12:48,410
+or toggles where we're
+toggling something on or off,
+
+1577
+01:12:48,410 --> 01:12:51,600
+we'll have a Binding to
+a Bool when we do that.
+
+1578
+01:12:51,600 --> 01:12:54,960
+Even things like I'm going
+to put another View on screen
+
+1579
+01:12:54,960 --> 01:12:57,390
+in a way that kinda takes over the screen,
+
+1580
+01:12:57,390 --> 01:13:00,120
+and when it's done it's gonna let me know
+
+1581
+01:13:00,120 --> 01:13:01,970
+through a Binding.
+
+1582
+01:13:01,970 --> 01:13:05,350
+After a boolean Binding
+says yeah, I'm done or not.
+
+1583
+01:13:05,350 --> 01:13:07,920
+So we're gonna see all that
+in the next few lectures.
+
+1584
+01:13:07,920 --> 01:13:12,240
+A lot of use of this Binding,
+so get used to seeing it.
+
+1585
+01:13:12,240 --> 01:13:13,460
+And that's it for today,
+
+1586
+01:13:13,460 --> 01:13:15,363
+so we'll pick up with this next time.
+
+1587
+01:13:16,620 --> 01:13:19,873
+- [Narrator] For more, please
+visit us at Stanford.edu.

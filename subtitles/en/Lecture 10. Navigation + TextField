@@ -1,0 +1,9632 @@
+1
+00:00:00,167 --> 00:00:03,000
+(celestial music)
+
+2
+00:00:04,920 --> 00:00:06,523
+- [Narrator] Stanford University.
+
+3
+00:00:08,610 --> 00:00:13,280
+- [Presenter] Lecture 10 of
+Stanford CS193p spring of 2020
+
+4
+00:00:13,280 --> 00:00:17,470
+is all about demo, all
+demo all the time today.
+
+5
+00:00:17,470 --> 00:00:22,200
+This demo is mostly about
+presenting Views on screen.
+
+6
+00:00:22,200 --> 00:00:24,790
+We already know how to do that somewhat.
+
+7
+00:00:24,790 --> 00:00:28,560
+ForEach's will bring Views
+on screen and off screen.
+
+8
+00:00:28,560 --> 00:00:31,150
+Also, if-elses inside of ViewBuilders,
+
+9
+00:00:31,150 --> 00:00:33,400
+those make Views come and go.
+
+10
+00:00:33,400 --> 00:00:36,350
+But now we're talking about
+large groupings of Views,
+
+11
+00:00:36,350 --> 00:00:39,400
+Views that might take
+over the entire screen,
+
+12
+00:00:39,400 --> 00:00:43,300
+Views that might be driven
+by their own MVVMs, right?
+
+13
+00:00:43,300 --> 00:00:46,460
+Having their own ViewModels,
+which we have not seen
+
+14
+00:00:46,460 --> 00:00:49,787
+an app yet that has multiple ViewModels,
+
+15
+00:00:49,787 --> 00:00:51,040
+but we're gonna see that today.
+
+16
+00:00:51,040 --> 00:00:52,853
+We're gonna take Emoji
+Art to the next level.
+
+17
+00:00:52,853 --> 00:00:55,440
+It's gonna have multiple ViewModels.
+
+18
+00:00:55,440 --> 00:00:59,940
+And of course, most large
+programs have many ViewModels.
+
+19
+00:00:59,940 --> 00:01:03,260
+As usual these things that
+I'm showing you in the demo
+
+20
+00:01:03,260 --> 00:01:05,150
+are just intended to introduce
+
+21
+00:01:05,150 --> 00:01:08,100
+this functionality to you in context.
+
+22
+00:01:08,100 --> 00:01:10,270
+That's why we do Memorize and Emoji Art
+
+23
+00:01:10,270 --> 00:01:11,690
+so you have a context
+
+24
+00:01:11,690 --> 00:01:14,610
+to see this functionality
+introduced to you.
+
+25
+00:01:14,610 --> 00:01:17,860
+Still no substitute from
+going to the documentation,
+
+26
+00:01:17,860 --> 00:01:20,250
+reading about things,
+try to understand them.
+
+27
+00:01:20,250 --> 00:01:22,150
+That's a lot of why we ask
+you to do the homework,
+
+28
+00:01:22,150 --> 00:01:25,543
+so you have to really figure
+out how to use these things.
+
+29
+00:01:26,650 --> 00:01:28,450
+Here's a list of what
+we're gonna do today.
+
+30
+00:01:28,450 --> 00:01:30,580
+I'm not gonna go over this,
+but just for quick reference,
+
+31
+00:01:30,580 --> 00:01:31,807
+you can always go back and say,
+
+32
+00:01:31,807 --> 00:01:33,980
+"What was I supposed to
+have learned in this demo?"
+
+33
+00:01:33,980 --> 00:01:35,767
+It's a very long list as you can see,
+
+34
+00:01:35,767 --> 00:01:39,113
+and a lot of very important
+things in this list as well.
+
+35
+00:01:40,110 --> 00:01:42,573
+So without further ado, let's get started.
+
+36
+00:01:43,560 --> 00:01:47,760
+This demo is gonna be all
+about putting Views on screen
+
+37
+00:01:47,760 --> 00:01:50,850
+in different ways, Alerts,
+popovers, et cetera.
+
+38
+00:01:50,850 --> 00:01:53,370
+But before I dive into
+that, I want to show you
+
+39
+00:01:53,370 --> 00:01:56,920
+one little thing that we
+could have done last time
+
+40
+00:01:56,920 --> 00:01:59,820
+that I think is worth showing,
+just so you understand
+
+41
+00:01:59,820 --> 00:02:02,860
+these property wrappers
+a little bit better.
+
+42
+00:02:02,860 --> 00:02:05,840
+Now, you remember that
+we wanted to initialize
+
+43
+00:02:05,840 --> 00:02:09,720
+this chosen palette using our
+document's default palette.
+
+44
+00:02:09,720 --> 00:02:13,890
+But we couldn't do that here
+because this ObservedObject
+
+45
+00:02:13,890 --> 00:02:15,570
+is part of what's being initialized,
+
+46
+00:02:15,570 --> 00:02:19,710
+and so we can't during
+initialize do it here.
+
+47
+00:02:19,710 --> 00:02:23,120
+Now, it turns out we can't
+really do it in an init either.
+
+48
+00:02:23,120 --> 00:02:26,633
+So if we had an init
+that took the document,
+
+49
+00:02:27,965 --> 00:02:32,910
+and just said self.document,
+equals that document,
+
+50
+00:02:32,910 --> 00:02:37,093
+then unfortunately, we can't
+even do this right here.
+
+51
+00:02:38,150 --> 00:02:39,980
+You'd think maybe we could do that
+
+52
+00:02:39,980 --> 00:02:41,720
+because now we have the document,
+
+53
+00:02:41,720 --> 00:02:43,977
+we can just set our chosen palette.
+
+54
+00:02:43,977 --> 00:02:47,250
+But the thing is here we are
+in the middle of initializing
+
+55
+00:02:47,250 --> 00:02:50,130
+and this needs to be initialized.
+
+56
+00:02:50,130 --> 00:02:52,320
+I'm kinda surprised this even compiles
+
+57
+00:02:52,320 --> 00:02:54,010
+although, I could imagine a cool feature
+
+58
+00:02:54,010 --> 00:02:57,900
+where this would compile and
+actually work, but it doesn't.
+
+59
+00:02:57,900 --> 00:03:00,130
+What we have to do
+instead here in our init
+
+60
+00:03:00,130 --> 00:03:02,660
+is initialize the actual variable
+
+61
+00:03:02,660 --> 00:03:04,750
+being created by this State,
+
+62
+00:03:04,750 --> 00:03:07,070
+which if you'll remember
+what that variable is
+
+63
+00:03:07,070 --> 00:03:10,230
+its _chosenPalette.
+
+64
+00:03:10,230 --> 00:03:13,550
+And this _chosenPalette is of type State.
+
+65
+00:03:13,550 --> 00:03:14,970
+It is the State struct.
+
+66
+00:03:14,970 --> 00:03:17,980
+That's what this line of
+code actually creates.
+
+67
+00:03:17,980 --> 00:03:21,070
+So we can initialize
+it by creating a State.
+
+68
+00:03:21,070 --> 00:03:23,150
+And in fact, we're gonna create a State
+
+69
+00:03:23,150 --> 00:03:26,410
+that whose wrappedValue
+is the value we want.
+
+70
+00:03:26,410 --> 00:03:28,673
+So this document's default palette.
+
+71
+00:03:29,640 --> 00:03:33,520
+This is a way to initialize
+your State in your initializers
+
+72
+00:03:33,520 --> 00:03:36,850
+by setting this struct directly.
+
+73
+00:03:36,850 --> 00:03:39,110
+Hopefully, you don't have
+to do this very often.
+
+74
+00:03:39,110 --> 00:03:41,700
+And I'm imagining this is
+gonna be more elegant ways
+
+75
+00:03:41,700 --> 00:03:43,550
+to do it in the future of Swift,
+
+76
+00:03:43,550 --> 00:03:47,420
+but this really does show
+you what this is creating,
+
+77
+00:03:47,420 --> 00:03:50,890
+it's creating this underbar
+var which is one of these.
+
+78
+00:03:50,890 --> 00:03:52,690
+So we don't really need our onAppear.
+
+79
+00:03:52,690 --> 00:03:54,490
+Our onAppear worked fine there actually
+
+80
+00:03:54,490 --> 00:03:56,840
+but this is more of a, kind
+of an educational thing
+
+81
+00:03:56,840 --> 00:03:59,370
+about what's going on with
+these property wrappers.
+
+82
+00:03:59,370 --> 00:04:01,220
+And later in the quarter,
+I hope to actually,
+
+83
+00:04:01,220 --> 00:04:03,290
+maybe we'll create our
+own property wrapper,
+
+84
+00:04:03,290 --> 00:04:05,840
+and then we'll really
+understand these things.
+
+85
+00:04:05,840 --> 00:04:07,187
+But in the meantime, this should help you
+
+86
+00:04:07,187 --> 00:04:09,113
+understand it a little better.
+
+87
+00:04:11,060 --> 00:04:15,810
+Let's dive in now to what we
+actually want to build which is
+
+88
+00:04:17,500 --> 00:04:19,430
+a palette editor.
+
+89
+00:04:19,430 --> 00:04:21,930
+So right now I've got
+these palettes right here,
+
+90
+00:04:21,930 --> 00:04:24,710
+and I can choose between
+them, but I can't change them,
+
+91
+00:04:24,710 --> 00:04:27,720
+can't add emoji here, can't remove emoji,
+
+92
+00:04:27,720 --> 00:04:30,610
+can't change the name of this faces thing.
+
+93
+00:04:30,610 --> 00:04:32,090
+So I wanna be able to do that,
+
+94
+00:04:32,090 --> 00:04:33,890
+I wanna be able to edit them.
+
+95
+00:04:33,890 --> 00:04:37,570
+And I'm gonna do that by
+providing a little icon right here
+
+96
+00:04:37,570 --> 00:04:40,057
+next to the name of the palette.
+
+97
+00:04:40,057 --> 00:04:42,220
+And when you touch on that icon,
+
+98
+00:04:42,220 --> 00:04:43,360
+it's gonna bring up some UI
+
+99
+00:04:43,360 --> 00:04:45,810
+that lets you add and remove emojis,
+
+100
+00:04:45,810 --> 00:04:47,310
+change the name, et cetera.
+
+101
+00:04:47,310 --> 00:04:49,273
+Essentially a palette editor.
+
+102
+00:04:50,170 --> 00:04:53,140
+Let's get started by
+putting a little icon here.
+
+103
+00:04:53,140 --> 00:04:56,830
+Now, I went into SF Symbols over here
+
+104
+00:04:56,830 --> 00:04:58,760
+and I looked around trying to decide
+
+105
+00:04:58,760 --> 00:05:00,140
+what would be a good icon here
+
+106
+00:05:00,140 --> 00:05:01,400
+that would help people understand
+
+107
+00:05:01,400 --> 00:05:03,800
+what touching on it would do?
+
+108
+00:05:03,800 --> 00:05:07,010
+And I kind of landed on a keyboard,
+
+109
+00:05:07,010 --> 00:05:08,440
+because most of what
+they're gonna be doing
+
+110
+00:05:08,440 --> 00:05:12,480
+is using a keyboard, Emoji
+Keyboard to add more emoji here.
+
+111
+00:05:12,480 --> 00:05:14,330
+So I thought that might be good.
+
+112
+00:05:14,330 --> 00:05:16,150
+You know, when I get into user testing
+
+113
+00:05:16,150 --> 00:05:18,437
+and doing focus groups, we
+find out people are like,
+
+114
+00:05:18,437 --> 00:05:19,337
+"What's that keyboard?
+
+115
+00:05:19,337 --> 00:05:20,830
+"I have no idea what that is."
+
+116
+00:05:20,830 --> 00:05:23,190
+And we might even change
+it to something else.
+
+117
+00:05:23,190 --> 00:05:26,380
+When you're building
+a UI, you can't assume
+
+118
+00:05:26,380 --> 00:05:27,970
+that you're going to see the world
+
+119
+00:05:27,970 --> 00:05:30,450
+exactly the same way as your users.
+
+120
+00:05:30,450 --> 00:05:34,590
+So you have to be able to be
+adaptable to what your users
+
+121
+00:05:34,590 --> 00:05:37,700
+actually understand
+about how your app works.
+
+122
+00:05:37,700 --> 00:05:38,533
+But we're gonna start with the keyboard.
+
+123
+00:05:38,533 --> 00:05:40,723
+So I'm gonna add a little
+keyboard right there,
+
+124
+00:05:40,723 --> 00:05:43,330
+a keyboard image right after the name,
+
+125
+00:05:43,330 --> 00:05:45,050
+and that's gonna be really easy to do.
+
+126
+00:05:45,050 --> 00:05:46,060
+Here's where our name is,
+
+127
+00:05:46,060 --> 00:05:48,357
+here's where that
+plus-minus stepper thing is.
+
+128
+00:05:48,357 --> 00:05:52,970
+I'm just gonna say Image,
+systemName, use the keyboard.
+
+129
+00:05:52,970 --> 00:05:56,410
+Again, this keyboard is something
+I looked up in SF Symbols.
+
+130
+00:05:56,410 --> 00:05:58,210
+And I'm gonna also make it large.
+
+131
+00:05:58,210 --> 00:06:00,470
+I'm gonna do this imageScale.large
+
+132
+00:06:03,000 --> 00:06:04,810
+Simple enough to add this little image.
+
+133
+00:06:04,810 --> 00:06:07,140
+There it is right there,
+it's on every one.
+
+134
+00:06:07,140 --> 00:06:10,340
+And when I touch on this,
+I want some UI to come up
+
+135
+00:06:10,340 --> 00:06:13,813
+that lets me edit this
+palette. So how do we do that?
+
+136
+00:06:13,813 --> 00:06:16,290
+How do we make it so that
+touching on something
+
+137
+00:06:16,290 --> 00:06:19,060
+causes some UI to come up?
+
+138
+00:06:19,060 --> 00:06:21,060
+I'm gonna use a popover in this case,
+
+139
+00:06:21,060 --> 00:06:22,650
+we're gonna be showing
+lots of different ways
+
+140
+00:06:22,650 --> 00:06:25,300
+to bring things up, but I'm
+gonna do popover to start.
+
+141
+00:06:25,300 --> 00:06:27,620
+So popover is just like
+a little rectangular area
+
+142
+00:06:27,620 --> 00:06:29,150
+that will appear.
+
+143
+00:06:29,150 --> 00:06:32,460
+And it'll kind of point to
+the thing that brings it up.
+
+144
+00:06:32,460 --> 00:06:34,690
+So this is gonna be our
+little keyboard icon
+
+145
+00:06:34,690 --> 00:06:35,960
+that brings it up, so it's gonna point
+
+146
+00:06:35,960 --> 00:06:37,460
+at that little keyboard icon
+
+147
+00:06:37,460 --> 00:06:40,247
+so that when it's up,
+this user can remember,
+
+148
+00:06:40,247 --> 00:06:42,747
+"Oh, yeah, I clicked on
+that little keyboard icon.
+
+149
+00:06:42,747 --> 00:06:47,480
+"That's how this little
+UI, this View came up."
+
+150
+00:06:47,480 --> 00:06:50,130
+So how do we make a popover appear?
+
+151
+00:06:50,130 --> 00:06:54,440
+We just go here to the
+View we want it to point to
+
+152
+00:06:54,440 --> 00:06:58,200
+when it comes up, which is
+our image and we say popover.
+
+153
+00:06:58,200 --> 00:07:01,470
+Popover has four different
+ways to bring it up, here.
+
+154
+00:07:01,470 --> 00:07:05,220
+Two of them involved passing
+it a Binding to an Identifiable
+
+155
+00:07:05,220 --> 00:07:07,600
+and that Identifiable is
+gonna kind of identify
+
+156
+00:07:07,600 --> 00:07:09,980
+what thing you wanna show in the popover.
+
+157
+00:07:09,980 --> 00:07:11,460
+But a lot of times in a popover,
+
+158
+00:07:11,460 --> 00:07:12,690
+we're showing the same thing.
+
+159
+00:07:12,690 --> 00:07:15,460
+Like in our case, we always
+show a palette editor.
+
+160
+00:07:15,460 --> 00:07:16,760
+That's all it shows.
+
+161
+00:07:16,760 --> 00:07:19,440
+So we can use one of
+these two popover things:
+
+162
+00:07:19,440 --> 00:07:21,580
+isPresented's right here.
+
+163
+00:07:21,580 --> 00:07:25,310
+And these isPresented versions
+take a Binding to a Bool,
+
+164
+00:07:25,310 --> 00:07:27,990
+and that Bool says whether that popover
+
+165
+00:07:27,990 --> 00:07:29,980
+is currently showing or not.
+
+166
+00:07:29,980 --> 00:07:31,570
+Let's use this one right here,
+
+167
+00:07:31,570 --> 00:07:33,810
+we need to give it a Binding to a Bool.
+
+168
+00:07:33,810 --> 00:07:35,380
+We know how to do Bindings now.
+
+169
+00:07:35,380 --> 00:07:38,420
+We create our own State.
+
+170
+00:07:38,420 --> 00:07:40,640
+So I'll make a little private State here.
+
+171
+00:07:40,640 --> 00:07:42,773
+I'll call it showPaletteEditor.
+
+172
+00:07:43,720 --> 00:07:45,940
+And it's a Bool, it's
+gonna start out false.
+
+173
+00:07:45,940 --> 00:07:49,010
+In other words, I don't want
+the palette editor showing
+
+174
+00:07:49,010 --> 00:07:50,960
+when my, this View first comes up.
+
+175
+00:07:50,960 --> 00:07:52,960
+And I just provide a Binding to that
+
+176
+00:07:52,960 --> 00:07:55,107
+which is $showPaletteEditor.
+
+177
+00:07:55,990 --> 00:07:59,320
+Remember, dollar on a State is a Binding
+
+178
+00:07:59,320 --> 00:08:00,950
+to this value of the State.
+
+179
+00:08:00,950 --> 00:08:03,270
+And this Bool is now gonna be shared
+
+180
+00:08:03,270 --> 00:08:06,370
+between the popover and us.
+
+181
+00:08:06,370 --> 00:08:08,110
+Now, who's gonna do what?
+
+182
+00:08:08,110 --> 00:08:10,440
+Well, I'm going to set this to true
+
+183
+00:08:10,440 --> 00:08:12,910
+whenever I want this popover to appear.
+
+184
+00:08:12,910 --> 00:08:14,730
+And when the popover is up,
+
+185
+00:08:14,730 --> 00:08:17,880
+if the user taps somewhere
+else outside the popover,
+
+186
+00:08:17,880 --> 00:08:21,780
+it's gonna set this back to
+false, and then it'll disappear.
+
+187
+00:08:21,780 --> 00:08:24,040
+So we're going to be talking to each other
+
+188
+00:08:24,040 --> 00:08:27,453
+through this Bool right
+here, this boolean value.
+
+189
+00:08:28,410 --> 00:08:29,390
+And then the content.
+
+190
+00:08:29,390 --> 00:08:31,670
+This is just like anything
+else that has content here,
+
+191
+00:08:31,670 --> 00:08:34,130
+we're just providing a View,
+
+192
+00:08:34,130 --> 00:08:36,390
+it's probably a ViewBuilder, in fact.
+
+193
+00:08:36,390 --> 00:08:39,740
+And here our View that we wanna present
+
+194
+00:08:39,740 --> 00:08:41,550
+is our PaletteEditor.
+
+195
+00:08:42,551 --> 00:08:46,600
+So we're gonna have to create
+our own little View here
+
+196
+00:08:46,600 --> 00:08:50,133
+to edit palette, let's
+do that, easy to do.
+
+197
+00:08:50,133 --> 00:08:51,943
+Make some space down here.
+
+198
+00:08:53,490 --> 00:08:56,020
+And we'll say struct PaletteEditor.
+
+199
+00:08:56,930 --> 00:09:01,287
+It's a View that means it has
+var body, which some View.
+
+200
+00:09:01,287 --> 00:09:04,327
+And for now I'm just gonna
+have it be a Text that says
+
+201
+00:09:04,327 --> 00:09:08,343
+"Palette Editor," because
+that's what this thing is.
+
+202
+00:09:09,400 --> 00:09:11,710
+Now, you might think, "Okay, we got it."
+
+203
+00:09:11,710 --> 00:09:13,970
+Popover, yep, let's do it, let's run,
+
+204
+00:09:13,970 --> 00:09:18,970
+we should be able to tap on
+our image somehow and see this.
+
+205
+00:09:21,090 --> 00:09:23,240
+Here we go, tap.
+
+206
+00:09:23,240 --> 00:09:26,513
+Oh, I don't see any change, tap, tap, tap.
+
+207
+00:09:27,510 --> 00:09:31,240
+That's because we never set
+this showPaletteEditor Bool
+
+208
+00:09:32,570 --> 00:09:34,080
+to true, it's always false.
+
+209
+00:09:34,080 --> 00:09:37,100
+So that means that popover
+is always never showing.
+
+210
+00:09:37,100 --> 00:09:39,310
+So the popover's doing
+exactly the right thing.
+
+211
+00:09:39,310 --> 00:09:41,240
+Remember, this is declarative UI,
+
+212
+00:09:41,240 --> 00:09:44,140
+we're just declaring that
+a popover should appear,
+
+213
+00:09:44,140 --> 00:09:46,810
+this should appear in a
+popover when this is true,
+
+214
+00:09:46,810 --> 00:09:48,543
+but we never set this to true.
+
+215
+00:09:49,410 --> 00:09:50,790
+That's easily enough done though.
+
+216
+00:09:50,790 --> 00:09:53,710
+OnTapGesture of this Image,
+
+217
+00:09:53,710 --> 00:09:57,190
+self.showPalettEditor equals true.
+
+218
+00:09:57,190 --> 00:09:59,300
+So when you tap on this
+keyboard right here,
+
+219
+00:09:59,300 --> 00:10:01,540
+I'm going to set that to true.
+
+220
+00:10:01,540 --> 00:10:04,480
+And we declared that this
+popover should appear
+
+221
+00:10:04,480 --> 00:10:06,353
+when that happens, see this work.
+
+222
+00:10:09,143 --> 00:10:10,669
+Here we go, ready?
+
+223
+00:10:10,669 --> 00:10:13,220
+Beep, there it is our palette editor.
+
+224
+00:10:13,220 --> 00:10:15,220
+So I tapped on that, I set it to be true
+
+225
+00:10:15,220 --> 00:10:17,960
+and so that popover is declared to show
+
+226
+00:10:17,960 --> 00:10:18,930
+when that thing is true.
+
+227
+00:10:18,930 --> 00:10:22,750
+And similarly, when I click
+anywhere else outside of there,
+
+228
+00:10:22,750 --> 00:10:26,520
+boop, the popover sets that
+variable back to false.
+
+229
+00:10:26,520 --> 00:10:30,240
+So that's how we're again
+communicating with each other.
+
+230
+00:10:30,240 --> 00:10:33,790
+And see the little triangle
+at the top of the popover
+
+231
+00:10:33,790 --> 00:10:36,530
+that is showing the user
+what they touched on
+
+232
+00:10:36,530 --> 00:10:38,940
+to cause this popover to appear,
+
+233
+00:10:38,940 --> 00:10:43,340
+and you can set the allowed
+directions of that arrow
+
+234
+00:10:43,340 --> 00:10:45,230
+and that somewhat controls
+
+235
+00:10:45,230 --> 00:10:47,830
+where your popover is allowed to come up.
+
+236
+00:10:47,830 --> 00:10:50,160
+The system is gonna
+try and fit the popover
+
+237
+00:10:50,160 --> 00:10:53,130
+and obey the arrow
+directions that you want.
+
+238
+00:10:53,130 --> 00:10:56,380
+By the way, popovers are
+pretty much an iPad thing
+
+239
+00:10:56,380 --> 00:10:59,810
+because there's really not
+a lot of room on an iPhone,
+
+240
+00:10:59,810 --> 00:11:02,130
+but we're gonna see that the iPhone adapts
+
+241
+00:11:02,130 --> 00:11:04,420
+and still can show a popover,
+
+242
+00:11:04,420 --> 00:11:05,693
+but it doesn't show it as a popover,
+
+243
+00:11:05,693 --> 00:11:07,760
+it just uses full screen.
+
+244
+00:11:07,760 --> 00:11:09,310
+We'll see that in a little bit.
+
+245
+00:11:10,720 --> 00:11:12,450
+Okay, so now we should be able to edit
+
+246
+00:11:12,450 --> 00:11:15,440
+any of these palettes that we want.
+
+247
+00:11:15,440 --> 00:11:17,820
+Before we get any farther here, though,
+
+248
+00:11:17,820 --> 00:11:20,360
+I wanna make this popover
+quite a bit bigger.
+
+249
+00:11:20,360 --> 00:11:21,230
+You can see it's small,
+
+250
+00:11:21,230 --> 00:11:23,940
+it's sizing itself to fit our content,
+
+251
+00:11:23,940 --> 00:11:27,077
+which is actually good, that's
+a cool feature of popover.
+
+252
+00:11:27,077 --> 00:11:28,530
+And we could put some padding around here.
+
+253
+00:11:28,530 --> 00:11:30,210
+But instead of just putting padding,
+
+254
+00:11:30,210 --> 00:11:31,360
+I wanna make some space.
+
+255
+00:11:31,360 --> 00:11:34,050
+So as I build my UI, you're
+gonna get a better idea
+
+256
+00:11:34,050 --> 00:11:36,840
+what it's eventually going to look like.
+
+257
+00:11:36,840 --> 00:11:39,840
+Making space, making this larger,
+
+258
+00:11:39,840 --> 00:11:40,913
+we could again try and do it
+
+259
+00:11:40,913 --> 00:11:42,680
+if I just put some padding around it,
+
+260
+00:11:42,680 --> 00:11:44,410
+that would make it a little bit bigger.
+
+261
+00:11:44,410 --> 00:11:48,070
+But instead I'm going to make
+the entire Palette Editor
+
+262
+00:11:48,070 --> 00:11:50,340
+have a minimum size.
+
+263
+00:11:50,340 --> 00:11:53,360
+We do that with .frame,
+we've seen .frame before.
+
+264
+00:11:53,360 --> 00:11:54,747
+And as I told you before,
+
+265
+00:11:54,747 --> 00:11:56,627
+.frame has a lot of arguments down here
+
+266
+00:11:56,627 --> 00:12:00,400
+and we're gonna use the minWidth
+and minHeight arguments.
+
+267
+00:12:00,400 --> 00:12:03,740
+So here's minWidth, maybe 300 wide,
+
+268
+00:12:03,740 --> 00:12:08,063
+and minHeight, something like 500.
+
+269
+00:12:09,230 --> 00:12:13,200
+That looks like touch,
+all right, much better!
+
+270
+00:12:13,200 --> 00:12:15,780
+So we got plenty of room
+to maneuver in here.
+
+271
+00:12:15,780 --> 00:12:19,350
+Might be down the road, once
+I get this UI the way I want,
+
+272
+00:12:19,350 --> 00:12:21,590
+I won't require to have a minWidth.
+
+273
+00:12:21,590 --> 00:12:23,420
+But I could always leave
+it in there as well,
+
+274
+00:12:23,420 --> 00:12:25,763
+depends on what I want my UI to look like.
+
+275
+00:12:26,920 --> 00:12:29,280
+We wanna be able to edit this palette,
+
+276
+00:12:29,280 --> 00:12:33,210
+so let's make sure we
+can transfer this palette
+
+277
+00:12:33,210 --> 00:12:35,563
+into this editor so that it can edit it.
+
+278
+00:12:37,970 --> 00:12:40,830
+So to do that, I'm gonna
+have my text: Palette Editor.
+
+279
+00:12:40,830 --> 00:12:42,990
+I'm gonna put a little Divider,
+
+280
+00:12:42,990 --> 00:12:46,683
+and now I'm gonna put
+Text of my chosenPalette.
+
+281
+00:12:47,810 --> 00:12:49,730
+I want this chosenPalette right here
+
+282
+00:12:49,730 --> 00:12:52,930
+to be the same as this
+chosenPalette up here.
+
+283
+00:12:52,930 --> 00:12:55,030
+So we're gonna edit whatever chosenPalette
+
+284
+00:12:55,030 --> 00:12:56,410
+we're showing here.
+
+285
+00:12:56,410 --> 00:12:59,140
+To do that, I'm just
+gonna create a Binding
+
+286
+00:13:00,070 --> 00:13:02,260
+to chosenPalette.
+
+287
+00:13:02,260 --> 00:13:05,080
+Notice I'm giving this
+the exact same name,
+
+288
+00:13:05,080 --> 00:13:07,430
+as I give it in here,
+which is even the same name
+
+289
+00:13:07,430 --> 00:13:08,970
+that we give it over here.
+
+290
+00:13:08,970 --> 00:13:10,640
+But there's no rule, no law
+
+291
+00:13:10,640 --> 00:13:12,180
+that says this has to have the same name.
+
+292
+00:13:12,180 --> 00:13:15,410
+We could call this palette
+we're editing if we wanted,
+
+293
+00:13:15,410 --> 00:13:18,040
+something like that, but
+often we'll name them the same
+
+294
+00:13:18,040 --> 00:13:19,790
+just so people don't get quite confused
+
+295
+00:13:19,790 --> 00:13:22,810
+because we are Binding them
+directly to each other.
+
+296
+00:13:22,810 --> 00:13:25,743
+So they are essentially
+all the same thing.
+
+297
+00:13:27,320 --> 00:13:30,010
+And so, we can use this
+chosenPalette down here.
+
+298
+00:13:30,010 --> 00:13:32,243
+Let's put these things into a VStack.
+
+299
+00:13:36,790 --> 00:13:38,767
+And we're seeing that
+we have an error here,
+
+300
+00:13:38,767 --> 00:13:41,660
+"Missing argument for
+parameter chosenPalette."
+
+301
+00:13:41,660 --> 00:13:44,710
+This is an uninitialized
+variable in our PaletteEditor.
+
+302
+00:13:44,710 --> 00:13:47,393
+So we have to initialize
+it: chosenPalette.
+
+303
+00:13:48,924 --> 00:13:52,475
+And how do we give a Binding
+to our chosenPalette,
+
+304
+00:13:52,475 --> 00:13:54,920
+$chosenPalette.
+
+305
+00:13:54,920 --> 00:13:58,510
+And this chosenPalette in here
+is actually a Binding itself.
+
+306
+00:13:58,510 --> 00:14:00,910
+It's Binding to this State over here,
+
+307
+00:14:00,910 --> 00:14:03,233
+our document View, this @State.
+
+308
+00:14:04,070 --> 00:14:07,310
+But we know that if we
+do dollar on a Binding,
+
+309
+00:14:07,310 --> 00:14:10,770
+that that is essentially
+returning self, okay,
+
+310
+00:14:10,770 --> 00:14:13,480
+the Binding itself or
+a Binding to the thing
+
+311
+00:14:13,480 --> 00:14:16,500
+that Binding is binding to either way.
+
+312
+00:14:16,500 --> 00:14:17,800
+And that's exactly what we want here.
+
+313
+00:14:17,800 --> 00:14:19,270
+So we want this Binding and that State.
+
+314
+00:14:19,270 --> 00:14:24,270
+So now there are three Views
+all sharing this same value.
+
+315
+00:14:24,380 --> 00:14:26,750
+Let's make sure this is actually working.
+
+316
+00:14:27,943 --> 00:14:30,860
+And I'm gonna touch on this keyboard.
+
+317
+00:14:30,860 --> 00:14:31,777
+Whoa! There it is.
+
+318
+00:14:31,777 --> 00:14:33,700
+And it is showing this one right here.
+
+319
+00:14:33,700 --> 00:14:36,450
+Let's go to a different
+one and touch on it,
+
+320
+00:14:36,450 --> 00:14:37,810
+whoa, it's showing it.
+
+321
+00:14:37,810 --> 00:14:41,690
+So our Palette Editor definitely
+got a hold of the palette
+
+322
+00:14:41,690 --> 00:14:43,963
+that it's supposed to be editing here.
+
+323
+00:14:45,120 --> 00:14:48,000
+I'm gonna work a little
+bit on layout of this.
+
+324
+00:14:48,000 --> 00:14:50,100
+I want this thing that
+says, "Palette Editor"
+
+325
+00:14:50,100 --> 00:14:51,910
+to really be like at the top
+
+326
+00:14:51,910 --> 00:14:56,720
+like it's some sort of title
+or something to my little View
+
+327
+00:14:56,720 --> 00:14:58,620
+instead of having it in
+the middle like this.
+
+328
+00:14:58,620 --> 00:15:01,493
+So let's do that layout really quickly.
+
+329
+00:15:03,008 --> 00:15:06,230
+I'm gonna make this title have more of a
+
+330
+00:15:06,230 --> 00:15:08,860
+title kind of a font headline.
+
+331
+00:15:08,860 --> 00:15:11,620
+And I'll give it some padding around it.
+
+332
+00:15:11,620 --> 00:15:13,620
+And then, let's make it go to the top
+
+333
+00:15:13,620 --> 00:15:15,720
+by putting a Spacer at the bottom
+
+334
+00:15:15,720 --> 00:15:18,250
+that just puts a whole
+bunch of space in there.
+
+335
+00:15:18,250 --> 00:15:20,233
+And let's see what that looks like.
+
+336
+00:15:24,084 --> 00:15:25,580
+Look, getting close.
+
+337
+00:15:25,580 --> 00:15:27,650
+A little too much spacing in here,
+
+338
+00:15:27,650 --> 00:15:29,210
+we got the padding around this
+
+339
+00:15:29,210 --> 00:15:32,360
+and then we've got the spacing
+of the VStack it looks like,
+
+340
+00:15:32,360 --> 00:15:34,050
+so we can get rid of that.
+
+341
+00:15:38,487 --> 00:15:40,040
+But if I'm doing no spacing,
+
+342
+00:15:40,040 --> 00:15:43,983
+maybe I want this thing to
+have some padding of its own.
+
+343
+00:15:49,374 --> 00:15:51,960
+All right, that is looking pretty awesome.
+
+344
+00:15:51,960 --> 00:15:53,310
+We got our palette editor.
+
+345
+00:15:53,310 --> 00:15:55,650
+This is now the part that is going to be
+
+346
+00:15:55,650 --> 00:15:56,773
+editing the palette.
+
+347
+00:15:57,930 --> 00:16:01,520
+Let's start by working on
+editing the name of the palette.
+
+348
+00:16:01,520 --> 00:16:02,840
+So right now we're seeing the palette
+
+349
+00:16:02,840 --> 00:16:04,860
+but I actually wanna see its name here.
+
+350
+00:16:04,860 --> 00:16:06,740
+And then we're going to make it editable
+
+351
+00:16:06,740 --> 00:16:08,770
+so that you can change
+this from activities
+
+352
+00:16:08,770 --> 00:16:11,030
+to something else if you wanted.
+
+353
+00:16:11,030 --> 00:16:12,940
+So how are we going to do that?
+
+354
+00:16:12,940 --> 00:16:14,560
+Well, instead of showing the palette,
+
+355
+00:16:14,560 --> 00:16:15,900
+I wanna show its name.
+
+356
+00:16:15,900 --> 00:16:17,760
+We do that all over the place up here.
+
+357
+00:16:17,760 --> 00:16:20,700
+That's this document
+paletteNames right here.
+
+358
+00:16:20,700 --> 00:16:24,307
+I'm gonna copy that code
+even and put it down here.
+
+359
+00:16:24,307 --> 00:16:28,310
+The problem is, we don't have
+the document down here, right?
+
+360
+00:16:28,310 --> 00:16:32,210
+We have the document up
+here, but not down here.
+
+361
+00:16:32,210 --> 00:16:34,717
+You might, your first
+inclination might be,
+
+362
+00:16:34,717 --> 00:16:36,557
+"Oh, let's create another Binding
+
+363
+00:16:36,557 --> 00:16:39,010
+"and we'll bind up to here."
+
+364
+00:16:39,010 --> 00:16:42,410
+But that is not how we share ViewModels.
+
+365
+00:16:42,410 --> 00:16:44,527
+This document is our ViewModel.
+
+366
+00:16:44,527 --> 00:16:48,823
+And instead we're gonna share
+it using EnvironmentObject.
+
+367
+00:16:51,392 --> 00:16:54,500
+So our document is going
+to be an EnvironmentObject.
+
+368
+00:16:54,500 --> 00:16:57,240
+And we're gonna do it this
+way with EnvironmentObject
+
+369
+00:16:57,240 --> 00:17:00,760
+because we're presenting this
+thing in a separate View.
+
+370
+00:17:00,760 --> 00:17:03,260
+Anytime we're gonna present
+something in a popover,
+
+371
+00:17:03,260 --> 00:17:05,030
+or any kinda separate View,
+
+372
+00:17:05,030 --> 00:17:09,730
+we want to pass our ViewModel
+using EnvironmentObject.
+
+373
+00:17:09,730 --> 00:17:12,000
+And we could pass it as an ObservedObject
+
+374
+00:17:12,000 --> 00:17:15,410
+and then have another argument
+here to the PaletteEditor.
+
+375
+00:17:15,410 --> 00:17:17,600
+But turns out there's a problem
+
+376
+00:17:17,600 --> 00:17:19,670
+when you do these separate Views
+
+377
+00:17:19,670 --> 00:17:22,290
+like popovers, and things like that.
+
+378
+00:17:22,290 --> 00:17:24,960
+They get their kind of
+own world to live in
+
+379
+00:17:24,960 --> 00:17:28,900
+and you have to pass into
+that world this ViewModel,
+
+380
+00:17:28,900 --> 00:17:32,000
+or it won't work right, bottom line.
+
+381
+00:17:32,000 --> 00:17:35,040
+So how do we set the environment here?
+
+382
+00:17:35,040 --> 00:17:38,017
+We use this .environmentObject.
+
+383
+00:17:40,896 --> 00:17:42,803
+And this is again, we
+saw this in the slide,
+
+384
+00:17:42,803 --> 00:17:45,200
+this is how we pass our environment.
+
+385
+00:17:45,200 --> 00:17:47,670
+And in this case, this
+is just our own document
+
+386
+00:17:47,670 --> 00:17:50,970
+being passed as the environment for this.
+
+387
+00:17:50,970 --> 00:17:52,830
+These EnvironmentObjects
+
+388
+00:17:52,830 --> 00:17:55,200
+and also @Environment to an extent
+
+389
+00:17:55,200 --> 00:17:58,080
+are really exactly what
+their name implies:
+
+390
+00:17:58,080 --> 00:18:01,490
+an environment in which
+this View is working.
+
+391
+00:18:01,490 --> 00:18:03,810
+Right, it's using, it's
+working in an environment
+
+392
+00:18:03,810 --> 00:18:07,033
+where this is their ViewModel essentially.
+
+393
+00:18:08,270 --> 00:18:09,217
+So now we have the document,
+
+394
+00:18:09,217 --> 00:18:11,570
+we should be able to get
+the name outta there.
+
+395
+00:18:11,570 --> 00:18:13,120
+Let's see what that looks like.
+
+396
+00:18:17,554 --> 00:18:20,230
+All right, so this is
+our activities palette,
+
+397
+00:18:20,230 --> 00:18:21,830
+and sure enough, we have it there.
+
+398
+00:18:21,830 --> 00:18:24,440
+Let's try another one,
+how about our animals?
+
+399
+00:18:24,440 --> 00:18:25,633
+Yeah, animals.
+
+400
+00:18:26,860 --> 00:18:30,860
+Our next step here is to
+make this animals editable.
+
+401
+00:18:30,860 --> 00:18:33,340
+We want to be able to change this animals
+
+402
+00:18:33,340 --> 00:18:34,810
+to be something else.
+
+403
+00:18:34,810 --> 00:18:38,450
+So how do we make this Text editable?
+
+404
+00:18:38,450 --> 00:18:41,720
+We're gonna need a little
+different View than Text for that.
+
+405
+00:18:41,720 --> 00:18:44,403
+We need a TextField.
+
+406
+00:18:45,280 --> 00:18:49,230
+A TextField takes a little
+bit different arguments
+
+407
+00:18:49,230 --> 00:18:50,530
+than a Text.
+
+408
+00:18:50,530 --> 00:18:53,780
+The first argument it takes is its label,
+
+409
+00:18:53,780 --> 00:18:56,800
+and it should describe what it is
+
+410
+00:18:56,800 --> 00:18:58,990
+that this TextField is editing.
+
+411
+00:18:58,990 --> 00:19:00,320
+In our case, this is going to be
+
+412
+00:19:00,320 --> 00:19:01,750
+editing the name of the palette,
+
+413
+00:19:01,750 --> 00:19:03,490
+so we're gonna say "Palette Name".
+
+414
+00:19:03,490 --> 00:19:06,380
+And we'll see in the UI
+where this label appears.
+
+415
+00:19:06,380 --> 00:19:09,170
+And it depends on the UI,
+this is going to adapt
+
+416
+00:19:09,170 --> 00:19:12,830
+to Apple TV, Apple Watch, iOS, Mac,
+
+417
+00:19:12,830 --> 00:19:15,277
+it's going to do the right thing here.
+
+418
+00:19:15,277 --> 00:19:16,830
+And then the second argument,
+
+419
+00:19:16,830 --> 00:19:20,997
+the most important argument
+in TextField is called text.
+
+420
+00:19:20,997 --> 00:19:25,750
+And it is a Binding to some String,
+
+421
+00:19:25,750 --> 00:19:29,100
+that is going to be what's being edited.
+
+422
+00:19:29,100 --> 00:19:32,680
+So this is what the TextField
+is actually editing.
+
+423
+00:19:32,680 --> 00:19:34,630
+So we need, this is gonna be a Binding.
+
+424
+00:19:34,630 --> 00:19:38,340
+So I'm gonna make some
+State here private var,
+
+425
+00:19:38,340 --> 00:19:41,540
+call my paletteName, which
+is gonna be a String.
+
+426
+00:19:41,540 --> 00:19:44,263
+We'll initialize it to be empty to start.
+
+427
+00:19:45,320 --> 00:19:48,380
+And that's what this TextField
+is gonna do is edit that.
+
+428
+00:19:48,380 --> 00:19:50,070
+Let's see what this UI looks like
+
+429
+00:19:50,070 --> 00:19:52,673
+with the TextField right
+there instead of a Text.
+
+430
+00:19:53,794 --> 00:19:54,960
+Here we go.
+
+431
+00:19:54,960 --> 00:19:58,110
+Oop, there it is, you can
+see it says, "Palette Name."
+
+432
+00:19:58,110 --> 00:20:01,050
+Now when I touch on it, it starts editing,
+
+433
+00:20:01,050 --> 00:20:03,400
+you can see it brings up the keyboard
+
+434
+00:20:03,400 --> 00:20:08,400
+and I could type in
+"hello", or whatever I want
+
+435
+00:20:08,450 --> 00:20:10,360
+as the name of my palette.
+
+436
+00:20:10,360 --> 00:20:13,240
+So the label that we saw: "Palette Name",
+
+437
+00:20:13,240 --> 00:20:17,140
+it only showed up when we
+had nothing in the field
+
+438
+00:20:17,140 --> 00:20:18,940
+when the field was completely empty.
+
+439
+00:20:19,840 --> 00:20:21,970
+Now normally, that's not
+going to happen here,
+
+440
+00:20:21,970 --> 00:20:26,970
+because when we first bring
+this up for some given palette,
+
+441
+00:20:27,210 --> 00:20:30,260
+this should probably be prefilled out
+
+442
+00:20:30,260 --> 00:20:33,060
+with what the current name is.
+
+443
+00:20:33,060 --> 00:20:35,230
+And we'd only see this label if the person
+
+444
+00:20:35,230 --> 00:20:38,090
+delete, delete, delete,
+and made it go away,
+
+445
+00:20:38,090 --> 00:20:40,120
+and then like, well,
+what's this field about?
+
+446
+00:20:40,120 --> 00:20:41,880
+They would find out about "Palette Name".
+
+447
+00:20:41,880 --> 00:20:45,660
+But it's pretty obvious if I go to faces
+
+448
+00:20:45,660 --> 00:20:49,120
+and I touch a button right
+next to it, to palette editor
+
+449
+00:20:49,120 --> 00:20:52,313
+and it says faces right here,
+that's gonna be the name.
+
+450
+00:20:53,150 --> 00:20:54,210
+And in the iOS,
+
+451
+00:20:54,210 --> 00:20:56,880
+we try not to have a
+lot of extraneous labels
+
+452
+00:20:56,880 --> 00:20:59,210
+and things like that aren't necessary.
+
+453
+00:20:59,210 --> 00:21:01,640
+In this case, definitely not
+necessary to have this here
+
+454
+00:21:01,640 --> 00:21:03,880
+unless someone deletes it all the way
+
+455
+00:21:03,880 --> 00:21:06,460
+then they might be like, "Oh
+wait, what is this again?"
+
+456
+00:21:06,460 --> 00:21:07,990
+And then this prompts them for that
+
+457
+00:21:07,990 --> 00:21:09,933
+which is kind of cool UI.
+
+458
+00:21:11,470 --> 00:21:15,420
+So how do we get this to come
+up with this saying faces
+
+459
+00:21:15,420 --> 00:21:17,690
+right here instead of being blank?
+
+460
+00:21:17,690 --> 00:21:20,040
+Well, because we're the
+State, this paletteName,
+
+461
+00:21:20,040 --> 00:21:22,440
+this String that we're editing,
+
+462
+00:21:22,440 --> 00:21:25,670
+we initialize it right
+here to nothingness.
+
+463
+00:21:25,670 --> 00:21:27,550
+So we need to initialize it
+
+464
+00:21:27,550 --> 00:21:30,630
+to be the name of the palette, right?
+
+465
+00:21:30,630 --> 00:21:32,910
+This thing that we have up here
+
+466
+00:21:32,910 --> 00:21:36,165
+that we originally had in that TextField.
+
+467
+00:21:36,165 --> 00:21:38,380
+I'm gonna do that with onAppear,
+
+468
+00:21:38,380 --> 00:21:41,730
+onAppear we're really
+comfortable doing this hopefully.
+
+469
+00:21:41,730 --> 00:21:44,680
+I'm just going to set my paletteName
+
+470
+00:21:45,780 --> 00:21:48,400
+equal to my document's palette name.
+
+471
+00:21:48,400 --> 00:21:49,910
+And again, I could initialize it
+
+472
+00:21:49,910 --> 00:21:52,130
+in the same way we showed at
+the beginning of this lecture,
+
+473
+00:21:52,130 --> 00:21:54,763
+but this is a perfectly
+fine way to do it here.
+
+474
+00:21:58,860 --> 00:22:00,930
+And activities, yep, there it is,
+
+475
+00:22:00,930 --> 00:22:03,520
+and still editable can
+click on it and edit it,
+
+476
+00:22:03,520 --> 00:22:05,920
+go over here animals, yap.
+
+477
+00:22:05,920 --> 00:22:07,600
+Brings up the keyboard.
+
+478
+00:22:07,600 --> 00:22:08,920
+Notice when it brings up the keyboard
+
+479
+00:22:08,920 --> 00:22:12,700
+it does scroll the breast
+of the UI up a little bit
+
+480
+00:22:12,700 --> 00:22:16,670
+so that this is not gonna
+be blocked by the keyboard.
+
+481
+00:22:16,670 --> 00:22:20,970
+Very important when we touch
+to start editing in iOS,
+
+482
+00:22:20,970 --> 00:22:23,800
+especially on an iPhone
+where space is limited
+
+483
+00:22:23,800 --> 00:22:25,350
+and the keyboard coming up
+
+484
+00:22:25,350 --> 00:22:26,990
+is going to cover up a lot of things.
+
+485
+00:22:26,990 --> 00:22:29,550
+We want it to scroll up into
+a place where it's editable,
+
+486
+00:22:29,550 --> 00:22:32,073
+so it automatically does that for us.
+
+487
+00:22:33,560 --> 00:22:34,677
+Now, what if I change this?
+
+488
+00:22:34,677 --> 00:22:39,677
+What if I change this from
+animals to let's say, beasts?
+
+489
+00:22:43,810 --> 00:22:46,390
+If I say animals to
+beasts, and there it is,
+
+490
+00:22:46,390 --> 00:22:48,330
+and it didn't change anything.
+
+491
+00:22:48,330 --> 00:22:51,330
+This still says animals right
+here but this says beasts.
+
+492
+00:22:51,330 --> 00:22:53,730
+Now, it still says animals and now I got,
+
+493
+00:22:53,730 --> 00:22:56,410
+it never changed it, how
+come it never changed it?
+
+494
+00:22:56,410 --> 00:23:00,450
+Well, we when we're over
+here editing our TextField,
+
+495
+00:23:00,450 --> 00:23:03,090
+we're editing this local State.
+
+496
+00:23:03,090 --> 00:23:06,730
+We're not editing back
+in our document anywhere.
+
+497
+00:23:06,730 --> 00:23:10,300
+So when this changes, whenever
+this TextField changes,
+
+498
+00:23:10,300 --> 00:23:14,400
+we need to set our document's
+palette name for that,
+
+499
+00:23:14,400 --> 00:23:17,000
+rename that palette to be that.
+
+500
+00:23:17,000 --> 00:23:18,803
+We do that with another
+argument to TextField,
+
+501
+00:23:18,803 --> 00:23:21,240
+it's called onEditingChanged,
+
+502
+00:23:22,269 --> 00:23:24,070
+and it just takes a little closure.
+
+503
+00:23:24,070 --> 00:23:28,730
+Now this closure has one argument,
+I call it usually, began.
+
+504
+00:23:28,730 --> 00:23:30,930
+This argument is whether
+the editing changed
+
+505
+00:23:30,930 --> 00:23:34,300
+because editing started,
+began in the TextField
+
+506
+00:23:34,300 --> 00:23:35,980
+or because it ended.
+
+507
+00:23:35,980 --> 00:23:38,460
+So this is began or ended.
+
+508
+00:23:38,460 --> 00:23:41,740
+So in our case, we only wanna
+update our palette's name
+
+509
+00:23:41,740 --> 00:23:44,060
+or rename our palette
+when the editing ends.
+
+510
+00:23:44,060 --> 00:23:48,147
+So I'm gonna say if !began,
+then what am I gonna do?
+
+511
+00:23:48,147 --> 00:23:53,147
+I'm gonna tell my document
+to rename this palette,
+
+512
+00:23:53,610 --> 00:23:57,730
+the chosenPalette to this
+name that was just chosen
+
+513
+00:23:57,730 --> 00:23:59,963
+which is the paletteName.
+
+514
+00:24:02,090 --> 00:24:04,870
+Simple as that, I'm just
+gonna rename my palette
+
+515
+00:24:04,870 --> 00:24:06,800
+so my document gets the message
+
+516
+00:24:06,800 --> 00:24:08,573
+that we just edited this thing.
+
+517
+00:24:13,210 --> 00:24:14,920
+So I can still go through here.
+
+518
+00:24:14,920 --> 00:24:18,980
+Now if I wanna rename animals
+to beasts, I can go to animals
+
+519
+00:24:18,980 --> 00:24:21,050
+click on it right here,
+it says, "Animals."
+
+520
+00:24:21,050 --> 00:24:22,663
+We'll back up here.
+
+521
+00:24:23,530 --> 00:24:25,763
+We'll type "Beasts".
+
+522
+00:24:28,330 --> 00:24:30,850
+We're done editing, we can
+dismiss the keyboard right here,
+
+523
+00:24:30,850 --> 00:24:33,600
+or we could click away.
+
+524
+00:24:33,600 --> 00:24:34,830
+And we're changing it, see?
+
+525
+00:24:34,830 --> 00:24:36,450
+When we finished editing there,
+
+526
+00:24:36,450 --> 00:24:39,383
+when editing was done
+happening, it changed.
+
+527
+00:24:40,950 --> 00:24:42,990
+Let's use another TextField now,
+
+528
+00:24:42,990 --> 00:24:44,780
+to be able to add emojis up here.
+
+529
+00:24:44,780 --> 00:24:47,935
+We wanna add emojis to our list.
+
+530
+00:24:47,935 --> 00:24:49,010
+This is so similar,
+
+531
+00:24:49,010 --> 00:24:51,670
+I'm actually going to take
+this TextField right here
+
+532
+00:24:52,510 --> 00:24:55,920
+and copy and paste it and
+make another TextField.
+
+533
+00:24:55,920 --> 00:24:59,810
+This is the "Add Emoji"
+TextField, that's its label.
+
+534
+00:24:59,810 --> 00:25:01,530
+Instead of editing the paletteName,
+
+535
+00:25:01,530 --> 00:25:04,417
+we're gonna edit something
+called $emojisToAdd.
+
+536
+00:25:05,750 --> 00:25:10,080
+And when this one changes,
+instead of renaming the palette,
+
+537
+00:25:10,080 --> 00:25:15,080
+we're going to ask our
+document to add emoji,
+
+538
+00:25:15,620 --> 00:25:17,800
+these emojis to add
+
+539
+00:25:19,440 --> 00:25:21,053
+to this palette,
+
+540
+00:25:23,564 --> 00:25:24,731
+chosenPalette.
+
+541
+00:25:25,880 --> 00:25:28,370
+And of course, adding
+emojis to our chosenPalette
+
+542
+00:25:28,370 --> 00:25:30,920
+is going to change our chosenPalette.
+
+543
+00:25:30,920 --> 00:25:34,410
+So we're gonna update
+our own State to do that.
+
+544
+00:25:34,410 --> 00:25:39,410
+And also, let's set our
+emojisToAdd here equal to empty
+
+545
+00:25:40,570 --> 00:25:42,760
+because we just added these emojis,
+
+546
+00:25:42,760 --> 00:25:46,227
+we don't really need to leave
+them in the emojisToAdd,
+
+547
+00:25:46,227 --> 00:25:47,500
+we're not gonna add them again.
+
+548
+00:25:47,500 --> 00:25:50,820
+In fact, my addEmoji here in my document
+
+549
+00:25:50,820 --> 00:25:52,800
+doesn't allow you to add
+the same emoji twice.
+
+550
+00:25:52,800 --> 00:25:54,830
+It just moves the emoji
+to the front of the list
+
+551
+00:25:54,830 --> 00:25:56,790
+if you add it twice.
+
+552
+00:25:56,790 --> 00:25:58,730
+And of course we need this State as well.
+
+553
+00:25:58,730 --> 00:26:02,473
+So at @State private var emojisToAdd.
+
+554
+00:26:03,982 --> 00:26:07,093
+This is a String, we'll start
+that also empty as well.
+
+555
+00:26:08,791 --> 00:26:09,763
+Let's see this.
+
+556
+00:26:13,508 --> 00:26:15,677
+And activities, there it is!
+
+557
+00:26:17,030 --> 00:26:18,800
+So let's click on here to add some emoji,
+
+558
+00:26:18,800 --> 00:26:23,010
+we'll go to the emoji keyboard,
+all iOS keyboards have that.
+
+559
+00:26:23,010 --> 00:26:25,870
+This is activities, so let's
+go over to our activities.
+
+560
+00:26:25,870 --> 00:26:29,089
+Maybe we add some bike riders here.
+
+561
+00:26:29,089 --> 00:26:30,263
+Then golfers.
+
+562
+00:26:35,167 --> 00:26:38,200
+And there it is, added it
+right there to our document,
+
+563
+00:26:38,200 --> 00:26:39,180
+no problem.
+
+564
+00:26:46,321 --> 00:26:47,238
+Snowborder.
+
+565
+00:26:49,110 --> 00:26:49,943
+Archery.
+
+566
+00:26:56,050 --> 00:26:58,150
+When we start having a UI though,
+
+567
+00:26:58,150 --> 00:26:59,960
+that's adding multiple things here.
+
+568
+00:26:59,960 --> 00:27:01,390
+And we're even gonna add another section
+
+569
+00:27:01,390 --> 00:27:03,010
+for removing emojis.
+
+570
+00:27:03,010 --> 00:27:06,870
+We don't want them to be kind
+of open in outer space here
+
+571
+00:27:06,870 --> 00:27:11,870
+just spaced out with no kind
+of cohesion to them or no form.
+
+572
+00:27:12,560 --> 00:27:14,750
+And so there is an awesome little View
+
+573
+00:27:14,750 --> 00:27:16,600
+that you can use to give
+
+574
+00:27:16,600 --> 00:27:21,600
+a set of fields like this
+some form, it's called Form.
+
+575
+00:27:22,350 --> 00:27:25,653
+So we're gonna put a Form around this.
+
+576
+00:27:25,653 --> 00:27:28,373
+This is what it looks
+like to put a Form around.
+
+577
+00:27:29,285 --> 00:27:33,403
+We put the Form right here
+around these two TextFields.
+
+578
+00:27:35,220 --> 00:27:37,070
+And one thing that's nice about Form
+
+579
+00:27:37,070 --> 00:27:39,710
+is it was automatically scrollable space
+
+580
+00:27:39,710 --> 00:27:41,410
+that will deal with the fact
+
+581
+00:27:41,410 --> 00:27:42,370
+that we have space at the bottom
+
+582
+00:27:42,370 --> 00:27:44,770
+so we do not need the
+Spacer anymore there.
+
+583
+00:27:44,770 --> 00:27:48,190
+The Form will use all of its
+space, it's one of these Views
+
+584
+00:27:48,190 --> 00:27:50,210
+that takes all the space offered to it.
+
+585
+00:27:50,210 --> 00:27:52,130
+We don't use Spacer there.
+
+586
+00:27:52,130 --> 00:27:54,170
+Forms also can be divided into Sections.
+
+587
+00:27:54,170 --> 00:27:56,670
+For example, we could have a Section here
+
+588
+00:27:56,670 --> 00:28:00,640
+which is our "Palette Name" Section.
+
+589
+00:28:05,300 --> 00:28:06,570
+We also don't need padding,
+
+590
+00:28:06,570 --> 00:28:08,910
+Form takes care of all the padding,
+
+591
+00:28:08,910 --> 00:28:11,703
+it's laying out all these things itself.
+
+592
+00:28:11,703 --> 00:28:14,650
+Have another Section here,
+maybe this Section has no title,
+
+593
+00:28:14,650 --> 00:28:16,363
+that's allowed as well.
+
+594
+00:28:18,340 --> 00:28:19,190
+Let's see what this looks like.
+
+595
+00:28:19,190 --> 00:28:23,490
+So we added a Form right here,
+Section for the palette name
+
+596
+00:28:23,490 --> 00:28:25,523
+and a Section for "Add Emoji".
+
+597
+00:28:29,353 --> 00:28:30,810
+(sighs) Look at our Form.
+
+598
+00:28:30,810 --> 00:28:33,010
+You've probably seen
+Forms like this before,
+
+599
+00:28:33,010 --> 00:28:34,490
+like even in the Settings app
+
+600
+00:28:34,490 --> 00:28:36,930
+that we've seen this kind of look.
+
+601
+00:28:36,930 --> 00:28:38,580
+Now, it's a little bit redundant actually,
+
+602
+00:28:38,580 --> 00:28:42,110
+to have a section title
+name here palette name
+
+603
+00:28:42,110 --> 00:28:45,440
+when we know that if we
+edit this down to zero,
+
+604
+00:28:45,440 --> 00:28:47,470
+we're gonna get the
+"Palette Name" there too.
+
+605
+00:28:47,470 --> 00:28:50,660
+So I probably would not have
+a header with the exact same
+
+606
+00:28:50,660 --> 00:28:52,463
+name as the TextField in it.
+
+607
+00:28:53,391 --> 00:28:54,900
+And in fact, I'm not even sure
+
+608
+00:28:54,900 --> 00:28:57,210
+I would make this two separate Sections.
+
+609
+00:28:57,210 --> 00:29:00,323
+I might put them both in
+the same Section right here.
+
+610
+00:29:03,470 --> 00:29:07,273
+Makes it a little bit cleaner
+UI, you can see it's still put
+
+611
+00:29:07,273 --> 00:29:09,990
+kind of a little special divider line
+
+612
+00:29:09,990 --> 00:29:13,203
+and I can still go and
+add my emoji right here.
+
+613
+00:29:17,790 --> 00:29:19,710
+But sometimes you do want Sections.
+
+614
+00:29:19,710 --> 00:29:23,010
+For example, I'm gonna add a
+Section here to remove emojis,
+
+615
+00:29:23,010 --> 00:29:26,480
+and it's going to want to be
+its own Section, as you'll see.
+
+616
+00:29:26,480 --> 00:29:27,530
+So let's go ahead and do that.
+
+617
+00:29:27,530 --> 00:29:29,973
+Add a remove emoji section.
+
+618
+00:29:32,250 --> 00:29:36,270
+Section, header, Text,
+
+619
+00:29:36,270 --> 00:29:37,883
+"Remove Emoji".
+
+620
+00:29:40,260 --> 00:29:43,547
+And in here, I essentially
+wanna do a ForEach
+
+621
+00:29:45,390 --> 00:29:49,370
+on all of my chosen palettes' emojis,
+
+622
+00:29:49,370 --> 00:29:53,623
+so I'll map them to
+Strings as we did before.
+
+623
+00:29:54,610 --> 00:29:57,580
+And, of course, these are not Identifiable
+
+624
+00:29:57,580 --> 00:30:01,470
+so we'll have to do id
+identifiable on self.
+
+625
+00:30:01,470 --> 00:30:03,643
+And for each of the emojis in here,
+
+626
+00:30:04,640 --> 00:30:09,640
+we will just put them in
+a little Text like this.
+
+627
+00:30:09,700 --> 00:30:11,163
+And when you tap on them,
+
+628
+00:30:12,705 --> 00:30:15,963
+it will remove them
+from our chosen palette.
+
+629
+00:30:18,746 --> 00:30:21,010
+And of course the ForEach
+doesn't lay them out
+
+630
+00:30:21,010 --> 00:30:22,520
+in any particular way.
+
+631
+00:30:22,520 --> 00:30:24,640
+So let's go ahead and put them in
+
+632
+00:30:24,640 --> 00:30:26,180
+I'll say a VStack for now.
+
+633
+00:30:26,180 --> 00:30:27,550
+I think we can do better than that
+
+634
+00:30:27,550 --> 00:30:30,644
+but we'll start by
+putting them in a VStack.
+
+635
+00:30:30,644 --> 00:30:34,550
+So I'm just gonna stack up
+all my emojis right there
+
+636
+00:30:34,550 --> 00:30:37,013
+and click on 'em to remove.
+
+637
+00:30:40,440 --> 00:30:42,810
+There we go, look at that,
+there's all our emojis.
+
+638
+00:30:42,810 --> 00:30:44,030
+Let's try removing some.
+
+639
+00:30:44,030 --> 00:30:47,930
+Let's decide, we don't
+want the golfer, gone.
+
+640
+00:30:47,930 --> 00:30:52,040
+We don't want this soccer ball, gone.
+
+641
+00:30:52,040 --> 00:30:55,840
+We don't want the surfer,
+snowboarder, gone.
+
+642
+00:30:55,840 --> 00:30:58,100
+The only problem with this emoji thing
+
+643
+00:30:58,100 --> 00:30:59,503
+is it's kind of a yucky UI.
+
+644
+00:31:00,580 --> 00:31:02,760
+To have this in a long list like this,
+
+645
+00:31:02,760 --> 00:31:06,350
+it'd be nicer if it was
+like in a grid, for example.
+
+646
+00:31:06,350 --> 00:31:08,460
+And we have a Grid from Memorize.
+
+647
+00:31:08,460 --> 00:31:11,300
+Let's see if we can use our
+Grid from Memorize in here.
+
+648
+00:31:11,300 --> 00:31:12,640
+It'll make it look better,
+
+649
+00:31:12,640 --> 00:31:14,720
+and it's also gonna help us understand
+
+650
+00:31:14,720 --> 00:31:19,710
+even a little bit more about
+protocols and don't cares,
+
+651
+00:31:19,710 --> 00:31:22,883
+and constrains and gains and all that.
+
+652
+00:31:24,410 --> 00:31:26,840
+Let's start by hopping over to Memorize
+
+653
+00:31:26,840 --> 00:31:28,440
+and grabbing Grid outta there.
+
+654
+00:31:28,440 --> 00:31:33,440
+I'm just gonna go over
+here to Developer here.
+
+655
+00:31:33,473 --> 00:31:36,660
+I'll go to Memorize, here's
+Memorize, I'm gonna grab Grid
+
+656
+00:31:36,660 --> 00:31:39,520
+and of course, we need GridLayout as well
+
+657
+00:31:39,520 --> 00:31:41,523
+and drag them over here.
+
+658
+00:31:42,470 --> 00:31:44,783
+And we do wanna copy the items there.
+
+659
+00:31:50,086 --> 00:31:52,530
+So this is the same
+Grid we had in Memorize,
+
+660
+00:31:52,530 --> 00:31:54,770
+no changes to it whatsoever.
+
+661
+00:31:54,770 --> 00:31:58,400
+And I'd like to use it instead
+of this VStack and ForEach,
+
+662
+00:31:58,400 --> 00:32:00,210
+remember our Grid kinda combines that.
+
+663
+00:32:00,210 --> 00:32:04,570
+So I'm gonna say Grid, get rid
+of one of these curly braces.
+
+664
+00:32:04,570 --> 00:32:08,020
+And this would be really
+nice to do like this.
+
+665
+00:32:08,020 --> 00:32:10,630
+Unfortunately, this is not going to work.
+
+666
+00:32:10,630 --> 00:32:13,920
+Because our Grid doesn't
+understand how to do
+
+667
+00:32:13,920 --> 00:32:17,030
+this id self business, right?
+
+668
+00:32:17,030 --> 00:32:20,400
+Our grid requires that
+everything that's passed to it
+
+669
+00:32:20,400 --> 00:32:22,560
+be Identifiable.
+
+670
+00:32:22,560 --> 00:32:27,560
+See, Item Identifiable, these
+Items have to be Identifiable.
+
+671
+00:32:27,900 --> 00:32:30,650
+So let's take a little time
+out from building our UI
+
+672
+00:32:30,650 --> 00:32:33,620
+and understand how we
+could change our Grid
+
+673
+00:32:33,620 --> 00:32:37,180
+so that it did take an id argument here
+
+674
+00:32:37,180 --> 00:32:38,630
+that let us specify
+
+675
+00:32:40,010 --> 00:32:44,330
+what KeyPath to use to find the ID.
+
+676
+00:32:44,330 --> 00:32:47,490
+Just like we do here, wanna pass this.
+
+677
+00:32:47,490 --> 00:32:50,130
+So what is this little thing right here?
+
+678
+00:32:50,130 --> 00:32:52,270
+We've talked about it a few times.
+
+679
+00:32:52,270 --> 00:32:53,820
+It is a KeyPath.
+
+680
+00:32:53,820 --> 00:32:57,750
+It's something that just
+specifies a certain var to access
+
+681
+00:32:57,750 --> 00:32:59,047
+on an instance of an object.
+
+682
+00:32:59,047 --> 00:33:02,730
+And in this case, I'm doing
+self because these are Strings
+
+683
+00:33:02,730 --> 00:33:04,610
+and the String.self is the String itself.
+
+684
+00:33:04,610 --> 00:33:08,361
+And that's a good thing
+to be Identifiable.
+
+685
+00:33:08,361 --> 00:33:10,160
+That works great.
+
+686
+00:33:10,160 --> 00:33:12,350
+So how do we say what this type is?
+
+687
+00:33:12,350 --> 00:33:15,610
+Because if we're gonna have
+this passed as a type here
+
+688
+00:33:15,610 --> 00:33:18,230
+to our id, we have to say what it is.
+
+689
+00:33:18,230 --> 00:33:23,230
+Its type is KeyPath, and
+it has two don't cares.
+
+690
+00:33:23,650 --> 00:33:28,650
+One is the kind of object that
+you are looking for a var on.
+
+691
+00:33:29,750 --> 00:33:31,970
+In our case, this is Item.
+
+692
+00:33:31,970 --> 00:33:34,405
+This is the things that
+in this Array over here,
+
+693
+00:33:34,405 --> 00:33:35,970
+KeyPath Item.
+
+694
+00:33:35,970 --> 00:33:39,920
+The second don't care is
+the return value of it.
+
+695
+00:33:39,920 --> 00:33:43,560
+Now, we really don't care what
+you use as your Identifiable.
+
+696
+00:33:43,560 --> 00:33:45,947
+So our return type is going
+to be a don't care for us.
+
+697
+00:33:45,947 --> 00:33:49,950
+I'm gonna call it ID,
+and I'll put it up there.
+
+698
+00:33:49,950 --> 00:33:52,680
+And that is how we can specify this ID.
+
+699
+00:33:52,680 --> 00:33:57,680
+And now we have this ID, let's
+go ahead and set it as a var.
+
+700
+00:33:57,980 --> 00:33:59,170
+Hold on to it.
+
+701
+00:33:59,170 --> 00:34:01,450
+So we're gonna need a private var
+
+702
+00:34:01,450 --> 00:34:05,763
+that's of type KeyPath&lt;Item, ID&gt;.
+
+703
+00:34:07,120 --> 00:34:10,670
+And almost there, let's go down
+here to here's our ForEach,
+
+704
+00:34:10,670 --> 00:34:15,670
+and we will just pass this id,
+our own id var right there.
+
+705
+00:34:16,650 --> 00:34:17,833
+This should work, right?
+
+706
+00:34:17,833 --> 00:34:20,750
+This is pretty much
+everything we would need.
+
+707
+00:34:20,750 --> 00:34:22,480
+But we have a little bit of a problem,
+
+708
+00:34:22,480 --> 00:34:24,713
+we got a constrains
+and gains problem here.
+
+709
+00:34:25,590 --> 00:34:29,580
+Says here, "Generic struct
+ForEach requires that ID,"
+
+710
+00:34:29,580 --> 00:34:33,120
+this ID conform to Hashable.
+
+711
+00:34:33,120 --> 00:34:34,530
+Which kind of makes sense, right?
+
+712
+00:34:34,530 --> 00:34:36,300
+What does a ForEach do?
+
+713
+00:34:36,300 --> 00:34:38,460
+Looks at all it's items
+and for each of one,
+
+714
+00:34:38,460 --> 00:34:42,050
+it builds this View
+for it, which is great,
+
+715
+00:34:42,050 --> 00:34:44,270
+but it probably has to keep these items
+
+716
+00:34:44,270 --> 00:34:47,020
+in some sort of Dictionary
+or hash table or something
+
+717
+00:34:47,020 --> 00:34:48,840
+so that it can know which View
+
+718
+00:34:48,840 --> 00:34:50,700
+is associated with them, et cetera.
+
+719
+00:34:50,700 --> 00:34:53,040
+So it's perfectly reasonable to expect
+
+720
+00:34:53,040 --> 00:34:55,290
+that ID has to be Hashable here.
+
+721
+00:34:55,290 --> 00:34:59,680
+But ID for us is the return
+value from this KeyPath here,
+
+722
+00:34:59,680 --> 00:35:02,140
+that is a don't care.
+
+723
+00:35:02,140 --> 00:35:05,540
+But evidently we care a
+little bit about this type ID
+
+724
+00:35:05,540 --> 00:35:07,400
+that's a return value from the KeyPath.
+
+725
+00:35:07,400 --> 00:35:09,653
+It's going to have to be Hashable.
+
+726
+00:35:10,843 --> 00:35:13,416
+So I'm gonna mark it to be Hashable,
+
+727
+00:35:13,416 --> 00:35:15,270
+and just require that this don't care,
+
+728
+00:35:15,270 --> 00:35:17,210
+whatever it is be Hashable.
+
+729
+00:35:17,210 --> 00:35:19,760
+And while I'm at it, I can
+get rid of Item Identifiable.
+
+730
+00:35:19,760 --> 00:35:22,110
+That's kind of the whole
+point is to make it
+
+731
+00:35:22,110 --> 00:35:25,163
+so that our Item doesn't
+have to be Identifiable.
+
+732
+00:35:26,150 --> 00:35:29,070
+So we're almost there,
+actually, but we have a problem
+
+733
+00:35:29,070 --> 00:35:31,420
+in that we use this firstIndex matching,
+
+734
+00:35:31,420 --> 00:35:33,210
+remember, firstIndex matching.
+
+735
+00:35:33,210 --> 00:35:37,080
+It's the function that we added to Array
+
+736
+00:35:37,080 --> 00:35:38,750
+into a Collection actually,
+
+737
+00:35:38,750 --> 00:35:43,570
+that looks something up
+by its Identifiable-ness.
+
+738
+00:35:43,570 --> 00:35:45,630
+Well, our Items are no
+longer Identifiable,
+
+739
+00:35:45,630 --> 00:35:47,540
+I stopped making them Identifiable.
+
+740
+00:35:47,540 --> 00:35:50,520
+However, we do have this ID, this KeyPath
+
+741
+00:35:50,520 --> 00:35:52,370
+that we can use on an Item
+
+742
+00:35:52,370 --> 00:35:56,150
+to find out an Identifiable
+thing on it, Hashable thing.
+
+743
+00:35:56,150 --> 00:35:59,330
+So how are we gonna replace
+firstIndex of item with
+
+744
+00:35:59,330 --> 00:36:01,086
+using this ID?
+
+745
+00:36:01,086 --> 00:36:05,750
+Well, I'm gonna do firstIndex,
+a different one called where,
+
+746
+00:36:05,750 --> 00:36:09,100
+and where takes some closure here.
+
+747
+00:36:09,100 --> 00:36:13,060
+And this closure is
+given each of the things,
+
+748
+00:36:13,060 --> 00:36:14,410
+Items in the Array.
+
+749
+00:36:14,410 --> 00:36:18,243
+So we'll use the built-in
+argument which will be $0.
+
+750
+00:36:19,560 --> 00:36:22,490
+And it lets you do something with it
+
+751
+00:36:22,490 --> 00:36:25,423
+and return true when it matches.
+
+752
+00:36:26,920 --> 00:36:31,880
+We want this KeyPath out of our item.
+
+753
+00:36:31,880 --> 00:36:36,850
+And we wanna compare this
+KeyPath out of the $0
+
+754
+00:36:36,850 --> 00:36:39,870
+in the items Array to
+see if they're the same.
+
+755
+00:36:39,870 --> 00:36:44,180
+So here's how you take
+an Item and use a KeyPath
+
+756
+00:36:44,180 --> 00:36:46,150
+to go get the value of the var
+
+757
+00:36:46,150 --> 00:36:48,240
+that that KeyPath is talking about it.
+
+758
+00:36:48,240 --> 00:36:52,270
+You say, [keyPath:
+
+759
+00:36:52,270 --> 00:36:54,530
+and the KeyPath.
+
+760
+00:36:54,530 --> 00:36:59,530
+So this expression right here
+means call this KeyPath var
+
+761
+00:37:00,150 --> 00:37:03,070
+on this Item and give it to us.
+
+762
+00:37:03,070 --> 00:37:05,147
+And we're just gonna check
+to see if that equals
+
+763
+00:37:05,147 --> 00:37:08,853
+$0's KeyPath of that id.
+
+764
+00:37:10,700 --> 00:37:14,590
+A lot going on here, hopefully,
+you guys are following this,
+
+765
+00:37:14,590 --> 00:37:16,700
+I would say you don't
+really have to understand
+
+766
+00:37:16,700 --> 00:37:19,060
+what I just did here to use SwiftUI.
+
+767
+00:37:19,060 --> 00:37:21,470
+But if you do, you're really understanding
+
+768
+00:37:21,470 --> 00:37:24,113
+this constrains and gains
+of what's going on here.
+
+769
+00:37:28,750 --> 00:37:31,393
+But let's take this even one step further.
+
+770
+00:37:32,300 --> 00:37:35,180
+This, unfortunately, has kind of broken
+
+771
+00:37:35,180 --> 00:37:37,060
+the old way we used to use Grid.
+
+772
+00:37:37,060 --> 00:37:41,380
+Now we're forced to do this ID KeyPath
+
+773
+00:37:41,380 --> 00:37:43,660
+even if our Item is Identifiable,
+
+774
+00:37:43,660 --> 00:37:45,440
+we still have to provide this argument.
+
+775
+00:37:45,440 --> 00:37:48,170
+This argument doesn't default to anything.
+
+776
+00:37:48,170 --> 00:37:50,330
+So let's look how we could
+
+777
+00:37:50,330 --> 00:37:53,450
+take this exact same code
+that we just modified
+
+778
+00:37:53,450 --> 00:37:55,980
+and change it so it'd still
+work with the old world.
+
+779
+00:37:55,980 --> 00:37:59,260
+And this will really get you
+with the constrains and gains.
+
+780
+00:37:59,260 --> 00:38:01,520
+So I'm gonna make an extension to Grid.
+
+781
+00:38:01,520 --> 00:38:05,230
+And in this extension,
+I'm going to require
+
+782
+00:38:05,230 --> 00:38:08,760
+that items be Identifiable.
+
+783
+00:38:08,760 --> 00:38:10,470
+So that's only gonna be in this extension
+
+784
+00:38:10,470 --> 00:38:11,850
+that they're Identifiable.
+
+785
+00:38:11,850 --> 00:38:14,590
+And then I wanna add a new init,
+
+786
+00:38:14,590 --> 00:38:18,250
+where it takes the items
+just as we did before,
+
+787
+00:38:18,250 --> 00:38:20,690
+and does not take that id argument.
+
+788
+00:38:20,690 --> 00:38:23,820
+But still, of course, has the viewForItem.
+
+789
+00:38:23,820 --> 00:38:25,560
+And I wanna be able to
+call this other init,
+
+790
+00:38:25,560 --> 00:38:29,720
+the one that I made down here
+with all the right arguments
+
+791
+00:38:29,720 --> 00:38:31,720
+to make this just work.
+
+792
+00:38:31,720 --> 00:38:33,100
+So let's try it.
+
+793
+00:38:33,100 --> 00:38:35,970
+Got the items, got the id.
+
+794
+00:38:35,970 --> 00:38:40,470
+So we know that Identifiables
+have a var on them called id
+
+795
+00:38:41,470 --> 00:38:42,470
+to make them Identifiable.
+
+796
+00:38:42,470 --> 00:38:47,470
+So what if I just say
+\Item.id and then viewForItem?
+
+797
+00:38:48,360 --> 00:38:50,580
+This word could just do this?
+
+798
+00:38:50,580 --> 00:38:52,520
+Oh, not quite.
+
+799
+00:38:52,520 --> 00:38:56,347
+Says here, "Key path value
+Item.ID cannot be converted
+
+800
+00:38:56,347 --> 00:38:58,140
+"to a contextual type ID."
+
+801
+00:38:58,140 --> 00:39:01,640
+In other words, our ID don't
+care is not necessarily
+
+802
+00:39:01,640 --> 00:39:05,600
+the same type as this Identifiable's .id,
+
+803
+00:39:05,600 --> 00:39:08,260
+which is its don't care
+for the Identifiable.
+
+804
+00:39:08,260 --> 00:39:12,957
+But we can actually force
+that too, by saying, ID,
+
+805
+00:39:14,480 --> 00:39:19,200
+its type equals the Item's ID,
+
+806
+00:39:19,200 --> 00:39:23,340
+This ID right here is the
+don't care for Identifiable,
+
+807
+00:39:23,340 --> 00:39:26,120
+and this ID is our don't care.
+
+808
+00:39:26,120 --> 00:39:29,100
+So by forcing these to be the same,
+
+809
+00:39:29,100 --> 00:39:31,850
+we make it so that we can call this init.
+
+810
+00:39:33,610 --> 00:39:34,880
+This is the kinda thing you can do
+
+811
+00:39:34,880 --> 00:39:36,050
+with constrains and gains.
+
+812
+00:39:36,050 --> 00:39:39,150
+A little bit advanced topic here,
+
+813
+00:39:39,150 --> 00:39:42,770
+but it makes it so the old
+Grid initializer here will work
+
+814
+00:39:42,770 --> 00:39:45,163
+and the new Grid initializer will work.
+
+815
+00:39:47,230 --> 00:39:49,490
+All right, enough of a time out there
+
+816
+00:39:49,490 --> 00:39:52,730
+should make it so that our
+Grid right here will work.
+
+817
+00:39:52,730 --> 00:39:54,880
+And let's see what
+happens when we do this.
+
+818
+00:39:56,983 --> 00:39:57,963
+All right, ready?
+
+819
+00:39:59,890 --> 00:40:02,430
+Well, it's not vertical
+anymore, it's horizontal.
+
+820
+00:40:02,430 --> 00:40:05,640
+And this is actually the
+Grid doing what it was asked.
+
+821
+00:40:05,640 --> 00:40:09,300
+It took this little space that
+it was offered, this line,
+
+822
+00:40:09,300 --> 00:40:12,630
+which is what Forms offer
+there, the things there.
+
+823
+00:40:12,630 --> 00:40:13,780
+Took this little space,
+
+824
+00:40:13,780 --> 00:40:16,490
+and it made all the emoji fit in there.
+
+825
+00:40:16,490 --> 00:40:19,470
+And this is the best way
+you can make 'em fit.
+
+826
+00:40:19,470 --> 00:40:23,210
+What we really wanna do is to
+offer this thing more space.
+
+827
+00:40:23,210 --> 00:40:25,020
+we want this to be taller,
+
+828
+00:40:25,020 --> 00:40:27,550
+we want this little white
+rectangle to be taller.
+
+829
+00:40:27,550 --> 00:40:30,600
+I'm gonna do that with frame as well.
+
+830
+00:40:30,600 --> 00:40:32,027
+I'm gonna give this thing a height.
+
+831
+00:40:32,027 --> 00:40:33,690
+And I'm gonna have it's height,
+
+832
+00:40:33,690 --> 00:40:36,680
+I'm gonna give more height
+when there's more emoji.
+
+833
+00:40:36,680 --> 00:40:39,277
+The more emoji we have, the
+more height I'm gonna give you.
+
+834
+00:40:39,277 --> 00:40:42,270
+And that should make them
+be spaced out about the same
+
+835
+00:40:42,270 --> 00:40:43,103
+no matter how many emoji you have.
+
+836
+00:40:43,103 --> 00:40:45,830
+If you have 1,000 I'm gonna
+give you a lot of height.
+
+837
+00:40:45,830 --> 00:40:47,140
+If you have just three or four,
+
+838
+00:40:47,140 --> 00:40:50,270
+I'm just gonna give you
+this tiny little height.
+
+839
+00:40:50,270 --> 00:40:52,310
+Well, how the heck do we do that?
+
+840
+00:40:52,310 --> 00:40:53,420
+Very simple.
+
+841
+00:40:53,420 --> 00:40:58,420
+This gGid, I'm going to
+give it a fixed height.
+
+842
+00:40:58,631 --> 00:41:02,943
+And I'm gonna just have a
+var for that, var height.
+
+843
+00:41:03,783 --> 00:41:05,270
+CGFloat.
+
+844
+00:41:05,270 --> 00:41:06,550
+I'm gonna calculate it.
+
+845
+00:41:06,550 --> 00:41:08,220
+I played around with this and I came up
+
+846
+00:41:08,220 --> 00:41:12,920
+with something like this
+CGFloat chosenPalette.count
+
+847
+00:41:12,920 --> 00:41:17,920
+minus one divided by six times 70 plus 70.
+
+848
+00:41:20,130 --> 00:41:25,130
+That seemed to be the kind of best fit
+
+849
+00:41:25,210 --> 00:41:27,697
+for making these things
+spread themselves out.
+
+850
+00:41:27,697 --> 00:41:30,960
+And you can go play with
+that math yourself later.
+
+851
+00:41:30,960 --> 00:41:32,180
+Let's see.
+
+852
+00:41:32,180 --> 00:41:34,370
+Yeah, it's pretty good.
+
+853
+00:41:34,370 --> 00:41:35,510
+And I just would like these images
+
+854
+00:41:35,510 --> 00:41:37,110
+to be a little bigger though,
+
+855
+00:41:37,110 --> 00:41:40,060
+since I've given them a
+nice little amount of space.
+
+856
+00:41:40,060 --> 00:41:44,360
+I'll do that by setting
+this font size right here
+
+857
+00:41:44,360 --> 00:41:47,350
+Font.system size.
+
+858
+00:41:47,350 --> 00:41:50,280
+Let's go ahead and have
+a self.fontSize as well.
+
+859
+00:41:50,280 --> 00:41:55,280
+These things down here are
+essentially drawing constants,
+
+860
+00:41:55,350 --> 00:42:00,350
+height and also let our
+fontSize be let's say around 40.
+
+861
+00:42:02,180 --> 00:42:05,063
+Seems like a good size for those things.
+
+862
+00:42:07,669 --> 00:42:09,710
+Here we go, and this
+should still work here.
+
+863
+00:42:09,710 --> 00:42:12,070
+This is still a grid, it
+knows how to show things.
+
+864
+00:42:12,070 --> 00:42:15,340
+So let's get rid of the
+football, tennis ball.
+
+865
+00:42:15,340 --> 00:42:17,210
+This is not an activity.
+
+866
+00:42:17,210 --> 00:42:18,043
+There we go.
+
+867
+00:42:21,260 --> 00:42:24,820
+So this looks great, it's
+a nice, compact little UI,
+
+868
+00:42:24,820 --> 00:42:26,810
+makes it really easy for
+people to go through,
+
+869
+00:42:26,810 --> 00:42:30,860
+change the emoji that they want inside
+
+870
+00:42:30,860 --> 00:42:33,193
+each of their palettes right here.
+
+871
+00:42:34,081 --> 00:42:35,330
+And I'm gonna show you some other ways
+
+872
+00:42:35,330 --> 00:42:36,400
+to present this though.
+
+873
+00:42:36,400 --> 00:42:39,670
+This is a popover makes
+perfect sense on the iPad here,
+
+874
+00:42:39,670 --> 00:42:41,690
+there's another way to present it on iPad,
+
+875
+00:42:41,690 --> 00:42:45,070
+which instead of using
+a popover right here,
+
+876
+00:42:45,070 --> 00:42:47,570
+we use something called a sheet.
+
+877
+00:42:47,570 --> 00:42:49,923
+So sheet looks like this.
+
+878
+00:42:53,882 --> 00:42:56,640
+It's larger, it's good for UIs
+
+879
+00:42:56,640 --> 00:42:58,940
+that take up a lot of space obviously.
+
+880
+00:42:58,940 --> 00:43:02,600
+Probably for our purposes,
+the popover's better,
+
+881
+00:43:02,600 --> 00:43:04,680
+this really doesn't need to be this large,
+
+882
+00:43:04,680 --> 00:43:07,320
+you're never gonna have
+really long names of palette,
+
+883
+00:43:07,320 --> 00:43:10,560
+you're probably not gonna
+be adding 100 emoji at once.
+
+884
+00:43:10,560 --> 00:43:14,610
+And this doesn't need to
+be so spaced out as this.
+
+885
+00:43:14,610 --> 00:43:17,650
+And these things can be dismissed,
+
+886
+00:43:17,650 --> 00:43:19,190
+not by clicking away though.
+
+887
+00:43:19,190 --> 00:43:21,790
+See I'm clicking, touching outside,
+
+888
+00:43:21,790 --> 00:43:25,060
+you swipe them down to make them go away.
+
+889
+00:43:25,060 --> 00:43:28,260
+Now, I find that this swiping down,
+
+890
+00:43:28,260 --> 00:43:32,270
+it's a little bit of a
+hidden UI to be swiping down
+
+891
+00:43:32,270 --> 00:43:34,040
+to make this go away.
+
+892
+00:43:34,040 --> 00:43:35,860
+So if I were doing this in a sheet,
+
+893
+00:43:35,860 --> 00:43:38,400
+I would probably put a
+little "Done" button,
+
+894
+00:43:38,400 --> 00:43:40,930
+or like a close button
+or something up here.
+
+895
+00:43:40,930 --> 00:43:42,490
+Done is usually a good word for it,
+
+896
+00:43:42,490 --> 00:43:45,090
+it means that you're done with this thing.
+
+897
+00:43:45,090 --> 00:43:48,160
+So how would we put a Button in this UI
+
+898
+00:43:48,160 --> 00:43:52,460
+that when we clicked it
+caused it to dismiss itself?
+
+899
+00:43:52,460 --> 00:43:55,370
+That's a really good
+thing to know how to do.
+
+900
+00:43:55,370 --> 00:43:57,850
+Let's put that "Done"
+Button in there first.
+
+901
+00:43:57,850 --> 00:43:59,940
+And to do that, here's the title bar,
+
+902
+00:43:59,940 --> 00:44:02,210
+that "Palette Editor" title bar.
+
+903
+00:44:02,210 --> 00:44:07,210
+Let's go ahead and make a
+ZStack that has that title,
+
+904
+00:44:07,550 --> 00:44:11,670
+and then also has an
+HStack, which has a Spacer
+
+905
+00:44:11,670 --> 00:44:14,197
+to move the Button all
+the way over to the right.
+
+906
+00:44:14,197 --> 00:44:16,160
+And then has a Button.
+
+907
+00:44:16,160 --> 00:44:17,760
+And the Button, we'll
+talk about the action
+
+908
+00:44:17,760 --> 00:44:18,877
+in a second here.
+
+909
+00:44:18,877 --> 00:44:23,293
+And the label we'll have it
+be Text for the word "Done".
+
+910
+00:44:25,130 --> 00:44:27,170
+And we'll put some padding
+on this one as well
+
+911
+00:44:27,170 --> 00:44:30,233
+just to make sure it's
+got the room it needs.
+
+912
+00:44:32,246 --> 00:44:33,380
+Let's take a look to see
+what that looks like.
+
+913
+00:44:33,380 --> 00:44:36,380
+So I've got a ZStack, so
+I'm laying this on top of
+
+914
+00:44:36,380 --> 00:44:40,453
+this thing where the Button
+is spaced out to the right.
+
+915
+00:44:43,120 --> 00:44:45,360
+Oh yeah, looking good, that "Done".
+
+916
+00:44:45,360 --> 00:44:47,740
+So clicking "Done" nothing is happening
+
+917
+00:44:47,740 --> 00:44:49,490
+'cause we didn't put
+anything in our action.
+
+918
+00:44:49,490 --> 00:44:52,860
+So what are we gonna do when
+we touch this "Done" Button
+
+919
+00:44:52,860 --> 00:44:54,563
+to make this whoop go away?
+
+920
+00:44:56,020 --> 00:44:58,200
+Very straightforward to do here,
+
+921
+00:44:58,200 --> 00:45:03,200
+in Button we are going to have
+to have some indication here,
+
+922
+00:45:03,560 --> 00:45:06,923
+set some Bool that says whether
+this is currently showing.
+
+923
+00:45:06,923 --> 00:45:11,740
+I'll call that isShowing equals false.
+
+924
+00:45:11,740 --> 00:45:14,570
+And this isShowing is gonna be similar,
+
+925
+00:45:14,570 --> 00:45:17,750
+in fact very similar to
+this showPalette over here
+
+926
+00:45:17,750 --> 00:45:19,870
+that determines whether this is showing,
+
+927
+00:45:19,870 --> 00:45:22,820
+in fact, it is exactly this boolean.
+
+928
+00:45:22,820 --> 00:45:23,870
+This boolean is what makes
+
+929
+00:45:23,870 --> 00:45:25,800
+this sheet appear in the first place.
+
+930
+00:45:25,800 --> 00:45:29,760
+So if somehow this
+isShowing could set this,
+
+931
+00:45:29,760 --> 00:45:32,350
+then it would make this go away.
+
+932
+00:45:32,350 --> 00:45:36,410
+And we know how to make
+this be hooked up to this.
+
+933
+00:45:36,410 --> 00:45:37,800
+That's what Bindings are for.
+
+934
+00:45:37,800 --> 00:45:40,420
+So let's make another Binding here,
+
+935
+00:45:40,420 --> 00:45:44,210
+isShowing just going to be a Bool.
+
+936
+00:45:45,264 --> 00:45:49,490
+And we wanna bind to this
+isShowing up to this one up here.
+
+937
+00:45:49,490 --> 00:45:52,240
+So just like we bound the chosenPalette,
+
+938
+00:45:52,240 --> 00:45:56,013
+using this Binding right here,
+we're gonna bind isShowing
+
+939
+00:45:57,950 --> 00:46:02,170
+using this showPaletteEditor here.
+
+940
+00:46:02,170 --> 00:46:05,020
+This is how we make
+these things come and go,
+
+941
+00:46:05,020 --> 00:46:07,020
+we share a Bool.
+
+942
+00:46:07,020 --> 00:46:10,230
+It might be an Identifiable in some cases
+
+943
+00:46:10,230 --> 00:46:13,500
+with some SwiftUI, but
+it's often just a Bool
+
+944
+00:46:13,500 --> 00:46:15,993
+that says whether this thing is showing.
+
+945
+00:46:17,170 --> 00:46:18,573
+See if this works.
+
+946
+00:46:21,557 --> 00:46:24,310
+Here we go at this and boop, gone.
+
+947
+00:46:25,452 --> 00:46:26,777
+And bloop it's back.
+
+948
+00:46:26,777 --> 00:46:30,240
+And all we're doing when I
+click this, when I click this
+
+949
+00:46:30,240 --> 00:46:35,230
+is setting this showPaletteEditor State.
+
+950
+00:46:35,230 --> 00:46:37,310
+Here's the setting it to true.
+
+951
+00:46:37,310 --> 00:46:39,430
+And here is setting it to false
+
+952
+00:46:39,430 --> 00:46:42,503
+inside this other View through a Binding.
+
+953
+00:46:43,860 --> 00:46:47,570
+Now, we've been doing a lot
+of work with this on the iPad
+
+954
+00:46:47,570 --> 00:46:50,900
+and this is our iPad work here.
+
+955
+00:46:50,900 --> 00:46:52,690
+What about iPhone?
+
+956
+00:46:52,690 --> 00:46:54,930
+Is this all gonna work on the iPhone?
+
+957
+00:46:54,930 --> 00:46:57,730
+Let's take a look, let's see
+if this works on an iPhone.
+
+958
+00:47:01,156 --> 00:47:02,313
+Look.
+
+959
+00:47:02,313 --> 00:47:05,900
+Woo-hoo, look at that, it works unchanged.
+
+960
+00:47:05,900 --> 00:47:08,580
+Here's that sheet, done, nice.
+
+961
+00:47:08,580 --> 00:47:11,357
+You can even swipe down to
+get rid of this one as well.
+
+962
+00:47:11,357 --> 00:47:13,660
+And we've got this, we can edit it,
+
+963
+00:47:13,660 --> 00:47:18,223
+let's go change this to be activity stuff.
+
+964
+00:47:20,720 --> 00:47:22,570
+Activity stuff, very good.
+
+965
+00:47:22,570 --> 00:47:24,200
+We can add emojis.
+
+966
+00:47:24,200 --> 00:47:25,793
+Let's go add an emoji here.
+
+967
+00:47:26,650 --> 00:47:29,800
+Now, when I clicked on this to edit it,
+
+968
+00:47:29,800 --> 00:47:32,870
+it wants me to use the
+hardware keyboard and type.
+
+969
+00:47:32,870 --> 00:47:34,960
+So one thing you have to be careful about
+
+970
+00:47:34,960 --> 00:47:38,070
+when you're working on
+your app in a simulator
+
+971
+00:47:38,070 --> 00:47:40,340
+is whether you have the
+hardware keyboard on
+
+972
+00:47:40,340 --> 00:47:43,310
+and you control that in the
+simulator with this IO menu.
+
+973
+00:47:43,310 --> 00:47:45,130
+You see it's this keyboard right here.
+
+974
+00:47:45,130 --> 00:47:47,290
+And right now I have a
+hardware keyboard connected.
+
+975
+00:47:47,290 --> 00:47:49,230
+If I disconnect the hardware keyboard,
+
+976
+00:47:49,230 --> 00:47:52,150
+then I'll get the keyboard
+that your actual users
+
+977
+00:47:52,150 --> 00:47:53,260
+are gonna have to make,
+
+978
+00:47:53,260 --> 00:47:56,330
+which I really recommend you use this
+
+979
+00:47:56,330 --> 00:48:00,570
+because you're putting yourself
+in the shoes of your users
+
+980
+00:48:00,570 --> 00:48:02,760
+when you use this versus
+typing on your keyboard.
+
+981
+00:48:02,760 --> 00:48:04,300
+They don't, some of them might have
+
+982
+00:48:04,300 --> 00:48:06,570
+a Hardware Keyboard connected
+with Bluetooth or something,
+
+983
+00:48:06,570 --> 00:48:09,560
+but 99% of them are gonna
+have to type in here as well,
+
+984
+00:48:09,560 --> 00:48:14,560
+so it helps you make sure that
+your UI is actually usable
+
+985
+00:48:14,750 --> 00:48:16,793
+and not relying on typing too much.
+
+986
+00:48:17,750 --> 00:48:21,137
+So to add soccer we're
+gonna click it right there.
+
+987
+00:48:21,137 --> 00:48:23,720
+Oh, I'm double clicking
+unnecessarily there.
+
+988
+00:48:23,720 --> 00:48:25,400
+We can see that works fine.
+
+989
+00:48:25,400 --> 00:48:29,380
+So if you put two of them in
+there, it only puts one in
+
+990
+00:48:29,380 --> 00:48:32,030
+that's my little add
+emoji that's doing that.
+
+991
+00:48:32,030 --> 00:48:33,437
+So it added the emojis there.
+
+992
+00:48:33,437 --> 00:48:35,610
+And I could remove the
+bicyclist or whatever,
+
+993
+00:48:35,610 --> 00:48:36,517
+I'm editing this.
+
+994
+00:48:36,517 --> 00:48:38,943
+And when I hit "Done", yeah, okay.
+
+995
+00:48:38,943 --> 00:48:40,843
+I think there's no bicyclist in there.
+
+996
+00:48:42,490 --> 00:48:44,060
+Got our new ones in there.
+
+997
+00:48:44,060 --> 00:48:47,620
+So this is working great
+for iPhone right here.
+
+998
+00:48:47,620 --> 00:48:50,530
+Unfortunately, there's no way
+to add a background image.
+
+999
+00:48:50,530 --> 00:48:53,550
+So that's a problem we're
+gonna have to fix on iPhone.
+
+1000
+00:48:53,550 --> 00:48:56,730
+And also it's just about
+getting to be time here
+
+1001
+00:48:56,730 --> 00:48:59,010
+to be able to have multiple documents.
+
+1002
+00:48:59,010 --> 00:49:02,600
+By now we always just have
+this one untitled document
+
+1003
+00:49:02,600 --> 00:49:05,310
+that we're editing, and
+that's true on iPad as well.
+
+1004
+00:49:05,310 --> 00:49:09,030
+So our next step is going to
+be able to add some UI here
+
+1005
+00:49:09,030 --> 00:49:12,250
+to have a list of documents,
+different EmojiArtDocuments
+
+1006
+00:49:12,250 --> 00:49:13,430
+that we can click on,
+
+1007
+00:49:13,430 --> 00:49:16,023
+and it'll show us each of the documents.
+
+1008
+00:49:17,120 --> 00:49:20,790
+And this is gonna allow
+us to learn something more
+
+1009
+00:49:20,790 --> 00:49:24,460
+in SwiftUI, which is how
+to have multiple ViewModels
+
+1010
+00:49:24,460 --> 00:49:25,530
+in your app.
+
+1011
+00:49:25,530 --> 00:49:27,310
+Because right now we have a ViewModel
+
+1012
+00:49:27,310 --> 00:49:29,500
+that represents an EmojiArtDocument.
+
+1013
+00:49:29,500 --> 00:49:30,500
+That's great.
+
+1014
+00:49:30,500 --> 00:49:33,560
+We're gonna need a new
+ViewModel, which represents
+
+1015
+00:49:33,560 --> 00:49:36,863
+a bunch of EmojiArtDocuments
+in storage somewhere.
+
+1016
+00:49:38,160 --> 00:49:42,240
+So let's dive into this
+by creating our ViewModel
+
+1017
+00:49:42,240 --> 00:49:45,430
+for a store of the EmojiArtDocuments,
+
+1018
+00:49:45,430 --> 00:49:47,290
+stored EmojiArtDocuments.
+
+1019
+00:49:47,290 --> 00:49:50,940
+Now, I, we've already seen
+how to create ViewModels,
+
+1020
+00:49:50,940 --> 00:49:52,810
+it would be a little bit
+repetitive to go do that.
+
+1021
+00:49:52,810 --> 00:49:56,490
+So I actually created my
+EmojiArtDocument store here.
+
+1022
+00:49:56,490 --> 00:49:59,490
+We're gonna drag it in
+and take a look at it.
+
+1023
+00:49:59,490 --> 00:50:01,040
+Copy it in.
+
+1024
+00:50:01,040 --> 00:50:05,660
+It's kind of the world's simplest
+little storage thing here.
+
+1025
+00:50:05,660 --> 00:50:08,730
+But notice that it is a ViewModel class
+
+1026
+00:50:08,730 --> 00:50:10,740
+and ObservableObject.
+
+1027
+00:50:10,740 --> 00:50:12,690
+And this ViewModel has a name.
+
+1028
+00:50:12,690 --> 00:50:14,580
+So this is like the name of the store,
+
+1029
+00:50:14,580 --> 00:50:16,550
+we'll probably call it our EmojiArtStore
+
+1030
+00:50:16,550 --> 00:50:17,610
+or something like that.
+
+1031
+00:50:17,610 --> 00:50:19,230
+So this is where the things are stored.
+
+1032
+00:50:19,230 --> 00:50:20,500
+But then it also has the name
+
+1033
+00:50:20,500 --> 00:50:22,130
+for all the documents in the store.
+
+1034
+00:50:22,130 --> 00:50:24,290
+You can get the name of the document,
+
+1035
+00:50:24,290 --> 00:50:26,330
+see, this is just an EmojiArtDocument.
+
+1036
+00:50:26,330 --> 00:50:28,070
+This is our other ViewModel.
+
+1037
+00:50:28,070 --> 00:50:29,860
+So in a way, this is a ViewModel
+
+1038
+00:50:29,860 --> 00:50:34,860
+that has other ViewModels
+as part of its content here.
+
+1039
+00:50:34,920 --> 00:50:37,610
+But you can set a name for
+a document right down here.
+
+1040
+00:50:37,610 --> 00:50:39,910
+You can get all the documents
+that we have names for,
+
+1041
+00:50:39,910 --> 00:50:41,340
+which is nice.
+
+1042
+00:50:41,340 --> 00:50:43,860
+You can add documents, the title or not
+
+1043
+00:50:43,860 --> 00:50:46,730
+it'll use "Untitled" if
+you don't specify a name.
+
+1044
+00:50:46,730 --> 00:50:48,680
+And you can remove documents down here.
+
+1045
+00:50:49,750 --> 00:50:52,710
+Believe it or not, this
+whole store, this whole thing
+
+1046
+00:50:52,710 --> 00:50:55,530
+only has one var that's
+actually doing any storage.
+
+1047
+00:50:55,530 --> 00:50:57,690
+It's a published var, of
+course, because when it changes
+
+1048
+00:50:57,690 --> 00:51:00,620
+we are an ObservableObject,
+we're a ViewModel,
+
+1049
+00:51:00,620 --> 00:51:02,510
+we want our Views to find out.
+
+1050
+00:51:02,510 --> 00:51:06,560
+And this store is just a
+Dictionary with EmojiArtDocuments
+
+1051
+00:51:06,560 --> 00:51:11,130
+as the keys and their names
+of the document as a String.
+
+1052
+00:51:11,130 --> 00:51:14,550
+That's it, that is the
+entirety of the storage
+
+1053
+00:51:14,550 --> 00:51:16,197
+in this ViewModel.
+
+1054
+00:51:16,197 --> 00:51:17,360
+And that's really all we need,
+
+1055
+00:51:17,360 --> 00:51:20,010
+we just need the document names that's,
+
+1056
+00:51:20,010 --> 00:51:22,700
+we can access them out of our store.
+
+1057
+00:51:22,700 --> 00:51:25,050
+By the way, it's very
+common to have ViewModels
+
+1058
+00:51:25,050 --> 00:51:29,080
+that are essentially stores,
+storage places for things.
+
+1059
+00:51:29,080 --> 00:51:31,180
+Our ViewModel that we've had for Memorize
+
+1060
+00:51:31,180 --> 00:51:35,850
+and that you had for Set are
+really more logic-oriented.
+
+1061
+00:51:35,850 --> 00:51:38,360
+This is really not a lot of logic here.
+
+1062
+00:51:38,360 --> 00:51:40,380
+I guess naming these
+things is kind of logic,
+
+1063
+00:51:40,380 --> 00:51:42,930
+but mostly it's just storing things.
+
+1064
+00:51:42,930 --> 00:51:44,060
+So you'll see a lot of ViewModels
+
+1065
+00:51:44,060 --> 00:51:46,493
+that have the word store in their name.
+
+1066
+00:51:47,890 --> 00:51:49,820
+Now, I've done a couple of things here,
+
+1067
+00:51:49,820 --> 00:51:54,370
+is I've used the Publisher
+stuff that we know about
+
+1068
+00:51:54,370 --> 00:51:57,270
+to have it autosave into UserDefaults.
+
+1069
+00:51:57,270 --> 00:51:59,450
+Again, UserDefaults is
+the only storage mechanism
+
+1070
+00:51:59,450 --> 00:52:02,140
+we know so far, so I'm
+having to use UserDefault.
+
+1071
+00:52:02,140 --> 00:52:04,190
+I wouldn't store these documents
+
+1072
+00:52:04,190 --> 00:52:07,620
+in UserDefaults in the real
+world but it's simple to do.
+
+1073
+00:52:07,620 --> 00:52:09,740
+One thing about storing
+things in UserDefault
+
+1074
+00:52:09,740 --> 00:52:13,230
+is we know that UserDefaults
+only stores property lists.
+
+1075
+00:52:13,230 --> 00:52:16,330
+And this is most certainly
+not a property list
+
+1076
+00:52:16,330 --> 00:52:20,690
+because this is not one
+of the prescribed types,
+
+1077
+00:52:20,690 --> 00:52:23,503
+String and Data, it's
+none of those things.
+
+1078
+00:52:23,503 --> 00:52:25,850
+It's its own custom class.
+
+1079
+00:52:25,850 --> 00:52:28,610
+So I had to write a little
+bit of code down here,
+
+1080
+00:52:28,610 --> 00:52:30,620
+I put it as an extension to Dictionary
+
+1081
+00:52:30,620 --> 00:52:35,430
+that converts this Dictionary
+to a property list and back.
+
+1082
+00:52:35,430 --> 00:52:37,097
+So this gets it as a property list
+
+1083
+00:52:37,097 --> 00:52:39,350
+and this creates from a property list.
+
+1084
+00:52:39,350 --> 00:52:42,530
+That way, I could have
+UserDefaults set object forKey
+
+1085
+00:52:42,530 --> 00:52:46,330
+and set, and get the object forKey
+
+1086
+00:52:46,330 --> 00:52:49,253
+and set the object for
+key as a property list.
+
+1087
+00:52:50,950 --> 00:52:53,430
+Now, and you can look at
+that later how I did that
+
+1088
+00:52:53,430 --> 00:52:55,470
+it's kinda cool.
+
+1089
+00:52:55,470 --> 00:52:57,960
+But not super important, because again,
+
+1090
+00:52:57,960 --> 00:53:00,530
+we're talking about interfacing
+with an old API here
+
+1091
+00:53:00,530 --> 00:53:02,880
+in UserDefaults, so it's not
+super important to understand
+
+1092
+00:53:02,880 --> 00:53:03,920
+what's going on in here.
+
+1093
+00:53:03,920 --> 00:53:07,160
+But we're using this as
+thing that I talked about,
+
+1094
+00:53:07,160 --> 00:53:10,983
+and we're using Any, so this
+is really kinda old stuff.
+
+1095
+00:53:11,980 --> 00:53:14,930
+Anyway, you can see I have a
+lot of red here a lot of error.
+
+1096
+00:53:14,930 --> 00:53:16,410
+And it's mostly this error
+
+1097
+00:53:16,410 --> 00:53:17,787
+that's causing the problem right here.
+
+1098
+00:53:17,787 --> 00:53:21,497
+"Generic struct Dictionary
+requires that EmojiArtDocuments
+
+1099
+00:53:21,497 --> 00:53:23,410
+"conform to Hashable."
+
+1100
+00:53:23,410 --> 00:53:25,880
+Anytime you wanna be
+the key of a Dictionary,
+
+1101
+00:53:25,880 --> 00:53:27,540
+you have to be Hashable.
+
+1102
+00:53:27,540 --> 00:53:29,970
+Now we've seen this
+Hashable protocol before,
+
+1103
+00:53:29,970 --> 00:53:31,347
+we didn't see how to implement it,
+
+1104
+00:53:31,347 --> 00:53:32,970
+but we saw that it exists,
+
+1105
+00:53:32,970 --> 00:53:35,720
+it was over here in our Grid, okay?
+
+1106
+00:53:35,720 --> 00:53:39,680
+ForEach is essentially
+creating up a little Dictionary
+
+1107
+00:53:39,680 --> 00:53:42,800
+with these items, and all
+these Views as their values
+
+1108
+00:53:42,800 --> 00:53:44,040
+and so that's why we had to say
+
+1109
+00:53:44,040 --> 00:53:48,300
+that that ID into this thing,
+it's gotta be a Hashable thing
+
+1110
+00:53:48,300 --> 00:53:50,580
+so that ForEach can
+put 'em in a Dictionary
+
+1111
+00:53:50,580 --> 00:53:52,500
+or whatever it's doing inside there.
+
+1112
+00:53:52,500 --> 00:53:54,590
+So we have seen Hashable before,
+
+1113
+00:53:54,590 --> 00:53:57,330
+but now we're gonna have to
+actually implement Hashable
+
+1114
+00:53:57,330 --> 00:53:59,250
+in EmojiArtDocument
+
+1115
+00:53:59,250 --> 00:54:02,890
+because we want EmojiArtDocument
+itself to be Hashable.
+
+1116
+00:54:02,890 --> 00:54:05,300
+So here's EmojiArtDocument,
+it's a ViewModel,
+
+1117
+00:54:05,300 --> 00:54:09,553
+it's a class and our requirement
+is that it be Hashable.
+
+1118
+00:54:10,690 --> 00:54:13,800
+Now, what is in this Hashable protocol?
+
+1119
+00:54:13,800 --> 00:54:16,620
+It only has one function in it.
+
+1120
+00:54:16,620 --> 00:54:19,670
+This function is called hash
+as you might've guessed.
+
+1121
+00:54:19,670 --> 00:54:23,670
+And you can see it
+right there into hasher.
+
+1122
+00:54:23,670 --> 00:54:26,560
+So this hasher is just an
+object that's given to you
+
+1123
+00:54:26,560 --> 00:54:28,390
+when you're being asked to hash.
+
+1124
+00:54:28,390 --> 00:54:31,270
+And it only really has one function in it.
+
+1125
+00:54:31,270 --> 00:54:36,270
+This hasher has combine, and
+you give it something here,
+
+1126
+00:54:37,600 --> 00:54:41,090
+that is itself Hashable, and it combines
+
+1127
+00:54:41,090 --> 00:54:45,850
+possibly multiple things
+inside your object
+
+1128
+00:54:45,850 --> 00:54:47,310
+to make it Hashable.
+
+1129
+00:54:47,310 --> 00:54:48,960
+So we're combining Hashable things
+
+1130
+00:54:48,960 --> 00:54:50,950
+to make something Hashable.
+
+1131
+00:54:50,950 --> 00:54:53,410
+Now, what could we combine here?
+
+1132
+00:54:53,410 --> 00:54:56,900
+What makes us unique
+enough to be hashed, right?
+
+1133
+00:54:56,900 --> 00:54:58,683
+To be put into a hash table?
+
+1134
+00:54:59,670 --> 00:55:02,630
+Well, of course our
+EmojiArtDocument itself
+
+1135
+00:55:02,630 --> 00:55:06,510
+is quite unique, it's got emojis
+in the background in there.
+
+1136
+00:55:06,510 --> 00:55:08,870
+So we could make this Hashable
+
+1137
+00:55:08,870 --> 00:55:11,143
+and then combine here have emojiArt.
+
+1138
+00:55:12,370 --> 00:55:14,820
+But it's a little bit overkill to do that,
+
+1139
+00:55:14,820 --> 00:55:16,750
+and it actually might not be that good
+
+1140
+00:55:16,750 --> 00:55:18,690
+in that every time we change our document,
+
+1141
+00:55:18,690 --> 00:55:21,211
+our hash is gonna change.
+
+1142
+00:55:21,211 --> 00:55:24,810
+It'd be a lot better if we
+had some unique identifier
+
+1143
+00:55:24,810 --> 00:55:26,850
+that we could hash in here.
+
+1144
+00:55:26,850 --> 00:55:27,850
+So I'm gonna do that.
+
+1145
+00:55:27,850 --> 00:55:30,870
+I'm gonna create a little
+unique identifier here,
+
+1146
+00:55:30,870 --> 00:55:32,593
+I'm gonna call it id.
+
+1147
+00:55:33,460 --> 00:55:35,850
+And I'm gonna make it be a UUID.
+
+1148
+00:55:35,850 --> 00:55:39,280
+Now, I mentioned UUID before,
+this is a little struct
+
+1149
+00:55:39,280 --> 00:55:42,120
+that generates a unique thing.
+
+1150
+00:55:42,120 --> 00:55:45,610
+That's really all it's for
+is to create a unique thing.
+
+1151
+00:55:45,610 --> 00:55:48,930
+Now the reason I called my
+little unique identifier id
+
+1152
+00:55:48,930 --> 00:55:52,830
+is because now I can also
+say that I'm Identifiable,
+
+1153
+00:55:52,830 --> 00:55:54,800
+which might be nice someday.
+
+1154
+00:55:54,800 --> 00:55:57,130
+Why call this something else,
+
+1155
+00:55:57,130 --> 00:55:59,640
+when it is a unique Identifiable thing?
+
+1156
+00:55:59,640 --> 00:56:02,730
+Might as well get
+Identifiable for free here.
+
+1157
+00:56:02,730 --> 00:56:04,650
+So I'm just gonna combine
+that and hash that.
+
+1158
+00:56:04,650 --> 00:56:07,730
+So my hashing is basically
+going to be the hashing of this.
+
+1159
+00:56:07,730 --> 00:56:10,713
+Luckily, your UUID is a
+Hashable thing itself.
+
+1160
+00:56:11,580 --> 00:56:13,150
+That seems like that should be enough
+
+1161
+00:56:13,150 --> 00:56:15,403
+but we got more complaints up here.
+
+1162
+00:56:15,403 --> 00:56:19,180
+"EmojiArtDocument does
+not conform to Equatable."
+
+1163
+00:56:19,180 --> 00:56:23,320
+So to be Hashable, you also
+have to implement Equatable.
+
+1164
+00:56:23,320 --> 00:56:25,840
+In other words, there's an
+inheritance relationship
+
+1165
+00:56:25,840 --> 00:56:28,600
+between Hashable and Equatable.
+
+1166
+00:56:28,600 --> 00:56:30,170
+Those two protocols.
+
+1167
+00:56:30,170 --> 00:56:32,820
+So what is in the Equatable protocol?
+
+1168
+00:56:32,820 --> 00:56:34,750
+I'm actually gonna use "Fix" right here
+
+1169
+00:56:34,750 --> 00:56:39,000
+to give this protocol stubs
+briefly show us what's in there.
+
+1170
+00:56:39,000 --> 00:56:41,410
+Boop and it's just this one function.
+
+1171
+00:56:41,410 --> 00:56:43,690
+It totally makes sense
+when you think about it.
+
+1172
+00:56:43,690 --> 00:56:47,570
+It's a static function
+on the type called ==
+
+1173
+00:56:47,570 --> 00:56:50,950
+remember that Swift can use any,
+
+1174
+00:56:50,950 --> 00:56:53,340
+it could use emoji as
+the name of a function.
+
+1175
+00:56:53,340 --> 00:56:57,080
+So == is just a perfectly reasonable
+
+1176
+00:56:57,080 --> 00:56:58,360
+name of a function.
+
+1177
+00:56:58,360 --> 00:57:00,550
+That's all this is, the
+name of this function.
+
+1178
+00:57:00,550 --> 00:57:02,560
+It takes two arguments, a left hand side
+
+1179
+00:57:02,560 --> 00:57:03,870
+and a right hand side.
+
+1180
+00:57:03,870 --> 00:57:06,650
+Both of which, of course,
+are EmojiArtDocuments,
+
+1181
+00:57:06,650 --> 00:57:08,070
+and it's returning a Bool,
+
+1182
+00:57:08,070 --> 00:57:10,820
+whether these two things are equal.
+
+1183
+00:57:10,820 --> 00:57:12,390
+So for us, that's really easy.
+
+1184
+00:57:12,390 --> 00:57:16,100
+Left hand side.id equals
+right hand side.id.
+
+1185
+00:57:16,100 --> 00:57:18,530
+If those IDs are the same, this unique ID,
+
+1186
+00:57:18,530 --> 00:57:20,760
+then this must be the same document.
+
+1187
+00:57:20,760 --> 00:57:22,370
+But a word of warning here,
+
+1188
+00:57:22,370 --> 00:57:24,440
+this strategy is really only gonna work
+
+1189
+00:57:24,440 --> 00:57:27,100
+for a reference type for a class,
+
+1190
+00:57:27,100 --> 00:57:30,890
+because we're all seeing the
+same version of it in the heap.
+
+1191
+00:57:30,890 --> 00:57:33,640
+For struct, it's a value type,
+
+1192
+00:57:33,640 --> 00:57:35,740
+we're copying it around all the time,
+
+1193
+00:57:35,740 --> 00:57:37,270
+we actually need to be able to see
+
+1194
+00:57:37,270 --> 00:57:40,830
+is this copy == to this other copy?
+
+1195
+00:57:40,830 --> 00:57:43,320
+And we wouldn't wanna
+do that just by the ID.
+
+1196
+00:57:43,320 --> 00:57:45,750
+That's what Identifiable is for,
+
+1197
+00:57:45,750 --> 00:57:48,080
+we actually need to check and see if
+
+1198
+00:57:48,080 --> 00:57:50,360
+all the vars are equal to each other.
+
+1199
+00:57:50,360 --> 00:57:51,440
+And same thing for hashing,
+
+1200
+00:57:51,440 --> 00:57:54,440
+we wanna hash all the vars in there.
+
+1201
+00:57:54,440 --> 00:57:56,590
+And in fact, that's the
+default implementation
+
+1202
+00:57:56,590 --> 00:58:01,590
+of Hashable in Swift is for
+structs to check all the vars.
+
+1203
+00:58:02,690 --> 00:58:05,420
+And we do this in our EmojiArt Model,
+
+1204
+00:58:05,420 --> 00:58:07,750
+we have a little sub-struct
+there, the Emoji,
+
+1205
+00:58:07,750 --> 00:58:11,300
+and we marked it Hashable and
+Hashable includes Equatable.
+
+1206
+00:58:11,300 --> 00:58:13,840
+And yeah, we didn't have to do == or hash,
+
+1207
+00:58:13,840 --> 00:58:16,650
+we just used the default
+version that we got from Swift,
+
+1208
+00:58:16,650 --> 00:58:18,293
+which checks all the variables.
+
+1209
+00:58:19,420 --> 00:58:22,000
+But for a class, this is a nice, really
+
+1210
+00:58:22,000 --> 00:58:25,580
+very, very simple way to
+get equality and hashability
+
+1211
+00:58:25,580 --> 00:58:29,120
+and identity all in very simple code.
+
+1212
+00:58:29,120 --> 00:58:32,870
+And we can use this little bit
+of code for one more thing,
+
+1213
+00:58:32,870 --> 00:58:36,270
+which is that right now we
+store our EmojiArtDocuments
+
+1214
+00:58:36,270 --> 00:58:40,560
+in UserDefaults, but we store
+them as this "Untitled",
+
+1215
+00:58:40,560 --> 00:58:42,810
+so they're not each
+separately being stored
+
+1216
+00:58:42,810 --> 00:58:43,920
+as something else.
+
+1217
+00:58:43,920 --> 00:58:46,010
+But now that we have a unique ID,
+
+1218
+00:58:46,010 --> 00:58:48,280
+we can still store them in default,
+
+1219
+00:58:48,280 --> 00:58:51,283
+but instead of under
+"Untitled", with that unique ID.
+
+1220
+00:58:52,550 --> 00:58:56,500
+So to do that, I'm going to
+have my init take the id,
+
+1221
+00:58:56,500 --> 00:59:01,200
+the UUID for that
+particular EmojiArtDocument,
+
+1222
+00:59:01,200 --> 00:59:02,330
+because if you give me an ID,
+
+1223
+00:59:02,330 --> 00:59:05,203
+I'll go look it up in
+UserDefaults and get it for you.
+
+1224
+00:59:06,460 --> 00:59:09,997
+And I could have it default
+to creating a random UUID
+
+1225
+00:59:10,916 --> 00:59:13,810
+then I wouldn't even need to
+do this initialization here.
+
+1226
+00:59:13,810 --> 00:59:17,100
+I could just have this be let ID UUID
+
+1227
+00:59:17,100 --> 00:59:20,273
+and then say self.id equals this id.
+
+1228
+00:59:21,360 --> 00:59:24,530
+This defaulting, we haven't
+done it much in our demos,
+
+1229
+00:59:24,530 --> 00:59:26,400
+but hopefully you know about that,
+
+1230
+00:59:26,400 --> 00:59:28,640
+that you can have a something default,
+
+1231
+00:59:28,640 --> 00:59:31,880
+and then someone could call
+my init with no arguments,
+
+1232
+00:59:31,880 --> 00:59:34,830
+and it would get some new identifier,
+
+1233
+00:59:34,830 --> 00:59:37,150
+which makes sense if I
+create an Emoji Art with,
+
+1234
+00:59:37,150 --> 00:59:39,350
+an EmojiArtDocument with no arguments
+
+1235
+00:59:39,350 --> 00:59:42,340
+I want it to get its own unique ID.
+
+1236
+00:59:42,340 --> 00:59:43,290
+I'm gonna show you another way
+
+1237
+00:59:43,290 --> 00:59:46,320
+that you'll often see
+this defaulting done,
+
+1238
+00:59:46,320 --> 00:59:48,540
+which is instead of setting
+equal, so I'm thinking,
+
+1239
+00:59:48,540 --> 00:59:52,090
+it'll make it an Optional
+and set it equal to nil,
+
+1240
+00:59:52,090 --> 00:59:54,623
+and then do this defaulting right here.
+
+1241
+00:59:55,790 --> 00:59:58,130
+Now, why would we do it this way?
+
+1242
+00:59:58,130 --> 01:00:00,900
+Why would we make this an Optional?
+
+1243
+01:00:00,900 --> 01:00:04,360
+Because now we can call
+this init with no arguments
+
+1244
+01:00:04,360 --> 01:00:09,360
+or we can call it with a UUID,
+or we can call it with nil.
+
+1245
+01:00:09,390 --> 01:00:11,440
+So now there's a little more flexibility
+
+1246
+01:00:11,440 --> 01:00:15,620
+in how we create this EmojiArtDocument.
+
+1247
+01:00:15,620 --> 01:00:16,880
+Totally flexibility,
+
+1248
+01:00:16,880 --> 01:00:18,780
+it's really no other difference otherwise
+
+1249
+01:00:18,780 --> 01:00:21,980
+but I mentioned this, because
+you're gonna see this in Swift
+
+1250
+01:00:21,980 --> 01:00:24,720
+where there are functions
+that seem to take an argument
+
+1251
+01:00:24,720 --> 01:00:26,600
+that isn't Optional, that defaults to nil,
+
+1252
+01:00:26,600 --> 01:00:27,730
+and you're like, why does it do that?
+
+1253
+01:00:27,730 --> 01:00:29,270
+Well, this is all it's doing.
+
+1254
+01:00:29,270 --> 01:00:33,160
+It wants to keep whatever
+it defaults it to internal.
+
+1255
+01:00:33,160 --> 01:00:35,590
+It doesn't want it to be made explicit,
+
+1256
+01:00:35,590 --> 01:00:38,430
+and so that people can
+see what the default is
+
+1257
+01:00:38,430 --> 01:00:42,120
+if for some reason don't want
+that to be public information.
+
+1258
+01:00:42,120 --> 01:00:43,183
+It's perfectly fine.
+
+1259
+01:00:44,380 --> 01:00:47,600
+So now instead of storing
+this as "Untitled", right?
+
+1260
+01:00:47,600 --> 01:00:49,740
+This "Untitled", let's get rid of that.
+
+1261
+01:00:49,740 --> 01:00:54,000
+Instead, I'm just gonna have
+a little let here defaultsKey.
+
+1262
+01:00:54,000 --> 01:00:57,173
+And we're gonna have this
+be EmojiArtDocument.,
+
+1263
+01:00:59,340 --> 01:01:03,470
+and I'm gonna use this little
+embedding of Strings here
+
+1264
+01:01:03,470 --> 01:01:07,140
+to put my ID in there as a String.
+
+1265
+01:01:07,140 --> 01:01:10,510
+And it has a nice
+function here, uuidString
+
+1266
+01:01:10,510 --> 01:01:12,720
+that will give it to you that way.
+
+1267
+01:01:12,720 --> 01:01:14,270
+So this is the default key I'm gonna use
+
+1268
+01:01:14,270 --> 01:01:15,843
+instead of this "Untitled",
+
+1269
+01:01:17,650 --> 01:01:22,513
+in both when I'm getting it
+there and when I am saving it.
+
+1270
+01:01:23,460 --> 01:01:25,890
+So now, I've made my documents
+
+1271
+01:01:25,890 --> 01:01:28,603
+persist always in UserDefaults.
+
+1272
+01:01:29,750 --> 01:01:31,830
+So that's it for our store.
+
+1273
+01:01:31,830 --> 01:01:34,050
+And we're gonna use this store right now
+
+1274
+01:01:34,050 --> 01:01:36,880
+as the ViewModel of a new
+View that we're gonna build
+
+1275
+01:01:36,880 --> 01:01:39,170
+that let's us choose documents.
+
+1276
+01:01:39,170 --> 01:01:40,980
+So it's a document chooser.
+
+1277
+01:01:40,980 --> 01:01:44,053
+Let's go ahead in here and
+create a new SwiftUI View.
+
+1278
+01:01:45,670 --> 01:01:47,940
+It is a SwiftUI View, this chooser.
+
+1279
+01:01:47,940 --> 01:01:50,180
+It's a list of documents,
+but it is a View.
+
+1280
+01:01:50,180 --> 01:01:52,430
+I'm gonna call it my
+EmojiArtDocumentChooser.
+
+1281
+01:01:54,720 --> 01:01:57,540
+I might be starting to regret
+putting EmojiArtDocument
+
+1282
+01:01:57,540 --> 01:01:59,340
+in front of everything
+here, but not really.
+
+1283
+01:01:59,340 --> 01:02:02,633
+It's nice to have good
+clear names of things.
+
+1284
+01:02:03,800 --> 01:02:05,740
+So here is my chooser.
+
+1285
+01:02:05,740 --> 01:02:09,710
+And this chooser is essentially
+going to have a store.
+
+1286
+01:02:09,710 --> 01:02:11,030
+And I'm gonna make the store be
+
+1287
+01:02:11,030 --> 01:02:12,943
+an EnvironmentObject as well.
+
+1288
+01:02:14,140 --> 01:02:16,370
+I could make this ObservedObject,
+
+1289
+01:02:16,370 --> 01:02:18,110
+but I'm just trying to mix it up here.
+
+1290
+01:02:18,110 --> 01:02:20,780
+I'm not really putting this in a popover
+
+1291
+01:02:20,780 --> 01:02:24,200
+or a sheet that would require
+me to do EnvironmentObject.
+
+1292
+01:02:24,200 --> 01:02:27,260
+But it's pretty common
+to use EnvironmentObject
+
+1293
+01:02:27,260 --> 01:02:29,307
+especially for a top level View like this
+
+1294
+01:02:29,307 --> 01:02:32,113
+that's going to be choosing
+other Views, et cetera.
+
+1295
+01:02:33,610 --> 01:02:37,420
+So how do we take, get our list
+of objects in our store here
+
+1296
+01:02:37,420 --> 01:02:39,010
+and display them in our body?
+
+1297
+01:02:39,010 --> 01:02:41,670
+We know exactly how to take
+a list of something and show,
+
+1298
+01:02:41,670 --> 01:02:46,230
+we do a ForEach, and we're
+going to do the store.documents.
+
+1299
+01:02:46,230 --> 01:02:48,340
+And now I'm awfully glad
+
+1300
+01:02:48,340 --> 01:02:51,690
+that I made EmojiArtDocument Identifiable
+
+1301
+01:02:51,690 --> 01:02:53,920
+because store.documents over here
+
+1302
+01:02:54,790 --> 01:02:57,010
+is an Array of EmojiArtDocument.
+
+1303
+01:02:57,010 --> 01:03:00,100
+Woo, this has to be
+Identifiable for ForEach to work
+
+1304
+01:03:00,100 --> 01:03:02,910
+and woo we got it to be Identifiable
+
+1305
+01:03:02,910 --> 01:03:04,470
+by making this be called id.
+
+1306
+01:03:04,470 --> 01:03:05,723
+And of course, I knew I was gonna do that.
+
+1307
+01:03:05,723 --> 01:03:08,643
+But you can see the benefit
+there of having done that.
+
+1308
+01:03:10,220 --> 01:03:11,820
+All right, so we've got our documents
+
+1309
+01:03:11,820 --> 01:03:15,000
+and for each document, I
+just wanna create a View that
+
+1310
+01:03:15,000 --> 01:03:17,263
+kinda shows that document in the list.
+
+1311
+01:03:19,040 --> 01:03:23,130
+So we'll do that by just
+doing a Text let's say,
+
+1312
+01:03:23,130 --> 01:03:27,080
+of the store's name for that document.
+
+1313
+01:03:27,080 --> 01:03:30,570
+So, it's just gonna be a list
+of the names of the documents.
+
+1314
+01:03:30,570 --> 01:03:33,430
+Now, of course, we know
+ForEach doesn't do layouts.
+
+1315
+01:03:33,430 --> 01:03:36,830
+So we have to put this
+in an HStack or a VStack
+
+1316
+01:03:36,830 --> 01:03:39,220
+or a Grid or some kind of layout thing.
+
+1317
+01:03:39,220 --> 01:03:41,200
+And we're gonna learn a new one today.
+
+1318
+01:03:41,200 --> 01:03:44,090
+This one is called a List.
+
+1319
+01:03:44,090 --> 01:03:47,750
+So List, kind of like a VStack
+
+1320
+01:03:47,750 --> 01:03:49,730
+feels a little bit like a VStack,
+
+1321
+01:03:49,730 --> 01:03:51,020
+but it's much more powerful
+
+1322
+01:03:51,020 --> 01:03:53,270
+that it creates a big scrollable list
+
+1323
+01:03:53,270 --> 01:03:55,860
+with separators and all that stuff.
+
+1324
+01:03:55,860 --> 01:03:59,800
+And it looks just like in what
+you've seen in other apps,
+
+1325
+01:03:59,800 --> 01:04:03,083
+what in the old UI kit
+we called a TableView.
+
+1326
+01:04:04,490 --> 01:04:08,900
+Now, we have to pass, and we'll
+see this in just a second,
+
+1327
+01:04:08,900 --> 01:04:11,190
+we have to pass our store in here.
+
+1328
+01:04:11,190 --> 01:04:13,270
+And also I want this document chooser.
+
+1329
+01:04:13,270 --> 01:04:15,003
+When I run my app right now,
+
+1330
+01:04:16,300 --> 01:04:18,630
+it's showing me an EmojiArtDocument.
+
+1331
+01:04:18,630 --> 01:04:20,810
+But I want it to show
+this chooser instead.
+
+1332
+01:04:20,810 --> 01:04:23,370
+So I'm gonna have to go back
+to my theme delegate here,
+
+1333
+01:04:23,370 --> 01:04:25,870
+and not do this EmojiArtDocumentView
+
+1334
+01:04:26,780 --> 01:04:29,783
+and instead do an EmojiArtDocumentChooser.
+
+1335
+01:04:32,190 --> 01:04:34,500
+And this takes no arguments, okay.
+
+1336
+01:04:34,500 --> 01:04:38,783
+But it does want you to
+provide this EnvironmentObject,
+
+1337
+01:04:40,100 --> 01:04:41,800
+which has to be the store.
+
+1338
+01:04:41,800 --> 01:04:43,830
+So we're gonna have to create that store.
+
+1339
+01:04:43,830 --> 01:04:47,746
+I'm gonna say let store equal
+
+1340
+01:04:47,746 --> 01:04:51,504
+an EmojiArtDocumentStore.
+
+1341
+01:04:52,400 --> 01:04:54,000
+This happens to take a name
+
+1342
+01:04:54,000 --> 01:04:56,362
+so I'm gonna call mine "Emoji Art".
+
+1343
+01:04:56,362 --> 01:04:58,940
+That's gonna be the name
+of this document store.
+
+1344
+01:04:58,940 --> 01:05:02,070
+Let's even put a couple
+of documents in there.
+
+1345
+01:05:02,070 --> 01:05:03,120
+So store.addDocument.
+
+1346
+01:05:04,480 --> 01:05:09,480
+Maybe store.addDocument
+named "Hello World".
+
+1347
+01:05:11,470 --> 01:05:13,540
+So all this stuff I'm
+doing here addDocument
+
+1348
+01:05:13,540 --> 01:05:14,410
+and creating the store,
+
+1349
+01:05:14,410 --> 01:05:16,620
+that's all the stuff that's
+in store here, right?
+
+1350
+01:05:16,620 --> 01:05:18,530
+Here's addDocument, creates that.
+
+1351
+01:05:18,530 --> 01:05:22,313
+Here's the document,
+creating the document.
+
+1352
+01:05:23,270 --> 01:05:25,190
+Initializer is right here, right?
+
+1353
+01:05:25,190 --> 01:05:27,230
+Init named, I'm just creating this,
+
+1354
+01:05:27,230 --> 01:05:29,120
+I'm not doing anything special here,
+
+1355
+01:05:29,120 --> 01:05:31,220
+I'm just creating the store.
+
+1356
+01:05:31,220 --> 01:05:33,410
+And then I'm setting the
+store as the environment
+
+1357
+01:05:33,410 --> 01:05:36,770
+for my chooser so that
+my chooser has this store
+
+1358
+01:05:36,770 --> 01:05:39,027
+and it can go through
+all the store's documents
+
+1359
+01:05:39,027 --> 01:05:40,070
+and show the names.
+
+1360
+01:05:40,070 --> 01:05:43,393
+And it's gonna do it in this List UI.
+
+1361
+01:05:43,393 --> 01:05:45,343
+So let's see what this List looks like.
+
+1362
+01:05:47,929 --> 01:05:50,250
+Woo-hoo, there we go, we've
+got our two documents.
+
+1363
+01:05:50,250 --> 01:05:52,040
+Now, this is a scrollable list,
+
+1364
+01:05:52,040 --> 01:05:53,763
+so we can scroll it up and down.
+
+1365
+01:05:55,220 --> 01:05:57,830
+So this store itself is persistent.
+
+1366
+01:05:57,830 --> 01:06:01,920
+So if we go back to our
+SceneDelegate over here,
+
+1367
+01:06:01,920 --> 01:06:05,573
+and delete these addDocuments and rerun,
+
+1368
+01:06:08,230 --> 01:06:11,200
+they'll stay in the list right there.
+
+1369
+01:06:11,200 --> 01:06:15,130
+Now, this is great, but
+when we tap on these,
+
+1370
+01:06:15,130 --> 01:06:17,520
+it does not show us these documents,
+
+1371
+01:06:17,520 --> 01:06:20,350
+Hello World and Untitled,
+it's not showing them to us.
+
+1372
+01:06:20,350 --> 01:06:22,340
+To make it so that clicking on things
+
+1373
+01:06:22,340 --> 01:06:26,730
+navigates to a different View
+to show us those documents,
+
+1374
+01:06:26,730 --> 01:06:31,730
+we have to embed our List
+right here in another View
+
+1375
+01:06:32,240 --> 01:06:34,193
+called a NavigationView.
+
+1376
+01:06:36,221 --> 01:06:39,910
+NavigationView, which
+very often, almost always,
+
+1377
+01:06:39,910 --> 01:06:42,430
+for putting a List inside a navigation,
+
+1378
+01:06:42,430 --> 01:06:43,770
+is not absolutely required.
+
+1379
+01:06:43,770 --> 01:06:47,563
+Sometimes we might put a
+Form in here, possibly.
+
+1380
+01:06:48,570 --> 01:06:50,530
+So our NavigationView has only changed
+
+1381
+01:06:50,530 --> 01:06:52,200
+our View a little bit here,
+
+1382
+01:06:52,200 --> 01:06:55,030
+but it's still not making
+it so if we tap on these,
+
+1383
+01:06:55,030 --> 01:06:58,410
+I'm tapping on these, it's
+not making any difference.
+
+1384
+01:06:58,410 --> 01:07:01,050
+That's because these are
+just Texts right here,
+
+1385
+01:07:01,050 --> 01:07:04,930
+text when you tap on them, they
+don't know how to navigate.
+
+1386
+01:07:04,930 --> 01:07:08,250
+So we're gonna wrap these also in a View
+
+1387
+01:07:08,250 --> 01:07:10,253
+called a NavigationLink.
+
+1388
+01:07:11,900 --> 01:07:16,340
+Now, NavigationLink has quite
+a few ways to create it.
+
+1389
+01:07:16,340 --> 01:07:19,100
+But in all of them, there's
+a very important argument
+
+1390
+01:07:19,100 --> 01:07:22,290
+you can see right here called destination.
+
+1391
+01:07:22,290 --> 01:07:25,740
+This destination is where
+this link is gonna go
+
+1392
+01:07:25,740 --> 01:07:26,880
+when you tap on it.
+
+1393
+01:07:26,880 --> 01:07:31,880
+In other words, give me
+a View to navigate to
+
+1394
+01:07:32,210 --> 01:07:33,900
+when I click on this.
+
+1395
+01:07:33,900 --> 01:07:36,210
+So in our case, the destination we want
+
+1396
+01:07:36,210 --> 01:07:39,520
+is we want an EmojiArtDocumentView
+
+1397
+01:07:39,520 --> 01:07:43,670
+that shows this document that
+you just clicked on, right?
+
+1398
+01:07:43,670 --> 01:07:46,180
+We're in a ForEach, we've
+got these documents.
+
+1399
+01:07:46,180 --> 01:07:49,093
+We wanna go to a document
+View that shows this document.
+
+1400
+01:07:50,230 --> 01:07:53,330
+And now we put this Text inside
+
+1401
+01:07:53,330 --> 01:07:55,693
+the content of this NavigationLink View.
+
+1402
+01:07:56,780 --> 01:07:59,360
+This is how we make it so that things
+
+1403
+01:07:59,360 --> 01:08:02,023
+that are in our List are navigatable.
+
+1404
+01:08:03,080 --> 01:08:04,330
+Let's see that in action.
+
+1405
+01:08:06,300 --> 01:08:08,670
+All right, now notice
+something has changed.
+
+1406
+01:08:08,670 --> 01:08:11,120
+Now there's a little
+greater than sign here.
+
+1407
+01:08:11,120 --> 01:08:14,020
+That's letting the user
+know if you tap on this,
+
+1408
+01:08:14,020 --> 01:08:15,650
+it's gonna go somewhere.
+
+1409
+01:08:15,650 --> 01:08:17,100
+And let's try.
+
+1410
+01:08:17,100 --> 01:08:20,123
+Whoop, there it is, look at that.
+
+1411
+01:08:20,123 --> 01:08:23,650
+All right, we have
+different documents here.
+
+1412
+01:08:23,650 --> 01:08:26,860
+Now, this is all a little kinda blank
+
+1413
+01:08:26,860 --> 01:08:28,687
+and it's hard to tell what's going on.
+
+1414
+01:08:28,687 --> 01:08:32,360
+And the NavigationView
+provides a lot of mechanism
+
+1415
+01:08:32,360 --> 01:08:35,440
+to make this all more
+understandable to the user.
+
+1416
+01:08:35,440 --> 01:08:38,070
+For example, titles, we can put a title,
+
+1417
+01:08:38,070 --> 01:08:39,993
+that's what this kinda blank
+space at the top here is.
+
+1418
+01:08:39,993 --> 01:08:43,650
+And we can put a title in
+front of on top of this List,
+
+1419
+01:08:43,650 --> 01:08:45,930
+and we can also put a
+different title if you want
+
+1420
+01:08:45,930 --> 01:08:48,670
+on top of this View right here.
+
+1421
+01:08:48,670 --> 01:08:50,390
+So when you're in a NavigationView,
+
+1422
+01:08:50,390 --> 01:08:51,760
+and you're navigating around,
+
+1423
+01:08:51,760 --> 01:08:54,050
+you can put titles on each one.
+
+1424
+01:08:54,050 --> 01:08:57,970
+You set this title on each
+View that can appear here.
+
+1425
+01:08:57,970 --> 01:09:00,760
+So we're gonna set a title on this list,
+
+1426
+01:09:00,760 --> 01:09:02,070
+then we're gonna set a title
+
+1427
+01:09:02,070 --> 01:09:05,490
+on this EmojiArtDocument View.
+
+1428
+01:09:05,490 --> 01:09:06,930
+Let's do that.
+
+1429
+01:09:06,930 --> 01:09:09,430
+So here's the List, let's set its title.
+
+1430
+01:09:09,430 --> 01:09:14,020
+So when the List is showing,
+the navigationBarTitle
+
+1431
+01:09:14,020 --> 01:09:17,610
+is going to be... how
+about the store's name,
+
+1432
+01:09:17,610 --> 01:09:18,730
+the name of our store,
+
+1433
+01:09:18,730 --> 01:09:20,430
+because that's what this List is showing,
+
+1434
+01:09:20,430 --> 01:09:22,660
+it's showing all the
+documents in this store.
+
+1435
+01:09:22,660 --> 01:09:23,980
+Let's do the store's name.
+
+1436
+01:09:23,980 --> 01:09:26,083
+Store name is just a var here,
+
+1437
+01:09:26,083 --> 01:09:28,330
+and the store keeps track of its name,
+
+1438
+01:09:28,330 --> 01:09:30,060
+nothing more than that.
+
+1439
+01:09:30,060 --> 01:09:34,490
+And then here's our
+EmojiArtDocument View right here.
+
+1440
+01:09:34,490 --> 01:09:38,710
+Let's put a name on it as
+well, navigationBarTitle.
+
+1441
+01:09:39,950 --> 01:09:44,950
+This is the store's
+name for this document.
+
+1442
+01:09:45,480 --> 01:09:50,480
+Now, notice that I am putting
+this bar title onto this View.
+
+1443
+01:09:51,810 --> 01:09:54,300
+This is the EmojiArtDocumentView
+
+1444
+01:09:54,300 --> 01:09:56,960
+that I show when I navigate
+here, the destination.
+
+1445
+01:09:56,960 --> 01:09:58,980
+So when this View is showing,
+
+1446
+01:09:58,980 --> 01:10:01,199
+this is the title that we'll use,
+
+1447
+01:10:01,199 --> 01:10:03,589
+navigationBarTitle, you put it on the View
+
+1448
+01:10:03,589 --> 01:10:07,050
+that will be showing,
+and this is what you get.
+
+1449
+01:10:08,640 --> 01:10:10,913
+Emoji Art, that's the name of our store.
+
+1450
+01:10:11,769 --> 01:10:13,560
+When we click, Hello World,
+
+1451
+01:10:13,560 --> 01:10:14,690
+that's the name of this document, right?
+
+1452
+01:10:14,690 --> 01:10:17,140
+This is the Hello World document,
+
+1453
+01:10:17,140 --> 01:10:19,170
+this is the Untitled document.
+
+1454
+01:10:19,170 --> 01:10:20,970
+Now there's other things
+that we can put here
+
+1455
+01:10:20,970 --> 01:10:23,990
+besides a title, we can
+actually put some buttons.
+
+1456
+01:10:23,990 --> 01:10:25,070
+Like it would be nice to have
+
+1457
+01:10:25,070 --> 01:10:27,170
+a little buttons at the top here,
+
+1458
+01:10:27,170 --> 01:10:29,930
+maybe a button that
+adds another Emoji Art,
+
+1459
+01:10:29,930 --> 01:10:32,200
+creates a new untitled document.
+
+1460
+01:10:32,200 --> 01:10:34,350
+So I'm gonna put a little
+plus button right here
+
+1461
+01:10:34,350 --> 01:10:36,565
+that does exactly that.
+
+1462
+01:10:36,565 --> 01:10:37,497
+Go right down here.
+
+1463
+01:10:37,497 --> 01:10:40,620
+And this is on the, this Button
+is only gonna be available
+
+1464
+01:10:40,620 --> 01:10:42,790
+when this List is showing not over here
+
+1465
+01:10:42,790 --> 01:10:44,853
+when the EmojiArtDocumentView is showing,
+
+1466
+01:10:44,853 --> 01:10:46,190
+only when the List is showing,
+
+1467
+01:10:46,190 --> 01:10:49,660
+navigationBarItems, this is called.
+
+1468
+01:10:49,660 --> 01:10:51,200
+And you can have leading and trailing.
+
+1469
+01:10:51,200 --> 01:10:53,570
+I'll put this on the leading side.
+
+1470
+01:10:53,570 --> 01:10:54,823
+And it's just a Button.
+
+1471
+01:10:55,954 --> 01:10:57,430
+You know how to do Buttons.
+
+1472
+01:10:57,430 --> 01:10:59,507
+So we'll do that in a second.
+
+1473
+01:10:59,507 --> 01:11:02,913
+And the label for this Button
+is going to be an Image.
+
+1474
+01:11:04,090 --> 01:11:05,007
+I'll use the systemName here.
+
+1475
+01:11:05,007 --> 01:11:08,980
+I'm gonna do plus, again, I
+got that by going over here
+
+1476
+01:11:08,980 --> 01:11:10,960
+to SF Symbols and searching around
+
+1477
+01:11:10,960 --> 01:11:12,980
+for what made sense for plus.
+
+1478
+01:11:12,980 --> 01:11:14,900
+I'll also do large scale here.
+
+1479
+01:11:14,900 --> 01:11:16,733
+Make this Button big.
+
+1480
+01:11:17,844 --> 01:11:20,520
+And what I'm gonna do when
+this plus Button is clicked?
+
+1481
+01:11:20,520 --> 01:11:23,067
+No problem store, addDocument,
+
+1482
+01:11:23,067 --> 01:11:25,593
+just add a document to our store.
+
+1483
+01:11:26,777 --> 01:11:29,450
+So we're adding this
+Button to the bar items
+
+1484
+01:11:29,450 --> 01:11:34,000
+on the leading edge of
+this NavigationView.
+
+1485
+01:11:34,000 --> 01:11:34,860
+There it is right there.
+
+1486
+01:11:34,860 --> 01:11:37,300
+Notice that our plus
+Button is not there here.
+
+1487
+01:11:37,300 --> 01:11:40,260
+Instead, we have this going
+back Button right there.
+
+1488
+01:11:40,260 --> 01:11:41,530
+It's 'cause when we're over here,
+
+1489
+01:11:41,530 --> 01:11:43,800
+this navigationBarItems was not added
+
+1490
+01:11:43,800 --> 01:11:45,577
+up here to the EmojiArtDocumentView
+
+1491
+01:11:45,577 --> 01:11:49,250
+and we're showing this
+EmojiArtDocumentView
+
+1492
+01:11:49,250 --> 01:11:51,050
+over here when we click on it,
+
+1493
+01:11:51,050 --> 01:11:53,000
+and so it doesn't get that plus Button.
+
+1494
+01:11:53,930 --> 01:11:55,560
+Let's try plus.
+
+1495
+01:11:55,560 --> 01:11:59,890
+Woo, got another untitled
+document right here, nice!
+
+1496
+01:11:59,890 --> 01:12:03,840
+Now we could also add
+some bar items over here
+
+1497
+01:12:03,840 --> 01:12:05,850
+in our EmojiArtDocumentView.
+
+1498
+01:12:05,850 --> 01:12:06,993
+For example, maybe it's time to make it
+
+1499
+01:12:06,993 --> 01:12:10,450
+so that this app is actually
+usable on an iPhone,
+
+1500
+01:12:10,450 --> 01:12:13,350
+so we can set a background image.
+
+1501
+01:12:13,350 --> 01:12:16,560
+There's no drag-and-drop in iPhone,
+
+1502
+01:12:16,560 --> 01:12:18,940
+so to set a background image
+we have to do a different way.
+
+1503
+01:12:18,940 --> 01:12:22,660
+And just to be simple,
+how about copy and paste?
+
+1504
+01:12:22,660 --> 01:12:24,327
+You go find the image
+you want, you copy it,
+
+1505
+01:12:24,327 --> 01:12:26,400
+you come back here and hit paste.
+
+1506
+01:12:26,400 --> 01:12:27,780
+And I'm gonna have the paste here,
+
+1507
+01:12:27,780 --> 01:12:30,400
+be a little button in the upper right.
+
+1508
+01:12:30,400 --> 01:12:32,170
+Now since I only want this Paste button
+
+1509
+01:12:32,170 --> 01:12:34,630
+to appear when I'm showing a document,
+
+1510
+01:12:34,630 --> 01:12:37,780
+I'm gonna put the code for this Button
+
+1511
+01:12:37,780 --> 01:12:41,980
+in EmojiArtDocumentView, 'cause
+that's what's showing here,
+
+1512
+01:12:41,980 --> 01:12:43,897
+so that's what's gonna
+control this Button.
+
+1513
+01:12:43,897 --> 01:12:46,200
+So I'm gonna go to EmojiArtDocumentView.
+
+1514
+01:12:46,200 --> 01:12:48,870
+And let's go down, maybe
+right here after onDrop
+
+1515
+01:12:50,330 --> 01:12:53,563
+and add navigationBarItems here.
+
+1516
+01:12:54,900 --> 01:12:58,383
+This time I want it to be
+on the trailing side of it.
+
+1517
+01:12:59,320 --> 01:13:02,133
+And let's just make another Button.
+
+1518
+01:13:03,112 --> 01:13:08,112
+And this Button with
+the action in the second
+
+1519
+01:13:08,410 --> 01:13:13,410
+and the label, let's have the
+label be an image system name.
+
+1520
+01:13:15,780 --> 01:13:18,840
+And I searched around SF
+Symbols I found one kinda cool,
+
+1521
+01:13:18,840 --> 01:13:22,450
+doc on clipboard,
+
+1522
+01:13:22,450 --> 01:13:24,940
+so this is an icon that shows
+
+1523
+01:13:24,940 --> 01:13:27,490
+when there's a doc on the clipboard.
+
+1524
+01:13:27,490 --> 01:13:29,853
+Let's go imageScale large again.
+
+1525
+01:13:31,000 --> 01:13:34,430
+And so that's really cool,
+perfect image for doing that.
+
+1526
+01:13:34,430 --> 01:13:36,930
+And what are we gonna do
+when they try to paste
+
+1527
+01:13:36,930 --> 01:13:37,930
+from the pasteboard?
+
+1528
+01:13:37,930 --> 01:13:39,210
+Well, we're gonna paste
+from the Pasteboard,
+
+1529
+01:13:39,210 --> 01:13:41,830
+which turns out to be
+really easy to do in iOS.
+
+1530
+01:13:41,830 --> 01:13:46,830
+I'm gonna say if let URL equal
+my general Pasteboard URL var
+
+1531
+01:13:49,300 --> 01:13:51,230
+if that's not nil,
+
+1532
+01:13:51,230 --> 01:13:55,050
+then I'm gonna set my
+document's backgroundURL
+
+1533
+01:13:55,050 --> 01:13:55,950
+equal to that URL.
+
+1534
+01:13:56,930 --> 01:13:59,270
+So let's understand the
+Pasteboard a little bit here.
+
+1535
+01:13:59,270 --> 01:14:01,670
+Pasteboard.general is a shared Pasteboard
+
+1536
+01:14:01,670 --> 01:14:05,060
+that represents the
+Pasteboard on this device.
+
+1537
+01:14:05,060 --> 01:14:09,530
+It has a lot of different
+vars, like string, url,
+
+1538
+01:14:09,530 --> 01:14:12,500
+other kinds of types, where
+if the thing on the Pasteboard
+
+1539
+01:14:12,500 --> 01:14:16,210
+can be representative of
+that, it returns non nil here.
+
+1540
+01:14:16,210 --> 01:14:18,620
+So if there's a URL in the Pasteboard,
+
+1541
+01:14:18,620 --> 01:14:21,570
+we're going to try and set it
+as our background right here.
+
+1542
+01:14:22,690 --> 01:14:23,890
+Let's see if that works.
+
+1543
+01:14:26,789 --> 01:14:27,877
+So I have hello world here.
+
+1544
+01:14:27,877 --> 01:14:28,880
+Oh, there it is.
+
+1545
+01:14:28,880 --> 01:14:30,820
+Click, that's not doing anything.
+
+1546
+01:14:30,820 --> 01:14:33,791
+Let's go see if we can put
+something in the Pasteboard.
+
+1547
+01:14:33,791 --> 01:14:36,363
+Let's go get my favorite image over there.
+
+1548
+01:14:37,650 --> 01:14:39,760
+Which is not this one.
+
+1549
+01:14:39,760 --> 01:14:41,990
+I like this one right here.
+
+1550
+01:14:41,990 --> 01:14:42,823
+There it is.
+
+1551
+01:14:42,823 --> 01:14:45,840
+I'm just gonna press
+and hold and say copy.
+
+1552
+01:14:45,840 --> 01:14:48,510
+So let's say copy an image in iOS.
+
+1553
+01:14:48,510 --> 01:14:50,870
+Go back here and paste.
+
+1554
+01:14:50,870 --> 01:14:52,997
+Woo, it worked.
+
+1555
+01:14:52,997 --> 01:14:56,120
+Look at that, I can zoom in, nice!
+
+1556
+01:14:56,120 --> 01:14:58,010
+I can even play a little soccer
+
+1557
+01:14:58,010 --> 01:14:59,800
+in the front yard right here.
+
+1558
+01:14:59,800 --> 01:15:01,370
+Okay, excellent.
+
+1559
+01:15:01,370 --> 01:15:04,230
+So this is fantastic.
+
+1560
+01:15:04,230 --> 01:15:06,090
+Unfortunately, when I did this one,
+
+1561
+01:15:06,090 --> 01:15:08,440
+I found another little
+bug in our Emoji Art.
+
+1562
+01:15:08,440 --> 01:15:09,347
+Watch this.
+
+1563
+01:15:09,347 --> 01:15:11,160
+I'm gonna go back out, and let's go back.
+
+1564
+01:15:11,160 --> 01:15:15,710
+Oh no, there's my emoji, but
+I lost my background image.
+
+1565
+01:15:15,710 --> 01:15:18,870
+And that turns out in our
+EmojiArt background View,
+
+1566
+01:15:18,870 --> 01:15:21,960
+we did a pretty good job
+when we zoomed to fit
+
+1567
+01:15:21,960 --> 01:15:25,170
+of protecting against the
+image being zero size,
+
+1568
+01:15:25,170 --> 01:15:29,190
+but we forgot to protect against
+the View being zero size.
+
+1569
+01:15:29,190 --> 01:15:31,750
+Because when that View
+is coming on screen,
+
+1570
+01:15:31,750 --> 01:15:34,920
+it seems to be momentarily
+have zero height.
+
+1571
+01:15:34,920 --> 01:15:37,970
+I'm not sure exactly what
+process is happening.
+
+1572
+01:15:37,970 --> 01:15:40,670
+But we zoom to fit it
+to zero at that point.
+
+1573
+01:15:40,670 --> 01:15:43,110
+So I'm also going to
+check here and zoom to fit
+
+1574
+01:15:43,110 --> 01:15:45,690
+that my size.height is greater than zero,
+
+1575
+01:15:45,690 --> 01:15:47,810
+and my size.width is greater than zero.
+
+1576
+01:15:47,810 --> 01:15:50,230
+I'm just being more
+protective in zoom to fit,
+
+1577
+01:15:50,230 --> 01:15:54,340
+so that it doesn't set the
+zoomScale here to zero.
+
+1578
+01:15:54,340 --> 01:15:55,890
+I never want my zoomScale to be zero
+
+1579
+01:15:55,890 --> 01:15:58,240
+'cause then I can't see my document.
+
+1580
+01:15:58,240 --> 01:16:01,410
+If I go back here to my simulator,
+
+1581
+01:16:01,410 --> 01:16:02,720
+I can actually double tap
+
+1582
+01:16:02,720 --> 01:16:05,700
+and it will zoom it up
+from zero, which is good,
+
+1583
+01:16:05,700 --> 01:16:08,150
+but I don't ever want to
+put it in that zero stage.
+
+1584
+01:16:08,150 --> 01:16:11,023
+So let's do this fix right here.
+
+1585
+01:16:12,000 --> 01:16:15,250
+So hello world, here's
+our document right here.
+
+1586
+01:16:15,250 --> 01:16:16,900
+Maybe we'll zoom it way out,
+
+1587
+01:16:16,900 --> 01:16:19,550
+and we'll go out in the back end.
+
+1588
+01:16:19,550 --> 01:16:21,240
+Okay, well now interesting.
+
+1589
+01:16:21,240 --> 01:16:24,550
+So it did not zoom to zero.
+
+1590
+01:16:24,550 --> 01:16:27,750
+But it zoomed to back up to its full size,
+
+1591
+01:16:27,750 --> 01:16:29,950
+even though I had zoomed it down,
+
+1592
+01:16:29,950 --> 01:16:33,550
+when I went out and back,
+it lost that zooming.
+
+1593
+01:16:33,550 --> 01:16:36,690
+And this is something to consider
+when you have these Views
+
+1594
+01:16:36,690 --> 01:16:38,860
+coming and going because of navigation.
+
+1595
+01:16:38,860 --> 01:16:41,053
+So I'm navigating out and back in.
+
+1596
+01:16:41,930 --> 01:16:44,780
+When you're doing this, these
+Views are being reconstructed,
+
+1597
+01:16:44,780 --> 01:16:47,920
+and their @State is mostly preserved,
+
+1598
+01:16:47,920 --> 01:16:52,020
+but some kind of State
+may not be preserved.
+
+1599
+01:16:52,020 --> 01:16:55,570
+And for example, our scaling State
+
+1600
+01:16:55,570 --> 01:16:58,670
+is not preserved across doing this.
+
+1601
+01:16:58,670 --> 01:17:01,050
+Now, if you want State
+to be preserved, though,
+
+1602
+01:17:01,050 --> 01:17:02,700
+there's a great place to do it.
+
+1603
+01:17:02,700 --> 01:17:04,240
+Your ViewModel.
+
+1604
+01:17:04,240 --> 01:17:06,970
+Okay, no matter how what is
+happening on the View side,
+
+1605
+01:17:06,970 --> 01:17:09,320
+if your ViewModel is holding on to it,
+
+1606
+01:17:09,320 --> 01:17:10,360
+it's going to be preserved.
+
+1607
+01:17:10,360 --> 01:17:12,940
+Now, that's not the same
+as putting it in the Model.
+
+1608
+01:17:12,940 --> 01:17:15,710
+I don't want the scaling
+to be part of the Model,
+
+1609
+01:17:15,710 --> 01:17:20,610
+the Model is the house and
+whatever emojis there are,
+
+1610
+01:17:20,610 --> 01:17:22,930
+but it doesn't include how scaled it is.
+
+1611
+01:17:22,930 --> 01:17:24,700
+But putting it in my ViewModel,
+
+1612
+01:17:24,700 --> 01:17:26,140
+if my ViewModel doesn't turn around
+
+1613
+01:17:26,140 --> 01:17:29,060
+and put it in the Model,
+is perfectly fine to do
+
+1614
+01:17:29,060 --> 01:17:31,660
+and it provides sharing
+across multiple Views
+
+1615
+01:17:31,660 --> 01:17:36,070
+that might be looking at
+this same document ViewModel.
+
+1616
+01:17:36,070 --> 01:17:37,280
+So let's go do that.
+
+1617
+01:17:37,280 --> 01:17:38,230
+How would we do that?
+
+1618
+01:17:38,230 --> 01:17:41,560
+I'm just gonna make it here
+so that our steady state,
+
+1619
+01:17:41,560 --> 01:17:45,141
+let's search where's our
+steadyStatePanOffset, here it is.
+
+1620
+01:17:45,141 --> 01:17:47,001
+So here's steadyStatePanOffset,
+
+1621
+01:17:47,001 --> 01:17:50,877
+and here's our
+steadyStateZoomOffset up here.
+
+1622
+01:17:50,877 --> 01:17:52,396
+And we're gonna have
+these instead of being
+
+1623
+01:17:52,396 --> 01:17:54,750
+@State in our View,
+
+1624
+01:17:54,750 --> 01:17:56,943
+we're gonna put them into our ViewModel.
+
+1625
+01:17:57,830 --> 01:18:00,393
+So let's do that, let's
+cut these outta here.
+
+1626
+01:18:03,272 --> 01:18:05,570
+And put them in our ViewModel
+which is right here.
+
+1627
+01:18:05,570 --> 01:18:08,693
+And we'll put it, again and I think.
+
+1628
+01:18:09,560 --> 01:18:11,800
+And of course, they're not
+State in the ViewModel,
+
+1629
+01:18:11,800 --> 01:18:13,893
+instead, they'd be @Published.
+
+1630
+01:18:15,500 --> 01:18:16,670
+And I'm not gonna make them private,
+
+1631
+01:18:16,670 --> 01:18:20,807
+'cause I'm gonna allow my
+View to set them and get them.
+
+1632
+01:18:20,807 --> 01:18:23,400
+In my View over here, I'm
+just gonna replace everywhere
+
+1633
+01:18:23,400 --> 01:18:28,400
+I have steady State with
+document.steadyState instead.
+
+1634
+01:18:32,458 --> 01:18:34,093
+So just to do that everywhere.
+
+1635
+01:18:35,730 --> 01:18:38,670
+We go back to our panOffset, here we go.
+
+1636
+01:18:38,670 --> 01:18:39,670
+Now, let's try that.
+
+1637
+01:18:43,618 --> 01:18:45,530
+All right, Hello World, here it is.
+
+1638
+01:18:45,530 --> 01:18:47,000
+Now, let's zoom out.
+
+1639
+01:18:47,000 --> 01:18:50,690
+This zooming is being
+kept in our ViewModel.
+
+1640
+01:18:50,690 --> 01:18:53,180
+So now if we go back and come back in,
+
+1641
+01:18:53,180 --> 01:18:54,660
+it's still there in our ViewModel,
+
+1642
+01:18:54,660 --> 01:18:56,833
+even though this View has gotten rebuilt.
+
+1643
+01:18:58,180 --> 01:19:00,080
+Now, there's a little
+more that we could do here
+
+1644
+01:19:00,080 --> 01:19:01,820
+to be nicer to our user.
+
+1645
+01:19:01,820 --> 01:19:06,080
+One thing is this little button,
+a lot of times you click it
+
+1646
+01:19:06,080 --> 01:19:07,540
+and nothing happens, okay.
+
+1647
+01:19:07,540 --> 01:19:11,110
+We go over here and we click
+it, nothing's happening, okay?
+
+1648
+01:19:11,110 --> 01:19:12,530
+That thing is no longer in the pasteboard,
+
+1649
+01:19:12,530 --> 01:19:15,460
+I copied and pasted this steady
+state thing, so it's gone.
+
+1650
+01:19:15,460 --> 01:19:17,980
+So I'm not getting my user much feedback
+
+1651
+01:19:17,980 --> 01:19:19,730
+about what this button does.
+
+1652
+01:19:19,730 --> 01:19:20,660
+It's not clear.
+
+1653
+01:19:20,660 --> 01:19:24,010
+I guess it looks like something
+copied on the Pasteboard,
+
+1654
+01:19:24,010 --> 01:19:27,960
+I guess, but it's like,
+what are we going to do
+
+1655
+01:19:27,960 --> 01:19:30,670
+to make this give some feedback.
+
+1656
+01:19:30,670 --> 01:19:33,410
+So how about if they click on this
+
+1657
+01:19:33,410 --> 01:19:35,900
+and it's not going to do something there,
+
+1658
+01:19:35,900 --> 01:19:40,090
+we put up a little Alert
+that explains what this is.
+
+1659
+01:19:40,090 --> 01:19:41,220
+So that gives us an opportunity
+
+1660
+01:19:41,220 --> 01:19:43,640
+to learn how to put Alerts up.
+
+1661
+01:19:43,640 --> 01:19:45,863
+And putting Alerts up, quite easy.
+
+1662
+01:19:45,863 --> 01:19:48,610
+You can go over here and
+put it on this Image.
+
+1663
+01:19:48,610 --> 01:19:52,420
+If you click on this Image,
+we want to put an Alert up.
+
+1664
+01:19:52,420 --> 01:19:57,420
+Now, Alerts are interesting
+little ViewModifiers here.
+
+1665
+01:19:58,750 --> 01:20:01,275
+They start out looking
+a lot like a popover.
+
+1666
+01:20:01,275 --> 01:20:02,610
+You can see that they've got the
+
+1667
+01:20:02,610 --> 01:20:04,530
+Identifiable Binding version
+
+1668
+01:20:04,530 --> 01:20:07,300
+if you wanna put different
+things up in your Alert
+
+1669
+01:20:07,300 --> 01:20:08,347
+depending on what's going on.
+
+1670
+01:20:08,347 --> 01:20:10,760
+But it also has this nice isPresented,
+
+1671
+01:20:10,760 --> 01:20:12,380
+which is the one we're going to use.
+
+1672
+01:20:12,380 --> 01:20:16,830
+And we're gonna need to have
+some sort of boolean var
+
+1673
+01:20:16,830 --> 01:20:18,550
+that says whether this Alert should be up,
+
+1674
+01:20:18,550 --> 01:20:21,480
+and I'm gonna call it
+explainBackgroundPaste.
+
+1675
+01:20:23,088 --> 01:20:28,009
+This is gonna be my State private var,
+
+1676
+01:20:28,009 --> 01:20:30,529
+explainBackgroundPaste.
+
+1677
+01:20:30,529 --> 01:20:31,620
+I'm gonna start it out as false.
+
+1678
+01:20:31,620 --> 01:20:34,180
+I don't want that Alert
+showing when we first come up.
+
+1679
+01:20:34,180 --> 01:20:37,960
+And I just need to set this to
+make this Alert be presented.
+
+1680
+01:20:37,960 --> 01:20:39,520
+And where am I gonna set that?
+
+1681
+01:20:39,520 --> 01:20:40,670
+I'm gonna set it here.
+
+1682
+01:20:40,670 --> 01:20:44,630
+I'm gonna set it anytime that I'm not
+
+1683
+01:20:44,630 --> 01:20:45,868
+updating the background here.
+
+1684
+01:20:45,868 --> 01:20:48,560
+So I'm gonna say else if I'm
+not updating the background,
+
+1685
+01:20:48,560 --> 01:20:51,130
+if it would just be clicking
+the Button and doing nothing.
+
+1686
+01:20:51,130 --> 01:20:55,833
+And I'm gonna say
+self.explainBackgroundPaste equals true.
+
+1687
+01:20:56,790 --> 01:20:59,383
+That's gonna cause this Alert to show up.
+
+1688
+01:20:59,383 --> 01:21:03,320
+I think we'll also do this if the URL
+
+1689
+01:21:03,320 --> 01:21:07,813
+does not equal to our
+existing backgroundURL,
+
+1690
+01:21:09,310 --> 01:21:12,540
+So if you've already pasted
+and then you'd try paste again,
+
+1691
+01:21:12,540 --> 01:21:15,650
+then we won't paste,
+instead, we'll explain
+
+1692
+01:21:15,650 --> 01:21:18,730
+this background paste
+to you and how it works.
+
+1693
+01:21:18,730 --> 01:21:22,200
+Now, Alert doesn't have you present
+
+1694
+01:21:22,200 --> 01:21:24,340
+with a ViewBuilder here,
+
+1695
+01:21:24,340 --> 01:21:27,220
+you can see that its return
+value of this little closure
+
+1696
+01:21:27,220 --> 01:21:30,270
+that you're giving an alert is
+not a ViewBuilder or a View,
+
+1697
+01:21:30,270 --> 01:21:31,850
+it's an Alert.
+
+1698
+01:21:31,850 --> 01:21:35,370
+So we're actually going to
+be returning an Alert here,
+
+1699
+01:21:35,370 --> 01:21:36,763
+return Alert.
+
+1700
+01:21:37,890 --> 01:21:40,630
+So Alert can provide messages
+and then it can either have
+
+1701
+01:21:40,630 --> 01:21:43,150
+a single dismiss button,
+like "Okay" button,
+
+1702
+01:21:43,150 --> 01:21:43,983
+that's what we want.
+
+1703
+01:21:43,983 --> 01:21:45,820
+Or it can actually have two buttons
+
+1704
+01:21:45,820 --> 01:21:48,640
+like an "Okay" button
+and a "Cancel" button.
+
+1705
+01:21:48,640 --> 01:21:52,620
+So let's go ahead and use this
+one that just has a single.
+
+1706
+01:21:52,620 --> 01:21:55,720
+To make it clear here, I will
+separate these arguments out
+
+1707
+01:21:55,720 --> 01:21:57,543
+so you can see them better.
+
+1708
+01:21:58,770 --> 01:22:00,003
+Here's our Alert.
+
+1709
+01:22:01,040 --> 01:22:04,250
+And the title and the
+message are both Text.
+
+1710
+01:22:04,250 --> 01:22:07,960
+So the title I'm gonna have
+it be "Paste Background"
+
+1711
+01:22:07,960 --> 01:22:10,790
+'cause that's what the user tried to do.
+
+1712
+01:22:10,790 --> 01:22:12,820
+And then the message,
+
+1713
+01:22:12,820 --> 01:22:14,960
+let's say this is where we're
+gonna explain ourselves,
+
+1714
+01:22:14,960 --> 01:22:19,960
+with a "Copy the URL of
+an image to the clipboard
+
+1715
+01:22:21,640 --> 01:22:25,200
+and touch this button", the
+one you just clicked on,
+
+1716
+01:22:25,200 --> 01:22:29,650
+"to make it the background
+of your document."
+
+1717
+01:22:29,650 --> 01:22:32,450
+And this is the kind of thing
+that first of all needs to be
+
+1718
+01:22:32,450 --> 01:22:34,520
+internationalizable to other languages.
+
+1719
+01:22:34,520 --> 01:22:36,870
+And also, we're gonna focus test
+
+1720
+01:22:36,870 --> 01:22:38,980
+and we're gonna have maybe documentation,
+
+1721
+01:22:38,980 --> 01:22:40,760
+people can help us pick good wording
+
+1722
+01:22:40,760 --> 01:22:43,130
+so that people won't be
+confused by what's going on,
+
+1723
+01:22:43,130 --> 01:22:44,063
+et cetera, here.
+
+1724
+01:22:45,553 --> 01:22:47,240
+And then finally, we
+have the "Dismiss" button
+
+1725
+01:22:47,240 --> 01:22:49,310
+which is of type Alert.Button.
+
+1726
+01:22:49,310 --> 01:22:51,260
+Now Alert.Button is a class that has
+
+1727
+01:22:51,260 --> 01:22:53,340
+a lot of static funcs on it,
+
+1728
+01:22:53,340 --> 01:22:55,857
+and some of them are default Buttons.
+
+1729
+01:22:55,857 --> 01:22:57,690
+That's just a normal Button.
+
+1730
+01:22:57,690 --> 01:23:00,030
+There's also destructive Buttons,
+
+1731
+01:23:00,030 --> 01:23:02,300
+and there are cancel Buttons.
+
+1732
+01:23:02,300 --> 01:23:05,140
+So in this case, we just
+want the default Button
+
+1733
+01:23:05,140 --> 01:23:06,750
+and the label for it,
+
+1734
+01:23:06,750 --> 01:23:09,880
+it's just gonna be a Text that says, "OK."
+
+1735
+01:23:09,880 --> 01:23:14,510
+And this also takes a
+closure that'll be executed
+
+1736
+01:23:14,510 --> 01:23:16,430
+when this Button is pressed.
+
+1737
+01:23:16,430 --> 01:23:18,910
+Now in our case, we
+don't need to do anything
+
+1738
+01:23:18,910 --> 01:23:21,500
+when this OK is pressed,
+we just want it to dismiss.
+
+1739
+01:23:21,500 --> 01:23:24,080
+And this default Button,
+this "Dismiss" Button
+
+1740
+01:23:24,080 --> 01:23:26,833
+will set this back to false for us.
+
+1741
+01:23:28,370 --> 01:23:30,773
+This dollar by the way, always goes here.
+
+1742
+01:23:32,020 --> 01:23:35,460
+So we don't have to go in here
+and set this back to false
+
+1743
+01:23:35,460 --> 01:23:38,173
+to cause our alert to go
+away, it'll do that for us.
+
+1744
+01:23:39,795 --> 01:23:43,160
+Let's see how this
+shows up in the UI here?
+
+1745
+01:23:43,160 --> 01:23:45,980
+Go back to Hello World,
+here's our document.
+
+1746
+01:23:45,980 --> 01:23:48,220
+Click here, and it says,
+oh, "Paste Background..."
+
+1747
+01:23:48,220 --> 01:23:51,170
+Copy this explains to me,
+oh, what you're gonna do.
+
+1748
+01:23:51,170 --> 01:23:53,280
+Oh, okay, so I'll go do that.
+
+1749
+01:23:53,280 --> 01:23:54,600
+I'll go over here.
+
+1750
+01:23:54,600 --> 01:23:57,023
+This time, maybe I'll go and get the image
+
+1751
+01:23:57,023 --> 01:23:59,873
+I don't like quite as much, this guy.
+
+1752
+01:24:01,130 --> 01:24:03,193
+Right here, let's copy this.
+
+1753
+01:24:04,470 --> 01:24:05,570
+Go back here.
+
+1754
+01:24:05,570 --> 01:24:08,000
+Now hit paste, oh, pasted it.
+
+1755
+01:24:08,000 --> 01:24:10,223
+But actually, this is a
+little scary that it pasted.
+
+1756
+01:24:10,223 --> 01:24:14,010
+This is kind of low res
+version of our horses here.
+
+1757
+01:24:14,010 --> 01:24:15,380
+'Cause it's like, oh, ooh,
+
+1758
+01:24:15,380 --> 01:24:16,780
+I didn't know it was gonna do that.
+
+1759
+01:24:16,780 --> 01:24:18,310
+Wow, what the heck?
+
+1760
+01:24:18,310 --> 01:24:22,370
+So maybe we need a little bit
+more alerting going on here,
+
+1761
+01:24:22,370 --> 01:24:25,720
+where if you click this and
+it's going to do this background
+
+1762
+01:24:25,720 --> 01:24:28,030
+then it's going to ask you first
+
+1763
+01:24:28,030 --> 01:24:29,800
+if that's really what you want.
+
+1764
+01:24:29,800 --> 01:24:32,810
+So how do we put up an
+Alert that asks us yes or no
+
+1765
+01:24:32,810 --> 01:24:34,610
+do we wanna do something?
+
+1766
+01:24:34,610 --> 01:24:36,530
+Well, same exact way where we're gonna
+
+1767
+01:24:36,530 --> 01:24:38,930
+have to have some State.
+
+1768
+01:24:38,930 --> 01:24:41,360
+So I'm gonna call this State
+
+1769
+01:24:41,360 --> 01:24:44,290
+instead of calling it
+explainBackgroundPaste,
+
+1770
+01:24:44,290 --> 01:24:47,080
+I'm gonna call it confirmBackgroundPaste.
+
+1771
+01:24:49,065 --> 01:24:52,180
+And I'll just set this
+confirmBackgroundPaste
+
+1772
+01:24:52,180 --> 01:24:54,155
+right here to true.
+
+1773
+01:24:54,155 --> 01:24:57,340
+ConfirmBackgroundPaste equals true.
+
+1774
+01:24:57,340 --> 01:25:00,153
+And now I need another Alert right here,
+
+1775
+01:25:00,153 --> 01:25:02,890
+another Alert that is going to
+
+1776
+01:25:02,890 --> 01:25:05,460
+react to this thing set to true.
+
+1777
+01:25:05,460 --> 01:25:08,070
+Now, something very important
+to understand about Alerts.
+
+1778
+01:25:08,070 --> 01:25:13,070
+You cannot put two Alerts with
+isPresented on the same View.
+
+1779
+01:25:13,600 --> 01:25:17,850
+So I cannot put another
+Alert on Image right here,
+
+1780
+01:25:17,850 --> 01:25:19,720
+it has to be on some other View,
+
+1781
+01:25:19,720 --> 01:25:21,760
+or I have to use the other Alert
+
+1782
+01:25:21,760 --> 01:25:23,500
+which takes an Identifiable.
+
+1783
+01:25:23,500 --> 01:25:26,370
+And that Identifiable, usually an enum
+
+1784
+01:25:26,370 --> 01:25:29,737
+is going to pick which Alert
+to show, this one or this one.
+
+1785
+01:25:29,737 --> 01:25:32,110
+And I might well decide that
+
+1786
+01:25:32,110 --> 01:25:33,570
+instead of having this be a Bool,
+
+1787
+01:25:33,570 --> 01:25:37,440
+I want this to be an enum
+that has explain or confirm.
+
+1788
+01:25:37,440 --> 01:25:40,990
+And then I will do my
+Alert with the finding
+
+1789
+01:25:40,990 --> 01:25:43,603
+being a Binding to a State with that enum.
+
+1790
+01:25:43,603 --> 01:25:45,680
+That probably will be
+a better way to do it
+
+1791
+01:25:45,680 --> 01:25:47,500
+than these two Bools.
+
+1792
+01:25:47,500 --> 01:25:50,350
+But for demo purposes,
+we'll keep going here.
+
+1793
+01:25:50,350 --> 01:25:51,870
+So where am I gonna put this alert
+
+1794
+01:25:51,870 --> 01:25:52,817
+since I can't put it on image?
+
+1795
+01:25:52,817 --> 01:25:54,970
+Oh, I can put it almost anywhere.
+
+1796
+01:25:54,970 --> 01:25:56,870
+This is our GeometryReader.
+
+1797
+01:25:56,870 --> 01:25:58,896
+This is our top level VStack.
+
+1798
+01:25:58,896 --> 01:26:00,680
+Go ahead and put it on
+our top level VStack,
+
+1799
+01:26:00,680 --> 01:26:03,210
+but it really doesn't matter
+as long as it's a View
+
+1800
+01:26:03,210 --> 01:26:05,930
+that's on the screen at
+the time this happens.
+
+1801
+01:26:05,930 --> 01:26:10,100
+And I'm going to type this
+in really fast, there we go.
+
+1802
+01:26:10,100 --> 01:26:11,670
+And this one, it's similar, right?
+
+1803
+01:26:11,670 --> 01:26:12,640
+Alert is presented,
+
+1804
+01:26:12,640 --> 01:26:16,930
+it's using this confirm as the
+decision maker, same title.
+
+1805
+01:26:16,930 --> 01:26:19,390
+Here it's saying, "Replace
+your background with."
+
+1806
+01:26:19,390 --> 01:26:21,770
+And now it's showing you
+the URL it's going to use
+
+1807
+01:26:21,770 --> 01:26:24,580
+that's kinda cool, it's in the pasteboard.
+
+1808
+01:26:24,580 --> 01:26:27,000
+And now I have a
+primaryButton, which is again,
+
+1809
+01:26:27,000 --> 01:26:31,550
+a default Text, OK, but now
+I am providing a closure.
+
+1810
+01:26:31,550 --> 01:26:33,420
+So now when this OK button is pressed,
+
+1811
+01:26:33,420 --> 01:26:36,850
+I am going to set my
+background URL to general URL.
+
+1812
+01:26:36,850 --> 01:26:38,460
+That's the code that used to be up here,
+
+1813
+01:26:38,460 --> 01:26:39,890
+now I'm putting it down here.
+
+1814
+01:26:39,890 --> 01:26:44,427
+It only happens if I click
+OK in this Alert, right?
+
+1815
+01:26:44,427 --> 01:26:48,100
+And now I have a second Button
+which is a .cancel Button.
+
+1816
+01:26:48,100 --> 01:26:52,120
+Remember, these are all
+Alert.Button.cancel.
+
+1817
+01:26:52,120 --> 01:26:54,300
+And Swift is just inferring that
+
+1818
+01:26:54,300 --> 01:26:56,963
+because it knows this argument
+takes an Alert.Button.
+
+1819
+01:26:57,835 --> 01:26:59,643
+Let's see this one in action.
+
+1820
+01:27:03,020 --> 01:27:06,270
+Go to "Hello World" document
+right here and click.
+
+1821
+01:27:06,270 --> 01:27:07,730
+Oh, it's telling you copy the URL.
+
+1822
+01:27:07,730 --> 01:27:09,610
+Okay, I'm gonna go do that.
+
+1823
+01:27:09,610 --> 01:27:11,150
+Go back here.
+
+1824
+01:27:11,150 --> 01:27:16,150
+Let's go back, go back
+to our favorite one.
+
+1825
+01:27:16,530 --> 01:27:19,750
+Copy it over here.
+
+1826
+01:27:19,750 --> 01:27:23,410
+And now when I hit this, it
+should come ask me to confirm.
+
+1827
+01:27:23,410 --> 01:27:26,445
+Oh, "Replace your
+background with this URL?"
+
+1828
+01:27:26,445 --> 01:27:29,100
+And I can either say,
+"Cancel, no, don't do it."
+
+1829
+01:27:29,100 --> 01:27:31,200
+Or I can over here and say, "Yeah, do it."
+
+1830
+01:27:32,070 --> 01:27:32,903
+So that's alert.
+
+1831
+01:27:32,903 --> 01:27:34,580
+So we've learned Alert,
+we've learned sheet,
+
+1832
+01:27:34,580 --> 01:27:36,490
+we've learned popovers,
+we've learned NavigationView.
+
+1833
+01:27:36,490 --> 01:27:38,930
+And there's a lot of different ways
+
+1834
+01:27:38,930 --> 01:27:43,170
+to decide how to build your UI here
+
+1835
+01:27:43,170 --> 01:27:46,713
+to get the information in front
+of the user as best you can.
+
+1836
+01:27:48,160 --> 01:27:50,510
+Now, one last thing I wanna do
+
+1837
+01:27:50,510 --> 01:27:55,370
+is to have this View right here
+be a little more changeable.
+
+1838
+01:27:55,370 --> 01:27:56,850
+For example, I'd like to be able to
+
+1839
+01:27:56,850 --> 01:27:58,680
+delete items that I want.
+
+1840
+01:27:58,680 --> 01:28:00,260
+I'd like to like swiping to delete
+
+1841
+01:28:00,260 --> 01:28:02,380
+or somehow clicking to delete.
+
+1842
+01:28:02,380 --> 01:28:04,760
+And I wanna be able to
+rename my documents.
+
+1843
+01:28:04,760 --> 01:28:06,880
+Okay, there's no way to, these Untitled's
+
+1844
+01:28:06,880 --> 01:28:08,270
+I can't give them names,
+
+1845
+01:28:08,270 --> 01:28:10,750
+so how am I gonna rename these documents?
+
+1846
+01:28:10,750 --> 01:28:11,996
+So let's get it out.
+
+1847
+01:28:11,996 --> 01:28:15,240
+It turns out to be really
+easy to make delete work.
+
+1848
+01:28:15,240 --> 01:28:17,020
+All you have to do to make delete work,
+
+1849
+01:28:17,020 --> 01:28:19,220
+it's a function in ForEach.
+
+1850
+01:28:19,220 --> 01:28:22,273
+So if you are in your
+ForEach say onDelete,
+
+1851
+01:28:23,150 --> 01:28:25,463
+it will give you what's
+called an indexSet.
+
+1852
+01:28:27,052 --> 01:28:31,450
+So an indexSet is kind of
+like an Array of indices,
+
+1853
+01:28:31,450 --> 01:28:33,980
+and it's telling you the
+things that were deleted.
+
+1854
+01:28:33,980 --> 01:28:36,210
+Now in iOS, you're doing swipe to delete,
+
+1855
+01:28:36,210 --> 01:28:39,550
+this is always going to be an
+Array with one thing in it.
+
+1856
+01:28:39,550 --> 01:28:41,650
+But we're still going to
+try and write our code
+
+1857
+01:28:41,650 --> 01:28:44,800
+in general terms so that we
+can go through all of these
+
+1858
+01:28:44,800 --> 01:28:47,240
+things in there and delete them all.
+
+1859
+01:28:47,240 --> 01:28:50,350
+I'm gonna write the code that
+does the delete of this store
+
+1860
+01:28:50,350 --> 01:28:54,480
+in a little bit of what you
+might call advanced Swift,
+
+1861
+01:28:54,480 --> 01:28:57,100
+but I'm just using the
+primitives in Swift,
+
+1862
+01:28:57,100 --> 01:29:00,830
+specifically in indexSet and
+in Array to write this code
+
+1863
+01:29:00,830 --> 01:29:02,530
+a little more succinctly.
+
+1864
+01:29:02,530 --> 01:29:03,497
+So watch me do this.
+
+1865
+01:29:03,497 --> 01:29:07,890
+I'm gonna take the indexSet
+and I'm gonna map it
+
+1866
+01:29:07,890 --> 01:29:12,890
+to getting from my store the
+documents at those indices.
+
+1867
+01:29:13,540 --> 01:29:18,540
+So now I have an Array of
+documents at those indexes.
+
+1868
+01:29:18,940 --> 01:29:22,070
+And I'm gonna ask that
+Array for each of them,
+
+1869
+01:29:22,070 --> 01:29:23,923
+each of the documents that is,
+
+1870
+01:29:25,360 --> 01:29:30,153
+just ask the store to
+remove that document.
+
+1871
+01:29:32,330 --> 01:29:34,740
+This is succinct way of basically saying,
+
+1872
+01:29:34,740 --> 01:29:36,470
+for all the things in the indexSet
+
+1873
+01:29:36,470 --> 01:29:38,221
+just remove that document.
+
+1874
+01:29:38,221 --> 01:29:39,810
+And we're doing it by having a little map
+
+1875
+01:29:39,810 --> 01:29:43,743
+in between the maps the
+indexes to the documents.
+
+1876
+01:29:45,100 --> 01:29:46,920
+So this kind of coding right here,
+
+1877
+01:29:46,920 --> 01:29:49,400
+eventually, you'll get used to doing this.
+
+1878
+01:29:49,400 --> 01:29:52,290
+Real Swift programmers
+are doing stuff like this.
+
+1879
+01:29:52,290 --> 01:29:54,720
+This is actually just as
+easy if not easier to read
+
+1880
+01:29:54,720 --> 01:29:57,300
+than having two for loops
+here that are going through
+
+1881
+01:29:57,300 --> 01:29:59,600
+the indexSet and then going
+through the documents.
+
+1882
+01:29:59,600 --> 01:30:01,360
+That's like six or seven lines of code,
+
+1883
+01:30:01,360 --> 01:30:03,070
+a lot to read and parse,
+
+1884
+01:30:03,070 --> 01:30:07,930
+whereas this is much more
+straightforward to read.
+
+1885
+01:30:10,730 --> 01:30:12,373
+So let's see this in action.
+
+1886
+01:30:13,240 --> 01:30:15,470
+Anytime you have a delete
+there and you're in the list,
+
+1887
+01:30:15,470 --> 01:30:17,770
+I can swipe to delete, you see that?
+
+1888
+01:30:17,770 --> 01:30:19,600
+I just swiped left.
+
+1889
+01:30:19,600 --> 01:30:20,710
+Now, if I don't want delete,
+
+1890
+01:30:20,710 --> 01:30:21,690
+I can push it back to the right.
+
+1891
+01:30:21,690 --> 01:30:24,640
+If I swipe to delete all
+the way and it goes away.
+
+1892
+01:30:24,640 --> 01:30:26,940
+Or I can swipe to delete partially
+
+1893
+01:30:26,940 --> 01:30:29,390
+and confirm by pressing that button.
+
+1894
+01:30:29,390 --> 01:30:31,760
+So that's how the delete works.
+
+1895
+01:30:31,760 --> 01:30:34,763
+Now, you can still add
+documents back here.
+
+1896
+01:30:36,000 --> 01:30:37,800
+That's one way to do delete,
+
+1897
+01:30:37,800 --> 01:30:39,610
+and it's a nice way to do it.
+
+1898
+01:30:39,610 --> 01:30:42,720
+There's another way, which
+is there's a special button
+
+1899
+01:30:42,720 --> 01:30:44,643
+in iOS that you can put
+called the edit button.
+
+1900
+01:30:44,643 --> 01:30:46,290
+And I'm gonna put it up here
+
+1901
+01:30:46,290 --> 01:30:49,990
+in the trailing situation in this View.
+
+1902
+01:30:49,990 --> 01:30:51,820
+And this will put you in an edit mode
+
+1903
+01:30:51,820 --> 01:30:55,060
+where there are little
+delete buttons on each line.
+
+1904
+01:30:55,060 --> 01:30:56,320
+So how do we do that?
+
+1905
+01:30:56,320 --> 01:30:58,690
+Here's the leading
+button for my bar items.
+
+1906
+01:30:58,690 --> 01:31:02,150
+I'm going to add the trailing button.
+
+1907
+01:31:02,150 --> 01:31:04,870
+And this is just gonna be the EditButton.
+
+1908
+01:31:04,870 --> 01:31:08,640
+Okay, so EditButton is a SwiftUI struct.
+
+1909
+01:31:08,640 --> 01:31:11,110
+And when you put the EditButton in here,
+
+1910
+01:31:11,110 --> 01:31:13,750
+and you click edit, if
+you have a List here,
+
+1911
+01:31:13,750 --> 01:31:16,160
+and there's a onDelete on your ForEach,
+
+1912
+01:31:16,160 --> 01:31:18,190
+it will put you in this
+mode where you can delete
+
+1913
+01:31:18,190 --> 01:31:20,963
+by clicking these instead
+of doing swipe to delete.
+
+1914
+01:31:22,070 --> 01:31:23,440
+That's pretty cool, right?
+
+1915
+01:31:23,440 --> 01:31:26,780
+A little delete/edit mode right there.
+
+1916
+01:31:26,780 --> 01:31:28,180
+Now, the last thing I wanna do
+
+1917
+01:31:28,180 --> 01:31:30,900
+is be able to edit my document names,
+
+1918
+01:31:30,900 --> 01:31:32,880
+but I really wanna be able to edit them
+
+1919
+01:31:32,880 --> 01:31:35,040
+just by clicking on them to edit them.
+
+1920
+01:31:35,040 --> 01:31:37,600
+But I don't really wanna
+click on them to edit them
+
+1921
+01:31:37,600 --> 01:31:40,420
+when it's like this because
+I wanna show my document.
+
+1922
+01:31:40,420 --> 01:31:43,310
+But how about when it's in edit mode?
+
+1923
+01:31:43,310 --> 01:31:44,510
+See when it's in edit mode,
+
+1924
+01:31:44,510 --> 01:31:46,840
+and I clicked it doesn't navigate anyway,
+
+1925
+01:31:46,840 --> 01:31:48,480
+because I'm editing it.
+
+1926
+01:31:48,480 --> 01:31:51,080
+So this would be a great
+time if I clicked on these
+
+1927
+01:31:51,080 --> 01:31:53,120
+to have them edit in place,
+
+1928
+01:31:53,120 --> 01:31:56,643
+just turn these Texts into TextFields.
+
+1929
+01:31:57,790 --> 01:31:59,870
+But we need to find out
+
+1930
+01:31:59,870 --> 01:32:03,430
+when this done button is clicked, right?
+
+1931
+01:32:03,430 --> 01:32:05,230
+And this done button clicking
+
+1932
+01:32:05,230 --> 01:32:08,566
+actually affects something
+in your @Environment.
+
+1933
+01:32:08,566 --> 01:32:11,560
+Do you remember those
+@Environments like colorScheme?
+
+1934
+01:32:11,560 --> 01:32:14,570
+Well, there's another one
+there called editMode.
+
+1935
+01:32:14,570 --> 01:32:16,270
+And it's a kind of a special one.
+
+1936
+01:32:16,270 --> 01:32:18,610
+So we're gonna go take a look at that one
+
+1937
+01:32:18,610 --> 01:32:19,833
+in the documentation.
+
+1938
+01:32:20,920 --> 01:32:23,110
+Here's EnvironmentValues right here.
+
+1939
+01:32:23,110 --> 01:32:25,620
+And EnvironmentValues is
+the thing that's listing
+
+1940
+01:32:25,620 --> 01:32:27,580
+all these stuff by color scheme,
+
+1941
+01:32:27,580 --> 01:32:29,370
+and all the things that
+can be in your environment.
+
+1942
+01:32:29,370 --> 01:32:31,960
+And one of them is editMode right here,
+
+1943
+01:32:31,960 --> 01:32:33,356
+you see this editMode?
+
+1944
+01:32:33,356 --> 01:32:35,960
+But look at the type of
+editMode, let's click on it,
+
+1945
+01:32:35,960 --> 01:32:39,178
+it is a Binding to an EditMode.
+
+1946
+01:32:39,178 --> 01:32:41,380
+And an EditMode is just an enum
+
+1947
+01:32:41,380 --> 01:32:43,930
+that has active, inactive or transient.
+
+1948
+01:32:43,930 --> 01:32:46,480
+It has a nice var, whether
+we're editing or not.
+
+1949
+01:32:46,480 --> 01:32:47,440
+So this makes sense.
+
+1950
+01:32:47,440 --> 01:32:49,970
+I've got this EditMode,
+whether I'm editing or not,
+
+1951
+01:32:49,970 --> 01:32:52,120
+but why is it a Binding,
+
+1952
+01:32:52,120 --> 01:32:55,200
+and not only a Binding
+an Optional Binding?
+
+1953
+01:32:55,200 --> 01:32:57,890
+Notice also that this is get set.
+
+1954
+01:32:57,890 --> 01:33:01,150
+So this environment value
+we can actually set.
+
+1955
+01:33:01,150 --> 01:33:03,880
+So if you wanna know
+whether that done button is
+
+1956
+01:33:03,880 --> 01:33:08,090
+has been activated or
+not, you're going to set
+
+1957
+01:33:08,090 --> 01:33:11,230
+this environment variable to be a Binding
+
+1958
+01:33:11,230 --> 01:33:14,920
+to some editMode State in your View.
+
+1959
+01:33:14,920 --> 01:33:15,930
+That's how you get this.
+
+1960
+01:33:15,930 --> 01:33:19,240
+Now, why do they do this
+indirection to the Binding?
+
+1961
+01:33:19,240 --> 01:33:21,460
+Well, because whenever that
+done button is clicked,
+
+1962
+01:33:21,460 --> 01:33:24,540
+you want to find out,
+and Bindings remember,
+
+1963
+01:33:24,540 --> 01:33:27,400
+when they change when the
+value they point to changes,
+
+1964
+01:33:27,400 --> 01:33:29,380
+they cause your View to redraw,
+
+1965
+01:33:29,380 --> 01:33:31,410
+which is exactly what you want.
+
+1966
+01:33:31,410 --> 01:33:34,133
+So this is how we're going
+to find out the editMode.
+
+1967
+01:33:34,133 --> 01:33:38,210
+Not a lot of the
+EnvironmentValues are like this,
+
+1968
+01:33:38,210 --> 01:33:40,460
+whether you have Bindings and all this,
+
+1969
+01:33:40,460 --> 01:33:43,180
+but for editMode it makes perfect sense.
+
+1970
+01:33:43,180 --> 01:33:45,540
+So we're gonna have to
+set this environment.
+
+1971
+01:33:45,540 --> 01:33:47,420
+Now, we didn't learn in the slides
+
+1972
+01:33:47,420 --> 01:33:48,820
+how to set the environment,
+
+1973
+01:33:48,820 --> 01:33:50,700
+we know how to get the environment, right?
+
+1974
+01:33:50,700 --> 01:33:55,700
+We do something like
+@Environment, the \.editMode.
+
+1975
+01:33:56,670 --> 01:34:00,170
+And you can get the editMode
+that way, but it's not,
+
+1976
+01:34:00,170 --> 01:34:03,098
+we don't want to get it
+here, we want to set it.
+
+1977
+01:34:03,098 --> 01:34:07,515
+So the way we set environment
+is we use .environment.
+
+1978
+01:34:08,560 --> 01:34:11,775
+And .environment takes the path editMode,
+
+1979
+01:34:11,775 --> 01:34:14,284
+and then it takes what
+you wanna set it to.
+
+1980
+01:34:14,284 --> 01:34:16,040
+And remember, this is a Binding.
+
+1981
+01:34:16,040 --> 01:34:20,120
+So I'm gonna have to set a
+Binding to some editMode.
+
+1982
+01:34:20,120 --> 01:34:24,130
+And so this is going to have
+to be some State in our View.
+
+1983
+01:34:24,130 --> 01:34:28,550
+So @State private var editMode,
+
+1984
+01:34:28,550 --> 01:34:30,173
+which is of type EditMode.
+
+1985
+01:34:31,317 --> 01:34:32,583
+And this is a Binding.
+
+1986
+01:34:34,142 --> 01:34:35,520
+And a couple of things here.
+
+1987
+01:34:35,520 --> 01:34:38,910
+Notice this is a var, it
+needs an initial value.
+
+1988
+01:34:38,910 --> 01:34:42,580
+And start with, it's
+either gonna be .inactive,
+
+1989
+01:34:42,580 --> 01:34:46,440
+or .active, or .transient,
+those are the three ones.
+
+1990
+01:34:46,440 --> 01:34:49,160
+And obviously when we
+first start up our View,
+
+1991
+01:34:49,160 --> 01:34:49,993
+it's inactive.
+
+1992
+01:34:49,993 --> 01:34:52,750
+So we'll set that to inactive.
+
+1993
+01:34:52,750 --> 01:34:55,210
+The other thing that's super
+important to understand
+
+1994
+01:34:55,210 --> 01:34:59,470
+is that .environment sets
+that var in EnvironmentValues
+
+1995
+01:34:59,470 --> 01:35:02,610
+only for the View you call it on.
+
+1996
+01:35:02,610 --> 01:35:05,520
+Right, this is setting the environment
+
+1997
+01:35:05,520 --> 01:35:07,870
+for whatever View you call it on.
+
+1998
+01:35:07,870 --> 01:35:11,140
+This is the View I'm
+calling environment on.
+
+1999
+01:35:11,140 --> 01:35:14,500
+So it is setting the
+environment for this View.
+
+2000
+01:35:14,500 --> 01:35:17,720
+Now, this View in here somewhere
+
+2001
+01:35:17,720 --> 01:35:20,450
+has to have the EditButton.
+
+2002
+01:35:20,450 --> 01:35:22,920
+Okay, if the View you
+set the environment on
+
+2003
+01:35:22,920 --> 01:35:24,380
+does not have the EditButton,
+
+2004
+01:35:24,380 --> 01:35:26,460
+then when the EditButton clicks,
+
+2005
+01:35:26,460 --> 01:35:28,250
+it's not gonna be setting this Binding
+
+2006
+01:35:28,250 --> 01:35:30,790
+'cause the Binding won't have
+been set into environment.
+
+2007
+01:35:30,790 --> 01:35:32,650
+So that means we can't put the environment
+
+2008
+01:35:32,650 --> 01:35:34,790
+up here for example, you might think,
+
+2009
+01:35:34,790 --> 01:35:36,500
+oh, let's put the environment up here.
+
+2010
+01:35:36,500 --> 01:35:37,540
+Well, this won't work
+
+2011
+01:35:37,540 --> 01:35:41,070
+because this only sets the
+environment for this View.
+
+2012
+01:35:41,070 --> 01:35:44,200
+And the EditButton isn't in this View.
+
+2013
+01:35:44,200 --> 01:35:46,950
+So the EditButton would
+never see this environment.
+
+2014
+01:35:46,950 --> 01:35:50,990
+So we need this environment
+down here, including it,
+
+2015
+01:35:50,990 --> 01:35:54,950
+whatever you send it to has
+to include the EditButton,
+
+2016
+01:35:54,950 --> 01:35:57,220
+in this case, this var items.
+
+2017
+01:35:57,220 --> 01:35:58,283
+So make sense there?
+
+2018
+01:35:58,283 --> 01:36:00,630
+A little subtlety some people miss.
+
+2019
+01:36:00,630 --> 01:36:02,340
+But when you set the environment,
+
+2020
+01:36:02,340 --> 01:36:04,150
+an environment variable that's settable,
+
+2021
+01:36:04,150 --> 01:36:07,573
+it only sets it in the
+Views that you set it on.
+
+2022
+01:36:09,605 --> 01:36:10,670
+Let's see this in action
+
+2023
+01:36:10,670 --> 01:36:12,587
+just to make sure it hasn't broken here.
+
+2024
+01:36:12,587 --> 01:36:14,030
+All right, so hit "Edit".
+
+2025
+01:36:14,030 --> 01:36:15,250
+All works good.
+
+2026
+01:36:15,250 --> 01:36:16,410
+All right, Done.
+
+2027
+01:36:16,410 --> 01:36:18,980
+So now when we're in edit mode,
+we know we're in edit mode
+
+2028
+01:36:18,980 --> 01:36:20,930
+because this editMode is gonna be set.
+
+2029
+01:36:20,930 --> 01:36:24,500
+So we want to change
+this from being a Text
+
+2030
+01:36:24,500 --> 01:36:26,883
+to being a TextField, essentially.
+
+2031
+01:36:27,940 --> 01:36:29,950
+So right here is where we have our Text.
+
+2032
+01:36:29,950 --> 01:36:34,950
+I actually created a nice little
+struct called EditableText.
+
+2033
+01:36:36,250 --> 01:36:39,853
+So let's grab that it's
+right here and drag this in.
+
+2034
+01:36:40,690 --> 01:36:41,663
+Copy it in.
+
+2035
+01:36:42,530 --> 01:36:45,060
+We're not gonna look at
+EditableText very much,
+
+2036
+01:36:45,060 --> 01:36:46,970
+but at its heart, it's a TextField.
+
+2037
+01:36:46,970 --> 01:36:50,520
+It's doing some other
+kinda tricky things to be,
+
+2038
+01:36:50,520 --> 01:36:54,330
+to nicely switch out when
+it's editable or not editable.
+
+2039
+01:36:54,330 --> 01:36:59,057
+And it takes an additional
+argument, which is isEditing.
+
+2040
+01:36:59,920 --> 01:37:03,130
+And this isEditing just is whether or not
+
+2041
+01:37:03,130 --> 01:37:05,350
+this EditableText is currently editing.
+
+2042
+01:37:05,350 --> 01:37:09,073
+And for us, that is our
+self.editMode.isEditing.
+
+2043
+01:37:11,175 --> 01:37:13,830
+And if that's this
+editMode, if this is editing
+
+2044
+01:37:13,830 --> 01:37:16,600
+this is just a var that
+looks at this inactive State
+
+2045
+01:37:16,600 --> 01:37:19,707
+or active State and tells you
+where, whether it's editing.
+
+2046
+01:37:19,707 --> 01:37:24,690
+And it also takes a nice
+little closure at the end
+
+2047
+01:37:24,690 --> 01:37:27,760
+anytime this EditableText changes.
+
+2048
+01:37:27,760 --> 01:37:31,600
+So the user changed it, then
+it calls this closure for you
+
+2049
+01:37:31,600 --> 01:37:32,950
+with the Text.
+
+2050
+01:37:32,950 --> 01:37:34,440
+And in our case, this is the name
+
+2051
+01:37:34,440 --> 01:37:35,810
+so I'm calling this argument name,
+
+2052
+01:37:35,810 --> 01:37:37,840
+could be called text or whatever you want.
+
+2053
+01:37:37,840 --> 01:37:39,510
+And when that happens, of course,
+
+2054
+01:37:39,510 --> 01:37:42,150
+I want to set the name in our store
+
+2055
+01:37:43,330 --> 01:37:44,403
+for that document.
+
+2056
+01:37:46,520 --> 01:37:47,493
+Go through that, so
+I'm just replacing this
+
+2057
+01:37:47,493 --> 01:37:49,133
+with this little EditableText.
+
+2058
+01:37:50,450 --> 01:37:52,113
+So let's see if this works.
+
+2059
+01:37:54,380 --> 01:37:58,840
+Right, here we go, we're
+gonna edit, and click,
+
+2060
+01:37:58,840 --> 01:38:00,540
+woo, look at that.
+
+2061
+01:38:00,540 --> 01:38:03,363
+Hello, hello, hello there.
+
+2062
+01:38:04,840 --> 01:38:05,673
+Oops.
+
+2063
+01:38:08,600 --> 01:38:09,640
+And now we're done.
+
+2064
+01:38:09,640 --> 01:38:12,713
+And this is "Hello There"
+is the name of that.
+
+2065
+01:38:13,850 --> 01:38:16,270
+Let me change this "Untitled" right here.
+
+2066
+01:38:16,270 --> 01:38:21,163
+Edit, call this maybe our "Barn".
+
+2067
+01:38:25,140 --> 01:38:28,100
+Now, this is automatically
+keeping it in alphabetical order
+
+2068
+01:38:28,100 --> 01:38:29,870
+'cause that's, the store does that.
+
+2069
+01:38:29,870 --> 01:38:33,457
+So this is a barn, so maybe
+we'll put our barn over here.
+
+2070
+01:38:35,180 --> 01:38:37,313
+It's telling us what to do, that's good.
+
+2071
+01:38:37,313 --> 01:38:40,490
+Go over here, back to the barn.
+
+2072
+01:38:40,490 --> 01:38:42,170
+Here's the barn.
+
+2073
+01:38:42,170 --> 01:38:43,954
+Low res barn here.
+
+2074
+01:38:43,954 --> 01:38:47,510
+Copy, back and paste.
+
+2075
+01:38:47,510 --> 01:38:49,210
+And yes, we do wanna paste it.
+
+2076
+01:38:49,210 --> 01:38:51,670
+There it is, so that's our barn.
+
+2077
+01:38:51,670 --> 01:38:53,130
+There's our "Hello There".
+
+2078
+01:38:53,130 --> 01:38:54,693
+There's an untitled document.
+
+2079
+01:38:55,570 --> 01:38:56,403
+Woo!
+
+2080
+01:38:57,280 --> 01:39:00,087
+So we built a pretty
+functional little app here.
+
+2081
+01:39:00,087 --> 01:39:03,503
+That's pretty easy to
+use, direct manipulation.
+
+2082
+01:39:04,420 --> 01:39:07,810
+And a lot of this we've
+done by presenting Views
+
+2083
+01:39:07,810 --> 01:39:10,930
+in different ways, whether
+it's sheets or popovers.
+
+2084
+01:39:10,930 --> 01:39:14,370
+By the way, let's take,
+right here we are in iPhone,
+
+2085
+01:39:14,370 --> 01:39:16,920
+let's go back and make sure
+we haven't broken anything
+
+2086
+01:39:16,920 --> 01:39:18,693
+on our iPad over here.
+
+2087
+01:39:19,680 --> 01:39:23,050
+We did an awful lot of work
+over there on the iPhone.
+
+2088
+01:39:23,050 --> 01:39:26,503
+So I sure hope this
+still looks good on iPad.
+
+2089
+01:39:27,410 --> 01:39:30,610
+Whoa, so actually, this is interesting,
+
+2090
+01:39:30,610 --> 01:39:33,290
+this looks quite a bit different here.
+
+2091
+01:39:33,290 --> 01:39:36,670
+You can see that our chooser
+is on screen with this space,
+
+2092
+01:39:36,670 --> 01:39:39,140
+which is actually our documents.
+
+2093
+01:39:39,140 --> 01:39:42,140
+So we could see both at
+the same time on the iPad.
+
+2094
+01:39:42,140 --> 01:39:45,260
+And as we've seen, SwiftUI will adapt
+
+2095
+01:39:45,260 --> 01:39:48,010
+whatever user interface we've declared
+
+2096
+01:39:48,010 --> 01:39:50,560
+to the device that it's on.
+
+2097
+01:39:50,560 --> 01:39:54,730
+So it's not necessarily the
+perfect UI here for iPad,
+
+2098
+01:39:54,730 --> 01:39:57,560
+I'm not sure I need to be able
+to see my document chooser
+
+2099
+01:39:57,560 --> 01:40:00,340
+on screen at all times,
+might wanna put that
+
+2100
+01:40:00,340 --> 01:40:04,650
+document chooser in a
+popover even on iPad.
+
+2101
+01:40:04,650 --> 01:40:06,430
+But we can certainly see
+that it did something
+
+2102
+01:40:06,430 --> 01:40:08,860
+quite sensible as the default here.
+
+2103
+01:40:08,860 --> 01:40:11,460
+Now, you can see that
+I've already loaded up
+
+2104
+01:40:11,460 --> 01:40:13,640
+a couple of documents
+here, "Barn" and "House"
+
+2105
+01:40:13,640 --> 01:40:15,290
+to make this go a little bit quicker.
+
+2106
+01:40:15,290 --> 01:40:16,373
+So let's take a look and make sure
+
+2107
+01:40:16,373 --> 01:40:17,650
+that we haven't done anything
+
+2108
+01:40:17,650 --> 01:40:20,293
+to break our palette editor here.
+
+2109
+01:40:21,460 --> 01:40:24,280
+Hmm, it appears to be working here,
+
+2110
+01:40:24,280 --> 01:40:28,440
+but I think this looked
+better as a popover.
+
+2111
+01:40:28,440 --> 01:40:32,030
+So let's jump back over
+to our PaletteChooser
+
+2112
+01:40:32,030 --> 01:40:35,393
+and change this sheet
+back to being a popover.
+
+2113
+01:40:39,570 --> 01:40:44,360
+In our House document up here,
+let's zoom in a little bit.
+
+2114
+01:40:44,360 --> 01:40:45,790
+And let's click.
+
+2115
+01:40:45,790 --> 01:40:49,103
+Huh, I'm tapping here on this keyboard.
+
+2116
+01:40:50,451 --> 01:40:52,440
+It's not working, I'm clicking on this.
+
+2117
+01:40:52,440 --> 01:40:55,610
+Why is this not working to click on this?
+
+2118
+01:40:55,610 --> 01:40:58,780
+Well, the problem is that
+we're zoomed way out,
+
+2119
+01:40:58,780 --> 01:41:02,270
+and even though we clip
+to draw in this space,
+
+2120
+01:41:02,270 --> 01:41:05,960
+our View is still large and
+when we're tapping here,
+
+2121
+01:41:05,960 --> 01:41:08,290
+trying to tap on this keyboard
+
+2122
+01:41:08,290 --> 01:41:10,930
+our View happens to be in front.
+
+2123
+01:41:10,930 --> 01:41:12,100
+And so it's intercepting,
+
+2124
+01:41:12,100 --> 01:41:12,993
+even though it's not drawing up here,
+
+2125
+01:41:12,993 --> 01:41:16,240
+it's still intercepting the taps.
+
+2126
+01:41:16,240 --> 01:41:17,910
+So how do we fix that?
+
+2127
+01:41:17,910 --> 01:41:21,380
+How do we make it so that
+this doesn't get in front.
+
+2128
+01:41:21,380 --> 01:41:24,160
+You can control which Views are in front
+
+2129
+01:41:24,160 --> 01:41:26,840
+using something called
+the zIndex modifier.
+
+2130
+01:41:26,840 --> 01:41:29,560
+So let's go back to our
+document View over here.
+
+2131
+01:41:29,560 --> 01:41:31,170
+And we're gonna make it so that
+
+2132
+01:41:31,170 --> 01:41:35,580
+our whole GeometryReader
+here is kept in the back
+
+2133
+01:41:35,580 --> 01:41:39,670
+by setting its zIndex to minus one.
+
+2134
+01:41:39,670 --> 01:41:41,640
+The default zIndex is zero.
+
+2135
+01:41:41,640 --> 01:41:43,967
+So all of our other Views
+like our palette up here
+
+2136
+01:41:43,967 --> 01:41:45,170
+are all gonna be zero,
+
+2137
+01:41:45,170 --> 01:41:46,880
+they're gonna be closer to the front.
+
+2138
+01:41:46,880 --> 01:41:50,270
+And our GeometryReader
+with all of the stuff
+
+2139
+01:41:50,270 --> 01:41:52,327
+in our document is gonna
+be closer to the back.
+
+2140
+01:41:52,327 --> 01:41:56,170
+And so this simple reordering of Views
+
+2141
+01:41:56,170 --> 01:41:57,210
+is gonna make this work.
+
+2142
+01:41:57,210 --> 01:42:00,520
+So here we go, we have a large
+image, it's overlapping it
+
+2143
+01:42:00,520 --> 01:42:04,213
+and it still opens our
+palette editor right here.
+
+2144
+01:42:05,290 --> 01:42:08,630
+So this all started when we
+changed this back to popover
+
+2145
+01:42:08,630 --> 01:42:09,870
+from being a sheet,
+
+2146
+01:42:09,870 --> 01:42:12,593
+and it looks like it's
+working great right here.
+
+2147
+01:42:13,580 --> 01:42:17,640
+But changing this to popover
+is that gonna break our iPhone?
+
+2148
+01:42:17,640 --> 01:42:19,653
+No indeed, let's go take a look.
+
+2149
+01:42:24,390 --> 01:42:25,233
+Hello there.
+
+2150
+01:42:26,830 --> 01:42:28,860
+And it still works even those it's,
+
+2151
+01:42:28,860 --> 01:42:32,100
+obviously, you can't show
+a popover on the iPhone,
+
+2152
+01:42:32,100 --> 01:42:34,380
+but still works just fine.
+
+2153
+01:42:34,380 --> 01:42:38,190
+All right, so, longest demo of the year.
+
+2154
+01:42:38,190 --> 01:42:39,560
+Hope you enjoyed that.
+
+2155
+01:42:39,560 --> 01:42:42,160
+And your homework that's
+based on all of this
+
+2156
+01:42:42,160 --> 01:42:47,160
+is to essentially create this
+kind of chooser right here
+
+2157
+01:42:47,250 --> 01:42:49,790
+that works for Memorize.
+
+2158
+01:42:49,790 --> 01:42:52,470
+So you're going to have your themes,
+
+2159
+01:42:52,470 --> 01:42:54,961
+your Memorize themes up here chosen from,
+
+2160
+01:42:54,961 --> 01:42:56,800
+that when you click,
+you're gonna play a game
+
+2161
+01:42:56,800 --> 01:42:58,093
+based on that theme.
+
+2162
+01:42:59,210 --> 01:43:00,670
+And of course, you're going to make it
+
+2163
+01:43:00,670 --> 01:43:02,760
+so that your themes are editable
+
+2164
+01:43:02,760 --> 01:43:06,690
+with some sort of editor similar to this.
+
+2165
+01:43:06,690 --> 01:43:09,207
+You can change things like
+like the color of the theme,
+
+2166
+01:43:09,207 --> 01:43:11,410
+the emojis in the theme,
+that kind of stuff.
+
+2167
+01:43:11,410 --> 01:43:12,960
+So you're gonna be doing
+something quite similar
+
+2168
+01:43:12,960 --> 01:43:16,283
+to what we're doing here but
+just in Memorize instead.
+
+2169
+01:43:17,838 --> 01:43:19,080
+So good luck on that homework
+
+2170
+01:43:19,080 --> 01:43:21,943
+and you know where to find
+us if you have questions.
+
+2171
+01:43:23,000 --> 01:43:26,213
+- [Narrator] For more, please
+visit us at stanford.edu.

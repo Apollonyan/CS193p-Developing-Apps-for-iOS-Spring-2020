@@ -1,0 +1,6501 @@
+1
+00:00:00,425 --> 00:00:03,508
+(enlightening music)
+
+2
+00:00:04,920 --> 00:00:06,620
+- [Announcer] Stanford University.
+
+3
+00:00:09,470 --> 00:00:12,360
+- [Lecturer] All righty then, Lecture 13
+
+4
+00:00:12,360 --> 00:00:17,050
+of Stanford CS193p Spring of 2020.
+
+5
+00:00:17,050 --> 00:00:20,150
+Today, our topic is persistence.
+
+6
+00:00:20,150 --> 00:00:23,900
+That is to say, storing stuff that lives
+
+7
+00:00:23,900 --> 00:00:27,430
+between launches of your application.
+
+8
+00:00:27,430 --> 00:00:28,960
+Now, we've actually seen quite
+
+9
+00:00:28,960 --> 00:00:31,100
+a bit of this stuff already.
+
+10
+00:00:31,100 --> 00:00:34,490
+And we're gonna go into some more detail
+
+11
+00:00:34,490 --> 00:00:37,890
+on the last two down there,
+CloudKit and file system
+
+12
+00:00:37,890 --> 00:00:39,460
+but let's do a quick review
+
+13
+00:00:39,460 --> 00:00:41,100
+of what we've learned about persistence.
+
+14
+00:00:41,100 --> 00:00:42,870
+We know about UserDefaults.
+
+15
+00:00:42,870 --> 00:00:46,390
+It's simple, quite limited,
+only lets you store
+
+16
+00:00:46,390 --> 00:00:47,960
+these property lists.
+
+17
+00:00:47,960 --> 00:00:50,820
+It's small, it only stores
+a little bit of data.
+
+18
+00:00:50,820 --> 00:00:55,420
+It's also pre-Swift, just
+kind of a clunky API.
+
+19
+00:00:55,420 --> 00:00:56,940
+But it's really good for demos,
+
+20
+00:00:56,940 --> 00:00:59,973
+and that's why we've used
+it so much this quarter.
+
+21
+00:01:00,908 --> 00:01:04,600
+And we learned about Codable
+and JSON earlier as well.
+
+22
+00:01:04,600 --> 00:01:07,490
+Great way to take a custom struct
+
+23
+00:01:07,490 --> 00:01:09,390
+that we've designed and turn it
+
+24
+00:01:09,390 --> 00:01:12,210
+into nice interoperable format,
+
+25
+00:01:12,210 --> 00:01:14,640
+either that we would
+send over the internet,
+
+26
+00:01:14,640 --> 00:01:18,260
+or maybe that we would store on disk.
+
+27
+00:01:18,260 --> 00:01:20,082
+Now, for those of you who looked into
+
+28
+00:01:20,082 --> 00:01:22,460
+the Enroute code that I wrote
+
+29
+00:01:22,460 --> 00:01:24,970
+that got the data from FlightAware
+
+30
+00:01:24,970 --> 00:01:27,160
+would see that that data from FlightAware
+
+31
+00:01:27,160 --> 00:01:30,370
+comes as JSON, and I just use Codable
+
+32
+00:01:30,370 --> 00:01:32,500
+to turn it into a local struct.
+
+33
+00:01:32,500 --> 00:01:34,830
+So that's another use of Codable
+
+34
+00:01:34,830 --> 00:01:39,463
+is receiving data from
+people in JSON format.
+
+35
+00:01:40,720 --> 00:01:45,560
+This UIDocument is something
+that is part of UIKit.
+
+36
+00:01:45,560 --> 00:01:48,490
+So we're not really gonna
+talk about it in this class
+
+37
+00:01:48,490 --> 00:01:49,870
+since this is a SwiftUI class.
+
+38
+00:01:49,870 --> 00:01:53,343
+However, if you have an
+application like EmojiArt
+
+39
+00:01:53,343 --> 00:01:55,900
+that really has what the user perceives
+
+40
+00:01:55,900 --> 00:01:58,790
+to be a document that they're creating,
+
+41
+00:01:58,790 --> 00:02:00,650
+you almost certainly would wanna use
+
+42
+00:02:00,650 --> 00:02:03,210
+this UIDocument infrastructure.
+
+43
+00:02:03,210 --> 00:02:04,600
+This is not gonna be something
+
+44
+00:02:04,600 --> 00:02:07,142
+that you're gonna do
+for your final project.
+
+45
+00:02:07,142 --> 00:02:10,500
+It's not just that it's
+a really advanced API,
+
+46
+00:02:10,500 --> 00:02:13,650
+as much as it requires UIkit integration,
+
+47
+00:02:13,650 --> 00:02:15,900
+and some concepts there that we just
+
+48
+00:02:15,900 --> 00:02:18,360
+don't have time to cover, bottom line,
+
+49
+00:02:18,360 --> 00:02:20,200
+but I'm mentioning it just so you know
+
+50
+00:02:20,200 --> 00:02:21,660
+it's out there because when you,
+
+51
+00:02:21,660 --> 00:02:22,760
+if you went out in the real world,
+
+52
+00:02:22,760 --> 00:02:25,130
+and you created some kind
+of app that has a document,
+
+53
+00:02:25,130 --> 00:02:26,983
+you wanna know about UIDocuments.
+
+54
+00:02:28,600 --> 00:02:30,620
+And there's Core Data, of course,
+
+55
+00:02:30,620 --> 00:02:32,960
+powerful, object-oriented,
+
+56
+00:02:32,960 --> 00:02:35,840
+it's incredibly great SwiftUI integration
+
+57
+00:02:35,840 --> 00:02:38,650
+through that FetchedResults stuff.
+
+58
+00:02:38,650 --> 00:02:40,960
+And this is really the go-to place,
+
+59
+00:02:40,960 --> 00:02:44,144
+when we want to store data in an iOS app,
+
+60
+00:02:44,144 --> 00:02:45,635
+we're gonna Core Data.
+
+61
+00:02:45,635 --> 00:02:47,344
+For any significant amount of data,
+
+62
+00:02:47,344 --> 00:02:48,177
+we're gonna do this.
+
+63
+00:02:48,177 --> 00:02:49,835
+We're not gonna put it in UserDefaults
+
+64
+00:02:49,835 --> 00:02:51,286
+unless we're doing a demo.
+
+65
+00:02:51,286 --> 00:02:52,970
+We're gonna use Core
+Data, and you saw why,
+
+66
+00:02:52,970 --> 00:02:56,673
+it's really very capable database system.
+
+67
+00:02:59,110 --> 00:03:03,580
+CloudKit is something I'm
+gonna talk about today.
+
+68
+00:03:03,580 --> 00:03:08,330
+And it's a way to store data
+in on the network in iCloud.
+
+69
+00:03:08,330 --> 00:03:11,730
+And you can see there's some
+huge advantages of doing that.
+
+70
+00:03:11,730 --> 00:03:13,560
+When you put stuff out on the network,
+
+71
+00:03:13,560 --> 00:03:15,510
+it means that now, the
+user's gonna see all
+
+72
+00:03:15,510 --> 00:03:17,890
+that data on all of their devices,
+
+73
+00:03:17,890 --> 00:03:19,680
+instead of just on the device they created
+
+74
+00:03:19,680 --> 00:03:24,150
+the EmojiArt thing or the
+theme in their Memorize.
+
+75
+00:03:24,150 --> 00:03:27,040
+So it's really, really powerful thing
+
+76
+00:03:27,040 --> 00:03:29,980
+to be able to do, store
+things on the network.
+
+77
+00:03:29,980 --> 00:03:33,030
+CloudKit has some nice features
+
+78
+00:03:33,030 --> 00:03:35,810
+that are similar to what you already know,
+
+79
+00:03:35,810 --> 00:03:38,460
+for example, it has its
+own little UserDefaults
+
+80
+00:03:38,460 --> 00:03:42,360
+like thing, where you
+can store key-value pairs
+
+81
+00:03:42,360 --> 00:03:46,310
+on the network that are shared
+on all devices for that user.
+
+82
+00:03:46,310 --> 00:03:48,980
+And it also can play really
+nicely with Core Data.
+
+83
+00:03:48,980 --> 00:03:52,190
+I know if you remember when
+we did the new project,
+
+84
+00:03:52,190 --> 00:03:54,630
+and we clicked the Use
+Core Data button there,
+
+85
+00:03:54,630 --> 00:03:57,983
+there was another one that
+said, "Oh and Use CloudKit too."
+
+86
+00:03:57,983 --> 00:04:00,540
+And now, we'll make it so
+that your Core Data databases
+
+87
+00:04:00,540 --> 00:04:02,720
+get replicated using CloudKit
+
+88
+00:04:02,720 --> 00:04:05,170
+on all of the user's devices.
+
+89
+00:04:05,170 --> 00:04:07,220
+So anything they put in Core
+Data, they see everywhere.
+
+90
+00:04:07,220 --> 00:04:10,363
+That's a powerful combo right there.
+
+91
+00:04:11,706 --> 00:04:13,210
+And CloudKit also has mechanism
+
+92
+00:04:13,210 --> 00:04:15,860
+for storing documents out there.
+
+93
+00:04:15,860 --> 00:04:19,340
+So there's some integration
+with UIDocument and all that,
+
+94
+00:04:19,340 --> 00:04:22,170
+to make a document store,
+so CloudKit's really,
+
+95
+00:04:22,170 --> 00:04:25,080
+iCloud in general,
+really awesome mechanism
+
+96
+00:04:25,080 --> 00:04:27,050
+for saving things on the network
+
+97
+00:04:27,050 --> 00:04:29,783
+so the user can see them
+on all of their devices.
+
+98
+00:04:30,640 --> 00:04:32,120
+Now, we're gonna go over the basics
+
+99
+00:04:32,120 --> 00:04:33,660
+of CloudKit today via slide.
+
+100
+00:04:33,660 --> 00:04:36,180
+I just wanna give you a
+feel for what it's like.
+
+101
+00:04:36,180 --> 00:04:38,440
+This is an API you might wanna try
+
+102
+00:04:38,440 --> 00:04:39,980
+and use for your final project.
+
+103
+00:04:39,980 --> 00:04:40,940
+It's a little ambitious,
+
+104
+00:04:40,940 --> 00:04:44,320
+and I'm gonna show you
+ways you can cut corners
+
+105
+00:04:44,320 --> 00:04:46,340
+just a little bit for your final project
+
+106
+00:04:46,340 --> 00:04:48,380
+as soon as you introduce yourself to this.
+
+107
+00:04:48,380 --> 00:04:51,003
+This is an introductory course after all.
+
+108
+00:04:51,850 --> 00:04:53,347
+But I think some of you might find,
+
+109
+00:04:53,347 --> 00:04:56,647
+"Wow, I really need a way to store stuff
+
+110
+00:04:56,647 --> 00:04:59,360
+"that would work on all
+the user's devices."
+
+111
+00:04:59,360 --> 00:05:01,430
+And so, CloudKit might be a nice
+
+112
+00:05:01,430 --> 00:05:03,693
+your-choice API from the rubric.
+
+113
+00:05:05,220 --> 00:05:06,560
+Then, the next stuff to talk about
+
+114
+00:05:06,560 --> 00:05:09,780
+after CloudKit is the file system
+
+115
+00:05:09,780 --> 00:05:11,590
+essentially accessing
+anything in the file system,
+
+116
+00:05:11,590 --> 00:05:14,150
+which we do via URL and Data,
+
+117
+00:05:14,150 --> 00:05:15,950
+which you already know
+about those structs,
+
+118
+00:05:15,950 --> 00:05:19,030
+and also a new struct called FileManager.
+
+119
+00:05:19,030 --> 00:05:20,420
+I'll talk about how these things work,
+
+120
+00:05:20,420 --> 00:05:23,070
+and then, I'm actually
+gonna demo on this one,
+
+121
+00:05:23,070 --> 00:05:24,970
+where we're gonna make
+our EmojiArtDocuments
+
+122
+00:05:24,970 --> 00:05:26,853
+be stored in the file system.
+
+123
+00:05:28,780 --> 00:05:30,160
+So CloudKit, what is it?
+
+124
+00:05:30,160 --> 00:05:32,630
+It's a database in the cloud.
+
+125
+00:05:32,630 --> 00:05:35,570
+Now, it's a simple to use database,
+
+126
+00:05:35,570 --> 00:05:37,580
+has basic database operation,
+
+127
+00:05:37,580 --> 00:05:39,920
+not as fully featured as Core Data.
+
+128
+00:05:39,920 --> 00:05:43,510
+This is not Core Data over
+the network, all right.
+
+129
+00:05:43,510 --> 00:05:44,570
+Now, one of the most important things
+
+130
+00:05:44,570 --> 00:05:46,870
+to understand about
+doing CloudKit database
+
+131
+00:05:46,870 --> 00:05:49,130
+is that it's asynchronous.
+
+132
+00:05:49,130 --> 00:05:52,550
+All of the important calls that do things
+
+133
+00:05:52,550 --> 00:05:54,650
+in CloudKit are asynchronous.
+
+134
+00:05:54,650 --> 00:05:56,210
+You provide them a closure,
+
+135
+00:05:56,210 --> 00:05:58,360
+it goes off and does it
+on a background thread,
+
+136
+00:05:58,360 --> 00:06:00,570
+and when it's done, it
+calls your closure back,
+
+137
+00:06:00,570 --> 00:06:02,450
+and said here's what happened.
+
+138
+00:06:02,450 --> 00:06:04,990
+That kind of programming,
+asynchronous programming,
+
+139
+00:06:04,990 --> 00:06:06,090
+takes some getting used to.
+
+140
+00:06:06,090 --> 00:06:08,487
+You already saw it a little
+bit so far in this course.
+
+141
+00:06:08,487 --> 00:06:11,300
+But CloudKit is intensively asynchronous.
+
+142
+00:06:11,300 --> 00:06:13,070
+By its very nature, it's going out
+
+143
+00:06:13,070 --> 00:06:14,450
+over the network, which the network
+
+144
+00:06:14,450 --> 00:06:17,203
+might be unavailable or it
+might be slow, or whatever.
+
+145
+00:06:18,380 --> 00:06:21,830
+Demoing this is, because of that,
+
+146
+00:06:21,830 --> 00:06:23,510
+can be quite a big demo,
+
+147
+00:06:23,510 --> 00:06:25,820
+even bigger than Core Data demo.
+
+148
+00:06:25,820 --> 00:06:27,820
+So I'm not gonna do a demo this quarter.
+
+149
+00:06:27,820 --> 00:06:31,260
+If you want to go back
+to spring of 2015-16,
+
+150
+00:06:31,260 --> 00:06:33,520
+this course was on iTunesU.
+
+151
+00:06:33,520 --> 00:06:35,470
+You can, I think it's
+still there on iTunesU,
+
+152
+00:06:35,470 --> 00:06:38,950
+you can go watch it, and
+see the CloudKit demo
+
+153
+00:06:38,950 --> 00:06:40,880
+that we did and most of
+that is still applicable.
+
+154
+00:06:40,880 --> 00:06:45,070
+This, all this cloud stuff is
+pre-SwiftUI, pre-Swift even.
+
+155
+00:06:45,070 --> 00:06:49,180
+And so, the stuff hasn't
+changed that much since then,
+
+156
+00:06:49,180 --> 00:06:50,370
+you'll get the basic idea
+
+157
+00:06:50,370 --> 00:06:52,170
+if you wanna go back and watch that.
+
+158
+00:06:53,570 --> 00:06:56,210
+All right, so let's do
+an overview of CloudKit.
+
+159
+00:06:56,210 --> 00:06:58,680
+I just wanna define some terms
+
+160
+00:06:58,680 --> 00:07:00,050
+that we use in CloudKit a lot,
+
+161
+00:07:00,050 --> 00:07:02,060
+so we understand what we're talking about.
+
+162
+00:07:02,060 --> 00:07:05,100
+The first term is Record Type.
+
+163
+00:07:05,100 --> 00:07:08,110
+So a Record Type is like
+a class or a struct.
+
+164
+00:07:08,110 --> 00:07:11,500
+There's really no classes
+or structs per se,
+
+165
+00:07:11,500 --> 00:07:12,900
+stored in CloudKit.
+
+166
+00:07:12,900 --> 00:07:14,180
+It's not like Core Data,
+
+167
+00:07:14,180 --> 00:07:17,180
+where we essentially
+looks like objects to us,
+
+168
+00:07:17,180 --> 00:07:19,150
+but we do have these
+things called Record Types,
+
+169
+00:07:19,150 --> 00:07:23,030
+and that's a kind of thing
+that's in the database.
+
+170
+00:07:23,030 --> 00:07:26,750
+Then, the word "Fields"
+is what we use for vars.
+
+171
+00:07:26,750 --> 00:07:29,500
+In Core Data, we call these attributes.
+
+172
+00:07:29,500 --> 00:07:31,170
+In CloudKit, we call them Fields.
+
+173
+00:07:31,170 --> 00:07:33,630
+This is the vars, the things that exist
+
+174
+00:07:33,630 --> 00:07:37,030
+in our Record Types that we store.
+
+175
+00:07:37,030 --> 00:07:38,610
+Then, there's the word Record.
+
+176
+00:07:38,610 --> 00:07:41,070
+Record means an instance of a Record Type,
+
+177
+00:07:41,070 --> 00:07:44,160
+so it's an actual one of
+those things in the database,
+
+178
+00:07:44,160 --> 00:07:45,270
+so of course, you're
+gonna be storing many,
+
+179
+00:07:45,270 --> 00:07:48,791
+many Records in your CloudKit database.
+
+180
+00:07:48,791 --> 00:07:50,037
+And that's where all your data is,
+
+181
+00:07:50,037 --> 00:07:53,243
+and the Records contain
+values for all the Fields.
+
+182
+00:07:54,740 --> 00:07:56,560
+There's something called a Reference,
+
+183
+00:07:56,560 --> 00:07:59,139
+capital R, Reference, a CKReference.
+
+184
+00:07:59,139 --> 00:08:01,040
+You're gonna see CK in
+front of all the things
+
+185
+00:08:01,040 --> 00:08:02,393
+that we do in CloudKit.
+
+186
+00:08:03,380 --> 00:08:06,010
+And that is a pointer to another Record,
+
+187
+00:08:06,010 --> 00:08:10,490
+doing relationships between Records,
+
+188
+00:08:10,490 --> 00:08:12,880
+Record Types, is not quite the same,
+
+189
+00:08:12,880 --> 00:08:14,900
+or as powerful if you're having Core Data,
+
+190
+00:08:14,900 --> 00:08:17,660
+where it's automatically
+keeping a set of the objects
+
+191
+00:08:17,660 --> 00:08:19,560
+on the other side, and
+it keeps it up to date,
+
+192
+00:08:19,560 --> 00:08:21,280
+and all that business.
+
+193
+00:08:21,280 --> 00:08:24,330
+This is not a full relational
+database by any means here.
+
+194
+00:08:24,330 --> 00:08:26,850
+So references between
+objects still make sense
+
+195
+00:08:26,850 --> 00:08:29,870
+but you have to do them
+with this CKReference,
+
+196
+00:08:29,870 --> 00:08:31,540
+this Reference to the other object,
+
+197
+00:08:31,540 --> 00:08:34,300
+and I'll show you that, what
+that looks like in code.
+
+198
+00:08:34,300 --> 00:08:37,720
+Then, there are terms like
+Database, Zone and Container.
+
+199
+00:08:37,720 --> 00:08:39,530
+A Container is a collection of Databases.
+
+200
+00:08:39,530 --> 00:08:41,800
+A Database can have Zones inside of it.
+
+201
+00:08:41,800 --> 00:08:44,380
+This is just how we partition up the space
+
+202
+00:08:44,380 --> 00:08:47,797
+out in iCloud that we
+want to store our data in,
+
+203
+00:08:47,797 --> 00:08:50,560
+and I'm gonna talk a little
+bit briefly about this.
+
+204
+00:08:50,560 --> 00:08:53,550
+I'll talk mostly about
+the top level databases
+
+205
+00:08:53,550 --> 00:08:55,090
+that we use, where you're gonna use one
+
+206
+00:08:55,090 --> 00:08:57,140
+of three databases, and you can see that.
+
+207
+00:08:58,430 --> 00:09:00,070
+Then, there's something called a Query.
+
+208
+00:09:00,070 --> 00:09:02,210
+A Query is a Database search.
+
+209
+00:09:02,210 --> 00:09:03,450
+This is where we're gonna
+go out in the Database,
+
+210
+00:09:03,450 --> 00:09:05,170
+and try and find some Records,
+
+211
+00:09:05,170 --> 00:09:07,560
+some instances of some Record Types
+
+212
+00:09:07,560 --> 00:09:09,340
+that match some criteria.
+
+213
+00:09:09,340 --> 00:09:10,273
+And that's gonna look very familiar to you
+
+214
+00:09:10,273 --> 00:09:11,840
+when we get to that.
+
+215
+00:09:11,840 --> 00:09:14,120
+And finally, there is a Subscription.
+
+216
+00:09:14,120 --> 00:09:15,757
+So this is like a standing Query,
+
+217
+00:09:15,757 --> 00:09:17,830
+and we talked about standing queries
+
+218
+00:09:17,830 --> 00:09:21,812
+in Core Data, where we have
+the SwiftUI FetchRequests
+
+219
+00:09:21,812 --> 00:09:23,000
+that return the these FetchedResults,
+
+220
+00:09:23,000 --> 00:09:24,240
+and that was a standing query,
+
+221
+00:09:24,240 --> 00:09:26,110
+it was always updating them.
+
+222
+00:09:26,110 --> 00:09:28,130
+Well, here's a standing query too
+
+223
+00:09:28,130 --> 00:09:30,090
+but it's a lot more complicated
+
+224
+00:09:30,090 --> 00:09:32,390
+to have a standing query on the network,
+
+225
+00:09:32,390 --> 00:09:34,440
+because you're talking about finding out
+
+226
+00:09:34,440 --> 00:09:36,660
+when something changes in iCloud,
+
+227
+00:09:36,660 --> 00:09:38,950
+and then, notifying your app, whoa,
+
+228
+00:09:38,950 --> 00:09:42,560
+this Query that you set
+up to be always querying,
+
+229
+00:09:42,560 --> 00:09:44,210
+it changed but it changed on the network,
+
+230
+00:09:44,210 --> 00:09:46,790
+and you get notified, and the
+way your app gets notified
+
+231
+00:09:46,790 --> 00:09:49,160
+is via something called
+a push notification.
+
+232
+00:09:49,160 --> 00:09:51,870
+These are the little things
+that come down to your phone
+
+233
+00:09:51,870 --> 00:09:53,740
+and tell you certain things have happened.
+
+234
+00:09:53,740 --> 00:09:56,300
+A lot of apps have these
+push notifications.
+
+235
+00:09:56,300 --> 00:09:57,750
+And that's how this works.
+
+236
+00:09:57,750 --> 00:09:59,760
+Now, that's way beyond
+the scope of this class
+
+237
+00:09:59,760 --> 00:10:01,560
+to talk about how push notifications work,
+
+238
+00:10:01,560 --> 00:10:03,540
+and how you would react to them.
+
+239
+00:10:03,540 --> 00:10:05,070
+This is not something I would expect you
+
+240
+00:10:05,070 --> 00:10:06,630
+to do on your final project is to have
+
+241
+00:10:06,630 --> 00:10:08,810
+a Subscription, a standing Query,
+
+242
+00:10:08,810 --> 00:10:11,710
+and handle the push notifications.
+
+243
+00:10:11,710 --> 00:10:13,310
+You have three weeks to do your project.
+
+244
+00:10:13,310 --> 00:10:14,740
+I don't want you spending
+a whole week on it,
+
+245
+00:10:14,740 --> 00:10:16,500
+trying to do that so I would,
+
+246
+00:10:16,500 --> 00:10:18,340
+if you're gonna do CloudKit
+for your final project,
+
+247
+00:10:18,340 --> 00:10:21,113
+I would not tackle Subscriptions.
+
+248
+00:10:22,020 --> 00:10:24,170
+One thing about using CloudKit
+
+249
+00:10:24,170 --> 00:10:26,220
+is it requires a little bit of enabling.
+
+250
+00:10:26,220 --> 00:10:28,810
+You're used to just, I don't
+know, import Core Data,
+
+251
+00:10:28,810 --> 00:10:30,110
+and I can start using Core Data,
+
+252
+00:10:30,110 --> 00:10:31,530
+and that's true for Core Data,
+
+253
+00:10:31,530 --> 00:10:34,290
+but for CloudKit, you
+actually need to turn it on.
+
+254
+00:10:34,290 --> 00:10:37,310
+And if you go to the Capabilities tab
+
+255
+00:10:37,310 --> 00:10:38,960
+in your Project Settings, you're gonna see
+
+256
+00:10:38,960 --> 00:10:41,610
+there's a bunch of
+capabilities like Apple Pay,
+
+257
+00:10:41,610 --> 00:10:44,380
+and Game Center, and things like that,
+
+258
+00:10:44,380 --> 00:10:45,550
+that you have to turn on,
+
+259
+00:10:45,550 --> 00:10:47,640
+and that's because these things
+
+260
+00:10:47,640 --> 00:10:50,280
+are accessing servers
+out there in the world,
+
+261
+00:10:50,280 --> 00:10:53,340
+so they need a little
+bit of an authorization
+
+262
+00:10:53,340 --> 00:10:56,480
+and enablement, entitlements
+we call these things
+
+263
+00:10:56,480 --> 00:10:58,770
+to make your app be able to do these.
+
+264
+00:10:58,770 --> 00:10:59,870
+But it's quite easy to do.
+
+265
+00:10:59,870 --> 00:11:02,410
+You just go in here to
+this Capabilities tab,
+
+266
+00:11:02,410 --> 00:11:04,930
+and we see iCloud, it says
+"OFF" when you get in there.
+
+267
+00:11:04,930 --> 00:11:06,970
+Just click it to "ON", and you're gonna
+
+268
+00:11:06,970 --> 00:11:08,610
+get some more UI here,
+
+269
+00:11:08,610 --> 00:11:10,300
+and you can see there's three different
+
+270
+00:11:10,300 --> 00:11:12,160
+services in CloudKit.
+
+271
+00:11:12,160 --> 00:11:14,160
+The first one there, key-value storage,
+
+272
+00:11:14,160 --> 00:11:16,040
+that's the UserDefaults like thing
+
+273
+00:11:16,040 --> 00:11:17,080
+I was telling you about,
+
+274
+00:11:17,080 --> 00:11:18,750
+and then, iCloud Documents right there.
+
+275
+00:11:18,750 --> 00:11:20,953
+That's for storing your
+documents in iCloud.
+
+276
+00:11:20,953 --> 00:11:22,240
+I was telling you about that.
+
+277
+00:11:22,240 --> 00:11:24,400
+And what we're gonna
+talk about is CloudKit,
+
+278
+00:11:24,400 --> 00:11:26,380
+which is this database, right,
+
+279
+00:11:26,380 --> 00:11:29,090
+the Database, the Records,
+and Fields, and all that.
+
+280
+00:11:29,090 --> 00:11:30,440
+So you're gonna turn that on,
+
+281
+00:11:30,440 --> 00:11:33,630
+and then, you're gonna go down
+to this button right below,
+
+282
+00:11:33,630 --> 00:11:36,960
+very important button, CloudKit Dashboard,
+
+283
+00:11:36,960 --> 00:11:38,680
+this CloudKit Dashboard is gonna let you
+
+284
+00:11:38,680 --> 00:11:41,500
+manage all your activity in CloudKit,
+
+285
+00:11:41,500 --> 00:11:43,500
+all your Record Types, all your Records,
+
+286
+00:11:43,500 --> 00:11:45,610
+see all your data queries,
+
+287
+00:11:45,610 --> 00:11:49,510
+everything is going to
+be managed through this.
+
+288
+00:11:49,510 --> 00:11:50,780
+Let's click on this button,
+
+289
+00:11:50,780 --> 00:11:52,860
+or simulate clicking on this button,
+
+290
+00:11:52,860 --> 00:11:54,650
+and see what we get.
+
+291
+00:11:54,650 --> 00:11:55,980
+This is what you get,
+
+292
+00:11:55,980 --> 00:11:59,130
+you go to a certain
+website on the internet,
+
+293
+00:11:59,130 --> 00:12:01,270
+and it probably doesn't look exactly
+
+294
+00:12:01,270 --> 00:12:04,740
+like this anymore, this like,
+it says created May 15, 2016,
+
+295
+00:12:04,740 --> 00:12:07,450
+so this is kinda old,
+but it's still same idea
+
+296
+00:12:07,450 --> 00:12:09,380
+what's going on up there,
+
+297
+00:12:09,380 --> 00:12:12,750
+which is that you are
+looking at all the Records
+
+298
+00:12:12,750 --> 00:12:14,380
+and Record Types that you have,
+
+299
+00:12:14,380 --> 00:12:15,795
+and you're even marking them.
+
+300
+00:12:15,795 --> 00:12:16,628
+You see on the right there
+
+301
+00:12:16,628 --> 00:12:18,690
+which is Query, Search,
+Sort, Query, Search.
+
+302
+00:12:18,690 --> 00:12:20,210
+You're marking which things
+
+303
+00:12:20,210 --> 00:12:21,840
+you wanna be able to query,
+
+304
+00:12:21,840 --> 00:12:25,470
+and which things you wanna be
+able to sort on, et cetera.
+
+305
+00:12:25,470 --> 00:12:27,620
+You can add Record Types, and Fields,
+
+306
+00:12:27,620 --> 00:12:28,760
+and all that stuff here,
+
+307
+00:12:28,760 --> 00:12:30,580
+although you usually don't do that
+
+308
+00:12:30,580 --> 00:12:33,010
+because something very
+interesting about CloudKit
+
+309
+00:12:33,010 --> 00:12:36,300
+when it comes to adding
+Record Types and Fields,
+
+310
+00:12:36,300 --> 00:12:39,370
+which is that it has
+dynamic schema creation.
+
+311
+00:12:39,370 --> 00:12:41,450
+So you kind of look at that dashboard,
+
+312
+00:12:41,450 --> 00:12:43,507
+and you think, "Oh,
+that's kinda like the map
+
+313
+00:12:43,507 --> 00:12:46,680
+"we had with Core Data," and it kinda is.
+
+314
+00:12:46,680 --> 00:12:48,520
+It serves a lot of the same function.
+
+315
+00:12:48,520 --> 00:12:51,110
+However, in Core Data,
+you have to do the map.
+
+316
+00:12:51,110 --> 00:12:53,740
+The map is how your app knows
+
+317
+00:12:53,740 --> 00:12:56,350
+what classes and vars to create for you,
+
+318
+00:12:56,350 --> 00:12:59,960
+so you can access the
+data, where in CloudKit,
+
+319
+00:12:59,960 --> 00:13:01,260
+you don't have to do the map.
+
+320
+00:13:01,260 --> 00:13:03,230
+It can build the map on the fly.
+
+321
+00:13:03,230 --> 00:13:06,260
+If you create a Record
+Type with a certain name,
+
+322
+00:13:06,260 --> 00:13:09,240
+it just creates that very
+first time you ever do it,
+
+323
+00:13:09,240 --> 00:13:10,190
+boom, it creates it.
+
+324
+00:13:10,190 --> 00:13:13,180
+Now, it only does this dynamic creation
+
+325
+00:13:13,180 --> 00:13:15,190
+of the Record Types,
+and Fields, and stuff,
+
+326
+00:13:15,190 --> 00:13:16,770
+while you're in development,
+
+327
+00:13:16,770 --> 00:13:18,700
+and eventually, when your app ships,
+
+328
+00:13:18,700 --> 00:13:19,950
+when you go to App Store,
+
+329
+00:13:21,330 --> 00:13:22,870
+the iTunes Connect, where you set up
+
+330
+00:13:22,870 --> 00:13:25,010
+to have your app be on the App Store,
+
+331
+00:13:25,010 --> 00:13:25,917
+you're gonna click a button says,
+
+332
+00:13:25,917 --> 00:13:27,367
+"Okay, I'm switching over to production
+
+333
+00:13:27,367 --> 00:13:29,380
+"mode on my CloudKit," and then,
+
+334
+00:13:29,380 --> 00:13:31,690
+it's not gonna let you do
+this dynamic schema creation,
+
+335
+00:13:31,690 --> 00:13:32,600
+of course, right.
+
+336
+00:13:32,600 --> 00:13:35,390
+You do the dynamic schema creation
+
+337
+00:13:35,390 --> 00:13:37,530
+while you're in development
+once you get that
+
+338
+00:13:37,530 --> 00:13:40,330
+to the Record Types, and
+Fields, and stuff you want,
+
+339
+00:13:40,330 --> 00:13:43,040
+then, you go live.
+
+340
+00:13:43,040 --> 00:13:45,720
+Let's take a look briefly
+at what the code looks
+
+341
+00:13:45,720 --> 00:13:48,530
+like when you're writing a CloudKit app.
+
+342
+00:13:48,530 --> 00:13:51,763
+The first thing you need is
+a Database to put things in.
+
+343
+00:13:51,763 --> 00:13:53,730
+It's kind of like a ManagedObjectContext
+
+344
+00:13:53,730 --> 00:13:55,380
+but not really 'cause it's much,
+
+345
+00:13:55,380 --> 00:13:58,040
+much more lighter weight
+concept, this Database.
+
+346
+00:13:58,040 --> 00:13:59,530
+But the most important thing
+
+347
+00:13:59,530 --> 00:14:01,360
+you're choosing between
+is whether you want
+
+348
+00:14:01,360 --> 00:14:03,930
+a public Database, a shared Database,
+
+349
+00:14:03,930 --> 00:14:05,920
+or the private Database.
+
+350
+00:14:05,920 --> 00:14:09,100
+So the private Database is
+the normal iCloud Database.
+
+351
+00:14:09,100 --> 00:14:11,610
+This is just the Database
+where you put stuff
+
+352
+00:14:11,610 --> 00:14:14,900
+that is the user's, and the user sees it
+
+353
+00:14:14,900 --> 00:14:17,990
+on all their devices,
+that's the normal Database.
+
+354
+00:14:17,990 --> 00:14:21,570
+The shared and public are
+kind of interesting ones.
+
+355
+00:14:21,570 --> 00:14:24,600
+The public one, if you,
+if a user puts stuff
+
+356
+00:14:24,600 --> 00:14:26,840
+in the public Database for themselves,
+
+357
+00:14:26,840 --> 00:14:30,760
+then, other users, if they
+know that person's iCloud
+
+358
+00:14:31,950 --> 00:14:34,630
+email address or whatever,
+they can actually look
+
+359
+00:14:34,630 --> 00:14:37,390
+their app, and go look, and see that data.
+
+360
+00:14:37,390 --> 00:14:40,000
+So it's really kind of
+publicly posted data.
+
+361
+00:14:40,000 --> 00:14:43,090
+You can think of it as like your website,
+
+362
+00:14:43,090 --> 00:14:45,510
+making the stuff available to people,
+
+363
+00:14:45,510 --> 00:14:47,050
+and they can see it all they want.
+
+364
+00:14:47,050 --> 00:14:48,927
+Pretty rare to do this on iCloud,
+
+365
+00:14:48,927 --> 00:14:49,940
+but you could do it.
+
+366
+00:14:49,940 --> 00:14:51,340
+Essentially, a way to use iCloud
+
+367
+00:14:51,340 --> 00:14:53,800
+to publish information to the world.
+
+368
+00:14:53,800 --> 00:14:56,630
+And then, they're shared,
+which is invitation-
+
+369
+00:14:56,630 --> 00:14:59,117
+only access to your private Database.
+
+370
+00:14:59,117 --> 00:15:01,410
+And the way this works is you end up
+
+371
+00:15:01,410 --> 00:15:04,110
+sending an email to people.
+
+372
+00:15:04,110 --> 00:15:05,600
+And in that email is a link,
+
+373
+00:15:05,600 --> 00:15:06,840
+and when they click on it,
+
+374
+00:15:06,840 --> 00:15:10,050
+their little iCloud shared Database
+
+375
+00:15:10,050 --> 00:15:14,110
+gets a view onto some
+part of, not your entire,
+
+376
+00:15:14,110 --> 00:15:16,600
+private cloud Database of someone else.
+
+377
+00:15:16,600 --> 00:15:18,380
+So that way, the two
+of you can share data,
+
+378
+00:15:18,380 --> 00:15:20,680
+and both sides can add objects,
+
+379
+00:15:20,680 --> 00:15:23,080
+or whatever depending on
+the permissions granted.
+
+380
+00:15:23,080 --> 00:15:24,880
+Add objects and see each other's objects,
+
+381
+00:15:24,880 --> 00:15:26,580
+and again, it's only a little sub-part,
+
+382
+00:15:26,580 --> 00:15:29,920
+so a little sub-part of the Database,
+
+383
+00:15:29,920 --> 00:15:32,873
+but it's a kind of a
+cool way to share things.
+
+384
+00:15:34,180 --> 00:15:35,420
+So once you have a Database,
+
+385
+00:15:35,420 --> 00:15:36,920
+then, you can start creating Records,
+
+386
+00:15:36,920 --> 00:15:38,440
+and here's how you do that.
+
+387
+00:15:38,440 --> 00:15:39,800
+To create a Record, you just say
+
+388
+00:15:39,800 --> 00:15:42,280
+CKRecord and the name of the Record,
+
+389
+00:15:42,280 --> 00:15:43,900
+and again you don't have to have gone
+
+390
+00:15:43,900 --> 00:15:45,070
+to the dashboards first.
+
+391
+00:15:45,070 --> 00:15:47,150
+You can just do this, and
+if this is the first time
+
+392
+00:15:47,150 --> 00:15:50,120
+ever created a CKRecord "Tweet",
+
+393
+00:15:50,120 --> 00:15:53,070
+then now Tweets, or Record Type Tweet,
+
+394
+00:15:53,070 --> 00:15:55,840
+is just going to be created
+in the Database for you.
+
+395
+00:15:55,840 --> 00:15:57,940
+And then, to set the values of Fields,
+
+396
+00:15:57,940 --> 00:16:00,370
+that kind of looks like
+accessing a Dictionary,
+
+397
+00:16:00,370 --> 00:16:04,040
+you say tweet open square
+bracket the name of the Field,
+
+398
+00:16:04,040 --> 00:16:06,230
+equals the value, and that is going
+
+399
+00:16:06,230 --> 00:16:10,700
+to again create that text
+Field in the Tweet Record Type,
+
+400
+00:16:10,700 --> 00:16:12,000
+if that doesn't exist before,
+
+401
+00:16:12,000 --> 00:16:14,280
+and set its value to that.
+
+402
+00:16:14,280 --> 00:16:15,680
+And here, I'll create another one.
+
+403
+00:16:15,680 --> 00:16:17,930
+This is a CKRecord for a Twitter user.
+
+404
+00:16:17,930 --> 00:16:19,380
+So it's a different Record Type,
+
+405
+00:16:19,380 --> 00:16:20,750
+a different kind of thing.
+
+406
+00:16:20,750 --> 00:16:22,320
+I'm going back to my tweet
+
+407
+00:16:22,320 --> 00:16:25,260
+and setting its "tweeter" Field
+
+408
+00:16:25,260 --> 00:16:28,230
+to be a Reference to the tweeter.
+
+409
+00:16:28,230 --> 00:16:30,263
+So see here, I'm having to say CKReference
+
+410
+00:16:30,263 --> 00:16:33,563
+with the record of this
+TwitterUser I created.
+
+411
+00:16:34,660 --> 00:16:36,100
+A little different again from Core Data.
+
+412
+00:16:36,100 --> 00:16:37,230
+You can't just set it directly,
+
+413
+00:16:37,230 --> 00:16:38,860
+you gotta do a CKReference thing,
+
+414
+00:16:38,860 --> 00:16:40,250
+and then, notice that action
+
+415
+00:16:40,250 --> 00:16:42,710
+that says things like basically
+
+416
+00:16:42,710 --> 00:16:44,890
+determines what happens
+if the Tweet gets deleted.
+
+417
+00:16:44,890 --> 00:16:46,650
+Does the TwitterUser get deleted?
+
+418
+00:16:46,650 --> 00:16:49,263
+Things like that, those
+kinda relationships.
+
+419
+00:16:50,180 --> 00:16:52,550
+So that's how we build
+up our Record Types,
+
+420
+00:16:52,550 --> 00:16:54,980
+and our Records, and their Fields,
+
+421
+00:16:54,980 --> 00:16:57,630
+and the References to other objects.
+
+422
+00:16:57,630 --> 00:16:59,240
+And once we've kinda done that,
+
+423
+00:16:59,240 --> 00:17:00,710
+then, we wanna save it.
+
+424
+00:17:00,710 --> 00:17:02,810
+And this is where we're
+gonna hit the network.
+
+425
+00:17:02,810 --> 00:17:05,390
+So this is an asynchronous function.
+
+426
+00:17:05,390 --> 00:17:07,580
+Just call save, we just
+give it the Record,
+
+427
+00:17:07,580 --> 00:17:10,060
+the CKRecord you wanna save,
+
+428
+00:17:10,060 --> 00:17:14,830
+and it's going to go off on
+the network in the background.
+
+429
+00:17:14,830 --> 00:17:16,880
+It might take a long time
+if the network's down
+
+430
+00:17:16,880 --> 00:17:19,430
+or might fail if the
+network's down eventually,
+
+431
+00:17:19,430 --> 00:17:21,160
+but if it can finally get through,
+
+432
+00:17:21,160 --> 00:17:22,840
+and write the information that you want,
+
+433
+00:17:22,840 --> 00:17:25,278
+this Tweet Record, then it's gonna call
+
+434
+00:17:25,278 --> 00:17:27,827
+this closure that you give it back.
+
+435
+00:17:27,827 --> 00:17:31,490
+And this closure that you
+give it has two arguments.
+
+436
+00:17:31,490 --> 00:17:34,943
+One is the record that it
+saved, if it was successful,
+
+437
+00:17:34,943 --> 00:17:38,060
+and the other one is the
+error that was generated
+
+438
+00:17:38,060 --> 00:17:39,510
+if it was not.
+
+439
+00:17:39,510 --> 00:17:41,040
+So this is again pre-Swift,
+
+440
+00:17:41,040 --> 00:17:42,760
+in Swift, we'd probably
+have an enum in here
+
+441
+00:17:42,760 --> 00:17:44,300
+with success and failure,
+
+442
+00:17:44,300 --> 00:17:47,430
+and associated value of
+the Record for success,
+
+443
+00:17:47,430 --> 00:17:49,090
+and associated value of the error
+
+444
+00:17:49,090 --> 00:17:49,923
+but we don't have any of that,
+
+445
+00:17:49,923 --> 00:17:51,133
+it's all pre-Swift.
+
+446
+00:17:52,070 --> 00:17:54,013
+So one or the other of these two things,
+
+447
+00:17:54,013 --> 00:17:56,240
+the savedRecord or the
+error, it can be nil.
+
+448
+00:17:56,240 --> 00:17:58,840
+The error is nil, then whoa, success,
+
+449
+00:17:58,840 --> 00:18:01,010
+you saved that thing and the savedRecord
+
+450
+00:18:01,010 --> 00:18:03,710
+will be the CKRecord you just saved.
+
+451
+00:18:03,710 --> 00:18:05,260
+But if the error is not nil,
+
+452
+00:18:05,260 --> 00:18:07,480
+then, you gotta start
+looking at the error codes,
+
+453
+00:18:07,480 --> 00:18:09,100
+and figure out what went wrong.
+
+454
+00:18:09,100 --> 00:18:12,370
+And it's the network, so a
+lot of things can go wrong.
+
+455
+00:18:12,370 --> 00:18:16,490
+There are 29 different, at
+last count, CKErrorCodes.
+
+456
+00:18:16,490 --> 00:18:18,040
+Now, you don't have to
+check every single one
+
+457
+00:18:18,040 --> 00:18:20,270
+'cause some of them can't
+happen during a save,
+
+458
+00:18:20,270 --> 00:18:22,840
+some errors happen in other things.
+
+459
+00:18:22,840 --> 00:18:25,340
+But if you're really doing this for real
+
+460
+00:18:25,340 --> 00:18:27,160
+and shipping your app, you'd want to check
+
+461
+00:18:27,160 --> 00:18:29,960
+all the ones that could
+reasonably happen here,
+
+462
+00:18:29,960 --> 00:18:31,780
+and decide what your app is gonna do
+
+463
+00:18:31,780 --> 00:18:35,400
+because you weren't able
+to save this Record.
+
+464
+00:18:35,400 --> 00:18:38,490
+Here's a place again if you're
+doing your final project.
+
+465
+00:18:38,490 --> 00:18:40,420
+I'm not gonna hold it against you
+
+466
+00:18:40,420 --> 00:18:42,510
+if you don't check all these error codes.
+
+467
+00:18:42,510 --> 00:18:44,960
+Maybe check error codes in one place
+
+468
+00:18:44,960 --> 00:18:46,840
+just to show me you understand,
+
+469
+00:18:46,840 --> 00:18:48,750
+that you gotta check error codes,
+
+470
+00:18:48,750 --> 00:18:50,700
+but otherwise, don't check them.
+
+471
+00:18:50,700 --> 00:18:52,490
+And then your app, your final project
+
+472
+00:18:52,490 --> 00:18:54,450
+basically would just fail miserably
+
+473
+00:18:54,450 --> 00:18:57,393
+in bad networking conditions,
+that's okay, we can.
+
+474
+00:18:58,240 --> 00:18:59,730
+This intro class, you're just trying
+
+475
+00:18:59,730 --> 00:19:02,870
+to introduce yourself to
+API, so like CloudKit.
+
+476
+00:19:02,870 --> 00:19:06,120
+You're not trying to be a master of it all
+
+477
+00:19:06,120 --> 00:19:07,580
+by the end of this quarter.
+
+478
+00:19:07,580 --> 00:19:10,000
+And that reduces the scope quite a bit
+
+479
+00:19:10,000 --> 00:19:10,833
+of doing CloudKit.
+
+480
+00:19:10,833 --> 00:19:12,720
+A lot of CloudKit is
+handling these errors,
+
+481
+00:19:12,720 --> 00:19:14,610
+and the infrastructure for what you do
+
+482
+00:19:14,610 --> 00:19:17,380
+when you can't write things out to iCloud.
+
+483
+00:19:17,380 --> 00:19:19,830
+And so hopefully, reduces
+the scope to something
+
+484
+00:19:19,830 --> 00:19:21,840
+where you could realistically do it
+
+485
+00:19:21,840 --> 00:19:23,933
+as a final project API.
+
+486
+00:19:25,600 --> 00:19:27,390
+Now, what about querying Records,
+
+487
+00:19:27,390 --> 00:19:28,850
+searching for Records?
+
+488
+00:19:28,850 --> 00:19:31,310
+And this oughta real look familiar to you.
+
+489
+00:19:31,310 --> 00:19:32,450
+Yes, it's NSPredicate,
+
+490
+00:19:32,450 --> 00:19:35,410
+the exact same NSPredicate from Core Data.
+
+491
+00:19:35,410 --> 00:19:36,920
+It has the same object now.
+
+492
+00:19:36,920 --> 00:19:40,240
+You can't have exactly
+the same formats there,
+
+493
+00:19:40,240 --> 00:19:43,210
+because the CloudKit database is not quite
+
+494
+00:19:43,210 --> 00:19:45,320
+as powerful as Core Data.
+
+495
+00:19:45,320 --> 00:19:46,900
+So Core Data can do some things in there
+
+496
+00:19:46,900 --> 00:19:50,170
+that CloudKit can't but
+basic stuff like equals,
+
+497
+00:19:50,170 --> 00:19:53,580
+and does this text contain
+this search String,
+
+498
+00:19:53,580 --> 00:19:55,760
+for example, this is, let's say a Tweet
+
+499
+00:19:55,760 --> 00:19:57,860
+that we're searching on right here,
+
+500
+00:19:57,860 --> 00:20:00,780
+that is perfectly reasonable to do.
+
+501
+00:20:00,780 --> 00:20:02,360
+So you create the Predicate you want,
+
+502
+00:20:02,360 --> 00:20:04,500
+and then, you create
+something called a CKQuery,
+
+503
+00:20:04,500 --> 00:20:05,920
+which just is the Record Type
+
+504
+00:20:05,920 --> 00:20:08,040
+that you're trying to find,
+
+505
+00:20:08,040 --> 00:20:10,050
+that you're searching for essentially,
+
+506
+00:20:10,050 --> 00:20:12,227
+and that Predicate.
+
+507
+00:20:12,227 --> 00:20:15,210
+So again, sounds similar to a FetchRequest
+
+508
+00:20:15,210 --> 00:20:19,420
+in Core Data, similar,
+but not exactly the same,
+
+509
+00:20:19,420 --> 00:20:21,281
+but you get the idea.
+
+510
+00:20:21,281 --> 00:20:22,270
+And then, to execute the Query,
+
+511
+00:20:22,270 --> 00:20:24,550
+of course, you're gonna have
+to go out onto the network,
+
+512
+00:20:24,550 --> 00:20:27,900
+so that's where this
+function perform comes in.
+
+513
+00:20:27,900 --> 00:20:29,110
+You give it the query you want,
+
+514
+00:20:29,110 --> 00:20:30,740
+and then, you give it a closure,
+
+515
+00:20:30,740 --> 00:20:32,050
+and that closure will be called
+
+516
+00:20:32,050 --> 00:20:34,570
+when this thing either fails or succeeds.
+
+517
+00:20:34,570 --> 00:20:36,390
+And that closure has
+two arguments as well.
+
+518
+00:20:36,390 --> 00:20:39,290
+One is an Optional Array of the Records
+
+519
+00:20:39,290 --> 00:20:42,070
+that it found by doing
+that search for you,
+
+520
+00:20:42,070 --> 00:20:43,950
+or an Error.
+
+521
+00:20:43,950 --> 00:20:45,550
+And again, if it's an Error,
+
+522
+00:20:45,550 --> 00:20:46,520
+you have to deal with the fact
+
+523
+00:20:46,520 --> 00:20:48,750
+things that you were looking for
+
+524
+00:20:48,750 --> 00:20:51,493
+failed to even search for them.
+
+525
+00:20:52,621 --> 00:20:54,890
+And if it's not, then the
+Records will not be nil,
+
+526
+00:20:54,890 --> 00:20:55,723
+it'll be an array of CKRecord,
+
+527
+00:20:55,723 --> 00:20:58,237
+and there you go, there's your CKRecords
+
+528
+00:20:58,237 --> 00:20:59,630
+that you're looking for.
+
+529
+00:20:59,630 --> 00:21:02,180
+So fairly straightforward to do searching
+
+530
+00:21:02,180 --> 00:21:04,100
+in CloudKit as well.
+
+531
+00:21:04,100 --> 00:21:05,960
+These standing Queries are just,
+
+532
+00:21:05,960 --> 00:21:07,580
+you take one of those CKQueries,
+
+533
+00:21:07,580 --> 00:21:09,547
+and you essentially
+communicate it to the database,
+
+534
+00:21:09,547 --> 00:21:12,130
+and then, it's doing the
+Query on the server side,
+
+535
+00:21:12,130 --> 00:21:14,450
+and then, whenever a
+new thing gets created,
+
+536
+00:21:14,450 --> 00:21:17,380
+that changes the result of that Query,
+
+537
+00:21:17,380 --> 00:21:20,030
+it's sent to this push notification.
+
+538
+00:21:20,030 --> 00:21:21,810
+And if you do want to try and check out
+
+539
+00:21:21,810 --> 00:21:23,820
+how do I handle push notifications,
+
+540
+00:21:23,820 --> 00:21:28,340
+and what do I do, feel free
+to try and jump on that.
+
+541
+00:21:28,340 --> 00:21:30,010
+Again, I think a little too much
+
+542
+00:21:30,010 --> 00:21:32,000
+for your final project here.
+
+543
+00:21:32,000 --> 00:21:34,350
+You can take a look at the
+UserNotifications framework,
+
+544
+00:21:34,350 --> 00:21:36,000
+not just for push notifications,
+
+545
+00:21:36,000 --> 00:21:37,820
+but also for doing
+local notifications too.
+
+546
+00:21:37,820 --> 00:21:39,290
+You might wanna check that out.
+
+547
+00:21:39,290 --> 00:21:41,010
+Those are kinda fun, that's just where
+
+548
+00:21:41,010 --> 00:21:43,050
+you kinda can set little calendar events
+
+549
+00:21:43,050 --> 00:21:46,530
+almost, things to go
+off at a certain time,
+
+550
+00:21:46,530 --> 00:21:49,390
+when your app wants to
+remind the user of something,
+
+551
+00:21:49,390 --> 00:21:51,840
+or do something in a timely
+manner, or something.
+
+552
+00:21:53,720 --> 00:21:55,020
+All right, that's it for CloudKit.
+
+553
+00:21:55,020 --> 00:21:56,810
+That's the intro to CloudKit.
+
+554
+00:21:56,810 --> 00:21:59,350
+Let's talk a little bit
+about the file system,
+
+555
+00:21:59,350 --> 00:22:01,980
+iOS devices, I don't
+know if y'all are aware
+
+556
+00:22:01,980 --> 00:22:05,090
+but they are essentially Unix OSes
+
+557
+00:22:05,090 --> 00:22:06,190
+at the heart of them,
+
+558
+00:22:06,190 --> 00:22:08,580
+and they have a Unix file system there,
+
+559
+00:22:08,580 --> 00:22:10,360
+Unix-like file system.
+
+560
+00:22:10,360 --> 00:22:11,660
+And it starts at slash,
+
+561
+00:22:11,660 --> 00:22:13,740
+just like all your Unix file systems,
+
+562
+00:22:13,740 --> 00:22:15,510
+but of course, it has protections,
+
+563
+00:22:15,510 --> 00:22:18,800
+and you cannot see or write into most
+
+564
+00:22:18,800 --> 00:22:20,570
+of the Unix file system there.
+
+565
+00:22:20,570 --> 00:22:22,910
+And there, you can see
+and write into though
+
+566
+00:22:22,910 --> 00:22:25,180
+is called your sandbox.
+
+567
+00:22:25,180 --> 00:22:27,870
+And your sandbox completely isolates you
+
+568
+00:22:27,870 --> 00:22:28,950
+from the rest of the world.
+
+569
+00:22:28,950 --> 00:22:31,440
+Your app can't see into
+other app sandboxes,
+
+570
+00:22:31,440 --> 00:22:33,160
+you can't see outside your sandbox
+
+571
+00:22:33,160 --> 00:22:34,730
+to modify the system, of course,
+
+572
+00:22:34,730 --> 00:22:36,117
+and damage it in any way,
+
+573
+00:22:36,117 --> 00:22:39,330
+and this is really a
+great idea, sandboxes.
+
+574
+00:22:39,330 --> 00:22:42,180
+I wish we had this on Windows, and Mac,
+
+575
+00:22:42,180 --> 00:22:44,103
+and normal operating systems.
+
+576
+00:22:45,330 --> 00:22:47,440
+Obviously, it makes a ton
+of sense on the devices,
+
+577
+00:22:47,440 --> 00:22:49,610
+where you're installing
+and uninstalling these apps
+
+578
+00:22:49,610 --> 00:22:51,850
+for each of them to
+have their own sandbox.
+
+579
+00:22:51,850 --> 00:22:53,920
+Now, why do we do this sandbox?
+
+580
+00:22:53,920 --> 00:22:55,170
+Three main reasons here.
+
+581
+00:22:55,170 --> 00:22:57,730
+One is security, you don't want anyone
+
+582
+00:22:57,730 --> 00:23:00,380
+to reach into your sandbox
+and damage your app
+
+583
+00:23:00,380 --> 00:23:02,300
+in some way by affecting its data
+
+584
+00:23:02,300 --> 00:23:03,900
+or doing something bad.
+
+585
+00:23:03,900 --> 00:23:06,250
+Also privacy, your app, obviously,
+
+586
+00:23:06,250 --> 00:23:07,890
+is collecting data from the user,
+
+587
+00:23:07,890 --> 00:23:09,420
+and you don't want other apps
+
+588
+00:23:09,420 --> 00:23:11,657
+to be able to see what that data is.
+
+589
+00:23:11,657 --> 00:23:15,530
+And really underrated but
+powerful part of it is cleanup.
+
+590
+00:23:15,530 --> 00:23:18,330
+If someone deletes your
+app from your device,
+
+591
+00:23:18,330 --> 00:23:20,570
+you want everything that
+app has ever created
+
+592
+00:23:20,570 --> 00:23:23,230
+or touched to disappear.
+
+593
+00:23:23,230 --> 00:23:25,760
+And that's what happens
+when you delete your app.
+
+594
+00:23:25,760 --> 00:23:28,140
+The sandbox is completely removed,
+
+595
+00:23:28,140 --> 00:23:29,960
+and so everything the
+person's ever created.
+
+596
+00:23:29,960 --> 00:23:33,030
+Now, the sandbox has directories in it,
+
+597
+00:23:33,030 --> 00:23:34,590
+which are backed up to iCloud,
+
+598
+00:23:34,590 --> 00:23:36,520
+when the user has iCloud Backups on.
+
+599
+00:23:36,520 --> 00:23:38,057
+So if someone deleted
+an app and they said,
+
+600
+00:23:38,057 --> 00:23:40,910
+"Oh no, my documents were in there,"
+
+601
+00:23:40,910 --> 00:23:43,620
+they can go back and get them.
+
+602
+00:23:43,620 --> 00:23:45,710
+By the way, when it comes
+to storing documents,
+
+603
+00:23:45,710 --> 00:23:47,990
+a lot of times, we'd want to
+store documents in iCloud.
+
+604
+00:23:47,990 --> 00:23:51,080
+That way if we deleted
+an app off of my device,
+
+605
+00:23:51,080 --> 00:23:53,270
+it will still be on my other devices.
+
+606
+00:23:53,270 --> 00:23:54,630
+And if I reinstalled the app,
+
+607
+00:23:54,630 --> 00:23:56,655
+I would see them from iCloud.
+
+608
+00:23:56,655 --> 00:23:57,580
+That's why it's a really good idea
+
+609
+00:23:57,580 --> 00:23:59,667
+to store our documents in iCloud.
+
+610
+00:24:01,297 --> 00:24:03,730
+All right so what's in this sandbox?
+
+611
+00:24:03,730 --> 00:24:05,380
+Well, it's a bunch of directories,
+
+612
+00:24:05,380 --> 00:24:08,960
+special directories, kind of
+specially named directories.
+
+613
+00:24:08,960 --> 00:24:11,560
+One of them is the Application directory.
+
+614
+00:24:11,560 --> 00:24:12,740
+This is where your executable is,
+
+615
+00:24:12,740 --> 00:24:15,320
+and your JPEGs, or
+images, or anything else
+
+616
+00:24:15,320 --> 00:24:18,750
+that you drag into Xcode
+to make your app work,
+
+617
+00:24:18,750 --> 00:24:20,990
+those live in there, and
+they're read only there.
+
+618
+00:24:20,990 --> 00:24:23,800
+No, you're not allowed to
+change your application,
+
+619
+00:24:23,800 --> 00:24:25,110
+add images to it or whatever,
+
+620
+00:24:25,110 --> 00:24:27,713
+you'd have to do that in other places.
+
+621
+00:24:28,840 --> 00:24:30,040
+Another really important directory
+
+622
+00:24:30,040 --> 00:24:32,140
+is the Documents directory.
+
+623
+00:24:32,140 --> 00:24:33,520
+This is where you store what
+
+624
+00:24:33,520 --> 00:24:35,840
+the user perceives as a document.
+
+625
+00:24:35,840 --> 00:24:37,760
+For example, your EmojiArtDocuments
+
+626
+00:24:37,760 --> 00:24:39,110
+would definitely be stored here.
+
+627
+00:24:39,110 --> 00:24:40,380
+If you didn't store them in iCloud,
+
+628
+00:24:40,380 --> 00:24:41,840
+you would definitely store them here,
+
+629
+00:24:41,840 --> 00:24:44,420
+but something like the emoji palette,
+
+630
+00:24:44,420 --> 00:24:46,460
+or maybe your Memorize themes even,
+
+631
+00:24:46,460 --> 00:24:47,757
+you probably would not store here.
+
+632
+00:24:47,757 --> 00:24:51,330
+The user does not like
+perceive them as documents.
+
+633
+00:24:51,330 --> 00:24:53,030
+Though, those things will be stored
+
+634
+00:24:53,030 --> 00:24:54,910
+in the Application Support directory,
+
+635
+00:24:54,910 --> 00:24:56,930
+that's another directory.
+
+636
+00:24:56,930 --> 00:25:00,800
+Gets backed up by iCloud, it's permanent,
+
+637
+00:25:00,800 --> 00:25:03,980
+but the user doesn't see
+them as documents in there,
+
+638
+00:25:03,980 --> 00:25:06,190
+kind of data that the user is creating
+
+639
+00:25:06,190 --> 00:25:08,090
+but not really document-oriented,
+
+640
+00:25:08,090 --> 00:25:08,923
+a subtle distinction there,
+
+641
+00:25:08,923 --> 00:25:11,500
+and it really doesn't matter too much
+
+642
+00:25:11,500 --> 00:25:13,020
+what how you do that unless you're using
+
+643
+00:25:13,020 --> 00:25:15,750
+the UIDocument stuff,
+you're using UIDocument
+
+644
+00:25:15,750 --> 00:25:17,470
+that I mentioned earlier,
+then, you definitely
+
+645
+00:25:17,470 --> 00:25:19,320
+want those documents
+and only those documents
+
+646
+00:25:19,320 --> 00:25:20,410
+going in the Document structure.
+
+647
+00:25:20,410 --> 00:25:22,430
+You don't wanna put those in Applications
+
+648
+00:25:22,430 --> 00:25:24,560
+nor would you want to
+put Application Support
+
+649
+00:25:24,560 --> 00:25:25,810
+stuff in the Document structure,
+
+650
+00:25:25,810 --> 00:25:29,390
+and confusing the user
+about what's in there.
+
+651
+00:25:29,390 --> 00:25:31,180
+And there's a Caches directory.
+
+652
+00:25:31,180 --> 00:25:32,650
+This is temporary storage,
+
+653
+00:25:32,650 --> 00:25:34,210
+so this is storage that does not get
+
+654
+00:25:34,210 --> 00:25:37,910
+backed up into iCloud, and
+if you deleted your sandbox,
+
+655
+00:25:37,910 --> 00:25:38,770
+it's gone forever.
+
+656
+00:25:38,770 --> 00:25:40,050
+So this would be things that you can
+
+657
+00:25:40,050 --> 00:25:42,730
+like easily get from the internet again,
+
+658
+00:25:42,730 --> 00:25:45,000
+images that you're just caching locally
+
+659
+00:25:45,000 --> 00:25:46,500
+for good performance.
+
+660
+00:25:46,500 --> 00:25:50,230
+But if you had to throw
+away the Caches directory,
+
+661
+00:25:50,230 --> 00:25:51,861
+you could, and your app would still work
+
+662
+00:25:51,861 --> 00:25:53,500
+because it would just re-download
+
+663
+00:25:53,500 --> 00:25:57,050
+whatever needed from
+that Caches directory.
+
+664
+00:25:57,050 --> 00:25:59,870
+If the iOS's disk started to get full,
+
+665
+00:25:59,870 --> 00:26:02,120
+it the iOS might start hunting around,
+
+666
+00:26:02,120 --> 00:26:04,530
+looking for Caches
+directories and sandboxes
+
+667
+00:26:04,530 --> 00:26:06,660
+that are really big, that it can blast
+
+668
+00:26:06,660 --> 00:26:08,790
+to get space back too.
+
+669
+00:26:08,790 --> 00:26:10,890
+Rarely happens, most people's iOS devices
+
+670
+00:26:10,890 --> 00:26:14,020
+do not get full disks, but could happen.
+
+671
+00:26:14,020 --> 00:26:15,400
+And there's other directories,
+
+672
+00:26:15,400 --> 00:26:18,390
+which you can look in
+the documentation for.
+
+673
+00:26:18,390 --> 00:26:22,330
+And let's talk about how we find out
+
+674
+00:26:22,330 --> 00:26:26,060
+what these directories
+are inside of our app,
+
+675
+00:26:26,060 --> 00:26:28,370
+and we're gonna do that using something
+
+676
+00:26:28,370 --> 00:26:30,013
+called the FileManager.
+
+677
+00:26:30,013 --> 00:26:33,090
+The FileManager is an object, a struct,
+
+678
+00:26:33,090 --> 00:26:35,400
+that lets you, as its name implies,
+
+679
+00:26:35,400 --> 00:26:37,090
+manage the files in your file system,
+
+680
+00:26:37,090 --> 00:26:40,370
+including finding out where
+these special directories are.
+
+681
+00:26:40,370 --> 00:26:43,140
+Now, there's two different
+methods for doing this.
+
+682
+00:26:43,140 --> 00:26:46,530
+I'm giving you here a
+little more complicated one.
+
+683
+00:26:46,530 --> 00:26:48,060
+There's a slightly simpler one
+
+684
+00:26:48,060 --> 00:26:50,180
+which is called URLs.
+
+685
+00:26:50,180 --> 00:26:51,520
+This one is called URL.
+
+686
+00:26:51,520 --> 00:26:54,640
+I'll use the simpler one in the demo,
+
+687
+00:26:54,640 --> 00:26:56,660
+so you'll get to see them both.
+
+688
+00:26:56,660 --> 00:26:59,680
+So this FileManager, how
+do we use a FileManager?
+
+689
+00:26:59,680 --> 00:27:03,010
+Most of the time, if we're
+working on the main queue,
+
+690
+00:27:03,010 --> 00:27:05,080
+which we are, most file operations
+
+691
+00:27:05,080 --> 00:27:07,820
+happen quick unless we're
+writing a gigantic file.
+
+692
+00:27:07,820 --> 00:27:09,300
+So we can do them on the main queue.
+
+693
+00:27:09,300 --> 00:27:10,133
+They're not gonna block
+
+694
+00:27:10,133 --> 00:27:12,130
+like a network operation would.
+
+695
+00:27:12,130 --> 00:27:15,360
+We get this usually FileManager default,
+
+696
+00:27:15,360 --> 00:27:18,090
+FileManager.default,
+which is the shared one.
+
+697
+00:27:18,090 --> 00:27:19,900
+Now, we probably wouldn't wanna use
+
+698
+00:27:19,900 --> 00:27:21,430
+that one off the main queue.
+
+699
+00:27:21,430 --> 00:27:22,490
+There, you'd want to create your
+
+700
+00:27:22,490 --> 00:27:24,700
+own instance of FileManager,
+
+701
+00:27:24,700 --> 00:27:26,920
+again, kind of an advanced topic.
+
+702
+00:27:26,920 --> 00:27:28,340
+So we just are gonna use the shared one
+
+703
+00:27:28,340 --> 00:27:30,830
+in the main queue and the function
+
+704
+00:27:30,830 --> 00:27:34,740
+that we're gonna call on this
+shared.FileManager.default
+
+705
+00:27:34,740 --> 00:27:38,327
+thing is called url for
+directory in domainMask,
+
+706
+00:27:38,327 --> 00:27:40,730
+and it's got these other things
+appropriateFor and create.
+
+707
+00:27:40,730 --> 00:27:44,140
+So what are the four arguments
+here to this URL thing?
+
+708
+00:27:44,140 --> 00:27:45,360
+The first one is which of
+
+709
+00:27:45,360 --> 00:27:47,150
+the special directories you want?
+
+710
+00:27:47,150 --> 00:27:51,180
+So this is an enum,
+FileManager.SearchPathDirectory.
+
+711
+00:27:51,180 --> 00:27:52,420
+Go look in the documentation,
+
+712
+00:27:52,420 --> 00:27:54,590
+and you will see, I think there's 12
+
+713
+00:27:54,590 --> 00:27:56,730
+or 15 different special directories
+
+714
+00:27:56,730 --> 00:27:59,290
+inside your sandboxes, like
+the Document directory,
+
+715
+00:27:59,290 --> 00:28:00,540
+Applications, Support, Caches,
+
+716
+00:28:00,540 --> 00:28:01,580
+all the things we talked about,
+
+717
+00:28:01,580 --> 00:28:04,720
+there is an enum value for each of those.
+
+718
+00:28:04,720 --> 00:28:07,640
+The second argument is
+in domainMask, in iOS,
+
+719
+00:28:07,640 --> 00:28:10,170
+this is always .userDomainMask,
+
+720
+00:28:10,170 --> 00:28:13,810
+because on a Mac, we might
+have the network domain,
+
+721
+00:28:13,810 --> 00:28:16,399
+a shared library we're looking at.
+
+722
+00:28:16,399 --> 00:28:18,380
+But it on an iOS device,
+it's a personal device,
+
+723
+00:28:18,380 --> 00:28:20,680
+so it's always userDomainMask.
+
+724
+00:28:20,680 --> 00:28:22,463
+Don't worry about appropriateFor, create.
+
+725
+00:28:24,610 --> 00:28:26,890
+If you're writing to
+the Documents directory
+
+726
+00:28:26,890 --> 00:28:28,430
+for the first time, for example,
+
+727
+00:28:28,430 --> 00:28:29,410
+you would want to create it,
+
+728
+00:28:29,410 --> 00:28:32,100
+so you probably are gonna put create true,
+
+729
+00:28:32,100 --> 00:28:33,423
+when you do this.
+
+730
+00:28:34,590 --> 00:28:36,127
+And that's gonna return for you,
+
+731
+00:28:36,127 --> 00:28:38,710
+the URL to these special directories.
+
+732
+00:28:38,710 --> 00:28:40,810
+So now, that you have the
+URL to the special directory
+
+733
+00:28:40,810 --> 00:28:42,710
+in the sandbox, you can start creating
+
+734
+00:28:42,710 --> 00:28:43,993
+or looking for files in there.
+
+735
+00:28:43,993 --> 00:28:45,650
+Now, how do we do that?
+
+736
+00:28:45,650 --> 00:28:48,860
+We do that with the methods in URL.
+
+737
+00:28:48,860 --> 00:28:50,740
+So we got this base URL,
+
+738
+00:28:50,740 --> 00:28:52,570
+and we're gonna use methods in URL
+
+739
+00:28:52,570 --> 00:28:54,452
+like appendingPathComponent,
+
+740
+00:28:54,452 --> 00:28:58,070
+and appendingPathExtension to build a path
+
+741
+00:28:58,070 --> 00:29:00,730
+to whatever file we're looking for
+
+742
+00:29:00,730 --> 00:29:05,210
+inside these special
+directories, simple as that.
+
+743
+00:29:05,210 --> 00:29:07,727
+You can also ask the URL, things like,
+
+744
+00:29:07,727 --> 00:29:09,817
+"Is this the URL of a file
+
+745
+00:29:09,817 --> 00:29:13,300
+"versus the URL of a
+network thing or web page?"
+
+746
+00:29:13,300 --> 00:29:14,847
+And you can ask the URL,
+
+747
+00:29:14,847 --> 00:29:18,130
+"Give me values for certain
+resources in this file,"
+
+748
+00:29:18,130 --> 00:29:20,090
+like its creation date,
+
+749
+00:29:20,090 --> 00:29:22,130
+or whether it's a directory or not,
+
+750
+00:29:22,130 --> 00:29:24,460
+or how big this file is.
+
+751
+00:29:24,460 --> 00:29:27,150
+And the API for this, again, pre-Swift,
+
+752
+00:29:27,150 --> 00:29:28,940
+not that weird, except for that
+
+753
+00:29:28,940 --> 00:29:31,450
+you give it the keys of what values
+
+754
+00:29:31,450 --> 00:29:32,750
+you want about this URL,
+
+755
+00:29:32,750 --> 00:29:34,860
+like its creation date,
+or file size, or whatever,
+
+756
+00:29:34,860 --> 00:29:36,780
+and it gives you back a dictionary,
+
+757
+00:29:36,780 --> 00:29:38,810
+where those keys that you gave it
+
+758
+00:29:38,810 --> 00:29:41,160
+are the keys and the values are in Any.
+
+759
+00:29:41,160 --> 00:29:43,430
+And the reason value
+has to be in Any there
+
+760
+00:29:43,430 --> 00:29:44,930
+because it could be a Date,
+
+761
+00:29:44,930 --> 00:29:47,970
+could be a file size,
+would probably be an Int,
+
+762
+00:29:47,970 --> 00:29:49,790
+those kind of things.
+
+763
+00:29:49,790 --> 00:29:51,700
+So that's how you find out about URL.
+
+764
+00:29:51,700 --> 00:29:54,360
+So URL is an important part of interacting
+
+765
+00:29:54,360 --> 00:29:57,113
+with the file system,
+just like FileManager is.
+
+766
+00:29:58,089 --> 00:30:00,730
+Another important struct is Data.
+
+767
+00:30:00,730 --> 00:30:02,180
+Data is how we actually
+
+768
+00:30:02,180 --> 00:30:03,957
+put the data out on the file system,
+
+769
+00:30:03,957 --> 00:30:06,860
+and you already know how to read data
+
+770
+00:30:06,860 --> 00:30:09,160
+from the internet using
+Data's contentsOf URL.
+
+771
+00:30:11,339 --> 00:30:13,070
+And you can do the same
+thing with a file URL,
+
+772
+00:30:13,070 --> 00:30:15,700
+so that's how you read
+files off your disk,
+
+773
+00:30:15,700 --> 00:30:17,880
+out of your file system is with Data.
+
+774
+00:30:17,880 --> 00:30:19,270
+And oh, same thing with writing.
+
+775
+00:30:19,270 --> 00:30:20,503
+There's a write(to url: URL, ...),
+
+776
+00:30:21,409 --> 00:30:22,857
+and you just send it to a Data,
+
+777
+00:30:22,857 --> 00:30:26,930
+and it puts the contents
+of itself into that URL,
+
+778
+00:30:26,930 --> 00:30:28,400
+in the file system.
+
+779
+00:30:28,400 --> 00:30:31,160
+Both of these have little
+reading and writing options.
+
+780
+00:30:31,160 --> 00:30:34,450
+The writing ones are the
+only ones that are very
+
+781
+00:30:34,450 --> 00:30:36,600
+interesting. For example,
+there's write atomically.
+
+782
+00:30:36,600 --> 00:30:38,430
+So if you're writing a gigantic file,
+
+783
+00:30:38,430 --> 00:30:40,980
+and let's say the disk
+fills up halfway through,
+
+784
+00:30:40,980 --> 00:30:43,670
+the file will now not
+be in a corrupted state
+
+785
+00:30:43,670 --> 00:30:45,810
+halfway written, it'll just revert back
+
+786
+00:30:45,810 --> 00:30:48,553
+to the state it was before
+you tried to do this write.
+
+787
+00:30:48,553 --> 00:30:50,120
+So that's an atomic transaction.
+
+788
+00:30:50,120 --> 00:30:52,150
+Like essentially, it
+writes to a temporary file.
+
+789
+00:30:52,150 --> 00:30:54,280
+If that's successful, then, it'll move it
+
+790
+00:30:54,280 --> 00:30:57,023
+into the URL you're trying to write to.
+
+791
+00:30:59,120 --> 00:31:01,660
+FileManager can also potentially help you
+
+792
+00:31:01,660 --> 00:31:03,810
+understand what's going
+on in the file system,
+
+793
+00:31:03,810 --> 00:31:06,240
+similar to what URL was doing.
+
+794
+00:31:06,240 --> 00:31:07,780
+And it also can do things like,
+
+795
+00:31:07,780 --> 00:31:10,630
+show me all the files that
+are in this directory,
+
+796
+00:31:10,630 --> 00:31:13,990
+or move this file from
+this URL to this one,
+
+797
+00:31:13,990 --> 00:31:17,350
+or copy this file, make
+a copy of this URL.
+
+798
+00:31:17,350 --> 00:31:20,130
+And I'm gonna show, instead
+of going through slides,
+
+799
+00:31:20,130 --> 00:31:21,240
+and showing you all the things
+
+800
+00:31:21,240 --> 00:31:22,460
+that a FileManager can do, first of all,
+
+801
+00:31:22,460 --> 00:31:24,540
+you can just look at the documentation,
+
+802
+00:31:24,540 --> 00:31:26,130
+but I'm actually gonna show you
+
+803
+00:31:26,130 --> 00:31:27,860
+in a demo in here in a moment.
+
+804
+00:31:27,860 --> 00:31:30,170
+One thing I wanna note about FileManager,
+
+805
+00:31:30,170 --> 00:31:32,260
+it has something called a delegate.
+
+806
+00:31:32,260 --> 00:31:34,610
+Delegate is just a var on it.
+
+807
+00:31:34,610 --> 00:31:37,800
+And that var is an object that you set,
+
+808
+00:31:37,800 --> 00:31:39,800
+and that object will be notified
+
+809
+00:31:39,800 --> 00:31:41,450
+when certain things are happening
+
+810
+00:31:41,450 --> 00:31:42,520
+in the FileManager.
+
+811
+00:31:42,520 --> 00:31:44,780
+As a FileManager goes around, moves files,
+
+812
+00:31:44,780 --> 00:31:49,490
+tries to do things, it's
+going to talk to its delegate,
+
+813
+00:31:49,490 --> 00:31:50,540
+and ask you to do things.
+
+814
+00:31:50,540 --> 00:31:54,140
+Now, this delegate stuff,
+fundamental to UIKit.
+
+815
+00:31:54,140 --> 00:31:55,910
+Everywhere in UIKit, there's delegates,
+
+816
+00:31:55,910 --> 00:31:58,243
+and we'll see that in our next lecture,
+
+817
+00:31:58,243 --> 00:31:59,490
+because we're gonna
+start talking about UIKit
+
+818
+00:31:59,490 --> 00:32:02,130
+integration with SwiftUI.
+
+819
+00:32:02,130 --> 00:32:04,070
+But if you're looking at FileManager,
+
+820
+00:32:04,070 --> 00:32:05,807
+you're probably like, "What
+is this delegate thing?
+
+821
+00:32:05,807 --> 00:32:07,260
+"Never seen it before."
+
+822
+00:32:07,260 --> 00:32:09,890
+And I don't think you need
+a FileManager's delegate
+
+823
+00:32:09,890 --> 00:32:12,200
+to do most stuff in FileManager.
+
+824
+00:32:12,200 --> 00:32:14,400
+We're going to do our demo,
+
+825
+00:32:14,400 --> 00:32:16,330
+and never even set the delegate,
+
+826
+00:32:16,330 --> 00:32:17,867
+but I just don't want
+you to be surprised by,
+
+827
+00:32:17,867 --> 00:32:19,370
+"Oh, what's this delegate thing?"
+
+828
+00:32:19,370 --> 00:32:20,430
+It's essentially just an object
+
+829
+00:32:20,430 --> 00:32:22,130
+that gets notified when
+things are happening
+
+830
+00:32:22,130 --> 00:32:24,023
+during FileManager operations.
+
+831
+00:32:25,160 --> 00:32:27,180
+All right, so a demo is
+worth a thousand words.
+
+832
+00:32:27,180 --> 00:32:29,270
+As we always say, thousands of words.
+
+833
+00:32:29,270 --> 00:32:31,230
+So let's check it out.
+
+834
+00:32:31,230 --> 00:32:32,690
+What we're gonna do in our demo today
+
+835
+00:32:32,690 --> 00:32:36,950
+is store our EmojiArtDocuments
+into the file system
+
+836
+00:32:36,950 --> 00:32:38,990
+instead of UserDefaults, which was silly,
+
+837
+00:32:38,990 --> 00:32:40,400
+that was demo-ware.
+
+838
+00:32:40,400 --> 00:32:42,580
+Storing in the file system
+makes a lot more sense.
+
+839
+00:32:42,580 --> 00:32:45,640
+Storing them in iCloud would
+make even more sense than that.
+
+840
+00:32:45,640 --> 00:32:47,714
+But we will store them in there,
+
+841
+00:32:47,714 --> 00:32:48,830
+and this is gonna be able to show us
+
+842
+00:32:48,830 --> 00:32:50,393
+all parts of accessing the file system
+
+843
+00:32:50,393 --> 00:32:52,710
+because we're gonna have to get a URL
+
+844
+00:32:52,710 --> 00:32:54,610
+to our Documents directory,
+
+845
+00:32:54,610 --> 00:32:57,130
+so we're gonna be using URL to do that,
+
+846
+00:32:57,130 --> 00:32:59,150
+and FileManager to do that.
+
+847
+00:32:59,150 --> 00:33:01,170
+Then, we're gonna write
+our data out, of course,
+
+848
+00:33:01,170 --> 00:33:03,040
+using the Data object.
+
+849
+00:33:03,040 --> 00:33:06,770
+And then, I'm also going to
+make my DocumentChooser work,
+
+850
+00:33:06,770 --> 00:33:09,850
+so removing documents,
+adding new documents,
+
+851
+00:33:09,850 --> 00:33:11,820
+are going to have to work.
+
+852
+00:33:11,820 --> 00:33:13,790
+And so, we'll have to
+be using the FileManager
+
+853
+00:33:13,790 --> 00:33:15,325
+to do some file system operations
+
+854
+00:33:15,325 --> 00:33:17,863
+to make that stuff work as well.
+
+855
+00:33:18,830 --> 00:33:21,393
+So let's dive into that demo right now.
+
+856
+00:33:23,530 --> 00:33:26,670
+So the goal of this demo is to make
+
+857
+00:33:26,670 --> 00:33:31,660
+EmojiArtDocumentStore stop storing itself,
+
+858
+00:33:31,660 --> 00:33:33,823
+right here, and EmojiArtDocuments,
+
+859
+00:33:35,770 --> 00:33:38,450
+over here, in UserDefaults.
+
+860
+00:33:38,450 --> 00:33:40,470
+Instead we want them to store
+
+861
+00:33:40,470 --> 00:33:44,073
+in the Unix file system
+that underlies iOS.
+
+862
+00:33:44,980 --> 00:33:46,790
+So it's really two things we have to fix.
+
+863
+00:33:46,790 --> 00:33:49,330
+We have to get documents to
+be storing in the file system,
+
+864
+00:33:49,330 --> 00:33:51,600
+and we have to get the DocumentStore
+
+865
+00:33:51,600 --> 00:33:53,120
+to be looking in the file system
+
+866
+00:33:53,120 --> 00:33:55,520
+instead of looking in UserDefaults.
+
+867
+00:33:55,520 --> 00:33:57,500
+Let's start with the Document here,
+
+868
+00:33:57,500 --> 00:34:00,770
+and I'm gonna add this
+capability to the Store
+
+869
+00:34:00,770 --> 00:34:03,380
+and to the Document to
+work in the file system,
+
+870
+00:34:03,380 --> 00:34:06,370
+and leave this UserDefaults capability,
+
+871
+00:34:06,370 --> 00:34:08,470
+in case someone wants that instead.
+
+872
+00:34:08,470 --> 00:34:11,313
+There's no reason to
+break what we had before.
+
+873
+00:34:12,600 --> 00:34:15,230
+So creating an EmojiArtDocument here
+
+874
+00:34:15,230 --> 00:34:17,730
+that stores itself in the file system,
+
+875
+00:34:17,730 --> 00:34:19,150
+it's just gonna be for me,
+
+876
+00:34:19,150 --> 00:34:21,360
+a matter of a different init.
+
+877
+00:34:21,360 --> 00:34:23,617
+So this init takes a UUID,
+
+878
+00:34:23,617 --> 00:34:26,650
+and which it uses to store in default.
+
+879
+00:34:26,650 --> 00:34:31,160
+I'm gonna have my init,
+instead of that, take a URL.
+
+880
+00:34:31,160 --> 00:34:32,980
+And this is gonna be the URL
+
+881
+00:34:32,980 --> 00:34:35,130
+to use to read the Document
+
+882
+00:34:35,130 --> 00:34:36,800
+from the file system initially,
+
+883
+00:34:36,800 --> 00:34:38,480
+and then, also to save the Document
+
+884
+00:34:38,480 --> 00:34:40,110
+anytime we want to autosave,
+
+885
+00:34:40,110 --> 00:34:42,760
+we're gonna use this URL for that.
+
+886
+00:34:42,760 --> 00:34:45,090
+We're still gonna need to set our id
+
+887
+00:34:45,090 --> 00:34:48,600
+to be some UUID because this id
+
+888
+00:34:48,600 --> 00:34:50,950
+is part of our Identifiable, right?
+
+889
+00:34:50,950 --> 00:34:52,860
+So we still need to do that.
+
+890
+00:34:52,860 --> 00:34:55,310
+But in here, we're going to also grab
+
+891
+00:34:55,310 --> 00:35:00,033
+a hold of this URL and
+put it in a little var.
+
+892
+00:35:01,000 --> 00:35:04,180
+We're gonna use this URL
+to load this thing up
+
+893
+00:35:04,180 --> 00:35:06,120
+and to autosave, so let's start
+
+894
+00:35:06,120 --> 00:35:08,270
+with the loading of it up.
+
+895
+00:35:08,270 --> 00:35:09,730
+It's pretty straightforward here actually.
+
+896
+00:35:09,730 --> 00:35:14,730
+We already know how to load
+up an EmojiArt from a URL,
+
+897
+00:35:14,990 --> 00:35:17,217
+because we know how to
+get a Data from the URL,
+
+898
+00:35:17,217 --> 00:35:20,380
+and we know how to load
+an EmojiArt from Data.
+
+899
+00:35:20,380 --> 00:35:22,937
+So let's just do EmojiArt here,
+
+900
+00:35:22,937 --> 00:35:24,810
+and we're gonna pass it some JSON,
+
+901
+00:35:24,810 --> 00:35:29,810
+which is trying to get
+the contents of this URL
+
+902
+00:35:31,080 --> 00:35:33,230
+from the file system,
+and if we can't do that,
+
+903
+00:35:33,230 --> 00:35:36,150
+by the way, let's just
+do a blank EmojiArt,
+
+904
+00:35:36,150 --> 00:35:38,400
+because maybe, they gave us the URL
+
+905
+00:35:38,400 --> 00:35:39,770
+that they want us to save to
+
+906
+00:35:39,770 --> 00:35:42,690
+but there's no such file
+currently in existence,
+
+907
+00:35:42,690 --> 00:35:44,440
+and so we'll create a blank file for them.
+
+908
+00:35:44,440 --> 00:35:47,150
+So it's the same data contentsOf
+
+909
+00:35:47,150 --> 00:35:49,370
+that we were using when we fetched
+
+910
+00:35:49,370 --> 00:35:50,670
+things over the internet,
+
+911
+00:35:50,670 --> 00:35:53,783
+we're just using it now with a file URL.
+
+912
+00:35:55,160 --> 00:35:57,700
+Oh, we still want to fetch the background
+
+913
+00:35:57,700 --> 00:36:02,390
+image data here from that,
+whatever that's coming from.
+
+914
+00:36:02,390 --> 00:36:05,520
+And we still want to do
+autosaveCancellable up here.
+
+915
+00:36:05,520 --> 00:36:06,480
+But of course, we're not going
+
+916
+00:36:06,480 --> 00:36:08,750
+to autosave into UserDefaults.
+
+917
+00:36:08,750 --> 00:36:10,800
+This time, we're gonna do
+our autosaveCancellable
+
+918
+00:36:12,430 --> 00:36:14,623
+to sync off of our EmojiArt.
+
+919
+00:36:16,860 --> 00:36:19,270
+For this autosave, we want to essentially
+
+920
+00:36:19,270 --> 00:36:23,770
+save our EmojiArt, have a
+little function to do that,
+
+921
+00:36:23,770 --> 00:36:27,793
+little private func save, which
+takes an EmojiArt to save.
+
+922
+00:36:29,430 --> 00:36:32,610
+And all this is going
+to do is do the kind of
+
+923
+00:36:32,610 --> 00:36:35,810
+the inverse of what we did
+right here with this Data.
+
+924
+00:36:35,810 --> 00:36:39,730
+We're going to say, if our URL is not nil,
+
+925
+00:36:39,730 --> 00:36:42,550
+in other words, we're the
+kind of EmojiArtDocument
+
+926
+00:36:42,550 --> 00:36:45,000
+that saves to the file system,
+
+927
+00:36:45,000 --> 00:36:49,340
+then, we're gonna try to
+have our EmojiArt's json
+
+928
+00:36:49,340 --> 00:36:52,733
+write itself to our URL.
+
+929
+00:36:53,780 --> 00:36:55,953
+One liner here to write ourselves out.
+
+930
+00:36:57,050 --> 00:36:59,720
+Now, one other thing
+I'm thinking I might do
+
+931
+00:36:59,720 --> 00:37:02,703
+is here, I'm autosaving
+every time it changes.
+
+932
+00:37:03,620 --> 00:37:06,270
+What if somebody changes this URL on me?
+
+933
+00:37:06,270 --> 00:37:09,466
+So, my Document was
+writing out to some URL,
+
+934
+00:37:09,466 --> 00:37:12,010
+and autosaving, and then,
+they change this URL.
+
+935
+00:37:12,010 --> 00:37:13,750
+Well, the next time I autosave,
+
+936
+00:37:13,750 --> 00:37:15,930
+that's okay, it'll write to this URL.
+
+937
+00:37:15,930 --> 00:37:18,560
+But I'm gonna be a little
+more immediate than that.
+
+938
+00:37:18,560 --> 00:37:21,090
+I'm gonna put a didSet in here,
+
+939
+00:37:21,090 --> 00:37:25,740
+which does save of my own EmojiArt,
+
+940
+00:37:25,740 --> 00:37:29,390
+just to immediately save to a new URL
+
+941
+00:37:29,390 --> 00:37:31,410
+if somebody sets it on me.
+
+942
+00:37:31,410 --> 00:37:35,050
+Probably not critical but I think
+
+943
+00:37:35,050 --> 00:37:38,050
+if someone sets a new URL on my document,
+
+944
+00:37:38,050 --> 00:37:39,820
+they probably want it to pretty
+
+945
+00:37:39,820 --> 00:37:41,260
+quickly write that thing out,
+
+946
+00:37:41,260 --> 00:37:42,650
+they don't want to rely on the user
+
+947
+00:37:42,650 --> 00:37:44,830
+having to add an emoji or something
+
+948
+00:37:44,830 --> 00:37:46,400
+to cause an autosave done.
+
+949
+00:37:48,011 --> 00:37:50,440
+And this is it, it's
+really all that's required
+
+950
+00:37:50,440 --> 00:37:52,770
+to get our EmojiArt to write itself
+
+951
+00:37:52,770 --> 00:37:55,373
+into a URL, quite straightforward.
+
+952
+00:37:56,320 --> 00:37:59,540
+Now, the other piece of this whole puzzle
+
+953
+00:37:59,540 --> 00:38:01,020
+is back in our store right here,
+
+954
+00:38:01,020 --> 00:38:04,020
+because right now, our
+store keeps the names
+
+955
+00:38:04,020 --> 00:38:06,640
+of all the documents in
+a little Dictionary here,
+
+956
+00:38:06,640 --> 00:38:09,657
+which is reading and
+writing from UserDefaults,
+
+957
+00:38:09,657 --> 00:38:14,390
+and we want these names to
+come out of the file system.
+
+958
+00:38:14,390 --> 00:38:18,490
+So we wanted to look into a
+URL of a directory somewhere,
+
+959
+00:38:18,490 --> 00:38:20,137
+look at all the files that are in there,
+
+960
+00:38:20,137 --> 00:38:23,140
+and use those as the
+names of all the documents
+
+961
+00:38:23,140 --> 00:38:24,640
+that are in there.
+
+962
+00:38:24,640 --> 00:38:26,360
+So this also is something we can do
+
+963
+00:38:26,360 --> 00:38:30,000
+without breaking our existing init named,
+
+964
+00:38:30,000 --> 00:38:32,710
+where it's going and
+looking in UserDefaults.
+
+965
+00:38:32,710 --> 00:38:34,750
+For this, we can just do a new init.
+
+966
+00:38:34,750 --> 00:38:38,660
+And this init is going
+to take a directory,
+
+967
+00:38:38,660 --> 00:38:41,110
+which is just gonna be a URL.
+
+968
+00:38:41,110 --> 00:38:42,950
+And we're gonna look in this directory,
+
+969
+00:38:42,950 --> 00:38:44,600
+and load up our documentNames,
+
+970
+00:38:44,600 --> 00:38:47,943
+whatever files, with whatever
+files we find in here.
+
+971
+00:38:49,340 --> 00:38:50,840
+Now, what's gonna be our name?
+
+972
+00:38:50,840 --> 00:38:52,970
+You remember our Store has a name here,
+
+973
+00:38:52,970 --> 00:38:55,070
+where init with name so
+we're providing the name,
+
+974
+00:38:55,070 --> 00:38:56,840
+this is the name of the Store itself,
+
+975
+00:38:56,840 --> 00:38:58,380
+not the names of any Documents,
+
+976
+00:38:58,380 --> 00:39:00,260
+just the name of the Store itself.
+
+977
+00:39:00,260 --> 00:39:02,770
+We could have that be
+an argument here as well
+
+978
+00:39:02,770 --> 00:39:05,350
+or another argument name but for fun,
+
+979
+00:39:05,350 --> 00:39:07,520
+I'm gonna set our name here
+
+980
+00:39:07,520 --> 00:39:12,053
+to be equal to our
+directory's lastPathComponent.
+
+981
+00:39:12,960 --> 00:39:14,880
+Now, this might not really be good
+
+982
+00:39:14,880 --> 00:39:17,530
+because maybe this is
+an internal directory
+
+983
+00:39:17,530 --> 00:39:18,520
+that stores our documents.
+
+984
+00:39:18,520 --> 00:39:19,920
+So I'm gonna make this eventually
+
+985
+00:39:19,920 --> 00:39:21,880
+be our Documents directory.
+
+986
+00:39:21,880 --> 00:39:22,783
+So this is gonna look pretty good
+
+987
+00:39:22,783 --> 00:39:25,270
+because I think that's called Documents,
+
+988
+00:39:25,270 --> 00:39:28,070
+but I mostly wanted to do this to show you
+
+989
+00:39:28,070 --> 00:39:30,940
+what it looks like to grab
+the last component out
+
+990
+00:39:30,940 --> 00:39:34,390
+and put it in something that
+we're gonna see in the UI.
+
+991
+00:39:34,390 --> 00:39:36,240
+But, in reality, probably want another
+
+992
+00:39:36,240 --> 00:39:37,723
+argument there for the name.
+
+993
+00:39:38,830 --> 00:39:41,040
+And so we're gonna grab
+onto this directory.
+
+994
+00:39:41,040 --> 00:39:45,890
+So let's say self.directory
+equals this directory,
+
+995
+00:39:45,890 --> 00:39:49,823
+put that into a little
+private var directory,
+
+996
+00:39:50,780 --> 00:39:51,973
+which is a URL.
+
+997
+00:39:53,140 --> 00:39:54,720
+So this URL, and this directory
+
+998
+00:39:54,720 --> 00:39:57,730
+points us to where all of
+our Documents are stored.
+
+999
+00:39:57,730 --> 00:40:01,780
+We're obviously gonna wanna
+create this DocumentStore
+
+1000
+00:40:01,780 --> 00:40:06,310
+likely with our Documents
+directory in our sandbox.
+
+1001
+00:40:06,310 --> 00:40:07,950
+But we'll get that a little bit.
+
+1002
+00:40:07,950 --> 00:40:09,440
+Right now, we're gonna
+make this DocumentStore
+
+1003
+00:40:09,440 --> 00:40:12,540
+so it can work with
+any directory anywhere.
+
+1004
+00:40:12,540 --> 00:40:15,070
+You pass what directory
+you want to its init,
+
+1005
+00:40:15,070 --> 00:40:16,900
+and it's just going to open it up,
+
+1006
+00:40:16,900 --> 00:40:19,113
+and look at all the
+files that are in there.
+
+1007
+00:40:19,980 --> 00:40:22,240
+Now, how does it open it up,
+
+1008
+00:40:22,240 --> 00:40:23,690
+and look at all the
+files that are in there?
+
+1009
+00:40:23,690 --> 00:40:26,230
+How do we find out what
+files are in the directory?
+
+1010
+00:40:26,230 --> 00:40:29,077
+Well, we're gonna use
+that FileManager thing,
+
+1011
+00:40:29,077 --> 00:40:31,610
+and it's got a really
+cool little function.
+
+1012
+00:40:31,610 --> 00:40:33,770
+I'm gonna call this documents,
+
+1013
+00:40:33,770 --> 00:40:38,500
+let documents equal FileManager.default,
+
+1014
+00:40:38,500 --> 00:40:40,000
+that's the shared one.
+
+1015
+00:40:40,000 --> 00:40:43,020
+Give me the contentsOfDirectory.
+
+1016
+00:40:43,020 --> 00:40:44,700
+You can see there's a
+couple of them right here.
+
+1017
+00:40:44,700 --> 00:40:47,600
+I want this one, directory atPath,
+
+1018
+00:40:47,600 --> 00:40:51,660
+my directory's path, directory.path.
+
+1019
+00:40:51,660 --> 00:40:56,430
+Path right here is a URL
+method or var, actually,
+
+1020
+00:40:56,430 --> 00:41:00,770
+and this var returns this URL as a String.
+
+1021
+00:41:00,770 --> 00:41:03,010
+And that's a lot of the FileManager things
+
+1022
+00:41:03,010 --> 00:41:04,840
+take these paths as Strings,
+
+1023
+00:41:04,840 --> 00:41:07,875
+some of them take URLs,
+but some can take Strings.
+
+1024
+00:41:07,875 --> 00:41:09,490
+This one happens to be convenient
+
+1025
+00:41:09,490 --> 00:41:12,623
+because it just takes this
+nice one argument right here.
+
+1026
+00:41:13,683 --> 00:41:14,750
+Now, you can see we have an error,
+
+1027
+00:41:14,750 --> 00:41:17,420
+call can throw, but it's
+not marked with try.
+
+1028
+00:41:17,420 --> 00:41:21,280
+So I could say try? here,
+
+1029
+00:41:21,280 --> 00:41:25,210
+but I'm gonna actually
+do the do catch here
+
+1030
+00:41:25,210 --> 00:41:28,540
+because I want you to get a look at it
+
+1031
+00:41:28,540 --> 00:41:31,730
+every once in a while, so
+that you know what's going on.
+
+1032
+00:41:31,730 --> 00:41:33,530
+Otherwise, I'll send
+you out of this class,
+
+1033
+00:41:33,530 --> 00:41:35,790
+and you'll just always be doing try?,
+
+1034
+00:41:35,790 --> 00:41:37,430
+and you won't think about the fact
+
+1035
+00:41:37,430 --> 00:41:40,070
+that we can do try
+without a question mark,
+
+1036
+00:41:40,070 --> 00:41:41,733
+and catch the error.
+
+1037
+00:41:42,760 --> 00:41:44,010
+I do this one other demo,
+
+1038
+00:41:44,010 --> 00:41:45,330
+and we'll do it again here.
+
+1039
+00:41:45,330 --> 00:41:46,393
+Now, I could just for now,
+
+1040
+00:41:46,393 --> 00:41:49,030
+I would just maybe print this error out,
+
+1041
+00:41:49,030 --> 00:41:54,030
+"EmojiArtDocumentStore couldn't
+create store from directory"
+
+1042
+00:41:56,430 --> 00:41:58,720
+Let's print out the directory.
+
+1043
+00:41:58,720 --> 00:42:00,460
+That was attempted here,
+
+1044
+00:42:00,460 --> 00:42:03,360
+and we'll even print out the
+error's localizedDescription.
+
+1045
+00:42:05,920 --> 00:42:07,750
+And we might want to, for example,
+
+1046
+00:42:07,750 --> 00:42:11,050
+make this be a failable
+initializer perhaps,
+
+1047
+00:42:11,050 --> 00:42:14,050
+and then, return nil in here.
+
+1048
+00:42:14,050 --> 00:42:16,650
+So it's kind of how you do error handling.
+
+1049
+00:42:16,650 --> 00:42:18,700
+You really want to think in general,
+
+1050
+00:42:18,700 --> 00:42:20,410
+what your strategy is,
+
+1051
+00:42:20,410 --> 00:42:22,050
+are you gonna notify the user,
+
+1052
+00:42:22,050 --> 00:42:24,000
+are you gonna try and recover?
+
+1053
+00:42:24,000 --> 00:42:25,870
+I'm kind of a fan of trying to recover
+
+1054
+00:42:25,870 --> 00:42:27,690
+as much as possible but by the same token,
+
+1055
+00:42:27,690 --> 00:42:29,470
+you don't wanna mislead your user
+
+1056
+00:42:29,470 --> 00:42:31,140
+into thinking that somehow,
+
+1057
+00:42:31,140 --> 00:42:33,090
+something that they thought was working,
+
+1058
+00:42:33,090 --> 00:42:35,143
+did not work or vice versa.
+
+1059
+00:42:36,280 --> 00:42:37,660
+All right, so we've got our Documents.
+
+1060
+00:42:37,660 --> 00:42:39,870
+This is an array of Strings.
+
+1061
+00:42:39,870 --> 00:42:41,370
+If you look at it here, array of Strings.
+
+1062
+00:42:41,370 --> 00:42:43,010
+These Strings are just the names
+
+1063
+00:42:43,010 --> 00:42:45,515
+of all the files in this directory.
+
+1064
+00:42:45,515 --> 00:42:46,650
+Couldn't be simpler.
+
+1065
+00:42:46,650 --> 00:42:48,350
+So let's go through each of those.
+
+1066
+00:42:49,890 --> 00:42:52,160
+And for each one, I'm going to create
+
+1067
+00:42:52,160 --> 00:42:56,700
+an EmojiArtDocument from
+what I find in that file,
+
+1068
+00:42:56,700 --> 00:42:59,020
+EmojiArtDocument, and it's great.
+
+1069
+00:42:59,020 --> 00:43:01,233
+We just added EmojiArtDocument URL.
+
+1070
+00:43:02,340 --> 00:43:05,430
+So how do I create a URL to this document?
+
+1071
+00:43:05,430 --> 00:43:06,680
+This document is a String,
+
+1072
+00:43:06,680 --> 00:43:08,377
+it's just the name of the file,
+
+1073
+00:43:08,377 --> 00:43:10,300
+and I have the directory right here,
+
+1074
+00:43:10,300 --> 00:43:12,380
+so I'm gonna take the directory,
+
+1075
+00:43:12,380 --> 00:43:15,963
+and I'm going to append a path component,
+
+1076
+00:43:17,400 --> 00:43:19,683
+which is that document name.
+
+1077
+00:43:20,610 --> 00:43:22,700
+So I'm just creating another URL here
+
+1078
+00:43:22,700 --> 00:43:25,000
+from our directory URL by adding
+
+1079
+00:43:25,000 --> 00:43:26,640
+the document name back in.
+
+1080
+00:43:26,640 --> 00:43:29,170
+And I'm doing this for
+every one of the documents
+
+1081
+00:43:29,170 --> 00:43:31,910
+that I found in that
+directory, super simple.
+
+1082
+00:43:31,910 --> 00:43:33,300
+When I have this document,
+
+1083
+00:43:33,300 --> 00:43:36,230
+I'm gonna add this to
+my own documentNames,
+
+1084
+00:43:37,160 --> 00:43:42,160
+this EmojiArtDocument,
+and its name is document.
+
+1085
+00:43:44,810 --> 00:43:47,700
+Now, we've updated our
+internal data structure
+
+1086
+00:43:47,700 --> 00:43:49,247
+to reflect what's in the file system,
+
+1087
+00:43:49,247 --> 00:43:51,730
+and we've done this at initialize time.
+
+1088
+00:43:51,730 --> 00:43:54,070
+Now, we still have quite a
+bit more work to do up here
+
+1089
+00:43:54,070 --> 00:43:56,000
+with all these adding, and removing,
+
+1090
+00:43:56,000 --> 00:43:57,500
+and changing names of documents.
+
+1091
+00:43:57,500 --> 00:44:00,400
+we're gonna have to keep the
+file system in sync up there
+
+1092
+00:44:00,400 --> 00:44:03,650
+but at least we kinda got
+started here on the right foot
+
+1093
+00:44:03,650 --> 00:44:05,760
+by having our internal data structure
+
+1094
+00:44:05,760 --> 00:44:07,413
+load up from the file system.
+
+1095
+00:44:08,710 --> 00:44:10,300
+That's pretty much all
+is necessary to do that.
+
+1096
+00:44:10,300 --> 00:44:13,470
+So now, let's go back to our SceneDelegate
+
+1097
+00:44:13,470 --> 00:44:16,200
+over here, where we are
+creating this DocumentStore
+
+1098
+00:44:16,200 --> 00:44:20,084
+called EmojiArt that we
+get out of UserDefaults,
+
+1099
+00:44:20,084 --> 00:44:22,150
+and instead of doing that, let's go
+
+1100
+00:44:22,150 --> 00:44:27,047
+and let our store equal
+an EmojiArtDocumentStore,
+
+1101
+00:44:29,160 --> 00:44:32,330
+whose directory is a URL,
+
+1102
+00:44:32,330 --> 00:44:35,990
+and this URL is going to
+be our Documents directory
+
+1103
+00:44:35,990 --> 00:44:39,170
+in our sandbox, that special directory.
+
+1104
+00:44:39,170 --> 00:44:42,340
+Everybody remember from
+the slides how we do that?
+
+1105
+00:44:42,340 --> 00:44:44,840
+Say let url =, again,
+
+1106
+00:44:44,840 --> 00:44:48,290
+we're gonna use the
+FileManager, the shared one.
+
+1107
+00:44:48,290 --> 00:44:49,999
+In the slides, I showed you this one
+
+1108
+00:44:49,999 --> 00:44:53,470
+URL for SearchPathDirectory
+
+1109
+00:44:53,470 --> 00:44:55,533
+in appropriateFor create, remember that?
+
+1110
+00:44:55,533 --> 00:44:59,690
+When you said different one
+here, it's called URLs, plural.
+
+1111
+00:44:59,690 --> 00:45:03,800
+And you still specify the
+special directory you want.
+
+1112
+00:45:03,800 --> 00:45:07,470
+So I want the documentDirectory,
+careful there.
+
+1113
+00:45:07,470 --> 00:45:09,770
+You don't want to do
+documentationDirectory,
+
+1114
+00:45:09,770 --> 00:45:11,840
+you want documentDirectory.
+
+1115
+00:45:11,840 --> 00:45:12,960
+What's a documentDirectory?
+
+1116
+00:45:12,960 --> 00:45:16,600
+And we always again in userDomainMask,
+
+1117
+00:45:16,600 --> 00:45:20,190
+iOS is an operating system
+for individual devices,
+
+1118
+00:45:20,190 --> 00:45:23,370
+so we're always giving the
+user's Document directory,
+
+1119
+00:45:23,370 --> 00:45:25,070
+not the shared one on the network,
+
+1120
+00:45:25,070 --> 00:45:26,780
+or something like that.
+
+1121
+00:45:26,780 --> 00:45:30,690
+Now, this URL's version
+returns an Array of them,
+
+1122
+00:45:30,690 --> 00:45:32,410
+again, because on other platforms,
+
+1123
+00:45:32,410 --> 00:45:35,570
+you might have multiple masks here,
+
+1124
+00:45:35,570 --> 00:45:37,540
+user mask, network mask, so you might
+
+1125
+00:45:37,540 --> 00:45:39,200
+be getting multiple responses.
+
+1126
+00:45:39,200 --> 00:45:41,860
+Here, we're only going to get one.
+
+1127
+00:45:41,860 --> 00:45:45,160
+And I'm gonna throw an
+exclamation point on here
+
+1128
+00:45:45,160 --> 00:45:47,790
+in the assumption that I always
+
+1129
+00:45:47,790 --> 00:45:50,570
+have my documentDirectory here.
+
+1130
+00:45:50,570 --> 00:45:54,720
+And putting an exclamation point here,
+
+1131
+00:45:54,720 --> 00:45:56,930
+that's not true, and this crashes.
+
+1132
+00:45:56,930 --> 00:46:00,410
+I'm gonna at least find that
+during my development period,
+
+1133
+00:46:00,410 --> 00:46:02,010
+but when it comes time to ship,
+
+1134
+00:46:02,010 --> 00:46:05,410
+maybe, I'll do something
+where I use this kind of store
+
+1135
+00:46:05,410 --> 00:46:07,440
+if for some reason I can't,
+
+1136
+00:46:07,440 --> 00:46:10,110
+I don't have a documentDirectory.
+
+1137
+00:46:10,110 --> 00:46:11,848
+So, this is it.
+
+1138
+00:46:11,848 --> 00:46:13,300
+We've got the Store, let's run!
+
+1139
+00:46:13,300 --> 00:46:14,550
+See what's going on here.
+
+1140
+00:46:16,200 --> 00:46:19,410
+All right, so this is probably working
+
+1141
+00:46:19,410 --> 00:46:21,110
+because there's no documents here.
+
+1142
+00:46:21,110 --> 00:46:23,470
+See, we have no documents
+in our file system,
+
+1143
+00:46:23,470 --> 00:46:26,400
+our documentDirectory in our
+sandbox is probably empty.
+
+1144
+00:46:26,400 --> 00:46:27,960
+So all this well.
+
+1145
+00:46:27,960 --> 00:46:30,890
+Yeah, maybe we could
+add some documents here,
+
+1146
+00:46:30,890 --> 00:46:33,870
+but this is not actually
+adding them to the file system.
+
+1147
+00:46:33,870 --> 00:46:38,470
+If I stop and rerun, these documents,
+
+1148
+00:46:38,470 --> 00:46:40,923
+no change, of course, because
+"+" is not doing anything,
+
+1149
+00:46:40,923 --> 00:46:45,220
+it's just adding it to our
+little local documentName
+
+1150
+00:46:45,220 --> 00:46:49,100
+data structure here in our DocumentStore.
+
+1151
+00:46:49,100 --> 00:46:52,170
+And so this is having no
+effect on the file system.
+
+1152
+00:46:52,170 --> 00:46:54,420
+So we need to update these things up here,
+
+1153
+00:46:54,420 --> 00:46:57,710
+addDocument, removeDocument, even setName,
+
+1154
+00:46:57,710 --> 00:46:59,800
+to affect the file system as well.
+
+1155
+00:46:59,800 --> 00:47:00,944
+And that's gonna be great
+
+1156
+00:47:00,944 --> 00:47:01,777
+because we're gonna get a chance
+
+1157
+00:47:01,777 --> 00:47:03,890
+to see how do we affect the file system.
+
+1158
+00:47:03,890 --> 00:47:07,500
+We already learned how to read
+the contents of a directory.
+
+1159
+00:47:07,500 --> 00:47:09,300
+Now, let's learn how we, for example,
+
+1160
+00:47:09,300 --> 00:47:11,173
+remove files and things like that.
+
+1161
+00:47:12,110 --> 00:47:13,550
+So let's do addDocument first,
+
+1162
+00:47:13,550 --> 00:47:15,720
+so we can get some documents going
+
+1163
+00:47:15,720 --> 00:47:17,560
+in our documentDirectory here.
+
+1164
+00:47:17,560 --> 00:47:20,170
+And addDocument has a little bit
+
+1165
+00:47:20,170 --> 00:47:22,340
+of an interesting aspect to it
+
+1166
+00:47:22,340 --> 00:47:25,000
+when we start storing in the file system.
+
+1167
+00:47:25,000 --> 00:47:26,747
+When we store it in UserDefaults,
+
+1168
+00:47:26,747 --> 00:47:28,870
+we can have two, or
+three, or four documents
+
+1169
+00:47:28,870 --> 00:47:30,815
+with exactly the same name.
+
+1170
+00:47:30,815 --> 00:47:32,060
+And that's perfectly fine.
+
+1171
+00:47:32,060 --> 00:47:34,250
+But in the file system,
+that's not allowed.
+
+1172
+00:47:34,250 --> 00:47:36,860
+The file system, you only get one document
+
+1173
+00:47:36,860 --> 00:47:38,940
+of a certain file name.
+
+1174
+00:47:38,940 --> 00:47:40,460
+That's just the way it is.
+
+1175
+00:47:40,460 --> 00:47:41,710
+That's the way file systems work.
+
+1176
+00:47:41,710 --> 00:47:44,010
+We distinguish the
+things in the file system
+
+1177
+00:47:44,010 --> 00:47:46,140
+by the name of the file.
+
+1178
+00:47:46,140 --> 00:47:48,800
+So I'm going to have to be careful here
+
+1179
+00:47:48,800 --> 00:47:51,650
+when if I'm dealing with the file system,
+
+1180
+00:47:51,650 --> 00:47:54,390
+to not just use the name
+that's passed to me,
+
+1181
+00:47:54,390 --> 00:47:56,530
+or even just "Untitled" default.
+
+1182
+00:47:56,530 --> 00:47:58,960
+I have to make sure that
+name doesn't already exist.
+
+1183
+00:47:58,960 --> 00:48:01,460
+What I'm gonna do here is if it does,
+
+1184
+00:48:01,460 --> 00:48:04,360
+I'm going to create a unique name.
+
+1185
+00:48:04,360 --> 00:48:06,400
+So I'm gonna take here,
+
+1186
+00:48:06,400 --> 00:48:10,360
+let uniqueName equal this name
+
+1187
+00:48:10,360 --> 00:48:13,430
+that you're asking me to do, unique-ified,
+
+1188
+00:48:13,430 --> 00:48:15,180
+and I have this nice function that I wrote
+
+1189
+00:48:15,180 --> 00:48:20,180
+called withRespectTo documentNames.values.
+
+1190
+00:48:20,620 --> 00:48:23,400
+So this unique-ifies,
+
+1191
+00:48:23,400 --> 00:48:26,527
+this String with respect
+to these other Strings.
+
+1192
+00:48:26,527 --> 00:48:27,690
+And these other Strings
+
+1193
+00:48:27,690 --> 00:48:28,970
+are the values of my documentNames.
+
+1194
+00:48:28,970 --> 00:48:32,620
+In other words, the documentNames
+I already know about.
+
+1195
+00:48:32,620 --> 00:48:35,810
+Let's take a look at this
+uniqued withRespectTo real quick.
+
+1196
+00:48:35,810 --> 00:48:37,660
+It's down here in EmojiArtExtensions.
+
+1197
+00:48:38,959 --> 00:48:40,550
+It's a real simple little function.
+
+1198
+00:48:40,550 --> 00:48:42,710
+It just creates a copy of myself,
+
+1199
+00:48:42,710 --> 00:48:44,000
+this is in String right?
+
+1200
+00:48:44,000 --> 00:48:49,000
+Copy of myself, and while
+I am in this otherStrings,
+
+1201
+00:48:49,510 --> 00:48:52,010
+I'm going to increment myself.
+
+1202
+00:48:52,010 --> 00:48:54,220
+Now, what is incrementing myself?
+
+1203
+00:48:54,220 --> 00:48:56,270
+That's a new thing I added to String,
+
+1204
+00:48:56,270 --> 00:48:59,760
+where it puts a number
+at the end of the String
+
+1205
+00:48:59,760 --> 00:49:02,000
+and just increments it as necessary
+
+1206
+00:49:02,000 --> 00:49:04,290
+to finally find a unique number.
+
+1207
+00:49:04,290 --> 00:49:07,740
+So if my name is "Untitled",
+
+1208
+00:49:07,740 --> 00:49:10,230
+and there's something else
+already called "Untitled",
+
+1209
+00:49:10,230 --> 00:49:12,487
+I'm gonna eventually become "Untitled1"
+
+1210
+00:49:12,487 --> 00:49:13,887
+And if my name is "Untitled1",
+
+1211
+00:49:14,780 --> 00:49:17,270
+and I do incremented, this little code,
+
+1212
+00:49:17,270 --> 00:49:18,320
+which you can look at later,
+
+1213
+00:49:18,320 --> 00:49:20,030
+it's kinda fun code actually,
+
+1214
+00:49:20,030 --> 00:49:23,640
+is gonna go "Untitled2",
+"Untitled3", "Untitled4",
+
+1215
+00:49:23,640 --> 00:49:25,663
+until we find a unique name.
+
+1216
+00:49:26,544 --> 00:49:29,420
+And so it's just kind of
+simple, simple tricky thing.
+
+1217
+00:49:29,420 --> 00:49:31,087
+But I actually am showing you this,
+
+1218
+00:49:31,087 --> 00:49:33,860
+and I used this because I want
+to show you something else.
+
+1219
+00:49:33,860 --> 00:49:35,670
+If we go back to our Store,
+
+1220
+00:49:35,670 --> 00:49:37,070
+this line of code that I wrote
+
+1221
+00:49:37,070 --> 00:49:39,210
+that did that, didn't actually work.
+
+1222
+00:49:39,210 --> 00:49:42,480
+It says cannot convert value of type
+
+1223
+00:49:42,480 --> 00:49:45,740
+Dictionary&lt;EmojiArt, String&gt;.Values
+
+1224
+00:49:45,740 --> 00:49:47,753
+to expected type, Array of String.
+
+1225
+00:49:49,340 --> 00:49:51,640
+Yeah, indeed my EmojiArt
+extensions over here
+
+1226
+00:49:51,640 --> 00:49:53,640
+takes an Array of otherStrings,
+
+1227
+00:49:53,640 --> 00:49:56,760
+which it wants to be unique withRespectTo.
+
+1228
+00:49:56,760 --> 00:50:01,130
+But back here, this is
+not an Array of Strings.
+
+1229
+00:50:01,130 --> 00:50:03,540
+If you have a Dictionary
+like documentNames,
+
+1230
+00:50:03,540 --> 00:50:05,440
+and you ask for its values,
+
+1231
+00:50:05,440 --> 00:50:08,710
+you do not get an Array of these things.
+
+1232
+00:50:08,710 --> 00:50:10,830
+You get a special type that
+
+1233
+00:50:10,830 --> 00:50:13,780
+is a Collection of these things.
+
+1234
+00:50:13,780 --> 00:50:16,150
+So we're using functional programming here
+
+1235
+00:50:16,150 --> 00:50:18,240
+to create, return something that
+
+1236
+00:50:18,240 --> 00:50:21,090
+it's not an Array, but it is a Collection.
+
+1237
+00:50:21,090 --> 00:50:23,970
+Now, my unique-ified really
+should be just as happy
+
+1238
+00:50:23,970 --> 00:50:27,440
+to work with a Collection
+of Strings, as an Array.
+
+1239
+00:50:27,440 --> 00:50:30,770
+For example, a Set of
+Strings should work here.
+
+1240
+00:50:30,770 --> 00:50:32,380
+If I want my name unique-ified
+
+1241
+00:50:32,380 --> 00:50:35,110
+with respect to a Set of other
+Strings, that should work.
+
+1242
+00:50:35,110 --> 00:50:37,400
+And certainly, I'd like to be able to pass
+
+1243
+00:50:37,400 --> 00:50:42,140
+these values of a Dictionary,
+whatever this collection is.
+
+1244
+00:50:42,140 --> 00:50:44,090
+So how can I make this over here?
+
+1245
+00:50:44,090 --> 00:50:47,110
+So this doesn't take an
+Array of String anymore,
+
+1246
+00:50:47,110 --> 00:50:49,870
+but it actually takes a Collection,
+
+1247
+00:50:49,870 --> 00:50:53,093
+and where that Collection
+has Strings in it.
+
+1248
+00:50:53,930 --> 00:50:56,420
+To do this, this is not
+object-oriented programming,
+
+1249
+00:50:56,420 --> 00:50:59,150
+so it's not like a Set, an Array,
+
+1250
+00:50:59,150 --> 00:51:01,250
+inherit from some class or collection,
+
+1251
+00:51:01,250 --> 00:51:03,100
+this is functional programming.
+
+1252
+00:51:03,100 --> 00:51:06,200
+So we're gonna do this way
+we always do these things,
+
+1253
+00:51:06,200 --> 00:51:09,020
+with a don't care and constraining.
+
+1254
+00:51:09,020 --> 00:51:11,540
+So this is constrains and gains.
+
+1255
+00:51:11,540 --> 00:51:12,373
+So how are we gonna do this?
+
+1256
+00:51:12,373 --> 00:51:14,480
+I'm gonna create a don't care here,
+
+1257
+00:51:14,480 --> 00:51:16,960
+which I'm gonna call StringCollection.
+
+1258
+00:51:16,960 --> 00:51:19,260
+So I'm gonna unique-ify with respect
+
+1259
+00:51:19,260 --> 00:51:21,340
+to some StringCollection.
+
+1260
+00:51:21,340 --> 00:51:24,080
+Now, I'm not totally don't care on this.
+
+1261
+00:51:24,080 --> 00:51:25,943
+It has to be a Collection,
+
+1262
+00:51:25,943 --> 00:51:28,280
+because I wanna do contains on it,
+
+1263
+00:51:28,280 --> 00:51:30,410
+and it also has to have Strings in it,
+
+1264
+00:51:30,410 --> 00:51:33,820
+because I'm trying to unique-ify
+withRespectTo Strings.
+
+1265
+00:51:33,820 --> 00:51:36,920
+So how do a don't care, with
+just a function like this?
+
+1266
+00:51:36,920 --> 00:51:40,080
+This is not don't care on
+String or something else,
+
+1267
+00:51:40,080 --> 00:51:42,760
+it's just this one little
+function on its own,
+
+1268
+00:51:42,760 --> 00:51:45,090
+wants to have a don't care.
+
+1269
+00:51:45,090 --> 00:51:47,387
+It does that with &lt;StringCollection&gt;.
+
+1270
+00:51:49,330 --> 00:51:51,770
+It's very similar to doing it on a type,
+
+1271
+00:51:51,770 --> 00:51:54,870
+a struct, or whatever,
+just do it right here.
+
+1272
+00:51:54,870 --> 00:51:57,010
+And I can also do the where.
+
+1273
+00:51:57,010 --> 00:52:01,740
+So I'm gonna do over here,
+where this StringCollection
+
+1274
+00:52:01,740 --> 00:52:04,650
+is a Collection, gotta be a Collection,
+
+1275
+00:52:04,650 --> 00:52:08,730
+and also, where the StringCollection's
+
+1276
+00:52:08,730 --> 00:52:11,690
+Element equals String.
+
+1277
+00:52:11,690 --> 00:52:16,230
+So this.Element is a
+don't care in Collection.
+
+1278
+00:52:16,230 --> 00:52:18,960
+Remember that, a protocol like Collection,
+
+1279
+00:52:18,960 --> 00:52:22,060
+it can have a don't care associated types.
+
+1280
+00:52:22,060 --> 00:52:24,660
+And so, it has one, it's just the element,
+
+1281
+00:52:24,660 --> 00:52:26,380
+and Array has the same one,
+
+1282
+00:52:26,380 --> 00:52:29,680
+and a Set has this one
+because they're getting it
+
+1283
+00:52:29,680 --> 00:52:31,530
+from Collection 'cause they implement
+
+1284
+00:52:31,530 --> 00:52:33,300
+the Collection protocol.
+
+1285
+00:52:33,300 --> 00:52:36,050
+So I'm just constraining
+this to make this work.
+
+1286
+00:52:36,050 --> 00:52:37,170
+Look, this is how it works.
+
+1287
+00:52:37,170 --> 00:52:39,840
+Because contains is in Collection,
+
+1288
+00:52:39,840 --> 00:52:43,010
+and of course, we can do things to it here
+
+1289
+00:52:43,010 --> 00:52:45,060
+that are String-oriented
+because I'm making sure
+
+1290
+00:52:45,060 --> 00:52:46,920
+this is a Collection of Strings.
+
+1291
+00:52:46,920 --> 00:52:48,610
+And not only that, but back here,
+
+1292
+00:52:48,610 --> 00:52:51,510
+when I recompile, this is gonna work.
+
+1293
+00:52:51,510 --> 00:52:52,730
+This is no longer complaining
+
+1294
+00:52:52,730 --> 00:52:55,210
+because this is a Collection of Strings
+
+1295
+00:52:55,210 --> 00:52:56,870
+because this is a Dictionary
+
+1296
+00:52:56,870 --> 00:52:58,703
+that has Strings as its values.
+
+1297
+00:53:00,220 --> 00:53:02,250
+Yeah, I just wanted to
+take a little detour
+
+1298
+00:53:02,250 --> 00:53:04,040
+from what we were doing to just throw
+
+1299
+00:53:04,040 --> 00:53:06,443
+another functional
+programming thing at you.
+
+1300
+00:53:07,690 --> 00:53:10,040
+All right, so we have a unique name here,
+
+1301
+00:53:10,040 --> 00:53:12,430
+so we can add our document
+with this uniqueName.
+
+1302
+00:53:12,430 --> 00:53:13,300
+So let's do that.
+
+1303
+00:53:13,300 --> 00:53:15,610
+I'm gonna create a document here
+
+1304
+00:53:15,610 --> 00:53:19,073
+as a little local var.
+
+1305
+00:53:20,010 --> 00:53:21,720
+And then, I'm going to say,
+
+1306
+00:53:21,720 --> 00:53:23,183
+if I can let the URL,
+
+1307
+00:53:24,130 --> 00:53:26,710
+this is gonna be the URL for this document
+
+1308
+00:53:26,710 --> 00:53:28,980
+that I'm gonna add, I'm
+gonna add a new document,
+
+1309
+00:53:28,980 --> 00:53:31,210
+so I'm gonna create a
+URL for that document.
+
+1310
+00:53:31,210 --> 00:53:35,500
+It's my directory that my store is in,
+
+1311
+00:53:35,500 --> 00:53:39,433
+appendingPathComponent,
+which is that uniqueName.
+
+1312
+00:53:40,580 --> 00:53:43,340
+So this is the URL that I would want
+
+1313
+00:53:43,340 --> 00:53:46,080
+to create this new EmojiArtDocument is.
+
+1314
+00:53:46,080 --> 00:53:48,810
+Now, I'm doing if let
+because maybe my directory
+
+1315
+00:53:48,810 --> 00:53:51,240
+is nil because someone did init named
+
+1316
+00:53:51,240 --> 00:53:53,230
+instead of doing init directory.
+
+1317
+00:53:53,230 --> 00:53:55,990
+In this case, my store isn't
+based in the file system,
+
+1318
+00:53:55,990 --> 00:54:00,980
+so my URL is nil, so I can't
+get a URL for this document.
+
+1319
+00:54:00,980 --> 00:54:03,330
+But if I can get a URL for this document,
+
+1320
+00:54:03,330 --> 00:54:08,170
+then, the document is just
+gonna be an EmojiArtDocument
+
+1321
+00:54:08,170 --> 00:54:11,290
+with that URL, let's create
+a new EmojiArtDocument.
+
+1322
+00:54:11,290 --> 00:54:13,740
+If not, if we're just doing
+the UserDefaults thing,
+
+1323
+00:54:13,740 --> 00:54:16,763
+then, the document is just
+a blank EmojiArtDocument.
+
+1324
+00:54:18,610 --> 00:54:20,400
+Brand new and 'cause we're in addDocument,
+
+1325
+00:54:20,400 --> 00:54:22,650
+we're adding new documents.
+
+1326
+00:54:22,650 --> 00:54:24,870
+Let's pay attention to our
+error here first though.
+
+1327
+00:54:24,870 --> 00:54:27,140
+Oh, yes indeed, we don't wanna be adding
+
+1328
+00:54:27,140 --> 00:54:29,180
+blank document here, we're going to add
+
+1329
+00:54:29,180 --> 00:54:31,650
+this document that we just created.
+
+1330
+00:54:31,650 --> 00:54:32,483
+That's why your warnings,
+
+1331
+00:54:32,483 --> 00:54:34,640
+you gotta always pay
+attention to those warnings.
+
+1332
+00:54:34,640 --> 00:54:36,860
+And also, let's make
+sure that we are using
+
+1333
+00:54:36,860 --> 00:54:39,230
+the uniqueName that we just created
+
+1334
+00:54:39,230 --> 00:54:41,093
+as the name of the document there.
+
+1335
+00:54:43,260 --> 00:54:44,730
+All right, so we have no documents here.
+
+1336
+00:54:44,730 --> 00:54:48,150
+Let's see, Plus, hopefully
+that created a file
+
+1337
+00:54:48,150 --> 00:54:50,790
+in our file system for that.
+
+1338
+00:54:50,790 --> 00:54:52,784
+And how about another one?
+
+1339
+00:54:52,784 --> 00:54:54,640
+Whoa, we got the unique, another?
+
+1340
+00:54:54,640 --> 00:54:56,570
+Whoa, it incremented, okay, so our little
+
+1341
+00:54:56,570 --> 00:54:58,200
+increment code worked as well.
+
+1342
+00:54:58,200 --> 00:55:00,270
+Now, hopefully when we
+quit and come back here,
+
+1343
+00:55:00,270 --> 00:55:03,780
+those three files are gonna
+be in the file system.
+
+1344
+00:55:03,780 --> 00:55:06,580
+And they are excellent.
+
+1345
+00:55:06,580 --> 00:55:08,440
+Okay, next step, deleting.
+
+1346
+00:55:08,440 --> 00:55:12,040
+So we go over here and say
+let's get rid of "Untitled1".
+
+1347
+00:55:12,040 --> 00:55:13,710
+Oh, the bugger worked, nice.
+
+1348
+00:55:13,710 --> 00:55:14,823
+Now, let's rerun.
+
+1349
+00:55:16,290 --> 00:55:17,533
+Oh, "Untitled1" is back.
+
+1350
+00:55:17,533 --> 00:55:20,220
+That makes sense, right,
+because we didn't,
+
+1351
+00:55:20,220 --> 00:55:22,110
+when we hit "Done" here and said "Delete",
+
+1352
+00:55:22,110 --> 00:55:24,280
+we didn't actually delete
+it in the file system,
+
+1353
+00:55:24,280 --> 00:55:27,013
+we deleted it in our
+document names, that's it.
+
+1354
+00:55:28,076 --> 00:55:31,770
+All right, so we gotta go
+fix removeDocument here
+
+1355
+00:55:31,770 --> 00:55:34,770
+to delete the thing from the file system.
+
+1356
+00:55:34,770 --> 00:55:35,840
+That's probably the easiest
+
+1357
+00:55:35,840 --> 00:55:37,720
+of all the things we need to do.
+
+1358
+00:55:37,720 --> 00:55:38,640
+We're just gonna see if we can
+
+1359
+00:55:38,640 --> 00:55:41,460
+get the URL for that thing,
+
+1360
+00:55:41,460 --> 00:55:44,000
+which we have to get from its name,
+
+1361
+00:55:44,000 --> 00:55:47,193
+that's our documentNames
+for that Document.
+
+1362
+00:55:48,140 --> 00:55:51,740
+And then, letting the
+URL equal our directory,
+
+1363
+00:55:51,740 --> 00:55:56,740
+and appending the
+PathComponent of that name.
+
+1364
+00:55:58,100 --> 00:56:00,660
+So, if this Document that
+we're trying to remove,
+
+1365
+00:56:00,660 --> 00:56:02,780
+it's already, we've got a name for it,
+
+1366
+00:56:02,780 --> 00:56:04,360
+and we can make a URL out of it,
+
+1367
+00:56:04,360 --> 00:56:07,410
+meaning that we're a Store
+that's in a directory.
+
+1368
+00:56:07,410 --> 00:56:08,500
+We're just gonna remove it.
+
+1369
+00:56:08,500 --> 00:56:09,570
+And that's another thing that
+
+1370
+00:56:09,570 --> 00:56:11,530
+our FileManager can do for us.
+
+1371
+00:56:11,530 --> 00:56:14,324
+FileManager.default shared one,
+
+1372
+00:56:14,324 --> 00:56:17,713
+removeItem at URL, kaboom.
+
+1373
+00:56:18,780 --> 00:56:19,997
+Now again, like most of these
+
+1374
+00:56:19,997 --> 00:56:23,360
+FileManagers things, this can throw.
+
+1375
+00:56:23,360 --> 00:56:25,200
+This one, in this case, I'm just going
+
+1376
+00:56:25,200 --> 00:56:26,840
+to do the try?
+
+1377
+00:56:26,840 --> 00:56:29,050
+because we're trying to
+remove this document,
+
+1378
+00:56:29,050 --> 00:56:29,990
+and I can't remove it.
+
+1379
+00:56:29,990 --> 00:56:31,840
+I'm not sure what I'm gonna do about it.
+
+1380
+00:56:31,840 --> 00:56:33,470
+I supposed I could look at these errors,
+
+1381
+00:56:33,470 --> 00:56:37,170
+and see if there's one that's
+recoverable in some way
+
+1382
+00:56:37,170 --> 00:56:39,830
+but probably unlikely.
+
+1383
+00:56:39,830 --> 00:56:42,313
+That did it, removeDocument done.
+
+1384
+00:56:44,573 --> 00:56:47,840
+Now, let's try and remove "Untitled1".
+
+1385
+00:56:47,840 --> 00:56:50,183
+All right, done, and rerun.
+
+1386
+00:56:51,800 --> 00:56:56,800
+Gone, nice, add this
+back, add another one.
+
+1387
+00:56:56,850 --> 00:56:59,640
+Let's go here, delete "Untitled3",
+
+1388
+00:56:59,640 --> 00:57:03,813
+let's delete "Untitled", done, rerun.
+
+1389
+00:57:05,270 --> 00:57:09,840
+Whoa, okay, so the last one I
+think we have here is rename.
+
+1390
+00:57:09,840 --> 00:57:11,547
+So if I go edit here and I say,
+
+1391
+00:57:11,547 --> 00:57:14,427
+"I wanna change this
+back to being "Untitled",
+
+1392
+00:57:14,427 --> 00:57:17,080
+"and I hit Done," looks like it works.
+
+1393
+00:57:17,080 --> 00:57:22,080
+Three run, oh no, "Untitled1" is back.
+
+1394
+00:57:22,460 --> 00:57:25,030
+So again, I'm renaming.
+
+1395
+00:57:25,030 --> 00:57:26,740
+It's having no effect on the file system,
+
+1396
+00:57:26,740 --> 00:57:28,760
+so it just comes back and shows you
+
+1397
+00:57:28,760 --> 00:57:31,023
+what was in the file system when we rerun.
+
+1398
+00:57:31,880 --> 00:57:33,980
+Let's change setName.
+
+1399
+00:57:33,980 --> 00:57:36,930
+This one's just a matter
+of changing the URL
+
+1400
+00:57:36,930 --> 00:57:39,370
+for this document right here to be a URL
+
+1401
+00:57:39,370 --> 00:57:40,830
+that works for this name.
+
+1402
+00:57:40,830 --> 00:57:44,630
+So if I can let url equal our directory
+
+1403
+00:57:44,630 --> 00:57:49,630
+by appending the
+PathComponent of this name
+
+1404
+00:57:49,650 --> 00:57:51,780
+that you wanna set as the new thing,
+
+1405
+00:57:51,780 --> 00:57:56,420
+then, the document.url = url.
+
+1406
+00:57:56,420 --> 00:57:59,130
+I've just changed the place,
+where this is happening.
+
+1407
+00:57:59,130 --> 00:58:02,040
+Now, I know, one other thing though,
+
+1408
+00:58:02,040 --> 00:58:04,550
+what if this is a rename?
+
+1409
+00:58:04,550 --> 00:58:06,890
+Okay, someone said the name of a document,
+
+1410
+00:58:06,890 --> 00:58:09,550
+and it had, was already around somewhere
+
+1411
+00:58:09,550 --> 00:58:12,170
+in our document name
+with a different name.
+
+1412
+00:58:12,170 --> 00:58:14,050
+So good to be careful of that.
+
+1413
+00:58:14,050 --> 00:58:17,633
+How about if we remove the old document?
+
+1414
+00:58:18,784 --> 00:58:21,400
+If we remove this old document
+before we change its URL,
+
+1415
+00:58:21,400 --> 00:58:23,790
+it'll remove it from its old URL,
+
+1416
+00:58:23,790 --> 00:58:26,800
+and now, we put it in its new URL.
+
+1417
+00:58:26,800 --> 00:58:29,540
+But there's one other thing with naming,
+
+1418
+00:58:29,540 --> 00:58:32,810
+it's a little tricky,
+similar to addDocument,
+
+1419
+00:58:32,810 --> 00:58:35,340
+which is what if you try to set the name
+
+1420
+00:58:35,340 --> 00:58:37,650
+of a Document to the same name
+
+1421
+00:58:37,650 --> 00:58:40,712
+as some other Document already has.
+
+1422
+00:58:40,712 --> 00:58:45,360
+Oh yeah, well, we could
+try some unique vocation
+
+1423
+00:58:45,360 --> 00:58:47,010
+or something like that.
+
+1424
+00:58:47,010 --> 00:58:48,290
+But I actually think the strategy
+
+1425
+00:58:48,290 --> 00:58:51,420
+I'm gonna use is I'm just
+gonna reject that request.
+
+1426
+00:58:51,420 --> 00:58:54,010
+I'm simply just going to ignore it.
+
+1427
+00:58:54,010 --> 00:58:56,590
+Again, maybe I wanna enhance this func
+
+1428
+00:58:56,590 --> 00:58:59,080
+to return a Bool, whether I was able
+
+1429
+00:58:59,080 --> 00:59:00,500
+to actually do this rename,
+
+1430
+00:59:00,500 --> 00:59:03,600
+and then, the UI could
+put up an Alert, whatever.
+
+1431
+00:59:03,600 --> 00:59:05,920
+We're doing a demo, so I'm
+not gonna do any of that.
+
+1432
+00:59:05,920 --> 00:59:10,060
+I'm just not going to allow
+a rename to happen here,
+
+1433
+00:59:10,060 --> 00:59:12,950
+if you're trying to do
+one in the file system,
+
+1434
+00:59:12,950 --> 00:59:14,800
+and that name exists.
+
+1435
+00:59:14,800 --> 00:59:15,770
+So the way I'm gonna do that
+
+1436
+00:59:15,770 --> 00:59:19,920
+is I'm gonna say, if the, I'll do this
+
+1437
+00:59:19,920 --> 00:59:24,880
+if the documentNames.values
+does not contain this name,
+
+1438
+00:59:24,880 --> 00:59:28,120
+then, I'm happy to rename this for you.
+
+1439
+00:59:28,120 --> 00:59:29,640
+Otherwise, I'm not gonna do it.
+
+1440
+00:59:29,640 --> 00:59:31,390
+And in fact, otherwise,
+I'm not gonna do anything.
+
+1441
+00:59:31,390 --> 00:59:36,267
+So let's put this one down
+here in an else like that.
+
+1442
+00:59:36,267 --> 00:59:38,230
+And then, do this up here
+
+1443
+00:59:38,230 --> 00:59:42,573
+only if this don't have
+this name conflict.
+
+1444
+00:59:43,590 --> 00:59:44,990
+Well, let's see what happens in the UI
+
+1445
+00:59:44,990 --> 00:59:46,240
+if I just take this strategy,
+
+1446
+00:59:46,240 --> 00:59:51,090
+just not allowing renames,
+that to another name.
+
+1447
+00:59:51,090 --> 00:59:52,040
+So here we go, let's try.
+
+1448
+00:59:52,040 --> 00:59:53,600
+Well, first of all, let's
+see if rename is working.
+
+1449
+00:59:53,600 --> 00:59:55,160
+So here I'm gonna do "Untitled1",
+
+1450
+00:59:55,160 --> 00:59:58,040
+I'm gonna rename it to be "Untitled".
+
+1451
+00:59:58,040 --> 00:59:59,350
+That's not the name of something else,
+
+1452
+00:59:59,350 --> 01:00:00,873
+that's good, let's rerun.
+
+1453
+01:00:02,644 --> 01:00:04,520
+Oh, it renamed it in the file system.
+
+1454
+01:00:04,520 --> 01:00:08,200
+Okay now, let's try, and
+take this "Untitled2",
+
+1455
+01:00:08,200 --> 01:00:11,387
+and call it "Untitled", done.
+
+1456
+01:00:11,387 --> 01:00:14,450
+Oh, look, it didn't allow me to do that.
+
+1457
+01:00:14,450 --> 01:00:16,050
+But when I went back, it was here.
+
+1458
+01:00:16,050 --> 01:00:19,697
+That's interesting, so
+let's try "Untitled1".
+
+1459
+01:00:19,697 --> 01:00:22,500
+Yeah, that works, okay,
+let's add a few more.
+
+1460
+01:00:22,500 --> 01:00:26,587
+Let's try and rename
+"Untitled4" to be "Untitled2".
+
+1461
+01:00:28,100 --> 01:00:30,920
+Done, oh, wouldn't allow
+it, just went back.
+
+1462
+01:00:30,920 --> 01:00:32,610
+But when I go back to Edit,
+
+1463
+01:00:32,610 --> 01:00:34,640
+it's still holding onto that "2" for me.
+
+1464
+01:00:34,640 --> 01:00:38,713
+So maybe I really want
+"21" or maybe I want "2a",
+
+1465
+01:00:40,403 --> 01:00:41,837
+something like that.
+
+1466
+01:00:41,837 --> 01:00:44,160
+And that, it allows.
+
+1467
+01:00:44,160 --> 01:00:46,673
+So it's not too bad that we just rejected.
+
+1468
+01:00:47,960 --> 01:00:50,360
+I probably would prefer
+a little Alert there,
+
+1469
+01:00:50,360 --> 01:00:54,530
+maybe just because the user
+might be a little confused.
+
+1470
+01:00:54,530 --> 01:00:55,910
+They're here, and they said this,
+
+1471
+01:00:55,910 --> 01:00:57,757
+and they hit "Done", and
+they think, "Oh, they did it,
+
+1472
+01:00:57,757 --> 01:00:59,857
+"but oh, there's that "2a", it's back.
+
+1473
+01:00:59,857 --> 01:01:00,690
+"What's going on?
+
+1474
+01:01:00,690 --> 01:01:01,717
+"I tried to rename that."
+
+1475
+01:01:02,640 --> 01:01:04,650
+Yeah, they may or may not notice it
+
+1476
+01:01:04,650 --> 01:01:05,890
+there's another one with that name.
+
+1477
+01:01:05,890 --> 01:01:08,090
+So maybe an Alert that name is already
+
+1478
+01:01:08,090 --> 01:01:09,533
+in use would be good here.
+
+1479
+01:01:11,530 --> 01:01:12,827
+But we're here to learn about file system,
+
+1480
+01:01:12,827 --> 01:01:14,960
+and I think we did that.
+
+1481
+01:01:14,960 --> 01:01:18,150
+We showed a lot of different
+parts of file system here.
+
+1482
+01:01:18,150 --> 01:01:20,040
+We started out over in our document,
+
+1483
+01:01:20,040 --> 01:01:22,780
+just learning how we can use Data,
+
+1484
+01:01:22,780 --> 01:01:25,540
+and URL to change our reading,
+
+1485
+01:01:25,540 --> 01:01:28,355
+and writing to be going
+out to the file system,
+
+1486
+01:01:28,355 --> 01:01:29,490
+instead of UserDefaults.
+
+1487
+01:01:29,490 --> 01:01:32,750
+That was super easy over here.
+
+1488
+01:01:32,750 --> 01:01:34,550
+And then, when we went to the store,
+
+1489
+01:01:34,550 --> 01:01:36,620
+we learned a lot of
+things about FileManager,
+
+1490
+01:01:36,620 --> 01:01:39,120
+the shared FileManager like how to get
+
+1491
+01:01:39,120 --> 01:01:41,110
+all the contents of a directory,
+
+1492
+01:01:41,110 --> 01:01:43,210
+and then, how to do things
+with the FileManager
+
+1493
+01:01:43,210 --> 01:01:44,813
+like remove files.
+
+1494
+01:01:46,100 --> 01:01:48,320
+So that is it for this demo,
+
+1495
+01:01:48,320 --> 01:01:50,810
+and hopefully, you'll have a chance
+
+1496
+01:01:50,810 --> 01:01:54,140
+to integrate this into your final project.
+
+1497
+01:01:54,140 --> 01:01:55,310
+It's pretty straightforward to do,
+
+1498
+01:01:55,310 --> 01:01:57,700
+and usually you do have
+storage requirements,
+
+1499
+01:01:57,700 --> 01:02:00,200
+and I'd rather not see
+all of your final projects
+
+1500
+01:02:00,200 --> 01:02:02,314
+storing everything in UserDefaults.
+
+1501
+01:02:02,314 --> 01:02:03,490
+I definitely would like to see
+
+1502
+01:02:03,490 --> 01:02:07,560
+some Core Data, and or file system,
+
+1503
+01:02:07,560 --> 01:02:10,323
+and maybe even CloudKit,
+that would be great.
+
+1504
+01:02:11,480 --> 01:02:14,733
+- [Announcer] For more, please
+visit us at stanford.edu.

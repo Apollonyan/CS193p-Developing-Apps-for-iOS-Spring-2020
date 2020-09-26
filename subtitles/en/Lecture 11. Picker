@@ -1,0 +1,4982 @@
+1
+00:00:00,316 --> 00:00:02,899
+(serene music)
+
+2
+00:00:04,940 --> 00:00:06,590
+- [Narrator] Stanford University.
+
+3
+00:00:11,490 --> 00:00:12,510
+- Hello, everyone.
+
+4
+00:00:12,510 --> 00:00:16,930
+Welcome to one CS193p, spring of 2020.
+
+5
+00:00:16,930 --> 00:00:20,534
+This is lecture 11, al fresco version.
+
+6
+00:00:20,534 --> 00:00:23,160
+Here outside to celebrate that
+
+7
+00:00:23,160 --> 00:00:25,960
+we pretty much covered the
+main topics of SwiftUI.
+
+8
+00:00:25,960 --> 00:00:27,820
+And you should be able now to go off
+
+9
+00:00:27,820 --> 00:00:29,090
+and do your final project
+
+10
+00:00:29,090 --> 00:00:30,950
+after you've finished with assignment six,
+
+11
+00:00:30,950 --> 00:00:34,080
+which you're in the middle
+of working on right now.
+
+12
+00:00:34,080 --> 00:00:35,824
+I'm still gonna have a few more lectures,
+
+13
+00:00:35,824 --> 00:00:38,340
+although I will not be having
+lectures during dead week,
+
+14
+00:00:38,340 --> 00:00:41,060
+nor am I gonna do a
+lecture on Memorial day.
+
+15
+00:00:41,060 --> 00:00:44,154
+So I believe that leaves us
+with three lectures more.
+
+16
+00:00:44,154 --> 00:00:48,540
+I will try to accelerate those
+lectures as much as possible
+
+17
+00:00:48,540 --> 00:00:49,960
+because they're all gonna be topics
+
+18
+00:00:49,960 --> 00:00:52,770
+that you might wanna work
+on for your final project,
+
+19
+00:00:52,770 --> 00:00:55,220
+not required, but you
+might wanna use them.
+
+20
+00:00:55,220 --> 00:00:57,400
+And if I wait too long to bring them out,
+
+21
+00:00:57,400 --> 00:00:58,900
+you won't have time to incorporate 'em
+
+22
+00:00:58,900 --> 00:00:59,733
+into your final project.
+
+23
+00:00:59,733 --> 00:01:03,800
+So I'll try to get those out
+as soon as I possibly can.
+
+24
+00:01:03,800 --> 00:01:06,810
+And speaking of your final project,
+
+25
+00:01:06,810 --> 00:01:09,080
+read the rubric carefully.
+
+26
+00:01:09,080 --> 00:01:10,610
+And if you have any questions about it,
+
+27
+00:01:10,610 --> 00:01:14,420
+make sure you ask in the
+class forums, questions,
+
+28
+00:01:14,420 --> 00:01:18,200
+I'm happy to answer and
+clarifications, et cetera.
+
+29
+00:01:18,200 --> 00:01:20,480
+In terms of advice for your final project,
+
+30
+00:01:20,480 --> 00:01:24,230
+I really recommend doing a
+good detailed project proposal.
+
+31
+00:01:24,230 --> 00:01:25,630
+That's your first deliverable.
+
+32
+00:01:25,630 --> 00:01:27,360
+It's due on Monday
+
+33
+00:01:27,360 --> 00:01:30,050
+and we are not gonna be held responsible
+
+34
+00:01:30,050 --> 00:01:32,060
+if you say you're gonna do
+something in that proposal
+
+35
+00:01:32,060 --> 00:01:33,550
+and you don't end up doing it.
+
+36
+00:01:33,550 --> 00:01:36,750
+So it's better to suggest
+a little too much there
+
+37
+00:01:36,750 --> 00:01:38,630
+and then come up a little short,
+
+38
+00:01:38,630 --> 00:01:41,690
+than the opposite,
+suggest not quite enough,
+
+39
+00:01:41,690 --> 00:01:43,620
+you're not sure what you're gonna do
+
+40
+00:01:43,620 --> 00:01:44,740
+and then you dive into it
+
+41
+00:01:44,740 --> 00:01:45,704
+and you really haven't thought ahead
+
+42
+00:01:45,704 --> 00:01:47,730
+and planned out what you're gonna do.
+
+43
+00:01:47,730 --> 00:01:49,227
+So that's my first piece of advice.
+
+44
+00:01:49,227 --> 00:01:50,747
+My second piece of advice,
+
+45
+00:01:50,747 --> 00:01:52,680
+old hackneyed advice
+
+46
+00:01:52,680 --> 00:01:54,740
+from all your instructors
+of your courses here,
+
+47
+00:01:54,740 --> 00:01:56,990
+which is start early.
+
+48
+00:01:56,990 --> 00:02:00,620
+Now, this is not just start
+early so you have more time,
+
+49
+00:02:00,620 --> 00:02:02,780
+you wanna start early
+because as I've said,
+
+50
+00:02:02,780 --> 00:02:05,280
+maybe even said in this
+course, I don't remember,
+
+51
+00:02:05,280 --> 00:02:08,770
+but programming is like
+doing a crossword puzzle.
+
+52
+00:02:08,770 --> 00:02:11,000
+Even if you're really
+good at crossword puzzles,
+
+53
+00:02:11,000 --> 00:02:12,720
+you'll sometimes get started on one
+
+54
+00:02:12,720 --> 00:02:14,340
+and you just can't figure it out.
+
+55
+00:02:14,340 --> 00:02:15,880
+And you're just convinced
+there's just no way
+
+56
+00:02:15,880 --> 00:02:19,840
+I'm gonna get these last four
+across and down in the corner
+
+57
+00:02:19,840 --> 00:02:21,640
+or something like that, it's impossible.
+
+58
+00:02:21,640 --> 00:02:24,150
+And then you go to sleep
+and you wake up next day
+
+59
+00:02:24,150 --> 00:02:25,260
+and you have your lunch.
+
+60
+00:02:25,260 --> 00:02:26,659
+And then in the afternoon,
+all of a sudden you're like,
+
+61
+00:02:26,659 --> 00:02:29,810
+oh yeah, I know what 39 down is.
+
+62
+00:02:29,810 --> 00:02:34,040
+And once you get 39 down, the
+whole thing falls into place.
+
+63
+00:02:34,040 --> 00:02:36,217
+And that's because your subconscious
+
+64
+00:02:36,217 --> 00:02:39,100
+got a chance to work on
+that crossword puzzle.
+
+65
+00:02:39,100 --> 00:02:40,559
+Your conscious mind is distracted
+
+66
+00:02:40,559 --> 00:02:42,739
+by a lot of things going on around you.
+
+67
+00:02:42,739 --> 00:02:44,369
+It's got limited bandwidth.
+
+68
+00:02:44,369 --> 00:02:47,355
+Your subconscious mind can
+sit there and cook on problems
+
+69
+00:02:47,355 --> 00:02:50,630
+and just come up with the
+most amazing solutions.
+
+70
+00:02:50,630 --> 00:02:52,920
+And so let your subconscious work.
+
+71
+00:02:52,920 --> 00:02:54,250
+Work on your final project,
+
+72
+00:02:54,250 --> 00:02:56,670
+even if it's just 20 minutes in a day
+
+73
+00:02:56,670 --> 00:02:58,160
+to touch base with it
+
+74
+00:02:58,160 --> 00:03:01,547
+and remind your subconscious
+mind what's going on.
+
+75
+00:03:01,547 --> 00:03:02,850
+You have a really good chance
+
+76
+00:03:02,850 --> 00:03:05,848
+that the next day you're
+gonna get 39 down, okay?
+
+77
+00:03:05,848 --> 00:03:08,110
+Or the equivalent thereof in programming.
+
+78
+00:03:08,110 --> 00:03:09,460
+So I really recommend that.
+
+79
+00:03:10,380 --> 00:03:13,200
+All right, big demo again today,
+
+80
+00:03:13,200 --> 00:03:14,770
+covering another topic
+
+81
+00:03:14,770 --> 00:03:16,780
+that's not required
+for your final project,
+
+82
+00:03:16,780 --> 00:03:17,980
+but it's likely most of you
+
+83
+00:03:17,980 --> 00:03:19,343
+are actually going to
+want to use this thing
+
+84
+00:03:19,343 --> 00:03:20,700
+called a Picker.
+
+85
+00:03:20,700 --> 00:03:22,823
+So let's jump into that right now.
+
+86
+00:03:24,540 --> 00:03:27,400
+This demo is mostly about Picker,
+
+87
+00:03:27,400 --> 00:03:30,210
+but we're going to do it in
+the context of a new app,
+
+88
+00:03:30,210 --> 00:03:32,387
+not Memorize or Emoji Art
+
+89
+00:03:32,387 --> 00:03:34,890
+and this app, which is called Enroute,
+
+90
+00:03:34,890 --> 00:03:36,980
+and I'm gonna show it to you in a moment
+
+91
+00:03:36,980 --> 00:03:40,040
+is also gonna be the basis
+for next week's demos.
+
+92
+00:03:40,040 --> 00:03:42,640
+So today we're not just
+learning about Picker,
+
+93
+00:03:42,640 --> 00:03:45,120
+we're learning a little bit
+about how Enroute works,
+
+94
+00:03:45,120 --> 00:03:47,840
+so when we do our stuff next week,
+
+95
+00:03:47,840 --> 00:03:50,370
+we'll have a shared knowledge of it.
+
+96
+00:03:50,370 --> 00:03:53,480
+Another difference today is
+with Emoji Art and Memorize
+
+97
+00:03:53,480 --> 00:03:56,130
+we started those
+applications from scratch,
+
+98
+00:03:56,130 --> 00:03:59,160
+but this one I'm starting
+with a working code
+
+99
+00:03:59,160 --> 00:03:59,993
+that does certain amount
+of functionality already,
+
+100
+00:03:59,993 --> 00:04:03,807
+and we're gonna add functionality to it.
+
+101
+00:04:03,807 --> 00:04:05,410
+And I'm doing that because
+
+102
+00:04:05,410 --> 00:04:08,640
+this application fetches some
+information from the internet
+
+103
+00:04:08,640 --> 00:04:10,530
+and so the code to do that
+
+104
+00:04:10,530 --> 00:04:13,404
+is not something that
+really is within the scope
+
+105
+00:04:13,404 --> 00:04:15,180
+of this class.
+
+106
+00:04:15,180 --> 00:04:17,360
+You're certainly welcome to look at it,
+
+107
+00:04:17,360 --> 00:04:19,460
+see if you can understand
+it, what it's doing.
+
+108
+00:04:19,460 --> 00:04:22,770
+It's not that complex and it's
+all pretty much demo-ware,
+
+109
+00:04:22,770 --> 00:04:24,843
+just something I put
+together over the weekend
+
+110
+00:04:24,843 --> 00:04:26,722
+for this demo.
+
+111
+00:04:26,722 --> 00:04:29,330
+But I don't really wanna
+go through that in detail.
+
+112
+00:04:29,330 --> 00:04:31,550
+Instead, I wanna focus on some features
+
+113
+00:04:31,550 --> 00:04:34,640
+that will really help you
+with your final project
+
+114
+00:04:34,640 --> 00:04:36,333
+like today, Picker.
+
+115
+00:04:37,400 --> 00:04:39,920
+So let's review this app called Enroute.
+
+116
+00:04:39,920 --> 00:04:42,470
+I'm gonna run it so you
+can see what it looks like.
+
+117
+00:04:43,607 --> 00:04:48,120
+Enroute essentially uses an API
+
+118
+00:04:48,120 --> 00:04:49,470
+that's available on the internet
+
+119
+00:04:49,470 --> 00:04:51,340
+from a company called FlightAware,
+
+120
+00:04:51,340 --> 00:04:53,160
+and you can see that
+it's actually loading up
+
+121
+00:04:53,160 --> 00:04:54,990
+some flight information here.
+
+122
+00:04:54,990 --> 00:04:58,610
+In this case, it's loading up
+flights that are in the air
+
+123
+00:04:58,610 --> 00:05:02,390
+enroute to San Francisco
+International KSFO.
+
+124
+00:05:02,390 --> 00:05:05,630
+That's its little airport code there.
+
+125
+00:05:05,630 --> 00:05:08,380
+And you can see that it's
+telling us this SkyWest flight
+
+126
+00:05:08,380 --> 00:05:10,863
+arrives today at 11:42,
+that's in two minutes,
+
+127
+00:05:10,863 --> 00:05:12,432
+it's coming from Los Angeles.
+
+128
+00:05:12,432 --> 00:05:14,320
+And it's telling us
+about all these flights,
+
+129
+00:05:14,320 --> 00:05:19,320
+different airlines, different
+origin airports, et cetera.
+
+130
+00:05:19,320 --> 00:05:23,020
+And our goal today with Picker
+is we wanna add some UI.
+
+131
+00:05:23,020 --> 00:05:25,190
+I'm gonna put a little
+Button in the corner here
+
+132
+00:05:25,190 --> 00:05:26,117
+called filter
+
+133
+00:05:26,117 --> 00:05:28,003
+And it's gonna bring up a modal sheet
+
+134
+00:05:28,003 --> 00:05:31,430
+that lets us filter these results
+
+135
+00:05:31,430 --> 00:05:34,240
+by for example, where it's coming from
+
+136
+00:05:34,240 --> 00:05:37,840
+or which airline or whether
+it's in the air or not,
+
+137
+00:05:37,840 --> 00:05:40,470
+because there are flights
+coming to San Francisco
+
+138
+00:05:40,470 --> 00:05:42,850
+that are scheduled to
+arrive at certain times,
+
+139
+00:05:42,850 --> 00:05:44,520
+but maybe they haven't taken off.
+
+140
+00:05:44,520 --> 00:05:46,920
+They might be scheduled to take off later,
+
+141
+00:05:46,920 --> 00:05:48,960
+or they might be delayed or whatever.
+
+142
+00:05:48,960 --> 00:05:50,680
+I'm not currently showing any of those.
+
+143
+00:05:50,680 --> 00:05:53,590
+All these flights you see
+right here are in the air,
+
+144
+00:05:53,590 --> 00:05:56,230
+actually flying to San
+Francisco at this very moment.
+
+145
+00:05:56,230 --> 00:05:58,070
+And this is real data
+coming from FlightAware.
+
+146
+00:05:58,070 --> 00:06:02,020
+FlightAware is not a free API to use.
+
+147
+00:06:02,020 --> 00:06:03,580
+It's quite inexpensive.
+
+148
+00:06:03,580 --> 00:06:05,535
+So hey, if you have a few bucks,
+
+149
+00:06:05,535 --> 00:06:07,761
+you can head over to FlightAware
+
+150
+00:06:07,761 --> 00:06:09,530
+and sign up and get your own key.
+
+151
+00:06:09,530 --> 00:06:11,640
+And so then when you run this demo code,
+
+152
+00:06:11,640 --> 00:06:15,450
+you can get live data like
+I'm getting right here.
+
+153
+00:06:15,450 --> 00:06:19,100
+Or I also am gonna provide
+some simulated data
+
+154
+00:06:19,100 --> 00:06:20,020
+so that those of you
+
+155
+00:06:20,020 --> 00:06:21,830
+who don't wanna go to
+FlightAware and sign up
+
+156
+00:06:21,830 --> 00:06:23,540
+you'll get some simulated data
+
+157
+00:06:23,540 --> 00:06:25,630
+from over the weekend basically.
+
+158
+00:06:25,630 --> 00:06:26,958
+It only has a couple of airports,
+
+159
+00:06:26,958 --> 00:06:30,160
+San Francisco and Las Vegas, I think,
+
+160
+00:06:30,160 --> 00:06:32,830
+but it'll let you at least see the code
+
+161
+00:06:32,830 --> 00:06:35,940
+and get your Picker working
+and things like that.
+
+162
+00:06:35,940 --> 00:06:39,500
+Let's talk a little bit
+about how Enroute is built,
+
+163
+00:06:39,500 --> 00:06:40,930
+how this app works.
+
+164
+00:06:40,930 --> 00:06:42,880
+So this View right here
+that you're seeing,
+
+165
+00:06:42,880 --> 00:06:46,660
+this list of flights
+is just a single View.
+
+166
+00:06:46,660 --> 00:06:49,200
+It's the only View file that we have
+
+167
+00:06:49,200 --> 00:06:50,280
+in the whole app right here,
+
+168
+00:06:50,280 --> 00:06:54,220
+this FlightsEnrouteView.swift.
+
+169
+00:06:54,220 --> 00:06:55,550
+And so let's go through this.
+
+170
+00:06:55,550 --> 00:06:59,210
+You can see it's actually
+quite a simple little View,
+
+171
+00:06:59,210 --> 00:07:00,484
+really not much to it here.
+
+172
+00:07:00,484 --> 00:07:03,500
+At the top level there's
+this FlightsEnrouteView.
+
+173
+00:07:03,500 --> 00:07:05,200
+It's just a NavigationView.
+
+174
+00:07:05,200 --> 00:07:07,557
+You did notice that our app over here
+
+175
+00:07:07,557 --> 00:07:10,340
+is definitely in a NavigationView,
+
+176
+00:07:10,340 --> 00:07:12,530
+even though we don't click
+on these and navigate,
+
+177
+00:07:12,530 --> 00:07:15,130
+one day maybe we would, but we don't now.
+
+178
+00:07:15,130 --> 00:07:17,210
+You're still getting the
+title of NavigationView
+
+179
+00:07:17,210 --> 00:07:19,200
+and if we had some buttons up here,
+
+180
+00:07:19,200 --> 00:07:21,510
+like we're gonna put that
+filter button up there
+
+181
+00:07:21,510 --> 00:07:23,210
+we are getting the benefits
+
+182
+00:07:23,210 --> 00:07:24,710
+of being a NavigationView here.
+
+183
+00:07:24,710 --> 00:07:26,650
+And then inside that
+navigation is this FlightList.
+
+184
+00:07:26,650 --> 00:07:29,790
+This FlightList is this View right here.
+
+185
+00:07:29,790 --> 00:07:32,036
+Another really simple little View.
+
+186
+00:07:32,036 --> 00:07:34,261
+All it does is have a List
+
+187
+00:07:34,261 --> 00:07:36,821
+that's ForEach through all the flights
+
+188
+00:07:36,821 --> 00:07:39,610
+and it uses this FlightListEntry View
+
+189
+00:07:39,610 --> 00:07:43,880
+to show each of the
+things in the flight here.
+
+190
+00:07:43,880 --> 00:07:46,040
+So this is the FlightListEntry
+
+191
+00:07:46,040 --> 00:07:49,830
+is showing you all this stuff in each row.
+
+192
+00:07:49,830 --> 00:07:51,430
+So let's take a look at FlightListEntry,
+
+193
+00:07:51,430 --> 00:07:53,100
+which is this View right here.
+
+194
+00:07:53,100 --> 00:07:55,270
+It's also simple little View.
+
+195
+00:07:55,270 --> 00:07:58,276
+It's just a VStack with
+the name of the flight,
+
+196
+00:07:58,276 --> 00:08:03,276
+like United 245, when it arrives
+and where it's coming from.
+
+197
+00:08:03,620 --> 00:08:04,453
+And that's it.
+
+198
+00:08:04,453 --> 00:08:05,672
+That's the entirety of FlightListEntry.
+
+199
+00:08:05,672 --> 00:08:07,540
+All that's happening down here
+
+200
+00:08:07,540 --> 00:08:10,070
+is where it's calculating
+Strings for all those things,
+
+201
+00:08:10,070 --> 00:08:12,490
+the name, the arrival and the origin.
+
+202
+00:08:12,490 --> 00:08:14,357
+Now, one thing that's
+interesting about FlightListEntry
+
+203
+00:08:14,357 --> 00:08:18,040
+is it has two ViewModels here.
+
+204
+00:08:18,040 --> 00:08:19,891
+Each of these ViewModels represent
+
+205
+00:08:19,891 --> 00:08:23,240
+either all the airports
+or all the airlines
+
+206
+00:08:23,240 --> 00:08:25,300
+that my app knows about.
+
+207
+00:08:25,300 --> 00:08:26,870
+So as I'm using my app,
+
+208
+00:08:26,870 --> 00:08:29,922
+it's finding out about more
+and more airports and airlines,
+
+209
+00:08:29,922 --> 00:08:32,260
+and it's asking FlightAware about them.
+
+210
+00:08:32,260 --> 00:08:34,760
+What's the name of them and where are they
+
+211
+00:08:34,760 --> 00:08:36,290
+and things like that.
+
+212
+00:08:36,290 --> 00:08:38,197
+And that information is all coming back.
+
+213
+00:08:38,197 --> 00:08:42,870
+And these are just ObservableObjects
+
+214
+00:08:42,870 --> 00:08:44,340
+that when the information changes,
+
+215
+00:08:44,340 --> 00:08:46,640
+they do, their objectWillChange.send()
+
+216
+00:08:46,640 --> 00:08:49,460
+and they update and cause
+things like this to redraw
+
+217
+00:08:49,460 --> 00:08:53,340
+with the proper information
+of the name of the airline,
+
+218
+00:08:53,340 --> 00:08:55,840
+or the name of the airport.
+
+219
+00:08:55,840 --> 00:08:58,200
+So that's all that's going
+on here in FlightListEntry.
+
+220
+00:08:58,200 --> 00:09:00,052
+So this is a View like you're used to
+
+221
+00:09:00,052 --> 00:09:02,680
+with a ViewModel, has two ViewModels.
+
+222
+00:09:02,680 --> 00:09:05,180
+It's perfectly fine for a View
+to have multiple ViewModels
+
+223
+00:09:05,180 --> 00:09:06,720
+as we'll see next week.
+
+224
+00:09:06,720 --> 00:09:07,884
+And it just takes any flight.
+
+225
+00:09:07,884 --> 00:09:09,150
+One of these FAFlights
+
+226
+00:09:10,430 --> 00:09:14,120
+and this FAFlight comes
+back from FlightAware.
+
+227
+00:09:14,120 --> 00:09:15,140
+We can take a look at that.
+
+228
+00:09:15,140 --> 00:09:17,010
+Here's all the code for
+FlightAware in here.
+
+229
+00:09:17,010 --> 00:09:18,165
+You can go look at it later.
+
+230
+00:09:18,165 --> 00:09:19,489
+But an FAFlight just has things
+
+231
+00:09:19,489 --> 00:09:21,260
+like the identity of the flight
+
+232
+00:09:21,260 --> 00:09:22,920
+and what aircraft is being used,
+
+233
+00:09:22,920 --> 00:09:26,670
+the destination and origin cities,
+
+234
+00:09:26,670 --> 00:09:27,960
+has some little functions.
+
+235
+00:09:27,960 --> 00:09:31,150
+Notice that I made FAFlight
+to be Codeable and Hashable
+
+236
+00:09:31,150 --> 00:09:33,090
+and Identifiable and Comparable
+
+237
+00:09:33,090 --> 00:09:34,646
+and CustomStringConvertible.
+
+238
+00:09:34,646 --> 00:09:36,750
+So there's a lot of things I made it be.
+
+239
+00:09:36,750 --> 00:09:39,040
+You know what these things are.
+
+240
+00:09:39,040 --> 00:09:40,580
+Comparable is an interesting one.
+
+241
+00:09:40,580 --> 00:09:43,390
+This is the Comparable
+protocol right here.
+
+242
+00:09:43,390 --> 00:09:45,520
+It just lets you compare two things
+
+243
+00:09:45,520 --> 00:09:46,890
+to see if they're less than.
+
+244
+00:09:46,890 --> 00:09:48,540
+This is a nice one to implement.
+
+245
+00:09:48,540 --> 00:09:51,610
+I'm comparing them by arrival dates,
+
+246
+00:09:51,610 --> 00:09:54,570
+which is how we usually
+wanna sort flights.
+
+247
+00:09:54,570 --> 00:09:55,520
+And one thing that's really nice
+
+248
+00:09:55,520 --> 00:09:56,970
+about implementing Comparable
+
+249
+00:09:56,970 --> 00:09:59,220
+is that the Array method sorted
+
+250
+00:09:59,220 --> 00:10:02,560
+will work on an Array of FAFlights here
+
+251
+00:10:02,560 --> 00:10:03,678
+without any arguments.
+
+252
+00:10:03,678 --> 00:10:07,810
+And it's just gonna use
+Comparable to compare the flights.
+
+253
+00:10:07,810 --> 00:10:10,260
+And then this other one up
+here, CustomStringConvertible.
+
+254
+00:10:10,260 --> 00:10:12,160
+Also a very interesting one to implement.
+
+255
+00:10:12,160 --> 00:10:14,710
+That is this var description.
+
+256
+00:10:14,710 --> 00:10:17,640
+If you implement
+CustomStringConvertible up here
+
+257
+00:10:17,640 --> 00:10:20,130
+and you provide this var description,
+
+258
+00:10:20,130 --> 00:10:22,184
+then you can say what happens
+
+259
+00:10:22,184 --> 00:10:24,956
+when this object, a flight object,
+
+260
+00:10:24,956 --> 00:10:28,440
+gets put into a String with
+backslash, open parentheses
+
+261
+00:10:28,440 --> 00:10:30,360
+closed parentheses, right?
+
+262
+00:10:30,360 --> 00:10:33,830
+Normally that shows something
+that Swift generates about it,
+
+263
+00:10:33,830 --> 00:10:35,146
+but you can have it say something
+
+264
+00:10:35,146 --> 00:10:38,356
+that is more easy for you to understand.
+
+265
+00:10:38,356 --> 00:10:41,840
+Here I just identify my
+flight with identifier
+
+266
+00:10:41,840 --> 00:10:44,802
+and its departure and arrival
+information, et cetera.
+
+267
+00:10:44,802 --> 00:10:48,783
+So that if I print one of these
+FAFlights, it looks nicer.
+
+268
+00:10:50,230 --> 00:10:51,340
+So that's our FAFlight.
+
+269
+00:10:51,340 --> 00:10:53,770
+That's essentially what's being drawn
+
+270
+00:10:53,770 --> 00:10:56,330
+in each of those FlightList entries.
+
+271
+00:10:56,330 --> 00:10:58,850
+If we back up here to the FlightList,
+
+272
+00:10:58,850 --> 00:11:01,350
+so this is the entire list over here.
+
+273
+00:11:01,350 --> 00:11:04,300
+It's this View that is this whole list
+
+274
+00:11:04,300 --> 00:11:05,525
+including all of these things,
+
+275
+00:11:05,525 --> 00:11:08,240
+it has a ViewModel as well, FlightFetcher,
+
+276
+00:11:08,240 --> 00:11:09,500
+which is a different thing.
+
+277
+00:11:09,500 --> 00:11:11,300
+Now FlightFetcher is a
+very simple ViewModel.
+
+278
+00:11:11,300 --> 00:11:12,766
+Let's take a look at it.
+
+279
+00:11:12,766 --> 00:11:16,068
+It essentially takes something
+called a FlightSearch,
+
+280
+00:11:16,068 --> 00:11:20,030
+which are search parameters for
+the list of flights to show.
+
+281
+00:11:20,030 --> 00:11:21,820
+And this FlightSearch
+
+282
+00:11:21,820 --> 00:11:24,339
+is a simple little struct right here
+
+283
+00:11:24,339 --> 00:11:27,640
+that just has the destination
+airport, origin airport,
+
+284
+00:11:27,640 --> 00:11:29,290
+the airline, inTheAir.
+
+285
+00:11:29,290 --> 00:11:30,870
+If you set these things,
+
+286
+00:11:30,870 --> 00:11:32,850
+then the only thing it'll show in the list
+
+287
+00:11:32,850 --> 00:11:35,010
+is the things that match this.
+
+288
+00:11:35,010 --> 00:11:37,350
+Of course destination would be like KSFO.
+
+289
+00:11:37,350 --> 00:11:39,390
+So the list is showing thing for KSFO.
+
+290
+00:11:39,390 --> 00:11:41,906
+If I specified an origin or an airline,
+
+291
+00:11:41,906 --> 00:11:45,940
+then would only show me
+flights to SFO from that origin
+
+292
+00:11:45,940 --> 00:11:48,540
+or that are flying with that airline.
+
+293
+00:11:48,540 --> 00:11:50,429
+And inTheAir is the thing that says
+
+294
+00:11:50,429 --> 00:11:52,690
+whether or not we're showing only flights
+
+295
+00:11:52,690 --> 00:11:53,870
+that are in the air or not.
+
+296
+00:11:53,870 --> 00:11:55,210
+So this little struct
+
+297
+00:11:55,210 --> 00:11:58,410
+just essentially defines
+what search we're doing.
+
+298
+00:11:58,410 --> 00:12:01,144
+So FlightFetcher, this
+ViewModel, ObservableObject
+
+299
+00:12:01,144 --> 00:12:03,010
+takes one of those FlightSearches
+
+300
+00:12:03,010 --> 00:12:05,640
+and you can change the
+FlightSearch at any time.
+
+301
+00:12:05,640 --> 00:12:08,340
+It makes this var
+available that you can set
+
+302
+00:12:08,340 --> 00:12:09,173
+and anytime it changes,
+
+303
+00:12:09,173 --> 00:12:11,883
+it goes out to FlightAware and
+starts fetching the flight.
+
+304
+00:12:11,883 --> 00:12:13,340
+It fetches it immediately
+
+305
+00:12:13,340 --> 00:12:14,630
+and then it continues to fetch it
+
+306
+00:12:14,630 --> 00:12:18,010
+every certain amount of
+time, 30 seconds configurable
+
+307
+00:12:18,010 --> 00:12:19,190
+what you wanna do.
+
+308
+00:12:19,190 --> 00:12:20,402
+And then as the information comes back,
+
+309
+00:12:20,402 --> 00:12:24,410
+it just pops it into
+this Array of FAFlights,
+
+310
+00:12:24,410 --> 00:12:26,637
+those FAFlight things we looked at,
+
+311
+00:12:26,637 --> 00:12:29,150
+and it's just showing
+you the latest result
+
+312
+00:12:29,150 --> 00:12:30,650
+and it's @Published.
+
+313
+00:12:30,650 --> 00:12:32,627
+So of course, every time
+more results come in,
+
+314
+00:12:32,627 --> 00:12:35,269
+this thing does its
+objectWillChange.send(),
+
+315
+00:12:35,269 --> 00:12:39,160
+and our View like this
+FlightList over here
+
+316
+00:12:39,160 --> 00:12:41,140
+is gonna redraw itself.
+
+317
+00:12:41,140 --> 00:12:43,556
+You can see that I have
+this little computed var
+
+318
+00:12:43,556 --> 00:12:45,390
+in my FlightList of flights,
+
+319
+00:12:45,390 --> 00:12:46,680
+which is an Array of FAFlight.
+
+320
+00:12:46,680 --> 00:12:49,160
+That's just my ViewModel's latest.
+
+321
+00:12:49,160 --> 00:12:52,060
+It's giving me the latest
+flights from my ViewModel.
+
+322
+00:12:52,060 --> 00:12:53,550
+And that's how I'm able
+to do this ForEach.
+
+323
+00:12:53,550 --> 00:12:55,274
+So I'm just going through the flights.
+
+324
+00:12:55,274 --> 00:12:58,590
+Notice I'm using their ident,
+their identity of the flight,
+
+325
+00:12:58,590 --> 00:13:03,590
+like SWK456 would be the
+identifier of some flight
+
+326
+00:13:04,780 --> 00:13:06,900
+and I'm using it to go through
+
+327
+00:13:06,900 --> 00:13:09,000
+and put those FlightList entries together.
+
+328
+00:13:10,180 --> 00:13:13,460
+All right, so super simple little View.
+
+329
+00:13:13,460 --> 00:13:16,640
+Not much to know about here.
+
+330
+00:13:16,640 --> 00:13:19,560
+Most of the guts of this
+program is over here
+
+331
+00:13:19,560 --> 00:13:21,660
+in this FlightAware code right here
+
+332
+00:13:21,660 --> 00:13:22,680
+that's doing the fetching.
+
+333
+00:13:22,680 --> 00:13:25,427
+Again you can go take a
+look at that if you want.
+
+334
+00:13:25,427 --> 00:13:28,560
+We don't really even look
+at any of it in our code,
+
+335
+00:13:28,560 --> 00:13:29,830
+except for this FAFlight.
+
+336
+00:13:29,830 --> 00:13:31,680
+We're obviously looking at the flights
+
+337
+00:13:31,680 --> 00:13:33,023
+to see their information.
+
+338
+00:13:34,530 --> 00:13:37,260
+The airport ViewModel,
+this all airport ViewModel,
+
+339
+00:13:37,260 --> 00:13:41,100
+notice it's a shared
+instance of the ViewModel.
+
+340
+00:13:41,100 --> 00:13:43,387
+That's perfectly fine for
+one ViewModel to be shared
+
+341
+00:13:43,387 --> 00:13:44,220
+by many Views.
+
+342
+00:13:44,220 --> 00:13:46,820
+They're all looking at
+the same all airports.
+
+343
+00:13:46,820 --> 00:13:48,710
+So we can have a shared one here
+
+344
+00:13:48,710 --> 00:13:51,707
+and it can give you the codes
+of all the airports it knows,
+
+345
+00:13:51,707 --> 00:13:54,280
+and then also you can
+use a subscript on it
+
+346
+00:13:54,280 --> 00:13:56,090
+with giving it to certain airport,
+
+347
+00:13:56,090 --> 00:13:57,840
+to get the info that comes back.
+
+348
+00:13:57,840 --> 00:14:00,750
+This airport info is
+down here and FlightAware
+
+349
+00:14:00,750 --> 00:14:03,200
+it's what comes back from FlightAware.
+
+350
+00:14:03,200 --> 00:14:04,980
+Just things like the name of the airport
+
+351
+00:14:04,980 --> 00:14:07,840
+and where it's located, things like that.
+
+352
+00:14:07,840 --> 00:14:09,147
+And similar one for airlines here,
+
+353
+00:14:09,147 --> 00:14:11,110
+just another ObservableObject.
+
+354
+00:14:11,110 --> 00:14:12,230
+Lets you get all the airline info.
+
+355
+00:14:12,230 --> 00:14:15,852
+So we only use these few Models here
+
+356
+00:14:15,852 --> 00:14:17,710
+when we want to find out information
+
+357
+00:14:17,710 --> 00:14:19,870
+about airports and
+airlines, which is rare.
+
+358
+00:14:19,870 --> 00:14:21,186
+Like we're doing it down here.
+
+359
+00:14:21,186 --> 00:14:22,489
+Of course, in our FlightListEntry,
+
+360
+00:14:22,489 --> 00:14:25,430
+we wanna find out the origin airport.
+
+361
+00:14:25,430 --> 00:14:29,187
+We're using this allAirports
+here to find out what that is
+
+362
+00:14:29,187 --> 00:14:31,260
+and the airline that we're flying on
+
+363
+00:14:31,260 --> 00:14:33,850
+obviously we're going to get its name here
+
+364
+00:14:33,850 --> 00:14:37,270
+in the name of the flight
+that we have right here,
+
+365
+00:14:37,270 --> 00:14:40,700
+like United 2828, American Airlines 2248.
+
+366
+00:14:40,700 --> 00:14:42,390
+We wanna put the name of the airline.
+
+367
+00:14:42,390 --> 00:14:43,690
+So we can do that as well.
+
+368
+00:14:45,340 --> 00:14:49,007
+Okay, so now that's all there
+is to know about Enroute.
+
+369
+00:14:49,007 --> 00:14:50,748
+You know how Enroute works.
+
+370
+00:14:50,748 --> 00:14:55,550
+And what we're gonna do today
+is add a little filter UI
+
+371
+00:14:55,550 --> 00:14:58,420
+so that we can filter through this list.
+
+372
+00:14:58,420 --> 00:15:00,460
+And we're gonna need a Picker to do that
+
+373
+00:15:00,460 --> 00:15:03,530
+'cause we're gonna be picking
+airports, picking airlines,
+
+374
+00:15:03,530 --> 00:15:04,363
+things like that.
+
+375
+00:15:04,363 --> 00:15:06,013
+Picker is great for that.
+
+376
+00:15:06,013 --> 00:15:07,583
+This is also a great opportunity
+
+377
+00:15:07,583 --> 00:15:12,060
+to review modal sheets, how
+we put a modal sheet up.
+
+378
+00:15:12,060 --> 00:15:14,100
+So let's first of all, just put the code
+
+379
+00:15:14,100 --> 00:15:16,430
+in our base Enroute View here
+
+380
+00:15:16,430 --> 00:15:18,460
+that adds a little filter button
+
+381
+00:15:18,460 --> 00:15:20,744
+to the upper right corner of it.
+
+382
+00:15:20,744 --> 00:15:22,777
+And then use that filter button
+
+383
+00:15:22,777 --> 00:15:24,670
+will bring up this modal sheet.
+
+384
+00:15:24,670 --> 00:15:25,930
+So this is all review.
+
+385
+00:15:25,930 --> 00:15:27,280
+We already know how to do this.
+
+386
+00:15:27,280 --> 00:15:31,990
+I'm gonna add that filter
+Button as a navigationBarItem.
+
+387
+00:15:31,990 --> 00:15:34,750
+I'm gonna put it on the
+trailing side actually.
+
+388
+00:15:34,750 --> 00:15:35,930
+I'm just gonna call it filter.
+
+389
+00:15:35,930 --> 00:15:37,800
+That's gonna be the name of my Button.
+
+390
+00:15:37,800 --> 00:15:41,360
+It's just gonna be a little
+computed var down here
+
+391
+00:15:41,360 --> 00:15:42,405
+that's some View.
+
+392
+00:15:42,405 --> 00:15:46,803
+We'll have it return a Button
+that says filter on it.
+
+393
+00:15:46,803 --> 00:15:50,410
+And inside here, when
+the Button is clicked,
+
+394
+00:15:50,410 --> 00:15:53,030
+we're just going to set some boolean var
+
+395
+00:15:53,030 --> 00:15:55,410
+like showFilter = true.
+
+396
+00:15:55,410 --> 00:15:58,210
+Just want to have to have a
+little bit of State for that.
+
+397
+00:15:58,210 --> 00:16:02,600
+Private var showFilter starts out false.
+
+398
+00:16:02,600 --> 00:16:04,430
+And when we set this Bool to true,
+
+399
+00:16:04,430 --> 00:16:06,610
+we're gonna have a modal sheet come up.
+
+400
+00:16:06,610 --> 00:16:09,130
+So we can say .sheet, right?
+
+401
+00:16:09,130 --> 00:16:12,430
+And we know that .sheet
+takes this isPresented,
+
+402
+00:16:12,430 --> 00:16:17,430
+which is a Binding,
+remember to this showFilter
+
+403
+00:16:17,920 --> 00:16:20,830
+so that whenever this Bool is set by us,
+
+404
+00:16:20,830 --> 00:16:22,620
+this will appear,
+
+405
+00:16:22,620 --> 00:16:25,520
+but also anytime the sheet is dismissed,
+
+406
+00:16:25,520 --> 00:16:28,053
+this will be set by the
+sheet back to false.
+
+407
+00:16:29,580 --> 00:16:32,560
+Let's just put a Text
+"Filter" on there for now.
+
+408
+00:16:32,560 --> 00:16:33,393
+the modal sheet
+
+409
+00:16:33,393 --> 00:16:35,950
+we're just gonna have it say
+the word "Filter" on there
+
+410
+00:16:35,950 --> 00:16:38,780
+just to make sure our UI is working.
+
+411
+00:16:38,780 --> 00:16:39,850
+So let's take a look at this.
+
+412
+00:16:39,850 --> 00:16:42,020
+This hopefully should
+add this filter button.
+
+413
+00:16:42,020 --> 00:16:42,989
+There it is up in the corner.
+
+414
+00:16:42,989 --> 00:16:44,857
+We've clicked filter. (cheers)
+
+415
+00:16:44,857 --> 00:16:45,950
+You got filter.
+
+416
+00:16:45,950 --> 00:16:49,120
+So this is where we're going
+to put our UI with some Pickers
+
+417
+00:16:49,120 --> 00:16:51,730
+to pick the destination airport,
+pick the origin airport,
+
+418
+00:16:51,730 --> 00:16:52,912
+pick the airline.
+
+419
+00:16:52,912 --> 00:16:55,200
+We're gonna put that all in here.
+
+420
+00:16:55,200 --> 00:16:56,969
+And then when we dismiss that,
+
+421
+00:16:56,969 --> 00:16:59,680
+it's going to update this whole thing
+
+422
+00:16:59,680 --> 00:17:03,743
+to show us just those airlines
+or origins, et cetera.
+
+423
+00:17:05,570 --> 00:17:06,403
+How are we gonna do that?
+
+424
+00:17:06,403 --> 00:17:10,660
+We obviously need some UI to
+go here, not Text("Filter").
+
+425
+00:17:10,660 --> 00:17:14,920
+We want it to be something
+like FilterFlights,
+
+426
+00:17:14,920 --> 00:17:15,796
+I'm gonna call it,
+
+427
+00:17:15,796 --> 00:17:20,796
+and it's going to have to take
+our little FlightSearch here.
+
+428
+00:17:22,170 --> 00:17:24,573
+Okay, remember that this FlightSearch
+
+429
+00:17:25,540 --> 00:17:28,940
+that we have as State in our Enroute View,
+
+430
+00:17:28,940 --> 00:17:31,120
+it's the thing that's saying
+what we're searching with.
+
+431
+00:17:31,120 --> 00:17:32,178
+'Cause we pass it to the FlightList
+
+432
+00:17:32,178 --> 00:17:35,320
+and say, hey, Mr. FlightList down here,
+
+433
+00:17:35,320 --> 00:17:36,942
+please only show me the things with this.
+
+434
+00:17:36,942 --> 00:17:39,620
+So I'm gonna filter the flights
+
+435
+00:17:39,620 --> 00:17:43,530
+by essentially editing this
+struct, changing this struct.
+
+436
+00:17:43,530 --> 00:17:46,130
+And as soon as I change this struct,
+
+437
+00:17:46,130 --> 00:17:47,593
+which is this var right here,
+
+438
+00:17:48,680 --> 00:17:49,960
+it's gonna redraw
+
+439
+00:17:49,960 --> 00:17:51,360
+and that's gonna cause the FlightList
+
+440
+00:17:51,360 --> 00:17:53,024
+to be passed a new FlightSearch
+
+441
+00:17:53,024 --> 00:17:56,930
+and it's all going to update itself.
+
+442
+00:17:56,930 --> 00:17:57,911
+So we definitely need to do that.
+
+443
+00:17:57,911 --> 00:18:01,350
+And then of course, since
+this is a presented thing
+
+444
+00:18:01,350 --> 00:18:05,743
+I'm also going to have
+isPresented passed to it as well
+
+445
+00:18:05,743 --> 00:18:06,912
+by showFilter,
+
+446
+00:18:06,912 --> 00:18:10,888
+and that will allow this
+View, this modal sheet View
+
+447
+00:18:10,888 --> 00:18:13,760
+to be able to dismiss itself.
+
+448
+00:18:13,760 --> 00:18:15,820
+Because again, not a big fan
+
+449
+00:18:15,820 --> 00:18:18,340
+of just having swipe down to dismiss,
+
+450
+00:18:18,340 --> 00:18:20,880
+be the only way to dismiss things.
+
+451
+00:18:20,880 --> 00:18:22,400
+It's nice if you have done buttons
+
+452
+00:18:22,400 --> 00:18:24,343
+and you're gonna see we're
+gonna need a Done and a Cancel
+
+453
+00:18:24,343 --> 00:18:25,423
+for this one.
+
+454
+00:18:26,310 --> 00:18:28,170
+So let's go create this View, right?
+
+455
+00:18:28,170 --> 00:18:29,240
+I just made this up.
+
+456
+00:18:29,240 --> 00:18:31,800
+So we have to go actually
+implement this FilterFlights,
+
+457
+00:18:31,800 --> 00:18:32,850
+That is a View.
+
+458
+00:18:32,850 --> 00:18:35,033
+So I'm gonna make a new SwiftUI View,
+
+459
+00:18:36,530 --> 00:18:39,240
+and I'm gonna call it FilterFlights,
+
+460
+00:18:39,240 --> 00:18:41,030
+make sure that it's in the right place.
+
+461
+00:18:41,030 --> 00:18:42,860
+Yes, I noticed some of you
+are still having a problem
+
+462
+00:18:42,860 --> 00:18:44,830
+where you're putting
+things up here in the blue.
+
+463
+00:18:44,830 --> 00:18:47,212
+We want things in the yellow there.
+
+464
+00:18:47,212 --> 00:18:48,644
+Here's FilterFlight.
+
+465
+00:18:48,644 --> 00:18:50,440
+It says, "Hello, World".
+
+466
+00:18:50,440 --> 00:18:51,350
+Now we know that our FilterFlights
+
+467
+00:18:51,350 --> 00:18:55,190
+has a couple of arguments
+here, these two Bindings,
+
+468
+00:18:55,190 --> 00:18:58,440
+so let's put those two
+Bindings in right off the bat.
+
+469
+00:18:58,440 --> 00:19:02,138
+And we know how to pass
+Bindings, @Binding to var.
+
+470
+00:19:02,138 --> 00:19:04,543
+We called one FlightSearch
+
+471
+00:19:07,174 --> 00:19:11,570
+and that is a Binding to
+a FlightSearch struct.
+
+472
+00:19:11,570 --> 00:19:14,763
+And then we have the
+Binding var isPresented,
+
+473
+00:19:14,763 --> 00:19:17,310
+which is a Binding to a Bool.
+
+474
+00:19:18,240 --> 00:19:21,012
+So now this FilterFlight
+is hooked up to that.
+
+475
+00:19:21,012 --> 00:19:23,900
+By the way, I'm gonna have
+my previews commented out
+
+476
+00:19:23,900 --> 00:19:25,030
+for now I really don't wanna deal
+
+477
+00:19:25,030 --> 00:19:27,520
+with having to try and to
+pass Bindings in my previews
+
+478
+00:19:27,520 --> 00:19:29,170
+as we saw can be done.
+
+479
+00:19:29,170 --> 00:19:31,098
+We can pass constants in here, et cetera.
+
+480
+00:19:31,098 --> 00:19:33,417
+But we're just gonna ignore that for now
+
+481
+00:19:33,417 --> 00:19:35,410
+and make this demo go a little quicker
+
+482
+00:19:35,410 --> 00:19:38,470
+'cause we're really trying
+to talk about Pickers here.
+
+483
+00:19:38,470 --> 00:19:41,630
+We have this FlightSearch passed into us.
+
+484
+00:19:41,630 --> 00:19:43,130
+Let's make sure that it's actually working
+
+485
+00:19:43,130 --> 00:19:46,480
+by having our Text here,
+say "Filter flights
+
+486
+00:19:46,480 --> 00:19:51,113
+to our \(flightSearch.destination)".
+
+487
+00:19:52,220 --> 00:19:56,240
+So if we're properly
+Binding this FlightSearch
+
+488
+00:19:56,240 --> 00:19:57,740
+back to our FlightSearch State
+
+489
+00:19:58,789 --> 00:20:01,940
+that's in our Enroute's View right here,
+
+490
+00:20:01,940 --> 00:20:02,860
+then when this print out,
+
+491
+00:20:02,860 --> 00:20:06,233
+it should print KSFO in this case.
+
+492
+00:20:09,300 --> 00:20:11,597
+Yes, sorry, FilterFlights flightSearch.
+
+493
+00:20:13,500 --> 00:20:14,990
+Put the name up here,
+
+494
+00:20:14,990 --> 00:20:19,650
+because that's the name of
+this Binding var right here.
+
+495
+00:20:19,650 --> 00:20:20,930
+So let's run this.
+
+496
+00:20:20,930 --> 00:20:24,050
+See if our filter is now
+saying FilterFlight to KSFO.
+
+497
+00:20:24,050 --> 00:20:26,151
+Hopefully it is ready, filter.
+
+498
+00:20:26,151 --> 00:20:26,984
+(cheers)
+
+499
+00:20:26,984 --> 00:20:27,817
+FilterFlight to KSFO.
+
+500
+00:20:27,817 --> 00:20:31,030
+So we are Binding our FlightSearch
+
+501
+00:20:31,030 --> 00:20:32,860
+to the one that's back in our routes.
+
+502
+00:20:32,860 --> 00:20:35,171
+And now we're really ready to proceed here
+
+503
+00:20:35,171 --> 00:20:39,670
+to use some Pickers and
+stuff to build that.
+
+504
+00:20:39,670 --> 00:20:42,540
+When I go in here and
+I start changing things
+
+505
+00:20:42,540 --> 00:20:44,650
+like let's say I change the destination.
+
+506
+00:20:44,650 --> 00:20:47,690
+If I change the destination SFO over here
+
+507
+00:20:47,690 --> 00:20:50,510
+to be somewhere else, Las Vegas or LAX
+
+508
+00:20:50,510 --> 00:20:51,664
+or Newark or somewhere,
+
+509
+00:20:51,664 --> 00:20:55,550
+it's going to cause this whole
+thing over here to refetch.
+
+510
+00:20:55,550 --> 00:20:58,157
+My FlightAware fetch is gonna
+have to get a whole new thing.
+
+511
+00:20:58,157 --> 00:21:01,400
+So I'm not sure that as
+I'm choosing it over here
+
+512
+00:21:01,400 --> 00:21:04,170
+in my Picker or whatever I want behind
+
+513
+00:21:04,170 --> 00:21:05,930
+this thing constantly updating.
+
+514
+00:21:05,930 --> 00:21:09,300
+And that's what would happen
+if we made FilterFlight,
+
+515
+00:21:09,300 --> 00:21:11,540
+this sheet, be like our PaletteEditor.
+
+516
+00:21:11,540 --> 00:21:14,375
+If we remember our
+PaletteEditor in Emoji Art,
+
+517
+00:21:14,375 --> 00:21:17,170
+as we changed the name or added emoji,
+
+518
+00:21:17,170 --> 00:21:19,973
+it was actually changing the
+palette back in our document.
+
+519
+00:21:19,973 --> 00:21:22,340
+That was live editing.
+
+520
+00:21:22,340 --> 00:21:27,340
+Our modal sheet was editing
+the thing it was editing live.
+
+521
+00:21:27,500 --> 00:21:28,426
+So it was changing live.
+
+522
+00:21:28,426 --> 00:21:30,270
+I don't think we want that here.
+
+523
+00:21:30,270 --> 00:21:33,170
+Here I think we want a "Done" "Cancel".
+
+524
+00:21:33,170 --> 00:21:34,422
+We talked about this in the hints
+
+525
+00:21:34,422 --> 00:21:37,210
+of the homework assignment as well.
+
+526
+00:21:37,210 --> 00:21:39,030
+Sometimes you want live editing,
+
+527
+00:21:39,030 --> 00:21:40,947
+sometimes you want "Done" "Cancel".
+
+528
+00:21:40,947 --> 00:21:42,490
+And here I think you want "Done" "Cancel"
+
+529
+00:21:42,490 --> 00:21:46,280
+because you might play around
+with what destination you want
+
+530
+00:21:46,280 --> 00:21:49,470
+then once you decide, okay,
+"Done", now we'll do the fetch.
+
+531
+00:21:49,470 --> 00:21:52,370
+We don't wanna be wasting
+money and internet resources
+
+532
+00:21:52,370 --> 00:21:55,480
+by fetching things that we're just picking
+
+533
+00:21:55,480 --> 00:21:57,840
+on the way to deciding what we want.
+
+534
+00:21:57,840 --> 00:21:59,730
+So we're gonna do a "Done" "Cancel" thing.
+
+535
+00:21:59,730 --> 00:22:02,120
+So let's put a "Done" "Cancel" on here.
+
+536
+00:22:02,120 --> 00:22:03,550
+Okay, I wanna put a "Done" and a "Cancel".
+
+537
+00:22:03,550 --> 00:22:06,480
+Now we did the "Done" Button in Emoji Art
+
+538
+00:22:06,480 --> 00:22:08,448
+by creating our own little title here.
+
+539
+00:22:08,448 --> 00:22:11,317
+I'm gonna actually
+draft off NavigationView
+
+540
+00:22:11,317 --> 00:22:13,640
+because we know that in NavigationView,
+
+541
+00:22:13,640 --> 00:22:14,473
+it puts a title up here
+
+542
+00:22:14,473 --> 00:22:17,471
+and it has room for two
+Buttons, like "Done" "Cancel".
+
+543
+00:22:17,471 --> 00:22:19,350
+So I'm gonna put this whole thing
+
+544
+00:22:19,350 --> 00:22:21,387
+in a NavigationView so I can get those.
+
+545
+00:22:21,387 --> 00:22:23,810
+You're gonna see that
+I need this whole thing
+
+546
+00:22:23,810 --> 00:22:25,790
+to be in a NavigationView anyway.
+
+547
+00:22:25,790 --> 00:22:30,280
+So just a little bit
+foresight going on here,
+
+548
+00:22:30,280 --> 00:22:34,050
+but it's not a bad way
+to get Buttons in a title
+
+549
+00:22:34,050 --> 00:22:34,980
+is to put things in a NavigationView,
+
+550
+00:22:34,980 --> 00:22:37,910
+even if you don't plan to navigate,
+
+551
+00:22:37,910 --> 00:22:39,520
+which I don't really plan to navigate,
+
+552
+00:22:39,520 --> 00:22:42,260
+but you're gonna see I'm gonna
+end up needing to navigate
+
+553
+00:22:42,260 --> 00:22:43,483
+in this modal sheet.
+
+554
+00:22:44,450 --> 00:22:46,360
+So let's put that "Done"
+"Cancel" in there.
+
+555
+00:22:46,360 --> 00:22:47,370
+Really easy to do.
+
+556
+00:22:47,370 --> 00:22:50,037
+I'm just gonna say .navigationBarItems.
+
+557
+00:22:51,560 --> 00:22:55,552
+I'm gonna put on the leading
+side, a "Cancel" button
+
+558
+00:22:55,552 --> 00:22:59,110
+and on the trailing side, a "Done" button.
+
+559
+00:22:59,110 --> 00:23:00,940
+Let's go ahead and put
+a title on here too.
+
+560
+00:23:00,940 --> 00:23:05,940
+navigationBarTitle and call
+this the "Filter Flights" sheet.
+
+561
+00:23:08,590 --> 00:23:09,423
+That'd be good.
+
+562
+00:23:09,423 --> 00:23:10,800
+So we need "Cancel" and "Done".
+
+563
+00:23:10,800 --> 00:23:11,890
+Those are just vars.
+
+564
+00:23:11,890 --> 00:23:14,710
+So cancel is some View.
+
+565
+00:23:14,710 --> 00:23:17,819
+It's a Button that says "Cancel".
+
+566
+00:23:17,819 --> 00:23:21,292
+And when this is pressed
+
+567
+00:23:21,292 --> 00:23:26,292
+is going to set our isPresented to false.
+
+568
+00:23:26,410 --> 00:23:29,970
+This is again, we pass our
+isPresented in as a Binding
+
+569
+00:23:29,970 --> 00:23:31,390
+so that we can dismiss ourselves
+
+570
+00:23:31,390 --> 00:23:33,680
+and certainly cancel wants to do that,
+
+571
+00:23:33,680 --> 00:23:36,180
+and done, it's very similar, right?
+
+572
+00:23:36,180 --> 00:23:37,013
+Here's done.
+
+573
+00:23:37,013 --> 00:23:38,289
+It says "Done".
+
+574
+00:23:38,289 --> 00:23:41,170
+And it's gonna also cancel but right here,
+
+575
+00:23:41,170 --> 00:23:45,430
+it's going to have to
+make the actual changes
+
+576
+00:23:45,430 --> 00:23:48,870
+because "Done" means I'm done, go do it,
+
+577
+00:23:48,870 --> 00:23:50,880
+do the fetch and all that stuff.
+
+578
+00:23:50,880 --> 00:23:54,210
+"Cancel" means just cancel
+me and don't do the changes.
+
+579
+00:23:54,210 --> 00:23:55,970
+So we'll have to talk about
+how we're gonna do this
+
+580
+00:23:55,970 --> 00:23:57,370
+in a moment.
+
+581
+00:23:57,370 --> 00:24:00,050
+All right, so we have
+this navigation bar stuff,
+
+582
+00:24:00,050 --> 00:24:04,234
+but we need to put it in a
+NavigationView of course.
+
+583
+00:24:04,234 --> 00:24:05,483
+I think this will work.
+
+584
+00:24:07,160 --> 00:24:07,993
+There we go.
+
+585
+00:24:07,993 --> 00:24:08,826
+Let's run.
+
+586
+00:24:11,370 --> 00:24:12,540
+There we go, filter.
+
+587
+00:24:12,540 --> 00:24:13,570
+(cheers)
+
+588
+00:24:13,570 --> 00:24:14,403
+There it is.
+
+589
+00:24:14,403 --> 00:24:15,940
+There's our FilterFlights to SFO.
+
+590
+00:24:15,940 --> 00:24:17,550
+We're in and NavigationView right here,
+
+591
+00:24:17,550 --> 00:24:18,990
+we've got Cancel and Done.
+
+592
+00:24:18,990 --> 00:24:20,442
+We can cancel that's good.
+
+593
+00:24:20,442 --> 00:24:23,050
+We can also go back here and hit Done.
+
+594
+00:24:23,050 --> 00:24:23,991
+That's working as well.
+
+595
+00:24:23,991 --> 00:24:26,425
+But of course we're not
+doing any actual editing
+
+596
+00:24:26,425 --> 00:24:30,570
+of our FlightSearch struct,
+which is what this is all about.
+
+597
+00:24:30,570 --> 00:24:32,163
+We wanna edit this struct.
+
+598
+00:24:34,030 --> 00:24:37,003
+How are we gonna do this
+"Done" "Cancel" business?
+
+599
+00:24:37,003 --> 00:24:40,262
+One simple way to do "Done" "Cancel"
+
+600
+00:24:40,262 --> 00:24:44,010
+is to have your own private State here
+
+601
+00:24:44,950 --> 00:24:47,940
+which is a draft of what
+you're trying to build.
+
+602
+00:24:47,940 --> 00:24:50,439
+So we're trying to edit a FlightSearch
+
+603
+00:24:50,439 --> 00:24:53,120
+and we're just gonna create a draft of it.
+
+604
+00:24:53,120 --> 00:24:56,600
+We'll have our entire UI edit this draft
+
+605
+00:24:56,600 --> 00:24:57,700
+and then at the end,
+
+606
+00:24:57,700 --> 00:24:59,620
+when it's time to make the actual changes,
+
+607
+00:24:59,620 --> 00:25:04,620
+we'll say self.flightSearch = self.draft.
+
+608
+00:25:06,200 --> 00:25:08,970
+In other words, we'll
+copy into the Binding,
+
+609
+00:25:08,970 --> 00:25:12,022
+the bound value, this our drafts value.
+
+610
+00:25:12,022 --> 00:25:14,034
+And FlightSearch is a struct.
+
+611
+00:25:14,034 --> 00:25:16,400
+You see right here, it's a struct.
+
+612
+00:25:16,400 --> 00:25:20,060
+So when we say equals it copies, right?
+
+613
+00:25:20,060 --> 00:25:20,893
+Structs get copied.
+
+614
+00:25:20,893 --> 00:25:23,360
+So it will be copying what's in this draft
+
+615
+00:25:23,360 --> 00:25:25,363
+back into this flightSearch here.
+
+616
+00:25:26,360 --> 00:25:28,100
+So that works on the way out.
+
+617
+00:25:28,100 --> 00:25:29,540
+What about on the way in?
+
+618
+00:25:29,540 --> 00:25:31,886
+'Cause we essentially
+wanna say something like
+
+619
+00:25:31,886 --> 00:25:35,390
+set this to the flightSearch, okay?
+
+620
+00:25:35,390 --> 00:25:37,460
+I want my draft to start out
+
+621
+00:25:37,460 --> 00:25:39,570
+with whatever this value
+of this Binding is.
+
+622
+00:25:39,570 --> 00:25:41,760
+But of course we know we can't do this
+
+623
+00:25:41,760 --> 00:25:44,650
+because we're in the
+initialization phase right here,
+
+624
+00:25:44,650 --> 00:25:46,510
+and this is not initialized yet
+
+625
+00:25:46,510 --> 00:25:48,570
+it's being passed into us
+
+626
+00:25:48,570 --> 00:25:50,230
+so we can't do this right?
+
+627
+00:25:50,230 --> 00:25:52,460
+Can't use within property initializer.
+
+628
+00:25:52,460 --> 00:25:54,390
+So how do we set something like this?
+
+629
+00:25:54,390 --> 00:25:55,960
+We need an init.
+
+630
+00:25:56,980 --> 00:25:58,770
+If we're gonna have an init,
+
+631
+00:25:58,770 --> 00:26:00,370
+it needs to have the same arguments
+
+632
+00:26:00,370 --> 00:26:02,660
+that this thing has over here.
+
+633
+00:26:02,660 --> 00:26:05,440
+So we need the flightSearch
+and isPresented
+
+634
+00:26:05,440 --> 00:26:06,370
+as arguments to our init.
+
+635
+00:26:06,370 --> 00:26:10,370
+So that interesting
+'cause these are Bindings.
+
+636
+00:26:10,370 --> 00:26:11,506
+So how are we gonna have
+
+637
+00:26:11,506 --> 00:26:14,847
+a FlightSearch argument here to our init?
+
+638
+00:26:14,847 --> 00:26:18,270
+It needs to be a Binding, right?
+
+639
+00:26:18,270 --> 00:26:19,776
+Somehow it needs to be a Binding here.
+
+640
+00:26:19,776 --> 00:26:22,340
+We're not passing a FlightSearch in here.
+
+641
+00:26:22,340 --> 00:26:24,367
+We're actually passing a Binding to one.
+
+642
+00:26:24,367 --> 00:26:26,708
+Well, remember back from lecture nine,
+
+643
+00:26:26,708 --> 00:26:29,010
+we talked about what these things are.
+
+644
+00:26:29,010 --> 00:26:31,210
+These creates struct, okay?
+
+645
+00:26:31,210 --> 00:26:33,420
+These property wrappers like @Binding
+
+646
+00:26:33,420 --> 00:26:35,810
+and @State, they create structs.
+
+647
+00:26:35,810 --> 00:26:38,790
+This creates a Binding struct.
+
+648
+00:26:38,790 --> 00:26:42,980
+So we can access that actual struct
+
+649
+00:26:42,980 --> 00:26:45,330
+using the underbar version of this.
+
+650
+00:26:45,330 --> 00:26:47,950
+And remember, there's also
+the non-underbar version.
+
+651
+00:26:47,950 --> 00:26:51,000
+That's the wrapped value of this struct,
+
+652
+00:26:51,000 --> 00:26:53,230
+and then there's the
+dollar version of this.
+
+653
+00:26:53,230 --> 00:26:56,010
+That's the projected value of this struct.
+
+654
+00:26:56,010 --> 00:26:57,924
+Well, here we're in initialization.
+
+655
+00:26:57,924 --> 00:27:01,930
+So we really can't use the
+projected and wrapped values
+
+656
+00:27:01,930 --> 00:27:04,940
+because this needs to
+be initialized, right?
+
+657
+00:27:04,940 --> 00:27:07,300
+Because we're in init, these
+have not been initialized.
+
+658
+00:27:07,300 --> 00:27:08,950
+We are initializing these.
+
+659
+00:27:08,950 --> 00:27:11,060
+That's what we're supposed
+to be doing in init.
+
+660
+00:27:11,060 --> 00:27:12,291
+That's what init's all about.
+
+661
+00:27:12,291 --> 00:27:16,520
+So we want to actually set this struct.
+
+662
+00:27:16,520 --> 00:27:18,843
+We're gonna say _flightSearch
+
+663
+00:27:20,090 --> 00:27:22,270
+equals some struct.
+
+664
+00:27:22,270 --> 00:27:24,890
+So we need a Binding struct right here.
+
+665
+00:27:24,890 --> 00:27:28,234
+So we're gonna force a Binding
+struct to be sent to us.
+
+666
+00:27:28,234 --> 00:27:33,210
+And Binding this struct is a
+generic, it has a don't-care
+
+667
+00:27:33,210 --> 00:27:36,250
+which is the type of the
+thing it's Binding to.
+
+668
+00:27:36,250 --> 00:27:38,946
+So we are Binding to a FlightSearch here.
+
+669
+00:27:38,946 --> 00:27:41,919
+So the argument here is
+Binding to a FlightSearch
+
+670
+00:27:41,919 --> 00:27:43,826
+and now can I say _flightSearch,
+
+671
+00:27:43,826 --> 00:27:46,788
+which is the actual
+struct, the Binding struct
+
+672
+00:27:46,788 --> 00:27:50,910
+equals that Binding struct
+that's being passed to us.
+
+673
+00:27:50,910 --> 00:27:54,340
+So this is how you can have init
+
+674
+00:27:54,340 --> 00:27:57,860
+where some of the vars you
+need to set are Bindings.
+
+675
+00:27:57,860 --> 00:28:00,000
+I just declare the type of the argument
+
+676
+00:28:00,000 --> 00:28:02,630
+to be a Binding to the var's type
+
+677
+00:28:02,630 --> 00:28:06,120
+and then use underbar to
+set the actual struct here.
+
+678
+00:28:06,120 --> 00:28:10,200
+And we can do the same
+thing with isPresented here.
+
+679
+00:28:10,200 --> 00:28:12,690
+That is a Binding to a Bool.
+
+680
+00:28:12,690 --> 00:28:16,559
+And so we can also here say _isPresented
+
+681
+00:28:16,559 --> 00:28:21,060
+equals isPresented, the
+argument to this function.
+
+682
+00:28:21,060 --> 00:28:22,120
+So how about the draft?
+
+683
+00:28:22,120 --> 00:28:23,330
+How do we set the draft?
+
+684
+00:28:23,330 --> 00:28:25,159
+We kinda like to say self.draft
+
+685
+00:28:25,159 --> 00:28:27,441
+equals this flightSearch.
+
+686
+00:28:27,441 --> 00:28:29,602
+And that's what we're trying to do,
+
+687
+00:28:29,602 --> 00:28:31,340
+but we can't really do this.
+
+688
+00:28:31,340 --> 00:28:34,538
+These two vars are not of the same type.
+
+689
+00:28:34,538 --> 00:28:38,660
+This right here is a
+Binding to a FlightSearch,
+
+690
+00:28:38,660 --> 00:28:39,740
+that's its type,
+
+691
+00:28:39,740 --> 00:28:42,780
+and this is the wrapped value of this,
+
+692
+00:28:42,780 --> 00:28:44,410
+which is a FlightSearch.
+
+693
+00:28:44,410 --> 00:28:45,243
+So that's why it's saying
+
+694
+00:28:45,243 --> 00:28:46,750
+you can't assign a
+Binding to a FlightSearch
+
+695
+00:28:46,750 --> 00:28:49,690
+to a FlightSearch, right?
+
+696
+00:28:49,690 --> 00:28:53,604
+This FlightSearch is not
+the same type as this draft
+
+697
+00:28:53,604 --> 00:28:57,810
+'cause we're doing the
+draft wrapped value here.
+
+698
+00:28:57,810 --> 00:28:59,770
+So we're gonna have to
+initialize this State
+
+699
+00:28:59,770 --> 00:29:02,110
+like we learned to do last time
+
+700
+00:29:02,110 --> 00:29:06,700
+by sending its _draft equal to a State
+
+701
+00:29:06,700 --> 00:29:09,310
+with some initial wrapped value.
+
+702
+00:29:09,310 --> 00:29:11,070
+And what is the wrap value?
+
+703
+00:29:11,070 --> 00:29:16,070
+Well, interestingly,
+it's not the flightSearch
+
+704
+00:29:16,440 --> 00:29:19,450
+because the flightSearch
+here is this Binding.
+
+705
+00:29:19,450 --> 00:29:23,440
+It's the flightSearch's
+wrapped value, right?
+
+706
+00:29:23,440 --> 00:29:27,320
+A Bindings wrap value is
+the thing it's bound to.
+
+707
+00:29:27,320 --> 00:29:29,160
+So flightSearch's wrap value
+
+708
+00:29:29,160 --> 00:29:32,150
+is the FlightSearch that it's bound to.
+
+709
+00:29:32,150 --> 00:29:35,009
+So here I'm creating this draft state
+
+710
+00:29:35,009 --> 00:29:37,160
+initializing its struct
+
+711
+00:29:37,160 --> 00:29:39,800
+by creating a struct, a State struct,
+
+712
+00:29:39,800 --> 00:29:41,075
+whose wrapped value is the same as
+
+713
+00:29:41,075 --> 00:29:43,860
+the flightSearch's wrapped value.
+
+714
+00:29:43,860 --> 00:29:46,500
+This is why I spent so
+much time in lecture 9
+
+715
+00:29:46,500 --> 00:29:48,910
+going over what these
+property wrappers really are
+
+716
+00:29:48,910 --> 00:29:52,063
+so that you'd hopefully
+understand code like this.
+
+717
+00:29:53,200 --> 00:29:55,749
+We've copied this draft
+in from our FlightSearch.
+
+718
+00:29:55,749 --> 00:29:58,640
+Let's double check that we
+have by going to our body.
+
+719
+00:29:58,640 --> 00:30:00,932
+And instead of showing our
+flightSearch's destination,
+
+720
+00:30:00,932 --> 00:30:04,420
+let's show our draft's destination.
+
+721
+00:30:04,420 --> 00:30:06,909
+So if this copy has happened correctly,
+
+722
+00:30:06,909 --> 00:30:10,220
+then this draft will be showing properly.
+
+723
+00:30:10,220 --> 00:30:11,270
+So let's take a look.
+
+724
+00:30:12,800 --> 00:30:14,190
+All right, filtering, here it is.
+
+725
+00:30:14,190 --> 00:30:15,840
+Oh, filter flights to SFO.
+
+726
+00:30:15,840 --> 00:30:18,020
+That's our draft destination, excellent.
+
+727
+00:30:18,020 --> 00:30:21,412
+So it obviously copied
+our flightSearch in.
+
+728
+00:30:21,412 --> 00:30:23,482
+So now we're actually almost done.
+
+729
+00:30:23,482 --> 00:30:26,080
+All we need to do going forward here
+
+730
+00:30:26,080 --> 00:30:29,330
+is change our UI in here
+from just being a TextField,
+
+731
+00:30:29,330 --> 00:30:31,350
+to being a bunch of Pickers and things
+
+732
+00:30:31,350 --> 00:30:33,350
+that are editing this draft.
+
+733
+00:30:33,350 --> 00:30:35,720
+We're automatically gonna
+copy that draft back out
+
+734
+00:30:35,720 --> 00:30:37,010
+if we click the "Done" button,
+
+735
+00:30:37,010 --> 00:30:38,390
+we'll do nothing if we hit "Cancel",
+
+736
+00:30:38,390 --> 00:30:39,841
+so the draft will be ignored,
+
+737
+00:30:39,841 --> 00:30:43,920
+but this makes it really easy
+for us to implement in here.
+
+738
+00:30:43,920 --> 00:30:45,520
+So let's do our first Picker.
+
+739
+00:30:45,520 --> 00:30:47,740
+Let's do draft destination.
+
+740
+00:30:47,740 --> 00:30:51,040
+Let's add a Picker that lets
+us choose a new destination
+
+741
+00:30:51,040 --> 00:30:52,853
+for our search.
+
+742
+00:30:53,850 --> 00:30:56,400
+Picker has a few constructors,
+
+743
+00:30:56,400 --> 00:30:58,039
+but we're almost always going to use
+
+744
+00:30:58,039 --> 00:31:00,510
+this second one right here
+
+745
+00:31:00,510 --> 00:31:03,730
+that takes a title of
+either a LocalizedStringKey
+
+746
+00:31:03,730 --> 00:31:04,606
+or a title.
+
+747
+00:31:04,606 --> 00:31:07,345
+And you can use a Text.
+
+748
+00:31:07,345 --> 00:31:09,210
+That's what this one up here is
+
+749
+00:31:09,210 --> 00:31:12,120
+that lets you specify
+a label for the title,
+
+750
+00:31:12,120 --> 00:31:13,840
+but it's very common in Picker
+
+751
+00:31:13,840 --> 00:31:15,550
+to have the title just be a String.
+
+752
+00:31:15,550 --> 00:31:16,940
+So let's go ahead and do this one.
+
+753
+00:31:16,940 --> 00:31:19,150
+The title of this, I'm
+gonna call "Destination"
+
+754
+00:31:19,150 --> 00:31:21,752
+because I'm setting the
+destination airport here.
+
+755
+00:31:21,752 --> 00:31:24,280
+The second argument here to Picker,
+
+756
+00:31:24,280 --> 00:31:25,500
+very important one.
+
+757
+00:31:25,500 --> 00:31:27,643
+This is a Binding to the thing
+
+758
+00:31:27,643 --> 00:31:30,290
+you want to change with the Picker.
+
+759
+00:31:30,290 --> 00:31:35,290
+So for us, we wanna change
+our draft's destination.
+
+760
+00:31:35,980 --> 00:31:38,550
+That is what this Picker is trying to do,
+
+761
+00:31:38,550 --> 00:31:40,240
+choose a new destination
+
+762
+00:31:40,240 --> 00:31:42,683
+in our draft FlightSearch right here.
+
+763
+00:31:43,520 --> 00:31:45,890
+And then this last argument content
+
+764
+00:31:45,890 --> 00:31:50,890
+is the list of Views that
+are gonna be in our Picker.
+
+765
+00:31:51,800 --> 00:31:54,183
+One thing Picker,
+interesting to understand is
+
+766
+00:31:54,183 --> 00:31:57,180
+you are going to provide a list of Views.
+
+767
+00:31:57,180 --> 00:32:00,330
+That's why in Picker we're
+almost always gonna do a ForEach.
+
+768
+00:32:00,330 --> 00:32:05,330
+That's the easiest way we know
+to provide a list of Views.
+
+769
+00:32:06,010 --> 00:32:07,040
+This is a list of Views.
+
+770
+00:32:07,040 --> 00:32:11,210
+And this Picker is essentially
+picking between those Views.
+
+771
+00:32:11,210 --> 00:32:13,430
+And we're gonna show you how it determines
+
+772
+00:32:13,430 --> 00:32:14,880
+when you pick one of those Views,
+
+773
+00:32:14,880 --> 00:32:18,750
+what to update your selection to.
+
+774
+00:32:18,750 --> 00:32:21,010
+So let's get the Views first.
+
+775
+00:32:21,010 --> 00:32:22,397
+Again, we're gonna do a ForEach.
+
+776
+00:32:22,397 --> 00:32:24,810
+Now I want to be able to pick an airport.
+
+777
+00:32:24,810 --> 00:32:27,910
+So I need all my airport codes.
+
+778
+00:32:27,910 --> 00:32:30,700
+So I'm gonna using allAirports.codes.
+
+779
+00:32:30,700 --> 00:32:32,145
+We'll see how to do that in a second,
+
+780
+00:32:32,145 --> 00:32:35,150
+and this is String so I'm gonna do .self.
+
+781
+00:32:35,150 --> 00:32:37,124
+This is a ForEach after all
+
+782
+00:32:37,124 --> 00:32:40,620
+and this ForEach it's
+gonna say airport in.
+
+783
+00:32:40,620 --> 00:32:43,113
+Here let's just print out the airport.
+
+784
+00:32:44,355 --> 00:32:46,855
+These are the airport codes
+like KSFO or whatever.
+
+785
+00:32:47,810 --> 00:32:50,206
+Now how do we get this allAirports thing?
+
+786
+00:32:50,206 --> 00:32:52,050
+We're gonna have a ViewModel,
+
+787
+00:32:52,050 --> 00:32:54,470
+the same ViewModel I use down here
+
+788
+00:32:54,470 --> 00:32:57,430
+in the FlightListEntry to get allAirports,
+
+789
+00:32:57,430 --> 00:32:59,087
+this little ObservedObject,
+
+790
+00:32:59,087 --> 00:33:02,010
+I'm gonna copy and paste
+that one over to here,
+
+791
+00:33:02,010 --> 00:33:06,590
+and it's gonna be part of
+the ViewModel for this View.
+
+792
+00:33:06,590 --> 00:33:09,900
+And this var provides all the codes
+
+793
+00:33:09,900 --> 00:33:14,227
+for all the airports that
+this ViewModel has ever seen.
+
+794
+00:33:14,227 --> 00:33:15,743
+Now we're not quite done here.
+
+795
+00:33:15,743 --> 00:33:18,553
+This is making a bunch of Views
+
+796
+00:33:18,553 --> 00:33:19,830
+that are gonna be in the Picker.
+
+797
+00:33:19,830 --> 00:33:21,460
+So the Picker is gonna be able to have
+
+798
+00:33:21,460 --> 00:33:23,070
+a View for every code,
+
+799
+00:33:23,070 --> 00:33:27,470
+but how do we match this
+selection up to this View?
+
+800
+00:33:27,470 --> 00:33:29,500
+We do that with dot tag
+
+801
+00:33:29,500 --> 00:33:32,150
+and I'm gonna tag this with the airport.
+
+802
+00:33:32,150 --> 00:33:35,610
+So whenever this View is
+clicked on in this Picker,
+
+803
+00:33:35,610 --> 00:33:37,770
+and we'll see what a Picker
+looks like in just a second,
+
+804
+00:33:37,770 --> 00:33:40,270
+whenever you pick this View, essentially,
+
+805
+00:33:40,270 --> 00:33:44,700
+it's going to take this tag
+and put it in this variable.
+
+806
+00:33:44,700 --> 00:33:47,350
+And again it's got a
+Binding to this variable,
+
+807
+00:33:47,350 --> 00:33:49,530
+so it just puts it right in there.
+
+808
+00:33:49,530 --> 00:33:51,460
+And what's really important about Pickers
+
+809
+00:33:51,460 --> 00:33:54,984
+is that this tag has to
+have exactly the same type
+
+810
+00:33:54,984 --> 00:33:57,930
+as this Binding is bound to.
+
+811
+00:33:57,930 --> 00:34:00,170
+Otherwise this makes no sense.
+
+812
+00:34:00,170 --> 00:34:01,820
+So luckily this is true here,
+
+813
+00:34:01,820 --> 00:34:03,730
+this airport code is just a String.
+
+814
+00:34:03,730 --> 00:34:05,780
+Our destination over here
+
+815
+00:34:06,650 --> 00:34:08,820
+is an airport code String right there.
+
+816
+00:34:08,820 --> 00:34:11,416
+So this String is exactly the same type
+
+817
+00:34:11,416 --> 00:34:14,083
+as these airport codes, which are Strings.
+
+818
+00:34:15,100 --> 00:34:16,650
+Let's see what this looks like.
+
+819
+00:34:18,447 --> 00:34:19,899
+All right, here's our flights.
+
+820
+00:34:19,899 --> 00:34:21,380
+(cheers)
+
+821
+00:34:21,380 --> 00:34:25,390
+Oh, well here's a Picker folks.
+
+822
+00:34:25,390 --> 00:34:26,480
+Okay, it's a wheel.
+
+823
+00:34:26,480 --> 00:34:29,486
+You can go around, pick
+a different thing LAX,
+
+824
+00:34:29,486 --> 00:34:31,998
+Las Vegas, right there, Newark.
+
+825
+00:34:31,998 --> 00:34:34,573
+But this is incredibly ugly.
+
+826
+00:34:34,573 --> 00:34:35,620
+All right? (chuckles)
+
+827
+00:34:35,620 --> 00:34:37,750
+It's first of all floating off
+
+828
+00:34:37,750 --> 00:34:39,640
+in the middle of space right here
+
+829
+00:34:39,640 --> 00:34:41,170
+and also its destination
+
+830
+00:34:41,170 --> 00:34:43,350
+doesn't quite fit there, this title.
+
+831
+00:34:43,350 --> 00:34:46,200
+So this is really, really bad.
+
+832
+00:34:46,200 --> 00:34:48,590
+And SwiftUI is doing the best it can
+
+833
+00:34:48,590 --> 00:34:52,890
+given the environment that
+you're asking it to show in
+
+834
+00:34:52,890 --> 00:34:55,390
+and really it's our fault
+
+835
+00:34:55,390 --> 00:34:57,410
+because when we're doing
+something like this,
+
+836
+00:34:57,410 --> 00:35:02,143
+we know that the environment
+we really wanna be in is a Form
+
+837
+00:35:02,143 --> 00:35:04,370
+just like we did with our palette editor.
+
+838
+00:35:04,370 --> 00:35:07,100
+We put all the fields in a Form,
+
+839
+00:35:07,100 --> 00:35:09,080
+we wanna do the exact same thing here.
+
+840
+00:35:09,080 --> 00:35:09,913
+There's something very interesting
+
+841
+00:35:09,913 --> 00:35:14,260
+that's going to happen to
+this when we put it in a Form.
+
+842
+00:35:14,260 --> 00:35:16,010
+Now this should be working, okay?
+
+843
+00:35:16,010 --> 00:35:17,950
+We are picking this here's Las Vegas.
+
+844
+00:35:17,950 --> 00:35:19,090
+I'm gonna hit Done.
+
+845
+00:35:19,090 --> 00:35:22,440
+It should re-fetch Las Vegas and it does.
+
+846
+00:35:22,440 --> 00:35:25,285
+So it is actually editing
+it, so nothing wrong there.
+
+847
+00:35:25,285 --> 00:35:28,682
+It's just the look of
+it is so bad right now.
+
+848
+00:35:28,682 --> 00:35:30,420
+So let's put that thing in a Form.
+
+849
+00:35:30,420 --> 00:35:33,750
+Watch what happens when
+I put this into a Form.
+
+850
+00:35:33,750 --> 00:35:35,300
+All I'm doing no change really,
+
+851
+00:35:35,300 --> 00:35:39,140
+except for just putting
+this Picker inside a Form
+
+852
+00:35:39,140 --> 00:35:39,973
+and hitting run.
+
+853
+00:35:45,130 --> 00:35:50,010
+Filter, oh, completely different look.
+
+854
+00:35:50,010 --> 00:35:52,980
+This Picker has completely adapted itself
+
+855
+00:35:52,980 --> 00:35:54,926
+to the fact that it's in a Form.
+
+856
+00:35:54,926 --> 00:35:58,950
+And this is a fundamental
+aspect of SwiftUI.
+
+857
+00:35:58,950 --> 00:36:03,740
+It adapts its controls to the
+environment that they're in.
+
+858
+00:36:03,740 --> 00:36:05,900
+And I mentioned this earlier with Button.
+
+859
+00:36:05,900 --> 00:36:09,290
+Why do we use a Button
+instead of just Text
+
+860
+00:36:09,290 --> 00:36:11,660
+with onTapGesture on it?
+
+861
+00:36:11,660 --> 00:36:12,493
+Well, we use a Button
+
+862
+00:36:12,493 --> 00:36:15,270
+because the Button knows
+whether it's on an Apple watch
+
+863
+00:36:15,270 --> 00:36:19,740
+or an Apple TV, but it's
+not just cross platform,
+
+864
+00:36:19,740 --> 00:36:21,120
+it's within a platform.
+
+865
+00:36:21,120 --> 00:36:23,500
+If you have a Picker and it's in a Form,
+
+866
+00:36:23,500 --> 00:36:26,290
+it knows it can use this
+really cool form right here,
+
+867
+00:36:26,290 --> 00:36:29,797
+where it has the title
+and the value side by side
+
+868
+00:36:29,797 --> 00:36:31,400
+and it doesn't need the wheel,
+
+869
+00:36:31,400 --> 00:36:34,253
+because when I click on
+this, watch what happens.
+
+870
+00:36:35,530 --> 00:36:39,967
+It navigates to a list of
+all of the airport codes.
+
+871
+00:36:39,967 --> 00:36:44,967
+And I can pick it here, pick
+San Diego over here, Las Vegas,
+
+872
+00:36:45,210 --> 00:36:48,250
+and this is a much better way of doing it.
+
+873
+00:36:48,250 --> 00:36:49,930
+Now, one thing about the adapting
+
+874
+00:36:49,930 --> 00:36:51,730
+to your environment, however though,
+
+875
+00:36:51,730 --> 00:36:53,650
+you have to be a little bit careful,
+
+876
+00:36:53,650 --> 00:36:56,890
+is that it adapts because
+it knows it's in a Form.
+
+877
+00:36:56,890 --> 00:36:58,273
+It doesn't necessarily adapt
+
+878
+00:36:58,273 --> 00:37:00,780
+because it knows it's in a NavigationView,
+
+879
+00:37:00,780 --> 00:37:02,359
+even though this adaptation
+
+880
+00:37:02,359 --> 00:37:04,820
+requires a NavigationView, right?
+
+881
+00:37:04,820 --> 00:37:07,950
+When I click on here, I'm
+navigating to this View
+
+882
+00:37:07,950 --> 00:37:11,770
+that it's wonderfully building for us.
+
+883
+00:37:11,770 --> 00:37:14,750
+And if I took this NavigationView away,
+
+884
+00:37:14,750 --> 00:37:19,423
+let's comment this out and
+go back and see what happens.
+
+885
+00:37:20,270 --> 00:37:23,340
+It's still gonna adapt
+to a form right here,
+
+886
+00:37:23,340 --> 00:37:24,710
+but I can't click on it.
+
+887
+00:37:24,710 --> 00:37:26,940
+I'm touching it right
+here nothing is happening
+
+888
+00:37:26,940 --> 00:37:30,550
+because I'm not in a NavigationView
+so it can't navigate.
+
+889
+00:37:30,550 --> 00:37:33,590
+Now, if I really didn't want
+this in the NavigationView,
+
+890
+00:37:33,590 --> 00:37:35,140
+I do because I want "Done" and "Cancel",
+
+891
+00:37:35,140 --> 00:37:36,121
+but if I didn't want it,
+
+892
+00:37:36,121 --> 00:37:38,975
+I could make this go
+back to being a wheel.
+
+893
+00:37:38,975 --> 00:37:42,950
+So Pickers here have a .pickerStyle,
+
+894
+00:37:42,950 --> 00:37:45,920
+and you can say, I want this
+to be the WheelPickerStyle(),
+
+895
+00:37:47,000 --> 00:37:50,040
+no matter what the context is.
+
+896
+00:37:50,040 --> 00:37:52,420
+So now we go back, we're still in a Form,
+
+897
+00:37:52,420 --> 00:37:57,420
+but we've got this wheel
+format or look again.
+
+898
+00:37:57,450 --> 00:37:58,677
+Still looks bad.
+
+899
+00:37:58,677 --> 00:38:00,923
+So let's go back to
+using our NavigationView,
+
+900
+00:38:00,923 --> 00:38:03,553
+it definitely looked a lot better.
+
+901
+00:38:11,440 --> 00:38:16,363
+Let's try and understand what
+this Picker has built here.
+
+902
+00:38:16,363 --> 00:38:21,363
+This obviously is a List
+that is built, okay?
+
+903
+00:38:21,490 --> 00:38:25,960
+List, capital L, List of all
+the Views in this ForEach.
+
+904
+00:38:25,960 --> 00:38:27,730
+You see this ForEach
+that's making these Texts,
+
+905
+00:38:27,730 --> 00:38:30,280
+these are just the Texts in here.
+
+906
+00:38:30,280 --> 00:38:31,670
+That's all there are in here.
+
+907
+00:38:31,670 --> 00:38:32,785
+But one thing that's interesting to notice
+
+908
+00:38:32,785 --> 00:38:37,785
+is that back here, this is
+also one of these Texts.
+
+909
+00:38:38,150 --> 00:38:43,150
+It's the text whose tag matches
+the thing we're bound to.
+
+910
+00:38:43,280 --> 00:38:45,030
+So this View actually appears twice.
+
+911
+00:38:45,030 --> 00:38:49,240
+It appears here and it appears over here
+
+912
+00:38:49,240 --> 00:38:50,750
+down where?
+
+913
+00:38:50,750 --> 00:38:52,890
+Way down here with a
+little check mark by it.
+
+914
+00:38:52,890 --> 00:38:55,350
+So that View is used in both places.
+
+915
+00:38:55,350 --> 00:38:56,950
+You have to understand that
+when you're making a Picker,
+
+916
+00:38:56,950 --> 00:38:58,130
+that this View that you're picking,
+
+917
+00:38:58,130 --> 00:38:59,480
+you're actually picking the View.
+
+918
+00:38:59,480 --> 00:39:01,815
+Now, the View is what's appearing here
+
+919
+00:39:01,815 --> 00:39:05,900
+and it's being reported
+back to you via this tag.
+
+920
+00:39:05,900 --> 00:39:09,270
+So we've got this working for destination
+
+921
+00:39:09,270 --> 00:39:11,090
+and let's make sure it's still working.
+
+922
+00:39:11,090 --> 00:39:13,290
+Change the look of this thing here,
+
+923
+00:39:13,290 --> 00:39:16,743
+but let's change our
+destination to Boston.
+
+924
+00:39:18,221 --> 00:39:19,054
+(cheers)
+
+925
+00:39:19,054 --> 00:39:20,203
+Flight into Boston.
+
+926
+00:39:21,670 --> 00:39:22,938
+All right, so we've got that working.
+
+927
+00:39:22,938 --> 00:39:25,660
+Now, let's add another thing
+
+928
+00:39:25,660 --> 00:39:28,100
+besides choosing our destination in here,
+
+929
+00:39:28,100 --> 00:39:30,040
+let's choose our origin airport.
+
+930
+00:39:30,040 --> 00:39:33,180
+So we only show flights to SFO from LAX
+
+931
+00:39:33,180 --> 00:39:34,590
+or something like that.
+
+932
+00:39:34,590 --> 00:39:37,433
+We can do that with almost
+exactly the same code here.
+
+933
+00:39:38,560 --> 00:39:40,320
+This is not our destination.
+
+934
+00:39:40,320 --> 00:39:43,130
+We're doing our origin right here,
+
+935
+00:39:43,130 --> 00:39:46,080
+and the selection is our origin.
+
+936
+00:39:46,080 --> 00:39:46,913
+Otherwise it's the same,
+
+937
+00:39:46,913 --> 00:39:49,110
+we're looking for all
+airport codes, et cetera.
+
+938
+00:39:49,110 --> 00:39:50,460
+So let's see if this works.
+
+939
+00:39:52,760 --> 00:39:54,500
+Right here, they're coming to SFO,
+
+940
+00:39:54,500 --> 00:39:57,190
+we filter destination,
+
+941
+00:39:57,190 --> 00:40:00,073
+looks like it's working great, origin.
+
+942
+00:40:01,460 --> 00:40:02,520
+Okay, this is blank.
+
+943
+00:40:02,520 --> 00:40:06,430
+Maybe that's okay because
+we don't have an origin yet.
+
+944
+00:40:06,430 --> 00:40:08,330
+We didn't choose an origin, it's nil.
+
+945
+00:40:08,330 --> 00:40:09,640
+All right, we'll go in here.
+
+946
+00:40:09,640 --> 00:40:10,473
+Here's our choices.
+
+947
+00:40:10,473 --> 00:40:12,000
+Let's choose Denver.
+
+948
+00:40:12,000 --> 00:40:14,650
+Oh no, it didn't work.
+
+949
+00:40:14,650 --> 00:40:17,300
+Why can't I pick an origin airport here?
+
+950
+00:40:17,300 --> 00:40:18,464
+It keeps being blank.
+
+951
+00:40:18,464 --> 00:40:19,760
+And is it actually searching?
+
+952
+00:40:19,760 --> 00:40:22,324
+No, it's still showing
+me all airports here.
+
+953
+00:40:22,324 --> 00:40:24,593
+So why is this not working?
+
+954
+00:40:25,550 --> 00:40:26,780
+Well, this is a common thing.
+
+955
+00:40:26,780 --> 00:40:28,777
+When people use Pickers for the first time
+
+956
+00:40:28,777 --> 00:40:33,150
+they miss this tiny subtlety
+here that's going on.
+
+957
+00:40:33,150 --> 00:40:36,983
+I told you that this var
+
+958
+00:40:38,160 --> 00:40:42,636
+has to be exactly the
+same type as this tag.
+
+959
+00:40:42,636 --> 00:40:45,040
+This var, what's its type?
+
+960
+00:40:45,040 --> 00:40:46,403
+The drafts origin?
+
+961
+00:40:47,400 --> 00:40:50,850
+This Optional String.
+
+962
+00:40:50,850 --> 00:40:54,340
+Oh, Optional String.
+
+963
+00:40:54,340 --> 00:40:55,980
+And what's this type?
+
+964
+00:40:55,980 --> 00:40:57,280
+Oh, that's a String,
+
+965
+00:40:57,280 --> 00:40:59,530
+'cause this is a ForEach of Strings.
+
+966
+00:40:59,530 --> 00:41:02,016
+So this is a String, this
+is an Optional String,
+
+967
+00:41:02,016 --> 00:41:03,820
+that's not gonna work.
+
+968
+00:41:03,820 --> 00:41:05,390
+They're not exactly the same type.
+
+969
+00:41:05,390 --> 00:41:08,010
+They need to be exactly the same type.
+
+970
+00:41:08,010 --> 00:41:11,710
+Now a tricky fix to this actually
+
+971
+00:41:11,710 --> 00:41:16,330
+is to make this argument to
+our ForEach closure here,
+
+972
+00:41:16,330 --> 00:41:20,113
+be a Optional String.
+
+973
+00:41:21,010 --> 00:41:23,297
+So remember this is equals void.
+
+974
+00:41:23,297 --> 00:41:26,450
+But we're just using Swift inference
+
+975
+00:41:26,450 --> 00:41:28,590
+to not have to specify these things.
+
+976
+00:41:28,590 --> 00:41:31,560
+But here I am gonna specify
+it and make it this type.
+
+977
+00:41:31,560 --> 00:41:34,720
+Now why doesn't this break the ForEach?
+
+978
+00:41:34,720 --> 00:41:38,930
+Because the ForEach just
+wants you to give it a closure
+
+979
+00:41:38,930 --> 00:41:43,150
+that you can pass its
+thing into that will work.
+
+980
+00:41:43,150 --> 00:41:45,700
+And of course you can pass
+a String into a closure
+
+981
+00:41:45,700 --> 00:41:47,483
+that takes an Optional String.
+
+982
+00:41:48,460 --> 00:41:51,078
+Now this has changed airport inside here
+
+983
+00:41:51,078 --> 00:41:53,190
+to be an Optional String.
+
+984
+00:41:53,190 --> 00:41:55,640
+So now this tag is an Optional String
+
+985
+00:41:55,640 --> 00:41:57,220
+and this is an Optional String.
+
+986
+00:41:57,220 --> 00:41:58,480
+So that fixed our problem
+
+987
+00:41:58,480 --> 00:42:00,250
+where these were not the same type.
+
+988
+00:42:00,250 --> 00:42:02,650
+However, kind of broke
+us a little bit here
+
+989
+00:42:02,650 --> 00:42:06,910
+because it's saying airport
+here is now an Optional,
+
+990
+00:42:06,910 --> 00:42:09,220
+and so we have to unwrap
+that Optional in here.
+
+991
+00:42:09,220 --> 00:42:13,650
+So I'll unwrap it with the
+defaulter that says something
+
+992
+00:42:13,650 --> 00:42:14,700
+when airport is nil.
+
+993
+00:42:14,700 --> 00:42:16,730
+And what do we want
+when the airport is nil?
+
+994
+00:42:16,730 --> 00:42:21,510
+We want it to say "Any"
+airport or "Unchosen" airport
+
+995
+00:42:21,510 --> 00:42:22,713
+or something like that.
+
+996
+00:42:23,640 --> 00:42:25,363
+So let's see if this works.
+
+997
+00:42:28,960 --> 00:42:30,270
+To our filter here.
+
+998
+00:42:30,270 --> 00:42:31,790
+Well, origin, that's still blank.
+
+999
+00:42:31,790 --> 00:42:34,490
+So that's still not right, it's not right.
+
+1000
+00:42:34,490 --> 00:42:35,740
+Going here.
+
+1001
+00:42:35,740 --> 00:42:36,573
+Okay, this is good.
+
+1002
+00:42:36,573 --> 00:42:39,050
+I don't see the choice of "Any" airport,
+
+1003
+00:42:39,050 --> 00:42:40,889
+but let's try something like Denver.
+
+1004
+00:42:40,889 --> 00:42:43,500
+Oh, at least this is working now.
+
+1005
+00:42:43,500 --> 00:42:47,250
+When I pick something in
+here, Dallas, it's working,
+
+1006
+00:42:47,250 --> 00:42:49,590
+but that's because we've made these match.
+
+1007
+00:42:49,590 --> 00:42:54,590
+But there's no way for me to
+go back to origin "Any", right?
+
+1008
+00:42:54,600 --> 00:42:56,750
+I can't set this back to nil.
+
+1009
+00:42:56,750 --> 00:43:01,328
+Why can't I set this origin
+anywhere here to nil?
+
+1010
+00:43:01,328 --> 00:43:04,860
+The answer is that this list of Views
+
+1011
+00:43:04,860 --> 00:43:08,200
+is made from this closure right here,
+
+1012
+00:43:08,200 --> 00:43:11,004
+and right now it's a ForEach
+of all the airport codes.
+
+1013
+00:43:11,004 --> 00:43:14,420
+There's no airport code which is nil.
+
+1014
+00:43:14,420 --> 00:43:16,900
+So since there's no nil in there,
+
+1015
+00:43:16,900 --> 00:43:18,584
+there's no nil in this list.
+
+1016
+00:43:18,584 --> 00:43:20,955
+So if we wanna be able to choose "Any",
+
+1017
+00:43:20,955 --> 00:43:24,089
+we have to put nil into this list.
+
+1018
+00:43:24,089 --> 00:43:27,840
+But this does not have
+to be just the ForEach.
+
+1019
+00:43:27,840 --> 00:43:31,930
+We could go here and say Text("Any"),
+
+1020
+00:43:31,930 --> 00:43:35,790
+it's got the tag of nil, and
+we've added another View.
+
+1021
+00:43:35,790 --> 00:43:37,700
+So there's all these ForEach's,
+
+1022
+00:43:37,700 --> 00:43:39,913
+but then there's this other one
+right at the beginning here.
+
+1023
+00:43:39,913 --> 00:43:41,726
+Now this doesn't quite work
+
+1024
+00:43:41,726 --> 00:43:46,726
+because Swift can't infer that
+this nil means String's nil.
+
+1025
+00:43:47,899 --> 00:43:50,970
+That's what this generic
+parameter "V" cannot be inferred.
+
+1026
+00:43:50,970 --> 00:43:54,750
+If we go look at tag, we can look at tag,
+
+1027
+00:43:54,750 --> 00:43:57,730
+let's see if we take tag
+zero, can probably look.
+
+1028
+00:43:57,730 --> 00:44:00,047
+Yeah, here's documentation for tag
+
+1029
+00:44:00,047 --> 00:44:02,470
+and you can see the
+tag takes a don't-care.
+
+1030
+00:44:02,470 --> 00:44:05,296
+Tag doesn't care what type
+you give it as the tag,
+
+1031
+00:44:05,296 --> 00:44:06,150
+all it requires
+
+1032
+00:44:06,150 --> 00:44:09,840
+is that this be something
+that's Hashable right here.
+
+1033
+00:44:09,840 --> 00:44:11,300
+But if you just say nil,
+
+1034
+00:44:11,300 --> 00:44:13,710
+then it just doesn't
+have enough information
+
+1035
+00:44:13,710 --> 00:44:15,860
+to know what nil are we talking about,
+
+1036
+00:44:15,860 --> 00:44:17,610
+'cause it could be anything.
+
+1037
+00:44:17,610 --> 00:44:20,990
+So how do we specify that
+we want nil of String?
+
+1038
+00:44:20,990 --> 00:44:24,880
+There's a cool way to do
+that, String Optional.
+
+1039
+00:44:24,880 --> 00:44:28,900
+Remember that's an enum and
+we can use the case .none.
+
+1040
+00:44:28,900 --> 00:44:31,017
+Right, we could also use
+.some of some String,
+
+1041
+00:44:31,017 --> 00:44:32,650
+but we're gonna use .none.
+
+1042
+00:44:32,650 --> 00:44:36,400
+So this is a way to say
+nil for Optional Strings.
+
+1043
+00:44:36,400 --> 00:44:40,200
+It's a tricky little way to do that.
+
+1044
+00:44:40,200 --> 00:44:42,200
+So now we've added an extra thing.
+
+1045
+00:44:42,200 --> 00:44:43,617
+And when we go back to our filter,
+
+1046
+00:44:43,617 --> 00:44:46,723
+we should see another row
+that says "Any" in it.
+
+1047
+00:44:47,674 --> 00:44:49,677
+And it's even got the View here.
+
+1048
+00:44:49,677 --> 00:44:50,510
+(cheers)
+
+1049
+00:44:50,510 --> 00:44:51,640
+There's that any row up there.
+
+1050
+00:44:51,640 --> 00:44:54,980
+So we can go over here to
+Boise and then come back,
+
+1051
+00:44:54,980 --> 00:44:56,730
+go back to any and we're at any.
+
+1052
+00:44:56,730 --> 00:44:59,577
+And if we say done, (cheers)
+it's still showing any.
+
+1053
+00:44:59,577 --> 00:45:02,360
+And if we go over here and go origin,
+
+1054
+00:45:02,360 --> 00:45:05,750
+let's do, I dunno, Denver, maybe.
+
+1055
+00:45:05,750 --> 00:45:07,643
+So to see if we can find a flight.
+
+1056
+00:45:09,061 --> 00:45:09,894
+(cheers)
+
+1057
+00:45:09,894 --> 00:45:11,220
+There, it is a flight from Denver today
+
+1058
+00:45:11,220 --> 00:45:15,093
+arrives at 1:00 in about
+half an hour, all right?
+
+1059
+00:45:16,090 --> 00:45:19,960
+So that's what's going on
+here when you have a nil
+
+1060
+00:45:19,960 --> 00:45:22,850
+or an Optional value and you
+wanna be able to choose nil,
+
+1061
+00:45:22,850 --> 00:45:25,480
+you need to add a little
+extra View just for that
+
+1062
+00:45:25,480 --> 00:45:27,390
+because the Picker is picking Views.
+
+1063
+00:45:27,390 --> 00:45:30,010
+It picks one of these Views.
+
+1064
+00:45:30,010 --> 00:45:33,250
+So you gotta have a View
+for every option you want.
+
+1065
+00:45:33,250 --> 00:45:35,770
+Let's now go do the same
+thing with airlines.
+
+1066
+00:45:35,770 --> 00:45:37,359
+We can filter by airlines.
+
+1067
+00:45:37,359 --> 00:45:38,671
+So I'm gonna put "Airline" here.
+
+1068
+00:45:38,671 --> 00:45:40,160
+To make my life easier
+
+1069
+00:45:40,160 --> 00:45:44,360
+I'm gonna replace airport with airline
+
+1070
+00:45:44,360 --> 00:45:47,212
+because it's almost
+exactly the same thing,
+
+1071
+00:45:47,212 --> 00:45:49,500
+paste, paste, paste,
+
+1072
+00:45:49,500 --> 00:45:52,830
+and I will need to add
+another ViewModel up here,
+
+1073
+00:45:52,830 --> 00:45:54,373
+which is all my airlines,
+
+1074
+00:45:57,129 --> 00:45:57,962
+airlines,
+
+1075
+00:45:59,918 --> 00:46:00,751
+airlines,
+
+1076
+00:46:01,940 --> 00:46:03,130
+Okay, so now I have a ViewModel
+
+1077
+00:46:03,130 --> 00:46:04,990
+for all my airlines and my airports,
+
+1078
+00:46:04,990 --> 00:46:06,340
+so I can do that with my airlines.
+
+1079
+00:46:06,340 --> 00:46:08,340
+And this airline
+
+1080
+00:46:08,340 --> 00:46:11,833
+is of course airline in
+our draft FlightSearch.
+
+1081
+00:46:15,557 --> 00:46:17,793
+Yeah, here we go filter, origin,
+
+1082
+00:46:18,650 --> 00:46:20,620
+yeah, we could pick origin, that's good.
+
+1083
+00:46:20,620 --> 00:46:23,440
+Airline, any airline or maybe United.
+
+1084
+00:46:23,440 --> 00:46:25,940
+So let's see United flights into SFO.
+
+1085
+00:46:25,940 --> 00:46:27,433
+Excellent, right there.
+
+1086
+00:46:29,010 --> 00:46:31,163
+And we can go back to any and hit Done,
+
+1087
+00:46:32,314 --> 00:46:34,633
+Get the full list of flights.
+
+1088
+00:46:35,660 --> 00:46:37,650
+Now, one other thing that
+I'd like to make better
+
+1089
+00:46:37,650 --> 00:46:40,560
+is these flight codes I know them well,
+
+1090
+00:46:40,560 --> 00:46:43,785
+as you can tell, but a
+lot of people don't know
+
+1091
+00:46:43,785 --> 00:46:46,158
+what are these things?
+
+1092
+00:46:46,158 --> 00:46:48,130
+What's K-O-R-D?
+
+1093
+00:46:48,130 --> 00:46:49,463
+What the heck is that?
+
+1094
+00:46:50,570 --> 00:46:55,480
+We want these to be nicer
+names than KSFO and KORD.
+
+1095
+00:46:55,480 --> 00:46:57,997
+We want to be names of actual airports,
+
+1096
+00:46:57,997 --> 00:46:59,119
+and we can do that too.
+
+1097
+00:46:59,119 --> 00:47:01,626
+These ViewModels up here,
+
+1098
+00:47:01,626 --> 00:47:03,170
+allAirports and allAirlines
+
+1099
+00:47:03,170 --> 00:47:05,540
+can provide us a lot better information.
+
+1100
+00:47:05,540 --> 00:47:07,970
+So here, instead of just
+putting the airport code,
+
+1101
+00:47:07,970 --> 00:47:10,510
+I'm still gonna have the
+tag be the airport code,
+
+1102
+00:47:10,510 --> 00:47:12,650
+but instead of showing the airport code,
+
+1103
+00:47:12,650 --> 00:47:17,383
+I'm going to use my self.allAirports,
+
+1104
+00:47:19,660 --> 00:47:21,091
+this airport right here,
+
+1105
+00:47:21,091 --> 00:47:22,844
+and that might be nil,
+
+1106
+00:47:22,844 --> 00:47:25,005
+they might look it up and
+not be able to find it,
+
+1107
+00:47:25,005 --> 00:47:27,750
+so I'm going to Optional chain here
+
+1108
+00:47:27,750 --> 00:47:30,730
+and use what I call its friendlyName.
+
+1109
+00:47:30,730 --> 00:47:31,660
+And if that's not set,
+
+1110
+00:47:31,660 --> 00:47:34,970
+then we'll just use the airport code.
+
+1111
+00:47:34,970 --> 00:47:37,430
+So this is just getting a friendly name
+
+1112
+00:47:37,430 --> 00:47:40,529
+from this ViewModel up here,
+this allAirports ViewModel,
+
+1113
+00:47:40,529 --> 00:47:43,590
+a friendly name of this airport.
+
+1114
+00:47:43,590 --> 00:47:47,587
+And we can do the same thing
+for this airport down here,
+
+1115
+00:47:47,587 --> 00:47:49,850
+and we can do a similar
+thing for the airlines,
+
+1116
+00:47:49,850 --> 00:47:51,193
+the allAirlines.
+
+1117
+00:47:55,428 --> 00:47:58,261
+So it has a friendly name feature.
+
+1118
+00:48:01,480 --> 00:48:03,390
+We'll go to our filter.
+
+1119
+00:48:03,390 --> 00:48:06,010
+Okay, destination, not KSFO anymore.
+
+1120
+00:48:06,010 --> 00:48:07,687
+San Francisco, California.
+
+1121
+00:48:07,687 --> 00:48:08,590
+(cheers)
+
+1122
+00:48:08,590 --> 00:48:10,630
+These are all the friendly
+names of these airports.
+
+1123
+00:48:10,630 --> 00:48:11,610
+How about airlines?
+
+1124
+00:48:11,610 --> 00:48:13,323
+Yeah, we got the friendly names.
+
+1125
+00:48:18,640 --> 00:48:21,933
+So let's add one more thing,
+not a Picker, but a Toggle.
+
+1126
+00:48:24,540 --> 00:48:27,830
+Toggle takes a Binding to
+something that it's gonna Toggle.
+
+1127
+00:48:27,830 --> 00:48:30,920
+In this case I wanted to
+Toggle my draft's inTheAir
+
+1128
+00:48:32,275 --> 00:48:34,938
+and it also takes a label
+
+1129
+00:48:34,938 --> 00:48:37,830
+and that'll just be for us a simple Text
+
+1130
+00:48:37,830 --> 00:48:40,949
+that says "Enroute Only".
+
+1131
+00:48:40,949 --> 00:48:43,250
+So this Toggle is going to Toggle
+
+1132
+00:48:43,250 --> 00:48:45,330
+whether we're showing
+flights that are in the air
+
+1133
+00:48:45,330 --> 00:48:47,770
+or flights that are on
+the ground somewhere.
+
+1134
+00:48:47,770 --> 00:48:48,770
+Take a look at that.
+
+1135
+00:48:52,970 --> 00:48:53,910
+We got Enroute Only.
+
+1136
+00:48:53,910 --> 00:48:55,931
+So I'm gonna turn this
+off and go back to Done.
+
+1137
+00:48:55,931 --> 00:48:56,764
+(cheers)
+
+1138
+00:48:56,764 --> 00:48:59,220
+We got a lot more flights
+here, not departed yet,
+
+1139
+00:48:59,220 --> 00:49:00,840
+flights that are
+scheduled to arrive later,
+
+1140
+00:49:00,840 --> 00:49:02,530
+but haven't departed.
+
+1141
+00:49:02,530 --> 00:49:05,810
+(mouse clicking)
+
+1142
+00:49:05,810 --> 00:49:07,460
+All right, so that is all I really wanted
+
+1143
+00:49:07,460 --> 00:49:11,190
+to cover today on Picker.
+
+1144
+00:49:11,190 --> 00:49:12,650
+And hopefully that sets you up
+
+1145
+00:49:12,650 --> 00:49:14,750
+to use Pickers in your final project.
+
+1146
+00:49:14,750 --> 00:49:15,712
+Most of you I'm guessing
+
+1147
+00:49:15,712 --> 00:49:18,479
+are going to have somewhere in
+your UI in your final project
+
+1148
+00:49:18,479 --> 00:49:19,913
+where you're gonna wanna do a Picker
+
+1149
+00:49:19,913 --> 00:49:22,263
+and now you know how to do it.
+
+1150
+00:49:23,190 --> 00:49:26,413
+- [Narrator] For more, please
+visit at us stanford.edu.

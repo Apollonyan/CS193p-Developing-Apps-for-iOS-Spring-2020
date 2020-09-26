@@ -1,0 +1,8994 @@
+1
+00:00:00,740 --> 00:00:03,490
+(peaceful music)
+
+2
+00:00:04,930 --> 00:00:06,630
+- [Presenter] Stanford University.
+
+3
+00:00:08,520 --> 00:00:13,290
+- [Paul] All right,
+Lecture 7, Stanford CS193p,
+
+4
+00:00:13,290 --> 00:00:15,870
+Spring of 2020.
+
+5
+00:00:15,870 --> 00:00:18,950
+Today we're briefly gonna
+talk about Colors and Images,
+
+6
+00:00:18,950 --> 00:00:20,423
+just a couple of minutes.
+
+7
+00:00:20,423 --> 00:00:22,780
+Then we're gonna dive
+into our main topic today
+
+8
+00:00:22,780 --> 00:00:26,020
+which is multithreaded programming.
+
+9
+00:00:26,020 --> 00:00:28,620
+And then we're gonna have a humongous demo
+
+10
+00:00:28,620 --> 00:00:30,520
+and this demo's gonna
+cover a lot of ground.
+
+11
+00:00:30,520 --> 00:00:34,810
+We're gonna somewhat review
+MVVM by just developing
+
+12
+00:00:34,810 --> 00:00:36,973
+a completely separate app from scratch
+
+13
+00:00:36,973 --> 00:00:39,710
+and that you way you can
+compare and contrast that app
+
+14
+00:00:39,710 --> 00:00:43,990
+with Memorize and it helps
+you understand MVVM better.
+
+15
+00:00:43,990 --> 00:00:45,131
+And then we're gonna talk
+
+16
+00:00:45,131 --> 00:00:47,110
+about a bunch of miscellaneous topics
+
+17
+00:00:47,110 --> 00:00:50,327
+and of course we will demo multithreading
+
+18
+00:00:50,327 --> 00:00:52,513
+since that's our main topic of today.
+
+19
+00:00:53,890 --> 00:00:56,630
+So Colors and Images, let's
+talk about Colors first.
+
+20
+00:00:56,630 --> 00:00:59,590
+There is a struct called
+Color, as you know.
+
+21
+00:00:59,590 --> 00:01:01,140
+We've been using it so far.
+
+22
+00:01:01,140 --> 00:01:03,890
+And there's another thing called UIColor.
+
+23
+00:01:03,890 --> 00:01:05,850
+And you might wonder
+why are these two things
+
+24
+00:01:05,850 --> 00:01:08,140
+that are just named so similarly?
+
+25
+00:01:08,140 --> 00:01:10,720
+Well a Color, as we learn,
+and we talk about this
+
+26
+00:01:10,720 --> 00:01:15,470
+in the forums actually, can
+kind of point different roles.
+
+27
+00:01:15,470 --> 00:01:17,220
+It can be a Color specifier,
+
+28
+00:01:17,220 --> 00:01:19,190
+like foregroundColor Color.green
+
+29
+00:01:19,190 --> 00:01:23,360
+or it can also be a
+ShapeStyle, fill Color.blue.
+
+30
+00:01:23,360 --> 00:01:25,387
+And it could even be a
+View, we haven't seen this
+
+31
+00:01:25,387 --> 00:01:27,120
+in any of our demos so far,
+
+32
+00:01:27,120 --> 00:01:29,700
+but it can be a View, Color.white.
+
+33
+00:01:29,700 --> 00:01:31,830
+You can have that appear
+anywhere a View appears.
+
+34
+00:01:31,830 --> 00:01:33,740
+It's quite strange, and so like, kind of,
+
+35
+00:01:33,740 --> 00:01:37,620
+you get a rectangle filled
+with white when you do that.
+
+36
+00:01:37,620 --> 00:01:40,760
+Now due to Color's multifaceted role
+
+37
+00:01:40,760 --> 00:01:42,650
+where it can do all
+these different things,
+
+38
+00:01:42,650 --> 00:01:44,750
+it has somewhat limited API.
+
+39
+00:01:44,750 --> 00:01:48,310
+Mostly just creating Colors
+and I think has some stuff
+
+40
+00:01:48,310 --> 00:01:51,643
+where you can compare Colors
+but it's pretty limited.
+
+41
+00:01:52,650 --> 00:01:55,110
+So there's this other thing, UIColor.
+
+42
+00:01:55,110 --> 00:01:56,610
+This is the thing where you're actually
+
+43
+00:01:56,610 --> 00:01:58,780
+going to manipulate colors,
+
+44
+00:01:58,780 --> 00:02:00,610
+you're going to interrogate the color,
+
+45
+00:02:00,610 --> 00:02:05,610
+what's your RGB value, and it's
+got a lot more system colors
+
+46
+00:02:05,710 --> 00:02:07,380
+and pre-built-in colors.
+
+47
+00:02:07,380 --> 00:02:09,700
+It's a much more powerful color class
+
+48
+00:02:09,700 --> 00:02:10,600
+than this Color thing.
+
+49
+00:02:10,600 --> 00:02:12,100
+Now it's not a chameleon.
+
+50
+00:02:12,100 --> 00:02:15,310
+It just is a little container
+that represents a color
+
+51
+00:02:15,310 --> 00:02:17,710
+and it represents it in
+a very particular way,
+
+52
+00:02:17,710 --> 00:02:18,760
+but that's what it is.
+
+53
+00:02:18,760 --> 00:02:20,890
+And if I'm ever gonna do
+any color manipulation,
+
+54
+00:02:20,890 --> 00:02:24,400
+which you are gonna do, by the
+way, in your assignment five.
+
+55
+00:02:24,400 --> 00:02:26,500
+Not next week but the week after,
+
+56
+00:02:26,500 --> 00:02:29,020
+you're gonna wanna use UIColor.
+
+57
+00:02:29,020 --> 00:02:31,420
+But the great thing is once
+you've built the UIColor
+
+58
+00:02:31,420 --> 00:02:33,810
+and transformed it or do
+whatever you wanna do to it
+
+59
+00:02:33,810 --> 00:02:36,170
+to make it the way you
+want, now you can just say
+
+60
+00:02:36,170 --> 00:02:39,350
+Color uiColor: and specify that color
+
+61
+00:02:39,350 --> 00:02:41,560
+and you can use it in all the ways above,
+
+62
+00:02:41,560 --> 00:02:44,459
+as a specifier, a View, whatever.
+
+63
+00:02:44,459 --> 00:02:46,550
+UIColor starts with UI.
+
+64
+00:02:46,550 --> 00:02:50,650
+That's because it comes from
+the old pre-SwiftUI world.
+
+65
+00:02:50,650 --> 00:02:53,400
+Things that start with UI are from UIKit.
+
+66
+00:02:53,400 --> 00:02:56,200
+But it was so good at manipulating colors,
+
+67
+00:02:56,200 --> 00:03:00,120
+yeah, they just brought it
+into SwiftUI just like it was.
+
+68
+00:03:00,120 --> 00:03:02,720
+Now a similar sort of dichotomy happened
+
+69
+00:03:02,720 --> 00:03:05,034
+with Image and UIImage.
+
+70
+00:03:05,034 --> 00:03:08,323
+So Image in SwiftUI is primarily a View,
+
+71
+00:03:09,460 --> 00:03:11,490
+and it's a View that displays an image.
+
+72
+00:03:11,490 --> 00:03:14,930
+It's not something that you
+would make a var of type Image
+
+73
+00:03:14,930 --> 00:03:16,240
+and it holds an image.
+
+74
+00:03:16,240 --> 00:03:17,550
+It is a View.
+
+75
+00:03:17,550 --> 00:03:20,490
+So this Image View you
+can specify what image
+
+76
+00:03:20,490 --> 00:03:23,710
+you want it to display
+in a number of ways.
+
+77
+00:03:23,710 --> 00:03:26,340
+One way is by just giving it a String,
+
+78
+00:03:26,340 --> 00:03:29,280
+and it will use that
+as the name of an image
+
+79
+00:03:29,280 --> 00:03:33,290
+that it finds in your
+Assets.xcassets file.
+
+80
+00:03:33,290 --> 00:03:36,090
+If you look in Xcode
+where all your files are,
+
+81
+00:03:36,090 --> 00:03:37,750
+there's a file we haven't
+talked about in there,
+
+82
+00:03:37,750 --> 00:03:40,810
+Assets.xcassets, Xcode assets.
+
+83
+00:03:40,810 --> 00:03:43,240
+And if you look at it you'll
+see that it's just a place
+
+84
+00:03:43,240 --> 00:03:45,690
+to store images in lots
+of different formats
+
+85
+00:03:45,690 --> 00:03:48,650
+and you can get them by name
+by saying Image of the name.
+
+86
+00:03:48,650 --> 00:03:52,500
+That's kind of the most
+basic way to access an image.
+
+87
+00:03:52,500 --> 00:03:55,760
+There are also though
+a ton of system images.
+
+88
+00:03:55,760 --> 00:03:58,850
+And you get this one by
+saying Image systemName:
+
+89
+00:03:58,850 --> 00:04:00,250
+and then the name.
+
+90
+00:04:00,250 --> 00:04:02,010
+Now how do you find
+out what all these are?
+
+91
+00:04:02,010 --> 00:04:04,120
+Well, you're gonna need to download an app
+
+92
+00:04:04,120 --> 00:04:07,140
+from developer.apple.com/design
+
+93
+00:04:07,140 --> 00:04:10,470
+called SF Symbols and it
+has all of them listed.
+
+94
+00:04:10,470 --> 00:04:12,920
+You can search through them by name,
+
+95
+00:04:12,920 --> 00:04:15,693
+the names pretty much
+encapsulate what they are.
+
+96
+00:04:16,600 --> 00:04:17,720
+When you're there, by the way,
+
+97
+00:04:17,720 --> 00:04:19,800
+at developer.apple.com/design,
+
+98
+00:04:19,800 --> 00:04:21,810
+there's a document you'll
+see right on that page
+
+99
+00:04:21,810 --> 00:04:23,880
+called the Human Interface Guidelines.
+
+100
+00:04:23,880 --> 00:04:25,810
+You really wanna read that document.
+
+101
+00:04:25,810 --> 00:04:27,180
+I really (chuckles) should have made it
+
+102
+00:04:27,180 --> 00:04:29,100
+reading assignment number four.
+
+103
+00:04:29,100 --> 00:04:31,750
+I might go back and still do
+that, but you should read it.
+
+104
+00:04:31,750 --> 00:04:34,240
+It's an absolute must
+read if you ever want
+
+105
+00:04:34,240 --> 00:04:35,720
+to do an App Store submission.
+
+106
+00:04:35,720 --> 00:04:39,600
+It talks about how your UI is
+supposed to do certain things
+
+107
+00:04:39,600 --> 00:04:42,720
+so that all UIs in all
+apps are doing these things
+
+108
+00:04:42,720 --> 00:04:45,830
+in the same way and the user
+gets a consistent experience.
+
+109
+00:04:45,830 --> 00:04:48,190
+Super important, and, not
+just to read that document,
+
+110
+00:04:48,190 --> 00:04:50,850
+to really understand all of
+the things that are in it
+
+111
+00:04:50,850 --> 00:04:52,160
+so when you go to write your app
+
+112
+00:04:52,160 --> 00:04:54,760
+and submit it to the App
+Store it doesn't get rejected
+
+113
+00:04:54,760 --> 00:04:57,940
+for violating these Human
+Interface Guidelines.
+
+114
+00:04:57,940 --> 00:05:00,930
+If you use the system
+name images, by the way,
+
+115
+00:05:00,930 --> 00:05:02,770
+you can control how large they are
+
+116
+00:05:02,770 --> 00:05:05,230
+with the .imageScale View modifier.
+
+117
+00:05:05,230 --> 00:05:06,800
+It's a little bit hidden there
+
+118
+00:05:06,800 --> 00:05:09,385
+'cause you don't do it on
+somewhere in the image.
+
+119
+00:05:09,385 --> 00:05:11,220
+So there's actually a View modifier.
+
+120
+00:05:11,220 --> 00:05:12,760
+So go take a look at that.
+
+121
+00:05:12,760 --> 00:05:14,870
+And also just a quick
+note, the system images
+
+122
+00:05:14,870 --> 00:05:16,970
+are really good to use as masks.
+
+123
+00:05:16,970 --> 00:05:18,730
+So like if you have a gradient,
+
+124
+00:05:18,730 --> 00:05:22,060
+you can have it shine
+through the system image
+
+125
+00:05:22,060 --> 00:05:24,410
+and that can give you
+some really cool effects.
+
+126
+00:05:25,940 --> 00:05:28,680
+So UIImage, that's the
+thing that if you had a var
+
+127
+00:05:28,680 --> 00:05:31,360
+that was gonna hold an image
+in it, like a JPEG image,
+
+128
+00:05:31,360 --> 00:05:33,120
+it would be of type UIImage.
+
+129
+00:05:33,120 --> 00:05:36,430
+Again, comes from UIKit,
+it was so good (chuckles)
+
+130
+00:05:36,430 --> 00:05:38,820
+at handling images,
+there was just no reason
+
+131
+00:05:38,820 --> 00:05:42,470
+to try and duplicate it
+all in the Image View.
+
+132
+00:05:42,470 --> 00:05:44,120
+And so they just brought it in
+
+133
+00:05:44,120 --> 00:05:47,201
+and UIImage can do multiple file formats,
+
+134
+00:05:47,201 --> 00:05:48,710
+JPEGs, GIF, PNGs.
+
+135
+00:05:48,710 --> 00:05:52,010
+It has transformation
+primitives, scaling, all these,
+
+136
+00:05:52,010 --> 00:05:54,970
+it can do animated images, all that.
+
+137
+00:05:54,970 --> 00:05:57,920
+And once you've built a
+UIImage up to what you want
+
+138
+00:05:57,920 --> 00:06:02,920
+from whatever JPEG file or
+whatever you built it from,
+
+139
+00:06:03,070 --> 00:06:06,234
+then you can say Image uiImage:,
+
+140
+00:06:06,234 --> 00:06:09,940
+the UIImage and present it as a View.
+
+141
+00:06:09,940 --> 00:06:12,930
+So similar kind of,
+with Color and UIColor,
+
+142
+00:06:12,930 --> 00:06:14,190
+Image and UIImage.
+
+143
+00:06:16,110 --> 00:06:18,603
+All right, main thing of
+the day, multithreading.
+
+144
+00:06:19,673 --> 00:06:24,673
+Now multithreading can
+be used to build systems
+
+145
+00:06:25,250 --> 00:06:28,090
+of parallel computing
+where you've got an app
+
+146
+00:06:28,090 --> 00:06:29,810
+and it's doing multiple
+things at the same time.
+
+147
+00:06:29,810 --> 00:06:31,240
+Maybe they depend on each other,
+
+148
+00:06:31,240 --> 00:06:34,710
+you want to manage those
+dependencies, all these things.
+
+149
+00:06:34,710 --> 00:06:36,710
+But we're only gonna
+talk about multithreading
+
+150
+00:06:36,710 --> 00:06:40,610
+in this class in one very important niche
+
+151
+00:06:40,610 --> 00:06:45,123
+that it can satisfy, which
+is not blocking the UI.
+
+152
+00:06:46,110 --> 00:06:48,290
+And we're going to not block the UI
+
+153
+00:06:48,290 --> 00:06:50,940
+by having all the stuff
+that would block the UI
+
+154
+00:06:50,940 --> 00:06:53,390
+on a different thread of execution.
+
+155
+00:06:53,390 --> 00:06:56,950
+Now it is never okay for
+your UI to be blocked.
+
+156
+00:06:56,950 --> 00:06:59,050
+If someone reaches with their finger
+
+157
+00:06:59,050 --> 00:07:02,030
+to scroll something or tap on a button,
+
+158
+00:07:02,030 --> 00:07:03,730
+your UI has to be ready to do it.
+
+159
+00:07:03,730 --> 00:07:05,247
+It cannot be saying, "Oh, I'm sorry.
+
+160
+00:07:05,247 --> 00:07:07,387
+"I'm off doing something else for a second
+
+161
+00:07:07,387 --> 00:07:08,820
+"or so, I'll be right back."
+
+162
+00:07:08,820 --> 00:07:10,183
+It has to instantly do it.
+
+163
+00:07:11,730 --> 00:07:14,090
+But sometimes you need
+to do those slow things.
+
+164
+00:07:14,090 --> 00:07:16,850
+You need to do some huge
+machine learning calculation
+
+165
+00:07:16,850 --> 00:07:19,300
+or something, or you need
+to go out over the network
+
+166
+00:07:19,300 --> 00:07:20,690
+and that's gonna take time.
+
+167
+00:07:20,690 --> 00:07:22,430
+There's just no avoiding that time.
+
+168
+00:07:22,430 --> 00:07:25,413
+So how during that time are
+you gonna not block your UI?
+
+169
+00:07:26,280 --> 00:07:27,113
+Well, we're gonna do that
+
+170
+00:07:27,113 --> 00:07:29,190
+by using different threads of execution.
+
+171
+00:07:29,190 --> 00:07:32,700
+Now I'm gonna assume most
+of you know what a thread is
+
+172
+00:07:32,700 --> 00:07:35,110
+but I'll just quickly talk about it.
+
+173
+00:07:35,110 --> 00:07:37,590
+Most modern operating
+systems have this ability
+
+174
+00:07:37,590 --> 00:07:40,280
+to say this code should execute
+
+175
+00:07:40,280 --> 00:07:42,750
+on its own thread of execution.
+
+176
+00:07:42,750 --> 00:07:45,380
+And then you can have
+multiple threads of execution
+
+177
+00:07:45,380 --> 00:07:47,320
+all executing simultaneously.
+
+178
+00:07:47,320 --> 00:07:50,760
+Now they may not actually
+be executing simultaneously.
+
+179
+00:07:50,760 --> 00:07:54,200
+You know, if you have
+multiple core processors
+
+180
+00:07:54,200 --> 00:07:56,890
+or a multi-processor or
+something, they might be.
+
+181
+00:07:56,890 --> 00:07:59,280
+But sometimes you just have a single core
+
+182
+00:07:59,280 --> 00:08:01,670
+or not enough cores and
+so it's actually switching
+
+183
+00:08:01,670 --> 00:08:04,500
+back and forth between them
+really quickly, not doing it.
+
+184
+00:08:04,500 --> 00:08:05,840
+But you don't care about any of that.
+
+185
+00:08:05,840 --> 00:08:08,460
+To you, it just appears that
+you've got different pieces
+
+186
+00:08:08,460 --> 00:08:10,420
+of code executing simultaneously.
+
+187
+00:08:10,420 --> 00:08:13,920
+They're running at the exact
+same time somehow, madly.
+
+188
+00:08:13,920 --> 00:08:18,550
+Now this can be a little
+bit complicated to manage
+
+189
+00:08:18,550 --> 00:08:20,560
+in terms of as a programmer deciding,
+
+190
+00:08:20,560 --> 00:08:22,140
+well this one wants to be running
+
+191
+00:08:22,140 --> 00:08:24,920
+on this thread of execution,
+this one over here.
+
+192
+00:08:24,920 --> 00:08:27,850
+So we really need some help in making
+
+193
+00:08:27,850 --> 00:08:31,100
+this multithreaded code
+readable and understandable
+
+194
+00:08:31,100 --> 00:08:33,650
+by mere mortals like us
+
+195
+00:08:33,650 --> 00:08:36,410
+and we need this because this time,
+
+196
+00:08:36,410 --> 00:08:38,800
+this thing about things
+running at the same time
+
+197
+00:08:38,800 --> 00:08:41,450
+adds this fourth dimensions to our code
+
+198
+00:08:41,450 --> 00:08:43,580
+that's hard for us to grok.
+
+199
+00:08:43,580 --> 00:08:45,770
+Swift solves this complexity issue
+
+200
+00:08:45,770 --> 00:08:48,720
+using something called queues.
+
+201
+00:08:48,720 --> 00:08:53,100
+Now a queue is nothing more
+than a bunch of blocks of code
+
+202
+00:08:53,100 --> 00:08:56,010
+that are sitting in line
+just patiently waiting
+
+203
+00:08:56,010 --> 00:08:59,150
+to get a thread of execution
+that will go and run them.
+
+204
+00:08:59,150 --> 00:09:01,890
+Now and by queue I mean
+the same thing as queue
+
+205
+00:09:01,890 --> 00:09:04,427
+like a queue at the
+movies or at least queue
+
+206
+00:09:04,427 --> 00:09:06,030
+that used to be at the movies
+
+207
+00:09:06,030 --> 00:09:07,760
+before they closed all the
+movie theaters (chuckles)
+
+208
+00:09:07,760 --> 00:09:10,690
+for coronavirus, but, you know, a line
+
+209
+00:09:10,690 --> 00:09:12,810
+where people are standing in
+line, the same thing here.
+
+210
+00:09:12,810 --> 00:09:14,370
+These are just blocks of code
+
+211
+00:09:14,370 --> 00:09:17,690
+waiting in line to get executed.
+
+212
+00:09:17,690 --> 00:09:20,270
+So with Swift we don't
+think about threads.
+
+213
+00:09:20,270 --> 00:09:21,310
+We don't even think about 'em.
+
+214
+00:09:21,310 --> 00:09:23,270
+All we think about is queues.
+
+215
+00:09:23,270 --> 00:09:26,240
+We let the system come
+up with all the threads
+
+216
+00:09:26,240 --> 00:09:28,960
+and all that stuff to take
+things off these queues
+
+217
+00:09:28,960 --> 00:09:30,730
+and execute them, that's up to the system.
+
+218
+00:09:30,730 --> 00:09:33,840
+All we think about is the
+queues and the blocks of code
+
+219
+00:09:33,840 --> 00:09:36,173
+we want to plop on those queues.
+
+220
+00:09:37,300 --> 00:09:40,710
+We specify these blocks of
+code that go on the queues
+
+221
+00:09:40,710 --> 00:09:44,450
+using closures, functions as arguments.
+
+222
+00:09:44,450 --> 00:09:47,870
+We'll see how this works, what
+the code looks like for this
+
+223
+00:09:47,870 --> 00:09:50,460
+but let's just quickly talk about queues
+
+224
+00:09:50,460 --> 00:09:52,367
+and what queues are available first.
+
+225
+00:09:52,367 --> 00:09:56,640
+And the most important queue
+in all the world of iOS
+
+226
+00:09:56,640 --> 00:09:59,180
+is called the main queue.
+
+227
+00:09:59,180 --> 00:10:02,400
+Now this is the queue that has
+all the blocks of code on it
+
+228
+00:10:02,400 --> 00:10:04,880
+that have anything to do with UI.
+
+229
+00:10:04,880 --> 00:10:07,350
+Anytime you want to do
+something in the UI,
+
+230
+00:10:07,350 --> 00:10:09,670
+you have to use the main queue.
+
+231
+00:10:09,670 --> 00:10:13,410
+It is absolutely unequivocally an error
+
+232
+00:10:13,410 --> 00:10:17,870
+to do UI in any block of
+code that is not executing,
+
+233
+00:10:17,870 --> 00:10:20,720
+was not chosen from, the main queue.
+
+234
+00:10:20,720 --> 00:10:24,300
+So when you tap on a screen,
+that is going to execute code
+
+235
+00:10:24,300 --> 00:10:25,393
+on the main queue.
+
+236
+00:10:26,410 --> 00:10:30,930
+When you do anything that
+draws in the UI in any way,
+
+237
+00:10:30,930 --> 00:10:33,350
+it's going to get initiated
+from the main queue.
+
+238
+00:10:33,350 --> 00:10:35,820
+There is some stuff like animation
+
+239
+00:10:35,820 --> 00:10:38,150
+where all the calculations
+of the animation,
+
+240
+00:10:38,150 --> 00:10:41,463
+the inter-frame, the
+animatableData that we did in,
+
+241
+00:10:41,463 --> 00:10:44,410
+that is going to happen in
+another queue off the main queue.
+
+242
+00:10:44,410 --> 00:10:47,480
+But it's all gonna get coordinated
+back onto the main queue
+
+243
+00:10:47,480 --> 00:10:50,010
+to do the drawing, so
+the stuff all happens
+
+244
+00:10:50,010 --> 00:10:51,660
+without smashing into each other.
+
+245
+00:10:54,230 --> 00:10:57,320
+So where do we do the
+long-lived stuff then,
+
+246
+00:10:57,320 --> 00:11:00,430
+the non-UI stuff, well,
+the best place to do it
+
+247
+00:11:00,430 --> 00:11:03,700
+is in this pile of background queues
+
+248
+00:11:03,700 --> 00:11:06,410
+that the system makes available to you.
+
+249
+00:11:06,410 --> 00:11:08,470
+So this is where we're gonna do anything
+
+250
+00:11:08,470 --> 00:11:10,390
+that's gonna take a long
+time like a network call
+
+251
+00:11:10,390 --> 00:11:12,280
+or some, like I said,
+machine learning (chuckles)
+
+252
+00:11:12,280 --> 00:11:15,210
+or some other analysis
+that's gonna take, you know,
+
+253
+00:11:15,210 --> 00:11:18,113
+more than a millisecond or so to do.
+
+254
+00:11:19,380 --> 00:11:23,280
+The system has, it
+manages a bunch of threads
+
+255
+00:11:23,280 --> 00:11:27,670
+to go pull blocks of code off
+of these background queues
+
+256
+00:11:27,670 --> 00:11:29,050
+and run them for you.
+
+257
+00:11:29,050 --> 00:11:31,360
+So things that you put on
+these background queues,
+
+258
+00:11:31,360 --> 00:11:33,920
+they all seem to almost
+be running simultaneously
+
+259
+00:11:33,920 --> 00:11:35,910
+and of course they're
+running simultaneously
+
+260
+00:11:35,910 --> 00:11:37,510
+with what's on the main queue.
+
+261
+00:11:37,510 --> 00:11:40,510
+But of course, the main queue
+always gets higher priority.
+
+262
+00:11:40,510 --> 00:11:43,150
+If someone taps or if you
+put your own block of code
+
+263
+00:11:43,150 --> 00:11:48,150
+on this main queue, it's
+gonna run much more quickly
+
+264
+00:11:48,240 --> 00:11:50,730
+and with more attention than anything
+
+265
+00:11:50,730 --> 00:11:52,453
+on these background queues.
+
+266
+00:11:53,290 --> 00:11:55,720
+The whole system that does all this
+
+267
+00:11:55,720 --> 00:11:57,740
+is called Grand Central Dispatch
+
+268
+00:11:57,740 --> 00:12:01,590
+because it's dispatching
+the code from the queues
+
+269
+00:12:01,590 --> 00:12:05,110
+to be executed by the threads.
+
+270
+00:12:05,110 --> 00:12:07,320
+And it has a number of different functions
+
+271
+00:12:07,320 --> 00:12:09,660
+in there in Grand Central Dispatch,
+
+272
+00:12:09,660 --> 00:12:12,710
+but really it boils down to
+these two fundamental tasks
+
+273
+00:12:12,710 --> 00:12:14,580
+that you're doing with GCD.
+
+274
+00:12:14,580 --> 00:12:16,800
+One is getting a queue
+
+275
+00:12:16,800 --> 00:12:19,400
+and two, plopping a block
+of code on the queue.
+
+276
+00:12:19,400 --> 00:12:24,400
+And that's pretty much
+99% of what GCD is about.
+
+277
+00:12:24,540 --> 00:12:26,510
+There's more stuff in there coordinating
+
+278
+00:12:26,510 --> 00:12:28,500
+with when things are
+happening on multiple queues,
+
+279
+00:12:28,500 --> 00:12:31,240
+but for our purposes,
+especially for the purposes
+
+280
+00:12:31,240 --> 00:12:36,240
+of keeping long-lived things
+off of the UI main queue,
+
+281
+00:12:36,350 --> 00:12:38,323
+these are the two main things we need.
+
+282
+00:12:39,340 --> 00:12:41,560
+So let's talk about the
+first of these two things
+
+283
+00:12:41,560 --> 00:12:45,690
+which is creating or
+getting access to a queue.
+
+284
+00:12:45,690 --> 00:12:48,470
+Now the first one is simple,
+that's the main queue.
+
+285
+00:12:48,470 --> 00:12:51,200
+You're just gonna use this
+simple DispatchQueue.main,
+
+286
+00:12:51,200 --> 00:12:53,000
+right, main is the static function
+
+287
+00:12:53,000 --> 00:12:54,830
+in the struct DispatchQueue.
+
+288
+00:12:54,830 --> 00:12:56,710
+And that is the queue you're gonna use
+
+289
+00:12:56,710 --> 00:12:58,780
+whenever you want to draw in the UI.
+
+290
+00:12:58,780 --> 00:13:01,280
+Couldn't be simpler, that's all you do.
+
+291
+00:13:01,280 --> 00:13:03,020
+What about all the background queues?
+
+292
+00:13:03,020 --> 00:13:05,470
+For that one you're gonna
+call this static function
+
+293
+00:13:05,470 --> 00:13:07,800
+in DispatchQueue called global
+
+294
+00:13:07,800 --> 00:13:12,300
+which takes an argument qos
+which is quality of service
+
+295
+00:13:12,300 --> 00:13:14,550
+which is kind of like priority.
+
+296
+00:13:14,550 --> 00:13:17,550
+Essentially how much do we want the system
+
+297
+00:13:17,550 --> 00:13:21,810
+to pay attention to the
+blocks of code on this queue.
+
+298
+00:13:21,810 --> 00:13:25,880
+And the four options you have
+here are userInteractive.
+
+299
+00:13:25,880 --> 00:13:27,860
+This is for things like
+you're in the middle
+
+300
+00:13:27,860 --> 00:13:30,480
+of dragging something across the screen
+
+301
+00:13:30,480 --> 00:13:33,030
+and you need to calculate something.
+
+302
+00:13:33,030 --> 00:13:36,430
+It might take a little bit,
+so you can't make the drag
+
+303
+00:13:36,430 --> 00:13:39,110
+be jaggy but you need
+that information now!
+
+304
+00:13:39,110 --> 00:13:42,073
+So this is a super high
+priority (chuckles) queue.
+
+305
+00:13:42,073 --> 00:13:44,400
+It's gonna get serviced a lot.
+
+306
+00:13:44,400 --> 00:13:46,280
+Then there's userInitiated.
+
+307
+00:13:46,280 --> 00:13:47,890
+Here you're not in the middle of a drag,
+
+308
+00:13:47,890 --> 00:13:50,137
+but the user did just tap on something.
+
+309
+00:13:50,137 --> 00:13:53,190
+"Do this for me," so you
+need to do this right now.
+
+310
+00:13:53,190 --> 00:13:56,310
+Then there's utility which
+is the user didn't just ask
+
+311
+00:13:56,310 --> 00:13:58,730
+for this, but it needs to be done.
+
+312
+00:13:58,730 --> 00:14:00,410
+So this is pretty high priority,
+
+313
+00:14:00,410 --> 00:14:01,640
+but it's not like the user
+
+314
+00:14:01,640 --> 00:14:03,370
+just clicked a button
+and wants this done now.
+
+315
+00:14:03,370 --> 00:14:06,210
+And then there's background
+which is really low priority.
+
+316
+00:14:06,210 --> 00:14:08,780
+This is, you know, I'm
+cleaning up my database
+
+317
+00:14:08,780 --> 00:14:11,356
+of old cruft or something that's
+going on in the background
+
+318
+00:14:11,356 --> 00:14:14,040
+that really has nothing to do
+with what the user perceives
+
+319
+00:14:14,040 --> 00:14:15,760
+to be their app, but it's something my app
+
+320
+00:14:15,760 --> 00:14:19,203
+needs to do to have proper
+operation or whatever.
+
+321
+00:14:20,407 --> 00:14:23,810
+And that's it, that's how
+you get a queue, super easy.
+
+322
+00:14:23,810 --> 00:14:26,157
+GCD you're gonna find is amazingly simple
+
+323
+00:14:26,157 --> 00:14:28,317
+and it's really simple
+to get ahold of a queue.
+
+324
+00:14:28,317 --> 00:14:29,890
+You're either gonna do the main queue
+
+325
+00:14:29,890 --> 00:14:32,363
+or one of these global background queues.
+
+326
+00:14:33,750 --> 00:14:37,470
+The second thing is plopping
+a closure onto a queue.
+
+327
+00:14:37,470 --> 00:14:38,440
+Well how are we gonna do that?
+
+328
+00:14:38,440 --> 00:14:40,680
+Well let's say I have my
+queue, either the main queue
+
+329
+00:14:40,680 --> 00:14:42,410
+or one of these global queues.
+
+330
+00:14:42,410 --> 00:14:45,290
+And I'm either gonna
+call this function async
+
+331
+00:14:45,290 --> 00:14:47,487
+or the function sync on that queue.
+
+332
+00:14:47,487 --> 00:14:50,050
+And the argument is just a closure
+
+333
+00:14:50,050 --> 00:14:52,470
+and it's a function
+that takes no arguments
+
+334
+00:14:52,470 --> 00:14:54,090
+and returns no arguments.
+
+335
+00:14:54,090 --> 00:14:56,710
+And inside there I'm gonna
+put whatever code I want
+
+336
+00:14:56,710 --> 00:14:59,450
+to be executed on that queue.
+
+337
+00:14:59,450 --> 00:15:03,380
+Now the second one of
+these, the .sync, blocks.
+
+338
+00:15:03,380 --> 00:15:06,190
+So it blocks and waits 'til that queue,
+
+339
+00:15:06,190 --> 00:15:07,120
+the green queue right there,
+
+340
+00:15:07,120 --> 00:15:10,560
+it waits until it has
+taken this block of code
+
+341
+00:15:10,560 --> 00:15:13,960
+off of its queue and
+executed it to completion.
+
+342
+00:15:13,960 --> 00:15:15,520
+Then it's gonna continue.
+
+343
+00:15:15,520 --> 00:15:19,500
+So we would never call
+queue.sync in UI code
+
+344
+00:15:19,500 --> 00:15:21,660
+because it would block the UI.
+
+345
+00:15:21,660 --> 00:15:24,740
+In fact, it's rare to
+call this .sync at all.
+
+346
+00:15:24,740 --> 00:15:26,900
+So we're almost always using .async
+
+347
+00:15:26,900 --> 00:15:28,670
+which means just take this block of code,
+
+348
+00:15:28,670 --> 00:15:31,560
+throw it on this other
+queue, and just keep going.
+
+349
+00:15:31,560 --> 00:15:32,920
+And so that means that whatever's
+
+350
+00:15:32,920 --> 00:15:34,680
+in that curly braces there,
+
+351
+00:15:34,680 --> 00:15:37,530
+it's gonna be executed
+some time in the future.
+
+352
+00:15:37,530 --> 00:15:39,700
+I don't know when, it's
+whenever that queue
+
+353
+00:15:39,700 --> 00:15:40,580
+gets around to it.
+
+354
+00:15:40,580 --> 00:15:42,373
+Now hopefully if that's the main queue,
+
+355
+00:15:42,373 --> 00:15:43,206
+it's gonna be pretty soon
+
+356
+00:15:43,206 --> 00:15:46,963
+but even that's not a
+locked, solid guarantee.
+
+357
+00:15:47,850 --> 00:15:50,543
+So your code has to be
+tolerant of the fact
+
+358
+00:15:50,543 --> 00:15:53,030
+that when you say queue.async blah,
+
+359
+00:15:53,030 --> 00:15:56,730
+whatever's in the blah
+might not be executed for,
+
+360
+00:15:56,730 --> 00:15:59,950
+you know, many milliseconds,
+possibly even longer.
+
+361
+00:15:59,950 --> 00:16:01,930
+So that's a little bit of thinking
+
+362
+00:16:01,930 --> 00:16:05,940
+you have to comprehend that
+as you write your code.
+
+363
+00:16:05,940 --> 00:16:07,490
+But async is the one we usually do.
+
+364
+00:16:07,490 --> 00:16:10,020
+We're just plopping these blocks of code
+
+365
+00:16:10,020 --> 00:16:13,723
+onto these other queues to
+get them to get executed.
+
+366
+00:16:15,070 --> 00:16:17,340
+Besides async and sync,
+there are some other ones.
+
+367
+00:16:17,340 --> 00:16:20,310
+asyncAfter, which will do the async
+
+368
+00:16:20,310 --> 00:16:23,320
+but after a little delay
+so that you can wait
+
+369
+00:16:23,320 --> 00:16:26,270
+to have it executed, but mostly
+we're gonna be doing async.
+
+370
+00:16:28,130 --> 00:16:30,320
+Beauty of this GCD API,
+
+371
+00:16:30,320 --> 00:16:31,820
+when you combine these two things,
+
+372
+00:16:31,820 --> 00:16:34,750
+having a queue and async
+to plop it on there
+
+373
+00:16:34,750 --> 00:16:37,827
+is when you're nesting these
+things inside of each other.
+
+374
+00:16:37,827 --> 00:16:39,510
+Now let's look at an example here.
+
+375
+00:16:39,510 --> 00:16:42,870
+So I'm doing DispatchQueue
+global userInitiated
+
+376
+00:16:42,870 --> 00:16:44,570
+so this is something
+the user asked me to do
+
+377
+00:16:44,570 --> 00:16:46,600
+but I'm gonna do it on
+a background thread,
+
+378
+00:16:46,600 --> 00:16:49,530
+not on the main queue.
+
+379
+00:16:49,530 --> 00:16:52,230
+So I'd call that async
+with a block of code
+
+380
+00:16:52,230 --> 00:16:54,020
+and in that block of code at the beginning
+
+381
+00:16:54,020 --> 00:16:54,953
+I'm gonna be doing something
+
+382
+00:16:54,953 --> 00:16:56,510
+that might take a very long time.
+
+383
+00:16:56,510 --> 00:16:58,740
+Maybe I'm accessing
+something on the network
+
+384
+00:16:58,740 --> 00:17:00,550
+or doing some calculation.
+
+385
+00:17:00,550 --> 00:17:02,840
+And it's fine to do because
+I'm not doing this code,
+
+386
+00:17:02,840 --> 00:17:05,770
+this curly brace that
+has started right there
+
+387
+00:17:05,770 --> 00:17:07,560
+is not doing something on the main queue.
+
+388
+00:17:07,560 --> 00:17:10,900
+So that's fine to take as
+long as I want right here.
+
+389
+00:17:10,900 --> 00:17:13,400
+But this longtime thing that we're doing,
+
+390
+00:17:13,400 --> 00:17:15,740
+when it comes back
+maybe it's gonna require
+
+391
+00:17:15,740 --> 00:17:16,780
+a change to the UI.
+
+392
+00:17:16,780 --> 00:17:19,270
+Maybe I fetched an image and
+now I wanna put that image
+
+393
+00:17:19,270 --> 00:17:22,320
+on the UI, but we can't do that UI here
+
+394
+00:17:22,320 --> 00:17:23,880
+because we are currently
+
+395
+00:17:23,880 --> 00:17:25,670
+on one of these global background queues.
+
+396
+00:17:25,670 --> 00:17:28,260
+We can't do UI on this queue.
+
+397
+00:17:28,260 --> 00:17:31,420
+So this code that we
+posted async to that queue
+
+398
+00:17:31,420 --> 00:17:33,230
+can't do UI here.
+
+399
+00:17:33,230 --> 00:17:35,570
+But that's no problem,
+let's just turn around
+
+400
+00:17:35,570 --> 00:17:38,600
+and post a block of code
+that does do the UI thing
+
+401
+00:17:38,600 --> 00:17:39,540
+back on the main queue.
+
+402
+00:17:39,540 --> 00:17:42,280
+And the main queue eventually
+will get through its queue
+
+403
+00:17:42,280 --> 00:17:45,060
+and get to this one and execute it.
+
+404
+00:17:45,060 --> 00:17:47,270
+And again, the main queue, high priority.
+
+405
+00:17:47,270 --> 00:17:48,990
+It's probably not gonna take long.
+
+406
+00:17:48,990 --> 00:17:51,200
+It might be nothing on the
+queue when you put it on there,
+
+407
+00:17:51,200 --> 00:17:54,180
+and boom it just runs really quickly.
+
+408
+00:17:54,180 --> 00:17:57,150
+But conceptually the point is we're taking
+
+409
+00:17:57,150 --> 00:17:58,697
+this block of code and
+telling the main queue,
+
+410
+00:17:58,697 --> 00:18:00,770
+"Hey, you go run this thing."
+
+411
+00:18:00,770 --> 00:18:02,650
+And so you can do UI in there.
+
+412
+00:18:02,650 --> 00:18:06,650
+This makes asynchronous
+code almost look synchronous
+
+413
+00:18:06,650 --> 00:18:08,310
+but they're not quite.
+
+414
+00:18:08,310 --> 00:18:12,035
+First outer block there, the
+outer yellow DispatchQueue
+
+415
+00:18:12,035 --> 00:18:14,810
+async is, it could take a long time.
+
+416
+00:18:14,810 --> 00:18:16,580
+And so that inner line
+might not be happening
+
+417
+00:18:16,580 --> 00:18:18,020
+for 10 seconds.
+
+418
+00:18:18,020 --> 00:18:21,040
+And what if the user is
+like totally navigating away
+
+419
+00:18:21,040 --> 00:18:23,160
+from this in their UI,
+they're just not even,
+
+420
+00:18:23,160 --> 00:18:25,550
+it took so long they
+don't even care anymore.
+
+421
+00:18:25,550 --> 00:18:26,617
+And then you come back and you're like,
+
+422
+00:18:26,617 --> 00:18:28,500
+"Oh, now I want to put this image up,"
+
+423
+00:18:28,500 --> 00:18:29,960
+but the user doesn't care
+about that image anymore.
+
+424
+00:18:29,960 --> 00:18:32,360
+They're off doing
+something else in the app.
+
+425
+00:18:32,360 --> 00:18:33,800
+That's why I'm saying you
+have to think a little bit
+
+426
+00:18:33,800 --> 00:18:37,410
+about the time, but at
+least it makes it read,
+
+427
+00:18:37,410 --> 00:18:38,880
+from a conceptual standpoint,
+
+428
+00:18:38,880 --> 00:18:41,713
+looks almost like
+synchronous code right here.
+
+429
+00:18:42,960 --> 00:18:45,600
+This DispatchQueue.main.async that we saw,
+
+430
+00:18:45,600 --> 00:18:48,240
+you're gonna often do that.
+
+431
+00:18:48,240 --> 00:18:49,990
+And the reason you're gonna often do that
+
+432
+00:18:49,990 --> 00:18:51,590
+when you're doing asynchronous programming
+
+433
+00:18:51,590 --> 00:18:53,810
+is you're gonna be doing
+things in the background
+
+434
+00:18:53,810 --> 00:18:57,210
+that are gonna result in things
+that are gonna affect the UI
+
+435
+00:18:57,210 --> 00:18:59,710
+and so you're gonna have
+to Dispatch main async
+
+436
+00:18:59,710 --> 00:19:03,830
+back to the UI to do the
+UI results of those things.
+
+437
+00:19:03,830 --> 00:19:05,730
+However you're not actually gonna call
+
+438
+00:19:05,730 --> 00:19:09,910
+DispatchQueue.global qos very often.
+
+439
+00:19:09,910 --> 00:19:11,350
+Why aren't you gonna call that very much?
+
+440
+00:19:11,350 --> 00:19:15,400
+Well, that's because there
+are higher-level APIs
+
+441
+00:19:15,400 --> 00:19:18,750
+for managing this background activities
+
+442
+00:19:18,750 --> 00:19:19,840
+that you're gonna be calling.
+
+443
+00:19:19,840 --> 00:19:22,960
+For example, if you
+wanted to fetch an image
+
+444
+00:19:22,960 --> 00:19:24,690
+over the network which we're gonna do
+
+445
+00:19:24,690 --> 00:19:28,000
+by doing Dispatch global
+in the demo later today,
+
+446
+00:19:28,000 --> 00:19:28,930
+but if you wanted to do it,
+
+447
+00:19:28,930 --> 00:19:31,630
+you really would use this
+thing called URLSession.
+
+448
+00:19:31,630 --> 00:19:36,410
+So URLSession is a struct
+and it takes the information
+
+449
+00:19:36,410 --> 00:19:38,240
+about the URL you want and it goes off
+
+450
+00:19:38,240 --> 00:19:43,180
+and it puts something
+on the global QoS queues
+
+451
+00:19:43,180 --> 00:19:44,940
+to go do that.
+
+452
+00:19:44,940 --> 00:19:46,640
+But you have to be a little careful here
+
+453
+00:19:46,640 --> 00:19:49,740
+because URLSession also takes an argument
+
+454
+00:19:49,740 --> 00:19:52,200
+which is a closure you give it
+
+455
+00:19:52,200 --> 00:19:54,910
+to execute when the image comes back.
+
+456
+00:19:54,910 --> 00:19:58,820
+That closure is also gonna
+be executed by URLSession
+
+457
+00:19:58,820 --> 00:20:00,830
+on this Dispatch global queue.
+
+458
+00:20:00,830 --> 00:20:02,730
+So we can't do UI in there.
+
+459
+00:20:02,730 --> 00:20:05,080
+So whenever you're using
+something like URLSession
+
+460
+00:20:05,080 --> 00:20:07,777
+you give the closure that
+says, "Hey, go fetch this
+
+461
+00:20:07,777 --> 00:20:09,850
+"and when you're done, call this closure,"
+
+462
+00:20:09,850 --> 00:20:12,356
+that closure is almost
+certainly gonna be doing
+
+463
+00:20:12,356 --> 00:20:13,189
+DispatchQueue.main.async
+inside of it to dispatch
+
+464
+00:20:16,278 --> 00:20:19,340
+and go back to the main
+queue to put the UI result
+
+465
+00:20:20,470 --> 00:20:23,170
+of whatever was fetched by the URLSession.
+
+466
+00:20:24,418 --> 00:20:26,520
+Now again today, I want
+you to understand GCD.
+
+467
+00:20:26,520 --> 00:20:29,720
+So that's why we're gonna
+do the DispatchQueue global
+
+468
+00:20:29,720 --> 00:20:30,897
+ourselves and then we're gonna do
+
+469
+00:20:30,897 --> 00:20:33,360
+a DispatchQueue.main.async ourselves.
+
+470
+00:20:33,360 --> 00:20:35,730
+But in the real world, if
+I was fetching an image
+
+471
+00:20:35,730 --> 00:20:38,630
+which is what we're doing in
+our demo, I'd use URLSession.
+
+472
+00:20:39,570 --> 00:20:41,910
+All right, so let's get
+to that demo right away.
+
+473
+00:20:41,910 --> 00:20:43,740
+I already talked about
+what we're gonna be doing,
+
+474
+00:20:43,740 --> 00:20:44,823
+so let's do it!
+
+475
+00:20:46,390 --> 00:20:49,240
+This demo is a pretty big one.
+
+476
+00:20:49,240 --> 00:20:52,760
+We are going to do a whole
+nother app from scratch.
+
+477
+00:20:52,760 --> 00:20:55,650
+That way you can compare and
+contrast what you saw us do
+
+478
+00:20:55,650 --> 00:20:57,927
+in Memorize versus a
+completely different app.
+
+479
+00:20:57,927 --> 00:21:00,940
+And then hopefully all the
+things you did in Memorize
+
+480
+00:21:00,940 --> 00:21:03,900
+won't seem so, you
+know, Memorize specific.
+
+481
+00:21:03,900 --> 00:21:06,363
+You'll see which ones of
+them are just general things
+
+482
+00:21:06,363 --> 00:21:10,900
+that we're doing in every app
+versus those specific things.
+
+483
+00:21:10,900 --> 00:21:13,530
+Let me show you what this
+app is going to look like
+
+484
+00:21:13,530 --> 00:21:16,110
+before we get started here.
+
+485
+00:21:16,110 --> 00:21:19,630
+It's called EmojiArt and it lets us build
+
+486
+00:21:19,630 --> 00:21:23,200
+some sort of art here
+out of emojis, of course,
+
+487
+00:21:23,200 --> 00:21:25,190
+'cause we love emojis.
+
+488
+00:21:25,190 --> 00:21:27,630
+And across the top you can
+see we have some emojis
+
+489
+00:21:27,630 --> 00:21:29,280
+to choose from to build out of
+
+490
+00:21:29,280 --> 00:21:32,160
+and we can even choose
+different kinds of emojis,
+
+491
+00:21:32,160 --> 00:21:34,920
+activities, animals, whatever.
+
+492
+00:21:34,920 --> 00:21:37,520
+These lists of emojis
+are editable by the user.
+
+493
+00:21:37,520 --> 00:21:39,830
+If they click on here, they can actually
+
+494
+00:21:39,830 --> 00:21:42,630
+remove emojis from there
+or even click on here
+
+495
+00:21:42,630 --> 00:21:45,830
+and go to the emoji keyboard
+and add more emojis,
+
+496
+00:21:45,830 --> 00:21:50,200
+maybe add another face
+in here or whatever.
+
+497
+00:21:50,200 --> 00:21:53,240
+And you use the emojis to build your art
+
+498
+00:21:53,240 --> 00:21:55,580
+but of course it's nice
+to have a good background
+
+499
+00:21:55,580 --> 00:21:57,340
+so I've gone over here to Google.
+
+500
+00:21:57,340 --> 00:22:02,280
+By the way, this right
+here is the iPad multi-app
+
+501
+00:22:02,280 --> 00:22:05,480
+user interface here where I've
+got my EmojiArt on the left
+
+502
+00:22:05,480 --> 00:22:07,410
+and I've got Safari on the right.
+
+503
+00:22:07,410 --> 00:22:10,220
+And I can drag Safari
+completely away if I want,
+
+504
+00:22:10,220 --> 00:22:12,950
+just leaving my EmojiArt or go down here
+
+505
+00:22:12,950 --> 00:22:16,650
+and grab Safari and drag it back out again
+
+506
+00:22:16,650 --> 00:22:19,783
+and then resize it to
+whatever size that I want.
+
+507
+00:22:20,670 --> 00:22:23,090
+I'm going to choose my background here
+
+508
+00:22:23,090 --> 00:22:24,993
+by using drag and drop.
+
+509
+00:22:25,920 --> 00:22:28,190
+Here I have searched for
+my favorite thing here,
+
+510
+00:22:28,190 --> 00:22:31,230
+countryside cartoons, and
+I'm just looking around here
+
+511
+00:22:31,230 --> 00:22:34,130
+for all the countryside
+cartoons on the internet.
+
+512
+00:22:34,130 --> 00:22:37,370
+And I'm just gonna pick
+one here and lift it up
+
+513
+00:22:37,370 --> 00:22:38,870
+and you see when I drag it over,
+
+514
+00:22:38,870 --> 00:22:41,010
+it gets that little green
+plus sign in the corner.
+
+515
+00:22:41,010 --> 00:22:45,090
+And if I drop, hmm, it
+adds it as the background.
+
+516
+00:22:45,090 --> 00:22:47,890
+We're gonna make it so
+you can zoom in here
+
+517
+00:22:47,890 --> 00:22:51,230
+or we could pan around a little bit.
+
+518
+00:22:51,230 --> 00:22:53,160
+Then we can add our emojis.
+
+519
+00:22:53,160 --> 00:22:57,590
+So let's see, let's see if we
+can find, here's a bicyclist.
+
+520
+00:22:57,590 --> 00:23:00,960
+So we'll just pick up
+Mr. bicyclist right here,
+
+521
+00:23:00,960 --> 00:23:02,730
+put him on the road.
+
+522
+00:23:02,730 --> 00:23:04,880
+And he's a little small,
+so I'm gonna select him
+
+523
+00:23:04,880 --> 00:23:06,533
+and then make him bigger.
+
+524
+00:23:08,633 --> 00:23:10,240
+Then of course we'd like
+some nature as well.
+
+525
+00:23:10,240 --> 00:23:11,690
+Let's go find some animals.
+
+526
+00:23:11,690 --> 00:23:16,690
+Oh, a bee, one of my favorite
+things in nature is a bee.
+
+527
+00:23:16,830 --> 00:23:19,360
+Where would we be without bees?
+
+528
+00:23:19,360 --> 00:23:21,760
+And maybe we'll add
+some perspective to this
+
+529
+00:23:21,760 --> 00:23:24,810
+by having some of the bees
+seem to be closer to us
+
+530
+00:23:24,810 --> 00:23:27,463
+and some of the bees farther away.
+
+531
+00:23:29,870 --> 00:23:32,180
+So our goal is to build this app.
+
+532
+00:23:32,180 --> 00:23:34,110
+Now today, all we're going to do
+
+533
+00:23:34,110 --> 00:23:36,120
+is put this little thing up here.
+
+534
+00:23:36,120 --> 00:23:37,300
+We're not gonna have a chooser
+
+535
+00:23:37,300 --> 00:23:38,820
+that lets us choose different kinds,
+
+536
+00:23:38,820 --> 00:23:42,440
+we're just gonna have
+one row of emoji up here.
+
+537
+00:23:42,440 --> 00:23:44,420
+And we also want to be
+able to drag and drop
+
+538
+00:23:44,420 --> 00:23:46,830
+to do our background, and
+we also want to be able
+
+539
+00:23:46,830 --> 00:23:50,360
+to pick up these emojis
+and drop them in there.
+
+540
+00:23:50,360 --> 00:23:52,810
+Then your homework for
+next week is going to be
+
+541
+00:23:52,810 --> 00:23:56,550
+to be able to select them
+and then resize these emojis
+
+542
+00:23:56,550 --> 00:23:59,160
+or to move them around.
+
+543
+00:23:59,160 --> 00:24:02,040
+And then next week, we're also going
+
+544
+00:24:02,040 --> 00:24:05,133
+to add this little chooser
+up here and make it
+
+545
+00:24:05,133 --> 00:24:07,410
+so that these documents persist
+
+546
+00:24:07,410 --> 00:24:09,920
+'cause right now, if I quit
+this app and went back in,
+
+547
+00:24:09,920 --> 00:24:11,010
+I'd lose my documents.
+
+548
+00:24:11,010 --> 00:24:14,110
+So we obviously want to
+be able to save documents.
+
+549
+00:24:14,110 --> 00:24:16,620
+And so we got a lot of
+work to do with this app,
+
+550
+00:24:16,620 --> 00:24:19,643
+but let's get started today
+with the basics of it.
+
+551
+00:24:20,500 --> 00:24:24,960
+So this is a completely
+brand new project, of course.
+
+552
+00:24:24,960 --> 00:24:26,860
+Now you don't have to follow along,
+
+553
+00:24:26,860 --> 00:24:29,040
+you won't be asked to
+do that in your homework
+
+554
+00:24:29,040 --> 00:24:30,450
+like you were the first two weeks.
+
+555
+00:24:30,450 --> 00:24:34,180
+But again, it's always
+recommended as a learning exercise
+
+556
+00:24:34,180 --> 00:24:36,370
+to follow along.
+
+557
+00:24:36,370 --> 00:24:40,210
+So let's get started here
+by clicking new project.
+
+558
+00:24:40,210 --> 00:24:43,180
+We always pick Single
+View App in this class.
+
+559
+00:24:43,180 --> 00:24:47,020
+I'm gonna call this thing
+EmojiArt, all right.
+
+560
+00:24:47,020 --> 00:24:49,950
+Everything else the same
+as we had for Memorize.
+
+561
+00:24:49,950 --> 00:24:52,330
+And I'm gonna put it in
+Developer right here,
+
+562
+00:24:52,330 --> 00:24:54,200
+same place as I'm putting my Memorize.
+
+563
+00:24:55,761 --> 00:24:58,260
+And here it is, let's
+go make a lot of space
+
+564
+00:24:58,260 --> 00:25:00,220
+so that we can see our code very clearly.
+
+565
+00:25:00,220 --> 00:25:02,453
+We'll even make that a little small there.
+
+566
+00:25:03,536 --> 00:25:04,369
+Now let's dive right in.
+
+567
+00:25:04,369 --> 00:25:07,490
+You already know the basics
+of how to do things here
+
+568
+00:25:07,490 --> 00:25:10,940
+so let's start by making our ViewModel.
+
+569
+00:25:10,940 --> 00:25:14,143
+So I'm just gonna go up
+here, File, New, File.
+
+570
+00:25:15,050 --> 00:25:17,790
+And it's a Swift file,
+right, part of the UI
+
+571
+00:25:17,790 --> 00:25:19,180
+but not a View itself.
+
+572
+00:25:19,180 --> 00:25:21,771
+Oh, let's make sure we
+put it in the right place.
+
+573
+00:25:21,771 --> 00:25:25,310
+And I'm gonna call my
+ViewModel here EmojiArtDocument
+
+574
+00:25:25,310 --> 00:25:28,480
+because my ViewModel's gonna
+represent one document,
+
+575
+00:25:28,480 --> 00:25:29,530
+one EmojiArtDocument.
+
+576
+00:25:30,450 --> 00:25:33,760
+And you could imagine some day having a UI
+
+577
+00:25:33,760 --> 00:25:36,760
+in my EmojiArt that would let
+me open different documents
+
+578
+00:25:36,760 --> 00:25:40,033
+and each one would be represented
+with its own ViewModel.
+
+579
+00:25:41,230 --> 00:25:42,900
+ViewModels of course are UI
+
+580
+00:25:42,900 --> 00:25:46,170
+so we're gonna important SwiftUI
+and they're also classes,
+
+581
+00:25:46,170 --> 00:25:49,700
+so we're gonna have this
+EmojiArtDocument be a class
+
+582
+00:25:49,700 --> 00:25:54,700
+and we always do ObservableObject
+for our ViewModels
+
+583
+00:25:54,950 --> 00:25:57,880
+because they're the thing
+that manage this reactiveness
+
+584
+00:25:57,880 --> 00:26:00,330
+between things change in the Model
+
+585
+00:26:00,330 --> 00:26:03,230
+and we see them in the UI.
+
+586
+00:26:03,230 --> 00:26:06,620
+Now that we have a ViewModel,
+let's go back to our View
+
+587
+00:26:06,620 --> 00:26:08,860
+which is this ContentView right here
+
+588
+00:26:08,860 --> 00:26:11,160
+with this default ContentView business.
+
+589
+00:26:11,160 --> 00:26:13,040
+And I'm gonna put my ViewModel here
+
+590
+00:26:13,040 --> 00:26:16,940
+so I'm gonna have ObservedObject var.
+
+591
+00:26:16,940 --> 00:26:18,620
+Now I'm not gonna call it viewModel.
+
+592
+00:26:18,620 --> 00:26:19,670
+That's what we called it before.
+
+593
+00:26:19,670 --> 00:26:20,510
+I'm gonna call it something
+
+594
+00:26:20,510 --> 00:26:22,660
+we would actually call it. (chuckles)
+
+595
+00:26:22,660 --> 00:26:25,770
+In this case document, and
+that's an EmojiArtDocument.
+
+596
+00:26:26,960 --> 00:26:30,038
+We're not gonna do preview
+right off the bat here.
+
+597
+00:26:30,038 --> 00:26:32,820
+Our EmojiArt View is pretty
+much all about the things
+
+598
+00:26:32,820 --> 00:26:33,653
+that are dragged into it,
+
+599
+00:26:33,653 --> 00:26:36,450
+and of course in the preview
+window we can't drag it
+
+600
+00:26:36,450 --> 00:26:38,730
+in there but eventually
+we probably would want
+
+601
+00:26:38,730 --> 00:26:42,840
+to put that preview back and
+have maybe some test data
+
+602
+00:26:42,840 --> 00:26:44,998
+of some emojis in a background
+
+603
+00:26:44,998 --> 00:26:47,420
+so that we could see to make
+sure that thing looks good.
+
+604
+00:26:47,420 --> 00:26:48,793
+But for general purposes here,
+
+605
+00:26:48,793 --> 00:26:51,003
+we'll just turn that off for now.
+
+606
+00:26:52,090 --> 00:26:54,930
+And I don't like this name
+ContentView right here.
+
+607
+00:26:54,930 --> 00:26:57,620
+That's bad, so let's do the
+same thing we did before.
+
+608
+00:26:57,620 --> 00:27:00,493
+Command click on this and say Rename.
+
+609
+00:27:01,330 --> 00:27:03,790
+And now it's kind of
+searching for all the places,
+
+610
+00:27:03,790 --> 00:27:05,930
+you can see it here, that this appears.
+
+611
+00:27:05,930 --> 00:27:06,850
+And so I'm gonna rename this
+
+612
+00:27:06,850 --> 00:27:08,243
+to be EmojiArtDocumentView.
+
+613
+00:27:10,511 --> 00:27:12,756
+It's gonna be a View
+that shows a document.
+
+614
+00:27:12,756 --> 00:27:14,560
+And we can see, uh, it's
+not going to rename that.
+
+615
+00:27:14,560 --> 00:27:17,430
+Okay, we'll have to do that ourselves.
+
+616
+00:27:17,430 --> 00:27:18,393
+It's up here.
+
+617
+00:27:20,890 --> 00:27:22,520
+And of course, we got to change,
+
+618
+00:27:22,520 --> 00:27:24,210
+look at the places where this is called
+
+619
+00:27:24,210 --> 00:27:27,470
+and make sure we create a
+ViewModel for these things
+
+620
+00:27:27,470 --> 00:27:30,330
+and we know that's over
+here in our SceneDelegate,
+
+621
+00:27:30,330 --> 00:27:32,293
+contentView equals EmojiArtDocumentView.
+
+622
+00:27:33,235 --> 00:27:35,020
+And we'll have the document be for now
+
+623
+00:27:35,020 --> 00:27:39,450
+just a default EmojiArtDocument,
+an empty document.
+
+624
+00:27:39,450 --> 00:27:40,797
+Doesn't have anything in it.
+
+625
+00:27:40,797 --> 00:27:43,730
+And it's okay for us to do this initialize
+
+626
+00:27:43,730 --> 00:27:46,650
+with no arguments 'cause if we
+look at our EmojiArtDocument
+
+627
+00:27:46,650 --> 00:27:50,200
+it has no uninitialized
+variables, so it's perfectly fine
+
+628
+00:27:50,200 --> 00:27:52,310
+to do init that way.
+
+629
+00:27:52,310 --> 00:27:56,900
+All right, so let's start
+building our UI right off the bat
+
+630
+00:27:56,900 --> 00:28:01,160
+and our UI, if you recall,
+has this emoji at the top.
+
+631
+00:28:01,160 --> 00:28:03,890
+So let's try and build this little nice
+
+632
+00:28:03,890 --> 00:28:08,170
+scrollable list of emoji
+there, see if we can do that.
+
+633
+00:28:08,170 --> 00:28:11,060
+Now that scrollable list of
+emoji, that palette at the top,
+
+634
+00:28:11,060 --> 00:28:12,660
+that's shared by all documents.
+
+635
+00:28:12,660 --> 00:28:17,030
+So that does not want to
+be a var in an instance
+
+636
+00:28:17,030 --> 00:28:19,030
+of the document, 'cause
+remember an instance
+
+637
+00:28:19,030 --> 00:28:21,370
+of this ViewModel represents one document.
+
+638
+00:28:21,370 --> 00:28:23,997
+That wants to be a static var.
+
+639
+00:28:23,997 --> 00:28:27,040
+And in fact, for now we're
+gonna make him static let,
+
+640
+00:28:27,040 --> 00:28:29,900
+this palette of emoji,
+
+641
+00:28:29,900 --> 00:28:34,030
+and well, we'll just put some
+random things in here for now.
+
+642
+00:28:34,030 --> 00:28:35,400
+We know how to add emojis.
+
+643
+00:28:35,400 --> 00:28:39,210
+We'll go here, sure, put a star in there,
+
+644
+00:28:39,210 --> 00:28:42,200
+some clouds, what else we got down here?
+
+645
+00:28:42,200 --> 00:28:46,800
+An apple, yeah, maybe a earth.
+
+646
+00:28:46,800 --> 00:28:49,123
+And then what else we got, a pretzel,
+
+647
+00:28:50,330 --> 00:28:52,350
+yeah, and I don't wanna make you hungry
+
+648
+00:28:52,350 --> 00:28:54,070
+so I won't put any food in there.
+
+649
+00:28:54,070 --> 00:28:57,050
+But maybe like a baseball,
+that kinda thing.
+
+650
+00:28:57,050 --> 00:29:00,410
+All right, so this is just
+gonna be our default palette.
+
+651
+00:29:00,410 --> 00:29:04,210
+Eventually this is going to
+become an Array of palettes
+
+652
+00:29:04,210 --> 00:29:07,760
+so that we can have that
+nice chooser right here
+
+653
+00:29:07,760 --> 00:29:11,000
+where we can choose
+between these palettes.
+
+654
+00:29:11,000 --> 00:29:13,940
+But for now, we're not, we
+don't have that feature.
+
+655
+00:29:13,940 --> 00:29:15,500
+And so now that we have this palette,
+
+656
+00:29:15,500 --> 00:29:17,530
+let's just make our document View
+
+657
+00:29:17,530 --> 00:29:18,950
+instead of saying "Hello, World!"
+
+658
+00:29:18,950 --> 00:29:21,290
+let's have it display that.
+
+659
+00:29:21,290 --> 00:29:22,960
+Now this should be something you can
+
+660
+00:29:22,960 --> 00:29:25,070
+kind of instantly imagine
+how we're gonna do.
+
+661
+00:29:25,070 --> 00:29:27,973
+We're just gonna make
+an HStack of ForEach.
+
+662
+00:29:29,150 --> 00:29:32,450
+And the ForEach is going to
+be those EmojiArtDocument,
+
+663
+00:29:32,450 --> 00:29:34,310
+that static palette.
+
+664
+00:29:34,310 --> 00:29:36,840
+And then for each of the emojis in there
+
+665
+00:29:36,840 --> 00:29:39,730
+we want to just put a Text of the emoji.
+
+666
+00:29:39,730 --> 00:29:43,860
+Now this doesn't quite work
+because this is a String
+
+667
+00:29:43,860 --> 00:29:47,610
+and ForEach remember wants an Array,
+
+668
+00:29:47,610 --> 00:29:50,090
+either a range of Ints
+or it wants an Array
+
+669
+00:29:50,090 --> 00:29:51,850
+of Identifiable things.
+
+670
+00:29:51,850 --> 00:29:53,520
+And so a String is not an Array.
+
+671
+00:29:53,520 --> 00:29:57,260
+It's close, but there's a
+great little function on String
+
+672
+00:29:57,260 --> 00:30:00,430
+called map which will
+turn it into an Array
+
+673
+00:30:00,430 --> 00:30:01,770
+by calling a function,
+
+674
+00:30:01,770 --> 00:30:04,933
+which we're going to
+call String zero here.
+
+675
+00:30:05,810 --> 00:30:08,700
+And this function takes each
+character in the String,
+
+676
+00:30:08,700 --> 00:30:11,790
+so $0 is a character in the String
+
+677
+00:30:11,790 --> 00:30:14,757
+and it just, we're gonna
+apply this function to it.
+
+678
+00:30:14,757 --> 00:30:16,380
+But we're just gonna
+turn it into a String.
+
+679
+00:30:16,380 --> 00:30:18,780
+So String knows how to
+take a single character
+
+680
+00:30:18,780 --> 00:30:19,967
+and turn it into a String.
+
+681
+00:30:19,967 --> 00:30:23,610
+And so now we have ForEach
+on an Array of Strings.
+
+682
+00:30:23,610 --> 00:30:25,730
+This map returns an Array of Strings.
+
+683
+00:30:25,730 --> 00:30:27,540
+So that's cool, and
+that means this emoji's
+
+684
+00:30:27,540 --> 00:30:28,690
+gonna be a String.
+
+685
+00:30:28,690 --> 00:30:29,600
+But it's still not working.
+
+686
+00:30:29,600 --> 00:30:33,450
+We're getting the dreaded
+Oh, expected range of Int.
+
+687
+00:30:33,450 --> 00:30:35,010
+And we know why that is.
+
+688
+00:30:35,010 --> 00:30:38,670
+ForEach takes an Array of Identifiable
+
+689
+00:30:38,670 --> 00:30:42,360
+and Strings are not Identifiable.
+
+690
+00:30:42,360 --> 00:30:46,180
+Now it's interesting, we could
+put an extension on String
+
+691
+00:30:46,180 --> 00:30:48,880
+to make it Identifiable, like this.
+
+692
+00:30:48,880 --> 00:30:51,080
+Just by doing var id.
+
+693
+00:30:51,080 --> 00:30:53,050
+And I have a cool way to do that.
+
+694
+00:30:53,050 --> 00:30:55,280
+I'm gonna have the id be a String.
+
+695
+00:30:55,280 --> 00:30:59,260
+I'm just gonna return
+myself, okay I'm a String.
+
+696
+00:30:59,260 --> 00:31:01,170
+Strings are equatable.
+
+697
+00:31:01,170 --> 00:31:04,740
+By the way, this don't care
+for the id and Identifiable,
+
+698
+00:31:04,740 --> 00:31:06,660
+it's not a complete don't care.
+
+699
+00:31:06,660 --> 00:31:09,918
+Obviously this id has to be Equatable.
+
+700
+00:31:09,918 --> 00:31:11,410
+You have to be able to say == on it.
+
+701
+00:31:11,410 --> 00:31:13,770
+Otherwise I can't tell if
+two Identifiable things
+
+702
+00:31:13,770 --> 00:31:14,700
+are the same.
+
+703
+00:31:14,700 --> 00:31:17,000
+But a String, you can certainly do == on
+
+704
+00:31:17,000 --> 00:31:18,200
+so this is fine.
+
+705
+00:31:18,200 --> 00:31:19,677
+But what's this error that I'm getting.
+
+706
+00:31:19,677 --> 00:31:22,817
+"Property id must be declared public
+
+707
+00:31:22,817 --> 00:31:24,237
+"because it matches a requirement
+
+708
+00:31:24,237 --> 00:31:27,130
+"in a public protocol 'Identifiable.'"
+
+709
+00:31:27,130 --> 00:31:29,690
+Well, Identifiable is
+indeed a public protocol
+
+710
+00:31:29,690 --> 00:31:31,780
+and String is a public class.
+
+711
+00:31:31,780 --> 00:31:35,320
+So that makes us have to
+mark this also as public.
+
+712
+00:31:35,320 --> 00:31:36,610
+Now what does public mean?
+
+713
+00:31:36,610 --> 00:31:39,430
+We have not seen the
+access control public.
+
+714
+00:31:39,430 --> 00:31:43,700
+We saw private, and private
+set, but we haven't seen public.
+
+715
+00:31:43,700 --> 00:31:48,140
+Public means non-private in a library.
+
+716
+00:31:48,140 --> 00:31:51,800
+Identifiable and String
+are clearly in the SwiftUI
+
+717
+00:31:51,800 --> 00:31:53,910
+imported library right here.
+
+718
+00:31:53,910 --> 00:31:56,810
+And so they have to mark
+things that they want people
+
+719
+00:31:56,810 --> 00:32:01,100
+outside the library to actually
+be able to see with public.
+
+720
+00:32:01,100 --> 00:32:02,940
+Now you'd not gonna be doing
+libraries in this class
+
+721
+00:32:02,940 --> 00:32:05,060
+so you're never gonna
+mark anything public.
+
+722
+00:32:05,060 --> 00:32:06,940
+But if one day you do work on a library,
+
+723
+00:32:06,940 --> 00:32:09,513
+you'll know what public
+is all about there.
+
+724
+00:32:10,780 --> 00:32:13,440
+Now this does work, you
+see, no errors, right?
+
+725
+00:32:13,440 --> 00:32:15,290
+This is now an Array of Identifiables
+
+726
+00:32:16,440 --> 00:32:18,270
+because Strings are Identifiables.
+
+727
+00:32:18,270 --> 00:32:20,410
+But this is also wrong, okay.
+
+728
+00:32:20,410 --> 00:32:21,480
+We really wouldn't (chuckles)
+
+729
+00:32:21,480 --> 00:32:25,220
+want to make Strings Identifiable
+throughout our entire app.
+
+730
+00:32:25,220 --> 00:32:26,760
+That's really, we only want them
+
+731
+00:32:26,760 --> 00:32:29,290
+to be Identifiable right here.
+
+732
+00:32:29,290 --> 00:32:31,370
+And ForEach understands
+that you're sometimes
+
+733
+00:32:31,370 --> 00:32:34,170
+gonna pass an Array of
+something that you don't,
+
+734
+00:32:34,170 --> 00:32:37,950
+you can't make it conform to Identifiable.
+
+735
+00:32:37,950 --> 00:32:39,960
+So it has a nice little extra argument
+
+736
+00:32:39,960 --> 00:32:42,130
+you could specify called id.
+
+737
+00:32:42,130 --> 00:32:47,130
+Now id lets you specify
+which var on these things
+
+738
+00:32:48,240 --> 00:32:50,860
+to use to uniquely identify it.
+
+739
+00:32:50,860 --> 00:32:53,940
+So it's essentially like
+use this var as the id
+
+740
+00:32:53,940 --> 00:32:55,850
+as if this thing were Identifiable,
+
+741
+00:32:55,850 --> 00:32:57,220
+which is really really convenient.
+
+742
+00:32:57,220 --> 00:33:01,413
+Now the var that I'm gonna
+use in String is .self.
+
+743
+00:33:02,290 --> 00:33:05,950
+Okay, (chuckles) so every
+object essentially has a var
+
+744
+00:33:05,950 --> 00:33:09,100
+you can't see called
+self and that is itself.
+
+745
+00:33:09,100 --> 00:33:12,140
+So that's a great identifier for a String.
+
+746
+00:33:12,140 --> 00:33:16,640
+But what is this syntax
+right here, \.self?
+
+747
+00:33:16,640 --> 00:33:19,550
+This is called a key path in Swift.
+
+748
+00:33:19,550 --> 00:33:22,630
+And a key path is just a
+really cool simple syntax
+
+749
+00:33:22,630 --> 00:33:27,130
+to be able to specify a
+var on another object.
+
+750
+00:33:27,130 --> 00:33:29,980
+So here, this is backslash
+means this is a key path
+
+751
+00:33:29,980 --> 00:33:33,453
+and dot means on this thing right here,
+
+752
+00:33:33,453 --> 00:33:36,620
+this class of things, String, self.
+
+753
+00:33:36,620 --> 00:33:38,470
+And I could press any, you know, any var.
+
+754
+00:33:38,470 --> 00:33:41,010
+I could even say like this, foo.bar
+
+755
+00:33:41,010 --> 00:33:44,260
+and call a var to return
+something, then call a var on that.
+
+756
+00:33:44,260 --> 00:33:46,050
+It's a pretty flexible little system,
+
+757
+00:33:46,050 --> 00:33:48,700
+this little key path oriented stuff.
+
+758
+00:33:48,700 --> 00:33:51,900
+But you can see that fixes
+everything right here.
+
+759
+00:33:51,900 --> 00:33:54,503
+So let's run it and see what we got here.
+
+760
+00:33:55,740 --> 00:33:57,400
+And let's not run on an iPhone.
+
+761
+00:33:57,400 --> 00:34:00,120
+So this app that we're doing right here
+
+762
+00:34:00,120 --> 00:34:02,280
+is going to be an iPad app.
+
+763
+00:34:02,280 --> 00:34:05,270
+I'm gonna make it primarily for the iPad.
+
+764
+00:34:05,270 --> 00:34:08,910
+We're gonna find that because
+of the power of SwiftUI,
+
+765
+00:34:08,910 --> 00:34:10,770
+it's going to work (chuckles)
+quite well on the iPhone
+
+766
+00:34:10,770 --> 00:34:13,570
+as well but we're gonna
+develop it on the iPad first.
+
+767
+00:34:13,570 --> 00:34:16,580
+We drag and drop and all these
+things we want over here.
+
+768
+00:34:16,580 --> 00:34:19,180
+So there it is, yeah
+this shows Safari here
+
+769
+00:34:19,180 --> 00:34:21,770
+and now we're running our
+version of EmojiArt over here
+
+770
+00:34:21,770 --> 00:34:25,030
+so we lost all the stuff that
+I was showing you before.
+
+771
+00:34:25,030 --> 00:34:27,010
+But here they are, look
+at that, those are emojis.
+
+772
+00:34:27,010 --> 00:34:29,150
+Now, well our emojis have a little bit
+
+773
+00:34:29,150 --> 00:34:30,210
+of some problems here.
+
+774
+00:34:30,210 --> 00:34:32,360
+One, they're really small and we want 'em
+
+775
+00:34:32,360 --> 00:34:35,550
+to be scrollable, so let's
+go fix some of these things.
+
+776
+00:34:35,550 --> 00:34:37,520
+The smallness, we know how to fix that.
+
+777
+00:34:37,520 --> 00:34:41,410
+We're just gonna say .font
+and we'll use a system font
+
+778
+00:34:41,410 --> 00:34:45,140
+of size and I'm gonna be
+a good programmer here
+
+779
+00:34:45,140 --> 00:34:48,330
+and actually make a little let down here,
+
+780
+00:34:48,330 --> 00:34:53,330
+probably a private let
+called my defaultEmojiSize.
+
+781
+00:34:53,940 --> 00:34:55,317
+It's gonna be CGFloat.
+
+782
+00:34:55,317 --> 00:34:57,367
+I'm gonna say 40, I think I tried that out
+
+783
+00:34:57,367 --> 00:34:59,100
+and it seemed pretty good.
+
+784
+00:34:59,100 --> 00:35:02,029
+So let's say
+self.defaultEmojiSize right here.
+
+785
+00:35:02,029 --> 00:35:03,029
+That'll make it big.
+
+786
+00:35:04,041 --> 00:35:05,303
+Let's see what that looks like.
+
+787
+00:35:07,801 --> 00:35:08,870
+Yeah, okay, definitely much better.
+
+788
+00:35:08,870 --> 00:35:10,870
+That's closer to what
+we were having before.
+
+789
+00:35:10,870 --> 00:35:12,020
+What about the scrollability?
+
+790
+00:35:12,020 --> 00:35:14,360
+I'm dragging on this, it's not scrolling
+
+791
+00:35:14,360 --> 00:35:17,470
+back and forth here,
+that's super easy in Swift.
+
+792
+00:35:17,470 --> 00:35:19,820
+So this is so easy, I was
+thinking of having slides
+
+793
+00:35:19,820 --> 00:35:21,510
+on this (chuckles) and
+how to do ScrollViews
+
+794
+00:35:21,510 --> 00:35:24,970
+but it's so easy, it's
+really hardly even worth
+
+795
+00:35:24,970 --> 00:35:26,270
+having a slide over.
+
+796
+00:35:26,270 --> 00:35:28,710
+You just put it in a
+ScrollView and a ScrollView
+
+797
+00:35:28,710 --> 00:35:31,140
+will let you specify whether
+it scrolls horizontally
+
+798
+00:35:31,140 --> 00:35:32,670
+or vertically or both.
+
+799
+00:35:32,670 --> 00:35:36,460
+So our ScrollView obviously
+only scrolls horizontally.
+
+800
+00:35:36,460 --> 00:35:39,320
+We just wrap this in there
+and that's all we have to do.
+
+801
+00:35:39,320 --> 00:35:42,410
+Now this HStack that we had
+is going to be scrollable.
+
+802
+00:35:42,410 --> 00:35:45,280
+You see, I can scroll it around.
+
+803
+00:35:45,280 --> 00:35:47,560
+And one thing I don't
+like, it's kinda close
+
+804
+00:35:47,560 --> 00:35:48,610
+to the edge right there.
+
+805
+00:35:48,610 --> 00:35:51,490
+I want a little bit of
+room and we know how to do,
+
+806
+00:35:51,490 --> 00:35:53,360
+add a little bit of room to things.
+
+807
+00:35:53,360 --> 00:35:56,580
+So let's take this ScrollView
+and add a little padding.
+
+808
+00:35:56,580 --> 00:35:59,510
+And I'm only gonna do
+padding horizontally.
+
+809
+00:35:59,510 --> 00:36:01,137
+You've probably gathered by now
+
+810
+00:36:01,137 --> 00:36:03,630
+how the padding has a lot
+of different arguments.
+
+811
+00:36:03,630 --> 00:36:06,530
+You can specify exact
+paddings on just some edges
+
+812
+00:36:06,530 --> 00:36:08,300
+or default paddings or whatever.
+
+813
+00:36:08,300 --> 00:36:09,950
+This is gonna give me the default padding
+
+814
+00:36:09,950 --> 00:36:12,063
+but only on the left and right.
+
+815
+00:36:13,322 --> 00:36:16,480
+And I probably want the,
+vertically I want this thing
+
+816
+00:36:17,540 --> 00:36:19,520
+to use as little space as possible.
+
+817
+00:36:19,520 --> 00:36:20,610
+So I don't really want padding there
+
+818
+00:36:20,610 --> 00:36:23,160
+'cause I want my document
+to be as big as possible.
+
+819
+00:36:24,130 --> 00:36:27,000
+Speaking of my document,
+let's get my document on there
+
+820
+00:36:27,000 --> 00:36:28,610
+and have this push up to the top
+
+821
+00:36:28,610 --> 00:36:32,053
+and my document use all the
+rest of the space over there.
+
+822
+00:36:33,090 --> 00:36:36,490
+It's until we write the code
+that actually does a document
+
+823
+00:36:36,490 --> 00:36:38,670
+that can have a background
+and have all those emojis
+
+824
+00:36:38,670 --> 00:36:42,220
+on there, I'm just going
+to use a yellow rectangle
+
+825
+00:36:42,220 --> 00:36:43,950
+to be my document.
+
+826
+00:36:43,950 --> 00:36:47,660
+So I'm gonna put it in a VStack
+here with this ScrollView
+
+827
+00:36:47,660 --> 00:36:50,370
+that we just built for the emoji,
+
+828
+00:36:50,370 --> 00:36:55,130
+and a rectangle that is
+foregroundColor yellow.
+
+829
+00:37:00,660 --> 00:37:02,500
+And well, that's pretty
+darn close (chuckles)
+
+830
+00:37:02,500 --> 00:37:04,430
+to already looking exactly what I want.
+
+831
+00:37:04,430 --> 00:37:07,130
+Okay, I've got my scrollable
+list of emoji up here.
+
+832
+00:37:07,130 --> 00:37:09,040
+We could have any amount
+of emoji we wanted.
+
+833
+00:37:09,040 --> 00:37:10,687
+And here's my document.
+
+834
+00:37:10,687 --> 00:37:14,330
+The only thing is I really
+don't want this white line
+
+835
+00:37:14,330 --> 00:37:17,890
+down here, why is this not
+yellow all the way to the bottom?
+
+836
+00:37:17,890 --> 00:37:19,590
+And it's not yellow all
+the way to the bottom
+
+837
+00:37:19,590 --> 00:37:23,110
+because it's only drawing
+this yellow in the safe area,
+
+838
+00:37:23,110 --> 00:37:26,060
+what's called the safe area of this View.
+
+839
+00:37:26,060 --> 00:37:29,220
+And it considers this little
+area down here not safe
+
+840
+00:37:29,220 --> 00:37:30,480
+because it's got this little,
+
+841
+00:37:30,480 --> 00:37:33,880
+you see this little bar right here?
+
+842
+00:37:33,880 --> 00:37:36,120
+That's the bar that you
+use if you want to switch
+
+843
+00:37:36,120 --> 00:37:38,600
+to other apps in the iPad.
+
+844
+00:37:38,600 --> 00:37:41,150
+And so it considers that an adornment
+
+845
+00:37:41,150 --> 00:37:42,970
+that's always on the screen.
+
+846
+00:37:42,970 --> 00:37:45,200
+By default, it doesn't draw over that
+
+847
+00:37:45,200 --> 00:37:46,690
+in case there's something critical
+
+848
+00:37:46,690 --> 00:37:48,620
+that your app is drawing behind it.
+
+849
+00:37:48,620 --> 00:37:51,010
+But our app, we're gonna be
+able to zoom and pan around
+
+850
+00:37:51,010 --> 00:37:52,770
+so if there was some
+critical emoji (chuckles)
+
+851
+00:37:52,770 --> 00:37:54,790
+underneath this bar, we just move it,
+
+852
+00:37:54,790 --> 00:37:56,780
+move our document out
+of the way a little bit.
+
+853
+00:37:56,780 --> 00:37:59,700
+So we do want to move to
+the edges right there.
+
+854
+00:37:59,700 --> 00:38:03,010
+And in general in iOS
+when we are building apps,
+
+855
+00:38:03,010 --> 00:38:04,560
+content is king.
+
+856
+00:38:04,560 --> 00:38:08,650
+We want to use as much space
+as possible for our content
+
+857
+00:38:08,650 --> 00:38:11,190
+and as little space as
+possible for adornments, okay,
+
+858
+00:38:11,190 --> 00:38:13,030
+these little things like that
+
+859
+00:38:13,030 --> 00:38:15,350
+or like, or even our emoji here.
+
+860
+00:38:15,350 --> 00:38:17,270
+We want to try and keep that kinda small
+
+861
+00:38:17,270 --> 00:38:20,160
+so we have this huge
+space for our document.
+
+862
+00:38:20,160 --> 00:38:22,307
+So how do we tell
+SwiftUI, "Yeah, go ahead,
+
+863
+00:38:22,307 --> 00:38:25,500
+"use these unsafe areas like
+this little thing right here."
+
+864
+00:38:25,500 --> 00:38:29,520
+By the way, the notch on the
+iPhone is also an unsafe area.
+
+865
+00:38:29,520 --> 00:38:32,230
+So if want to use that,
+that is no problem.
+
+866
+00:38:32,230 --> 00:38:34,380
+We're just gonna go to our rectangle here
+
+867
+00:38:34,380 --> 00:38:37,570
+and say edges ignoring the safe area
+
+868
+00:38:37,570 --> 00:38:40,890
+are, and I'm gonna do the
+horizontal edges left and right
+
+869
+00:38:40,890 --> 00:38:43,670
+and also the bottom edge.
+
+870
+00:38:43,670 --> 00:38:47,340
+So I can do multiple areas to ignore here.
+
+871
+00:38:47,340 --> 00:38:49,263
+So let's see what that looks like.
+
+872
+00:38:53,684 --> 00:38:54,780
+Whoo-hoo!
+
+873
+00:38:54,780 --> 00:38:58,010
+We want to make that yellow
+rectangle be our document
+
+874
+00:38:58,010 --> 00:39:00,730
+so we need a Model for that document.
+
+875
+00:39:00,730 --> 00:39:03,800
+Now our Model for that
+document is just going to be
+
+876
+00:39:03,800 --> 00:39:05,967
+the background and then all the emoji
+
+877
+00:39:05,967 --> 00:39:07,760
+and where they are and what size they are.
+
+878
+00:39:07,760 --> 00:39:09,600
+That is, that's the entire Model.
+
+879
+00:39:09,600 --> 00:39:11,430
+Now don't get confused here
+
+880
+00:39:11,430 --> 00:39:14,900
+and maybe just because you did
+Memorize and you had themes,
+
+881
+00:39:14,900 --> 00:39:18,290
+you might be a little
+wondering what's going on here.
+
+882
+00:39:18,290 --> 00:39:20,240
+Yes, the Model for an EmojiArtDocument
+
+883
+00:39:21,330 --> 00:39:25,770
+is representing a visual
+thing, the emoji art itself.
+
+884
+00:39:25,770 --> 00:39:29,080
+But it's not itself a UI element.
+
+885
+00:39:29,080 --> 00:39:32,780
+It's still a kind of device
+independent representation
+
+886
+00:39:32,780 --> 00:39:35,400
+of an EmojiArtDocument, it's up to some UI
+
+887
+00:39:35,400 --> 00:39:39,280
+like SwiftUI to turn it into
+something that we can draw.
+
+888
+00:39:39,280 --> 00:39:42,860
+And I'm gonna emphasize this
+by making the coordinates
+
+889
+00:39:42,860 --> 00:39:45,800
+of these emojis and the size be Ints,
+
+890
+00:39:45,800 --> 00:39:48,320
+and clearly SwiftUI doesn't work in Ints,
+
+891
+00:39:48,320 --> 00:39:51,460
+it works in CGFloat, right,
+floating point numbers.
+
+892
+00:39:51,460 --> 00:39:54,330
+But I'm gonna make 'em Ints
+just so you can be really
+
+893
+00:39:54,330 --> 00:39:56,240
+seeing the difference between my Model,
+
+894
+00:39:56,240 --> 00:39:59,300
+which is this device
+independent, UI independent
+
+895
+00:39:59,300 --> 00:40:01,483
+representation of it and my UI.
+
+896
+00:40:02,860 --> 00:40:04,757
+So let's go create that Model.
+
+897
+00:40:04,757 --> 00:40:07,350
+We're gonna go File, New up here.
+
+898
+00:40:07,350 --> 00:40:11,380
+And it is a Model, so it's a Swift file.
+
+899
+00:40:11,380 --> 00:40:12,560
+It's all in the right places.
+
+900
+00:40:12,560 --> 00:40:15,110
+I'm gonna call my Model EmojiArt.
+
+901
+00:40:15,110 --> 00:40:17,980
+That is what my Model is, it's emoji art.
+
+902
+00:40:17,980 --> 00:40:20,849
+Here it is, I'm not gonna
+change to SwiftUI here.
+
+903
+00:40:20,849 --> 00:40:23,319
+Just going to import Foundation.
+
+904
+00:40:23,319 --> 00:40:26,490
+It's a simple struct called EmojiArt
+
+905
+00:40:26,490 --> 00:40:29,660
+and it has this backgroundURL.
+
+906
+00:40:29,660 --> 00:40:32,454
+I'm gonna store the URL for background.
+
+907
+00:40:32,454 --> 00:40:36,330
+It's gonna be of type
+URL, optional URL though.
+
+908
+00:40:36,330 --> 00:40:40,070
+This URL is just a Swift library struct
+
+909
+00:40:40,070 --> 00:40:44,097
+that holds a URL like https://.
+
+910
+00:40:44,097 --> 00:40:46,067
+That is a URL and it holds it
+
+911
+00:40:46,067 --> 00:40:49,000
+and it also can hold file URLs in there.
+
+912
+00:40:49,000 --> 00:40:50,690
+And the reason I'm making this optional
+
+913
+00:40:50,690 --> 00:40:52,670
+is that our documents obviously start out
+
+914
+00:40:52,670 --> 00:40:55,570
+with no background and it's actually valid
+
+915
+00:40:55,570 --> 00:40:57,664
+to have an EmojiArtDocument
+with no background.
+
+916
+00:40:57,664 --> 00:41:00,290
+It would just be probably
+white or something.
+
+917
+00:41:00,290 --> 00:41:02,100
+It wouldn't look that good maybe.
+
+918
+00:41:02,100 --> 00:41:04,510
+But it's certainly legal, so that's why
+
+919
+00:41:04,510 --> 00:41:06,450
+I'm gonna make this an optional.
+
+920
+00:41:06,450 --> 00:41:08,230
+The other thing is the emojis.
+
+921
+00:41:08,230 --> 00:41:11,990
+So the emojis are just gonna
+be some Array of emojis
+
+922
+00:41:11,990 --> 00:41:15,260
+of some sort, so I'm gonna
+have to have a struct Emoji
+
+923
+00:41:15,260 --> 00:41:17,270
+that represents the emojis.
+
+924
+00:41:17,270 --> 00:41:18,920
+Just like we had card in Memorize,
+
+925
+00:41:18,920 --> 00:41:21,600
+here we happen to have
+emojis in our EmojiArt.
+
+926
+00:41:21,600 --> 00:41:23,633
+And what is in an Emoji?
+
+927
+00:41:23,633 --> 00:41:26,820
+It's obviously the text,
+right, the actual emoji
+
+928
+00:41:26,820 --> 00:41:29,050
+like the smiley face or whatever.
+
+929
+00:41:29,050 --> 00:41:31,070
+It's got position and I told you
+
+930
+00:41:31,070 --> 00:41:33,820
+I'm gonna do position using Ints.
+
+931
+00:41:33,820 --> 00:41:35,500
+Take note here, by the way,
+
+932
+00:41:35,500 --> 00:41:38,760
+that I'm gonna have the
+coordinate system of this X and Y
+
+933
+00:41:38,760 --> 00:41:42,300
+have (0, 0) right in the
+center of my document.
+
+934
+00:41:42,300 --> 00:41:44,580
+And that's different from
+iOS's coordinate system.
+
+935
+00:41:44,580 --> 00:41:46,830
+You'll remember from when we did our Pie
+
+936
+00:41:46,830 --> 00:41:47,830
+that that coordinate system
+
+937
+00:41:47,830 --> 00:41:49,790
+is (0, 0) in the upper left.
+
+938
+00:41:49,790 --> 00:41:51,750
+And I'm gonna have X and
+Y here be in the center.
+
+939
+00:41:51,750 --> 00:41:54,680
+And note that because
+later on when we're working
+
+940
+00:41:54,680 --> 00:41:56,410
+in our View, we're gonna have to convert
+
+941
+00:41:56,410 --> 00:41:58,270
+from this coordinate system of our Model
+
+942
+00:41:58,270 --> 00:42:00,580
+which is, it's (0, 0) is the center,
+
+943
+00:42:00,580 --> 00:42:04,240
+to our iOS coordinate
+system (0, 0) upper left.
+
+944
+00:42:04,240 --> 00:42:08,320
+So also we go to size, we can
+do that with an Int as well.
+
+945
+00:42:08,320 --> 00:42:10,350
+Notice that I made the text be a let.
+
+946
+00:42:10,350 --> 00:42:13,360
+Once you create an emoji in
+EmojiArt like a smiley face
+
+947
+00:42:13,360 --> 00:42:16,050
+or a panda or a bicycle
+or whatever (chuckles)
+
+948
+00:42:16,050 --> 00:42:18,110
+it is going to always be that.
+
+949
+00:42:18,110 --> 00:42:20,941
+We're never gonna allow
+you to change that emoji.
+
+950
+00:42:20,941 --> 00:42:22,010
+And that's just the decision I made
+
+951
+00:42:22,010 --> 00:42:24,190
+and I make that decision
+or I express that decision
+
+952
+00:42:24,190 --> 00:42:26,163
+by having this be a let.
+
+953
+00:42:27,050 --> 00:42:29,960
+Now we can already
+anticipate that in our UI
+
+954
+00:42:30,811 --> 00:42:33,087
+this emoji is gonna
+want to be Identifiable.
+
+955
+00:42:33,087 --> 00:42:35,200
+And clearly we're gonna have to ForEach
+
+956
+00:42:35,200 --> 00:42:38,240
+through our Emojis and
+show them all on screen.
+
+957
+00:42:38,240 --> 00:42:41,190
+So I'm gonna make this Identifiable.
+
+958
+00:42:41,190 --> 00:42:44,253
+And that requires us to do this var id.
+
+959
+00:42:45,340 --> 00:42:48,090
+Now what is our id gonna be?
+
+960
+00:42:48,090 --> 00:42:51,140
+In our Memorize game, we
+made it be like pretty much
+
+961
+00:42:51,140 --> 00:42:53,720
+which pair does like, first
+pair it with zero and one,
+
+962
+00:42:53,720 --> 00:42:55,630
+the second pair it was two and three.
+
+963
+00:42:55,630 --> 00:42:58,920
+And here we don't really
+have that kind of pairs
+
+964
+00:42:58,920 --> 00:43:00,670
+or anything like that to use.
+
+965
+00:43:00,670 --> 00:43:04,990
+There is something that we'll
+often use for ids called UUID.
+
+966
+00:43:04,990 --> 00:43:07,750
+This is a very unique identifier.
+
+967
+00:43:07,750 --> 00:43:11,521
+In the universe it's unique.
+
+968
+00:43:11,521 --> 00:43:13,020
+It's a little bit of overkill
+
+969
+00:43:13,020 --> 00:43:15,520
+for the Emojis in EmojiArt.
+
+970
+00:43:15,520 --> 00:43:17,710
+I could have hundreds
+of Emojis in EmojiArt
+
+971
+00:43:17,710 --> 00:43:19,800
+and I could have hundreds
+of EmojiArt documents.
+
+972
+00:43:19,800 --> 00:43:22,910
+So this is a lot of these,
+generating these unique IDs
+
+973
+00:43:22,910 --> 00:43:24,400
+kind of for nothing.
+
+974
+00:43:24,400 --> 00:43:27,730
+And really this id also only
+needs to be Identifiable
+
+975
+00:43:27,730 --> 00:43:30,350
+and unique within this document.
+
+976
+00:43:30,350 --> 00:43:33,580
+We are not going to need to identifiably
+
+977
+00:43:33,580 --> 00:43:36,300
+see Emoji across many documents.
+
+978
+00:43:36,300 --> 00:43:40,170
+So I'm going to actually
+have this be an Int
+
+979
+00:43:40,170 --> 00:43:42,980
+which I'm gonna manage in this struct.
+
+980
+00:43:42,980 --> 00:43:45,210
+And so it's gonna be privately managed.
+
+981
+00:43:45,210 --> 00:43:48,480
+Only EmojiArt is going
+to know what makes this
+
+982
+00:43:48,480 --> 00:43:50,450
+Int how we make this Int.
+
+983
+00:43:50,450 --> 00:43:52,820
+But of course Identifiable
+is a public thing,
+
+984
+00:43:52,820 --> 00:43:55,250
+so people would look at the Int.
+
+985
+00:43:55,250 --> 00:43:58,630
+And since we only want anyone
+to ever look at this file,
+
+986
+00:43:58,630 --> 00:44:01,890
+you can certainly make it a let.
+
+987
+00:44:01,890 --> 00:44:05,130
+But what we need to do now is
+every time this is created,
+
+988
+00:44:05,130 --> 00:44:07,280
+I give it a unique ID.
+
+989
+00:44:07,280 --> 00:44:11,090
+And that is going to be done
+with a little private var
+
+990
+00:44:11,090 --> 00:44:12,730
+called uniqueEmojiId.
+
+991
+00:44:15,204 --> 00:44:17,660
+It's just gonna be an Int
+and I'm gonna add a function
+
+992
+00:44:17,660 --> 00:44:18,823
+called addEmoji.
+
+993
+00:44:23,968 --> 00:44:26,820
+And all addEmoji is
+gonna do is add an Emoji
+
+994
+00:44:26,820 --> 00:44:31,010
+by appending a new Emoji
+which I'm gonna create
+
+995
+00:44:31,010 --> 00:44:33,053
+with a standard constructor there.
+
+996
+00:44:35,340 --> 00:44:39,313
+And unique ID as the id.
+
+997
+00:44:40,230 --> 00:44:43,900
+Now of course I need to keep
+this unique ID being unique
+
+998
+00:44:43,900 --> 00:44:45,650
+so each time someone does this,
+
+999
+00:44:45,650 --> 00:44:49,900
+I'm gonna say uniqueEmojiID += 1.
+
+1000
+00:44:49,900 --> 00:44:53,670
+That way it's changing all the
+time and always being unique.
+
+1001
+00:44:53,670 --> 00:44:56,130
+Now this is great, but you
+can see I've got errors here
+
+1002
+00:44:56,130 --> 00:44:56,963
+all over the place.
+
+1003
+00:44:56,963 --> 00:44:59,237
+"Left side of mutating
+operator isn't mutable.
+
+1004
+00:44:59,237 --> 00:45:01,700
+"Self is immutable, self
+is immutable." (chuckles)
+
+1005
+00:45:01,700 --> 00:45:05,010
+And yes, this is a function
+that mutates self, right?
+
+1006
+00:45:05,010 --> 00:45:06,500
+It changes this guy.
+
+1007
+00:45:06,500 --> 00:45:09,553
+So we need to mark this
+as a mutating func.
+
+1008
+00:45:11,240 --> 00:45:14,080
+Now this strategy of
+doing this uniqueEmojiID
+
+1009
+00:45:14,080 --> 00:45:17,270
+will work great as long as
+everyone always adds Emojis
+
+1010
+00:45:17,270 --> 00:45:18,950
+by calling addEmoji.
+
+1011
+00:45:18,950 --> 00:45:22,570
+But what if someone creates
+an Emoji with their own id
+
+1012
+00:45:22,570 --> 00:45:25,930
+and then adds it right here to this Array?
+
+1013
+00:45:25,930 --> 00:45:28,240
+That could be bad, especially
+if they choose an id
+
+1014
+00:45:28,240 --> 00:45:30,800
+that's the same as some other one we chose
+
+1015
+00:45:30,800 --> 00:45:32,440
+with that Emoji.
+
+1016
+00:45:32,440 --> 00:45:35,180
+Now you might think private set, right,
+
+1017
+00:45:35,180 --> 00:45:36,990
+private set ought to fix this problem
+
+1018
+00:45:36,990 --> 00:45:38,440
+because that makes it so that emojis
+
+1019
+00:45:38,440 --> 00:45:41,010
+can only be written by us.
+
+1020
+00:45:41,010 --> 00:45:43,290
+But I actually don't want that
+
+1021
+00:45:43,290 --> 00:45:46,410
+because some of these Emoji
+things like the position
+
+1022
+00:45:46,410 --> 00:45:50,056
+and the size I do want
+people to set those.
+
+1023
+00:45:50,056 --> 00:45:50,970
+And they can set them all they want,
+
+1024
+00:45:50,970 --> 00:45:53,380
+move the emojis around
+as much as they want.
+
+1025
+00:45:53,380 --> 00:45:55,490
+So I really can't use private set here
+
+1026
+00:45:55,490 --> 00:45:57,150
+like I did in Memorize.
+
+1027
+00:45:58,150 --> 00:46:01,120
+So how am I going to
+protect this from happening
+
+1028
+00:46:01,120 --> 00:46:04,223
+where people are adding
+Emoji, not calling this.
+
+1029
+00:46:05,407 --> 00:46:06,930
+I'm gonna do that in an interesting way.
+
+1030
+00:46:06,930 --> 00:46:10,060
+In Emoji here, I'm going to define an init
+
+1031
+00:46:10,060 --> 00:46:13,290
+and it's gonna have all the same arguments
+
+1032
+00:46:13,290 --> 00:46:17,590
+as the standard init that you
+get for free for a struct.
+
+1033
+00:46:17,590 --> 00:46:19,450
+Now how does this help the problem?
+
+1034
+00:46:19,450 --> 00:46:21,040
+In fact, it seems like a big waste.
+
+1035
+00:46:21,040 --> 00:46:24,297
+I get this for free, why
+would I do this at all?
+
+1036
+00:46:24,297 --> 00:46:25,750
+And the reason I'm gonna do it
+
+1037
+00:46:25,750 --> 00:46:29,470
+is because I'm gonna
+make this init private.
+
+1038
+00:46:29,470 --> 00:46:31,320
+By making this init private,
+
+1039
+00:46:31,320 --> 00:46:34,620
+now nobody can create an Emoji
+
+1040
+00:46:34,620 --> 00:46:37,700
+except for Emoji itself,
+it's kinda not useful here.
+
+1041
+00:46:37,700 --> 00:46:40,890
+Even EmojiArt though can't create it.
+
+1042
+00:46:40,890 --> 00:46:43,247
+So it does protect against
+someone else creating an Emoji
+
+1043
+00:46:43,247 --> 00:46:45,850
+and putting it in here but
+it's protecting EmojiArt
+
+1044
+00:46:45,850 --> 00:46:47,640
+from doing it too.
+
+1045
+00:46:47,640 --> 00:46:49,070
+I'm gonna show you a way around that
+
+1046
+00:46:49,070 --> 00:46:52,603
+with a different kind of access
+control called fileprivate.
+
+1047
+00:46:54,118 --> 00:46:57,450
+fileprivate makes this
+private in this file.
+
+1048
+00:46:57,450 --> 00:47:00,710
+And that gives EmojiArt
+the power to call this
+
+1049
+00:47:00,710 --> 00:47:04,240
+and create this but no one
+outside this file can do it.
+
+1050
+00:47:04,240 --> 00:47:06,100
+So now we've protected against that case
+
+1051
+00:47:06,100 --> 00:47:09,140
+where someone creates an
+Emoji and puts it in here
+
+1052
+00:47:09,140 --> 00:47:12,300
+without going through
+our nice unique EmojiID
+
+1053
+00:47:12,300 --> 00:47:14,823
+since there's no way for
+them to create an Emoji.
+
+1054
+00:47:16,080 --> 00:47:19,340
+All right, so that's it
+basically for our Model.
+
+1055
+00:47:19,340 --> 00:47:21,160
+Our Model is very simple.
+
+1056
+00:47:21,160 --> 00:47:24,900
+Let's go over to our ViewModel over here
+
+1057
+00:47:24,900 --> 00:47:29,850
+and add this as a @Published private var.
+
+1058
+00:47:29,850 --> 00:47:31,940
+And again, I could call it
+Model but I'm not going to.
+
+1059
+00:47:31,940 --> 00:47:36,300
+I'm gonna call this my
+emojiArt, it's of type EmojiArt.
+
+1060
+00:47:36,300 --> 00:47:39,320
+And let's just set it to a empty EmojiArt
+
+1061
+00:47:39,320 --> 00:47:44,130
+with no background and
+no emoji to start with.
+
+1062
+00:47:44,130 --> 00:47:47,700
+And it's published because
+every time the EmojiArt changes
+
+1063
+00:47:47,700 --> 00:47:50,750
+of course we need to use our
+ObservableObject mechanism
+
+1064
+00:47:50,750 --> 00:47:52,870
+to cause our View to redraw.
+
+1065
+00:47:52,870 --> 00:47:56,610
+And it's private because
+I'm going to be a very good
+
+1066
+00:47:56,610 --> 00:47:59,270
+little ViewModel here
+and do one of my jobs
+
+1067
+00:47:59,270 --> 00:48:02,220
+which is to interpret
+the Model for the View.
+
+1068
+00:48:02,220 --> 00:48:06,490
+So I'm a UI guy, I'm a UI
+person, this ViewModel.
+
+1069
+00:48:06,490 --> 00:48:09,050
+I know that we use CGFloats and CGPoints
+
+1070
+00:48:11,106 --> 00:48:13,520
+and CGSizes, we don't use Ints.
+
+1071
+00:48:13,520 --> 00:48:16,210
+And I know that's what
+my View's gonna expect.
+
+1072
+00:48:16,210 --> 00:48:18,950
+So I'm going to provide some Intents.
+
+1073
+00:48:20,440 --> 00:48:23,433
+Mark Intents here.
+
+1074
+00:48:24,320 --> 00:48:25,867
+And these Intents, we're gonna type 'em in
+
+1075
+00:48:25,867 --> 00:48:28,220
+real fast there (chuckles) with a snippet.
+
+1076
+00:48:28,220 --> 00:48:31,110
+These Intents are going to
+essentially take arguments
+
+1077
+00:48:31,110 --> 00:48:34,430
+to addEmoji like at location CGPoint
+
+1078
+00:48:34,430 --> 00:48:35,980
+and size CGFloat,
+
+1079
+00:48:35,980 --> 00:48:39,370
+or moveEmoji by offset CGSize,
+
+1080
+00:48:39,370 --> 00:48:41,020
+or scaleEmoji by a scale CGFloat.
+
+1081
+00:48:42,752 --> 00:48:43,890
+And then it's just going to turn around
+
+1082
+00:48:43,890 --> 00:48:47,120
+and access its Array, but Intifying them.
+
+1083
+00:48:47,120 --> 00:48:49,650
+See, Int, Int, we're doing Int.
+
+1084
+00:48:49,650 --> 00:48:51,570
+We're making these things into Ints.
+
+1085
+00:48:51,570 --> 00:48:54,350
+So this makes it so my
+View is gonna call these.
+
+1086
+00:48:54,350 --> 00:48:56,670
+It can't access emojiArt
+directly, it's private.
+
+1087
+00:48:56,670 --> 00:48:58,353
+So it's gonna call these Intent functions,
+
+1088
+00:48:58,353 --> 00:49:00,540
+intend, I intend to add an Emoji,
+
+1089
+00:49:00,540 --> 00:49:03,223
+I intend to move Emoji around, et cetera.
+
+1090
+00:49:04,290 --> 00:49:05,627
+Now notice we have an error here.
+
+1091
+00:49:05,627 --> 00:49:08,070
+"Cannot convert value type
+EmojiArt," blah blah blah.
+
+1092
+00:49:08,070 --> 00:49:10,580
+It's because I'm using
+firstIndex matching.
+
+1093
+00:49:10,580 --> 00:49:13,010
+Remember that cool function that we added
+
+1094
+00:49:13,010 --> 00:49:16,030
+via an extension to Array
+that would look up something
+
+1095
+00:49:16,030 --> 00:49:19,000
+that's Identifiable in
+an Array of Identifiables
+
+1096
+00:49:19,000 --> 00:49:21,020
+and find the index of it?
+
+1097
+00:49:21,020 --> 00:49:23,020
+And I'm doing this inside my ViewModel
+
+1098
+00:49:23,020 --> 00:49:25,610
+'cause I also don't want
+my View to necessarily
+
+1099
+00:49:25,610 --> 00:49:28,150
+have to deal with indexes into the Array.
+
+1100
+00:49:28,150 --> 00:49:31,300
+Now in Memorize, we used
+index into the Array
+
+1101
+00:49:31,300 --> 00:49:33,660
+and why did we use index into the Array?
+
+1102
+00:49:33,660 --> 00:49:35,990
+Because we wanted to
+make changes to the Array
+
+1103
+00:49:35,990 --> 00:49:38,700
+right in place and we want
+to do the same thing here.
+
+1104
+00:49:38,700 --> 00:49:40,800
+So I'm gonna use index as Array here.
+
+1105
+00:49:40,800 --> 00:49:43,360
+But I'd really like for
+my View to just be able
+
+1106
+00:49:43,360 --> 00:49:45,440
+to use EmojiArt objects.
+
+1107
+00:49:45,440 --> 00:49:47,360
+And since they're
+Identifiable, when they ask me
+
+1108
+00:49:47,360 --> 00:49:50,320
+to move one or to scale one,
+
+1109
+00:49:50,320 --> 00:49:53,240
+I'll just use this firstIndex matching
+
+1110
+00:49:53,240 --> 00:49:56,850
+to look it up by the same
+Identifiable that's here
+
+1111
+00:49:56,850 --> 00:50:00,160
+that's in my emojiArt Emojis list,
+
+1112
+00:50:00,160 --> 00:50:02,017
+all right, since these are Identifiable.
+
+1113
+00:50:02,017 --> 00:50:05,200
+And just a little different
+API here than having to View,
+
+1114
+00:50:05,200 --> 00:50:09,223
+have to say moveEmoji at index by offset.
+
+1115
+00:50:10,350 --> 00:50:13,620
+Now of course firstIndex
+matching was something we added
+
+1116
+00:50:13,620 --> 00:50:16,170
+in Memorize, so it's not here,
+that's why it's complaining.
+
+1117
+00:50:16,170 --> 00:50:19,060
+Now I actually put it in here, this file,
+
+1118
+00:50:19,060 --> 00:50:21,420
+which I'm gonna drag in
+and which I provided to you
+
+1119
+00:50:21,420 --> 00:50:25,310
+and I'm definitely gonna
+copy this in, not link it in.
+
+1120
+00:50:25,310 --> 00:50:28,940
+And this extension not only
+has this firstIndex matching,
+
+1121
+00:50:28,940 --> 00:50:31,623
+it has some other stuff
+you're gonna see later on,
+
+1122
+00:50:32,470 --> 00:50:34,240
+things that are just kinda of utilities
+
+1123
+00:50:34,240 --> 00:50:37,060
+and make the code, this
+demo go a little quicker.
+
+1124
+00:50:37,060 --> 00:50:39,920
+And here's firstIndex but
+it's kind of interesting,
+
+1125
+00:50:39,920 --> 00:50:42,220
+I didn't add it to Array.
+
+1126
+00:50:42,220 --> 00:50:45,860
+Here we did Array in our Memorize,
+
+1127
+00:50:45,860 --> 00:50:48,960
+but here I'm doing collection,
+now what is collection?
+
+1128
+00:50:48,960 --> 00:50:51,990
+Collection is a protocol
+that Array implements.
+
+1129
+00:50:51,990 --> 00:50:54,320
+And since Array implements that protocol,
+
+1130
+00:50:54,320 --> 00:50:57,760
+if I add an extension
+to it, Array gets this.
+
+1131
+00:50:57,760 --> 00:50:59,420
+And so this will work with any collection.
+
+1132
+00:50:59,420 --> 00:51:02,380
+Now why did I add it to
+collection here instead of Array?
+
+1133
+00:51:02,380 --> 00:51:07,380
+Well because Set also
+implements a collection.
+
+1134
+00:51:07,650 --> 00:51:10,510
+So if I have a Set, you
+know, the SwiftUI Set
+
+1135
+00:51:10,510 --> 00:51:11,940
+not the set your homework
+three. (chuckles)
+
+1136
+00:51:11,940 --> 00:51:14,190
+SwiftUI Set, if I have one of those
+
+1137
+00:51:14,190 --> 00:51:17,500
+I can do firstIndex
+matching on it as well.
+
+1138
+00:51:17,500 --> 00:51:22,500
+And I'm even gonna put this
+contains matching element also
+
+1139
+00:51:23,090 --> 00:51:27,390
+so that I can go look and see
+inside of a Set or an Array,
+
+1140
+00:51:27,390 --> 00:51:30,973
+do you contain this thing by matching it?
+
+1141
+00:51:32,120 --> 00:51:35,083
+So I'm doing the same
+$0 equals element.id.
+
+1142
+00:51:36,020 --> 00:51:37,600
+Why do I do that, by the way?
+
+1143
+00:51:37,600 --> 00:51:40,340
+Well I think when you
+do your assignment four
+
+1144
+00:51:40,340 --> 00:51:41,350
+and you're having to manage
+
+1145
+00:51:41,350 --> 00:51:43,230
+the selection of all those Emojis,
+
+1146
+00:51:43,230 --> 00:51:45,600
+pretty good chance you might
+want to put them in a Set.
+
+1147
+00:51:45,600 --> 00:51:47,340
+You probably could put 'em into an Array,
+
+1148
+00:51:47,340 --> 00:51:50,320
+but Sets are nicer than Arrays
+because they manage identity
+
+1149
+00:51:50,320 --> 00:51:52,000
+and you never want the same Emoji
+
+1150
+00:51:52,000 --> 00:51:55,120
+inside of your selection twice.
+
+1151
+00:51:55,120 --> 00:51:58,190
+And it's real easy to take 'em
+in and put 'em out in a set.
+
+1152
+00:51:58,190 --> 00:52:00,820
+So if you want to do that,
+you don't have to use this.
+
+1153
+00:52:00,820 --> 00:52:03,730
+So any of this stuff,
+okay, this is just provided
+
+1154
+00:52:03,730 --> 00:52:06,150
+for your use if you want to,
+but you might want to use Sets.
+
+1155
+00:52:06,150 --> 00:52:08,573
+So that's why I'm putting that here.
+
+1156
+00:52:09,907 --> 00:52:10,950
+All right, back to our ViewModel.
+
+1157
+00:52:10,950 --> 00:52:14,040
+Now if we compile on
+this side, it'll succeed
+
+1158
+00:52:14,040 --> 00:52:17,687
+and we have built our
+Intents here for the emojis.
+
+1159
+00:52:17,687 --> 00:52:20,010
+But there's one more Intent I might have
+
+1160
+00:52:20,010 --> 00:52:22,370
+which is to set the background URL,
+
+1161
+00:52:22,370 --> 00:52:24,120
+which I'm gonna do with drag and drop.
+
+1162
+00:52:24,120 --> 00:52:27,297
+So I need one more here which
+is func setBackgroundURL
+
+1163
+00:52:28,370 --> 00:52:31,840
+and it's just going to
+take a URL here, URL,
+
+1164
+00:52:31,840 --> 00:52:35,780
+type URL, again optional, we allow that.
+
+1165
+00:52:35,780 --> 00:52:38,767
+And we'll just have our
+emojiArt.backgroundURL
+
+1166
+00:52:40,200 --> 00:52:41,290
+equal this URL.
+
+1167
+00:52:41,290 --> 00:52:44,180
+I'm gonna do one other
+little thing right here
+
+1168
+00:52:44,180 --> 00:52:47,130
+which is that these URLS
+that you drag and drop
+
+1169
+00:52:47,130 --> 00:52:50,710
+from the internet, sometimes
+they're kinda funky URLs
+
+1170
+00:52:50,710 --> 00:52:53,420
+that have the actual URL
+(chuckles) for the image
+
+1171
+00:52:53,420 --> 00:52:55,410
+embedded inside of them using this thing
+
+1172
+00:52:55,410 --> 00:52:59,310
+called image URL right here, I-M-G-U-R-L.
+
+1173
+00:52:59,310 --> 00:53:04,100
+So I put a little thing on
+URL to extract that image URL
+
+1174
+00:53:04,100 --> 00:53:07,600
+if it's in there out of
+these more complicated URLs.
+
+1175
+00:53:07,600 --> 00:53:10,593
+So I'm gonna call this little
+imageURL var right here.
+
+1176
+00:53:12,490 --> 00:53:14,900
+Okay, and if, by the way,
+if imageURL goes and looks
+
+1177
+00:53:14,900 --> 00:53:17,380
+and it can't find that
+funky little embedded thing
+
+1178
+00:53:17,380 --> 00:53:19,050
+then it just returns the URL itself.
+
+1179
+00:53:19,050 --> 00:53:22,750
+So if you drag a normal URL
+in, that'll work as well.
+
+1180
+00:53:22,750 --> 00:53:26,830
+So now our ViewModel is fully prepared
+
+1181
+00:53:26,830 --> 00:53:30,860
+to support the View in doing
+what the View wants to do.
+
+1182
+00:53:30,860 --> 00:53:34,660
+And so let's go over to
+our View and implement it.
+
+1183
+00:53:34,660 --> 00:53:36,250
+Now the first thing I want to implement
+
+1184
+00:53:36,250 --> 00:53:38,090
+is that drag and drop all right.
+
+1185
+00:53:38,090 --> 00:53:40,410
+So over here in our simulator,
+
+1186
+00:53:40,410 --> 00:53:43,380
+if we have our EmojiArt
+with Safari on here
+
+1187
+00:53:43,380 --> 00:53:45,370
+and I pick this up, I want to be able
+
+1188
+00:53:45,370 --> 00:53:48,607
+to drop it in here but notice
+it's really not working.
+
+1189
+00:53:48,607 --> 00:53:50,740
+It, I don't know, when
+we did it the first time
+
+1190
+00:53:50,740 --> 00:53:52,590
+you noticed there was a little green plus.
+
+1191
+00:53:52,590 --> 00:53:55,180
+I'm not getting the green
+plus and when I let go,
+
+1192
+00:53:55,180 --> 00:53:58,030
+it doesn't, it fails
+to drop and goes back.
+
+1193
+00:53:58,030 --> 00:53:59,850
+So I want it to drop and
+I want it to draw here.
+
+1194
+00:53:59,850 --> 00:54:01,590
+I'm also not gonna be yellow anymore.
+
+1195
+00:54:01,590 --> 00:54:02,990
+I'm gonna use a white background.
+
+1196
+00:54:02,990 --> 00:54:05,270
+I think that looks better
+when we don't have an image
+
+1197
+00:54:05,270 --> 00:54:07,460
+or if our image is small, having white's
+
+1198
+00:54:07,460 --> 00:54:09,720
+gonna look better than yellow.
+
+1199
+00:54:09,720 --> 00:54:11,230
+So let's do this drag and drop.
+
+1200
+00:54:11,230 --> 00:54:13,760
+Now before we go do drag and
+drop, a couple of things.
+
+1201
+00:54:13,760 --> 00:54:16,670
+First of all, this only works in iOS 13.4.
+
+1202
+00:54:16,670 --> 00:54:19,400
+So if you're not on the latest Xcode,
+
+1203
+00:54:19,400 --> 00:54:22,540
+this part of this demo, it's
+just not going to work for you.
+
+1204
+00:54:22,540 --> 00:54:25,960
+The second thing is drag and drop,
+
+1205
+00:54:25,960 --> 00:54:28,223
+it's a little bit of sophisticated API.
+
+1206
+00:54:28,223 --> 00:54:33,040
+It's very simple in SwiftUI,
+but it uses some old technology
+
+1207
+00:54:33,040 --> 00:54:35,290
+from the Objective-C world.
+
+1208
+00:54:35,290 --> 00:54:39,670
+And so don't be too caught
+up in the details of this.
+
+1209
+00:54:39,670 --> 00:54:42,010
+I want you to conceptually
+understand what's going on.
+
+1210
+00:54:42,010 --> 00:54:44,810
+I'm not gonna ask you to do
+drag and drop in your homework
+
+1211
+00:54:44,810 --> 00:54:45,740
+but it might be something you want to do
+
+1212
+00:54:45,740 --> 00:54:48,320
+in your final project so this
+would be a good opportunity
+
+1213
+00:54:48,320 --> 00:54:50,370
+to understand it from that point of view.
+
+1214
+00:54:51,360 --> 00:54:53,370
+So drag and drop works very simply.
+
+1215
+00:54:53,370 --> 00:54:55,780
+You just call this method
+on anywhere you want
+
+1216
+00:54:55,780 --> 00:54:57,947
+to be able drop, you just say onDrop.
+
+1217
+00:54:58,990 --> 00:55:02,270
+And onDrop takes some argument
+here which I'm gonna type
+
+1218
+00:55:02,270 --> 00:55:04,830
+in and then we'll go over what they are.
+
+1219
+00:55:04,830 --> 00:55:08,830
+This first argument of, this
+is saying what kind of thing
+
+1220
+00:55:08,830 --> 00:55:13,670
+do you want to drop and we
+want to drop public image.
+
+1221
+00:55:13,670 --> 00:55:16,673
+So public image is a, what's called a URI.
+
+1222
+00:55:17,510 --> 00:55:20,660
+It specifies kind of a public agreement
+
+1223
+00:55:20,660 --> 00:55:24,520
+of the type of things that are images.
+
+1224
+00:55:24,520 --> 00:55:27,290
+Now we're looking for a URL, not an image.
+
+1225
+00:55:27,290 --> 00:55:31,890
+But if you drag and drop an
+image, very likely the provider
+
+1226
+00:55:31,890 --> 00:55:35,180
+of that image can also
+provide you its URL.
+
+1227
+00:55:35,180 --> 00:55:37,340
+So that is what we are
+going to have dropped.
+
+1228
+00:55:37,340 --> 00:55:40,400
+If I said in here that
+we wanted URLs dropped,
+
+1229
+00:55:40,400 --> 00:55:42,330
+we might get URLs from non-images
+
+1230
+00:55:42,330 --> 00:55:43,340
+that would be useless to us.
+
+1231
+00:55:43,340 --> 00:55:45,120
+So that why the kind
+of thing we're looking
+
+1232
+00:55:45,120 --> 00:55:46,820
+to be dropping here is images.
+
+1233
+00:55:46,820 --> 00:55:48,670
+Now I'm not gonna talk about URIs.
+
+1234
+00:55:48,670 --> 00:55:50,370
+You can look up URIs in the documentation
+
+1235
+00:55:50,370 --> 00:55:51,860
+and understand what they are.
+
+1236
+00:55:51,860 --> 00:55:53,910
+We're actually gonna
+put another one in here
+
+1237
+00:55:53,910 --> 00:55:57,100
+in a few minutes, but it's
+pretty straightforward
+
+1238
+00:55:57,100 --> 00:55:58,660
+what a URI is.
+
+1239
+00:55:58,660 --> 00:56:00,300
+Now this isTargeted.
+
+1240
+00:56:00,300 --> 00:56:03,710
+That is a good thing we don't need this
+
+1241
+00:56:03,710 --> 00:56:06,190
+because the argument to this
+is what's called a Binding.
+
+1242
+00:56:06,190 --> 00:56:08,730
+We're gonna talk all
+about Bindings next week.
+
+1243
+00:56:08,730 --> 00:56:10,400
+But we haven't talked about 'em yet
+
+1244
+00:56:10,400 --> 00:56:12,960
+so if I had to explain it
+now, that would be bad.
+
+1245
+00:56:12,960 --> 00:56:16,160
+But all this is doing is
+basically letting us know
+
+1246
+00:56:16,160 --> 00:56:18,190
+when someone's dragging over us.
+
+1247
+00:56:18,190 --> 00:56:20,310
+Not when they drop, but
+when they're dragging over.
+
+1248
+00:56:20,310 --> 00:56:22,090
+Luckily I don't care, I just care
+
+1249
+00:56:22,090 --> 00:56:23,693
+when you drop that thing on me.
+
+1250
+00:56:24,550 --> 00:56:27,570
+And then the third argument
+to onDrop is a function,
+
+1251
+00:56:27,570 --> 00:56:29,510
+a closure, that has two arguments.
+
+1252
+00:56:29,510 --> 00:56:31,050
+One is providers.
+
+1253
+00:56:31,050 --> 00:56:34,470
+These are objects called NSItemProviders
+
+1254
+00:56:34,470 --> 00:56:37,850
+that provide the information
+that's being dropped.
+
+1255
+00:56:37,850 --> 00:56:40,340
+Now this information being
+dropped might be big,
+
+1256
+00:56:40,340 --> 00:56:41,660
+like it might actually be an image.
+
+1257
+00:56:41,660 --> 00:56:43,120
+We're only gonna grab the URL,
+
+1258
+00:56:43,120 --> 00:56:45,980
+but you could grab the
+whole image and that's big.
+
+1259
+00:56:45,980 --> 00:56:48,550
+And so that transfer has
+to happen asynchronously
+
+1260
+00:56:48,550 --> 00:56:51,680
+and we're gonna talk all
+about asynchrony in this demo.
+
+1261
+00:56:51,680 --> 00:56:54,040
+That's one of the primary
+things we're doing in this demo.
+
+1262
+00:56:54,040 --> 00:56:56,670
+But we're not, we're gonna
+gloss over the asynchrony here
+
+1263
+00:56:56,670 --> 00:56:58,010
+in these providers.
+
+1264
+00:56:58,010 --> 00:57:01,680
+I put again some code over
+here in this EmojiArtExtensions
+
+1265
+00:57:01,680 --> 00:57:03,750
+to handle that stuff for us.
+
+1266
+00:57:03,750 --> 00:57:06,180
+And so don't worry about
+the asynchrony of this.
+
+1267
+00:57:06,180 --> 00:57:09,467
+We'll be talking all about
+asynchrony in just a moment here.
+
+1268
+00:57:09,467 --> 00:57:11,400
+And then the second
+argument to this function
+
+1269
+00:57:11,400 --> 00:57:12,540
+is the location of the drop.
+
+1270
+00:57:12,540 --> 00:57:15,030
+Now for the background, we
+don't care where it was dropped.
+
+1271
+00:57:15,030 --> 00:57:18,230
+You drop it anywhere in
+our big yellow, currently,
+
+1272
+00:57:18,230 --> 00:57:19,950
+rectangle, we're gonna accept the drop.
+
+1273
+00:57:19,950 --> 00:57:21,590
+So we're not gonna do anything
+with location for now.
+
+1274
+00:57:21,590 --> 00:57:23,467
+But eventually we're gonna
+be dropping emoji on there
+
+1275
+00:57:23,467 --> 00:57:26,910
+and then we will care about
+location, but not yet.
+
+1276
+00:57:26,910 --> 00:57:28,520
+So what do we have to do in here?
+
+1277
+00:57:28,520 --> 00:57:30,550
+This function that we're given is supposed
+
+1278
+00:57:30,550 --> 00:57:33,600
+to return whether the drop succeeded.
+
+1279
+00:57:33,600 --> 00:57:35,800
+So I'm gonna create another
+little function for that
+
+1280
+00:57:35,800 --> 00:57:38,663
+called drop with the providers,
+
+1281
+00:57:40,010 --> 00:57:41,858
+pass those providers over.
+
+1282
+00:57:41,858 --> 00:57:44,333
+And it's gonna return
+whether the drop succeeded.
+
+1283
+00:57:45,370 --> 00:57:46,830
+So, just gonna do that.
+
+1284
+00:57:46,830 --> 00:57:50,550
+A little private func
+here, drop providers.
+
+1285
+00:57:50,550 --> 00:57:52,080
+And these providers are an Array
+
+1286
+00:57:52,080 --> 00:57:54,990
+of, as I said, NSItemProvider.
+
+1287
+00:57:54,990 --> 00:57:57,674
+This thing, I'm not gonna
+get into what this is.
+
+1288
+00:57:57,674 --> 00:58:00,620
+It's kind of an old
+Objective-C thing right there.
+
+1289
+00:58:00,620 --> 00:58:02,650
+And this returns a Bool with it,
+
+1290
+00:58:02,650 --> 00:58:05,390
+which is whether the drop succeeded.
+
+1291
+00:58:05,390 --> 00:58:08,010
+All we need to do here because
+of that little extension
+
+1292
+00:58:08,010 --> 00:58:12,530
+I provided is go try and load
+a URL from these providers,
+
+1293
+00:58:12,530 --> 00:58:14,910
+see if these providers can
+provide me an actual URL.
+
+1294
+00:58:14,910 --> 00:58:16,980
+I'm asking for images, so
+they might not be able to
+
+1295
+00:58:16,980 --> 00:58:18,950
+but usually they do.
+
+1296
+00:58:18,950 --> 00:58:23,340
+So I'm gonna let a little
+variable found equal providers
+
+1297
+00:58:23,340 --> 00:58:25,420
+that's the Array of those item providers,
+
+1298
+00:58:25,420 --> 00:58:27,480
+load up the first object
+
+1299
+00:58:28,590 --> 00:58:29,593
+of type URL.
+
+1300
+00:58:31,940 --> 00:58:34,170
+And when you specify type as an argument,
+
+1301
+00:58:34,170 --> 00:58:38,070
+you say URL.self, that
+means the actual type URL.
+
+1302
+00:58:38,070 --> 00:58:42,050
+This just a static var in the type URL
+
+1303
+00:58:42,050 --> 00:58:44,539
+that returns the type itself.
+
+1304
+00:58:44,539 --> 00:58:47,820
+And that works for instances,
+it also works for classes.
+
+1305
+00:58:47,820 --> 00:58:48,840
+So I'm able to do that.
+
+1306
+00:58:48,840 --> 00:58:51,730
+Then it calls a little
+function where it passes you
+
+1307
+00:58:51,730 --> 00:58:54,500
+the URL that it was able to find.
+
+1308
+00:58:54,500 --> 00:58:56,010
+And this is just the URL that it was able
+
+1309
+00:58:56,010 --> 00:58:58,280
+to load the first one of.
+
+1310
+00:58:58,280 --> 00:59:02,330
+And all we need to do now
+is just ask our document,
+
+1311
+00:59:02,330 --> 00:59:05,260
+our ViewModel, to please
+set the background URL
+
+1312
+00:59:05,260 --> 00:59:07,710
+to this thing that was just dropped on me.
+
+1313
+00:59:07,710 --> 00:59:08,810
+To make sure this is working,
+
+1314
+00:59:08,810 --> 00:59:12,473
+I'm gonna actually print
+out here dropped URL
+
+1315
+00:59:13,980 --> 00:59:16,900
+and print out what was dropped on this.
+
+1316
+00:59:16,900 --> 00:59:18,720
+So it would make sure
+that this dropping stuff
+
+1317
+00:59:18,720 --> 00:59:21,740
+is actually working
+before go and figure out
+
+1318
+00:59:21,740 --> 00:59:23,673
+how to get this URL to show up.
+
+1319
+00:59:24,920 --> 00:59:25,980
+So I'm gonna return this found
+
+1320
+00:59:25,980 --> 00:59:27,310
+whether or not the drop worked,
+
+1321
+00:59:27,310 --> 00:59:30,860
+that's what loadFirstObject
+return is whether it worked.
+
+1322
+00:59:30,860 --> 00:59:32,800
+That's it for drag and drop. (chuckles)
+
+1323
+00:59:32,800 --> 00:59:36,110
+This is really simple
+actually to do drag and drop.
+
+1324
+00:59:36,110 --> 00:59:38,450
+The complication comes a
+little bit inside here.
+
+1325
+00:59:38,450 --> 00:59:41,690
+I encourage you if you want
+to understand drag and drop
+
+1326
+00:59:41,690 --> 00:59:44,610
+to go and see if you can
+figure out that code.
+
+1327
+00:59:44,610 --> 00:59:46,100
+So let's run and see if we're at least
+
+1328
+00:59:46,100 --> 00:59:47,663
+getting this print to happen.
+
+1329
+00:59:51,842 --> 00:59:54,540
+There we go, so I'm gonna
+pick up our image, drag.
+
+1330
+00:59:54,540 --> 00:59:56,630
+I can already see something's different.
+
+1331
+00:59:56,630 --> 00:59:59,060
+The green plus that's
+appearing in the corner
+
+1332
+00:59:59,060 --> 01:00:01,420
+of the image, that's good, and drop.
+
+1333
+01:00:01,420 --> 01:00:03,610
+And it didn't do anything, of course,
+
+1334
+01:00:03,610 --> 01:00:06,110
+'cause we don't do anything with the URL.
+
+1335
+01:00:06,110 --> 01:00:11,110
+But it did do it here, down
+here, saying dropped this URL
+
+1336
+01:00:11,750 --> 01:00:13,170
+and in fact this is one of those URLs
+
+1337
+01:00:13,170 --> 01:00:17,310
+that has this weird imgurl
+thing embedded in it.
+
+1338
+01:00:17,310 --> 01:00:20,020
+See, this is the actual URL there.
+
+1339
+01:00:20,020 --> 01:00:22,240
+So it's good thing we dragged, you know,
+
+1340
+01:00:22,240 --> 01:00:25,247
+dragged this thing out of
+here or this would not work.
+
+1341
+01:00:25,247 --> 01:00:26,080
+But this is great.
+
+1342
+01:00:26,080 --> 01:00:28,440
+So we have this URL, we
+set it as our document's
+
+1343
+01:00:28,440 --> 01:00:32,250
+background URL in our
+ViewModel, setBackgroundURL,
+
+1344
+01:00:32,250 --> 01:00:34,987
+which sets it in our Model over here.
+
+1345
+01:00:34,987 --> 01:00:36,570
+And all is well.
+
+1346
+01:00:36,570 --> 01:00:38,010
+The only thing that's left to do now
+
+1347
+01:00:38,010 --> 01:00:40,908
+is actually show that image. (chuckles)
+
+1348
+01:00:40,908 --> 01:00:42,650
+All right, we've got
+the URL of that image,
+
+1349
+01:00:42,650 --> 01:00:45,200
+but nowhere in our View right here
+
+1350
+01:00:45,200 --> 01:00:46,607
+do we actually show the image.
+
+1351
+01:00:46,607 --> 01:00:48,750
+All we show now is a rectangle,
+
+1352
+01:00:48,750 --> 01:00:50,890
+edges ignoring that takes a drop.
+
+1353
+01:00:50,890 --> 01:00:53,453
+So how are we going to do that?
+
+1354
+01:00:53,453 --> 01:00:55,410
+We need to do that
+essentially by replacing
+
+1355
+01:00:55,410 --> 01:00:58,537
+this Rectangle
+foregroundColor yellow here.
+
+1356
+01:00:58,537 --> 01:01:02,030
+I'm gonna replace it by making
+it be a white Rectangle.
+
+1357
+01:01:02,030 --> 01:01:06,390
+And overlaid on top of it
+is going to be an Image
+
+1358
+01:01:06,390 --> 01:01:11,150
+that has our document's backgroundImage.
+
+1359
+01:01:11,150 --> 01:01:14,310
+Now this line of code's
+got a lot to unpack here.
+
+1360
+01:01:14,310 --> 01:01:17,020
+So let's unpack this piece
+by piece what's going on here
+
+1361
+01:01:17,020 --> 01:01:19,720
+'cause it's not actually gonna work as-is.
+
+1362
+01:01:19,720 --> 01:01:22,840
+The first thing is I
+took a white Rectangle
+
+1363
+01:01:22,840 --> 01:01:25,640
+and I overlaid my Image on top of it.
+
+1364
+01:01:25,640 --> 01:01:27,520
+Why did I do that, why didn't I just
+
+1365
+01:01:27,520 --> 01:01:29,650
+make a ZStack here, right?
+
+1366
+01:01:29,650 --> 01:01:32,600
+ZStack overlays one
+View on top of another.
+
+1367
+01:01:32,600 --> 01:01:35,600
+And this has to do with sizing
+
+1368
+01:01:35,600 --> 01:01:39,690
+because we want our
+document View, or whatever,
+
+1369
+01:01:39,690 --> 01:01:43,390
+to be sized like it was a Rectangle.
+
+1370
+01:01:43,390 --> 01:01:46,190
+Basically we wanted to use
+all the space offered to it.
+
+1371
+01:01:46,190 --> 01:01:48,950
+We know that Shapes take all
+the space offered to them
+
+1372
+01:01:48,950 --> 01:01:50,320
+so that's what we want.
+
+1373
+01:01:50,320 --> 01:01:53,500
+We wouldn't want it to
+size it to the Image
+
+1374
+01:01:53,500 --> 01:01:57,040
+because Images, these Views, Image,
+
+1375
+01:01:57,040 --> 01:02:00,210
+they size themselves to
+the size of the image.
+
+1376
+01:02:00,210 --> 01:02:01,300
+So if you had a small image,
+
+1377
+01:02:01,300 --> 01:02:03,160
+we would have a small little View there
+
+1378
+01:02:03,160 --> 01:02:05,110
+and we want it to be as big as possible.
+
+1379
+01:02:05,110 --> 01:02:07,510
+There is also something called background
+
+1380
+01:02:07,510 --> 01:02:09,360
+which does the same kind of thing.
+
+1381
+01:02:09,360 --> 01:02:13,630
+Sizes to this and then puts
+whatever View is in here
+
+1382
+01:02:13,630 --> 01:02:15,880
+as a background for the other image.
+
+1383
+01:02:15,880 --> 01:02:17,210
+So this is all about sizing.
+
+1384
+01:02:17,210 --> 01:02:22,043
+Using overlay or using
+background, all right, right here,
+
+1385
+01:02:23,068 --> 01:02:26,043
+is all about the sizing
+behavior that you want.
+
+1386
+01:02:27,510 --> 01:02:28,440
+All right, otherwise this is very much
+
+1387
+01:02:28,440 --> 01:02:31,433
+like a two-View ZStack essentially.
+
+1388
+01:02:34,180 --> 01:02:37,000
+So it's still not quite right here.
+
+1389
+01:02:37,000 --> 01:02:39,510
+We're still making our way through this.
+
+1390
+01:02:39,510 --> 01:02:43,470
+This Image right here,
+it takes some argument
+
+1391
+01:02:43,470 --> 01:02:46,670
+which is supposed to be
+this image, backgroundImage,
+
+1392
+01:02:46,670 --> 01:02:48,550
+but what is backgroundImage?
+
+1393
+01:02:48,550 --> 01:02:51,910
+We don't have a backgroundImage
+in our document.
+
+1394
+01:02:51,910 --> 01:02:53,300
+So let's add that.
+
+1395
+01:02:53,300 --> 01:02:56,030
+Let's go over here, I'm
+just gonna add a var
+
+1396
+01:02:56,030 --> 01:03:00,420
+backgroundImage and what
+type is this gonna be?
+
+1397
+01:03:00,420 --> 01:03:03,140
+You'd think this might be a type Image
+
+1398
+01:03:03,140 --> 01:03:04,760
+but it's not really a type Image.
+
+1399
+01:03:04,760 --> 01:03:06,770
+We're creating the Image View right here.
+
+1400
+01:03:06,770 --> 01:03:10,250
+So this type Image, this
+is a struct, it's a View.
+
+1401
+01:03:10,250 --> 01:03:13,580
+Really what we want to pass
+to it is an actual image.
+
+1402
+01:03:13,580 --> 01:03:16,510
+And an actual image in
+SwiftUI is represented
+
+1403
+01:03:16,510 --> 01:03:19,580
+by another thing called a UIImage.
+
+1404
+01:03:19,580 --> 01:03:22,360
+Now UIImage, things that start with UI
+
+1405
+01:03:22,360 --> 01:03:27,200
+come from the old world, the
+previous-to-SwiftUI world.
+
+1406
+01:03:27,200 --> 01:03:30,220
+And this was such a great little object
+
+1407
+01:03:30,220 --> 01:03:33,160
+for dealing with images that
+they decided just to keep it.
+
+1408
+01:03:33,160 --> 01:03:35,643
+And they did the same thing with UIColor.
+
+1409
+01:03:35,643 --> 01:03:37,410
+And we saw that before that we have Color.
+
+1410
+01:03:37,410 --> 01:03:40,793
+Color is kind of like a
+View, but UIColor is a thing
+
+1411
+01:03:40,793 --> 01:03:43,420
+that actually represents Colors.
+
+1412
+01:03:43,420 --> 01:03:46,110
+By the way, I talked about
+UIColor being a View.
+
+1413
+01:03:46,110 --> 01:03:49,310
+UIColor also can be a
+specifier right here,
+
+1414
+01:03:49,310 --> 01:03:51,040
+foregroundColor Color.white.
+
+1415
+01:03:51,040 --> 01:03:54,650
+This is not a View, we're just
+specifying the Color white.
+
+1416
+01:03:54,650 --> 01:03:57,010
+But Color can act like a View.
+
+1417
+01:03:57,010 --> 01:03:59,617
+I could even say Color.white right here,
+
+1418
+01:03:59,617 --> 01:04:01,340
+and that's perfectly legal. (chuckles)
+
+1419
+01:04:01,340 --> 01:04:02,803
+This can be a View and we also know
+
+1420
+01:04:02,803 --> 01:04:05,610
+that Color can be ShapeStyle,
+
+1421
+01:04:05,610 --> 01:04:08,750
+fill Color or stroke Color in a Shape.
+
+1422
+01:04:08,750 --> 01:04:10,070
+So Color's kind of a chameleon,
+
+1423
+01:04:10,070 --> 01:04:12,640
+can be a lot of different things.
+
+1424
+01:04:12,640 --> 01:04:14,320
+But Image here is the View.
+
+1425
+01:04:14,320 --> 01:04:18,180
+We can say uiImage as
+the constructor for it
+
+1426
+01:04:18,180 --> 01:04:21,550
+and pass it a UIImage and
+that will make the Image.
+
+1427
+01:04:21,550 --> 01:04:23,580
+And we're often doing this
+when we create an Image.
+
+1428
+01:04:23,580 --> 01:04:25,920
+We're gonna learn other
+ways to create Images,
+
+1429
+01:04:25,920 --> 01:04:29,370
+but one way is we just pass it a UIImage.
+
+1430
+01:04:30,385 --> 01:04:32,370
+Now this isn't quite working either
+
+1431
+01:04:32,370 --> 01:04:36,020
+and that's because this
+does not really want
+
+1432
+01:04:36,020 --> 01:04:39,003
+to be a UIImage, it's an optional UIImage.
+
+1433
+01:04:39,950 --> 01:04:42,210
+Because again, we might
+not have the background.
+
+1434
+01:04:42,210 --> 01:04:44,790
+Even if we have the URL,
+we might not have gone
+
+1435
+01:04:44,790 --> 01:04:46,680
+and got the image yet.
+
+1436
+01:04:46,680 --> 01:04:49,340
+So this has to be able to be nil.
+
+1437
+01:04:49,340 --> 01:04:50,460
+Another important thing here
+
+1438
+01:04:50,460 --> 01:04:52,260
+is I want this to be private set.
+
+1439
+01:04:52,260 --> 01:04:55,860
+Only our ViewModel is
+going to be fetching images
+
+1440
+01:04:55,860 --> 01:04:56,930
+from the internet.
+
+1441
+01:04:56,930 --> 01:05:00,630
+Our View is just going to
+look at whatever image arrives
+
+1442
+01:05:00,630 --> 01:05:01,623
+from the internet.
+
+1443
+01:05:02,760 --> 01:05:04,550
+All right, so our View gets the drop,
+
+1444
+01:05:04,550 --> 01:05:08,550
+it sets the backgroundURL,
+and then it's our ViewModel
+
+1445
+01:05:08,550 --> 01:05:09,900
+that's gonna have to go off
+
+1446
+01:05:09,900 --> 01:05:12,690
+and create this background image.
+
+1447
+01:05:12,690 --> 01:05:15,960
+So that creates a problem though,
+making this be an optional
+
+1448
+01:05:15,960 --> 01:05:19,030
+because this Image uiImage constructor
+
+1449
+01:05:19,030 --> 01:05:20,520
+will not take an optional.
+
+1450
+01:05:20,520 --> 01:05:22,970
+This has to be non-optional.
+
+1451
+01:05:22,970 --> 01:05:25,150
+So it kinda makes me want to go in here,
+
+1452
+01:05:25,150 --> 01:05:26,567
+and say, "Yeah, I'll just have to say
+
+1453
+01:05:26,567 --> 01:05:29,530
+"if self.document.backgroundImage
+
+1454
+01:05:31,067 --> 01:05:36,067
+"does not equal nil, then I'll
+create this image right here
+
+1455
+01:05:36,527 --> 01:05:38,900
+"and I'll force unwrap it."
+
+1456
+01:05:38,900 --> 01:05:42,090
+And this looks like, oh, this should work
+
+1457
+01:05:42,090 --> 01:05:44,710
+except for the problem is that
+the arguments that overlay
+
+1458
+01:05:44,710 --> 01:05:47,750
+somewhat unusually is not a ViewBuilder.
+
+1459
+01:05:47,750 --> 01:05:49,530
+This didn't have curly braces,
+
+1460
+01:05:49,530 --> 01:05:50,690
+there was no curly brace there.
+
+1461
+01:05:50,690 --> 01:05:54,030
+This is an actual View,
+this has to be a View.
+
+1462
+01:05:54,030 --> 01:05:55,610
+And we can't do ifs here.
+
+1463
+01:05:55,610 --> 01:05:57,160
+This is supposed to be a View.
+
+1464
+01:05:57,160 --> 01:05:59,330
+This is an if statement, not a View.
+
+1465
+01:05:59,330 --> 01:06:02,700
+So if we want to do this nice
+ViewBuilder if stuff here,
+
+1466
+01:06:02,700 --> 01:06:07,010
+we need to wrap this in
+something that does ViewBuilder
+
+1467
+01:06:07,010 --> 01:06:09,700
+and that's what Group is really good at.
+
+1468
+01:06:09,700 --> 01:06:12,230
+So if you find yourself having
+to pass a View somewhere,
+
+1469
+01:06:12,230 --> 01:06:14,610
+but you need to do the
+if business around it,
+
+1470
+01:06:14,610 --> 01:06:16,210
+go ahead and use a Group because a Group
+
+1471
+01:06:16,210 --> 01:06:19,440
+does not otherwise modify
+the layout or anything
+
+1472
+01:06:19,440 --> 01:06:23,093
+of that View, so it's a nice
+little trick to use Group.
+
+1473
+01:06:24,490 --> 01:06:25,570
+All right, excellent.
+
+1474
+01:06:25,570 --> 01:06:28,618
+So everything's fine, no errors,
+
+1475
+01:06:28,618 --> 01:06:29,490
+(chuckles) everything compiled.
+
+1476
+01:06:29,490 --> 01:06:32,860
+The only problem is this is
+just always going to be nil.
+
+1477
+01:06:32,860 --> 01:06:34,780
+We never set this to anything.
+
+1478
+01:06:34,780 --> 01:06:37,570
+Our ViewModel is to take this URL
+
+1479
+01:06:37,570 --> 01:06:39,530
+and go fetch it on the internet.
+
+1480
+01:06:39,530 --> 01:06:42,320
+And when it gets the actual
+image and makes a UIImage
+
+1481
+01:06:42,320 --> 01:06:44,760
+out of whatever it finds
+over there on the internet,
+
+1482
+01:06:44,760 --> 01:06:47,440
+then it should automatically
+draw in our View.
+
+1483
+01:06:47,440 --> 01:06:52,223
+As long as we make this
+backgroundImage also Published.
+
+1484
+01:06:53,170 --> 01:06:55,570
+We need to publish this so
+that whenever this changes,
+
+1485
+01:06:55,570 --> 01:06:59,510
+our View causes to redraw and
+this whole thing will happen,
+
+1486
+01:06:59,510 --> 01:07:02,410
+this overlay will change, and
+we'll get to see that image.
+
+1487
+01:07:03,550 --> 01:07:05,790
+Especially when you're
+doing your ViewModel,
+
+1488
+01:07:05,790 --> 01:07:07,667
+it can be easy to remember,
+"Oh, yeah, of course,
+
+1489
+01:07:07,667 --> 01:07:10,250
+"my Model is published."
+
+1490
+01:07:10,250 --> 01:07:12,930
+But there might be other
+things that your ViewModel
+
+1491
+01:07:12,930 --> 01:07:15,920
+is doing that you want
+your View to react to.
+
+1492
+01:07:15,920 --> 01:07:18,950
+And we just do that with @Published.
+
+1493
+01:07:18,950 --> 01:07:23,000
+Now really some ways, the meat
+of today's lecture (chuckles)
+
+1494
+01:07:23,000 --> 01:07:26,060
+is how are we gonna fetch
+this backgroundImage
+
+1495
+01:07:26,060 --> 01:07:29,900
+and create a UIImage
+from this URL down here?
+
+1496
+01:07:29,900 --> 01:07:32,060
+We're gonna do that in
+its own little function.
+
+1497
+01:07:32,060 --> 01:07:33,930
+I'm gonna call this function
+
+1498
+01:07:34,807 --> 01:07:36,890
+fetchBackgroundImageData.
+
+1499
+01:07:40,225 --> 01:07:42,340
+And it's gonna go fetch
+the background image data
+
+1500
+01:07:42,340 --> 01:07:44,820
+and make a UIImage out of it.
+
+1501
+01:07:44,820 --> 01:07:45,653
+So let's create that little func,
+
+1502
+01:07:45,653 --> 01:07:47,760
+it's a little private func here.
+
+1503
+01:07:47,760 --> 01:07:51,400
+This function's only
+job is to set this var.
+
+1504
+01:07:51,400 --> 01:07:54,490
+Once it sets this var to
+some UIImage that it gets
+
+1505
+01:07:54,490 --> 01:07:57,930
+from this URL, everything's
+just gonna update, right.
+
+1506
+01:07:57,930 --> 01:08:02,240
+We have reactive UI,
+we've already built our UI
+
+1507
+01:08:02,240 --> 01:08:03,460
+to deal with this image.
+
+1508
+01:08:03,460 --> 01:08:06,450
+So it should all just happen
+automatically once we set this.
+
+1509
+01:08:06,450 --> 01:08:08,590
+So our goal here in the
+side here (chuckles)
+
+1510
+01:08:08,590 --> 01:08:11,563
+is to do one thing and one
+thing only, set this var.
+
+1511
+01:08:13,508 --> 01:08:15,750
+All right, so what are
+we gonna do to do that?
+
+1512
+01:08:15,750 --> 01:08:18,290
+Well first thing is if
+you're asking me to go fetch
+
+1513
+01:08:18,290 --> 01:08:19,830
+the background image data,
+
+1514
+01:08:19,830 --> 01:08:24,390
+I'm gonna set my current
+backgroundImage to nil.
+
+1515
+01:08:24,390 --> 01:08:26,560
+So I'm in the process of
+going out in the internet
+
+1516
+01:08:26,560 --> 01:08:27,860
+and getting something.
+
+1517
+01:08:27,860 --> 01:08:29,230
+That might take quite awhile.
+
+1518
+01:08:29,230 --> 01:08:31,910
+Maybe it's a big image or
+maybe the server that it's on
+
+1519
+01:08:31,910 --> 01:08:33,010
+is really slow.
+
+1520
+01:08:33,010 --> 01:08:35,140
+So in the meantime, I'm gonna
+clear the backgroundImage
+
+1521
+01:08:35,140 --> 01:08:37,500
+just to let you know,
+yeah I know you changed
+
+1522
+01:08:37,500 --> 01:08:39,257
+the backgroundImage, you
+dropped something on me.
+
+1523
+01:08:39,257 --> 01:08:40,633
+And I'm working on it.
+
+1524
+01:08:41,700 --> 01:08:44,140
+Really what we'd like
+to do is provide some UI
+
+1525
+01:08:45,030 --> 01:08:47,030
+to give some feedback
+that we're working on it.
+
+1526
+01:08:47,030 --> 01:08:50,530
+Maybe we will actually
+demo that, time permitting.
+
+1527
+01:08:50,530 --> 01:08:53,010
+But we definitely need
+to give some feedback
+
+1528
+01:08:53,010 --> 01:08:56,100
+that, "Yeah, we saw that drop
+and we're working on it."
+
+1529
+01:08:56,100 --> 01:08:59,960
+So that's that, and then
+if the URL that was dropped
+
+1530
+01:08:59,960 --> 01:09:04,790
+which is this emojiArt.backgroundURL now,
+
+1531
+01:09:04,790 --> 01:09:08,090
+if that's nil then there's
+no need to go fetch anything.
+
+1532
+01:09:08,090 --> 01:09:10,500
+So I'm gonna put this if let url around it
+
+1533
+01:09:10,500 --> 01:09:12,280
+so that I'm only doing any fetching
+
+1534
+01:09:12,280 --> 01:09:14,090
+on the internet (chuckles)
+if I've actually
+
+1535
+01:09:14,090 --> 01:09:16,290
+got a URL to go look for.
+
+1536
+01:09:16,290 --> 01:09:20,810
+So fetching the information
+from a URL is really simple.
+
+1537
+01:09:20,810 --> 01:09:23,540
+There is a more sophisticated
+mechanism for doing this.
+
+1538
+01:09:23,540 --> 01:09:24,800
+We're gonna do the simplest one
+
+1539
+01:09:24,800 --> 01:09:26,390
+'cause we were only really focused
+
+1540
+01:09:26,390 --> 01:09:29,490
+on the asynchronous programming
+that's going on here.
+
+1541
+01:09:29,490 --> 01:09:31,740
+But if you were really
+gonna be downloading stuff
+
+1542
+01:09:31,740 --> 01:09:35,060
+from the internet, you
+would use URLSession.
+
+1543
+01:09:35,060 --> 01:09:38,100
+And I'm not gonna talk about
+the whole URLSession API
+
+1544
+01:09:38,100 --> 01:09:40,360
+but essentially it's
+just a closure-based API.
+
+1545
+01:09:40,360 --> 01:09:43,410
+You pass closures to it, it
+goes and downloads stuff.
+
+1546
+01:09:43,410 --> 01:09:46,160
+It calls your closures when
+the downloads come back
+
+1547
+01:09:46,160 --> 01:09:49,680
+or it'll call other
+closures when errors occur.
+
+1548
+01:09:49,680 --> 01:09:51,840
+But a simple way to
+fetch data is just to say
+
+1549
+01:09:51,840 --> 01:09:56,840
+if let imageData equal,
+try getting the data
+
+1550
+01:09:56,860 --> 01:09:59,103
+from the contents of that URL.
+
+1551
+01:10:00,220 --> 01:10:03,480
+This Data is just an object, a struct,
+
+1552
+01:10:03,480 --> 01:10:06,210
+and it has initializer
+where you give it a URL
+
+1553
+01:10:06,210 --> 01:10:07,940
+and it will go out on the internet
+
+1554
+01:10:07,940 --> 01:10:11,200
+and get the data at
+that URL and return it.
+
+1555
+01:10:11,200 --> 01:10:14,210
+This can encounter all kinds of errors:
+
+1556
+01:10:14,210 --> 01:10:17,670
+internet timeouts, all
+kinds of things happening.
+
+1557
+01:10:17,670 --> 01:10:19,730
+So that's why we have to do this try.
+
+1558
+01:10:19,730 --> 01:10:21,550
+And in next week's reading assignment,
+
+1559
+01:10:21,550 --> 01:10:24,030
+you're gonna learn about
+try and thrown errors.
+
+1560
+01:10:24,030 --> 01:10:26,080
+I'm not gonna talk about it today,
+
+1561
+01:10:26,080 --> 01:10:28,840
+but just know that there
+are some constructors
+
+1562
+01:10:28,840 --> 01:10:31,170
+that you call and some
+functions that you call
+
+1563
+01:10:31,170 --> 01:10:32,850
+that have to be try-ed.
+
+1564
+01:10:32,850 --> 01:10:35,270
+And when you do this try
+with a question mark,
+
+1565
+01:10:35,270 --> 01:10:38,500
+it means try this and
+if it fails, (chuckles)
+
+1566
+01:10:38,500 --> 01:10:40,880
+network timeout,
+whatever, just return nil.
+
+1567
+01:10:40,880 --> 01:10:42,390
+And since I'm doing if let,
+
+1568
+01:10:42,390 --> 01:10:45,173
+this in here won't get
+executed if this fails.
+
+1569
+01:10:46,450 --> 01:10:49,720
+Now a huge problem with this line of code.
+
+1570
+01:10:49,720 --> 01:10:53,740
+This could take 10 seconds or two minutes
+
+1571
+01:10:53,740 --> 01:10:55,610
+depending on what the timeout is.
+
+1572
+01:10:55,610 --> 01:10:57,640
+Certainly probably gonna
+take at least a half a second
+
+1573
+01:10:57,640 --> 01:11:00,790
+or a second, and during
+that time my whole app
+
+1574
+01:11:00,790 --> 01:11:04,180
+is stuck waiting for this line
+of code (chuckles) to execute
+
+1575
+01:11:04,180 --> 01:11:06,410
+and that is the rub.
+
+1576
+01:11:06,410 --> 01:11:08,480
+That we can never allow to happen.
+
+1577
+01:11:08,480 --> 01:11:12,550
+We can never call a function
+like this that blocks our code
+
+1578
+01:11:12,550 --> 01:11:13,640
+waiting for it to return
+
+1579
+01:11:13,640 --> 01:11:15,840
+because it can take seconds to do this.
+
+1580
+01:11:15,840 --> 01:11:19,820
+Never call that in the
+same thread of execution
+
+1581
+01:11:19,820 --> 01:11:22,750
+as all of our UIs
+happening, otherwise our app
+
+1582
+01:11:22,750 --> 01:11:25,200
+is going to freeze and the
+user's gonna be clicking
+
+1583
+01:11:25,200 --> 01:11:27,070
+and typing and trying
+to drag a new thing in,
+
+1584
+01:11:27,070 --> 01:11:29,760
+and, "I, I didn't want that
+URL, it's taking too long."
+
+1585
+01:11:29,760 --> 01:11:30,593
+No, they can't do anything.
+
+1586
+01:11:30,593 --> 01:11:33,340
+Our app, they can't even
+scroll their emoji at the top.
+
+1587
+01:11:33,340 --> 01:11:36,130
+It's all frozen because our
+app is sitting right here
+
+1588
+01:11:36,130 --> 01:11:39,323
+on this line of code for 10
+seconds, 15 seconds, whatever.
+
+1589
+01:11:40,460 --> 01:11:41,870
+So how do we get around that?
+
+1590
+01:11:41,870 --> 01:11:43,670
+We use what we talked about in the slides,
+
+1591
+01:11:43,670 --> 01:11:45,240
+the dispatch mechanism.
+
+1592
+01:11:45,240 --> 01:11:50,240
+So I'm going to dispatch
+this code to a global queue.
+
+1593
+01:11:50,377 --> 01:11:52,670
+And the quality of service I want here
+
+1594
+01:11:52,670 --> 01:11:54,890
+is called userInitiated.
+
+1595
+01:11:54,890 --> 01:11:57,810
+Remember there's these
+different qualities of service.
+
+1596
+01:11:57,810 --> 01:12:00,090
+I want userInitiated because
+that's exactly what happened.
+
+1597
+01:12:00,090 --> 01:12:02,450
+The user initiated a request here.
+
+1598
+01:12:02,450 --> 01:12:04,940
+And so that right there,
+that that you've seen,
+
+1599
+01:12:04,940 --> 01:12:08,723
+this DispatchQueue.global,
+that gives me a global queue,
+
+1600
+01:12:08,723 --> 01:12:11,280
+a queue that executes its
+code off the main queue,
+
+1601
+01:12:11,280 --> 01:12:12,730
+not where the UI is.
+
+1602
+01:12:12,730 --> 01:12:15,410
+And I'm going to asynchronously ask it
+
+1603
+01:12:15,410 --> 01:12:17,480
+to perform this function.
+
+1604
+01:12:17,480 --> 01:12:19,500
+This function takes no
+argument, return no arguments.
+
+1605
+01:12:19,500 --> 01:12:23,450
+And I'm just gonna ask it
+please perform this function
+
+1606
+01:12:23,450 --> 01:12:25,780
+off on this queue, whatever it is,
+
+1607
+01:12:25,780 --> 01:12:30,010
+and I'll have nothing else
+to do with you, just do it.
+
+1608
+01:12:30,010 --> 01:12:32,393
+So I'm gonna put this inside here now.
+
+1609
+01:12:33,257 --> 01:12:35,490
+And this is great because
+now this is blocking still,
+
+1610
+01:12:35,490 --> 01:12:39,160
+still taking five seconds, but
+off on some background queue,
+
+1611
+01:12:39,160 --> 01:12:41,147
+not in the same queue where all the code
+
+1612
+01:12:41,147 --> 01:12:43,633
+for our UI is being executed.
+
+1613
+01:12:44,800 --> 01:12:45,633
+So that's great.
+
+1614
+01:12:45,633 --> 01:12:47,530
+Now the imageData comes back, let's say.
+
+1615
+01:12:47,530 --> 01:12:48,900
+You know, let's say there was no error
+
+1616
+01:12:48,900 --> 01:12:51,400
+and so this try, that
+it didn't return nil.
+
+1617
+01:12:51,400 --> 01:12:53,190
+And now I've got the imageData!
+
+1618
+01:12:53,190 --> 01:12:55,390
+It's JPEG data or PNG data
+
+1619
+01:12:55,390 --> 01:12:58,020
+or some kind of data from the internet.
+
+1620
+01:12:58,020 --> 01:13:00,420
+And I need to turn it into a UIImage
+
+1621
+01:13:00,420 --> 01:13:01,730
+'cause that's what I'm trying to do here
+
+1622
+01:13:01,730 --> 01:13:03,650
+is make this UIImage here.
+
+1623
+01:13:03,650 --> 01:13:06,100
+And luckily UIImage has
+a great way to do that.
+
+1624
+01:13:06,100 --> 01:13:10,820
+I could just say
+backgroundImage equals UIImage
+
+1625
+01:13:10,820 --> 01:13:12,313
+with this Data.
+
+1626
+01:13:13,240 --> 01:13:15,790
+This line of code has a
+humongous problem, okay.
+
+1627
+01:13:15,790 --> 01:13:18,260
+Just like this line of code
+was a problem that it blocked
+
+1628
+01:13:18,260 --> 01:13:20,490
+and we fixed that by putting
+on a background queue.
+
+1629
+01:13:20,490 --> 01:13:23,240
+This one has a huge
+problem which is that this
+
+1630
+01:13:23,240 --> 01:13:25,360
+is going to set this backgroundImage
+
+1631
+01:13:25,360 --> 01:13:28,670
+which is gonna cause this
+publishing to happen up here,
+
+1632
+01:13:28,670 --> 01:13:32,760
+which is gonna cause our
+View over here to redraw
+
+1633
+01:13:32,760 --> 01:13:36,010
+which means UI is going to be happening
+
+1634
+01:13:36,010 --> 01:13:38,940
+on a background thread.
+
+1635
+01:13:38,940 --> 01:13:41,177
+And that is never allowed, that is,
+
+1636
+01:13:41,177 --> 01:13:43,030
+and in fact when you do that,
+
+1637
+01:13:43,030 --> 01:13:45,140
+your app is gonna start behaving funny,
+
+1638
+01:13:45,140 --> 01:13:47,810
+might possibly even crash.
+
+1639
+01:13:47,810 --> 01:13:50,210
+And you're gonna get little
+purple warnings up here
+
+1640
+01:13:50,210 --> 01:13:52,287
+when you're running your
+app in Xcode that says,
+
+1641
+01:13:52,287 --> 01:13:54,720
+"Ah, you drew something
+outside the main queue!"
+
+1642
+01:13:54,720 --> 01:13:56,890
+So we can never do something like this,
+
+1643
+01:13:56,890 --> 01:14:00,330
+a line of code that would
+cause drawing to happen
+
+1644
+01:14:00,330 --> 01:14:03,260
+on non main threads.
+
+1645
+01:14:03,260 --> 01:14:05,410
+So how do we put this
+back on the main thread?
+
+1646
+01:14:05,410 --> 01:14:07,810
+We do it the exact same
+way that we put this code
+
+1647
+01:14:07,810 --> 01:14:10,360
+on this thread originally.
+
+1648
+01:14:10,360 --> 01:14:12,060
+But we're gonna put it on instead of
+
+1649
+01:14:12,060 --> 01:14:15,500
+a background userInitiated
+quality of service thread,
+
+1650
+01:14:15,500 --> 01:14:19,110
+we're gonna put this DispatchQueue.main.
+
+1651
+01:14:19,110 --> 01:14:20,210
+So it'll be the same thing.
+
+1652
+01:14:20,210 --> 01:14:24,810
+I'm gonna asynchronously post
+a little function closure
+
+1653
+01:14:24,810 --> 01:14:27,530
+to the main queue and say go do this.
+
+1654
+01:14:27,530 --> 01:14:30,370
+Now posting something asynchronously
+
+1655
+01:14:30,370 --> 01:14:32,240
+basically means it gets in the queue,
+
+1656
+01:14:32,240 --> 01:14:34,480
+that's why we call these queues, to run.
+
+1657
+01:14:34,480 --> 01:14:36,300
+And there might be other threads
+
+1658
+01:14:36,300 --> 01:14:39,600
+that are posting these
+little function snippets
+
+1659
+01:14:39,600 --> 01:14:41,172
+to run on the main queue.
+
+1660
+01:14:41,172 --> 01:14:42,380
+And so this guy might have to get in line
+
+1661
+01:14:42,380 --> 01:14:43,710
+if something else is happening.
+
+1662
+01:14:43,710 --> 01:14:45,830
+In fact one of those might
+be executing right now.
+
+1663
+01:14:45,830 --> 01:14:49,120
+The user just touched on
+something or scrolled their emojis
+
+1664
+01:14:49,120 --> 01:14:51,720
+at the top, so the main queue is busy.
+
+1665
+01:14:51,720 --> 01:14:53,810
+But when it's settled down, it's not busy,
+
+1666
+01:14:53,810 --> 01:14:56,280
+it'll start attending
+to its queue of requests
+
+1667
+01:14:56,280 --> 01:14:58,723
+and eventually it will execute this.
+
+1668
+01:14:59,610 --> 01:15:02,220
+This really is all there is
+
+1669
+01:15:02,220 --> 01:15:03,750
+to this multithreaded programming
+
+1670
+01:15:03,750 --> 01:15:08,750
+and it looks really simple, and it is.
+
+1671
+01:15:09,400 --> 01:15:10,890
+But it can get you in a little trouble
+
+1672
+01:15:10,890 --> 01:15:12,833
+as I will explain in just a minute.
+
+1673
+01:15:14,280 --> 01:15:16,210
+But this should be enough, right.
+
+1674
+01:15:16,210 --> 01:15:17,660
+We did what we said we were gonna do
+
+1675
+01:15:17,660 --> 01:15:19,284
+in this fetchBackgroundImageData
+
+1676
+01:15:19,284 --> 01:15:21,930
+is we are setting the
+backgroundImage to the UIImage
+
+1677
+01:15:21,930 --> 01:15:23,040
+from fetching that data.
+
+1678
+01:15:23,040 --> 01:15:24,340
+So let's see it in action.
+
+1679
+01:15:27,880 --> 01:15:29,687
+All right, here we go, pick this guy up.
+
+1680
+01:15:29,687 --> 01:15:32,380
+And we drag him, he's
+turning green, that's good,
+
+1681
+01:15:32,380 --> 01:15:34,820
+go over here and drop!
+
+1682
+01:15:34,820 --> 01:15:37,870
+Ah, whoa, it worked!
+
+1683
+01:15:37,870 --> 01:15:39,440
+Now there was a slight delay.
+
+1684
+01:15:39,440 --> 01:15:40,310
+I don't know if you noticed it.
+
+1685
+01:15:40,310 --> 01:15:42,620
+We dropped it and it took
+about a half a second
+
+1686
+01:15:42,620 --> 01:15:44,340
+to draw this image.
+
+1687
+01:15:44,340 --> 01:15:46,640
+And during that half second,
+it was just going over
+
+1688
+01:15:46,640 --> 01:15:48,930
+the internet to whatever
+website this is on
+
+1689
+01:15:48,930 --> 01:15:51,043
+and pulling that image over.
+
+1690
+01:15:52,040 --> 01:15:53,410
+Let's talk a little bit though
+
+1691
+01:15:53,410 --> 01:15:56,060
+about these asynchronous things
+
+1692
+01:15:56,060 --> 01:15:57,940
+and why it's not always as straightforward
+
+1693
+01:15:57,940 --> 01:15:59,220
+as you might think.
+
+1694
+01:15:59,220 --> 01:16:02,430
+I'm gonna describe a
+scenario that goes on here
+
+1695
+01:16:02,430 --> 01:16:05,693
+and you can see why this code
+is actually not quite right.
+
+1696
+01:16:06,640 --> 01:16:09,530
+Let's say that I drag and drop an image
+
+1697
+01:16:09,530 --> 01:16:13,740
+from a really slow server and
+it's gonna take 15 seconds.
+
+1698
+01:16:13,740 --> 01:16:15,290
+And after about three or four seconds,
+
+1699
+01:16:15,290 --> 01:16:16,977
+as the user, I'm like,
+"Ah, I'm tired of waiting
+
+1700
+01:16:16,977 --> 01:16:20,090
+"for that image," and you go
+to another one, a fast server,
+
+1701
+01:16:20,090 --> 01:16:21,890
+and you drag a new thing in.
+
+1702
+01:16:21,890 --> 01:16:24,070
+And of course, the fast server
+gives it to your right away,
+
+1703
+01:16:24,070 --> 01:16:25,227
+and boop, you display it.
+
+1704
+01:16:25,227 --> 01:16:28,330
+And so now it's displaying
+and maybe you go on
+
+1705
+01:16:28,330 --> 01:16:30,840
+and you're like, "Ah, I'm
+gonna add some emoji to it,"
+
+1706
+01:16:30,840 --> 01:16:33,830
+and then the other one finally returns.
+
+1707
+01:16:33,830 --> 01:16:37,790
+And what's it gonna do, boom,
+reset your background image.
+
+1708
+01:16:37,790 --> 01:16:40,150
+So that is really unexpected for the user.
+
+1709
+01:16:40,150 --> 01:16:41,500
+I dragged something in.
+
+1710
+01:16:41,500 --> 01:16:43,480
+I think it failed 'cause it took too long.
+
+1711
+01:16:43,480 --> 01:16:44,610
+So I dragged something else in.
+
+1712
+01:16:44,610 --> 01:16:47,140
+It was quick, it got there,
+and then 10 seconds later,
+
+1713
+01:16:47,140 --> 01:16:49,000
+boom, the old thing comes in.
+
+1714
+01:16:49,000 --> 01:16:52,010
+So that we never would want to happen.
+
+1715
+01:16:52,010 --> 01:16:54,520
+Now it's easily protectable against,
+
+1716
+01:16:54,520 --> 01:16:56,270
+which is just when I go back here
+
+1717
+01:16:56,270 --> 01:16:58,400
+to set this backgroundImage,
+I'm gonna make sure
+
+1718
+01:16:58,400 --> 01:17:02,103
+that this Data that I got
+is for the background URL
+
+1719
+01:17:02,103 --> 01:17:03,440
+that the user still wants.
+
+1720
+01:17:03,440 --> 01:17:05,800
+We can just do it in
+here and say if the URL
+
+1721
+01:17:06,729 --> 01:17:08,870
+that I just fetched,
+right, that's this URL
+
+1722
+01:17:08,870 --> 01:17:10,820
+that I got right here.
+
+1723
+01:17:10,820 --> 01:17:13,747
+If it equals the EmojiArt's
+
+1724
+01:17:15,790 --> 01:17:19,750
+backgroundURL, then I'll
+go ahead and load it up.
+
+1725
+01:17:19,750 --> 01:17:22,000
+But if it's some other URL that I got
+
+1726
+01:17:22,000 --> 01:17:24,750
+15 seconds ago, (chuckles)
+then I'm just gonna do nothing.
+
+1727
+01:17:24,750 --> 01:17:25,740
+I'm gonna ignore it.
+
+1728
+01:17:25,740 --> 01:17:27,570
+I still fetched it, it still arrived,
+
+1729
+01:17:27,570 --> 01:17:30,180
+but I'm not gonna waste
+my time making an image
+
+1730
+01:17:30,180 --> 01:17:33,200
+and certainly not gonna blast
+it in front of the user.
+
+1731
+01:17:33,200 --> 01:17:36,343
+So this kind of minor thing right here,
+
+1732
+01:17:36,343 --> 01:17:38,210
+it's the kind of thing you have to be able
+
+1733
+01:17:38,210 --> 01:17:40,400
+to protect against and be careful about
+
+1734
+01:17:40,400 --> 01:17:42,260
+when you have this
+asynchronous programming.
+
+1735
+01:17:42,260 --> 01:17:44,640
+You can't just blindly
+be posting back and forth
+
+1736
+01:17:44,640 --> 01:17:47,460
+and not thinking about
+what if things like this
+
+1737
+01:17:47,460 --> 01:17:51,053
+take a very long time and then,
+it's another one comes by.
+
+1738
+01:17:52,040 --> 01:17:54,840
+Make sure that didn't break
+anything, I'm sure it won't.
+
+1739
+01:17:56,900 --> 01:17:58,470
+Drag our image in here.
+
+1740
+01:17:58,470 --> 01:18:00,850
+Oop, there it is, working great.
+
+1741
+01:18:00,850 --> 01:18:02,400
+Now that we have our image working here,
+
+1742
+01:18:02,400 --> 01:18:04,780
+let's make it so we can pick these up
+
+1743
+01:18:04,780 --> 01:18:07,940
+and drag them in here,
+drag our emojis in here.
+
+1744
+01:18:07,940 --> 01:18:12,840
+So that's both making it
+so we can drop little texts
+
+1745
+01:18:12,840 --> 01:18:16,080
+on our View here, but
+also we got to make it
+
+1746
+01:18:16,080 --> 01:18:17,700
+so these things are draggable
+
+1747
+01:18:17,700 --> 01:18:20,710
+so that we're doing drag
+and drop with this one.
+
+1748
+01:18:20,710 --> 01:18:22,640
+So let's do the drop side of it first
+
+1749
+01:18:22,640 --> 01:18:24,290
+because we already know how to drop
+
+1750
+01:18:24,290 --> 01:18:28,433
+and it's actually really easy
+to drop the emoji as well.
+
+1751
+01:18:30,540 --> 01:18:33,340
+Over here in our View, so here's onDrop.
+
+1752
+01:18:33,340 --> 01:18:35,360
+Right now onDrop just
+lets you drop the image
+
+1753
+01:18:35,360 --> 01:18:36,230
+for the background.
+
+1754
+01:18:36,230 --> 01:18:39,870
+Now I'm gonna make it so that
+onDrop also can drop a Text
+
+1755
+01:18:39,870 --> 01:18:42,430
+'cause our emojis are just
+little snippets of Text.
+
+1756
+01:18:42,430 --> 01:18:45,600
+So public.text is the URI for Text.
+
+1757
+01:18:45,600 --> 01:18:48,520
+Now in this case, I do need the location.
+
+1758
+01:18:48,520 --> 01:18:50,570
+If you drop an emoji, I need the,
+
+1759
+01:18:50,570 --> 01:18:53,570
+let's get rid of this
+URL printing right there.
+
+1760
+01:18:53,570 --> 01:18:55,960
+In this case, I do need the location.
+
+1761
+01:18:55,960 --> 01:18:56,880
+So we're gonna have to do it.
+
+1762
+01:18:56,880 --> 01:19:00,300
+Now the location that's
+provided here when we drop,
+
+1763
+01:19:00,300 --> 01:19:02,000
+I think it's actually a bug.
+
+1764
+01:19:02,000 --> 01:19:05,000
+But it's currently in
+global coordinate systems,
+
+1765
+01:19:05,000 --> 01:19:08,290
+the coordinate system of the
+entire device, basically.
+
+1766
+01:19:08,290 --> 01:19:11,730
+Not the little coordinate
+system of our little,
+
+1767
+01:19:11,730 --> 01:19:14,160
+you know, Color here with
+an Image in front of it,
+
+1768
+01:19:14,160 --> 01:19:15,410
+which, that's bad for us.
+
+1769
+01:19:15,410 --> 01:19:17,540
+We need to convert it to do that.
+
+1770
+01:19:17,540 --> 01:19:21,970
+So I provided a little
+extension to GeometryReader
+
+1771
+01:19:21,970 --> 01:19:24,800
+right here, GeometryProxy,
+that can convert
+
+1772
+01:19:24,800 --> 01:19:26,860
+from some coordinate
+space and we're gonna use
+
+1773
+01:19:26,860 --> 01:19:29,800
+this little function to
+convert this location
+
+1774
+01:19:29,800 --> 01:19:32,380
+that we're given here
+from global coordinates
+
+1775
+01:19:32,380 --> 01:19:34,520
+to our View's coordinate system.
+
+1776
+01:19:34,520 --> 01:19:35,610
+Pretty straightforward,
+I'm just gonna create
+
+1777
+01:19:35,610 --> 01:19:37,470
+a little var here location.
+
+1778
+01:19:37,470 --> 01:19:40,220
+And I'm gonna use that GeometryProxy thing
+
+1779
+01:19:40,220 --> 01:19:43,540
+that I just showed you
+to convert that location
+
+1780
+01:19:43,540 --> 01:19:46,500
+that we're given from the global.
+
+1781
+01:19:46,500 --> 01:19:50,150
+So this is converting this
+location from global coordinates.
+
+1782
+01:19:50,150 --> 01:19:52,000
+Now there's another
+conversion I have to do.
+
+1783
+01:19:52,000 --> 01:19:55,400
+This location is in iOS coordinate system.
+
+1784
+01:19:55,400 --> 01:19:57,500
+Remember the iOS coordinate system?
+
+1785
+01:19:57,500 --> 01:20:00,030
+It's the upper left is (0, 0).
+
+1786
+01:20:00,030 --> 01:20:03,610
+My EmojiArt, I'm gonna have its X and Y
+
+1787
+01:20:03,610 --> 01:20:06,413
+be offset from the center.
+
+1788
+01:20:07,360 --> 01:20:10,440
+Not just to be different, but
+I actually think it's easier
+
+1789
+01:20:10,440 --> 01:20:12,130
+to store it this way.
+
+1790
+01:20:12,130 --> 01:20:15,310
+And so we need to convert
+from iOS coordinates,
+
+1791
+01:20:15,310 --> 01:20:18,190
+zero, zero in the upper
+left, to this coordinates,
+
+1792
+01:20:18,190 --> 01:20:19,593
+zero, zero in the middle.
+
+1793
+01:20:21,500 --> 01:20:25,513
+Our location equals a CGPoint
+
+1794
+01:20:26,900 --> 01:20:29,810
+and X is the location you
+gave us in the iOS coordinates
+
+1795
+01:20:29,810 --> 01:20:33,380
+but minus the GeometryReader's
+
+1796
+01:20:33,380 --> 01:20:35,650
+proxy size.width divided by two,
+
+1797
+01:20:35,650 --> 01:20:38,700
+and the Y is the location
+you gave us in the Y
+
+1798
+01:20:38,700 --> 01:20:43,700
+minus the geometry's
+size.height divide by two.
+
+1799
+01:20:45,240 --> 01:20:47,960
+Now here I'm using my
+GeometryReader both here
+
+1800
+01:20:47,960 --> 01:20:50,370
+to convert that and my GeometryReader here
+
+1801
+01:20:50,370 --> 01:20:51,930
+to convert from global.
+
+1802
+01:20:51,930 --> 01:20:54,720
+So I clearly need my GeometryReader here.
+
+1803
+01:20:54,720 --> 01:20:59,093
+So let's put GeometryReader around this.
+
+1804
+01:21:00,620 --> 01:21:02,170
+Then the last thing we need to do
+
+1805
+01:21:02,170 --> 01:21:05,660
+is have this drop handler
+not only take the providers
+
+1806
+01:21:05,660 --> 01:21:09,060
+but it also needs to take the locations.
+
+1807
+01:21:09,060 --> 01:21:11,810
+So let's enhance this
+drop to take the location,
+
+1808
+01:21:11,810 --> 01:21:14,263
+comma at location which is a CGPoint.
+
+1809
+01:21:15,960 --> 01:21:17,700
+Now in here, right now I'm looking
+
+1810
+01:21:17,700 --> 01:21:19,350
+for the first object to be a URL.
+
+1811
+01:21:20,270 --> 01:21:24,370
+So if I don't find that, if not found
+
+1812
+01:21:24,370 --> 01:21:28,550
+then I'm gonna go and see if
+found equals the providers
+
+1813
+01:21:28,550 --> 01:21:33,550
+load up objects of type String.self.
+
+1814
+01:21:34,110 --> 01:21:37,530
+So here I was loading the
+first object ofType URL,
+
+1815
+01:21:37,530 --> 01:21:40,530
+here I'm loading all
+objects ofType String.
+
+1816
+01:21:40,530 --> 01:21:43,730
+And that has a little argument here
+
+1817
+01:21:43,730 --> 01:21:47,140
+which is string in.
+
+1818
+01:21:47,140 --> 01:21:48,890
+And this is gonna call
+this little function
+
+1819
+01:21:48,890 --> 01:21:51,257
+for all the strings
+that are found in there.
+
+1820
+01:21:51,257 --> 01:21:53,160
+And I'm gonna assume all
+my strings are emojis.
+
+1821
+01:21:53,160 --> 01:21:54,780
+Now this does mean I could drag
+
+1822
+01:21:54,780 --> 01:21:57,790
+a non-emoji string (chuckles) on and that,
+
+1823
+01:21:57,790 --> 01:21:59,643
+it's going to work, but that's okay.
+
+1824
+01:22:00,650 --> 01:22:02,260
+So here what do I want to do?
+
+1825
+01:22:02,260 --> 01:22:05,120
+If this happens, I'm just
+gonna use my intent right here,
+
+1826
+01:22:05,120 --> 01:22:09,610
+this document.addEmoji and
+the emoji is the String
+
+1827
+01:22:09,610 --> 01:22:12,090
+that was dropped on me and
+the point is the location
+
+1828
+01:22:12,090 --> 01:22:13,477
+that it was dropped at.
+
+1829
+01:22:13,477 --> 01:22:16,510
+And the size is the defaultEmojiSize.
+
+1830
+01:22:16,510 --> 01:22:19,010
+So we're gonna have
+emojis that are dropped
+
+1831
+01:22:19,010 --> 01:22:22,920
+be this defaultEmojiSize,
+the same size we used
+
+1832
+01:22:22,920 --> 01:22:24,733
+with our ScrollView at the top.
+
+1833
+01:22:25,760 --> 01:22:29,242
+Now this is complaining
+'cause let found is a let.
+
+1834
+01:22:29,242 --> 01:22:31,010
+Let's just make it be a var
+'cause now we're searching
+
+1835
+01:22:31,010 --> 01:22:34,980
+for two things here, and
+this is all we needed to do
+
+1836
+01:22:34,980 --> 01:22:36,140
+on the drop side.
+
+1837
+01:22:36,140 --> 01:22:39,010
+We got the location and
+we're just checking for them
+
+1838
+01:22:39,010 --> 01:22:41,300
+and adding them using this Intent, right.
+
+1839
+01:22:41,300 --> 01:22:42,800
+Remember, everyone remember this Intent
+
+1840
+01:22:42,800 --> 01:22:45,260
+that we added over here, AddEmoji.
+
+1841
+01:22:45,260 --> 01:22:46,370
+The last thing we want to do is be able
+
+1842
+01:22:46,370 --> 01:22:49,530
+to drag our emojis out.
+
+1843
+01:22:49,530 --> 01:22:52,080
+Here are the emojis
+that are in the palette.
+
+1844
+01:22:52,080 --> 01:22:53,630
+To do this is incredibly easy.
+
+1845
+01:22:53,630 --> 01:22:55,850
+We're just gonna say onDrag.
+
+1846
+01:22:55,850 --> 01:22:58,890
+Now onDrag takes a function.
+
+1847
+01:22:58,890 --> 01:23:03,040
+And this function just needs
+to return the things to drag.
+
+1848
+01:23:03,040 --> 01:23:04,890
+And these need to be NSItemProviders.
+
+1849
+01:23:06,100 --> 01:23:08,850
+Remember NSItemProviders
+are what these providers are
+
+1850
+01:23:08,850 --> 01:23:10,340
+down here when we drop.
+
+1851
+01:23:10,340 --> 01:23:12,060
+So there needs to be a provider.
+
+1852
+01:23:12,060 --> 01:23:14,210
+So I need to create a
+provider that essentially
+
+1853
+01:23:14,210 --> 01:23:16,823
+provides this emoji right here.
+
+1854
+01:23:17,756 --> 01:23:21,460
+And NSItemProvider
+almost has the one I want
+
+1855
+01:23:21,460 --> 01:23:24,600
+and something for that,
+object it's called,
+
+1856
+01:23:24,600 --> 01:23:27,550
+on NSItemProvider object
+and it will take this object
+
+1857
+01:23:27,550 --> 01:23:30,440
+and for certain known types
+like Strings and Images,
+
+1858
+01:23:30,440 --> 01:23:33,200
+it will create an ItemProvider here.
+
+1859
+01:23:33,200 --> 01:23:37,210
+Unfortunately, this is
+old Objective-C world code
+
+1860
+01:23:37,210 --> 01:23:41,010
+imported into SwiftUI and
+so we have to put this
+
+1861
+01:23:41,010 --> 01:23:43,880
+as NSString on here.
+
+1862
+01:23:43,880 --> 01:23:46,150
+This is because
+ItemProviders will only take
+
+1863
+01:23:46,150 --> 01:23:47,560
+these old NS things.
+
+1864
+01:23:47,560 --> 01:23:50,350
+You see it starts with
+NS, this starts with NS.
+
+1865
+01:23:50,350 --> 01:23:52,210
+Not gonna talk about as right now.
+
+1866
+01:23:52,210 --> 01:23:54,580
+We'll talk about it later, what it means,
+
+1867
+01:23:54,580 --> 01:23:56,400
+but it essentially converts this emoji
+
+1868
+01:23:56,400 --> 01:23:59,050
+which is a type String, these are Strings,
+
+1869
+01:23:59,050 --> 01:24:03,500
+into this NS world so that
+NSItemProvider can do it.
+
+1870
+01:24:03,500 --> 01:24:06,050
+And of course we don't need
+return there, actually.
+
+1871
+01:24:07,440 --> 01:24:08,930
+So let's see if this works.
+
+1872
+01:24:08,930 --> 01:24:12,220
+We got our drag up here,
+we got our drop down here.
+
+1873
+01:24:12,220 --> 01:24:13,053
+Let's see if we can do it.
+
+1874
+01:24:13,053 --> 01:24:14,390
+Let's start with this background,
+
+1875
+01:24:14,390 --> 01:24:15,910
+make sure that didn't get broken.
+
+1876
+01:24:15,910 --> 01:24:19,413
+Oh, works fine, and let's
+maybe drag earth down here.
+
+1877
+01:24:19,413 --> 01:24:21,600
+Ooh, I see a green plus!
+
+1878
+01:24:21,600 --> 01:24:23,430
+Oh, it didn't display.
+
+1879
+01:24:23,430 --> 01:24:26,080
+So our drag and drop appears to be working
+
+1880
+01:24:26,080 --> 01:24:27,890
+'cause we got the green plus.
+
+1881
+01:24:27,890 --> 01:24:31,760
+But we don't actually draw
+our emojis that are dropped
+
+1882
+01:24:31,760 --> 01:24:34,868
+anywhere in our UI here.
+
+1883
+01:24:34,868 --> 01:24:37,250
+We draw our palettes up here,
+
+1884
+01:24:37,250 --> 01:24:38,550
+but we don't actually draw (chuckles)
+
+1885
+01:24:38,550 --> 01:24:40,360
+the emojis that are dropped.
+
+1886
+01:24:40,360 --> 01:24:45,180
+We just need to put that on top
+of this white overlaid image
+
+1887
+01:24:45,180 --> 01:24:47,430
+so I'm gonna make a ZStack,
+stack these two things
+
+1888
+01:24:47,430 --> 01:24:49,220
+on top of each other, this guy.
+
+1889
+01:24:49,220 --> 01:24:51,860
+And this second thing that I'm
+gonna put in the ZStack here
+
+1890
+01:24:51,860 --> 01:24:56,860
+is just ForEach of all of the Emojis
+
+1891
+01:24:58,290 --> 01:25:00,223
+in my document.
+
+1892
+01:25:02,200 --> 01:25:04,030
+And for each one of these
+things, I'm going to have
+
+1893
+01:25:04,030 --> 01:25:06,750
+to make a View to draw it.
+
+1894
+01:25:06,750 --> 01:25:09,600
+Now I don't currently have any var
+
+1895
+01:25:09,600 --> 01:25:12,150
+that gives me the Emojis in the document.
+
+1896
+01:25:12,150 --> 01:25:14,650
+And if you look over in my document,
+
+1897
+01:25:14,650 --> 01:25:17,730
+my Model is private so I
+can't look at the emojiArt
+
+1898
+01:25:17,730 --> 01:25:21,860
+so I'm gonna need another
+var here which is emojis
+
+1899
+01:25:21,860 --> 01:25:26,280
+and it's gonna be of type
+Array of EmojiArt.Emoji.
+
+1900
+01:25:26,280 --> 01:25:30,700
+And this thing is just going
+to return my emojiArt.emojis
+
+1901
+01:25:30,700 --> 01:25:33,718
+since this is a get only computed var.
+
+1902
+01:25:33,718 --> 01:25:36,300
+This is a read-only version
+of this emojiArts, okay.
+
+1903
+01:25:36,300 --> 01:25:39,550
+That's kind of exactly what
+my ViewModel here wants to do
+
+1904
+01:25:39,550 --> 01:25:42,750
+is provide a read-only access to the Model
+
+1905
+01:25:42,750 --> 01:25:47,123
+since it provides immutable
+access via its Intent functions.
+
+1906
+01:25:48,630 --> 01:25:51,820
+So inside here, these
+emojis are Identifiable.
+
+1907
+01:25:51,820 --> 01:25:54,580
+That's great, we made emoji Identifiable.
+
+1908
+01:25:54,580 --> 01:25:57,760
+And to display them, it's
+just Text of the emoji.
+
+1909
+01:25:57,760 --> 01:25:59,077
+That's all we need to do.
+
+1910
+01:25:59,077 --> 01:26:03,290
+The only thing about that
+is we want to set the font
+
+1911
+01:26:03,290 --> 01:26:07,560
+to be the size and we want to
+set the position of this thing
+
+1912
+01:26:07,560 --> 01:26:09,900
+to be wherever the
+position is in the Model.
+
+1913
+01:26:09,900 --> 01:26:11,550
+So we're gonna have to
+do both of those things.
+
+1914
+01:26:11,550 --> 01:26:13,240
+So I'm gonna create little
+functions to do that.
+
+1915
+01:26:13,240 --> 01:26:18,240
+So let's have the font return
+self.font for this Emoji
+
+1916
+01:26:18,580 --> 01:26:22,440
+and then we'll have the
+position return to self.position
+
+1917
+01:26:22,440 --> 01:26:24,239
+for this emoji.
+
+1918
+01:26:24,239 --> 01:26:26,970
+And for that, because of
+the coordinate system space
+
+1919
+01:26:26,970 --> 01:26:29,110
+between (0, 0) in the
+middle or upper left,
+
+1920
+01:26:29,110 --> 01:26:34,110
+I'm gonna have to pass this
+geometry.size in there.
+
+1921
+01:26:34,270 --> 01:26:36,220
+So let's make these two little functions
+
+1922
+01:26:36,220 --> 01:26:39,510
+and then I think we'll be
+done here, font and position,
+
+1923
+01:26:39,510 --> 01:26:42,420
+private func font
+
+1924
+01:26:43,610 --> 01:26:46,387
+for emoji, EmojiArt.Emoji.
+
+1925
+01:26:47,956 --> 01:26:49,600
+These are gonna return a Font.
+
+1926
+01:26:49,600 --> 01:26:51,530
+And this one's pretty simple to do.
+
+1927
+01:26:51,530 --> 01:26:55,407
+We're just going to do Font.system size.
+
+1928
+01:26:55,407 --> 01:26:57,100
+And we need to get the size.
+
+1929
+01:26:57,100 --> 01:27:01,810
+Now this size is actually
+in the Emoji as size.
+
+1930
+01:27:01,810 --> 01:27:04,340
+But this is an Int, right.
+
+1931
+01:27:04,340 --> 01:27:08,370
+Size is an Int in our Model over here.
+
+1932
+01:27:08,370 --> 01:27:11,300
+And I don't really want my
+View to ever have to deal
+
+1933
+01:27:11,300 --> 01:27:12,370
+with Ints.
+
+1934
+01:27:12,370 --> 01:27:14,580
+So I'm gonna put something in my ViewModel
+
+1935
+01:27:14,580 --> 01:27:16,510
+just like I did all these things,
+
+1936
+01:27:16,510 --> 01:27:19,540
+doing a little interpretation
+here into floats and points.
+
+1937
+01:27:19,540 --> 01:27:21,100
+I'm gonna do the same thing over here
+
+1938
+01:27:21,100 --> 01:27:24,220
+for the font size and
+for the location as well.
+
+1939
+01:27:24,220 --> 01:27:25,740
+But I'm gonna do it in an unusual way.
+
+1940
+01:27:25,740 --> 01:27:29,120
+I'm gonna create an
+extension to EmojiArt.Emoji
+
+1941
+01:27:31,043 --> 01:27:35,040
+and I'm gonna add the var
+fontSize which is a CGFloat
+
+1942
+01:27:36,020 --> 01:27:40,260
+and just takes a CGFloat-ized version
+
+1943
+01:27:40,260 --> 01:27:43,253
+of self.size.
+
+1944
+01:27:44,830 --> 01:27:48,380
+Now this might feel like
+we're violating MVVM here.
+
+1945
+01:27:48,380 --> 01:27:53,300
+I just added a CGFloat var to my Model.
+
+1946
+01:27:53,300 --> 01:27:55,410
+But this is not violating MVVM
+
+1947
+01:27:55,410 --> 01:27:58,340
+because this code is in
+my ViewModel right here.
+
+1948
+01:27:58,340 --> 01:28:00,930
+It's not in the Model,
+I'm adding it to something
+
+1949
+01:28:00,930 --> 01:28:02,690
+that's in my Model, but this code,
+
+1950
+01:28:02,690 --> 01:28:06,360
+this line of code right here
+is here in my ViewModel.
+
+1951
+01:28:06,360 --> 01:28:08,140
+And that makes it perfectly legal.
+
+1952
+01:28:08,140 --> 01:28:11,430
+ViewModel is allowed to
+do CGFloat, no problem.
+
+1953
+01:28:11,430 --> 01:28:16,120
+I can do the same thing here
+with location which is CGPoint.
+
+1954
+01:28:16,120 --> 01:28:19,760
+And I could make that a CGPoint
+
+1955
+01:28:21,670 --> 01:28:24,567
+where the X is CGFloat sub X
+
+1956
+01:28:24,567 --> 01:28:27,610
+and the Y is CGFloat sub Y.
+
+1957
+01:28:27,610 --> 01:28:31,450
+So now I've made it so
+that we don't have to deal
+
+1958
+01:28:31,450 --> 01:28:35,163
+with Ints ever in our View.
+
+1959
+01:28:36,034 --> 01:28:38,694
+And our ViewModel is just
+being a good ViewModel,
+
+1960
+01:28:38,694 --> 01:28:42,180
+okay by interpreting the Model for us.
+
+1961
+01:28:42,180 --> 01:28:44,520
+So over here then I can
+just say that this size
+
+1962
+01:28:44,520 --> 01:28:47,240
+equals this Emoji's fontSize.
+
+1963
+01:28:47,240 --> 01:28:48,857
+And this will be a CGFloat.
+
+1964
+01:28:50,060 --> 01:28:54,410
+And for the position, similarly
+for private func position
+
+1965
+01:28:54,410 --> 01:28:59,193
+for emoji, EmojiArt.Emoji in size, CGSize.
+
+1966
+01:29:00,220 --> 01:29:01,500
+That's going to give the CGPoint
+
+1967
+01:29:01,500 --> 01:29:04,000
+which is where that thing goes.
+
+1968
+01:29:04,000 --> 01:29:07,270
+That's just gonna make a
+CGPoint where we convert again
+
+1969
+01:29:07,270 --> 01:29:09,000
+to that (0, 0) in the middle
+
+1970
+01:29:09,000 --> 01:29:10,920
+instead of (0, 0) in the upper left.
+
+1971
+01:29:10,920 --> 01:29:14,820
+So that's the X being Emoji's location.x
+
+1972
+01:29:14,820 --> 01:29:18,940
+plus, plus size.width divided by two
+
+1973
+01:29:18,940 --> 01:29:23,330
+and the Y is the Emoji's location.y.
+
+1974
+01:29:23,330 --> 01:29:25,880
+Again, this emoji.location,
+those are CGPoints
+
+1975
+01:29:26,767 --> 01:29:28,760
+coming from our ViewModel there.
+
+1976
+01:29:28,760 --> 01:29:31,253
+Plus size.height divided by two.
+
+1977
+01:29:32,700 --> 01:29:36,700
+Now you might have some more
+conversion going on later
+
+1978
+01:29:36,700 --> 01:29:38,870
+when you start allowing these things
+
+1979
+01:29:38,870 --> 01:29:41,590
+to be positioned, moved around.
+
+1980
+01:29:41,590 --> 01:29:43,632
+And what do we got here, oh yes of course,
+
+1981
+01:29:43,632 --> 01:29:45,963
+it's not just emoji, it's emoji's text.
+
+1982
+01:29:47,490 --> 01:29:48,540
+So let's take a look!
+
+1983
+01:29:50,120 --> 01:29:53,460
+Hopefully that just ForEach'd
+all of us text in there.
+
+1984
+01:29:53,460 --> 01:29:55,940
+Again, let's make a nice background here.
+
+1985
+01:29:55,940 --> 01:29:59,560
+Let's pick this up, put it
+in here, whoo, we got it!
+
+1986
+01:29:59,560 --> 01:30:02,540
+A little baseball, yay!
+
+1987
+01:30:02,540 --> 01:30:05,350
+Apple on top of the house, nice!
+
+1988
+01:30:05,350 --> 01:30:08,300
+Now your homework assignment
+next week is going to be,
+
+1989
+01:30:08,300 --> 01:30:11,110
+it'll make it so you can
+click on these to select them
+
+1990
+01:30:11,110 --> 01:30:14,210
+and then drag them around, okay?
+
+1991
+01:30:14,210 --> 01:30:17,300
+Or even pinch, which you
+can do on your simulator
+
+1992
+01:30:17,300 --> 01:30:18,970
+by holding down the option key
+
+1993
+01:30:18,970 --> 01:30:22,130
+and pinch to zoom in and out on them.
+
+1994
+01:30:22,130 --> 01:30:23,850
+So to get you started on
+that and understanding
+
+1995
+01:30:23,850 --> 01:30:25,330
+how to do that, in the next lecture
+
+1996
+01:30:25,330 --> 01:30:27,640
+we're gonna make it so
+that we can drag around
+
+1997
+01:30:27,640 --> 01:30:30,690
+and pinch the whole image.
+
+1998
+01:30:30,690 --> 01:30:32,727
+So I'm gonna let you drag around
+and pinch the whole image.
+
+1999
+01:30:32,727 --> 01:30:34,750
+You're gonna make it
+so you can drag around
+
+2000
+01:30:34,750 --> 01:30:36,743
+and pinch the little emoji there.
+
+2001
+01:30:39,315 --> 01:30:40,530
+So that's it for this lecture,
+
+2002
+01:30:40,530 --> 01:30:42,910
+and then we'll start off the next lecture
+
+2003
+01:30:42,910 --> 01:30:44,670
+with a little bit of slides about how
+
+2004
+01:30:44,670 --> 01:30:48,467
+to do these gestures, pinches,
+and drags and all that stuff
+
+2005
+01:30:48,467 --> 01:30:50,270
+and then we'll dive
+right back into this demo
+
+2006
+01:30:50,270 --> 01:30:51,913
+and make some more progress.
+
+2007
+01:30:53,090 --> 01:30:56,323
+- [Presenter] For more, please
+visit us at stanford.edu.
