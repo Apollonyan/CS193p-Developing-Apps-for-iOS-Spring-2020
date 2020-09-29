@@ -8560,230 +8560,285 @@ Array<MemoryGame<String>.Card>
 2051
 01:33:11,911 --> 01:33:14,410
 There's no way of identifying them.
+没有办法识别它们
 
 2052
 01:33:14,410 --> 01:33:18,810
 So, Swift has a formalism,
 a formal mechanism
+所以 Swift 有一套正式的机制
 
 2053
 01:33:18,810 --> 01:33:22,670
 for identifying something,
 making something identifiable
+能识别变量
 
 2054
 01:33:22,670 --> 01:33:25,040
 and it does it with
 something I like to call
+我喜欢称之为
 
 2055
 01:33:25,040 --> 01:33:27,500
 constrains and gains.
+“限制与收获”
 
 2056
 01:33:27,500 --> 01:33:31,160
 So that's when you require a
 struct to do a certain thing,
+这就是当你让结构体做某件事时
 
 2057
 01:33:31,160 --> 01:33:34,430
 you constrain it to do a certain thing
+你限制它做某件事
 
 2058
 01:33:34,430 --> 01:33:38,120
 but if it does, then it
 gains certain capabilities.
+与此同时，它获得了某种能力
 
 2059
 01:33:38,120 --> 01:33:40,560
 Now, we're gonna talk all about
+下周我们会讨论
 
 2060
 01:33:40,560 --> 01:33:44,163
 how constrains and gains works next week.
+“限制与收获”是如何运行的
 
 2061
 01:33:45,250 --> 01:33:47,322
 And we've already used
 constrains and gains,
+事实上，我们已经在 :View 这里
 
 2062
 01:33:47,322 --> 01:33:51,490
 actually, here, colon View
 was constrains and gains.
+使用了“限制与收获”
 
 2063
 01:33:51,490 --> 01:33:54,857
 We constrained ourselves to
 have to do this body, okay?
+我们限制结构体 ContentView
+必须实现 body 中的内容
 
 2064
 01:33:54,857 --> 01:33:59,210
 But we gained all the
 stuff that View does, okay?
+但我们获得了 View 所具备的能力
 
 2065
 01:33:59,210 --> 01:34:01,703
 So, that's constraints
 and gains in the struct.
+这就是“限制与收获”
+在结构体中的示例
 
 2066
 01:34:02,592 --> 01:34:04,950
 We're gonna do the same thing
 with this constrains and gains
+接下来我们要在 Card 这个结构体中
 
 2067
 01:34:04,950 --> 01:34:06,140
 with this struct.
+使用“限制与收获”
 
 2068
 01:34:06,140 --> 01:34:09,719
 We're gonna say constrains
 and gains Identifiable.
+在这里输入 :Identifiable
 
 2069
 01:34:09,719 --> 01:34:14,719
 Identifiable like View is
 what's called a protocol
+Identifiable 就像 View 一样
+是一个 Protocol（协议）
 
 2070
 01:34:15,070 --> 01:34:18,900
 and that's the heart of this
 constrains and gains business.
+它是“限制与收获”这个机制的核心
 
 2071
 01:34:18,900 --> 01:34:22,640
 And again, we'll talk about
 protocols a lot next week.
+我们也会在下周展开来讲协议相关的内容
 
 2072
 01:34:22,640 --> 01:34:24,410
 Unfortunately, you don't gain much with it
+遗憾地是，除了获得可识别的能力
 
 2073
 01:34:24,410 --> 01:34:27,080
 except where you gain the
 ability to be identified
+你并不能通过 Identifiable 得到更多
 
 2074
 01:34:27,080 --> 01:34:29,090
 but mostly, you are constrained
+但是你主要是被限制了
 
 2075
 01:34:29,090 --> 01:34:31,010
 and the constraint of Identifiable
+Identifiable 的限制是
 
 2076
 01:34:31,010 --> 01:34:34,540
 is that you have to have a var called id
+你需要声明一个变量 id
 
 2077
 01:34:34,540 --> 01:34:36,890
 Now, luckily, it can be any type you want.
+幸运地是，它可以是任何你想要的类型
 
 2078
 01:34:36,890 --> 01:34:38,570
 I'm gonna make my id be an Int
+我要把 id 声明为 Int 类型
 
 2079
 01:34:38,570 --> 01:34:41,160
 but it could be a String
 or anything you need to do
+但是它也可以是 String
+或者任何你需要的类型
 
 2080
 01:34:41,160 --> 01:34:43,390
 to make this thing identifiable.
+让它成为可识别的即可
 
 2081
 01:34:43,390 --> 01:34:45,980
 Of course, as soon as
 I add another var here,
+当我添加 id 这个变量之后
 
 2082
 01:34:45,980 --> 01:34:49,000
 now, my Card isFaceUp blah, blah, blah
+Card 的构造器
 
 2083
 01:34:49,000 --> 01:34:51,610
 is not doing all the vars.
+就报错了
 
 2084
 01:34:51,610 --> 01:34:55,420
 So for both of these, I need to add an ID.
+所以我需要在这两行添加 id 的值
 
 2085
 01:34:55,420 --> 01:34:59,500
 And what I'm gonna use for my
 ID is my pairIndex times two
+这里输入 pairIndex*2
 
 2086
 01:34:59,500 --> 01:35:01,760
 and for this guy's ID
 because I want this Card
+这里，为了让卡片
 
 2087
 01:35:01,760 --> 01:35:05,270
 to be obviously, to
 have its own identifier,
+有自己的标识符
 
 2088
 01:35:05,270 --> 01:35:09,930
 I'm gonna do pairIndex
 times two plus one, okay?
+输入 pairIndex*2+1
 
 2089
 01:35:09,930 --> 01:35:14,760
 So now these things
 have unique identifiers.
+现在，它们都有唯一的标识符了
 
 2090
 01:35:14,760 --> 01:35:17,440
 Now this is fully identifiable,
 that's all we need to do,
+它们完全可识别了
 
 2091
 01:35:17,440 --> 01:35:19,340
 we just have to make sure that these Cards
+我们只需要确保这些卡片
 
 2092
 01:35:19,340 --> 01:35:21,060
 are uniquely identifiable,
+是独一无二的
 
 2093
 01:35:21,060 --> 01:35:22,290
 again, so that they move around,
+那么，当它们移动时
 
 2094
 01:35:22,290 --> 01:35:23,803
 we can animate them or whatever.
+我们就能展示动画或者进行其他的操作
 
 2095
 01:35:23,803 --> 01:35:26,290
 By the way, it's a little annoying here
+这里稍稍有点烦人
 
 2096
 01:35:26,290 --> 01:35:29,360
 that I have to say this
 every time for a new Card.
+每次声明一个新的 Card
+都要输入这么多
 
 2097
 01:35:29,360 --> 01:35:31,660
 I could just put that
 down here, by the way.
+我可以在下面输入默认值
 
 2098
 01:35:31,660 --> 01:35:35,930
 You're absolutely allowed
 to have some of your vars
+你完全可以
 
 2099
 01:35:35,930 --> 01:35:37,760
 be initialized that way
+这样初始化变量
 
 2100
 01:35:37,760 --> 01:35:41,160
 and then we don't need
 to have them here, okay?
+然后就不用在声明的时候输入这么多了
 
 2101
 01:35:41,160 --> 01:35:43,423
